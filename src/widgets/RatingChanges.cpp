@@ -1,4 +1,8 @@
 
+#include <utility>
+#include <vector>
+#include <boost/foreach.hpp>
+
 #include <Wt/WContainerWidget>
 #include <Wt/WString>
 #include <Wt/Dbo/Transaction>
@@ -7,7 +11,6 @@
 namespace dbo = Wt::Dbo;
 #include <Wt/Chart/WCartesianChart>
 #include <Wt/Chart/WDataSeries>
-#include <Wt/WTableView>
 #include <Wt/WDate>
 #include <Wt/WEnvironment>
 #include <Wt/WApplication>
@@ -28,9 +31,10 @@ typedef GamePtr Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 
-const int id_column = 0;
-const int ended_column = 1;
-const int rating_after_column = 2;
+const int ID_COLUMN = 0;
+const int ENDED_COLUMN = 1;
+const int RATING_AFTER_COLUMN = 2;
+const int COLUMNS = 3;
 
 class RatingModel : public BaseQM
 {
@@ -54,12 +58,12 @@ public:
     boost::any data(const Wt::WModelIndex& index,
         int role=Wt::DisplayRole) const
     {
-        if (index.column() == ended_column && role == Wt::DisplayRole)
+        if (index.column() == ENDED_COLUMN && role == Wt::DisplayRole)
         {
             GamePtr game = resultRow(index.row());
             return Wt::WDate(game->ended().date());
         }
-        if (index.column() == rating_after_column && role == Wt::DisplayRole)
+        if (index.column() == RATING_AFTER_COLUMN && role == Wt::DisplayRole)
         {
             GamePtr game = resultRow(index.row());
             return game->rating_after(game->color_of(user_));
@@ -77,46 +81,105 @@ private:
 class MultiRatingModel : public Wt::WAbstractTableModel
 {
 public:
-    void add_user(UserPtr user)
+    MultiRatingModel(Wt::WObject* parent=0):
+    Wt::WAbstractTableModel(parent), column_count_(0), row_count_(0)
     {
     }
 
+    void add_user(UserPtr user)
+    {
+        RatingModel* model = new RatingModel(user, this);
+        models_.push_back(model);
+        column_count_ += COLUMNS;
+        row_count_ = std::max(row_count_, model->rowCount());
+    }
+
+    virtual int columnCount(const Wt::WModelIndex& /* parent */) const
+    {
+        return column_count_;
+    }
+
+    virtual int rowCount(const Wt::WModelIndex& /* parent */) const
+    {
+        return row_count_;
+    }
+
+    boost::any data(const Wt::WModelIndex& index,
+        int role=Wt::DisplayRole) const
+    {
+        RatingModel* model = models_[index.column() / COLUMNS];
+        int column = index.column() % COLUMNS;
+        if (index.row() < model->rowCount())
+        {
+            return model->index(index.row(), column).data(role);
+        }
+        else if (index.column() % COLUMNS == ENDED_COLUMN)
+        {
+            return Wt::WDate::currentServerDate();
+        }
+        else if (index.column() % COLUMNS == RATING_AFTER_COLUMN)
+        {
+            return "";
+        }
+    }
+
 private:
+    std::vector<RatingModel*> models_;
+    int column_count_;
+    int row_count_;
 };
 
 class RatingChangesImpl : public Wt::WContainerWidget
 {
 public:
-    RatingChangesImpl(UserPtr user) :
-    Wt::WContainerWidget()
+    RatingChangesImpl(UserPtr user=UserPtr()):
+    Wt::WContainerWidget(), number_of_users_(0)
     {
-        RatingModel* rating_model_ = new RatingModel(user, this);
-        Wt::Chart::WCartesianChart* chart_ =
-            new Wt::Chart::WCartesianChart(Wt::Chart::ScatterPlot, this);
-        chart_->setModel(rating_model_);
-        chart_->setXSeriesColumn(ended_column);
-        Wt::Chart::WDataSeries series(rating_after_column, Wt::Chart::CurveSeries);
-        series.setMarker(Wt::Chart::CircleMarker);
-        chart_->addSeries(series);
+        model_ = new MultiRatingModel(this);
+        chart_ = new Wt::Chart::WCartesianChart(Wt::Chart::ScatterPlot, this);
+        chart_->setModel(model_);
+        chart_->setXSeriesColumn(ENDED_COLUMN); // useless
         chart_->axis(Wt::Chart::XAxis).setScale(Wt::Chart::DateScale);
         chart_->resize(400, 200);
         if (!wApp->environment().ajax())
         {
             chart_->setPreferredMethod(Wt::WPaintedWidget::PngImage);
         }
-
-        Wt::WTableView* table_view_ = new Wt::WTableView(this);
-        table_view_->setModel(rating_model_);
-        table_view_->resize(500, 200);
+        if (user)
+        {
+            add_user(user);
+        }
     }
-};
 
+    void add_user(UserPtr user)
+    {
+        int shift = number_of_users_ * COLUMNS;
+        int rating_after_column = RATING_AFTER_COLUMN + shift;
+        int ended_column = ENDED_COLUMN + shift;
+        model_->add_user(user);
+        Wt::Chart::WDataSeries series(rating_after_column, Wt::Chart::CurveSeries);
+        series.setXSeriesColumn(ended_column);
+        series.setMarker(Wt::Chart::CircleMarker);
+        chart_->addSeries(series);
+        number_of_users_ += 1;
+    }
+
+private:
+    int number_of_users_;
+    MultiRatingModel* model_;
+    Wt::Chart::WCartesianChart* chart_;
+};
 
 RatingChanges::RatingChanges(UserPtr user, Wt::WContainerWidget* parent):
 Wt::WCompositeWidget(parent)
 {
     impl_ = new RatingChangesImpl(user);
     setImplementation(impl_);
+}
+
+void RatingChanges::add_user(UserPtr user)
+{
+    impl_->add_user(user);
 }
 
 }

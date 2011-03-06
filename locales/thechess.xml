@@ -324,6 +324,9 @@
     <message id='thechess.game_list'>List of games</message>
     <message id='thechess.start_game'>Start a game</message>
     <message id='thechess.rating_changes'>Rating changes</message>
+    <message id='thechess.rating_changes_and_me'>
+        Rating changes (compared to my ones)
+    </message>
 
     <message id='thechess.number'>#</message>
     <message id='thechess.random'>random</message>
