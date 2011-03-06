@@ -9,3 +9,31 @@ table.thechess_board
     text-align: center !important;
     vertical-align: middle;
 }
+
+
+body
+{
+    font: 14px 'Arial', Tahoma, Arial;
+    cursor: default;
+}
+
+a
+{
+    font: 14px 'Arial', Tahoma, Arial;
+    color: blue;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover
+{
+    color: black;
+    font-family: 'Arial' , Tahoma, Arial;
+    text-decoration: underline;
+}
+
+td
+{
+    font: 14px 'Arial', Tahoma, Arial;
+}
+
