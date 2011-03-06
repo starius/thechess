@@ -64,6 +64,8 @@ contains( CONFIG, debug ) {
 
 INCLUDEPATH = /usr/local/include/Wt/
 
+QMAKE_CXX = ccache g++
+
 LIBS += -lboost_signals -lboost_regex
 LIBS += -lwt -lwthttp
 LIBS += -lwtdbo -lwtdbosqlite3 -lwtdbopostgres # -lwtdbomysql
