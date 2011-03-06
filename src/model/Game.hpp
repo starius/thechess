@@ -5,6 +5,7 @@
 #include <boost/optional.hpp>
 
 #include <Wt/WObject>
+#include <Wt/WString>
 #include <Wt/WSignal>
 #include <Wt/Dbo/Dbo>
 #include <Wt/Dbo/ptr>
