@@ -47,7 +47,7 @@ public:
     {
     }
 
-    boost::any data(const Wt::WModelIndex& index, 
+    boost::any data(const Wt::WModelIndex& index,
         int role=Wt::DisplayRole) const
     {
         if (index.column() == state_column && role == Wt::DisplayRole)
@@ -166,8 +166,8 @@ private:
         {
             tApp->view(game);
         }
-        else if (index.column() == white_column || 
-            index.column() == black_column || 
+        else if (index.column() == white_column ||
+            index.column() == black_column ||
             index.column() == winner_column)
         {
             UserPtr user;

@@ -194,7 +194,7 @@ Td Game::limit_private(UserPtr user) const
 
 Td Game::spent_time() const
 {
-    if (state() == active) 
+    if (state() == active)
     {
         return now() - lastmove();
     }
@@ -229,7 +229,7 @@ Td Game::total_limit_now(UserPtr user) const
 
 Td Game::limit_private_now(UserPtr user) const
 {
-    return std::max(td_null, 
+    return std::max(td_null,
         std::min(limit_private(user), total_limit_now(user)));
 }
 

@@ -68,7 +68,7 @@ Wt::WApplication(env)
 
     #ifdef RUN_TESTS
     #endif
-    
+
     cookie_session_read_();
 
     onPathChange_();
@@ -275,7 +275,7 @@ void ThechessApplication::view(UserPtr user)
 
 void ThechessApplication::view(GamePtr game)
 {
-    show_<widgets::GameWidget>(game, 
+    show_<widgets::GameWidget>(game,
         str(boost::format("/game/%i/") % game.id()));
 }
 

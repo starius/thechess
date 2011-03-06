@@ -51,7 +51,7 @@ public:
         t.commit();
     }
 
-    boost::any data(const Wt::WModelIndex& index, 
+    boost::any data(const Wt::WModelIndex& index,
         int role=Wt::DisplayRole) const
     {
         if (index.column() == ended_column && role == Wt::DisplayRole)

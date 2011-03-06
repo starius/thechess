@@ -17,7 +17,7 @@ struct sql_value_traits<thechess::Td, void>
     static const bool specialized = true;
 
     static const char *type(SqlConnection *conn, int size);
-    static void bind(const thechess::Td& v, SqlStatement *statement, 
+    static void bind(const thechess::Td& v, SqlStatement *statement,
         int column, int size);
     static bool read(thechess::Td& v, SqlStatement *statement,
         int column, int size);

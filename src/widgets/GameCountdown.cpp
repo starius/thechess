@@ -24,15 +24,15 @@ class SingleTimeout : public Wt::WTemplate
 {
 public:
     SingleTimeout(const Wt::WString& name, bool active,
-        const Td& limit_private_now, const Td& limit_std_now, 
+        const Td& limit_private_now, const Td& limit_std_now,
         Wt::WContainerWidget* parent=0) :
     Wt::WTemplate(tr("thechess.template.countdown"), parent)
     {
         bindString("name", name);
-        Wt::WText* limit_private_text = 
+        Wt::WText* limit_private_text =
             new Wt::WText(td2str(limit_private_now));
         bindWidget("limit_private", limit_private_text);
-        Wt::WText* limit_std_text = 
+        Wt::WText* limit_std_text =
             new Wt::WText(td2str(limit_std_now));
         bindWidget("limit_std", limit_std_text);
         if (active)
@@ -92,7 +92,7 @@ private:
     {
         using model::Game;
         const Wt::WString& name = user->username();
-        bool active = game_->state() == Game::active 
+        bool active = game_->state() == Game::active
             && user == game_->order_user();
         Td limit_private_now = game_->limit_private_now(user);
         Td limit_std_now = game_->limit_std_now(user);

@@ -66,7 +66,7 @@ private:
 };
 
 
-TimeDeltaWidget::TimeDeltaWidget(const Td& min, const Td& value, 
+TimeDeltaWidget::TimeDeltaWidget(const Td& min, const Td& value,
     const Td& max, Wt::WContainerWidget* parent) :
 WCompositeWidget(parent)
 {

@@ -359,7 +359,7 @@
     </message>
 
     <message id='thechess.mistake_welcome'>
-        Wrong move? Select it and press Rollback - 
+        Wrong move? Select it and press Rollback -
         game would be rolled back before selected move
     </message>
     <message id='thechess.mistake_propose'>Rollback</message>

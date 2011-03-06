@@ -35,7 +35,7 @@ float EloPlayer::E(const EloPlayer* other) const
 float EloPlayer::K() const
 {
     return (elo_rating_ >= elo::big_rating) ? elo::big_K : (
-        (number_of_games_ < elo::beginner_number_of_games) ? 
+        (number_of_games_ < elo::beginner_number_of_games) ?
         elo::beginner_K : elo::other_K);
 }
 
