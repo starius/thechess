@@ -1,0 +1,11 @@
+
+table.thechess_board
+{
+    border-Collapse: separate;
+}
+
+.thechess_board td
+{
+    text-align: center !important;
+    vertical-align: middle;
+}
