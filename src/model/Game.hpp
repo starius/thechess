@@ -203,6 +203,9 @@ public:
     bool can_comment(const UserPtr user) const;
     void set_comment(const UserPtr user, const Wt::WString& t);
 
+    int competition_round() const { return competition_round_; }
+    void set_competition_round(int v) { competition_round_ = v; }
+
 private:
     State state_;
 
@@ -222,7 +225,7 @@ private:
     Td limit_private_[2];
 
     CompetitionPtr competition_;
-    //int joust_round_;
+    int competition_round_;
 
     Wt::WDateTime pause_until_;
     Td pause_limit_;

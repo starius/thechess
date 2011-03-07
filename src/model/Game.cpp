@@ -264,6 +264,7 @@ void Game::init_game()
     moves_size_ = moves().size();
     rating_after_[chess::white] = -1;
     rating_after_[chess::black] = -1;
+    competition_round_ = -1;
 }
 
 void Game::create_game(UserPtr init, UserPtr u, chess::Color c)
