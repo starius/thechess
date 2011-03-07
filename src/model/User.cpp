@@ -21,5 +21,47 @@ dbo::Query<GamePtr> User::games() const
         .bind(id()).bind(id());
 }
 
+bool User::can_set_classification(UserPtr user) const
+{
+    return user && user.id() == id();
+}
+
+void User::set_classification(UserPtr user, Classification classification)
+{
+    if (can_set_classification(user))
+    {
+        classification_ = classification;
+        classification_confirmer_.reset();
+    }
+}
+
+Classification User::classification() const
+{
+    return classification_;
+}
+
+bool User::can_confirm_classification(UserPtr user) const
+{
+    return user && user->rights() >= moderator;
+}
+
+void User::confirm_classification(UserPtr user)
+{
+    if (can_confirm_classification(user))
+    {
+        classification_confirmer_ = user;
+    }
+}
+
+bool User::classification_confirmed() const
+{
+    return classification_confirmer_;
+}
+
+UserPtr User::classification_confirmer() const
+{
+    return classification_confirmer_;
+}
+
 }
 }

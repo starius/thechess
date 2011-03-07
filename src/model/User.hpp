@@ -46,10 +46,11 @@ public:
         dbo::field(a, password_, "password");
         dbo::field(a, rights_, "rights");
         dbo::field(a, sessions_, "sessions");
-
         dbo::hasMany(a, white_games_, dbo::ManyToOne, "white");
         dbo::hasMany(a, black_games_, dbo::ManyToOne, "black");
         dbo::hasMany(a, black_games_, dbo::ManyToOne, "black");
+        dbo::field(a, classification_, "classification");
+        dbo::field(a, classification_confirmer_, "classification_confirmer");
     }
 
     void set_password(const Wt::WString& password);
@@ -63,6 +64,15 @@ public:
     bool online() const { return sessions_ != 0; }
     dbo::Query<GamePtr> games() const;
 
+    bool can_set_classification(UserPtr user) const;
+    void set_classification(UserPtr user, Classification classification);
+    Classification classification() const;
+
+    bool can_confirm_classification(UserPtr user) const;
+    void confirm_classification(UserPtr user);
+    bool classification_confirmed() const;
+    UserPtr classification_confirmer() const;
+
 private:
     Wt::WString username_;
     Wt::WString password_;
@@ -71,8 +81,10 @@ private:
 
     Games white_games_;
     Games black_games_;
-};
 
+    Classification classification_;
+    UserPtr classification_confirmer_;
+};
 
 }
 }
