@@ -23,6 +23,7 @@ namespace model {
 #include "model/Game.hpp"
 #include "model/EloPlayer.hpp"
 #include "model/CookieSession.hpp"
+#include "model/UserClassification.hpp"
 
 namespace thechess {
 namespace model {

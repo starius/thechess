@@ -23,6 +23,7 @@ namespace model {
 
 #include "model/GameParameters.hpp"
 #include "model/User.hpp"
+#include "model/Competition.hpp"
 #include "model/td.hpp"
 
 namespace thechess {
@@ -79,6 +80,7 @@ public:
         dbo::field(a, ended_, "ended");
         dbo::field(a, limit_private_[0], "limit_private_white");
         dbo::field(a, limit_private_[1], "limit_private_black");
+        dbo::belongsTo(a, competition_, "competition");
         dbo::field(a, pause_until_, "pause_until");
         dbo::field(a, pause_limit_, "pause_limit");
         dbo::field(a, pause_proposed_td_, "pause_proposed_td");
@@ -219,7 +221,7 @@ private:
 
     Td limit_private_[2];
 
-    //dbo::ptr<Joust> joust_;
+    CompetitionPtr competition_;
     //int joust_round_;
 
     Wt::WDateTime pause_until_;

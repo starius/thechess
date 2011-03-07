@@ -3,6 +3,7 @@
 #define THECHESS_CONFIG_H_
 
 #include "time_intervals.hpp"
+#include "model/UserClassification.hpp"
 
 namespace thechess {
 namespace config {
@@ -38,6 +39,20 @@ namespace defaults
     const int first_draw = 10 * 2;
 
     const double pause_factor = 0.5;
+
+    namespace competition
+    {
+        const int max_rating = 3000;
+        const int min_rating = 100;
+        using namespace model;
+        const Classification max_classification = SUPER_GRANDMASTER;
+        const Classification min_classification = NO_CLASSIFICATION;
+        const Td max_recruiting_time = 3 * day;
+        const int max_users = 16;
+        const int max_simultaneous_games = 8;
+        const float games_factor = 1.0;
+        const Td relax_time = day;
+    }
 }
 
 namespace max
