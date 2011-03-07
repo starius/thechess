@@ -117,10 +117,7 @@ public:
         {
             return Wt::WDate::currentServerDate();
         }
-        else if (index.column() % COLUMNS == RATING_AFTER_COLUMN)
-        {
-            return "";
-        }
+        return "";
     }
 
 private:
