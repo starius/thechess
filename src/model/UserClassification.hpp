@@ -1,6 +1,8 @@
 #ifndef THECHESS_MODEL_USER_CLASSIFICATION_HPP_
 #define THECHESS_MODEL_USER_CLASSIFICATION_HPP_
 
+#include <Wt/WString>
+
 namespace thechess {
 namespace model {
 
@@ -22,6 +24,8 @@ enum Classification {
     CLASSIFICATION_J = 5,
     NO_CLASSIFICATION = 0
 };
+
+const Wt::WString classification2str(Classification c);
 
 }
 }
