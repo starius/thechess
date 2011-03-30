@@ -52,20 +52,19 @@ public:
         dbo::field(a, type_, "type");
         dbo::field(a, name_, "name");
         dbo::field(a, description_, "description");
-        dbo::hasMany(a, users_, dbo::ManyToMany, "users");
-        dbo::belongsTo(a, init_, "init");
+        dbo::hasMany(a, users_, dbo::ManyToMany, "users_competitions");
+        dbo::belongsTo(a, init_, "init_competitions");
         dbo::field(a, min_rating_, "min_rating");
         dbo::field(a, max_rating_, "max_rating");
         dbo::field(a, min_classification_, "min_classification");
         dbo::field(a, max_classification_, "max_classification");
-        dbo::hasMany(a, virtuals_, dbo::ManyToMany, "virtuals");
         dbo::belongsTo(a, virtual_allower_, "virtual_allower");
         dbo::hasMany(a, games_, dbo::ManyToOne, "competition");
         dbo::field(a, created_, "created");
         dbo::field(a, started_, "started");
         dbo::field(a, ended_, "ended");
 
-        dbo::hasMany(a, winners_, dbo::ManyToMany, "winners");
+        dbo::hasMany(a, winners_, dbo::ManyToMany, "winners_competition");
         dbo::field(a, max_users_, "max_users");
         dbo::field(a, max_recruiting_time_, "max_recruiting_time");
 

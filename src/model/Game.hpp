@@ -70,8 +70,8 @@ public:
         dbo::field(a, state_, "state");
         dbo::belongsTo(a, white_, "white");
         dbo::belongsTo(a, black_, "black");
-        dbo::belongsTo(a, winner_, "winner");
-        dbo::belongsTo(a, init_, "init");
+        dbo::belongsTo(a, winner_, "winner_game");
+        dbo::belongsTo(a, init_, "init_game");
         dbo::field(a, colors_random_, "colors_random");
         dbo::field(a, created_, "created");
         dbo::field(a, confirmed_, "confirmed");

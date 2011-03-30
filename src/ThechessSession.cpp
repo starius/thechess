@@ -4,6 +4,7 @@
 
 #include "model/Game.hpp"
 #include "model/User.hpp"
+#include "model/Competition.hpp"
 #include "model/CookieSession.hpp"
 #include "config.hpp"
 #include "TaskTracker.hpp"
@@ -26,6 +27,7 @@ ThechessSession::ThechessSession() :
 {
     using model::User;
     using model::Game;
+    using model::Competition;
     using model::GamePtr;
     using model::CookieSession;
 
@@ -52,6 +54,7 @@ ThechessSession::ThechessSession() :
     mapClass<User>("thechess_user");
     mapClass<Game>("thechess_game");
     mapClass<CookieSession>("thechess_cookie_session");
+    mapClass<Competition>("thechess_competition");
 
 }
 

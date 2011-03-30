@@ -21,6 +21,7 @@ namespace model {
 }
 
 #include "model/Game.hpp"
+#include "model/Competition.hpp"
 #include "model/EloPlayer.hpp"
 #include "model/CookieSession.hpp"
 #include "model/UserClassification.hpp"
@@ -46,11 +47,18 @@ public:
         dbo::field(a, password_, "password");
         dbo::field(a, rights_, "rights");
         dbo::field(a, sessions_, "sessions");
-        dbo::hasMany(a, white_games_, dbo::ManyToOne, "white");
-        dbo::hasMany(a, black_games_, dbo::ManyToOne, "black");
-        dbo::hasMany(a, black_games_, dbo::ManyToOne, "black");
         dbo::field(a, classification_, "classification");
         dbo::field(a, classification_confirmer_, "classification_confirmer");
+
+        dbo::hasMany(a, white_games_, dbo::ManyToOne, "white");
+        dbo::hasMany(a, black_games_, dbo::ManyToOne, "black");
+        dbo::hasMany(a, won_games_, dbo::ManyToOne, "winner_game");
+        dbo::hasMany(a, init_games_, dbo::ManyToOne, "init_game");
+
+        dbo::hasMany(a, competitions_, dbo::ManyToMany, "users_competitions");
+        dbo::hasMany(a, init_competitions_, dbo::ManyToOne, "init_competitions");
+        dbo::hasMany(a, virtual_allower_, dbo::ManyToOne, "virtual_allower");
+        dbo::hasMany(a, won_competitions_, dbo::ManyToMany, "winners_competition");
     }
 
     void set_password(const Wt::WString& password);
@@ -81,9 +89,16 @@ private:
 
     Games white_games_;
     Games black_games_;
+    Games won_games_;
+    Games init_games_;
 
     Classification classification_;
     UserPtr classification_confirmer_;
+
+    Competitions competitions_;
+    Competitions init_competitions_;
+    Competitions virtual_allower_;
+    Competitions won_competitions_;
 };
 
 }
