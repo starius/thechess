@@ -40,6 +40,11 @@ Classification User::classification() const
     return classification_;
 }
 
+Wt::WString User::classification_str() const
+{
+    return classification2str(classification());
+}
+
 bool User::can_confirm_classification(UserPtr user) const
 {
     return user && user->rights() >= moderator;

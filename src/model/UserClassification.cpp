@@ -4,7 +4,7 @@
 namespace thechess {
 namespace model {
 
-const Wt::WString classification2str(Classification c)
+Wt::WString classification2str(Classification c)
 {
     if (c == SUPER_GRANDMASTER) return Wt::WString::tr("SUPER_GRANDMASTER");
     if (c == GRANDMASTER) return Wt::WString::tr("GRANDMASTER");

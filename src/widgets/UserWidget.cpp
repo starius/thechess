@@ -28,6 +28,8 @@ public:
         dbo::Transaction t(tApp->session());
         new Wt::WText(user_->username(), this);
         new Wt::WBreak(this);
+        new Wt::WText(user_->classification_str(), this);
+        new Wt::WBreak(this);
         if (tApp->user() && tApp->user() != user_)
         {
             start_button_ = new Wt::WPushButton(

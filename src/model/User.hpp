@@ -75,6 +75,7 @@ public:
     bool can_set_classification(UserPtr user) const;
     void set_classification(UserPtr user, Classification classification);
     Classification classification() const;
+    Wt::WString classification_str() const;
 
     bool can_confirm_classification(UserPtr user) const;
     void confirm_classification(UserPtr user);

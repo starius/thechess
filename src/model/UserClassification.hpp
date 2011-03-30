@@ -25,7 +25,7 @@ enum Classification {
     NO_CLASSIFICATION = 0
 };
 
-const Wt::WString classification2str(Classification c);
+Wt::WString classification2str(Classification c);
 
 }
 }
