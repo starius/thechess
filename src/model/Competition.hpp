@@ -33,7 +33,8 @@ public:
     {
         RECRUITING = 10,
         ACTIVE = 30,
-        ENDED = 50
+        ENDED = 50,
+        CANCELLED = 70
     };
 
     enum Type
@@ -111,6 +112,28 @@ public:
 
     Td relax_time() const { return relax_time_; }
     void set_relax_time(Td v) { relax_time_ = v; }
+
+    // auto-manage
+    void check();
+    void check_impl_();
+
+    // manage competition
+    bool can_create_competition(UserPtr user) const;
+    void create_competition(UserPtr user);
+
+    bool can_join(UserPtr user) const;
+    void join(UserPtr user);
+
+    bool can_leave(UserPtr user) const;
+    void leave(UserPtr user);
+
+    bool can_kick(UserPtr kicker, UserPtr kicked) const;
+    void kick(UserPtr kicker, UserPtr kicked);
+
+    bool can_change_parameters(UserPtr user) const;
+
+    bool can_cancel(UserPtr user) const;
+    void cancel(UserPtr user);
 
 private:
 
