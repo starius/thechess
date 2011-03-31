@@ -49,6 +49,7 @@ public:
         dbo::field(a, sessions_, "sessions");
         dbo::field(a, classification_, "classification");
         dbo::field(a, classification_confirmer_, "classification_confirmer");
+        dbo::hasMany(a, classification_confirmed_, dbo::ManyToOne, "classification_confirmer");
 
         dbo::hasMany(a, white_games_, dbo::ManyToOne, "white");
         dbo::hasMany(a, black_games_, dbo::ManyToOne, "black");
@@ -95,6 +96,7 @@ private:
 
     Classification classification_;
     UserPtr classification_confirmer_;
+    Users classification_confirmed_;
 
     Competitions competitions_;
     Competitions init_competitions_;
