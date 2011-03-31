@@ -116,7 +116,7 @@ public:
         ("select G, Uw, Ub, Uwin from thechess_game G "
          "left outer join thechess_user Uw on G.white_id = Uw.id "
          "left outer join thechess_user Ub on G.black_id = Ub.id "
-         "left outer join thechess_user Uwin on G.winner_id = Uwin.id");
+         "left outer join thechess_user Uwin on G.winner_game_id = Uwin.id");
     }
 
     Q query()
