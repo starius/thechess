@@ -61,6 +61,8 @@ contains( CONFIG, release ) {
 contains( CONFIG, debug ) {
     DEFINES += RUN_TESTS
     QMAKE_CXXFLAGS_DEBUG += -fdump-class-hierarchy
+    QMAKE_CXXFLAGS_DEBUG += -O0
+    QMAKE_LFLAGS_DEBUG += -O0
     SOURCES += tests.cpp
 }
 
