@@ -50,25 +50,56 @@ public:
     boost::any data(const Wt::WModelIndex& index,
         int role=Wt::DisplayRole) const
     {
-        if (index.column() == state_column && role == Wt::DisplayRole)
+        if (role == Wt::DisplayRole)
         {
-            GamePtr game = resultRow(index.row()).get<0>();
-            return game->str_state();
+
+            if (index.column() == n_column)
+            {
+                GamePtr game = resultRow(index.row()).get<game_in_tuple>();
+                return game.id();
+            }
+            else if (index.column() == white_column)
+            {
+                UserPtr user = resultRow(index.row()).get<white_in_tuple>();
+                return user ? user->username() : "";
+            }
+            else if (index.column() == black_column)
+            {
+                UserPtr user = resultRow(index.row()).get<black_in_tuple>();
+                return user ? user->username() : "";
+            }
+            else if (index.column() == state_column)
+            {
+                GamePtr game = resultRow(index.row()).get<game_in_tuple>();
+                return game->str_state();
+            }
+            else if (index.column() == winner_column)
+            {
+                UserPtr user = resultRow(index.row()).get<winner_in_tuple>();
+                return user ? user->username() : "";
+            }
+            else if (index.column() == started_column)
+            {
+                GamePtr game = resultRow(index.row()).get<game_in_tuple>();
+                return game->started();
+            }
+            else if (index.column() == ended_column)
+            {
+                GamePtr game = resultRow(index.row()).get<game_in_tuple>();
+                return game->ended();
+            }
+            else if (index.column() == moves_size_column)
+            {
+                GamePtr game = resultRow(index.row()).get<game_in_tuple>();
+                return game->human_size();
+            }
+            else if (index.column() == real_rating_column)
+            {
+                GamePtr game = resultRow(index.row()).get<game_in_tuple>();
+                return game->real_rating();
+            }
         }
-        else if (index.column() == moves_size_column && role == Wt::DisplayRole)
-        {
-            GamePtr game = resultRow(index.row()).get<0>();
-            return game->human_size();
-        }
-        else if (index.column() == real_rating_column && role == Wt::DisplayRole)
-        {
-            GamePtr game = resultRow(index.row()).get<0>();
-            return game->real_rating();
-        }
-        else
-        {
-            return BaseQM::data(index, role);
-        }
+        return "";
     }
 };
 
