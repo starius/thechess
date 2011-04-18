@@ -52,6 +52,7 @@ public:
     {
         if (role == Wt::DisplayRole)
         {
+            dbo::Transaction t(tApp->session());
             GamePtr game = resultRow(index.row());
             if (index.column() == n_column)
             {
@@ -92,6 +93,7 @@ public:
             {
                 return game->real_rating();
             }
+            t.commit();
         }
         return "";
     }
