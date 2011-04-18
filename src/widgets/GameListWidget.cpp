@@ -20,7 +20,7 @@ namespace widgets {
 
 using model::Game;
 using model::User;
-typedef dbo::ptr_tuple<Game, User, User, User>::type Result;
+typedef GamePtr Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 
@@ -52,50 +52,44 @@ public:
     {
         if (role == Wt::DisplayRole)
         {
-
+            GamePtr game = resultRow(index.row());
             if (index.column() == n_column)
             {
-                GamePtr game = resultRow(index.row()).get<game_in_tuple>();
                 return game.id();
             }
             else if (index.column() == white_column)
             {
-                UserPtr user = resultRow(index.row()).get<white_in_tuple>();
+                UserPtr user = game->white();
                 return user ? user->username() : "";
             }
             else if (index.column() == black_column)
             {
-                UserPtr user = resultRow(index.row()).get<black_in_tuple>();
+                UserPtr user = game->black();
                 return user ? user->username() : "";
             }
             else if (index.column() == state_column)
             {
-                GamePtr game = resultRow(index.row()).get<game_in_tuple>();
                 return game->str_state();
             }
             else if (index.column() == winner_column)
             {
-                UserPtr user = resultRow(index.row()).get<winner_in_tuple>();
+                UserPtr user = game->winner();
                 return user ? user->username() : "";
             }
             else if (index.column() == started_column)
             {
-                GamePtr game = resultRow(index.row()).get<game_in_tuple>();
                 return game->started();
             }
             else if (index.column() == ended_column)
             {
-                GamePtr game = resultRow(index.row()).get<game_in_tuple>();
                 return game->ended();
             }
             else if (index.column() == moves_size_column)
             {
-                GamePtr game = resultRow(index.row()).get<game_in_tuple>();
                 return game->human_size();
             }
             else if (index.column() == real_rating_column)
             {
-                GamePtr game = resultRow(index.row()).get<game_in_tuple>();
                 return game->real_rating();
             }
         }
@@ -114,10 +108,10 @@ public:
         query_model_->setQuery(query());
 
         query_model_->addColumn("G.id", tr("thechess.number"));
-        query_model_->addColumn("Uw.username", tr("thechess.white"));
-        query_model_->addColumn("Ub.username", tr("thechess.black"));
+        query_model_->addColumn("G.white_id", tr("thechess.white"));
+        query_model_->addColumn("G.black_id", tr("thechess.black"));
         query_model_->addColumn("G.state", tr("thechess.state"));
-        query_model_->addColumn("Uwin.username", tr("thechess.winner"));
+        query_model_->addColumn("G.winner_game_id", tr("thechess.winner"));
         query_model_->addColumn("G.started", tr("thechess.started"));
         query_model_->addColumn("G.ended", tr("thechess.ended"));
         query_model_->addColumn("G.moves_size", tr("thechess.moves_size"));
@@ -144,7 +138,7 @@ public:
     static Q all_games()
     {
         return tApp->session().query<Result>
-        ("select G, Uw, Ub, Uwin from thechess_game G "
+        ("select G from thechess_game G "
          "left outer join thechess_user Uw on G.white_id = Uw.id "
          "left outer join thechess_user Ub on G.black_id = Ub.id "
          "left outer join thechess_user Uwin on G.winner_game_id = Uwin.id");
@@ -192,7 +186,7 @@ private:
     void clicked_handler_(const Wt::WModelIndex index)
     {
         const Result& r = query_model_->resultRow(index.row());
-        GamePtr game = r.get<game_in_tuple>();
+        GamePtr game = r;
         if (index.column() == n_column)
         {
             tApp->view(game);
