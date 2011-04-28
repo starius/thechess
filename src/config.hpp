@@ -4,19 +4,12 @@
 
 #include "time_intervals.hpp"
 #include "model/UserClassification.hpp"
+#include "ThechessOptions.hpp"
 
 namespace thechess {
 namespace config {
 
-const char* const sqliteDb = "thechess.db";
-
-const char* const mysql_db = "thechess";
-const char* const mysql_user = "boris";
-const char* const mysql_password = "";
-const char* const mysql_host = "localhost";
-
-const char* const postgres = "dbname = thechess user = thechess "
-    "password = 123";
+const char* const ini_filename = "~/.thechess";
 
 const char* const username_regex = "[a-zA-Z][a-zA-Z0-9._-]{2,29}";
 const char* const password_regex = "[a-zA-Z0-9._%+-@]{3,30}";
@@ -53,6 +46,9 @@ namespace defaults
         const float games_factor = 1.0;
         const Td relax_time = day;
     }
+
+    const ThechessOptions::DatabaseType database_type = ThechessOptions::Sqlite3;
+    const char* const database_value = "~/thechess.db";
 }
 
 namespace max

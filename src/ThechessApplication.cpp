@@ -43,7 +43,7 @@ using model::User;
 using model::GamePtr;
 using model::Game;
 
-ThechessSession ThechessApplication::session_;
+ThechessSession* ThechessApplication::session_=0;
 
 ThechessApplication::ThechessApplication(const Wt::WEnvironment& env) :
 Wt::WApplication(env)
@@ -66,9 +66,6 @@ Wt::WApplication(env)
     widgets::MainMenu* main_menu = new widgets::MainMenu();
     layout->addWidget(main_menu, Wt::WBorderLayout::West);
 
-    #ifdef RUN_TESTS
-    #endif
-
     cookie_session_read_();
 
     onPathChange_();
@@ -80,47 +77,6 @@ ThechessApplication::~ThechessApplication()
     if (user_)
     {
         user_.modify()->logout();
-    }
-    t.commit();
-}
-
-void ThechessApplication::consider_db()
-{
-    try
-    {
-        dbo::Transaction t(session());
-        session().createTables();
-        std::cerr << "Created database" << std::endl;
-
-        User* admin = new User();
-        admin->set_username("admin");
-        admin->set_rights(User::admin);
-        admin->set_password("123");
-        session().add(admin);
-        std::cerr<< "and admin user (password 123)" << std::endl;
-
-        User* user = new User();
-        user->set_username("user");
-        user->set_password("123");
-        session().add(user);
-        std::cerr<< "and user user (password 123)" << std::endl;
-
-        t.commit();
-    }
-    catch (std::exception& e)
-    {
-        std::cerr << e.what() << std::endl;
-        std::cerr << "Using existing database" << std::endl;
-    }
-
-    dbo::Transaction t(session());
-    session().execute("update thechess_user set sessions = ?").bind(0);
-
-    model::Games games =
-        session().find<Game>().where("state < ?").bind(Game::min_ended);
-    BOOST_FOREACH(GamePtr game, games)
-    {
-        tracker::add_or_update_task(tracker::Game, game->id());
     }
     t.commit();
 }

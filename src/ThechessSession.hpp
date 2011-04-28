@@ -4,13 +4,9 @@
 #include <Wt/Dbo/Session>
 #include <Wt/Dbo/ptr>
 #include <Wt/WSignal>
-#ifdef THECHESS_SQLITE
-    #include <Wt/Dbo/backend/Sqlite3>
-#elif THECHESS_MYSQL
-    #include <Wt/Dbo/backend/MySQL.h>
-#elif THECHESS_POSTGRES
-    #include <Wt/Dbo/backend/Postgres>
-#endif
+#include <Wt/Dbo/SqlConnection>
+
+#include "ThechessOptions.hpp"
 
 namespace dbo = Wt::Dbo;
 
@@ -19,15 +15,11 @@ namespace thechess {
 class ThechessSession : public dbo::Session
 {
 public:
-    ThechessSession();
+    ThechessSession(const ThechessOptions& options);
+    virtual ~ThechessSession();
+    void reconsider();
 private:
-#ifdef THECHESS_SQLITE
-    dbo::backend::Sqlite3 connection_;
-#elif THECHESS_MYSQL
-    dbo::backend::MySQL connection_;
-#elif THECHESS_POSTGRES
-    dbo::backend::Postgres connection_;
-#endif
+    dbo::SqlConnection* connection_;
 };
 
 }

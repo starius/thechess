@@ -35,18 +35,15 @@ SOURCES += widgets/RatingChanges.cpp
 SOURCES += widgets/MainMenu.cpp
 
 SOURCES += rand.cpp
+SOURCES += utils.cpp
 
 SOURCES += time_intervals.cpp
 SOURCES += TaskTracker.cpp
 SOURCES += ThechessSession.cpp
 SOURCES += ThechessApplication.cpp
+SOURCES += ThechessOptions.cpp
 
 SOURCES += thechess.cpp
-
-
-#DEFINES += THECHESS_SQLITE
-#DEFINES += THECHESS_MYSQL
-DEFINES += THECHESS_POSTGRES
 
 CONFIG += debug
 #CONFIG += precompile_header
@@ -70,6 +67,7 @@ INCLUDEPATH = /usr/local/include/Wt/
 
 QMAKE_CXX = ccache g++
 
-LIBS += -lboost_signals -lboost_regex
+LIBS += -lboost_signals -lboost_regex -lboost_program_options -lboost_system
 LIBS += -lwt -lwthttp
 LIBS += -lwtdbo -lwtdbosqlite3 -lwtdbopostgres # -lwtdbomysql
+

@@ -36,8 +36,8 @@ public:
     ThechessApplication(const Wt::WEnvironment& env);
     ~ThechessApplication();
 
-    static ThechessSession& session() { return session_; }
-    static void consider_db();
+    static ThechessSession& session() { return *session_; }
+    static void set_session_(ThechessSession& s) { session_ = &s; }
 
     UserPtr user() const { return user_; }
     void after_user_change_();
@@ -52,7 +52,7 @@ public:
     }
 
 private:
-    static ThechessSession session_;
+    static ThechessSession* session_;
     UserPtr user_;
 
     void cookie_session_read_();
