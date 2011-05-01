@@ -271,6 +271,18 @@
     <message id='thechess.colors'>colors</message>
     <message id='thechess.colors_random'>determined by chance</message>
     <message id='thechess.colors_not_random'>predetermined </message>
+    <message id='thechess.norating_false'>
+        game result will affect members' rating
+    </message>
+    <message id='thechess.norating_true'>
+        game result will not affect members' rating
+    </message>
+    <message id='thechess.real_rating_false'>
+        game result does not affect members' rating
+    </message>
+    <message id='thechess.real_rating_true'>
+        game result affects members' rating
+    </message>
 
     <message id='thechess.board.turn'>Overturn</message>
 

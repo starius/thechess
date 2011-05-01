@@ -57,6 +57,16 @@ protected:
         time_(game_->lastmove(), "thechess.lastmove", result);
         time_(game_->pause_until(), "thechess.pause_until", result);
         time_(game_->ended(), "thechess.ended", result);
+        if (game_->is_ended())
+        {
+            bool_(game_->real_rating(), "thechess.real_rating_true",
+                "thechess.real_rating_false", result);
+        }
+        else
+        {
+            bool_(game_->norating(), "thechess.norating_true",
+                "thechess.norating_false", result);
+        }
         return result;
     }
 
@@ -92,6 +102,11 @@ private:
         }
     }
 
+    void bool_(const bool value, const char* true_id, const char* false_id,
+        Wt::WContainerWidget* r)
+    {
+        item_(tr(value ? true_id : false_id), r);
+    }
 };
 
 class GameWidgetImpl : public Wt::WContainerWidget
