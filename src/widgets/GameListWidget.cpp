@@ -150,7 +150,7 @@ public:
         if (only_my_->isChecked() && tApp->user())
         {
             int id = tApp->user()->id();
-            q.where("G.white_id = ? or G.black_id = ? or G.init_id = ?")
+            q.where("G.white_id = ? or G.black_id = ? or G.init_game_id = ?")
             .bind(id).bind(id).bind(id);
         }
         q.orderBy("G.id");
