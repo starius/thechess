@@ -34,11 +34,7 @@ const int started_column = 5;
 const int ended_column = 6;
 const int moves_size_column = 7;
 const int real_rating_column = 8;
-
-const int game_in_tuple = 0;
-const int white_in_tuple = 1;
-const int black_in_tuple = 2;
-const int winner_in_tuple = 3;
+const int comment_column = 9;
 
 class QM : public BaseQM
 {
@@ -94,6 +90,10 @@ public:
             {
                 return game->real_rating();
             }
+            else if (index.column() == comment_column)
+            {
+                return game->comment();
+            }
             t.commit();
         }
         return "";
@@ -119,10 +119,11 @@ public:
         query_model_->addColumn("G.ended", tr("thechess.ended"));
         query_model_->addColumn("G.moves_size", tr("thechess.moves_size"));
         query_model_->addColumn("G.norating", tr("thechess.real_rating"));
+        query_model_->addColumn("G.comment", tr("thechess.comment"));
 
         table_view_ = new Wt::WTableView(this);
         table_view_->setModel(query_model_);
-        table_view_->resize(900, 300);
+        table_view_->resize(1200, 300);
 
         table_view_->setColumnWidth(n_column, 40);
         table_view_->setColumnWidth(white_column, 90);
@@ -133,6 +134,7 @@ public:
         table_view_->setColumnWidth(ended_column, 120);
         table_view_->setColumnWidth(moves_size_column, 40);
         table_view_->setColumnWidth(real_rating_column, 40);
+        table_view_->setColumnWidth(comment_column, 200);
 
         table_view_->clicked()
             .connect(this, &GameListWidgetImpl::clicked_handler_);
