@@ -122,7 +122,7 @@ chess::Color Game::color_of(const UserPtr user) const
 
 bool Game::is_member(const UserPtr user) const
 {
-    return user && (user == white() || user == black());
+    return user && (user == white() || user == black() || user == init());
 }
 
 UserPtr Game::user_of(chess::Color color) const
