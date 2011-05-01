@@ -379,8 +379,10 @@
     </message>
     <message id='thechess.mistake_propose'>Rollback</message>
     <message id='thechess.format.mistake_proposal'>
-        {1} proposed to roll back game to position before move {2} of {3}
+        {1} proposed to roll back game to position before move {2} {3}
     </message>
+    <message id='thechess.of_white'>of white</message>
+    <message id='thechess.of_black'>of black</message>
 
     <message id='thechess.start_position'>Start position</message>
 

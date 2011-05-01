@@ -332,8 +332,8 @@ private:
             new Wt::WText(tr("thechess.format.mistake_proposal")
                 .arg(game_->mistake_proposer()->username())
                 .arg(Moves::n_to_human(game_->mistake_move()))
-                .arg(chess::color2str(Moves::order(game_
-                    ->mistake_move()))),
+                .arg(tr(Moves::order(game_->mistake_move()) == chess::white ?
+                    "thechess.of_white" : "thechess.of_black")),
                 manager_);
             if (game_->can_mistake_agree(tApp->user()))
             {

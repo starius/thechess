@@ -118,6 +118,8 @@
     <message id='thechess.format.mistake_proposal'>
         {1} предлагает откатить игру к позиции, предшествующей ходу {2} {3}
     </message>
+    <message id='thechess.of_white'>белых</message>
+    <message id='thechess.of_black'>черных</message>
 
     <message id='thechess.start_position'>Исходная позиция</message>
 
