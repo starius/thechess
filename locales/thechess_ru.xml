@@ -1,3 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
+    <message id='thechess.analysis'>Анализ</message>
+    <message id='thechess.format.analysis'>Анализ игры № {1}</message>
+
+    <message id='thechess.colors'>цвета</message>
+    <message id='thechess.colors_random'>выбраны случайно</message>
+    <message id='thechess.colors_not_random'>предопределены</message>
+    <message id='thechess.norating_false'>
+        результат игры повлияет на рейтинг участников
+    </message>
+    <message id='thechess.norating_true'>
+        результат игры не повлияет на рейтинг участников
+    </message>
+    <message id='thechess.real_rating_false'>
+        результат игры не влияет на рейтинг участников
+    </message>
+    <message id='thechess.real_rating_true'>
+        результат игры влияет на рейтинг участников
+    </message>
+
+    <message id='thechess.board.turn'>Перевернуть</message>
+
+    <message id='thechess.register'>Зарегистрироваться</message>
+    <message id='thechess.username'>Имя пользователя</message>
+    <message id='thechess.password'>Пароль</message>
+    <message id='thechess.login'>Войти</message>
+    <message id='thechess.logout'>Выйти</message>
+    <message id='thechess.please_login'>
+        Пожалуйста, войдите или зарегистрируйтесь
+    </message>
+
+    <message id='thechess.wrong_username_or_password'>
+        Неправильное имя пользователя или пароль
+    </message>
+
+    <message id='thechess.format.game_header'>Игра № {1}</message>
+    <message id='thechess.format.competitor'>Соперник: {1}</message>
+
+    <message id='thechess.state.proposed'>Предложенная</message>
+    <message id='thechess.state.confirmed'>Подтвержденная</message>
+    <message id='thechess.state.active'>Активная</message>
+    <message id='thechess.state.pause'>Приостановленная</message>
+    <message id='thechess.state.draw_stalemate'>Пат</message>
+    <message id='thechess.state.draw_agreed'>Ничья по соглашению</message>
+    <message id='thechess.state.draw_50'>
+        Ничья: 50 ходов не брались фигуры и не ходила пешка
+    </message>
+    <message id='thechess.state.draw_3'>
+        Трехкратное повторение позиции
+    </message>
+    <message id='thechess.state.draw_2_kings'>
+        Ничья ввиду невозможности поставить мат
+    </message>
+    <message id='thechess.state.surrendered'>Сдана</message>
+    <message id='thechess.state.timeout'>Просрочена</message>
+    <message id='thechess.state.cancelled'>Отменена</message>
+    <message id='thechess.state.mate'>Мат</message>
+    <message id='thechess.state.state'>Неизвестное состояние</message>
+    <message id='thechess.state'>Состояние</message>
+
+    <message id='thechess.comment'>комментарий</message>
+    <message id='thechess.comment_welcome'>введите ваш комментарий здесь</message>
+
+    <message id='thechess.created'>создана</message>
+    <message id='thechess.confirmed'>подтверждена</message>
+    <message id='thechess.started'>начата</message>
+    <message id='thechess.lastmove'>последний ход (или его эквивалент)</message>
+    <message id='thechess.pause_until'>приостановлена до</message>
+    <message id='thechess.ended'>завершена</message>
+
+    <message id='thechess.challenge'>Вызов</message>
+    <message id='thechess.game_list'>Список игр</message>
+    <message id='thechess.start_game'>Начать игру</message>
+    <message id='thechess.rating_changes'>Изменения рейтинга</message>
+    <message id='thechess.rating_changes_and_me'>
+        Изменения рейтинга (в сравнении с моим рейтингом)
+    </message>
+
+    <message id='thechess.number'>№</message>
+    <message id='thechess.random'>случайный</message>
+    <message id='thechess.white'>белый</message>
+    <message id='thechess.black'>черный</message>
+    <message id='thechess.winner'>победитель</message>
+    <message id='thechess.init'>создатель игры</message>
+    <message id='thechess.order_user'>ходит</message>
+    <message id='thechess.moves_size'>ходов</message>
+    <message id='thechess.real_rating'>рейтинговая</message>
+    <message id='thechess.rating_after'>рейтинг после</message>
+
+    <message id='thechess.only_my'>Только мои</message>
+
+    <message id='thechess.apply'>Применить</message>
+    <message id='thechess.reset'>Сброс</message>
+    <message id='thechess.create'>Создать</message>
+    <message id='thechess.agree'>Согласиться</message>
+    <message id='thechess.discard'>Отказаться</message>
+    <message id='thechess.join'>Присоединиться</message>
+    <message id='thechess.cancel'>Отменить</message>
+    <message id='thechess.confirm'>Подтвердить</message>
+    <message id='thechess.close'>Закрыть</message>
+
+    <message id='thechess.pause_propose'>Предложить перерыв</message>
+    <message id='thechess.format.pause_proposal'>
+        Перерыв предложен, предложил {1}, продолжительность: {2}
+    </message>
+
+    <message id='thechess.draw_propose'>Предложить ничью</message>
+    <message id='thechess.format.draw_proposal'>
+        Ничья предложена, предложил {1}
+    </message>
+
+    <message id='thechess.mistake_welcome'>
+        Неверный ход? Выделите его и нажмите Откатить -
+        будет восстановлена позиция, предшествующая выделенному ходу
+    </message>
+    <message id='thechess.mistake_propose'>Откатить</message>
+    <message id='thechess.format.mistake_proposal'>
+        {1} предлагает откатить игру к позиции, предшествующей ходу {2} {3}
+    </message>
+
+    <message id='thechess.start_position'>Исходная позиция</message>
+
+    <message id='thechess.seconds'>секунд</message>
+    <message id='thechess.minutes'>минут</message>
+    <message id='thechess.hours'>часов</message>
+    <message id='thechess.days'>суток</message>
+    <message id='thechess.weeks'>недель</message>
+
+    <message id='thechess.limit_std'>возобновляемый запас времени</message>
+    <message id='thechess.limit_private_init'>невозобновляемый запас</message>
+    <message id='thechess.pause_limit'>запас времени на паузы</message>
+    <message id='thechess.norating'>нерейтинговая</message>
+    <message id='thechess.first_draw'>
+        количество ходов, необходимое для предложения ничьей
+    </message>
+    <message id='thechess.your_color'>цвет ваших фигур</message>
+
 </messages>
