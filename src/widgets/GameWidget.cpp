@@ -125,11 +125,8 @@ public:
         new Wt::WText(": ", this);
         comment_ = new Wt::WInPlaceEdit(game_->comment(), this);
         comment_->setEmptyText(tr("thechess.comment_welcome"));
-        if (game_->can_comment(tApp->user()))
-        {
-            comment_->valueChanged().connect(this,
-                &GameWidgetImpl::comment_handler_);
-        }
+        comment_->valueChanged().connect(this,
+            &GameWidgetImpl::comment_handler_);
         game_status_ = new GameStatus(game_, this);
         status_and_manager_();
         countdown_print_();
