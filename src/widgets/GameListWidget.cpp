@@ -9,6 +9,7 @@ namespace dbo = Wt::Dbo;
 #include <Wt/WCheckBox>
 #include <Wt/WPushButton>
 #include <Wt/WString>
+#include <Wt/WEnvironment>
 
 #include "widgets/GameListWidget.hpp"
 #include "ThechessApplication.hpp"
@@ -171,10 +172,12 @@ private:
         {
             only_my_->setEnabled(false);
         }
-
-        Wt::WPushButton* apply_button =
-            new Wt::WPushButton(tr("thechess.apply"), this);
-        apply_button->clicked().connect(this, &GameListWidgetImpl::apply_);
+        if (!tApp->environment().ajax())
+        {
+            Wt::WPushButton* apply_button =
+                new Wt::WPushButton(tr("thechess.apply"), this);
+            apply_button->clicked().connect(this, &GameListWidgetImpl::apply_);
+        }
     }
 
     void apply_()
