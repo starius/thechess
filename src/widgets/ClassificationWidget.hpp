@@ -11,10 +11,15 @@ namespace widgets {
 class ClassificationWidget : public Wt::WComboBox
 {
 public:
-    ClassificationWidget(Classification classification=NO_CLASSIFICATION,
-        Wt::WContainerWidget* parent=0);
+    typedef model::Classification Classification;
+
+    ClassificationWidget(Classification classification=
+        model::NO_CLASSIFICATION, Wt::WContainerWidget* parent=0);
     void set_classification(Classification classification);
     Classification get_classification() const;
+
+private:
+    Wt::WComboBox* combo_box_;
 };
 
 }

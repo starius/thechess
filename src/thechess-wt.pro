@@ -20,6 +20,7 @@ SOURCES += model/Competition.cpp
 
 SOURCES += widgets/MySpinBox.cpp
 SOURCES += widgets/TimeDeltaWidget.cpp
+SOURCES += widgets/ClassificationWidget.cpp
 SOURCES += widgets/GameCountdown.cpp
 SOURCES += widgets/BoardWidget.cpp
 SOURCES += widgets/MovesWidget.cpp
