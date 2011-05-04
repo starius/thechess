@@ -13,24 +13,15 @@ namespace model {
 
 #include "chess/moves.hpp"
 #include "chess/field.hpp"
-#include "config.hpp"
 #include "time_intervals.hpp"
 
 namespace thechess {
 namespace model {
 
-using namespace config; // defaults
-
 class GameParameters
 {
 public:
-    GameParameters() :
-    moves_(), moves_init_(0), limit_std_(defaults::limit_std),
-    limit_private_init_(defaults::limit_private_init),
-    pause_limit_init_(defaults::pause_limit_init), norating_(false),
-    first_draw_(defaults::first_draw)
-    {
-    }
+    void initialize();
 
     template<class Action>
     void persist(Action& a)

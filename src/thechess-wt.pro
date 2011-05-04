@@ -15,6 +15,7 @@ SOURCES += model/EloPlayer.cpp
 SOURCES += model/CookieSession.cpp
 SOURCES += model/User.cpp
 SOURCES += model/UserClassification.cpp
+SOURCES += model/GameParameters.cpp
 SOURCES += model/Game.cpp
 SOURCES += model/Competition.cpp
 

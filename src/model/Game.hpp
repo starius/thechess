@@ -96,7 +96,7 @@ public:
 
     GameSignal& signal() const;
 
-    void init_game();
+    void initialize();
     void create_game(UserPtr init, UserPtr u,
         chess::Color c);
     void create_challenge(UserPtr init, chess::Color c);

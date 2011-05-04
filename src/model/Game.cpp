@@ -254,8 +254,9 @@ Wt::WDateTime Game::next_check() const
     return result;
 }
 
-void Game::init_game()
+void Game::initialize()
 {
+    GameParameters::initialize();
     state_ = proposed;
     colors_random_ = false;
     mistake_move_ = -1;
@@ -269,7 +270,7 @@ void Game::init_game()
 
 void Game::create_game(UserPtr init, UserPtr u, chess::Color c)
 {
-    init_game();
+    initialize();
     init_ = init;
     if (c == chess::color_null)
     {
@@ -285,7 +286,7 @@ void Game::create_game(UserPtr init, UserPtr u, chess::Color c)
 
 void Game::create_challenge(UserPtr init, chess::Color c)
 {
-    init_game();
+    initialize();
     init_ = init;
     if (c != chess::color_null)
     {
