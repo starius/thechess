@@ -18,6 +18,8 @@ namespace model {
 }
 
 #include "model/GameParameters.hpp"
+#include "model/UserClassification.hpp"
+#include "model/CompetitionType.hpp"
 #include "model/User.hpp"
 #include "model/Game.hpp"
 #include "model/td.hpp"
@@ -28,7 +30,7 @@ namespace model {
 class Competition : public GameParameters, public dbo::Dbo<Competition>
 {
 public:
-
+    
     enum State
     {
         RECRUITING = 10,
@@ -37,14 +39,7 @@ public:
         CANCELLED = 70
     };
 
-    enum Type
-    {
-        CLASSICAL = 10,
-        STAGED = 20,
-        TEAM = 30
-    };
-    const Type types[] = {CLASSICAL, STAGED, TEAM};
-    const int types_size = 3;
+    typedef CompetitionType Type;
     static Wt::WString type2str();
 
     template<class Action>
