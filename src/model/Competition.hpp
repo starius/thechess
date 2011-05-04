@@ -43,6 +43,9 @@ public:
         STAGED = 20,
         TEAM = 30
     };
+    const Type types[] = {CLASSICAL, STAGED, TEAM};
+    const int types_size = 3;
+    static Wt::WString type2str();
 
     template<class Action>
     void persist(Action& a)
@@ -117,7 +120,7 @@ public:
     void check_impl_();
 
     // manage competition
-    bool can_create_competition(UserPtr user) const;
+    static bool can_create_competition(UserPtr /*user*/) { return true; }
     void create_competition(UserPtr user);
 
     bool can_join(UserPtr user) const;
