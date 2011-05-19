@@ -26,17 +26,16 @@ int main(int argc, char **argv)
     #ifdef RUN_TESTS
     thechess::chess::run_tests();
     #endif // RUN_TESTS
-    
-    std::string ini_filepath = thechess::expand_path(c::ini_filename);
-    std::ifstream ini_file(ini_filepath.c_str());
-    thechess::ThechessOptions options(ini_file);
+
+    Wt::WServer server(argv[0]);
+    server.setServerConfiguration(argc, argv);
+    server.addEntryPoint(Wt::Application, createApplication, "");
+
+    thechess::ThechessOptions options(server);
     thechess::ThechessSession session(options);
     thechess::ThechessApplication::set_session_(session);
     session.reconsider();
 
-    Wt::WServer server(argv[0]);
-    server.setServerConfiguration(argc, argv, WTHTTP_CONFIGURATION);
-    server.addEntryPoint(Wt::Application, createApplication, "");
     if (server.start())
     {
         Wt::WServer::waitForShutdown();

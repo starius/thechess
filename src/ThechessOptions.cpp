@@ -1,44 +1,33 @@
 
 #include <string>
 #include <set>
-#include <boost/program_options/detail/config_file.hpp>
-#include <boost/program_options/parsers.hpp>
 
 #include "ThechessOptions.hpp"
 #include "config.hpp"
 
-namespace pod = boost::program_options::detail;
-
 namespace thechess
 {
 
-ThechessOptions::ThechessOptions(std::istream& ini_file):
+ThechessOptions::ThechessOptions(const Wt::WServer& server):
 database_type_(config::defaults::database_type),
 database_value_(config::defaults::database_value)
 {
-    std::set<std::string> options;
-    options.insert("*");
-    for (pod::config_file_iterator i(ini_file, options), e; i != e; ++i)
+    std::string value;
+    if (server.readConfigurationProperty("database_type", value))
     {
-        if (i->string_key == "database_type")
+        BOOST_ASSERT(value == "postgres" ||
+            value == "sqlite3");
+        if (value == "postgres")
         {
-            std::string database_type_str = i->value[0];
-            BOOST_ASSERT(database_type_str == "postgres" ||
-                database_type_str == "sqlite3");
-            if (database_type_str == "postgres")
-            {
-                database_type_ = Postgres;
-            }
-            else if (database_type_str == "sqlite3")
-            {
-                database_type_ = Sqlite3;
-            }
+            database_type_ = Postgres;
         }
-        if (i->string_key == "database_value")
+        else if (value == "sqlite3")
         {
-            database_value_ = i->value[0];
+            database_type_ = Sqlite3;
         }
     }
+
+    server.readConfigurationProperty("database_value", database_value_);
 }
 
 ThechessOptions::DatabaseType ThechessOptions::database_type() const

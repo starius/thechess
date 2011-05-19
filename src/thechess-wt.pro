@@ -69,7 +69,7 @@ INCLUDEPATH = /usr/local/include/Wt/
 
 QMAKE_CXX = ccache g++
 
-LIBS += -lboost_signals -lboost_regex -lboost_program_options -lboost_system
+LIBS += -lboost_signals -lboost_regex
 LIBS += -lwt -lwthttp
 LIBS += -lwtdbo -lwtdbosqlite3 -lwtdbopostgres # -lwtdbomysql
 
