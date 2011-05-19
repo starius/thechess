@@ -56,15 +56,16 @@ Wt::WApplication(env)
             &ThechessApplication::onPathChange_);
     setCssTheme("polished");
 
-    Wt::WBorderLayout* layout = new Wt::WBorderLayout();
-    root()->setLayout(layout, Wt::AlignTop | Wt::AlignJustify);
-    layout->addWidget(new Wt::WImage("img/top.gif"),
+    Wt::WContainerWidget* root1 = new Wt::WContainerWidget(root());
+    layout_ = new Wt::WBorderLayout();
+    root1->setLayout(layout_, Wt::AlignTop | Wt::AlignJustify);
+    layout_->addWidget(new Wt::WImage("img/top.gif"),
             Wt::WBorderLayout::North);
-    layout->addWidget(new Wt::WContainerWidget(),
+    layout_->addWidget(new Wt::WContainerWidget(),
             Wt::WBorderLayout::Center);
 
     widgets::MainMenu* main_menu = new widgets::MainMenu();
-    layout->addWidget(main_menu, Wt::WBorderLayout::West);
+    layout_->addWidget(main_menu, Wt::WBorderLayout::West);
 
     cookie_session_read_();
 
@@ -178,15 +179,10 @@ void ThechessApplication::logout()
     t.commit();
 }
 
-Wt::WBorderLayout* ThechessApplication::layout_()
-{
-    return (Wt::WBorderLayout*)(root()->layout());
-}
-
 Wt::WContainerWidget* ThechessApplication::mainpanel_()
 {
     return (Wt::WContainerWidget*)
-        (layout_()->widgetAt(Wt::WBorderLayout::Center));
+        (layout_->widgetAt(Wt::WBorderLayout::Center));
 }
 
 void ThechessApplication::set_mainpanel_(Wt::WWidget* widget)

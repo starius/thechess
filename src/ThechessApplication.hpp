@@ -54,12 +54,12 @@ public:
 private:
     static ThechessSession* session_;
     UserPtr user_;
+    Wt::WBorderLayout* layout_;
 
     void cookie_session_read_();
     void cookie_session_write_();
 
     void onPathChange_();
-    Wt::WBorderLayout* layout_();
     Wt::WContainerWidget* mainpanel_();
     void set_mainpanel_(Wt::WWidget* widget);
 
