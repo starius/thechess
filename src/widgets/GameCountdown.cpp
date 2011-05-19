@@ -106,8 +106,8 @@ GameCountdown::GameCountdown(GamePtr game,
     Wt::WContainerWidget* parent) :
 Wt::WViewWidget(parent), game_(game)
 {
-    wApp->require("/js/jquery.countdown.pack.js");
-    wApp->require("/js/countdown.js");
+    wApp->require("js/jquery.countdown.pack.js");
+    wApp->require("js/countdown.js");
 }
 
 Wt::WWidget* GameCountdown::renderView()

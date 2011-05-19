@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 
     Wt::WServer server(argv[0]);
     server.setServerConfiguration(argc, argv, WTHTTP_CONFIGURATION);
-    server.addEntryPoint(Wt::Application, createApplication, "/");
+    server.addEntryPoint(Wt::Application, createApplication, "");
     if (server.start())
     {
         Wt::WServer::waitForShutdown();

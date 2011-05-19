@@ -58,7 +58,7 @@ Wt::WApplication(env)
 
     Wt::WBorderLayout* layout = new Wt::WBorderLayout();
     root()->setLayout(layout, Wt::AlignTop | Wt::AlignJustify);
-    layout->addWidget(new Wt::WImage("/img/top.gif"),
+    layout->addWidget(new Wt::WImage("img/top.gif"),
             Wt::WBorderLayout::North);
     layout->addWidget(new Wt::WContainerWidget(),
             Wt::WBorderLayout::Center);

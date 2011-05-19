@@ -475,7 +475,7 @@ private:
 
 std::string BoardWidget::image(chess::Field field, bool big)
 {
-    return str(boost::format("/img/chess/board/%d-%d%s.GIF")
+    return str(boost::format("img/chess/board/%d-%d%s.GIF")
     % (2 - (int)field.color())
     % (int)field.chessman()
     % (big ? "-B" : ""));
