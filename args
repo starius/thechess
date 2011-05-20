@@ -1,2 +1,2 @@
---docroot ../files/;/resources,/img,/js,/css --http-address 0.0.0.0 --http-port 8004 -c ../wt_config.xml
+--docroot files/;/resources,/img,/js,/css --approot . --http-address 0.0.0.0 --http-port 8004
 

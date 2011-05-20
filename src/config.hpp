@@ -9,7 +9,13 @@
 namespace thechess {
 namespace config {
 
-const char* const ini_filename = "~/.thechess";
+const char* const wt_config_files[] = {
+    "wt_config.xml",
+    "~/.thechess.wt_config.xml",
+    "/etc/thechess/wt_config.xml",
+    "/etc/wt/wt_config.xml"
+};
+const int wt_config_files_size = 4;
 
 const char* const username_regex = "[a-zA-Z][a-zA-Z0-9._-]{2,29}";
 const char* const password_regex = "[a-zA-Z0-9._%+-@]{3,30}";

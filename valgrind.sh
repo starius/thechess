@@ -1,5 +1,3 @@
-
-cd ./build/;
-valgrind --leak-check=full ./thechess.wt `cat ../args`
+valgrind --leak-check=full ./build/thechess.wt `cat args`
 
 

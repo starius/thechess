@@ -1,4 +1,2 @@
-
-cd ./build/;
-gdb --args ./thechess.wt `cat ../args`
+gdb --args ./build/thechess.wt `cat args`
 

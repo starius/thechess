@@ -1,0 +1,6 @@
+
+if [ -f args ]; then thechess.wt `cat args`;
+elif [ -f ~/.thechess.args ]; then thechess.wt `cat ~/.thechess.args`;
+elif [ -f /etc/thechess/args ]; then thechess.wt `cat /etc/thechess/args`;
+fi
+

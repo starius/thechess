@@ -1,8 +1,6 @@
 #ifndef THECHESS_HPP_
 #define THECHESS_HPP_
 
-#include <fstream>
-
 #include <Wt/WEnvironment>
 #include <Wt/WApplication>
 #include <Wt/WServer>
@@ -27,7 +25,15 @@ int main(int argc, char **argv)
     thechess::chess::run_tests();
     #endif // RUN_TESTS
 
-    Wt::WServer server(argv[0]);
+    std::string wt_config = thechess::first_file(c::wt_config_files,
+        c::wt_config_files_size);
+    if (wt_config.empty())
+    {
+        std::cerr << "Can not find wt_config.xml" << std::endl;
+        exit(1);
+    }
+
+    Wt::WServer server(argv[0], wt_config.c_str());
     server.setServerConfiguration(argc, argv);
     server.addEntryPoint(Wt::Application, createApplication, "");
 

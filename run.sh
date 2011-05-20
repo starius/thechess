@@ -1,4 +1,2 @@
-
-cd ./build/;
-./thechess.wt `cat ../args`
+./build/thechess.wt `cat args`
 
