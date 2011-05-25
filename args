@@ -1,2 +1,2 @@
---docroot files/;/resources,/img,/js,/css --approot . --http-address 0.0.0.0 --http-port 8004
+--docroot files/;/resources,/img,/js,/css --approot . --http-address 0.0.0.0 --http-port 8003
 
