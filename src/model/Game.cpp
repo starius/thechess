@@ -270,7 +270,6 @@ void Game::initialize()
 
 void Game::create_game(UserPtr init, UserPtr u, chess::Color c)
 {
-    initialize();
     init_ = init;
     if (c == chess::color_null)
     {
@@ -286,7 +285,6 @@ void Game::create_game(UserPtr init, UserPtr u, chess::Color c)
 
 void Game::create_challenge(UserPtr init, chess::Color c)
 {
-    initialize();
     init_ = init;
     if (c != chess::color_null)
     {

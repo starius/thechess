@@ -54,6 +54,7 @@ Wt::WContainerWidget(p), with_user_(false)
 void GameCreateWidget::print_()
 {
     model::GameParameters gp;
+    gp.initialize();
     gpw_ = new GameParametersWidget(&gp, this);
 
     Wt::WLabel* color_label =
@@ -72,6 +73,7 @@ void GameCreateWidget::button_handler_()
 {
     dbo::Transaction t(tApp->session());
     GamePtr game = tApp->session().add(new model::Game());
+    game.modify()->initialize();
     gpw_->apply_parameters(game.modify());
     chess::Color color = selected_color_();
     if (with_user_)
