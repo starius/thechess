@@ -20,6 +20,7 @@ CONFIG(debug) {
 
 QMAKE_CXX = ccache g++
 
+LIBS += -lcrypt
 LIBS += -lboost_signals -lboost_regex
 LIBS += -lwt -lwthttp
 LIBS += -lwtdbo -lwtdbosqlite3 -lwtdbopostgres

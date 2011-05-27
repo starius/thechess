@@ -1,5 +1,11 @@
 
+#define _XOPEN_SOURCE
+#include <unistd.h>
+
+#include <Wt/WRandom>
+
 #include "model/User.hpp"
+#include "config.hpp"
 
 namespace thechess {
 namespace model {
@@ -9,16 +15,18 @@ User* User::create_new()
     return new User();
 }
 
-void User::set_password(const Wt::WString& password)
+void User::set_password(const std::string& password)
 {
-    password_ = password;
+    std::string salt = "$.$";
+    salt[1] = config::crypt_id;
+    salt += Wt::WRandom::generateId(config::salt_length);
+    password_ = crypt(password.c_str(), salt.c_str());
 }
 
-bool User::test_password(const Wt::WString& password) const
+bool User::test_password(const std::string& password) const
 {
-    return password_ == password;
+    return crypt(password.c_str(), password_.c_str()) == password_;
 }
-
 
 dbo::Query<GamePtr> User::games() const
 {

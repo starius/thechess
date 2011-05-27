@@ -77,7 +77,7 @@ void RegisterWidget::try_register_()
         {
             model::User* u = model::User::create_new();
             u->set_username(username_->text());
-            u->set_password(password_->text());
+            u->set_password(password_->text().toUTF8());
             UserPtr user = tApp->session().add(u);
             table_->hide();
             button_->hide();

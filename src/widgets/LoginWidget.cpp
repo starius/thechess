@@ -46,7 +46,7 @@ void LoginWidget::try_()
     UserPtr user = tApp->session().find<model::User>()
     .where("username = ?")
     .bind(username_->text());
-    if (!user || !user->test_password(password_->text()))
+    if (!user || !user->test_password(password_->text().toUTF8()))
     {
         error_->setText(tr("thechess.wrong_username_or_password"));
     }

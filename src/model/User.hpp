@@ -65,8 +65,8 @@ public:
         dbo::hasMany(a, won_competitions_, dbo::ManyToMany, "winners_competition");
     }
 
-    void set_password(const Wt::WString& password);
-    bool test_password(const Wt::WString& password) const;
+    void set_password(const std::string& password);
+    bool test_password(const std::string& password) const;
     const Wt::WString& username() const { return username_; }
     void set_username(Wt::WString username) { username_ = username; }
     Rights rights() const { return rights_; }
@@ -88,7 +88,7 @@ public:
 
 private:
     Wt::WString username_;
-    Wt::WString password_;
+    std::string password_; // UTF8
     Rights rights_; // default constructor: 0
     int sessions_;
 
