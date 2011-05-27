@@ -16,8 +16,7 @@ namespace dbo = Wt::Dbo;
 namespace thechess {
 namespace widgets {
 
-using model::GamePtr;
-using model::UserPtr;
+using namespace model;
 
 GameCreateWidget::GameCreateWidget(UserPtr user,
     Wt::WContainerWidget* p) :
@@ -53,9 +52,9 @@ Wt::WContainerWidget(p), with_user_(false)
 
 void GameCreateWidget::print_()
 {
-    model::GameParameters gp;
-    gp.initialize();
-    gpw_ = new GameParametersWidget(&gp, this);
+    GameParameters* gp = GameParameters::create_new();
+    gpw_ = new GameParametersWidget(gp, this);
+    delete gp;
 
     Wt::WLabel* color_label =
         new Wt::WLabel(tr("thechess.your_color"), this);
@@ -72,17 +71,16 @@ void GameCreateWidget::print_()
 void GameCreateWidget::button_handler_()
 {
     dbo::Transaction t(tApp->session());
-    GamePtr game = tApp->session().add(new model::Game());
-    game.modify()->initialize();
+    GamePtr game = tApp->session().add(Game::create_new());
     gpw_->apply_parameters(game.modify());
     chess::Color color = selected_color_();
     if (with_user_)
     {
-        game.modify()->create_game(tApp->user(), user_, color);
+        game.modify()->propose_game(tApp->user(), user_, color);
     }
     else
     {
-        game.modify()->create_challenge(tApp->user(), color);
+        game.modify()->propose_challenge(tApp->user(), color);
     }
     t.commit();
     tApp->view(game);

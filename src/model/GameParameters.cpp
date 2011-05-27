@@ -4,7 +4,7 @@
 namespace thechess {
 namespace model {
 
-void GameParameters::initialize()
+void GameParameters::initialize_()
 {
     using namespace config; // defaults
     moves_ = chess::Moves();
@@ -14,6 +14,13 @@ void GameParameters::initialize()
     pause_limit_init_ = defaults::pause_limit_init;
     norating_ = false;
     first_draw_ = defaults::first_draw;
+}
+
+GameParameters* GameParameters::create_new()
+{
+    GameParameters* gp = new GameParameters();
+    gp->initialize_();
+    return gp;
 }
 
 }

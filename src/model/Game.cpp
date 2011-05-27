@@ -254,9 +254,9 @@ Wt::WDateTime Game::next_check() const
     return result;
 }
 
-void Game::initialize()
+void Game::initialize_()
 {
-    GameParameters::initialize();
+    GameParameters::initialize_();
     state_ = proposed;
     colors_random_ = false;
     mistake_move_ = -1;
@@ -268,7 +268,14 @@ void Game::initialize()
     competition_round_ = -1;
 }
 
-void Game::create_game(UserPtr init, UserPtr u, chess::Color c)
+Game* Game::create_new()
+{
+    Game* game = new Game();
+    game->initialize_();
+    return game;
+}
+
+void Game::propose_game(UserPtr init, UserPtr u, chess::Color c)
 {
     init_ = init;
     if (c == chess::color_null)
@@ -283,7 +290,7 @@ void Game::create_game(UserPtr init, UserPtr u, chess::Color c)
     }
 }
 
-void Game::create_challenge(UserPtr init, chess::Color c)
+void Game::propose_challenge(UserPtr init, chess::Color c)
 {
     init_ = init;
     if (c != chess::color_null)

@@ -4,6 +4,11 @@
 namespace thechess {
 namespace model {
 
+User* User::create_new()
+{
+    return new User();
+}
+
 void User::set_password(const Wt::WString& password)
 {
     password_ = password;

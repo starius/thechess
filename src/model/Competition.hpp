@@ -30,7 +30,7 @@ namespace model {
 class Competition : public GameParameters, public dbo::Dbo<Competition>
 {
 public:
-    
+
     enum State
     {
         RECRUITING = 10,
@@ -38,6 +38,8 @@ public:
         ENDED = 50,
         CANCELLED = 70
     };
+
+    static Competition* create_new();
 
     typedef CompetitionType Type;
     static Wt::WString type2str();
@@ -71,8 +73,6 @@ public:
 
         dbo::field(a, relax_time_, "relax_time");
     }
-
-    void initialize();
 
     State state() const { return state_; }
 
@@ -131,6 +131,9 @@ public:
 
     bool can_cancel(UserPtr user) const;
     void cancel(UserPtr user);
+
+protected:
+    void initialize_();
 
 private:
 

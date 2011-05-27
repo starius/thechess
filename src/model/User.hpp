@@ -32,6 +32,9 @@ namespace model {
 class User : public model::EloPlayer, public dbo::Dbo<User>
 {
 public:
+
+    static User* create_new();
+
     enum Rights {
         admin = 5,
         moderator = 2,

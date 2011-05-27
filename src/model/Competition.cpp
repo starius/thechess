@@ -5,8 +5,7 @@
 namespace thechess {
 namespace model {
 
-
-void Competition::initialize()
+void Competition::initialize_()
 {
     type_ = STAGED;
     state_ = RECRUITING;
@@ -25,6 +24,14 @@ void Competition::initialize()
 
     relax_time_ = defaults::relax_time;
 }
+
+Competition* Competition::create_new()
+{
+    Competition* c = new Competition();
+    c->initialize_();
+    return c;
+}
+
 
 }
 }

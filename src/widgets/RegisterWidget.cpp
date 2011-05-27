@@ -75,7 +75,7 @@ void RegisterWidget::try_register_()
         }
         else
         {
-            model::User* u = new model::User();
+            model::User* u = model::User::create_new();
             u->set_username(username_->text());
             u->set_password(password_->text());
             UserPtr user = tApp->session().add(u);

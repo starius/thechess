@@ -96,10 +96,11 @@ public:
 
     GameSignal& signal() const;
 
-    void initialize();
-    void create_game(UserPtr init, UserPtr u,
+    static Game* create_new();
+
+    void propose_game(UserPtr init, UserPtr u,
         chess::Color c);
-    void create_challenge(UserPtr init, chess::Color c);
+    void propose_challenge(UserPtr init, chess::Color c);
 
     void check();
     void check_impl_();
@@ -205,6 +206,9 @@ public:
 
     int competition_round() const { return competition_round_; }
     void set_competition_round(int v) { competition_round_ = v; }
+
+protected:
+    void initialize_();
 
 private:
     State state_;

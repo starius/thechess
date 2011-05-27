@@ -62,14 +62,14 @@ void ThechessSession::reconsider()
         createTables();
         std::cerr << "Created database" << std::endl;
 
-        User* admin = new User();
+        User* admin = User::create_new();
         admin->set_username("admin");
         admin->set_rights(User::admin);
         admin->set_password("123");
         add(admin);
         std::cerr<< "and admin user (password 123)" << std::endl;
 
-        User* user = new User();
+        User* user = User::create_new();
         user->set_username("user");
         user->set_password("123");
         add(user);
