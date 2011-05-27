@@ -1,47 +1,38 @@
 
-#include <boost/random/mersenne_twister.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
+#include <Wt/WRandom>
+#include <climits>
 
 namespace thechess {
 namespace random {
 
-class WCaptchaRandom : public boost::mt19937
-{
-public:
-    WCaptchaRandom() : boost::mt19937()
-    {
-        long s = boost::posix_time::microsec_clock::universal_time()
-            .time_of_day().total_microseconds();
-        seed(s);
-    }
+const unsigned int uint_min = 0;
+const unsigned int uint_max = UINT_MAX;
 
-} r_;
-
-int rand()
+unsigned int rand()
 {
-    return r_();
+    return Wt::WRandom::get();
 }
 
-int rr(int stop)
+unsigned int rr(unsigned int stop)
 {
-    return r_() % stop;
+    return rand() % stop;
 }
 
-int rr(int start, int stop)
+unsigned int rr(unsigned int start, unsigned int stop)
 {
-    return start + r_() % (stop - start);
+    return start + rand() % (stop - start);
 }
 
-int rr(int start, int stop, int step)
+unsigned int rr(unsigned int start, unsigned int stop, unsigned int step)
 {
-    return start + (r_() % ((stop - start) / step)) * step;
+    return start + (rand() % ((stop - start) / step)) * step;
 }
 
 double drr(double start, double stop)
 {
     double stop_start = stop - start;
-    double max_min = r_.max() - r_.min();
-    return start + double(r_()) / max_min * stop_start;
+    const double max_min = uint_max - uint_min;
+    return start + double(rand()) / max_min * stop_start;
 }
 
 }

@@ -2,11 +2,11 @@
 namespace thechess {
 namespace random {
 
-int rand();
+unsigned int rand();
 
-int rr(int stop);
-int rr(int start, int stop);
-int rr(int start, int stop, int step);
+unsigned int rr(unsigned int stop);
+unsigned int rr(unsigned int start, unsigned int stop);
+unsigned int rr(unsigned int start, unsigned int stop, unsigned int step);
 
 double drr(double start, double stop);
 
