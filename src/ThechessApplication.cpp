@@ -2,6 +2,7 @@
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <cstdlib>
+#include <vector>
 
 #include <Wt/WEnvironment>
 #include <Wt/WApplication>
@@ -153,11 +154,15 @@ void ThechessApplication::set_user(UserPtr user)
     }
     user_ = user;
     user_.modify()->login();
-    model::Games games = user_->games().where("state in (?,?,?)")
-        .bind(Game::confirmed)
-        .bind(Game::active)
-        .bind(Game::pause);
-    BOOST_FOREACH(model::GamePtr game, games)
+    std::vector<model::GamePtr> games_vector;
+    {
+        model::Games games = user_->games().where("state in (?,?,?)")
+            .bind(Game::confirmed)
+            .bind(Game::active)
+            .bind(Game::pause);
+        games_vector.assign(games.begin(), games.end());
+    }
+    BOOST_FOREACH(model::GamePtr game, games_vector)
     {
         game.modify()->check();
     }
