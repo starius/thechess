@@ -5,8 +5,8 @@
 #include <Wt/WText>
 #include <Wt/WPushButton>
 #include <Wt/WTable>
+#include <Wt/WSpinBox>
 
-#include "widgets/MySpinBox.hpp"
 #include "widgets/GameParametersWidget.hpp"
 #include "widgets/TimeDeltaWidget.hpp"
 #include "widgets/MovesWidget.hpp"
@@ -61,7 +61,7 @@ public:
 
         Wt::WLabel* first_draw_label =
             new Wt::WLabel(tr("thechess.first_draw"), t->elementAt(4,0));
-        first_draw_ = new MySpinBox(t->elementAt(4,1));
+        first_draw_ = new Wt::WSpinBox(t->elementAt(4,1));
         first_draw_->setRange(min::first_draw, max::first_draw);
         first_draw_->setValue(gp->first_draw());
         first_draw_label->setBuddy(first_draw_);
@@ -74,8 +74,9 @@ public:
         gp->set_limit_private_init(limit_private_init_->timedelta());
         gp->set_norating(norating_->checkState() == Wt::Checked);
         gp->set_pause_limit_init(pause_limit_init_->timedelta());
-        gp->set_first_draw(first_draw_->value());
+        gp->set_first_draw(first_draw_value_());
     }
+
 
 private:
     MovesWidget* moves_widget_;
@@ -86,7 +87,21 @@ private:
     Wt::WCheckBox* norating_;
 
     TimeDeltaWidget* pause_limit_init_;
-    MySpinBox* first_draw_;
+    Wt::WSpinBox* first_draw_;
+
+    int first_draw_value_()
+    {
+        int value = first_draw_->value();
+        if (value < first_draw_->minimum())
+        {
+            value = first_draw_->minimum();
+        }
+        else if (value > first_draw_->maximum())
+        {
+            value = first_draw_->maximum();
+        }
+        return value;
+    }
 };
 
 GameParametersWidget::GameParametersWidget(
