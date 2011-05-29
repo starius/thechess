@@ -67,6 +67,11 @@ protected:
             bool_(game_->norating(), "thechess.norating_true",
                 "thechess.norating_false", result);
         }
+        if (!game_->is_ended())
+        {
+            item_(tr("thechess.first_draw_full")
+                .arg(game_->first_draw()/2), result);
+        }
         return result;
     }
 

@@ -399,6 +399,9 @@
     <message id='thechess.first_draw'>
         move number for draw proposal
     </message>
+    <message id='thechess.first_draw_full'>
+        Surrender or draw can be made after {1} non-predetermined move
+    </message>
     <message id='thechess.your_color'>your color</message>
 
     <message id='Wt.WDateTime.null'>-</message>

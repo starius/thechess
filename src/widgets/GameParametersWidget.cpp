@@ -62,8 +62,8 @@ public:
         Wt::WLabel* first_draw_label =
             new Wt::WLabel(tr("thechess.first_draw"), t->elementAt(4,0));
         first_draw_ = new Wt::WSpinBox(t->elementAt(4,1));
-        first_draw_->setRange(min::first_draw, max::first_draw);
-        first_draw_->setValue(gp->first_draw());
+        first_draw_->setRange(min::first_draw / 2, max::first_draw / 2);
+        first_draw_->setValue(gp->first_draw() / 2);
         first_draw_label->setBuddy(first_draw_);
     }
 
@@ -100,7 +100,7 @@ private:
         {
             value = first_draw_->maximum();
         }
-        return value;
+        return value * 2;
     }
 };
 

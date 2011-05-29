@@ -136,6 +136,10 @@
     <message id='thechess.first_draw'>
         количество ходов, необходимое для предложения ничьей
     </message>
+    <message id='thechess.first_draw_full'>
+        Капитуляция или ничья может быть совершена после {1} хода,
+        не считая предопределенные ходы
+    </message>
     <message id='thechess.your_color'>цвет ваших фигур</message>
 
 </messages>
