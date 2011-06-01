@@ -75,7 +75,7 @@ Wt::WApplication(env)
 
 ThechessApplication::~ThechessApplication()
 {
-    dbo::Transaction t(tApp->session());
+    dbo::Transaction t(session());
     if (user_)
     {
         user_.modify()->logout();
@@ -85,7 +85,7 @@ ThechessApplication::~ThechessApplication()
 
 void ThechessApplication::cookie_session_read_()
 {
-    dbo::Transaction t(tApp->session());
+    dbo::Transaction t(session());
     try
     {
         std::string cookie_id = environment().getCookie("cookie_session");
@@ -105,7 +105,7 @@ void ThechessApplication::cookie_session_read_()
 
 void ThechessApplication::cookie_session_write_()
 {
-    dbo::Transaction t(tApp->session());
+    dbo::Transaction t(session());
     std::string cookie_id;
     model::CookieSessionPtr cookie_session;
     try
@@ -147,7 +147,7 @@ void ThechessApplication::after_user_change_()
 void ThechessApplication::set_user(UserPtr user)
 {
     using model::Game;
-    dbo::Transaction t(tApp->session());
+    dbo::Transaction t(session());
     if (user_)
     {
         user_.modify()->logout();
@@ -173,7 +173,7 @@ void ThechessApplication::set_user(UserPtr user)
 
 void ThechessApplication::logout()
 {
-    dbo::Transaction t(tApp->session());
+    dbo::Transaction t(session());
     if (user_)
     {
         user_.modify()->logout();
