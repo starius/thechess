@@ -79,7 +79,6 @@ namespace elo
     const float other_K = 15;
 }
 
-const int session_id_length = 16;
 const int salt_length = 16;
 const char crypt_id = '5'; // man 3 crypt
 

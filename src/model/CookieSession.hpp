@@ -33,7 +33,7 @@ public:
     void persist(Action& a)
     {
         dbo::belongsTo(a, user_, "user");
-        dbo::id(a, cookie_id_, "cookie_id", config::session_id_length);
+        dbo::id(a, cookie_id_, "cookie_id");
         dbo::field(a, used_, "used");
     }
 
