@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<messages>
+<messages nplurals='2' plural="n==1 ? 0 : 1">
+
     <message id='thechess.template.board.white'>
         <table class="thechess_board">
             <tbody>
@@ -400,7 +401,12 @@
         move number for draw proposal
     </message>
     <message id='thechess.first_draw_full'>
-        Surrender or draw can be made after {1} non-predetermined move
+        <plural case='0'>
+            Surrender or draw can be made when {1} non-predetermined move is done
+        </plural>
+        <plural case='1'>
+            Surrender or draw can be made when {1} non-predetermined moves are done
+        </plural>
     </message>
     <message id='thechess.your_color'>your color</message>
 

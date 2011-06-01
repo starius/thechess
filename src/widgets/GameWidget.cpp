@@ -69,8 +69,8 @@ protected:
         }
         if (!game_->is_ended())
         {
-            item_(tr("thechess.first_draw_full")
-                .arg(game_->first_draw()/2), result);
+            item_(Wt::WString::trn("thechess.first_draw_full",
+                game_->first_draw()/2).arg(game_->first_draw()/2), result);
         }
         return result;
     }
