@@ -121,6 +121,7 @@ public:
     Wt::WContainerWidget(), game_(game), app_(tApp)
     {
         dbo::Transaction t(tApp->session());
+        game_.reread();
         game_.modify()->check();
 
         new Wt::WText(tr("thechess.format.game_header")
@@ -136,8 +137,6 @@ public:
             append_only, bottom, this);
         moves_widget_->move()
             .connect(this, &GameWidgetImpl::move_handler_);
-        game_->signal()
-            .connect(this, &GameWidgetImpl::game_handler_);
 
         countdown_container_ = new Wt::WContainerWidget(this);
         manager_ = new Wt::WContainerWidget(this);
@@ -168,15 +167,16 @@ private:
 
     void move_handler_(const chess::Move& move)
     {
+        dbo::Transaction t(tApp->session());
+        game_.reread();
         int game_size = game_->moves().size();
         int moves_size = moves_widget_->moves().size();
         // additional protection
         if (game_size == moves_size - 1 && game_->can_move(tApp->user()))
         {
-            dbo::Transaction t(tApp->session());
             game_.modify()->add_move(move, moves_widget_->board());
-            t.commit();
         }
+        t.commit();
     }
 
     void game_handler_(model::Game::Event event, const chess::Move& move)
@@ -229,6 +229,7 @@ private:
     void handle_timer_()
     {
         dbo::Transaction t(tApp->session());
+        game_.reread();
         game_.modify()->check();
         setup_timer_();
         t.commit();
@@ -394,6 +395,7 @@ private:
     void action_()
     {
         dbo::Transaction t(tApp->session());
+        game_.reread();
         (game_.modify()->*method)(tApp->user());
         t.commit();
     }
@@ -409,6 +411,7 @@ private:
     void pause_propose_(TimeDeltaWidget* pause_duration)
     {
         dbo::Transaction t(tApp->session());
+        game_.reread();
         game_.modify()
             ->pause_propose(tApp->user(), pause_duration->timedelta());
         t.commit();
@@ -417,6 +420,7 @@ private:
     void mistake_propose_()
     {
         dbo::Transaction t(tApp->session());
+        game_.reread();
         game_.modify()
             ->mistake_propose(tApp->user(), moves_widget_->current_move());
         t.commit();
@@ -453,6 +457,7 @@ private:
     void comment_handler_()
     {
         dbo::Transaction t(tApp->session());
+        game_.reread();
         game_.modify()->set_comment(tApp->user(), comment_->text());
         t.commit();
     }

@@ -56,12 +56,13 @@ Game::GameSignal& Game::signal() const
 
 void Game::signal_emit(Event event, const chess::Move& move)
 {
+    return;
     signal().emit(event, move);
 }
 
 void Game::signal_emit(Event event)
 {
-    signal().emit(event, chess::move_null);
+    signal_emit(event, chess::move_null);
 }
 
 bool Game::is_ended() const
@@ -139,7 +140,7 @@ UserPtr Game::other_user(const UserPtr user) const
 void Game::check()
 {
     check_impl_();
-    tracker::check();
+    tracker::check(session());
 }
 
 void Game::check_impl_()
@@ -314,7 +315,6 @@ void Game::set_random_(UserPtr user1, UserPtr user2)
     {
         white_ = user2;
         black_ = user1;
-
     }
 }
 
@@ -496,7 +496,7 @@ void Game::pause_agree(const UserPtr user)
         state_ = pause;
         pause_until_ = now() + pause_proposed_td();
         signal_emit(e_pause);
-        tracker::add_or_update_task(tracker::Game, id());
+        tracker::add_or_update_task(tracker::Game, id(), session());
     }
 }
 
@@ -677,6 +677,8 @@ void Game::finish_(State state, UserPtr winner)
 
 void Game::elo_change_()
 {
+    white_.reread();
+    black_.reread();
     if (is_win())
     {
         winner_.modify()->win(other_user(winner_).modify());

@@ -8,6 +8,7 @@
 #include "TaskTracker.hpp"
 #include "time_intervals.hpp"
 #include "ThechessApplication.hpp"
+#include "ThechessSession.hpp"
 #include "model/Game.hpp"
 #include "model/User.hpp"
 
@@ -38,24 +39,24 @@ typedef T2I::iterator T2I_It;
 W2T w2t;
 T2I t2i;
 
-Wt::WDateTime process_task(const Task& task, ThechessSession& session)
+Wt::WDateTime process_task(const Task& task, dbo::Session* session)
 {
     Wt::WDateTime result;
     if (task.type == Game)
     {
-        GamePtr game = session.load<model::Game>(task.id);
+        GamePtr game = session->load<model::Game>(task.id);
+        // FIXME game.reread();
         game.modify()->check_impl_();
         result = game->next_check();
     }
     return result;
 }
 
-void add_or_update_task(TaskType type, int id)
+void add_or_update_task(TaskType type, int id, dbo::Session* session)
 {
     printf("%d\n", id);
     Task task(type, id);
-    check();
-    ThechessSession& session = tApp->session();
+    check(session);
     Wt::WDateTime new_time = process_task(task, session);
     T2I_It t2i_it = t2i.find(task);
     if (t2i_it != t2i.end())
@@ -67,9 +68,8 @@ void add_or_update_task(TaskType type, int id)
     t2i[task] = w2t.insert(std::make_pair(new_time, task));
 }
 
-void check()
+void check(dbo::Session* session)
 {
-    ThechessSession& session = tApp->session();
     Wt::WDateTime cached_now = now();
     while (!w2t.empty())
     {

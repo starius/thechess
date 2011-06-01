@@ -5,6 +5,7 @@
 #include <Wt/Dbo/ptr>
 #include <Wt/WSignal>
 #include <Wt/Dbo/SqlConnection>
+#include <Wt/Dbo/FixedSqlConnectionPool>
 
 #include "ThechessOptions.hpp"
 
@@ -15,11 +16,11 @@ namespace thechess {
 class ThechessSession : public dbo::Session
 {
 public:
-    ThechessSession(const ThechessOptions& options);
-    virtual ~ThechessSession();
+    ThechessSession();
     void reconsider();
+    static void set_options(const ThechessOptions* options);
 private:
-    dbo::SqlConnection* connection_;
+    static dbo::FixedSqlConnectionPool* pool_;
 };
 
 }

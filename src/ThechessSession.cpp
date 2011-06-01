@@ -24,34 +24,15 @@ using model::Competition;
 using model::GamePtr;
 using model::CookieSession;
 
-ThechessSession::ThechessSession(const ThechessOptions& options)
+dbo::FixedSqlConnectionPool* ThechessSession::pool_ = 0;
+
+ThechessSession::ThechessSession()
 {
-    if (options.database_type() == ThechessOptions::Postgres)
-    {
-        connection_ = new dbo::backend::Postgres(options.database_value());
-    }
-    else if (options.database_type() == ThechessOptions::Sqlite3)
-    {
-        std::string path = expand_path(options.database_value());
-        connection_ = new dbo::backend::Sqlite3(path);
-    }
-    setConnection(*connection_);
-    if (options.database_type() == ThechessOptions::Sqlite3)
-    {
-        connection_->executeSql("PRAGMA cache_size = 3000");
-        connection_->executeSql("PRAGMA synchronous = normal");
-        connection_->executeSql("PRAGMA journal_mode = wal");
-        connection_->executeSql("PRAGMA locking_mode = EXCLUSIVE");
-    }
+    setConnectionPool(*pool_);
     mapClass<User>("thechess_user");
     mapClass<Game>("thechess_game");
     mapClass<CookieSession>("thechess_cookie_session");
     mapClass<Competition>("thechess_competition");
-}
-
-ThechessSession::~ThechessSession()
-{
-    delete connection_;
 }
 
 void ThechessSession::reconsider()
@@ -89,9 +70,25 @@ void ThechessSession::reconsider()
     model::Games games = find<Game>().where("state < ?").bind(Game::min_ended);
     BOOST_FOREACH(GamePtr game, games)
     {
-        tracker::add_or_update_task(tracker::Game, game->id());
+        tracker::add_or_update_task(tracker::Game, game->id(), this);
     }
     t.commit();
+}
+
+void ThechessSession::set_options(const ThechessOptions* options)
+{
+    dbo::SqlConnection* connection;
+    if (options->database_type() == ThechessOptions::Postgres)
+    {
+        connection = new dbo::backend::Postgres(options->database_value());
+    }
+    else if (options->database_type() == ThechessOptions::Sqlite3)
+    {
+        std::string path = expand_path(options->database_value());
+        connection = new dbo::backend::Sqlite3(path);
+    }
+    pool_ = new dbo::FixedSqlConnectionPool(connection,
+        options->connections_in_pool());
 }
 
 }

@@ -44,8 +44,6 @@ using model::User;
 using model::GamePtr;
 using model::Game;
 
-ThechessSession* ThechessApplication::session_=0;
-
 ThechessApplication::ThechessApplication(const Wt::WEnvironment& env) :
 Wt::WApplication(env)
 {
@@ -76,6 +74,7 @@ Wt::WApplication(env)
 ThechessApplication::~ThechessApplication()
 {
     dbo::Transaction t(session());
+    user_.reread();
     if (user_)
     {
         user_.modify()->logout();
@@ -148,11 +147,13 @@ void ThechessApplication::set_user(UserPtr user)
 {
     using model::Game;
     dbo::Transaction t(session());
+    user_.reread();
     if (user_)
     {
         user_.modify()->logout();
     }
     user_ = user;
+    user_.reread();
     user_.modify()->login();
     std::vector<model::GamePtr> games_vector;
     {
@@ -164,6 +165,7 @@ void ThechessApplication::set_user(UserPtr user)
     }
     BOOST_FOREACH(model::GamePtr game, games_vector)
     {
+        game.reread();
         game.modify()->check();
     }
     cookie_session_write_();
@@ -174,6 +176,7 @@ void ThechessApplication::set_user(UserPtr user)
 void ThechessApplication::logout()
 {
     dbo::Transaction t(session());
+    user_.reread();
     if (user_)
     {
         user_.modify()->logout();

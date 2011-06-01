@@ -11,6 +11,7 @@
 #include "tests.hpp"
 #include "config.hpp"
 #include "utils.hpp"
+#include "TaskTracker.hpp"
 
 namespace c = thechess::config;
 
@@ -38,15 +39,16 @@ int main(int argc, char **argv)
     server.addEntryPoint(Wt::Application, createApplication, "");
 
     thechess::ThechessOptions options(server);
-    thechess::ThechessSession session(options);
-    thechess::ThechessApplication::set_session_(session);
-    session.reconsider();
+    thechess::ThechessSession::set_options(&options);
+    thechess::ThechessSession* session = new thechess::ThechessSession();
+    session->reconsider();
 
     if (server.start())
     {
         Wt::WServer::waitForShutdown();
         server.stop();
     }
+    delete session;
 }
 
 

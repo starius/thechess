@@ -36,8 +36,7 @@ public:
     ThechessApplication(const Wt::WEnvironment& env);
     virtual ~ThechessApplication();
 
-    static ThechessSession& session() { return *session_; }
-    static void set_session_(ThechessSession& s) { session_ = &s; }
+    ThechessSession& session() { return session_; }
 
     UserPtr user() const { return user_; }
     void after_user_change_();
@@ -52,7 +51,7 @@ public:
     }
 
 private:
-    static ThechessSession* session_;
+    ThechessSession session_;
     UserPtr user_;
     Wt::WBorderLayout* layout_;
 
