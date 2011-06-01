@@ -34,7 +34,7 @@ class ThechessApplication : public Wt::WApplication
 {
 public:
     ThechessApplication(const Wt::WEnvironment& env);
-    ~ThechessApplication();
+    virtual ~ThechessApplication();
 
     static ThechessSession& session() { return *session_; }
     static void set_session_(ThechessSession& s) { session_ = &s; }
