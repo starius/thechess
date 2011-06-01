@@ -55,6 +55,7 @@ namespace defaults
 
     const ThechessOptions::DatabaseType database_type = ThechessOptions::Sqlite3;
     const char* const database_value = "~/thechess.db";
+    const int connections_in_pool = 10;
 }
 
 namespace max

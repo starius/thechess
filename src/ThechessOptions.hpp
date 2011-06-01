@@ -16,12 +16,19 @@ public:
         Sqlite3
     };
     ThechessOptions(const Wt::WServer& server);
+
     DatabaseType database_type() const;
     const std::string& database_value() const;
+    int connections_in_pool() const;
 
 private:
+    const Wt::WServer& server_;
+
     DatabaseType database_type_;
     std::string database_value_;
+    int connections_in_pool_;
+
+    bool read_int_value(const std::string& name, int& value);
 };
 
 }
