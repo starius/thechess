@@ -140,12 +140,25 @@ public:
 
         countdown_container_ = new Wt::WContainerWidget(this);
         manager_ = new Wt::WContainerWidget(this);
+
         new Wt::WText(tr("thechess.comment"), this);
         new Wt::WText(": ", this);
-        comment_ = new Wt::WInPlaceEdit(game_->comment(), this);
-        comment_->setEmptyText(tr("thechess.comment_welcome"));
-        comment_->valueChanged().connect(this,
-            &GameWidgetImpl::comment_handler_);
+        can_comment_ = game_->can_comment(tApp->user());
+        if (can_comment_)
+        {
+            Wt::WInPlaceEdit* comment =
+                new Wt::WInPlaceEdit(game_->comment(), this);
+            comment->setEmptyText(tr("thechess.comment_welcome"));
+            comment->valueChanged().connect(this,
+                &GameWidgetImpl::comment_handler_);
+            comment_ = comment;
+        }
+        else
+        {
+            Wt::WText* comment = new Wt::WText(game_->comment(), this);
+            comment_ = comment;
+        }
+
         game_status_ = new GameStatus(game_, this);
         status_and_manager_();
         countdown_print_();
@@ -163,7 +176,8 @@ private:
     Wt::WContainerWidget* countdown_container_;
     ThechessApplication* app_;
     Wt::WTimer* timer_;
-    Wt::WInPlaceEdit* comment_;
+    bool can_comment_;
+    Wt::WWidget* comment_;
 
     void move_handler_(const chess::Move& move)
     {
@@ -458,14 +472,23 @@ private:
     {
         dbo::Transaction t(tApp->session());
         game_.reread();
-        game_.modify()->set_comment(tApp->user(), comment_->text());
+        game_.modify()->set_comment(tApp->user(),
+            dynamic_cast<Wt::WInPlaceEdit*>(comment_)->text());
         t.commit();
     }
 
     void comment_print_()
     {
         dbo::Transaction t(tApp->session());
-        comment_->setText(game_->comment());
+        if (can_comment_)
+        {
+            dynamic_cast<Wt::WInPlaceEdit*>(comment_)
+                ->setText(game_->comment());
+        }
+        else
+        {
+            dynamic_cast<Wt::WText*>(comment_)->setText(game_->comment());
+        }
         t.commit();
     }
 
