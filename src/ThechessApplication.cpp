@@ -44,8 +44,8 @@ using model::User;
 using model::GamePtr;
 using model::Game;
 
-ThechessApplication::ThechessApplication(const Wt::WEnvironment& env) :
-Wt::WApplication(env)
+ThechessApplication::ThechessApplication(const Wt::WEnvironment& env, ThechessServer& server) :
+Wt::WApplication(env), session_(server.pool())
 {
     enableUpdates(true);
     useStyleSheet("css/1.css");

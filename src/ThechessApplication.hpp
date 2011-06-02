@@ -18,6 +18,7 @@ namespace dbo = Wt::Dbo;
 
 #include "model/User.hpp"
 #include "model/Game.hpp"
+#include "ThechessServer.hpp"
 #include "ThechessSession.hpp"
 #include "widgets/MainMenu.hpp"
 
@@ -33,7 +34,7 @@ class ThechessSession;
 class ThechessApplication : public Wt::WApplication
 {
 public:
-    ThechessApplication(const Wt::WEnvironment& env);
+    ThechessApplication(const Wt::WEnvironment& env, ThechessServer& server);
     virtual ~ThechessApplication();
 
     ThechessSession& session() { return session_; }

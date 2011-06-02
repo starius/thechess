@@ -16,11 +16,9 @@ namespace thechess {
 class ThechessSession : public dbo::Session
 {
 public:
-    ThechessSession();
+    ThechessSession(dbo::FixedSqlConnectionPool& pool);
     void reconsider();
-    static void set_options(const ThechessOptions* options);
-private:
-    static dbo::FixedSqlConnectionPool* pool_;
+    static dbo::SqlConnection* new_connection(const ThechessOptions& options);
 };
 
 }

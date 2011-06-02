@@ -24,11 +24,9 @@ using model::Competition;
 using model::GamePtr;
 using model::CookieSession;
 
-dbo::FixedSqlConnectionPool* ThechessSession::pool_ = 0;
-
-ThechessSession::ThechessSession()
+ThechessSession::ThechessSession(dbo::FixedSqlConnectionPool& pool)
 {
-    setConnectionPool(*pool_);
+    setConnectionPool(pool);
     mapClass<User>("thechess_user");
     mapClass<Game>("thechess_game");
     mapClass<CookieSession>("thechess_cookie_session");
@@ -75,20 +73,19 @@ void ThechessSession::reconsider()
     t.commit();
 }
 
-void ThechessSession::set_options(const ThechessOptions* options)
+dbo::SqlConnection* ThechessSession::new_connection(const ThechessOptions& options)
 {
     dbo::SqlConnection* connection;
-    if (options->database_type() == ThechessOptions::Postgres)
+    if (options.database_type() == ThechessOptions::Postgres)
     {
-        connection = new dbo::backend::Postgres(options->database_value());
+        connection = new dbo::backend::Postgres(options.database_value());
     }
-    else if (options->database_type() == ThechessOptions::Sqlite3)
+    else if (options.database_type() == ThechessOptions::Sqlite3)
     {
-        std::string path = expand_path(options->database_value());
+        std::string path = expand_path(options.database_value());
         connection = new dbo::backend::Sqlite3(path);
     }
-    pool_ = new dbo::FixedSqlConnectionPool(connection,
-        options->connections_in_pool());
+    return connection;
 }
 
 }
