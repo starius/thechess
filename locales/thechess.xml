@@ -412,4 +412,21 @@
 
     <message id='Wt.WDateTime.null'>-</message>
 
+    <message id='thechess.SUPER_GRANDMASTER'>super-grandmaster</message>
+    <message id='thechess.GRANDMASTER'>grandmaster</message>
+    <message id='thechess.INTERNATIONAL_MASTER'>nternational master</message>
+    <message id='thechess.NATIONAL_MASTER'>national master</message>
+    <message id='thechess.EXPERT'>expert</message>
+    <message id='thechess.CLASSIFICATION_A'>class A</message>
+    <message id='thechess.CLASSIFICATION_B'>class B</message>
+    <message id='thechess.CLASSIFICATION_C'>class C</message>
+    <message id='thechess.CLASSIFICATION_D'>class D</message>
+    <message id='thechess.CLASSIFICATION_E'>class E</message>
+    <message id='thechess.CLASSIFICATION_F'>class F</message>
+    <message id='thechess.CLASSIFICATION_G'>class G</message>
+    <message id='thechess.CLASSIFICATION_H'>class H</message>
+    <message id='thechess.CLASSIFICATION_I'>class I</message>
+    <message id='thechess.CLASSIFICATION_J'>class J</message>
+    <message id='thechess.NO_CLASSIFICATION'>without category</message>
+
 </messages>

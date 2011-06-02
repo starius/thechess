@@ -249,4 +249,21 @@
     </message>
     <message id='thechess.your_color'>цвет ваших фигур</message>
 
+    <message id='thechess.SUPER_GRANDMASTER'>супергроссмейстер</message>
+    <message id='thechess.GRANDMASTER'>гроссмейстер</message>
+    <message id='thechess.INTERNATIONAL_MASTER'>международный мастер</message>
+    <message id='thechess.NATIONAL_MASTER'>национальный мастер</message>
+    <message id='thechess.EXPERT'>кандидат в мастера</message>
+    <message id='thechess.CLASSIFICATION_A'>первый разряд</message>
+    <message id='thechess.CLASSIFICATION_B'>второй разряд</message>
+    <message id='thechess.CLASSIFICATION_C'>третий разряд</message>
+    <message id='thechess.CLASSIFICATION_D'>средний любитель (четвертый разряд)</message>
+    <message id='thechess.CLASSIFICATION_E'>слабый любитель (пятый разряд)</message>
+    <message id='thechess.CLASSIFICATION_F'>новичок (разряд F)</message>
+    <message id='thechess.CLASSIFICATION_G'>новичок (разряд G)</message>
+    <message id='thechess.CLASSIFICATION_H'>новичок (разряд H)</message>
+    <message id='thechess.CLASSIFICATION_I'>новичок (разряд I)</message>
+    <message id='thechess.CLASSIFICATION_J'>новичок (разряд J)</message>
+    <message id='thechess.NO_CLASSIFICATION'>без разряда</message>
+
 </messages>
