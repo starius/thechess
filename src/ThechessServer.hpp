@@ -6,6 +6,7 @@
 
 #include "ThechessOptions.hpp"
 #include "ThechessSession.hpp"
+#include "ThechessNotifier.hpp"
 
 namespace dbo = Wt::Dbo;
 
@@ -17,11 +18,13 @@ public:
     ThechessServer(int argc, char **argv);
     const ThechessOptions& options() const;
     dbo::FixedSqlConnectionPool& pool();
+    ThechessNotifier& notifier();
 
 private:
     ThechessOptions options_;
     dbo::FixedSqlConnectionPool pool_;
     ThechessSession session_;
+    ThechessNotifier notifier_;
 };
 
 }

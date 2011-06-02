@@ -244,4 +244,8 @@ template<> void ThechessApplication::list_view<model::Game>()
     show_<widgets::GameListWidget>("/game/");
 }
 
+void ThechessApplication::thechess_notify(ThechessEvent)
+{
+}
+
 }

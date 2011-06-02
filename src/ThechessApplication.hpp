@@ -16,6 +16,7 @@ namespace Wt {
 #include <Wt/Dbo/ptr>
 namespace dbo = Wt::Dbo;
 
+#include "ThechessNotifier.hpp"
 #include "model/User.hpp"
 #include "model/Game.hpp"
 #include "ThechessServer.hpp"
@@ -50,6 +51,8 @@ public:
     template<typename M> void list_view()
     {
     }
+
+    static void thechess_notify(ThechessEvent);
 
 private:
     ThechessSession session_;
