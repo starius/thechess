@@ -40,5 +40,10 @@ dbo::FixedSqlConnectionPool& ThechessServer::pool()
     return pool_;
 }
 
+ThechessNotifier& ThechessServer::notifier()
+{
+    return notifier_;
+}
+
 }
 
