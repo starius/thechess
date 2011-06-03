@@ -12,6 +12,8 @@ enum ObjectType {
 
 struct Object
 {
+    Object(ObjectType ot, int i);
+
     ObjectType object_type;
     int id;
 };

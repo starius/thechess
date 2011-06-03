@@ -15,6 +15,8 @@ class ThechessServer;
 
 struct ThechessEvent : public model::Object
 {
+    ThechessEvent(model::ObjectType ot, int i,
+        model::Game::Event ge, chess::Move m=chess::move_null);
     model::Game::Event game_event;
     chess::Move move;
 };
@@ -24,8 +26,8 @@ class ThechessNotifier
 public:
     ThechessNotifier(ThechessServer& server);
 
-    void start_listenning(model::Object& object); // by ThechessApplication
-    void stop_listenning(model::Object& object); // by ThechessApplication
+    void start_listenning(const model::Object& object); // by ThechessApplication
+    void stop_listenning(const model::Object& object); // by ThechessApplication
 
     void emit(const ThechessEvent event); // after successful transaction.commit()
 

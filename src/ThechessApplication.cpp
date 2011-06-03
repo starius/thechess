@@ -3,6 +3,8 @@
 #include <boost/foreach.hpp>
 #include <cstdlib>
 #include <vector>
+#include <utility>
+#include <boost/assert.hpp>
 
 #include <Wt/WEnvironment>
 #include <Wt/WApplication>
@@ -45,7 +47,7 @@ using model::GamePtr;
 using model::Game;
 
 ThechessApplication::ThechessApplication(const Wt::WEnvironment& env, ThechessServer& server) :
-Wt::WApplication(env), session_(server.pool())
+Wt::WApplication(env), server_(server), session_(server.pool()), active_(true)
 {
     enableUpdates(true);
     useStyleSheet("css/1.css");
@@ -73,6 +75,18 @@ Wt::WApplication(env), session_(server.pool())
 
 ThechessApplication::~ThechessApplication()
 {
+    std::set<model::Object> objects;
+    for (O2N::iterator it = notifiables_.begin(); it != notifiables_.end(); ++it)
+    {
+        objects.insert(it->first);
+    }
+    BOOST_FOREACH(const model::Object& object, objects)
+    {
+        server_.notifier().stop_listenning(object);
+    }
+    notifiables_.clear();
+    active_ = false;
+
     dbo::Transaction t(session());
     user_.reread();
     if (user_)
@@ -244,8 +258,78 @@ template<> void ThechessApplication::list_view<model::Game>()
     show_<widgets::GameListWidget>("/game/");
 }
 
-void ThechessApplication::thechess_notify(ThechessEvent)
+void ThechessApplication::thechess_notify(ThechessEvent event)
 {
+    std::pair<O2N::iterator, O2N::iterator> range =
+        tApp->notifiables_.equal_range(static_cast<model::Object>(event));
+    for (O2N::iterator it = range.first; it != range.second; ++it)
+    {
+        Notifiable* notifiable = it->second;
+        notifiable->notify();
+    }
+}
+
+void ThechessApplication::add_notifiable_(Notifiable* notifiable,
+    const model::Object& object)
+{
+    if (notifiables_.find(object) == notifiables_.end())
+    {
+        // first Notifiable for the object is being created
+        server_.notifier().start_listenning(object);
+    }
+    notifiables_.insert(O2N::value_type(object, notifiable));
+}
+
+void ThechessApplication::remove_notifiable_(Notifiable* notifiable,
+    const model::Object& object)
+{
+    O2N::iterator to_delete;
+    std::pair<O2N::iterator, O2N::iterator> range =
+        notifiables_.equal_range(object);
+    for (to_delete = range.first; to_delete != range.second; ++to_delete)
+    {
+        if (to_delete->second == notifiable)
+        {
+            break;
+        }
+    }
+    BOOST_ASSERT(to_delete->second == notifiable);
+    notifiables_.erase(to_delete);
+    if (notifiables_.find(object) == notifiables_.end())
+    {
+        // last Notifiable for the object is being deleted
+        server_.notifier().stop_listenning(object);
+    }
+}
+
+Notifiable::Notifiable(const model::Object& object):
+object_(object)
+{
+    if (tApp->active_)
+    {
+        // do not call after ~ThechessApplication
+        tApp->add_notifiable_(this, object_);
+    }
+}
+
+Notifiable::Notifiable(model::ObjectType ot, int id):
+object_(ot, id)
+{
+    if (tApp->active_)
+    {
+        // do not call after ~ThechessApplication
+        tApp->add_notifiable_(this, object_);
+    }
+}
+
+Notifiable::~Notifiable()
+{
+    if (tApp->active_)
+    {
+        // do not call after ~ThechessApplication
+        tApp->remove_notifiable_(this, object_);
+    }
 }
 
 }
+

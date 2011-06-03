@@ -2,6 +2,7 @@
 #define THECHESS_WAPPLICATION_HPP_
 
 #include <vector>
+#include <map>
 
 namespace Wt {
     class WEnvironment;
@@ -17,6 +18,7 @@ namespace Wt {
 namespace dbo = Wt::Dbo;
 
 #include "ThechessNotifier.hpp"
+#include "model/Object.hpp"
 #include "model/User.hpp"
 #include "model/Game.hpp"
 #include "ThechessServer.hpp"
@@ -31,6 +33,21 @@ using model::UserPtr;
 using model::GamePtr;
 
 class ThechessSession;
+
+class Notifiable
+{
+public:
+    Notifiable(const model::Object& object);
+    Notifiable(model::ObjectType ot, int id);
+
+    virtual ~Notifiable();
+    virtual void notify()=0;
+
+private:
+    const model::Object object_;
+
+    void add_to_application_();
+};
 
 class ThechessApplication : public Wt::WApplication
 {
@@ -52,12 +69,21 @@ public:
     {
     }
 
-    static void thechess_notify(ThechessEvent);
+    static void thechess_notify(ThechessEvent event);
 
 private:
+    ThechessServer& server_;
     ThechessSession session_;
     UserPtr user_;
     Wt::WBorderLayout* layout_;
+    typedef std::multimap<model::Object, Notifiable*> O2N;
+    O2N notifiables_;
+    bool active_;
+
+    void add_notifiable_(Notifiable* notifiable,
+        const model::Object& object);
+    void remove_notifiable_(Notifiable* notifiable,
+        const model::Object& object);
 
     void cookie_session_read_();
     void cookie_session_write_();
@@ -106,6 +132,7 @@ private:
     }
 
 friend class widgets::MainMenuImpl;
+friend class Notifiable;
 };
 
 template<> void ThechessApplication::list_view<model::Game>();

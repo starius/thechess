@@ -114,11 +114,13 @@ private:
     }
 };
 
-class GameWidgetImpl : public Wt::WContainerWidget
+class GameWidgetImpl : public Wt::WContainerWidget, public Notifiable
 {
 public:
     GameWidgetImpl(GamePtr game) :
-    Wt::WContainerWidget(), game_(game), app_(tApp)
+    Wt::WContainerWidget(),
+    Notifiable(model::Object(model::GameObject, game->id())),
+    game_(game), app_(tApp)
     {
         dbo::Transaction t(tApp->session());
         game_.reread();
@@ -166,6 +168,10 @@ public:
         timer_->timeout().connect(this, &GameWidgetImpl::handle_timer_);
         setup_timer_();
         t.commit();
+    }
+
+    virtual void notify()
+    {
     }
 
 private:

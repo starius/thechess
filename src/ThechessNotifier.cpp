@@ -6,12 +6,18 @@
 
 namespace thechess {
 
+ThechessEvent::ThechessEvent(model::ObjectType ot, int i,
+    model::Game::Event ge, chess::Move m) :
+model::Object(ot, i), game_event(ge), move(m)
+{
+}
+
 ThechessNotifier::ThechessNotifier(ThechessServer& server):
 server_(server)
 {
 }
 
-void ThechessNotifier::start_listenning(model::Object& object)
+void ThechessNotifier::start_listenning(const model::Object& object)
 {
     mutex_.lock();
     if (object2ids_.find(object) == object2ids_.end())
@@ -23,7 +29,7 @@ void ThechessNotifier::start_listenning(model::Object& object)
     mutex_.unlock();
 }
 
-void ThechessNotifier::stop_listenning(model::Object& object)
+void ThechessNotifier::stop_listenning(const model::Object& object)
 {
     mutex_.lock();
     if (object2ids_.find(object) == object2ids_.end())
