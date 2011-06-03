@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <string>
 #include <set>
+#include <boost/assert.hpp>
 
 #include "ThechessOptions.hpp"
 #include "config.hpp"
