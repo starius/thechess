@@ -47,7 +47,8 @@ using model::GamePtr;
 using model::Game;
 
 ThechessApplication::ThechessApplication(const Wt::WEnvironment& env, ThechessServer& server) :
-Wt::WApplication(env), server_(server), session_(server.pool()), active_(true)
+Wt::WApplication(env), server_(server), session_(server.pool()),
+active_(true), notifying_object_(0)
 {
     enableUpdates(true);
     useStyleSheet("css/1.css");
@@ -262,11 +263,22 @@ void ThechessApplication::thechess_notify(ThechessEvent event)
 {
     std::pair<O2N::iterator, O2N::iterator> range =
         tApp->notifiables_.equal_range(static_cast<model::Object>(event));
+    std::set<Notifiable*>& waiting_notifiables = tApp->waiting_notifiables_;
+    tApp->notifying_object_ = &event;
+    waiting_notifiables.clear();
     for (O2N::iterator it = range.first; it != range.second; ++it)
     {
         Notifiable* notifiable = it->second;
+        waiting_notifiables.insert(notifiable);
+    }
+    while(!waiting_notifiables.empty())
+    {
+        std::set<Notifiable*>::iterator it = waiting_notifiables.begin();
+        Notifiable* notifiable = *it;
+        waiting_notifiables.erase(it);
         notifiable->notify();
     }
+    tApp->notifying_object_ = 0;
 }
 
 void ThechessApplication::add_notifiable_(Notifiable* notifiable,
@@ -278,6 +290,10 @@ void ThechessApplication::add_notifiable_(Notifiable* notifiable,
         server_.notifier().start_listenning(object);
     }
     notifiables_.insert(O2N::value_type(object, notifiable));
+    if (notifying_object_ && object == *notifying_object_)
+    {
+        waiting_notifiables_.insert(notifiable);
+    }
 }
 
 void ThechessApplication::remove_notifiable_(Notifiable* notifiable,
@@ -294,6 +310,10 @@ void ThechessApplication::remove_notifiable_(Notifiable* notifiable,
         }
     }
     BOOST_ASSERT(to_delete->second == notifiable);
+    if (notifying_object_)
+    {
+        waiting_notifiables_.erase(notifiable);
+    }
     notifiables_.erase(to_delete);
     if (notifiables_.find(object) == notifiables_.end())
     {

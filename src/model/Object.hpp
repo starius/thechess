@@ -23,6 +23,11 @@ inline bool operator<(const model::Object& a, const model::Object& b)
     return a.id<b.id || (a.id==b.id && a.object_type<b.object_type);
 }
 
+inline bool operator==(const model::Object& a, const model::Object& b)
+{
+    return a.id == b.id && a.object_type == b.object_type;
+}
+
 }
 }
 

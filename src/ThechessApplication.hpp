@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <map>
+#include <set>
 
 namespace Wt {
     class WEnvironment;
@@ -79,6 +80,8 @@ private:
     typedef std::multimap<model::Object, Notifiable*> O2N;
     O2N notifiables_;
     bool active_;
+    std::set<Notifiable*> waiting_notifiables_;
+    const model::Object* notifying_object_;
 
     void add_notifiable_(Notifiable* notifiable,
         const model::Object& object);
