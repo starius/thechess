@@ -116,7 +116,7 @@ class GameWidgetImpl : public Wt::WContainerWidget, public Notifiable
 public:
     GameWidgetImpl(GamePtr game) :
     Wt::WContainerWidget(),
-    Notifiable(Object(GameObject, game->id())),
+    Notifiable(Object(GameObject, game.id())),
     game_(game), app_(tApp)
     {
         dbo::Transaction t(tApp->session());
@@ -447,7 +447,7 @@ private:
     {
         dbo::Transaction t(tApp->session());
         Wt::WDialog* analysis = new Wt::WDialog(
-            tr("thechess.format.analysis").arg((int)game_->id()));
+            tr("thechess.format.analysis").arg((int)game_.id()));
         int max_moves = -1;
         bool active = true;
         bool big = false; // FIXME
