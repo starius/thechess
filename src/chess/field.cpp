@@ -3,7 +3,7 @@
 #include "chess/field.hpp"
 
 namespace thechess {
- namespace chess {
+namespace chess {
 
 
 Field::Field(Color color, Chessman chessman) :

@@ -19,6 +19,7 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 namespace widgets {
+using namespace model;
 
 class SingleTimeout : public Wt::WTemplate
 {
@@ -90,7 +91,6 @@ private:
 
     void single_countdown_(UserPtr user)
     {
-        using model::Game;
         const Wt::WString& name = user->username();
         bool active = game_->state() == Game::active
             && user == game_->order_user();

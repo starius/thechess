@@ -1,7 +1,7 @@
 #include "chess/cached_moves.hpp"
 
 namespace thechess {
- namespace chess {
+namespace chess {
 
 CachedMoves::CachedMoves(int moves_count) :
 Moves(moves_count), boards_(moves_count+1)

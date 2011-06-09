@@ -18,9 +18,8 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 namespace widgets {
+using namespace model;
 
-using model::Game;
-using model::User;
 typedef GamePtr Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;

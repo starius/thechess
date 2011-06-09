@@ -14,11 +14,12 @@
 
 namespace thechess {
 namespace widgets {
+using namespace model;
 
 class GameParametersWidgetImpl : public Wt::WContainerWidget
 {
 public:
-    GameParametersWidgetImpl(const model::GameParameters* gp) :
+    GameParametersWidgetImpl(const GameParameters* gp) :
     Wt::WContainerWidget()
     {
         using namespace config; // max, min
@@ -67,7 +68,7 @@ public:
         first_draw_label->setBuddy(first_draw_);
     }
 
-    void apply_parameters(model::GameParameters* gp)
+    void apply_parameters(GameParameters* gp)
     {
         gp->set_init_moves(moves_widget_->moves());
         gp->set_limit_std(limit_std_->timedelta());
@@ -105,7 +106,7 @@ private:
 };
 
 GameParametersWidget::GameParametersWidget(
-    const model::GameParameters* gp,
+    const GameParameters* gp,
     Wt::WContainerWidget* parent) :
 Wt::WCompositeWidget(parent)
 {
@@ -113,7 +114,7 @@ Wt::WCompositeWidget(parent)
     setImplementation(impl_);
 }
 
-void GameParametersWidget::apply_parameters(model::GameParameters* gp) const
+void GameParametersWidget::apply_parameters(GameParameters* gp) const
 {
     impl_->apply_parameters(gp);
 }

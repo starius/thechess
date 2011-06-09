@@ -1,4 +1,3 @@
-//
 
 #include <iostream>
 #include <cstdio>
@@ -9,7 +8,7 @@
 #include "chess/xy.hpp"
 
 namespace thechess {
- namespace chess {
+namespace chess {
 
 MovesIterator::MovesIterator(const Moves* moves, Board& board, int from)
  :  moves_(moves), board_(board), n(from)

@@ -15,7 +15,6 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 namespace widgets {
-
 using namespace model;
 
 GameCreateWidget::GameCreateWidget(UserPtr user,

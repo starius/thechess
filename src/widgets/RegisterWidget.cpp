@@ -16,7 +16,7 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 namespace widgets {
-
+using namespace model;
 
 RegisterWidget::RegisterWidget(Wt::WContainerWidget* parent) :
 Wt::WContainerWidget(parent)
@@ -66,7 +66,7 @@ void RegisterWidget::try_register_()
     if (ok)
     {
         dbo::Transaction t(tApp->session());
-        UserPtr check_username = tApp->session().find<model::User>()
+        UserPtr check_username = tApp->session().find<User>()
         .where("username = ?")
         .bind(username_->text());
         if (check_username)
@@ -75,7 +75,7 @@ void RegisterWidget::try_register_()
         }
         else
         {
-            model::User* u = model::User::create_new();
+            User* u = User::create_new();
             u->set_username(username_->text());
             u->set_password(password_->text().toUTF8());
             UserPtr user = tApp->session().add(u);

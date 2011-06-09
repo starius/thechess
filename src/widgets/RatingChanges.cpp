@@ -22,10 +22,7 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 namespace widgets {
-
-using model::GamePtr;
-using model::Game;
-using model::UserPtr;
+using namespace model;
 
 typedef GamePtr Result;
 typedef dbo::Query<Result> Q;

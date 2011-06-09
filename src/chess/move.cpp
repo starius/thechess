@@ -1,4 +1,3 @@
-//
 
 #include "chess/move.hpp"
 

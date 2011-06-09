@@ -4,7 +4,6 @@
 
 namespace thechess {
 namespace widgets {
-
 using namespace model;
 
 ClassificationWidget::ClassificationWidget(Classification classification,

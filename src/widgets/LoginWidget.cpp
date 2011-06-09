@@ -15,8 +15,8 @@ namespace dbo = Wt::Dbo;
 #include "model/User.hpp"
 
 namespace thechess {
+using namespace model;
 namespace widgets {
-
 
 LoginWidget::LoginWidget(Wt::WContainerWidget* parent) :
 Wt::WContainerWidget(parent)
@@ -43,7 +43,7 @@ void LoginWidget::try_()
 {
     error_->setText(tr(""));
     dbo::Transaction t(tApp->session());
-    UserPtr user = tApp->session().find<model::User>()
+    UserPtr user = tApp->session().find<User>()
     .where("username = ?")
     .bind(username_->text());
     if (!user || !user->test_password(password_->text().toUTF8()))

@@ -40,11 +40,7 @@ namespace dbo = Wt::Dbo;
 #include "TaskTracker.hpp"
 
 namespace thechess {
-
-using model::UserPtr;
-using model::User;
-using model::GamePtr;
-using model::Game;
+using namespace model;
 
 ThechessApplication::ThechessApplication(const Wt::WEnvironment& env, ThechessServer& server) :
 Wt::WApplication(env), server_(server), session_(server.pool()),
@@ -76,12 +72,12 @@ active_(true), notifying_object_(0)
 
 ThechessApplication::~ThechessApplication()
 {
-    std::set<model::Object> objects;
+    std::set<Object> objects;
     for (O2N::iterator it = notifiables_.begin(); it != notifiables_.end(); ++it)
     {
         objects.insert(it->first);
     }
-    BOOST_FOREACH(const model::Object& object, objects)
+    BOOST_FOREACH(const Object& object, objects)
     {
         server_.notifier().stop_listenning(object);
     }
@@ -103,8 +99,8 @@ void ThechessApplication::cookie_session_read_()
     try
     {
         std::string cookie_id = environment().getCookie("cookie_session");
-        model::CookieSessionPtr cookie_session =
-            session().load<model::CookieSession>(cookie_id);
+        CookieSessionPtr cookie_session =
+            session().load<CookieSession>(cookie_id);
         if (cookie_session->user())
         {
             set_user(cookie_session->user());
@@ -121,7 +117,7 @@ void ThechessApplication::cookie_session_write_()
 {
     dbo::Transaction t(session());
     std::string cookie_id;
-    model::CookieSessionPtr cookie_session;
+    CookieSessionPtr cookie_session;
     try
     {
         cookie_id = environment().getCookie("cookie_session");
@@ -132,12 +128,12 @@ void ThechessApplication::cookie_session_write_()
     }
     try
     {
-        cookie_session = session().load<model::CookieSession>(cookie_id);
+        cookie_session = session().load<CookieSession>(cookie_id);
     }
     catch (dbo::ObjectNotFoundException e)
     {
         cookie_session =
-            session().add(new model::CookieSession(cookie_id));
+            session().add(new CookieSession(cookie_id));
     }
     setCookie("cookie_session", cookie_id, (365*day).total_seconds());
     cookie_session.modify()->set_user(user());
@@ -160,7 +156,6 @@ void ThechessApplication::after_user_change_()
 
 void ThechessApplication::set_user(UserPtr user)
 {
-    using model::Game;
     dbo::Transaction t(session());
     user_.reread();
     if (user_)
@@ -170,15 +165,15 @@ void ThechessApplication::set_user(UserPtr user)
     user_ = user;
     user_.reread();
     user_.modify()->login();
-    std::vector<model::GamePtr> games_vector;
+    std::vector<GamePtr> games_vector;
     {
-        model::Games games = user_->games().where("state in (?,?,?)")
+        Games games = user_->games().where("state in (?,?,?)")
             .bind(Game::confirmed)
             .bind(Game::active)
             .bind(Game::pause);
         games_vector.assign(games.begin(), games.end());
     }
-    BOOST_FOREACH(model::GamePtr game, games_vector)
+    BOOST_FOREACH(GamePtr game, games_vector)
     {
         game.reread();
         game.modify()->check();
@@ -229,7 +224,7 @@ void ThechessApplication::onPathChange_()
     }
     if (section == "user")
     {
-        object_view_<model::User>("/user/");
+        object_view_<User>("/user/");
     }
     if (section == "game")
     {
@@ -237,7 +232,7 @@ void ThechessApplication::onPathChange_()
         {
             set_mainpanel_(new widgets::GameCreateWidget());
         }
-        object_view_<model::Game>("/game/");
+        object_view_<Game>("/game/");
     }
 }
 
@@ -254,7 +249,7 @@ void ThechessApplication::view(GamePtr game)
         str(boost::format("/game/%i/") % game.id()));
 }
 
-template<> void ThechessApplication::list_view<model::Game>()
+template<> void ThechessApplication::list_view<Game>()
 {
     show_<widgets::GameListWidget>("/game/");
 }
@@ -262,7 +257,7 @@ template<> void ThechessApplication::list_view<model::Game>()
 void ThechessApplication::thechess_notify(ThechessEvent event)
 {
     std::pair<O2N::iterator, O2N::iterator> range =
-        tApp->notifiables_.equal_range(static_cast<model::Object>(event));
+        tApp->notifiables_.equal_range(static_cast<Object>(event));
     std::set<Notifiable*>& waiting_notifiables = tApp->waiting_notifiables_;
     tApp->notifying_object_ = &event;
     waiting_notifiables.clear();
@@ -282,7 +277,7 @@ void ThechessApplication::thechess_notify(ThechessEvent event)
 }
 
 void ThechessApplication::add_notifiable_(Notifiable* notifiable,
-    const model::Object& object)
+    const Object& object)
 {
     if (notifiables_.find(object) == notifiables_.end())
     {
@@ -297,7 +292,7 @@ void ThechessApplication::add_notifiable_(Notifiable* notifiable,
 }
 
 void ThechessApplication::remove_notifiable_(Notifiable* notifiable,
-    const model::Object& object)
+    const Object& object)
 {
     O2N::iterator to_delete;
     std::pair<O2N::iterator, O2N::iterator> range =
@@ -322,7 +317,7 @@ void ThechessApplication::remove_notifiable_(Notifiable* notifiable,
     }
 }
 
-Notifiable::Notifiable(const model::Object& object):
+Notifiable::Notifiable(const Object& object):
 object_(object)
 {
     if (tApp->active_)
@@ -332,7 +327,7 @@ object_(object)
     }
 }
 
-Notifiable::Notifiable(model::ObjectType ot, int id):
+Notifiable::Notifiable(ObjectType ot, int id):
 object_(ot, id)
 {
     if (tApp->active_)

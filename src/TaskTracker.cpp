@@ -14,9 +14,7 @@
 
 namespace thechess {
 namespace tracker {
-
-using model::GamePtr;
-using model::UserPtr;
+using namespace model;
 
 struct Task
 {
@@ -44,7 +42,7 @@ Wt::WDateTime process_task(const Task& task, dbo::Session* session)
     Wt::WDateTime result;
     if (task.type == Game)
     {
-        GamePtr game = session->load<model::Game>(task.id);
+        GamePtr game = session->load<Game>(task.id);
         // FIXME game.reread();
         game.modify()->check_impl_();
         result = game->next_check();

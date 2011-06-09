@@ -15,9 +15,7 @@
 
 namespace thechess {
 namespace widgets {
-
-using model::UserPtr;
-using model::GamePtr;
+using namespace model;
 
 class UserWidgetImpl : public Wt::WContainerWidget
 {

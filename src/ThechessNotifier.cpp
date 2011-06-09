@@ -5,10 +5,11 @@
 #include "ThechessApplication.hpp"
 
 namespace thechess {
+using namespace model;
 
-ThechessEvent::ThechessEvent(model::ObjectType ot, int i,
-    model::Game::Event ge, chess::Move m) :
-model::Object(ot, i), game_event(ge), move(m)
+ThechessEvent::ThechessEvent(ObjectType ot, int i,
+    Game::Event ge, chess::Move m) :
+Object(ot, i), game_event(ge), move(m)
 {
 }
 
@@ -17,7 +18,7 @@ server_(server)
 {
 }
 
-void ThechessNotifier::start_listenning(const model::Object& object)
+void ThechessNotifier::start_listenning(const Object& object)
 {
     mutex_.lock();
     if (object2ids_.find(object) == object2ids_.end())
@@ -29,7 +30,7 @@ void ThechessNotifier::start_listenning(const model::Object& object)
     mutex_.unlock();
 }
 
-void ThechessNotifier::stop_listenning(const model::Object& object)
+void ThechessNotifier::stop_listenning(const Object& object)
 {
     mutex_.lock();
     if (object2ids_.find(object) == object2ids_.end())
@@ -49,7 +50,7 @@ void ThechessNotifier::stop_listenning(const model::Object& object)
 void ThechessNotifier::emit(const ThechessEvent event)
 {
     mutex_.lock();
-    IdSet* id_set = object2ids_[static_cast<model::Object>(event)];
+    IdSet* id_set = object2ids_[static_cast<Object>(event)];
     BOOST_FOREACH(const std::string& id, *id_set)
     {
         server_.post(id, boost::bind(&ThechessApplication::thechess_notify, event));

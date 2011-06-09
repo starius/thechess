@@ -25,10 +25,7 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 namespace widgets {
-
-using model::UserPtr;
-using model::GamePtr;
-using model::Game;
+using namespace model;
 
 class GameStatus : public Wt::WViewWidget
 {
@@ -119,7 +116,7 @@ class GameWidgetImpl : public Wt::WContainerWidget, public Notifiable
 public:
     GameWidgetImpl(GamePtr game) :
     Wt::WContainerWidget(),
-    Notifiable(model::Object(model::GameObject, game->id())),
+    Notifiable(Object(GameObject, game->id())),
     game_(game), app_(tApp)
     {
         dbo::Transaction t(tApp->session());
@@ -199,7 +196,7 @@ private:
         t.commit();
     }
 
-    void game_handler_(model::Game::Event event, const chess::Move& move)
+    void game_handler_(Game::Event event, const chess::Move& move)
     {
         dbo::Transaction t(tApp->session());
         Wt::WApplication::UpdateLock lock(app_);
@@ -207,19 +204,19 @@ private:
         {
             moves_widget_->set_active(game_->can_move(app_->user()));
             countdown_print_();
-            if (event == model::Game::e_confirm && game_->colors_random())
+            if (event == Game::e_confirm && game_->colors_random())
             {
                 moves_widget_->bottom_set(game_->color_of(tApp->user()));
             }
-            if (event == model::Game::e_mistake)
+            if (event == Game::e_mistake)
             {
                 moves_widget_->set_moves(game_->moves());
             }
-            if (event == model::Game::e_move)
+            if (event == Game::e_move)
             {
                 moves_widget_->add_move(move);
             }
-            if (event == model::Game::e_comment)
+            if (event == Game::e_comment)
             {
                 comment_print_();
             }
@@ -410,7 +407,7 @@ private:
         game_status_->update();
     }
 
-    typedef void (model::Game::*GameMember)(UserPtr);
+    typedef void (Game::*GameMember)(UserPtr);
     template <GameMember method>
     void action_()
     {

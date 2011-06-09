@@ -15,14 +15,8 @@
 
 namespace dbo = Wt::Dbo;
 
-namespace thechess
-{
-
-using model::User;
-using model::Game;
-using model::Competition;
-using model::GamePtr;
-using model::CookieSession;
+namespace thechess {
+using namespace model;
 
 ThechessSession::ThechessSession(dbo::FixedSqlConnectionPool& pool)
 {
@@ -65,7 +59,7 @@ void ThechessSession::reconsider()
     dbo::Transaction t(*this);
     execute("update thechess_user set sessions = ?").bind(0);
 
-    model::Games games = find<Game>().where("state < ?").bind(Game::min_ended);
+    Games games = find<Game>().where("state < ?").bind(Game::min_ended);
     BOOST_FOREACH(GamePtr game, games)
     {
         tracker::add_or_update_task(tracker::Game, game->id(), this);
