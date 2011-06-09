@@ -137,23 +137,8 @@ public:
         countdown_container_ = new Wt::WContainerWidget(this);
         manager_ = new Wt::WContainerWidget(this);
 
-        new Wt::WText(tr("thechess.comment"), this);
-        new Wt::WText(": ", this);
-        can_comment_ = game_->can_comment(tApp->user());
-        if (can_comment_)
-        {
-            Wt::WInPlaceEdit* comment =
-                new Wt::WInPlaceEdit(game_->comment(), this);
-            comment->setEmptyText(tr("thechess.comment_welcome"));
-            comment->valueChanged().connect(this,
-                &GameWidgetImpl::comment_handler_);
-            comment_ = comment;
-        }
-        else
-        {
-            Wt::WText* comment = new Wt::WText(game_->comment(), this);
-            comment_ = comment;
-        }
+        comment_container_ = new Wt::WContainerWidget(this);
+        print_comment_();
 
         game_status_ = new GameStatus(game_, this);
         status_and_manager_();
@@ -181,11 +166,12 @@ public:
         }
         if (game_event == ge_comment)
         {
-            comment_print_();
+            print_comment_();
         }
         if (game_event == ge_state)
         {
             status_and_manager_();
+            print_comment_();
         }
         if (game_event == ge_dialog)
         {
@@ -199,8 +185,7 @@ private:
     GameStatus* game_status_;
     Wt::WContainerWidget* manager_;
     Wt::WContainerWidget* countdown_container_;
-    bool can_comment_;
-    Wt::WWidget* comment_;
+    Wt::WContainerWidget* comment_container_;
 
     void move_handler_(const chess::Move& move)
     {
@@ -451,28 +436,33 @@ private:
         delete sender();
     }
 
-    void comment_handler_()
+    void comment_handler_(const Wt::WString& text)
     {
         ThechessEvent event(GameObject, game_.id());
         dbo::Transaction t(tApp->session());
         game_.reread();
-        game_.modify()->set_comment(tApp->user(),
-            dynamic_cast<Wt::WInPlaceEdit*>(comment_)->text(), event);
+        game_.modify()->set_comment(tApp->user(), text, event);
         t.commit();
         ThechessNotifier::app_emit(event);
     }
 
-    void comment_print_()
+    void print_comment_()
     {
         dbo::Transaction t(tApp->session());
-        if (can_comment_)
+        comment_container_->clear();
+        new Wt::WText(tr("thechess.comment"), comment_container_);
+        new Wt::WText(": ", comment_container_);
+        if (game_->can_comment(tApp->user()))
         {
-            dynamic_cast<Wt::WInPlaceEdit*>(comment_)
-                ->setText(game_->comment());
+            Wt::WInPlaceEdit* comment =
+                new Wt::WInPlaceEdit(game_->comment(), comment_container_);
+            comment->setEmptyText(tr("thechess.comment_welcome"));
+            comment->valueChanged().connect(this,
+                &GameWidgetImpl::comment_handler_);
         }
         else
         {
-            dynamic_cast<Wt::WText*>(comment_)->setText(game_->comment());
+            Wt::WText* comment = new Wt::WText(game_->comment(), comment_container_);
         }
         t.commit();
     }
