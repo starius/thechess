@@ -46,6 +46,7 @@ struct Object
     }
 
     void reread(dbo::Session& session) const;
+    Wt::WDateTime process(ThechessEvent& event, dbo::Session& session) const;
 };
 
 class ThechessEvent : public Object

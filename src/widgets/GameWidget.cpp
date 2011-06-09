@@ -387,6 +387,10 @@ private:
         (game_.modify()->*method)(tApp->user(), event);
         t.commit();
         ThechessNotifier::app_emit(event);
+        if (method == &Game::pause_agree)
+        {
+            tApp->server().tracker().add_or_update_task(event);
+        }
     }
 
     template <GameMember method>

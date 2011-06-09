@@ -6,6 +6,7 @@
 #include <Wt/Dbo/backend/Postgres>
 
 #include "ThechessSession.hpp"
+#include "model/Object.hpp"
 #include "model/Game.hpp"
 #include "model/User.hpp"
 #include "model/Competition.hpp"
@@ -27,7 +28,7 @@ ThechessSession::ThechessSession(dbo::FixedSqlConnectionPool& pool)
     mapClass<Competition>("thechess_competition");
 }
 
-void ThechessSession::reconsider()
+void ThechessSession::reconsider(TaskTracker& tracker)
 {
     try
     {
@@ -58,13 +59,15 @@ void ThechessSession::reconsider()
 
     dbo::Transaction t(*this);
     execute("update thechess_user set sessions = ?").bind(0);
+    t.commit();
 
+    dbo::Transaction t2(*this);
     Games games = find<Game>().where("state < ?").bind(Game::min_ended);
     BOOST_FOREACH(GamePtr game, games)
     {
-        tracker::add_or_update_task(tracker::Game, game->id(), this);
+        tracker.add_or_update_task(Object(GameObject, game.id()));
     }
-    t.commit();
+    t2.commit();
 }
 
 dbo::SqlConnection* ThechessSession::new_connection(const ThechessOptions& options)

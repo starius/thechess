@@ -73,6 +73,21 @@ void Object::reread(dbo::Session& session) const
     t.commit();
 }
 
+Wt::WDateTime Object::process(ThechessEvent& event, dbo::Session& session) const
+{
+    Wt::WDateTime result;
+    if (object_type == GameObject)
+    {
+        GamePtr game = session.load<Game>(id);
+        game.reread();
+        game.modify()->check(event);
+        result = game->next_check();
+    }
+    // FIXME: UserObject, CompetitionObject
+    result += config::tracker::delay;
+    return result;
+}
+
 }
 }
 

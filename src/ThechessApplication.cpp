@@ -174,6 +174,10 @@ void ThechessApplication::set_user(UserPtr user)
             .bind(Game::pause);
         games_vector.assign(games.begin(), games.end());
     }
+    BOOST_FOREACH(GamePtr game, games_vector)
+    {
+        server_.tracker().add_or_update_task(Object(GameObject, game.id()));
+    }
     cookie_session_write_();
     after_user_change_();
     t.commit();

@@ -2,6 +2,8 @@
 #include <map>
 #include <list>
 #include <utility>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/thread.hpp>
 
 #include <Wt/WDateTime>
 
@@ -9,92 +11,109 @@
 #include "time_intervals.hpp"
 #include "ThechessApplication.hpp"
 #include "ThechessSession.hpp"
+#include "ThechessServer.hpp"
 #include "model/Game.hpp"
 #include "model/User.hpp"
+#include "time_intervals.hpp"
+#include "config.hpp"
 
 namespace thechess {
-namespace tracker {
 using namespace model;
 
-struct Task
+TaskTracker::TaskTracker(ThechessServer& server):
+server_(server), session_(server.pool()), timer_(io_),
+dummy_timer_(io_, config::tracker::dummy_timer_expiry_time)
 {
-    Task(TaskType t, int i): type(t), id(i) {}
-
-    TaskType type;
-    int id;
-};
-
-bool operator < (const Task& a, const Task& b)
-{
-    return a.id < b.id;
+    dummy_timer_.async_wait(boost::bind(&TaskTracker::check_, this, _1));
+    boost::thread(&TaskTracker::io_run_, this);
+    refresh_();
 }
 
-typedef std::multimap<Wt::WDateTime, Task> W2T;
-typedef W2T::iterator W2T_It;
-typedef std::map<Task, W2T_It> T2I;
-typedef T2I::iterator T2I_It;
-
-W2T w2t;
-T2I t2i;
-
-Wt::WDateTime process_task(const Task& task, dbo::Session* session)
+TaskTracker::~TaskTracker()
 {
-    Wt::WDateTime result;
-    if (task.type == Game)
-    {
-        GamePtr game = session->load<model::Game>(task.id);
-        // FIXME game.reread();
-        //game.modify()->check_impl_();
-        result = game->next_check();
-    }
-    return result;
+    timer_.cancel();
+    dummy_timer_.cancel();
 }
 
-void add_or_update_task(TaskType type, int id, dbo::Session* session)
+void TaskTracker::io_run_()
 {
-    printf("%d\n", id);
-    Task task(type, id);
-    check(session);
-    Wt::WDateTime new_time = process_task(task, session);
-    T2I_It t2i_it = t2i.find(task);
+    io_.run();
+}
+
+void TaskTracker::add_or_update_task(const Object& object)
+{
+    mutex_.lock();
+    T2I_It t2i_it = t2i.find(object);
     if (t2i_it != t2i.end())
     {
         // delete old
         W2T_It w2t_it = t2i_it->second;
         w2t.erase(w2t_it);
     }
-    t2i[task] = w2t.insert(std::make_pair(new_time, task));
+    t2i[object] = w2t.insert(std::make_pair(now(), object));
+    std::cout << "add_or_update_task() ok" <<std::endl;
+    refresh_();
+    mutex_.unlock();
 }
 
-void check(dbo::Session* session)
+void TaskTracker::check_(const boost::system::error_code& error)
 {
-    Wt::WDateTime cached_now = now();
-    while (!w2t.empty())
+    std::cout << "TaskTracker::check_()" <<std::endl;
+    if (!error)
     {
-        W2T_It w2t_it = w2t.begin();
-        const Wt::WDateTime& time = w2t_it->first;
-        if (cached_now >= time)
+        std::cout << "TaskTracker::check_() ok" <<std::endl;
+        mutex_.lock();
+        Wt::WDateTime cached_now = now();
+        while (!w2t.empty())
         {
-            const Task& task = w2t_it->second;
-            Wt::WDateTime new_time = process_task(task, session);
-            if (new_time.isValid() && new_time > cached_now)
+            W2T_It w2t_it = w2t.begin();
+            const Wt::WDateTime& time = w2t_it->first;
+            if (cached_now >= time)
             {
-                // update
-                t2i[task] = w2t.insert(std::make_pair(new_time, task));
+                const Object& object = w2t_it->second;
+                dbo::Transaction t(session_);
+                ThechessEvent event(object);
+                Wt::WDateTime new_time = object.process(event, session_);
+                try
+                {
+                    t.commit();
+                    server_.notifier().emit(event);
+                    if (new_time.isValid() && new_time > cached_now)
+                    {
+                        // update
+                        t2i[object] = w2t.insert(std::make_pair(new_time, object));
+                    }
+                    else
+                    {
+                        // delete
+                        t2i.erase(object);
+                    }
+                    w2t.erase(w2t_it);
+                }
+                catch(...)
+                {
+                    object.reread(session_);
+                }
             }
             else
             {
-                // delete
-                t2i.erase(task);
+                break;
             }
-            w2t.erase(w2t_it);
         }
-        else
-        {
-            break;
-        }
+        refresh_();
+        mutex_.unlock();
+    }
+}
+
+void TaskTracker::refresh_()
+{
+    if (!w2t.empty())
+    {
+        Wt::WDateTime next_check = std::max(w2t.begin()->first, now()+second);
+        timer_.expires_at(next_check.toPosixTime()); // internally calls cancel
+        timer_.async_wait(boost::bind(&TaskTracker::check_, this, _1));
     }
 }
 
 }
-}
+

@@ -13,11 +13,13 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 
+class TaskTracker;
+
 class ThechessSession : public dbo::Session
 {
 public:
     ThechessSession(dbo::FixedSqlConnectionPool& pool);
-    void reconsider();
+    void reconsider(TaskTracker& tracker);
     static dbo::SqlConnection* new_connection(const ThechessOptions& options);
 };
 

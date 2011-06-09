@@ -7,6 +7,7 @@
 #include "ThechessOptions.hpp"
 #include "ThechessSession.hpp"
 #include "ThechessNotifier.hpp"
+#include "TaskTracker.hpp"
 
 namespace dbo = Wt::Dbo;
 
@@ -19,12 +20,13 @@ public:
     const ThechessOptions& options() const;
     dbo::FixedSqlConnectionPool& pool();
     ThechessNotifier& notifier();
+    TaskTracker& tracker();
 
 private:
     ThechessOptions options_;
     dbo::FixedSqlConnectionPool pool_;
-    ThechessSession session_;
     ThechessNotifier notifier_;
+    TaskTracker tracker_;
 };
 
 }

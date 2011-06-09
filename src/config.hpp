@@ -82,6 +82,12 @@ namespace elo
 const int salt_length = 16;
 const char crypt_id = '5'; // man 3 crypt
 
+namespace tracker
+{
+    const Td delay = 0.01 * second;
+    const Td dummy_timer_expiry_time = 100500 * day;
+}
+
 }
 }
 
