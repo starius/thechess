@@ -37,6 +37,7 @@ namespace dbo = Wt::Dbo;
 #include "model/User.hpp"
 #include "model/CookieSession.hpp"
 #include "model/Game.hpp"
+#include "model/Object.hpp"
 #include "TaskTracker.hpp"
 
 namespace thechess {
@@ -173,11 +174,6 @@ void ThechessApplication::set_user(UserPtr user)
             .bind(Game::pause);
         games_vector.assign(games.begin(), games.end());
     }
-    BOOST_FOREACH(GamePtr game, games_vector)
-    {
-        game.reread();
-        game.modify()->check();
-    }
     cookie_session_write_();
     after_user_change_();
     t.commit();
@@ -256,6 +252,8 @@ template<> void ThechessApplication::list_view<Game>()
 
 void ThechessApplication::thechess_notify(ThechessEvent event)
 {
+    dbo::Transaction t(tApp->session());
+    static_cast<Object>(event).reread(tApp->session());
     std::pair<O2N::iterator, O2N::iterator> range =
         tApp->notifiables_.equal_range(static_cast<Object>(event));
     std::set<Notifiable*>& waiting_notifiables = tApp->waiting_notifiables_;
@@ -271,9 +269,11 @@ void ThechessApplication::thechess_notify(ThechessEvent event)
         std::set<Notifiable*>::iterator it = waiting_notifiables.begin();
         Notifiable* notifiable = *it;
         waiting_notifiables.erase(it);
-        notifiable->notify();
+        notifiable->notify(event);
     }
     tApp->notifying_object_ = 0;
+    tApp->triggerUpdate();
+    t.commit();
 }
 
 void ThechessApplication::add_notifiable_(Notifiable* notifiable,

@@ -6,7 +6,6 @@
 #include <Wt/WText>
 #include <Wt/WPushButton>
 #include <Wt/WInPlaceEdit>
-#include <Wt/WTimer>
 #include <Wt/WDialog>
 #include <Wt/WBreak>
 #include <Wt/Dbo/Transaction>
@@ -117,11 +116,9 @@ public:
     GameWidgetImpl(GamePtr game) :
     Wt::WContainerWidget(),
     Notifiable(Object(GameObject, game.id())),
-    game_(game), app_(tApp)
+    game_(game)
     {
         dbo::Transaction t(tApp->session());
-        game_.reread();
-        game_.modify()->check();
 
         new Wt::WText(tr("thechess.format.game_header")
             .arg((int)game.id()), this);
@@ -161,14 +158,39 @@ public:
         game_status_ = new GameStatus(game_, this);
         status_and_manager_();
         countdown_print_();
-        timer_ = new Wt::WTimer(this);
-        timer_->timeout().connect(this, &GameWidgetImpl::handle_timer_);
-        setup_timer_();
         t.commit();
     }
 
-    virtual void notify()
+    virtual void notify(const ThechessEvent& event)
     {
+        moves_widget_->set_active(game_->can_move(tApp->user()));
+        countdown_print_();
+        GameEvent game_event = event.game_event();
+        if (game_event == ge_state && game_->colors_random())
+        {
+            moves_widget_->bottom_set(game_->color_of(tApp->user()));
+        }
+        if (game_event == ge_mistake)
+        {
+            moves_widget_->set_moves(game_->moves());
+            status_and_manager_();
+        }
+        if (event.move != chess::move_null)
+        {
+            moves_widget_->add_move(event.move);
+        }
+        if (game_event == ge_comment)
+        {
+            comment_print_();
+        }
+        if (game_event == ge_state)
+        {
+            status_and_manager_();
+        }
+        if (game_event == ge_dialog)
+        {
+            print_manager_();
+        }
     }
 
 private:
@@ -177,8 +199,6 @@ private:
     GameStatus* game_status_;
     Wt::WContainerWidget* manager_;
     Wt::WContainerWidget* countdown_container_;
-    ThechessApplication* app_;
-    Wt::WTimer* timer_;
     bool can_comment_;
     Wt::WWidget* comment_;
 
@@ -189,78 +209,20 @@ private:
         int game_size = game_->moves().size();
         int moves_size = moves_widget_->moves().size();
         // additional protection
-        if (game_size == moves_size - 1 && game_->can_move(tApp->user()))
+        ThechessEvent event(GameObject, game_.id());
+        if (game_size == moves_size-1 && game_->can_move(tApp->user()))
         {
-            game_.modify()->add_move(move, moves_widget_->board());
+            game_.modify()->add_move(move, moves_widget_->board(), event);
         }
         t.commit();
-    }
-
-    void game_handler_(Game::Event event, const chess::Move& move)
-    {
-        dbo::Transaction t(tApp->session());
-        Wt::WApplication::UpdateLock lock(app_);
-        if (lock)
-        {
-            moves_widget_->set_active(game_->can_move(app_->user()));
-            countdown_print_();
-            if (event == Game::e_confirm && game_->colors_random())
-            {
-                moves_widget_->bottom_set(game_->color_of(tApp->user()));
-            }
-            if (event == Game::e_mistake)
-            {
-                moves_widget_->set_moves(game_->moves());
-            }
-            if (event == Game::e_move)
-            {
-                moves_widget_->add_move(move);
-            }
-            if (event == Game::e_comment)
-            {
-                comment_print_();
-            }
-            status_and_manager_();
-            setup_timer_();
-            app_->triggerUpdate();
-        }
-        t.commit();
+        ThechessNotifier::app_emit(event);
     }
 
     void status_and_manager_()
     {
         dbo::Transaction t(tApp->session());
         print_status_();
-        manager_->clear();
-        if (tApp->user())
-        {
-            print_manager_();
-        }
-        else
-        {
-            new PleaseLoginWidget(manager_);
-        }
-        t.commit();
-    }
-
-    void handle_timer_()
-    {
-        dbo::Transaction t(tApp->session());
-        game_.reread();
-        game_.modify()->check();
-        setup_timer_();
-        t.commit();
-    }
-
-    void setup_timer_()
-    {
-        dbo::Transaction t(tApp->session());
-        timer_->stop();
-        if (game_->next_check().isValid())
-        {
-            timer_->setInterval((game_->next_check() - now()).total_milliseconds());
-            timer_->start();
-        }
+        print_manager_();
         t.commit();
     }
 
@@ -273,16 +235,24 @@ private:
     void print_manager_()
     {
         dbo::Transaction t(tApp->session());
+        manager_->clear();
         print_analysis_button_();
-        if (game_->state() < Game::active)
+        if (tApp->user())
         {
-            print_before_active_buttons_();
+            if (game_->state() < Game::active)
+            {
+                print_before_active_buttons_();
+            }
+            if (game_->state()==Game::active || game_->state()==Game::pause)
+            {
+                print_pause_buttons_();
+                print_mistake_buttons_();
+                print_draw_buttons_();
+            }
         }
-        if (game_->state()==Game::active || game_->state()==Game::pause)
+        else
         {
-            print_pause_buttons_();
-            print_mistake_buttons_();
-            print_draw_buttons_();
+            new PleaseLoginWidget(manager_);
         }
         t.commit();
     }
@@ -407,14 +377,16 @@ private:
         game_status_->update();
     }
 
-    typedef void (Game::*GameMember)(UserPtr);
+    typedef void (Game::*GameMember)(UserPtr, ThechessEvent&);
     template <GameMember method>
     void action_()
     {
+        ThechessEvent event(GameObject, game_.id());
         dbo::Transaction t(tApp->session());
         game_.reread();
-        (game_.modify()->*method)(tApp->user());
+        (game_.modify()->*method)(tApp->user(), event);
         t.commit();
+        ThechessNotifier::app_emit(event);
     }
 
     template <GameMember method>
@@ -427,20 +399,24 @@ private:
 
     void pause_propose_(TimeDeltaWidget* pause_duration)
     {
+        ThechessEvent event(GameObject, game_.id());
         dbo::Transaction t(tApp->session());
         game_.reread();
         game_.modify()
-            ->pause_propose(tApp->user(), pause_duration->timedelta());
+            ->pause_propose(tApp->user(), pause_duration->timedelta(), event);
         t.commit();
+        ThechessNotifier::app_emit(event);
     }
 
     void mistake_propose_()
     {
+        ThechessEvent event(GameObject, game_.id());
         dbo::Transaction t(tApp->session());
         game_.reread();
         game_.modify()
-            ->mistake_propose(tApp->user(), moves_widget_->current_move());
+            ->mistake_propose(tApp->user(), moves_widget_->current_move(), event);
         t.commit();
+        ThechessNotifier::app_emit(event);
     }
 
     void show_analysis_()
@@ -473,11 +449,13 @@ private:
 
     void comment_handler_()
     {
+        ThechessEvent event(GameObject, game_.id());
         dbo::Transaction t(tApp->session());
         game_.reread();
         game_.modify()->set_comment(tApp->user(),
-            dynamic_cast<Wt::WInPlaceEdit*>(comment_)->text());
+            dynamic_cast<Wt::WInPlaceEdit*>(comment_)->text(), event);
         t.commit();
+        ThechessNotifier::app_emit(event);
     }
 
     void comment_print_()

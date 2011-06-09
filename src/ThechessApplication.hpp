@@ -22,6 +22,7 @@ namespace dbo = Wt::Dbo;
 #include "model/Object.hpp"
 #include "model/User.hpp"
 #include "model/Game.hpp"
+#include "model/Object.hpp"
 #include "ThechessServer.hpp"
 #include "ThechessSession.hpp"
 #include "widgets/MainMenu.hpp"
@@ -42,7 +43,7 @@ public:
     Notifiable(model::ObjectType ot, int id);
 
     virtual ~Notifiable();
-    virtual void notify()=0;
+    virtual void notify(const model::ThechessEvent& event)=0; // under Transaction
 
 private:
     const model::Object object_;
@@ -57,6 +58,7 @@ public:
     virtual ~ThechessApplication();
 
     ThechessSession& session() { return session_; }
+    ThechessServer& server() { return server_; }
 
     UserPtr user() const { return user_; }
     void after_user_change_();
@@ -70,7 +72,7 @@ public:
     {
     }
 
-    static void thechess_notify(ThechessEvent event);
+    static void thechess_notify(model::ThechessEvent event);
 
 private:
     ThechessServer& server_;

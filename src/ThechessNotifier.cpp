@@ -7,12 +7,6 @@
 namespace thechess {
 using namespace model;
 
-ThechessEvent::ThechessEvent(ObjectType ot, int i,
-    Game::Event ge, chess::Move m) :
-Object(ot, i), game_event(ge), move(m)
-{
-}
-
 ThechessNotifier::ThechessNotifier(ThechessServer& server):
 server_(server)
 {
@@ -47,15 +41,36 @@ void ThechessNotifier::stop_listenning(const Object& object)
     mutex_.unlock();
 }
 
-void ThechessNotifier::emit(const ThechessEvent event)
+void ThechessNotifier::emit(const ThechessEvent& event, const std::string& this_app)
 {
-    mutex_.lock();
-    IdSet* id_set = object2ids_[static_cast<Object>(event)];
-    BOOST_FOREACH(const std::string& id, *id_set)
+    if (event.object_type != NoEvent &&
+        (event.move != chess::move_null || event.raw_event() != 0))
     {
-        server_.post(id, boost::bind(&ThechessApplication::thechess_notify, event));
+        mutex_.lock();
+        O2I::iterator it = object2ids_.find(static_cast<Object>(event));
+        if (it != object2ids_.end())
+        {
+            IdSet* id_set = it->second;
+            BOOST_FOREACH(const std::string& id, *id_set)
+            {
+                if (id != this_app)
+                {
+                    server_.post(id, boost::bind(
+                        &ThechessApplication::thechess_notify, event));
+                }
+            }
+        }
+        mutex_.unlock();
     }
-    mutex_.unlock();
+}
+
+void ThechessNotifier::app_emit(const ThechessEvent& event)
+{
+    if (event.object_type != NoEvent)
+    {
+        tApp->server().notifier().emit(event, tApp->sessionId());
+        tApp->thechess_notify(event);
+    }
 }
 
 }

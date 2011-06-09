@@ -6,20 +6,10 @@
 #include <boost/thread/mutex.hpp>
 
 #include "model/Object.hpp"
-#include "model/Game.hpp"
-#include "chess/move.hpp"
 
 namespace thechess {
 
 class ThechessServer;
-
-struct ThechessEvent : public model::Object
-{
-    ThechessEvent(model::ObjectType ot, int i,
-        model::Game::Event ge, chess::Move m=chess::move_null);
-    model::Game::Event game_event;
-    chess::Move move;
-};
 
 class ThechessNotifier
 {
@@ -29,7 +19,10 @@ public:
     void start_listenning(const model::Object& object); // by ThechessApplication
     void stop_listenning(const model::Object& object); // by ThechessApplication
 
-    void emit(const ThechessEvent event); // after successful transaction.commit()
+    // after successful transaction.commit()
+    void emit(const model::ThechessEvent& event,
+        const std::string& this_app=""); // not from WApplication
+    static void app_emit(const model::ThechessEvent& event); // from WApplication
 
 private:
     ThechessServer& server_;

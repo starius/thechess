@@ -6,7 +6,6 @@
 
 #include <Wt/WObject>
 #include <Wt/WString>
-#include <Wt/WSignal>
 #include <Wt/Dbo/Dbo>
 #include <Wt/Dbo/ptr>
 namespace dbo = Wt::Dbo;
@@ -25,6 +24,7 @@ namespace model {
 #include "model/User.hpp"
 #include "model/Competition.hpp"
 #include "model/td.hpp"
+#include "model/Object.hpp"
 
 namespace thechess {
 namespace model {
@@ -32,20 +32,6 @@ namespace model {
 class Game : public GameParameters, public dbo::Dbo<Game>
 {
 public:
-
-    enum Event {
-        e_confirm,
-        e_start,
-        e_move,
-        e_pause, // any pause event
-        e_mistake, // any mistake event
-        e_draw, // any draw event
-        e_end,
-        e_comment
-    };
-
-    typedef Wt::Signal<Event, chess::Move> GameSignal;
-
     enum State {
         proposed = 0,
         confirmed = 10,
@@ -94,31 +80,26 @@ public:
         dbo::field(a, comment_, "comment");
     }
 
-    GameSignal& signal() const;
-
     static Game* create_new();
 
     void propose_game(UserPtr init, UserPtr u,
         chess::Color c);
     void propose_challenge(UserPtr init, chess::Color c);
 
-    void check();
-    void check_impl_();
+    bool check(ThechessEvent& event);
 
     bool is_challenge() const;
     bool is_creation() const;
     bool can_join(UserPtr user) const;
-    void join(UserPtr user);
+    void join(UserPtr user, ThechessEvent& event);
     bool can_confirm(UserPtr user) const;
-    void confirm(UserPtr user);
-    void confirm();
-    void start();
+    void confirm(UserPtr user, ThechessEvent& event);
     bool can_cancel(UserPtr user) const;
-    void cancel(UserPtr user);
+    void cancel(UserPtr user, ThechessEvent& event);
 
     bool can_pause_propose(const UserPtr user) const;
     bool can_pause_propose(const UserPtr user, const Td& td) const;
-    void pause_propose(const UserPtr user, const Td& td);
+    void pause_propose(const UserPtr user, const Td& td, ThechessEvent& event);
     bool is_pause_proposed() const;
     const UserPtr pause_proposer() const { return pause_proposer_; }
     Td pause_limit() const { return pause_limit_; }
@@ -126,29 +107,29 @@ public:
     const Wt::WDateTime& pause_until() const { return pause_until_; }
     Wt::WDateTime pause_started() const;
     bool can_pause_agree(const UserPtr user) const;
-    void pause_agree(const UserPtr user);
+    void pause_agree(const UserPtr user, ThechessEvent& event);
     bool can_pause_discard(const UserPtr user) const;
-    void pause_discard(const UserPtr user);
+    void pause_discard(const UserPtr user, ThechessEvent& event);
 
     bool can_mistake_propose(const UserPtr user) const;
     bool can_mistake_propose(const UserPtr user, int mistake_move) const;
-    void mistake_propose(const UserPtr user, int mistake_move);
+    void mistake_propose(const UserPtr user, int mistake_move, ThechessEvent& event);
     bool is_mistake_proposed() const;
     const UserPtr mistake_proposer() const { return mistake_proposer_;}
     int mistake_move() const { return mistake_move_; }
     bool can_mistake_agree(const UserPtr user) const;
-    void mistake_agree(const UserPtr user);
+    void mistake_agree(const UserPtr user, ThechessEvent& event);
     bool can_mistake_discard(const UserPtr user) const;
-    void mistake_discard(const UserPtr user);
+    void mistake_discard(const UserPtr user, ThechessEvent& event);
 
     bool can_draw_propose(const UserPtr user) const;
-    void draw_propose(const UserPtr user);
+    void draw_propose(const UserPtr user, ThechessEvent& event);
     const UserPtr draw_proposer() const { return draw_proposer_;}
     bool is_draw_proposed() const { return draw_proposer_; }
     bool can_draw_agree(const UserPtr user) const;
-    void draw_agree(const UserPtr user);
+    void draw_agree(const UserPtr user, ThechessEvent& event);
     bool can_draw_discard(const UserPtr user) const;
-    void draw_discard(const UserPtr user);
+    void draw_discard(const UserPtr user, ThechessEvent& event);
 
     chess::Color order_color() const;
     UserPtr order_user() const;
@@ -196,13 +177,13 @@ public:
     bool colors_random() const { return colors_random_; }
 
     void add_move(const chess::Move& move,
-        const chess::Board& board_after);
+        const chess::Board& board_after, ThechessEvent& event);
 
     int rating_after(chess::Color color) const;
 
     const Wt::WString& comment() const { return comment_; }
     bool can_comment(const UserPtr user) const;
-    void set_comment(const UserPtr user, const Wt::WString& t);
+    void set_comment(const UserPtr user, const Wt::WString& t, ThechessEvent& event);
 
     int competition_round() const { return competition_round_; }
     void set_competition_round(int v) { competition_round_ = v; }
@@ -251,9 +232,9 @@ private:
     void set_of_color_(UserPtr user, chess::Color color);
     void set_random_(UserPtr user1, UserPtr user2);
 
-    void signal_emit(Event event, const chess::Move& move);
-    void signal_emit(Event event);
-
+    void confirm_();
+    void start_();
+    void stop_pause_();
     void finish_(State state, UserPtr winner=UserPtr());
     void elo_change_();
 
@@ -265,3 +246,4 @@ private:
 }
 
 #endif // THECHESS_MODEL_GAME_H_
+
