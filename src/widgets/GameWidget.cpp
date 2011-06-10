@@ -163,6 +163,10 @@ public:
         if (event.move != chess::move_null)
         {
             moves_widget_->add_move(event.move);
+            if (game_->size_without_init() == 1)
+            {
+                print_manager_(); // to show Rollback button
+            }
         }
         if (game_event == ge_comment)
         {
