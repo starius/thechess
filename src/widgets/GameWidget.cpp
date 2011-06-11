@@ -37,6 +37,7 @@ public:
 protected:
     virtual Wt::WWidget *renderView()
     {
+        dbo::Transaction t(tApp->session());
         Wt::WContainerWidget* result = new Wt::WContainerWidget();
         result->setList(true);
         kw_(game_->str_state(), "thechess.state", result);
@@ -68,6 +69,7 @@ protected:
             item_(Wt::WString::trn("thechess.first_draw_full",
                 game_->first_draw()/2).arg(game_->first_draw()/2), result);
         }
+        t.commit();
         return result;
     }
 
