@@ -1,3 +1,5 @@
+#include <boost/format.hpp>
+
 #include <Wt/WContainerWidget>
 #include <Wt/WTableView>
 #include <Wt/Dbo/Transaction>
@@ -38,9 +40,21 @@ const int comment_column = 9;
 class QM : public BaseQM
 {
 public:
-    QM(Wt::WObject *parent=0) :
+    QM(const Q& query, Wt::WObject *parent=0) :
     BaseQM(parent)
     {
+        setQuery(query);
+        addColumn("G.id", tr("thechess.number"));
+        addColumn("G.white_id", tr("thechess.white"));
+        addColumn("G.black_id", tr("thechess.black"));
+        addColumn("G.state", tr("thechess.state"));
+        addColumn("G.winner_game_id", tr("thechess.winner"));
+        addColumn("G.started", tr("thechess.started"));
+        addColumn("G.ended", tr("thechess.ended"));
+        addColumn("G.moves_size", tr("thechess.moves_size"));
+        addColumn("G.norating", tr("thechess.real_rating"));
+        addColumn("G.comment", tr("thechess.comment"));
+        setColumnFlags(n_column, Wt::ItemIsXHTMLText);
     }
 
     boost::any data(const Wt::WModelIndex& index,
@@ -95,7 +109,38 @@ public:
             }
             t.commit();
         }
+
+        if (role == Wt::InternalPathRole)
+        {
+            dbo::Transaction t(tApp->session());
+            GamePtr game = resultRow(index.row());
+            if (index.column() == n_column)
+            {
+                return str(boost::format("/game/%i/") % game.id());
+            }
+            else if (index.column() == white_column)
+            {
+                UserPtr user = game->white();
+                return user ? str(boost::format("/user/%i/") % user.id()) : "";
+            }
+            else if (index.column() == black_column)
+            {
+                UserPtr user = game->black();
+                return user ? str(boost::format("/user/%i/") % user.id()) : "";
+            }
+            else if (index.column() == winner_column)
+            {
+                UserPtr user = game->winner();
+                return user ? str(boost::format("/user/%i/") % user.id()) : "";
+            }
+            t.commit();
+        }
         return "";
+    }
+
+    static Wt::WString tr(const char* key)
+    {
+        return Wt::WString::tr(key);
     }
 };
 
@@ -106,24 +151,11 @@ public:
     Wt::WContainerWidget()
     {
         manager_();
-        query_model_ = new QM(this);
-        query_model_->setQuery(query());
-
-        query_model_->addColumn("G.id", tr("thechess.number"));
-        query_model_->addColumn("G.white_id", tr("thechess.white"));
-        query_model_->addColumn("G.black_id", tr("thechess.black"));
-        query_model_->addColumn("G.state", tr("thechess.state"));
-        query_model_->addColumn("G.winner_game_id", tr("thechess.winner"));
-        query_model_->addColumn("G.started", tr("thechess.started"));
-        query_model_->addColumn("G.ended", tr("thechess.ended"));
-        query_model_->addColumn("G.moves_size", tr("thechess.moves_size"));
-        query_model_->addColumn("G.norating", tr("thechess.real_rating"));
-        query_model_->addColumn("G.comment", tr("thechess.comment"));
+        query_model_ = new QM(query(), this);
 
         table_view_ = new Wt::WTableView(this);
         table_view_->setModel(query_model_);
         table_view_->resize(1200, 300);
-
         table_view_->setColumnWidth(n_column, 40);
         table_view_->setColumnWidth(white_column, 90);
         table_view_->setColumnWidth(black_column, 90);
@@ -134,9 +166,6 @@ public:
         table_view_->setColumnWidth(moves_size_column, 40);
         table_view_->setColumnWidth(real_rating_column, 40);
         table_view_->setColumnWidth(comment_column, 200);
-
-        table_view_->clicked()
-            .connect(this, &GameListWidgetImpl::clicked_handler_);
     }
 
     static Q all_games()
@@ -184,38 +213,6 @@ private:
     void apply_()
     {
         query_model_->setQuery(query(), /* keep_columns */ true);
-    }
-
-    void clicked_handler_(const Wt::WModelIndex index)
-    {
-        const Result& r = query_model_->resultRow(index.row());
-        GamePtr game = r;
-        if (index.column() == n_column)
-        {
-            tApp->view(game);
-        }
-        else if (index.column() == white_column ||
-            index.column() == black_column ||
-            index.column() == winner_column)
-        {
-            UserPtr user;
-            if (index.column() == white_column)
-            {
-                user = game->white();
-            }
-            else if (index.column() == black_column)
-            {
-                user = game->black();
-            }
-            else if (index.column() == winner_column)
-            {
-                user = game->winner();
-            }
-            if (user)
-            {
-                tApp->view(user);
-            }
-        }
     }
 
 };
