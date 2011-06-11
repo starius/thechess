@@ -149,6 +149,10 @@ void ThechessApplication::after_user_change_()
     {
         view(user());
     }
+    else if (path == "logout")
+    {
+        setInternalPath("/", true);
+    }
     else
     {
         onPathChange_();
@@ -218,21 +222,29 @@ void ThechessApplication::onPathChange_()
     {
         set_mainpanel_(new widgets::RegisterWidget());
     }
-    if (section == "login")
+    else if (section == "logout")
+    {
+        logout();
+    }
+    else if (section == "login")
     {
         set_mainpanel_(new widgets::LoginWidget());
     }
-    if (section == "user")
+    else if (section == "user")
     {
         object_view_<User>("/user/");
     }
-    if (section == "game")
+    else if (section == "game")
     {
         if (internalPathNextPart("/game/") == "challenge")
         {
             set_mainpanel_(new widgets::GameCreateWidget());
         }
         object_view_<Game>("/game/");
+    }
+    else
+    {
+        set_mainpanel_(new Wt::WContainerWidget()); // FIXME index page
     }
 }
 
