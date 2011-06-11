@@ -468,7 +468,7 @@ private:
         }
         else
         {
-            Wt::WText* comment = new Wt::WText(game_->comment(), comment_container_);
+            new Wt::WText(game_->comment(), comment_container_);
         }
         t.commit();
     }
