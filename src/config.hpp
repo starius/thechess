@@ -88,6 +88,8 @@ namespace tracker
     const Td dummy_timer_expiry_time = 100500 * day;
 }
 
+const int cookie_session_age = (5*365*day).total_seconds();
+
 }
 }
 

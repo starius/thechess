@@ -136,7 +136,8 @@ void ThechessApplication::cookie_session_write_()
         cookie_session =
             session().add(new CookieSession(cookie_id));
     }
-    setCookie("cookie_session", cookie_id, (365*day).total_seconds());
+    setCookie("cookie_session", cookie_id, config::cookie_session_age,
+        "", bookmarkUrl("/"));
     cookie_session.modify()->set_user(user());
     cookie_session.modify()->use();
     t.commit();
