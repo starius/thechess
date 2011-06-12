@@ -96,7 +96,8 @@ public:
             {
                 chess::Color color = board.color(move.from());
                 chess::Field ti_field(color, move.turn_into());
-                std::string ti_src = BoardWidget::image(ti_field);
+                std::string ti_src =
+                    wApp->resolveRelativeUrl(BoardWidget::image(ti_field));
                 return str(boost::format(
                     "<table><tr><td style='vertical-align:middle;'>%s =</td>"
                     "<td><img src='%s' /></td></tr></table>") %
@@ -105,7 +106,8 @@ public:
             else
             {
                 chess::Field field = board.field(move.from());
-                std::string img = BoardWidget::image(field);
+                std::string img =
+                    wApp->resolveRelativeUrl(BoardWidget::image(field));
                 return str(boost::format(
                     "<table><tr>"
                     "<td><img src='%s' /></td>"

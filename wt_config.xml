@@ -7,8 +7,8 @@
     <behind-reverse-proxy>false</behind-reverse-proxy>
     <progressive-bootstrap>false</progressive-bootstrap>
     <properties>
-        <property name="baseURL">/</property>
-        <property name="resourcesURL">/resources/</property>
+        <property name="baseURL"></property>
+        <property name="resourcesURL">resources/</property>
     </properties>
     <user-agents type="bot">
       <user-agent>.*Googlebot.*</user-agent>
