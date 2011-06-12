@@ -362,7 +362,7 @@
     <message id='thechess.join'>Join</message>
     <message id='thechess.cancel'>Cancel</message>
     <message id='thechess.confirm'>Confirm</message>
-    <message id='thechess.close'>Close</message>
+    <message id='thechess.close'>X</message>
 
     <message id='thechess.pause_propose'>Propose a pause</message>
     <message id='thechess.format.pause_proposal'>

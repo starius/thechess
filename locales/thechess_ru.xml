@@ -195,7 +195,6 @@
     <message id='thechess.join'>Присоединиться</message>
     <message id='thechess.cancel'>Отменить</message>
     <message id='thechess.confirm'>Подтвердить</message>
-    <message id='thechess.close'>Закрыть</message>
 
     <message id='thechess.pause_propose'>Предложить перерыв</message>
     <message id='thechess.format.pause_proposal'>

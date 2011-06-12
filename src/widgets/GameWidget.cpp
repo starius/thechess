@@ -427,8 +427,8 @@ private:
         const chess::Moves& moves = game_->moves();
         new MovesWidget(moves, big, active, max_moves,
             append_only, bottom, analysis->contents());
-        Wt::WPushButton* close = new Wt::WPushButton(tr("thechess.close"),
-            analysis->contents());
+        Wt::WPushButton* close = new Wt::WPushButton(tr("thechess.close"));
+        analysis->titleBar()->insertWidget(0, close);
         close->clicked().connect(analysis, &Wt::WDialog::accept);
         analysis->finished()
             .connect(this, &GameWidgetImpl::close_analysis_);
