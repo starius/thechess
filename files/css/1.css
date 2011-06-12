@@ -1,3 +1,7 @@
+td img
+{
+    display: block;
+}
 
 table.thechess_board
 {
