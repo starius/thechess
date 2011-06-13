@@ -17,6 +17,7 @@ public:
     TimeDeltaWidgetImpl(const Td& min, const Td& value, const Td& max) :
     Wt::WContainerWidget(), min_(min), max_(max), interval_(second)
     {
+        setInline(true);
         spin_box_ = new MyDoubleSpinBox(this);
         spin_box_->setRange(min.total_seconds(), max.total_seconds());
         spin_box_->setValue(value.total_seconds());
