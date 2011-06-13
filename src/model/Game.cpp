@@ -397,6 +397,7 @@ bool Game::can_pause_propose(const UserPtr user) const
 {
     return state() == active &&
         !is_pause_proposed() &&
+        pause_limit() > td_null &&
         is_member(user);
 }
 
