@@ -3,6 +3,7 @@
 
 #include <Wt/WContainerWidget>
 #include <Wt/WTable>
+#include <Wt/WTableRow>
 #include <Wt/WString>
 #include <Wt/WWidget>
 #include <Wt/WFormWidget>
@@ -18,6 +19,11 @@ public:
     Wt::WContainerWidget* item(const Wt::WString& name,
         const Wt::WString& description="",
         Wt::WFormWidget* fw=0, Wt::WWidget* input=0, bool row=true);
+    void show(Wt::WWidget* input);
+    void hide(Wt::WWidget* input);
+
+private:
+    Wt::WTableRow* parent_row_(Wt::WWidget* input);
 };
 
 }

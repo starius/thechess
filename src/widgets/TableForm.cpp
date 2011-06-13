@@ -64,6 +64,21 @@ Wt::WContainerWidget* TableForm::item(const Wt::WString& name,
     return input_cell;
 }
 
+void TableForm::show(Wt::WWidget* input)
+{
+    parent_row_(input)->show();
+}
+
+void TableForm::hide(Wt::WWidget* input)
+{
+    parent_row_(input)->hide();
+}
+
+Wt::WTableRow* TableForm::parent_row_(Wt::WWidget* input)
+{
+    return rowAt(dynamic_cast<Wt::WTableCell*>(input->parent())->row());
+}
+
 }
 }
 
