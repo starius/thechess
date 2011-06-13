@@ -91,7 +91,7 @@ chess::Color GameCreateWidget::selected_color_() const
     {
         color = chess::white;
     }
-    if (color_->currentIndex() == 2)
+    else if (color_->currentIndex() == 2)
     {
         color = chess::black;
     }
