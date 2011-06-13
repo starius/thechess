@@ -40,7 +40,7 @@ public:
         }
     }
 
-    Td timedelta() const
+    Td value() const
     {
         return spin_box_->value() * intervals[combo_box_->currentIndex()];
     }
@@ -75,9 +75,9 @@ WCompositeWidget(parent)
     setImplementation(impl_);
 }
 
-Td TimeDeltaWidget::timedelta() const
+Td TimeDeltaWidget::value() const
 {
-    return impl_->timedelta();
+    return impl_->value();
 }
 
 

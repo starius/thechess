@@ -54,10 +54,10 @@ TableForm(parent)
 void GameParametersWidget::apply_parameters(GameParameters* gp)
 {
     gp->set_init_moves(moves_widget_->moves());
-    gp->set_limit_std(limit_std_->timedelta());
-    gp->set_limit_private_init(limit_private_init_->timedelta());
+    gp->set_limit_std(limit_std_->value());
+    gp->set_limit_private_init(limit_private_init_->value());
     gp->set_norating(norating_->checkState() == Wt::Checked);
-    gp->set_pause_limit_init(pause_limit_init_->timedelta());
+    gp->set_pause_limit_init(pause_limit_init_->value());
     gp->set_first_draw(first_draw_->value() * 2);
 }
 

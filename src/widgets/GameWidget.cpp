@@ -398,7 +398,7 @@ private:
         dbo::Transaction t(tApp->session());
         game_.reread();
         game_.modify()
-            ->pause_propose(tApp->user(), pause_duration->timedelta(), event);
+            ->pause_propose(tApp->user(), pause_duration->value(), event);
         t.commit();
         ThechessNotifier::app_emit(event);
     }
