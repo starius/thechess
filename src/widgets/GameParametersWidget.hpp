@@ -5,6 +5,7 @@
 #include <Wt/WCheckBox>
 #include <Wt/WSpinBox>
 
+#include "widgets/TableForm.hpp"
 #include "model/GameParameters.hpp"
 #include "widgets/MovesWidget.hpp"
 #include "widgets/TimeDeltaWidget.hpp"
@@ -12,7 +13,7 @@
 namespace thechess {
 namespace widgets {
 
-class GameParametersWidget : public Wt::WContainerWidget
+class GameParametersWidget : public TableForm
 {
 public:
     GameParametersWidget(const model::GameParameters* gp,

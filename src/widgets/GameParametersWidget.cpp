@@ -13,52 +13,39 @@ using namespace model;
 
 GameParametersWidget::GameParametersWidget(const GameParameters* gp,
     Wt::WContainerWidget* parent) :
-Wt::WContainerWidget(parent)
+TableForm(parent)
 {
     using namespace config; // max, min
 
-    new Wt::WText(tr("thechess.start_position"), this);
-    moves_widget_ = new MovesWidget(gp->moves(),
-        false, true, max::moves_init, false, chess::white, this);
-    Wt::WPushButton* moves_reset_ =
-        new Wt::WPushButton(tr("thechess.reset"), this);
+    Wt::WContainerWidget* cell;
+
+    cell = item(tr("thechess.start_position"), "", 0, 0, false);
+    moves_widget_ = new MovesWidget(gp->moves(), false, true,
+        max::moves_init, false, chess::white, cell);
+    Wt::WPushButton* moves_reset_ = new Wt::WPushButton(tr("thechess.reset"), cell);
     moves_reset_->clicked().connect(moves_widget_, &MovesWidget::reset);
 
-    Wt::WTable* t = new Wt::WTable(this);
+    limit_std_ = new TimeDeltaWidget(min::limit_std, gp->limit_std(), max::limit_std);
+    item(tr("thechess.limit_std"), "", limit_std_->form_widget(), limit_std_);
 
-    Wt::WLabel* limit_std_label =
-        new Wt::WLabel(tr("thechess.limit_std"), t->elementAt(0, 0));
-    limit_std_ = new TimeDeltaWidget(min::limit_std,
-        gp->limit_std(), max::limit_std, t->elementAt(0,1));
-    limit_std_label->setBuddy(limit_std_->form_widget());
-
-    Wt::WLabel* limit_private_init_label =
-        new Wt::WLabel(tr("thechess.limit_private_init"),
-        t->elementAt(1,0));
     limit_private_init_ = new TimeDeltaWidget(min::limit_private_init,
-        gp->limit_private_init(), max::limit_private_init,
-        t->elementAt(1,1));
-    limit_private_init_label
-        ->setBuddy(limit_private_init_->form_widget());
+        gp->limit_private_init(), max::limit_private_init);
+    item(tr("thechess.limit_private_init"), "",
+        limit_private_init_->form_widget(), limit_private_init_);
 
-    Wt::WLabel* pause_limit_label =
-        new Wt::WLabel(tr("thechess.pause_limit"), t->elementAt(2,0));
     pause_limit_init_ = new TimeDeltaWidget(min::pause_limit_init,
-        gp->pause_limit_init(), max::pause_limit_init, t->elementAt(2,1));
-    pause_limit_label->setBuddy(pause_limit_init_->form_widget());
+        gp->pause_limit_init(), max::pause_limit_init);
+    item(tr("thechess.pause_limit"), "",
+        pause_limit_init_->form_widget(), pause_limit_init_);
 
-    norating_ = new Wt::WCheckBox(tr("thechess.norating"),
-        t->elementAt(3,0));
-    Wt::CheckState state = (gp->norating()) ?
-        Wt::Checked : Wt::Unchecked;
-    norating_->setCheckState(state);
+    norating_ = new Wt::WCheckBox();
+    item(tr("thechess.norating"), "", norating_, norating_);
+    norating_->setCheckState(gp->norating() ? Wt::Checked : Wt::Unchecked);
 
-    Wt::WLabel* first_draw_label =
-        new Wt::WLabel(tr("thechess.first_draw"), t->elementAt(4,0));
-    first_draw_ = new Wt::WSpinBox(t->elementAt(4,1));
+    first_draw_ = new Wt::WSpinBox();
     first_draw_->setRange(min::first_draw / 2, max::first_draw / 2);
     first_draw_->setValue(gp->first_draw() / 2);
-    first_draw_label->setBuddy(first_draw_);
+    item(tr("thechess.first_draw"), "", first_draw_, first_draw_);
 }
 
 void GameParametersWidget::apply_parameters(GameParameters* gp)

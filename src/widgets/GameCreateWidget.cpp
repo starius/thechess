@@ -55,13 +55,12 @@ void GameCreateWidget::print_()
     gpw_ = new GameParametersWidget(gp, this);
     delete gp;
 
-    Wt::WLabel* color_label =
-        new Wt::WLabel(tr("thechess.your_color"), this);
-    color_ = new Wt::WComboBox(this);
+    color_ = new Wt::WComboBox();
     color_->addItem(tr("thechess.random"));
     color_->addItem(tr("thechess.white"));
     color_->addItem(tr("thechess.black"));
-    color_label->setBuddy(color_);
+    gpw_->item(tr("thechess.your_color"), "", color_, color_);
+
     new Wt::WBreak(this);
     Wt::WPushButton* ok_ = new Wt::WPushButton(tr("thechess.create"), this);
     ok_->clicked().connect(this, &GameCreateWidget::button_handler_);
