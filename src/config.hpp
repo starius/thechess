@@ -4,6 +4,7 @@
 
 #include "time_intervals.hpp"
 #include "model/UserClassification.hpp"
+#include "model/CompetitionType.hpp"
 #include "ThechessOptions.hpp"
 
 namespace thechess {
@@ -39,20 +40,6 @@ namespace defaults
 
     const double pause_factor = 0.5;
 
-    namespace competition
-    {
-        const int max_rating = 3000;
-        const int min_rating = 100;
-        using namespace model;
-        const Classification max_classification = SUPER_GRANDMASTER;
-        const Classification min_classification = NO_CLASSIFICATION;
-        const Td max_recruiting_time = 3 * day;
-        const int max_users = 16;
-        const int max_simultaneous_games = 8;
-        const float games_factor = 1.0;
-        const Td relax_time = day;
-    }
-
     const ThechessOptions::DatabaseType database_type = ThechessOptions::Sqlite3;
     const char* const database_value = "~/thechess.db";
     const int connections_in_pool = 10;
@@ -67,6 +54,56 @@ namespace max
     const Td pause_limit_init = week;
 
     const int first_draw = 5000 * 2;
+}
+
+namespace competition
+{
+    using namespace model;
+    namespace min
+    {
+        const int max_rating = 900;
+        const int min_rating = 100;
+        const Classification max_classification = CLASSIFICATION_F;
+        const Classification min_classification = NO_CLASSIFICATION;
+        const Td min_recruiting_time = hour;
+        const Td max_recruiting_time = 2 * hour;
+        const int min_users = 5;
+        const int max_users = 10;
+        const int max_simultaneous_games = 1;
+        const float games_factor = 0.01;
+        const Td relax_time = day;
+    }
+
+    namespace defaults
+    {
+        const CompetitionType competition_type = STAGED;
+        const int max_rating = 2000;
+        const int min_rating = 500;
+        const Classification max_classification = SUPER_GRANDMASTER;
+        const Classification min_classification = NO_CLASSIFICATION;
+        const Td min_recruiting_time = 3 * day;
+        const Td max_recruiting_time = week;
+        const int min_users = 8;
+        const int max_users = 16;
+        const int max_simultaneous_games = 8;
+        const float games_factor = 1.0;
+        const Td relax_time = day;
+    }
+
+    namespace max
+    {
+        const int max_rating = 3000;
+        const int min_rating = 1700;
+        const Classification max_classification = SUPER_GRANDMASTER;
+        const Classification min_classification = NATIONAL_MASTER;
+        const Td min_recruiting_time = 4 * week;
+        const Td max_recruiting_time = 8 * week;
+        const int min_users = 50;
+        const int max_users = 100;
+        const int max_simultaneous_games = 50;
+        const float games_factor = 10.0;
+        const Td relax_time = week;
+    }
 }
 
 namespace elo

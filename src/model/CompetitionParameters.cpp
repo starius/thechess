@@ -8,7 +8,7 @@ namespace model {
 
 void CompetitionParameters::initialize_()
 {
-    namespace defaults = config::defaults::competition;
+    namespace defaults = config::competition::defaults;
     GameParameters::initialize_();
     type_ = STAGED;
     min_rating_ = defaults::min_rating;
@@ -16,7 +16,10 @@ void CompetitionParameters::initialize_()
     min_classification_ = defaults::min_classification;
     max_classification_ = defaults::max_classification;
 
+
+    min_users_ = defaults::min_users;
     max_users_ = defaults::max_users;
+    min_recruiting_time_ = defaults::min_recruiting_time;
     max_recruiting_time_ = defaults::max_recruiting_time;
 
     max_simultaneous_games_ = defaults::max_simultaneous_games;

@@ -35,7 +35,9 @@ public:
         dbo::field(a, max_rating_, "max_rating");
         dbo::field(a, min_classification_, "min_classification");
         dbo::field(a, max_classification_, "max_classification");
+        dbo::field(a, min_users_, "min_users");
         dbo::field(a, max_users_, "max_users");
+        dbo::field(a, min_recruiting_time_, "min_recruiting_time");
         dbo::field(a, max_recruiting_time_, "max_recruiting_time");
         dbo::field(a, max_simultaneous_games_, "max_simultaneous_games");
         dbo::field(a, games_factor_, "games_factor");
@@ -55,9 +57,13 @@ public:
     Classification max_classification() const { return max_classification_; }
     void set_max_classification(Classification v) { max_classification_ = v; }
 
+    int min_users() const { return min_users_; }
+    void set_min_users(int v) { min_users_ = v; }
     int max_users() const { return max_users_; }
     void set_max_users(int v) { max_users_ = v; }
 
+    Td min_recruiting_time() const { return min_recruiting_time_; }
+    void set_min_recruiting_time(Td v) { min_recruiting_time_ = v; }
     Td max_recruiting_time() const { return max_recruiting_time_; }
     void set_max_recruiting_time(Td v) { max_recruiting_time_ = v; }
 
@@ -82,7 +88,9 @@ private:
     Classification max_classification_;
 
     // classical and staged
+    int min_users_;
     int max_users_;
+    Td min_recruiting_time_;
     Td max_recruiting_time_;
 
     // classical
