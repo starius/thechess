@@ -27,7 +27,7 @@ public:
         combo_box_->addItem(tr("thechess.days"));
         combo_box_->addItem(tr("thechess.weeks"));
         combo_box_->activated()
-            .connect(this, & TimeDeltaWidgetImpl::select_handler_);
+            .connect(this, &TimeDeltaWidgetImpl::select_handler_);
         for (int i = intervals_size - 1; i >= 0; i--)
         {
             if (value > intervals[i])
