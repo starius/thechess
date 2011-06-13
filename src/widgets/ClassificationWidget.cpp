@@ -6,31 +6,31 @@ namespace thechess {
 namespace widgets {
 using namespace model;
 
-ClassificationWidget::ClassificationWidget(Classification classification,
-    Wt::WContainerWidget* parent):
-Wt::WComboBox(parent)
+ClassificationWidget::ClassificationWidget(Classification min,
+    Classification value, Classification max, Wt::WContainerWidget* parent):
+Wt::WComboBox(parent), first_i_(-1)
 {
     for (int i = 0; i < classifications_size; i++)
     {
-        combo_box_->addItem(classification2str(classifications[i]));
-    }
-    set_classification(classification);
-}
-
-void ClassificationWidget::set_classification(Classification classification)
-{
-    for (int i = 0; i < classifications_size; i++)
-    {
-        if (classifications[i] == classification)
+        Classification classification = classifications[i];
+        if (min <= classification && classification <= max)
         {
-            combo_box_->setCurrentIndex(i);
+            addItem(classification2str(classification));
+            if (classification == value)
+            {
+                setCurrentIndex(i);
+            }
+            if (first_i_ == -1)
+            {
+                first_i_ = i;
+            }
         }
     }
 }
 
-Classification ClassificationWidget::get_classification() const
+Classification ClassificationWidget::value() const
 {
-    return classifications[combo_box_->currentIndex()];
+    return classifications[currentIndex() + first_i_];
 }
 
 }

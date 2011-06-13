@@ -13,13 +13,14 @@ class ClassificationWidget : public Wt::WComboBox
 public:
     typedef model::Classification Classification;
 
-    ClassificationWidget(Classification classification=
-        model::NO_CLASSIFICATION, Wt::WContainerWidget* parent=0);
-    void set_classification(Classification classification);
-    Classification get_classification() const;
+    ClassificationWidget(Classification min=model::NO_CLASSIFICATION,
+        Classification value=model::NO_CLASSIFICATION,
+        Classification max=model::SUPER_GRANDMASTER,
+        Wt::WContainerWidget* parent=0);
+    Classification value() const;
 
 private:
-    Wt::WComboBox* combo_box_;
+    int first_i_;
 };
 
 }
