@@ -12,7 +12,7 @@ void GameParameters::initialize_()
     limit_std_ = defaults::limit_std;
     limit_private_init_ = defaults::limit_private_init;
     pause_limit_init_ = defaults::pause_limit_init;
-    norating_ = false;
+    norating_ = defaults::norating;
     first_draw_ = defaults::first_draw;
 }
 

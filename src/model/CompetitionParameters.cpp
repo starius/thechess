@@ -26,6 +26,8 @@ void CompetitionParameters::initialize_()
     games_factor_ = defaults::games_factor;
 
     relax_time_ = defaults::relax_time;
+
+    set_norating(defaults::norating);
 }
 
 CompetitionParameters* CompetitionParameters::create_new()

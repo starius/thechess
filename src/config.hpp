@@ -43,6 +43,8 @@ namespace defaults
     const ThechessOptions::DatabaseType database_type = ThechessOptions::Sqlite3;
     const char* const database_value = "~/thechess.db";
     const int connections_in_pool = 10;
+
+    const bool norating = false;
 }
 
 namespace max
@@ -88,6 +90,8 @@ namespace competition
         const int max_simultaneous_games = 8;
         const float games_factor = 1.0;
         const Td relax_time = day;
+
+        const bool norating = true;
     }
 
     namespace max
