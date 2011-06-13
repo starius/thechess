@@ -260,8 +260,8 @@
     <message id='thechess.CLASSIFICATION_A'>первый разряд</message>
     <message id='thechess.CLASSIFICATION_B'>второй разряд</message>
     <message id='thechess.CLASSIFICATION_C'>третий разряд</message>
-    <message id='thechess.CLASSIFICATION_D'>средний любитель (четвертый разряд)</message>
-    <message id='thechess.CLASSIFICATION_E'>слабый любитель (пятый разряд)</message>
+    <message id='thechess.CLASSIFICATION_D'>средний любитель (4)</message>
+    <message id='thechess.CLASSIFICATION_E'>слабый любитель (5)</message>
     <message id='thechess.CLASSIFICATION_F'>новичок (разряд F)</message>
     <message id='thechess.CLASSIFICATION_G'>новичок (разряд G)</message>
     <message id='thechess.CLASSIFICATION_H'>новичок (разряд H)</message>

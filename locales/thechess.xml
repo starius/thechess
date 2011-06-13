@@ -418,7 +418,7 @@
 
     <message id='thechess.SUPER_GRANDMASTER'>super-grandmaster</message>
     <message id='thechess.GRANDMASTER'>grandmaster</message>
-    <message id='thechess.INTERNATIONAL_MASTER'>nternational master</message>
+    <message id='thechess.INTERNATIONAL_MASTER'>international master</message>
     <message id='thechess.NATIONAL_MASTER'>national master</message>
     <message id='thechess.EXPERT'>expert</message>
     <message id='thechess.CLASSIFICATION_A'>class A</message>
