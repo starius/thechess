@@ -402,9 +402,7 @@
     <message id='thechess.limit_private_init'>non-renewable</message>
     <message id='thechess.pause_limit'>pause leeway</message>
     <message id='thechess.norating'>non-rating</message>
-    <message id='thechess.first_draw'>
-        move number for draw proposal
-    </message>
+    <message id='thechess.first_draw'>move number for draw</message>
     <message id='thechess.first_draw_full'>
         <plural case='0'>
             Surrender or draw can be made when {1} non-predetermined move is done

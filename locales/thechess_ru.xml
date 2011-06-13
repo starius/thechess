@@ -234,9 +234,7 @@
     <message id='thechess.limit_private_init'>невозобновляемый запас</message>
     <message id='thechess.pause_limit'>запас времени на паузы</message>
     <message id='thechess.norating'>нерейтинговая</message>
-    <message id='thechess.first_draw'>
-        количество ходов, необходимое для предложения ничьей
-    </message>
+    <message id='thechess.first_draw'>число ходов для ничьей</message>
     <message id='thechess.first_draw_full'>
         <plural case="0">
             Капитуляция или ничья может быть совершена, когда будет сделан {1} ход,
