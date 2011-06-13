@@ -229,6 +229,7 @@
     <message id='thechess.days'>суток</message>
     <message id='thechess.weeks'>недель</message>
 
+    <message id='thechess.game_parameters'>Параметры партии</message>
     <message id='thechess.limit_std'>возобновляемый запас времени</message>
     <message id='thechess.limit_private_init'>невозобновляемый запас</message>
     <message id='thechess.pause_limit'>запас времени на паузы</message>

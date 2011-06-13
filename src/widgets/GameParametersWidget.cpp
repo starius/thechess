@@ -22,6 +22,8 @@ TableForm(parent)
 
     Wt::WContainerWidget* cell;
 
+    section(tr("thechess.game_parameters"));
+
     cell = item(tr("thechess.start_position"), "", 0, 0, false);
     moves_widget_ = new MovesWidget(gp->moves(), false, true,
         max::moves_init, false, chess::white, cell);

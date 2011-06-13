@@ -397,6 +397,7 @@
     <message id='thechess.days'>days</message>
     <message id='thechess.weeks'>weeks</message>
 
+    <message id='thechess.game_parameters'>Game parameters</message>
     <message id='thechess.limit_std'>renewable leeway</message>
     <message id='thechess.limit_private_init'>non-renewable</message>
     <message id='thechess.pause_limit'>pause leeway</message>
