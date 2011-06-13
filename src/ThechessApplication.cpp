@@ -30,6 +30,7 @@ namespace dbo = Wt::Dbo;
 #include "widgets/LoginWidget.hpp"
 #include "widgets/GameWidget.hpp"
 #include "widgets/GameCreateWidget.hpp"
+#include "widgets/CompetitionCreateWidget.hpp"
 #include "widgets/GameListWidget.hpp"
 #include "widgets/UserWidget.hpp"
 #include "widgets/MainMenu.hpp"
@@ -241,7 +242,21 @@ void ThechessApplication::onPathChange_()
         {
             set_mainpanel_(new widgets::GameCreateWidget());
         }
-        object_view_<Game>("/game/");
+        else
+        {
+            object_view_<Game>("/game/");
+        }
+    }
+    else if (section == "competition")
+    {
+        if (internalPathNextPart("/competition/") == "new")
+        {
+            set_mainpanel_(new widgets::CompetitionCreateWidget());
+        }
+        else
+        {
+            //object_view_<Competition>("/competition/");
+        }
     }
     else
     {

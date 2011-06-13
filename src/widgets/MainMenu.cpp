@@ -18,6 +18,7 @@ public:
     {
         button_("thechess.register", "/register/");
         button_("thechess.challenge", "/game/challenge/");
+        button_("thechess.competition.new", "/competition/new/");
         button_("thechess.game_list", "/game/");
         button_("thechess.login", "/login/");
         button_("thechess.logout", "/logout/");

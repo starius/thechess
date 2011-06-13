@@ -270,4 +270,22 @@
     <message id='thechess.CLASSIFICATION_J'>новичок (разряд J)</message>
     <message id='thechess.NO_CLASSIFICATION'>без разряда</message>
 
+    <message id='thechess.competition_parameters'>Параметры турнира</message>
+    <message id='thechess.refresh'>Обновить</message>
+    <message id='thechess.competition.cant_create'>Вы не можете создавать турниры</message>
+    <message id='thechess.competition.new'>Создать турнир</message>
+    <message id='thechess.competition.create_welcome'>Создать новый турнир</message>
+    <message id='thechess.competition.type.CLASSICAL'>Классический</message>
+    <message id='thechess.competition.type.STAGED'>Ступенчаый</message>
+    <message id='thechess.competition.type.TEAM'>Командный</message>
+    <message id='thechess.competition.type'>Тип</message>
+    <message id='thechess.competition.rating'>Рейтинг участников</message>
+    <message id='thechess.competition.classification'>Разряд участников</message>
+    <message id='thechess.competition.users'>Число участников</message>
+    <message id='thechess.competition.recruiting_time'>Время на сборы</message>
+    <message id='thechess.competition.max_simultaneous_games'>Одновременные игры</message>
+    <message id='thechess.competition.games_factor'>Множитель партий</message>
+    <message id='thechess.competition.relax_time'>Время на отдых</message>
+
 </messages>
+
