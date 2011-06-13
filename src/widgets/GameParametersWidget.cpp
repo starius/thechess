@@ -5,6 +5,9 @@
 #include <Wt/WTable>
 
 #include "widgets/GameParametersWidget.hpp"
+#include "widgets/MySpinBox.hpp"
+#include "widgets/MovesWidget.hpp"
+#include "widgets/TimeDeltaWidget.hpp"
 #include "config.hpp"
 
 namespace thechess {
@@ -42,7 +45,7 @@ TableForm(parent)
     item(tr("thechess.norating"), "", norating_, norating_);
     norating_->setCheckState(gp->norating() ? Wt::Checked : Wt::Unchecked);
 
-    first_draw_ = new Wt::WSpinBox();
+    first_draw_ = new MySpinBox();
     first_draw_->setRange(min::first_draw / 2, max::first_draw / 2);
     first_draw_->setValue(gp->first_draw() / 2);
     item(tr("thechess.first_draw"), "", first_draw_, first_draw_);
@@ -55,21 +58,7 @@ void GameParametersWidget::apply_parameters(GameParameters* gp)
     gp->set_limit_private_init(limit_private_init_->timedelta());
     gp->set_norating(norating_->checkState() == Wt::Checked);
     gp->set_pause_limit_init(pause_limit_init_->timedelta());
-    gp->set_first_draw(first_draw_value_());
-}
-
-int GameParametersWidget::first_draw_value_()
-{
-    int value = first_draw_->value();
-    if (value < first_draw_->minimum())
-    {
-        value = first_draw_->minimum();
-    }
-    else if (value > first_draw_->maximum())
-    {
-        value = first_draw_->maximum();
-    }
-    return value * 2;
+    gp->set_first_draw(first_draw_->value() * 2);
 }
 
 }

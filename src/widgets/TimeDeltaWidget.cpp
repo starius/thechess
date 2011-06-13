@@ -1,8 +1,8 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WComboBox>
-#include <Wt/WDoubleSpinBox>
 
 #include "widgets/TimeDeltaWidget.hpp"
+#include "widgets/MySpinBox.hpp"
 #include "time_intervals.hpp"
 
 namespace thechess {
@@ -17,7 +17,7 @@ public:
     TimeDeltaWidgetImpl(const Td& min, const Td& value, const Td& max) :
     Wt::WContainerWidget(), min_(min), max_(max), interval_(second)
     {
-        spin_box_ = new Wt::WDoubleSpinBox(this);
+        spin_box_ = new MyDoubleSpinBox(this);
         spin_box_->setRange(min.total_seconds(), max.total_seconds());
         spin_box_->setValue(value.total_seconds());
         combo_box_ = new Wt::WComboBox(this);
@@ -41,16 +41,7 @@ public:
 
     Td timedelta() const
     {
-        Td td = spin_box_->value() * intervals[combo_box_->currentIndex()];
-        if (td > max_)
-        {
-            td = max_;
-        }
-        else if (td < min_)
-        {
-            td = min_;
-        }
-        return td;
+        return spin_box_->value() * intervals[combo_box_->currentIndex()];
     }
 
     Wt::WFormWidget* form_widget()
@@ -59,7 +50,7 @@ public:
     }
 
 private:
-    Wt::WDoubleSpinBox* spin_box_;
+    MyDoubleSpinBox* spin_box_;
     Wt::WComboBox* combo_box_;
     Td min_;
     Td max_;

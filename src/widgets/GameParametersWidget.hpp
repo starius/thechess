@@ -3,15 +3,16 @@
 
 #include <Wt/WContainerWidget>
 #include <Wt/WCheckBox>
-#include <Wt/WSpinBox>
 
-#include "widgets/TableForm.hpp"
 #include "model/GameParameters.hpp"
-#include "widgets/MovesWidget.hpp"
-#include "widgets/TimeDeltaWidget.hpp"
+#include "widgets/TableForm.hpp"
 
 namespace thechess {
 namespace widgets {
+
+class MySpinBox;
+class TimeDeltaWidget;
+class MovesWidget;
 
 class GameParametersWidget : public TableForm
 {
@@ -29,9 +30,7 @@ private:
     Wt::WCheckBox* norating_;
 
     TimeDeltaWidget* pause_limit_init_;
-    Wt::WSpinBox* first_draw_;
-
-    int first_draw_value_();
+    MySpinBox* first_draw_;
 };
 
 }
