@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages nplurals="3"
-    plural="(n%10>=5 || (5 <= n%100 && n%100 <= 20)) ? 2 : n%10==1 ? 0 : 1">
+    plural="(n%10 == 0 || n%10 >= 5 || n/10%10 == 1) ? 2 : n%10==1 ? 0 : 1">
 
     <message id="Wt.WAbstractItemView.PageIOfN"><b>{1}</b> из <b>{2}</b></message>
     <message id="Wt.WAbstractItemView.PageBar.First">&#x00ab; Первая</message>
