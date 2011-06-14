@@ -21,6 +21,7 @@ namespace model {
 #include "model/User.hpp"
 #include "model/Game.hpp"
 #include "model/td.hpp"
+#include "model/Object.hpp"
 
 namespace thechess {
 namespace model {
@@ -49,7 +50,7 @@ public:
         dbo::field(a, state_, "state");
         dbo::field(a, name_, "name");
         dbo::field(a, description_, "description");
-        dbo::hasMany(a, users_, dbo::ManyToMany, "users_competitions");
+        dbo::hasMany(a, members_, dbo::ManyToMany, "members_competitions");
         dbo::belongsTo(a, init_, "init_competitions");
         dbo::belongsTo(a, virtual_allower_, "virtual_allower");
         dbo::hasMany(a, games_, dbo::ManyToOne, "competition");
@@ -67,12 +68,13 @@ public:
     void set_description(Wt::WString& v) { description_ = v; }
 
     // auto-manage
-    void check();
+    void check(ThechessEvent& event);
 
     // manage competition
     static bool can_create_competition(UserPtr /*user*/) { return true; }
     void create_competition(UserPtr user);
 
+    bool is_member(UserPtr user) const;
     bool can_join(UserPtr user) const;
     void join(UserPtr user);
 
@@ -87,6 +89,8 @@ public:
     bool can_cancel(UserPtr user) const;
     void cancel(UserPtr user);
 
+    bool is_winner(UserPtr user) const;
+
 protected:
     void initialize_();
 
@@ -97,7 +101,7 @@ private:
     Wt::WString name_;
     Wt::WString description_;
 
-    Users users_;
+    Users members_;
     UserPtr init_;
 
     Users virtuals_;
