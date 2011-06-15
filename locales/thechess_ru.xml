@@ -169,6 +169,7 @@
     <message id='thechess.lastmove'>последний ход (или его эквивалент)</message>
     <message id='thechess.pause_until'>приостановлена до</message>
     <message id='thechess.ended'>завершена</message>
+    <message id='thechess.GameWidget.force_start'>форсированный старт</message>
 
     <message id='thechess.challenge'>Вызов</message>
     <message id='thechess.game_list'>Список игр</message>
@@ -279,6 +280,7 @@
     <message id='thechess.competition.type'>Тип</message>
     <message id='thechess.competition.rating'>Рейтинг участников</message>
     <message id='thechess.competition.classification'>Разряд участников</message>
+    <message id='thechess.competition.force_start_delay'>Форсированный старт партии</message>
     <message id='thechess.competition.users'>Число участников</message>
     <message id='thechess.competition.recruiting_time'>Время на сборы</message>
     <message id='thechess.competition.max_simultaneous_games'>Одновременные игры</message>

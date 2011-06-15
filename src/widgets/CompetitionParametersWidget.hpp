@@ -32,6 +32,8 @@ private:
     ClassificationWidget* min_classification_;
     ClassificationWidget* max_classification_;
 
+    TimeDeltaWidget* force_start_delay_;
+
     MySpinBox* min_users_;
     MySpinBox* max_users_;
     IntervalWidget* users_;

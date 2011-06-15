@@ -69,6 +69,11 @@ protected:
             item_(Wt::WString::trn("thechess.first_draw_full",
                 game_->first_draw()/2).arg(game_->first_draw()/2), result);
         }
+        if (game_->state() == Game::confirmed && game_->competition())
+        {
+            time_(game_->when_confirmed()+game_->competition()->force_start_delay(),
+                "thechess.GameWidget.force_start", result);
+        }
         t.commit();
         return result;
     }

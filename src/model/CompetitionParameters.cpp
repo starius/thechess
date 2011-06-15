@@ -15,7 +15,7 @@ void CompetitionParameters::initialize_()
     max_rating_ = defaults::max_rating;
     min_classification_ = defaults::min_classification;
     max_classification_ = defaults::max_classification;
-
+    force_start_delay_ = defaults::force_start_delay;
 
     min_users_ = defaults::min_users;
     max_users_ = defaults::max_users;

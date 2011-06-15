@@ -91,13 +91,22 @@ bool Game::check(ThechessEvent& event)
         event.set_event(ge_state);
         result = true;
     }
-    if (state() == pause && now() > pause_until())
+    else if (state() == confirmed && competition())
+    {
+        if (now() - confirmed_ > competition()->force_start_delay())
+        {
+            start_();
+            event.set_event(ge_state);
+            result = true;
+        }
+    }
+    else if (state() == pause && now() > pause_until())
     {
         stop_pause_();
         event.set_event(ge_state);
         result = true;
     }
-    if (state() == active && total_limit_now(order_user()) < td_null)
+    else if (state() == active && total_limit_now(order_user()) < td_null)
     {
         UserPtr winner = user_of(chess::other_color(order_color()));
         finish_(timeout, winner);
@@ -185,7 +194,11 @@ Wt::WDateTime Game::next_check() const
             std::min(limit_private(chess::white),
             limit_private(chess::black));
     }
-    if (state() == pause)
+    else if (state() == confirmed && competition())
+    {
+        result = confirmed_ + competition()->force_start_delay();
+    }
+    else if (state() == pause)
     {
         result = pause_until();
     }

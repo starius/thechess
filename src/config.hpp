@@ -67,6 +67,7 @@ namespace competition
         const int min_rating = 100;
         const Classification max_classification = CLASSIFICATION_F;
         const Classification min_classification = NO_CLASSIFICATION;
+        const Td force_start_delay = 18 * hour;
         const Td min_recruiting_time = hour;
         const Td max_recruiting_time = 2 * hour;
         const int min_users = 5;
@@ -83,6 +84,7 @@ namespace competition
         const int min_rating = 500;
         const Classification max_classification = SUPER_GRANDMASTER;
         const Classification min_classification = NO_CLASSIFICATION;
+        const Td force_start_delay = day;
         const Td min_recruiting_time = 3 * day;
         const Td max_recruiting_time = week;
         const int min_users = 8;
@@ -100,6 +102,7 @@ namespace competition
         const int min_rating = 1700;
         const Classification max_classification = SUPER_GRANDMASTER;
         const Classification min_classification = NATIONAL_MASTER;
+        const Td force_start_delay = week;
         const Td min_recruiting_time = 4 * week;
         const Td max_recruiting_time = 8 * week;
         const int min_users = 50;

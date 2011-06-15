@@ -67,6 +67,11 @@ GameParametersWidget(cp, parent)
     interval = new IntervalWidget(min_classification_, max_classification_);
     item(tr("thechess.competition.classification"), "", min_classification_, interval);
 
+    force_start_delay_ = new TimeDeltaWidget(min::force_start_delay,
+        cp->force_start_delay(), max::force_start_delay);
+    item(tr("thechess.competition.force_start_delay"), "",
+        force_start_delay_->form_widget(), force_start_delay_);
+
     min_users_ = new MySpinBox();
     min_users_->setRange(min::min_users, max::min_users);
     min_users_->setValue(cp->min_users());
@@ -112,6 +117,7 @@ void CompetitionParametersWidget::apply_parameters(CompetitionParameters* cp)
     cp->set_max_rating(max_rating_->value());
     cp->set_min_classification(min_classification_->value());
     cp->set_max_classification(max_classification_->value());
+    cp->set_force_start_delay(force_start_delay_->value());
     if (t == CLASSICAL || t == STAGED)
     {
         cp->set_min_users(min_users_->value());

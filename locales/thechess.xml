@@ -336,6 +336,7 @@
     <message id='thechess.lastmove'>surrogate last move</message>
     <message id='thechess.pause_until'>paused until</message>
     <message id='thechess.ended'>ended</message>
+    <message id='thechess.GameWidget.force_start'>forced start</message>
 
     <message id='thechess.challenge'>Challenge</message>
     <message id='thechess.game_list'>List of games</message>
@@ -443,6 +444,7 @@
     <message id='thechess.competition.type'>Type</message>
     <message id='thechess.competition.rating'>Rating of members</message>
     <message id='thechess.competition.classification'>Classification of members</message>
+    <message id='thechess.competition.force_start_delay'>Forced start of game</message>
     <message id='thechess.competition.users'>Number of users</message>
     <message id='thechess.competition.recruiting_time'>Recruiting time</message>
     <message id='thechess.competition.max_simultaneous_games'>Simultaneous games</message>
