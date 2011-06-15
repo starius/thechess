@@ -67,6 +67,7 @@ public:
         dbo::field(a, limit_private_[0], "limit_private_white");
         dbo::field(a, limit_private_[1], "limit_private_black");
         dbo::belongsTo(a, competition_, "competition");
+        dbo::field(a, competition_stage_, "competition_stage");
         dbo::field(a, pause_until_, "pause_until");
         dbo::field(a, pause_limit_, "pause_limit");
         dbo::field(a, pause_proposed_td_, "pause_proposed_td");
@@ -85,6 +86,8 @@ public:
     void propose_game(UserPtr init, UserPtr u,
         chess::Color c);
     void propose_challenge(UserPtr init, chess::Color c);
+    void make_competition_game(UserPtr white, UserPtr black,
+        CompetitionPtr competition, int competition_stage=-1, bool random=false);
 
     bool check(ThechessEvent& event);
 
@@ -94,6 +97,7 @@ public:
     void join(UserPtr user, ThechessEvent& event);
     bool can_confirm(UserPtr user) const;
     void confirm(UserPtr user, ThechessEvent& event);
+    void confirm_by_competition(ThechessEvent& event);
     bool can_cancel(UserPtr user) const;
     void cancel(UserPtr user, ThechessEvent& event);
 
@@ -185,8 +189,8 @@ public:
     bool can_comment(const UserPtr user) const;
     void set_comment(const UserPtr user, const Wt::WString& t, ThechessEvent& event);
 
-    int competition_round() const { return competition_round_; }
-    void set_competition_round(int v) { competition_round_ = v; }
+    CompetitionPtr competition() const { return competition_; }
+    int competition_stage() const { return competition_stage_; }
 
 protected:
     void initialize_();
@@ -210,7 +214,7 @@ private:
     Td limit_private_[2];
 
     CompetitionPtr competition_;
-    int competition_round_;
+    int competition_stage_;
 
     Wt::WDateTime pause_until_;
     Td pause_limit_;

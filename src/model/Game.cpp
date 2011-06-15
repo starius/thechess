@@ -203,7 +203,7 @@ void Game::initialize_()
     moves_size_ = moves().size();
     rating_after_[chess::white] = -1;
     rating_after_[chess::black] = -1;
-    competition_round_ = -1;
+    competition_stage_ = -1;
 }
 
 Game* Game::create_new()
@@ -218,7 +218,6 @@ void Game::propose_game(UserPtr init, UserPtr u, chess::Color c)
     init_ = init;
     if (c == chess::color_null)
     {
-        colors_random_ = true;
         set_random_(init, u);
     }
     else
@@ -241,8 +240,25 @@ void Game::propose_challenge(UserPtr init, chess::Color c)
     }
 }
 
+void Game::make_competition_game(UserPtr white, UserPtr black,
+    CompetitionPtr competition, int competition_stage, bool random)
+{
+    if (random)
+    {
+        set_random_(white, black);
+    }
+    else
+    {
+        white_ = white;
+        black_ = black;
+    }
+    competition_ = competition;
+    competition_stage_ = competition_stage;
+}
+
 void Game::set_random_(UserPtr user1, UserPtr user2)
 {
+    colors_random_ = true;
     if (random::rr(2) == 0)
     {
         white_ = user1;
@@ -274,7 +290,7 @@ bool Game::is_challenge() const
 
 bool Game::is_creation() const
 {
-    return state() == proposed && white() && black();
+    return state() == proposed && white() && black() && init();
 }
 
 bool Game::can_join(UserPtr user) const
@@ -312,6 +328,16 @@ bool Game::can_confirm(UserPtr user) const
 void Game::confirm(UserPtr user, ThechessEvent& event)
 {
     if (can_confirm(user))
+    {
+        event.set_event(ge_state);
+        confirm_();
+        check(event);
+    }
+}
+
+void Game::confirm_by_competition(ThechessEvent& event)
+{
+    if (competition())
     {
         event.set_event(ge_state);
         confirm_();
