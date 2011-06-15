@@ -67,14 +67,16 @@ public:
     const Wt::WString& description() const { return description_; }
     void set_description(Wt::WString& v) { description_ = v; }
 
+    bool is_member(UserPtr user) const;
+    bool is_winner(UserPtr user) const;
+
     // auto-manage
     void check(ThechessEvent& event);
 
-    // manage competition
+    // methods of recruiting state
     static bool can_create_competition(UserPtr /*user*/) { return true; }
     void create_competition(UserPtr user);
 
-    bool is_member(UserPtr user) const;
     bool can_join(UserPtr user) const;
     void join(UserPtr user);
 
@@ -89,7 +91,9 @@ public:
     bool can_cancel(UserPtr user) const;
     void cancel(UserPtr user);
 
-    bool is_winner(UserPtr user) const;
+    // methods of active stage
+    bool can_start() const;
+    void start();
 
 protected:
     void initialize_();
@@ -114,6 +118,10 @@ private:
     Wt::WDateTime ended_;
 
     Users winners_;
+
+    void create_games_classical_();
+    void create_games_staged_();
+    void create_games_team_();
 };
 
 }

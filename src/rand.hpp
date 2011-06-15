@@ -1,4 +1,6 @@
 
+#include <cstddef>
+
 namespace thechess {
 namespace random {
 
@@ -9,6 +11,8 @@ unsigned int rr(unsigned int start, unsigned int stop);
 unsigned int rr(unsigned int start, unsigned int stop, unsigned int step);
 
 double drr(double start, double stop);
+
+ptrdiff_t rand_for_shuffle(ptrdiff_t i);
 
 }
 }
