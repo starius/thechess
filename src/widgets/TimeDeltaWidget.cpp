@@ -31,7 +31,7 @@ public:
             .connect(this, &TimeDeltaWidgetImpl::select_handler_);
         for (int i = intervals_size - 1; i >= 0; i--)
         {
-            if (value > intervals[i])
+            if (value >= intervals[i])
             {
                 combo_box_->setCurrentIndex(i);
                 select_handler_(i);
