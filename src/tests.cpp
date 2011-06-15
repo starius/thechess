@@ -1,7 +1,8 @@
-//
 
 #include <cassert>
+#include <cmath>
 #include <iostream>
+#include <boost/assert.hpp>
 
 #include <Wt/Dbo/Transaction>
 #include <Wt/Dbo/ptr>
@@ -14,6 +15,7 @@ namespace dbo = Wt::Dbo;
 #include "chess/xy.hpp"
 #include "model/User.hpp"
 #include "ThechessApplication.hpp"
+#include "rand.hpp"
 
 namespace thechess {
 namespace chess {
@@ -51,6 +53,16 @@ void run_tests()
     assert(moves0.size() == 2);
     assert(moves0.check() == -1);
 
+
+    // rand (binomial test, p=q=1/2)
+    const int n = 10000;
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        sum += random::rr(2);
+    }
+    int sigma = sqrt(n*0.5*0.5);
+    BOOST_ASSERT(abs(sum - n/2) < 10*sigma);
 }
 
 
