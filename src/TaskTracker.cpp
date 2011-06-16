@@ -6,6 +6,7 @@
 #include <boost/thread.hpp>
 
 #include <Wt/WDateTime>
+#include <Wt/Dbo/Exception>
 
 #include "TaskTracker.hpp"
 #include "time_intervals.hpp"
@@ -71,11 +72,11 @@ void TaskTracker::check_(const boost::system::error_code& error)
             if (cached_now >= time)
             {
                 const Object& object = w2t_it->second;
-                dbo::Transaction t(session_);
-                ThechessEvent event(object);
-                Wt::WDateTime new_time = object.process(event, session_);
                 try
                 {
+                    dbo::Transaction t(session_);
+                    ThechessEvent event(object);
+                    Wt::WDateTime new_time = object.process(event, session_);
                     t.commit();
                     server_.notifier().emit(event);
                     if (new_time.isValid() && new_time > cached_now)
@@ -88,12 +89,22 @@ void TaskTracker::check_(const boost::system::error_code& error)
                         // delete
                         t2i.erase(object);
                     }
-                    w2t.erase(w2t_it);
                 }
-                catch(...)
+                catch (dbo::StaleObjectException)
                 {
+                    // reread
                     object.reread(session_);
+                    // update
+                    Wt::WDateTime new_time = cached_now +
+                        config::tracker::stale_object_delay;
+                    t2i[object] = w2t.insert(std::make_pair(new_time, object));
                 }
+                catch (...) // dbo::ObjectNotFoundException
+                {
+                    // delete
+                    t2i.erase(object);
+                }
+                w2t.erase(w2t_it);
             }
             else
             {

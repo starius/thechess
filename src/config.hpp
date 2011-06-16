@@ -130,6 +130,7 @@ namespace tracker
 {
     const Td delay = 0.01 * second;
     const Td dummy_timer_expiry_time = 100500 * day;
+    const Td stale_object_delay = minute;
 }
 
 const int cookie_session_age = (5*365*day).total_seconds();
