@@ -71,7 +71,8 @@ public:
     bool is_winner(UserPtr user) const;
 
     // auto-manage
-    void check(ThechessEvent& event);
+    void check(Objects& objects);
+    Wt::WDateTime next_check() const;
 
     // methods of recruiting state
     static bool can_create_competition(UserPtr /*user*/) { return true; }

@@ -153,41 +153,31 @@ public:
         t.commit();
     }
 
-    virtual void notify(const ThechessEvent& event)
+    virtual void notify()
     {
         moves_widget_->set_active(game_->can_move(tApp->user()));
         countdown_print_();
-        GameEvent game_event = event.game_event();
-        if (game_event == ge_state && game_->colors_random())
+        if (game_->colors_random() && game_->size_without_init() == 0)
         {
             moves_widget_->bottom_set(game_->color_of(tApp->user()));
         }
-        if (game_event == ge_mistake)
+        if (game_->size() < moves_widget_->moves().size())
         {
             moves_widget_->set_moves(game_->moves());
             status_and_manager_();
         }
-        if (event.move != chess::move_null)
+        if (game_->size() - moves_widget_->moves().size() == 1)
         {
-            moves_widget_->add_move(event.move);
+            chess::Move last_move =
+                game_->moves().move_at(game_->size()-1, moves_widget_->board());
+            moves_widget_->add_move(last_move);
             if (game_->size_without_init() == 1)
             {
                 print_manager_(); // to show Rollback button
             }
         }
-        if (game_event == ge_comment)
-        {
-            print_comment_();
-        }
-        if (game_event == ge_state)
-        {
-            status_and_manager_();
-            print_comment_();
-        }
-        if (game_event == ge_dialog)
-        {
-            print_manager_();
-        }
+        status_and_manager_();
+        print_comment_();
     }
 
 private:
@@ -205,13 +195,18 @@ private:
         int game_size = game_->moves().size();
         int moves_size = moves_widget_->moves().size();
         // additional protection
-        ThechessEvent event(GameObject, game_.id());
         if (game_size == moves_size-1 && game_->can_move(tApp->user()))
         {
-            game_.modify()->add_move(move, moves_widget_->board(), event);
+            game_.modify()->add_move(move, moves_widget_->board());
         }
+        bool game_ended = game_->is_ended();
         t.commit();
-        ThechessNotifier::app_emit(event);
+        Object object(GameObject, game_.id());
+        ThechessNotifier::app_emit(object);
+        if (game_ended)
+        {
+            tApp->server().tracker().add_or_update_task(object);
+        }
     }
 
     void status_and_manager_()
@@ -373,19 +368,21 @@ private:
         game_status_->update();
     }
 
-    typedef void (Game::*GameMember)(UserPtr, ThechessEvent&);
+    typedef void (Game::*GameMember)(UserPtr);
     template <GameMember method>
     void action_()
     {
-        ThechessEvent event(GameObject, game_.id());
         dbo::Transaction t(tApp->session());
         game_.reread();
-        (game_.modify()->*method)(tApp->user(), event);
+        Game::State state_before = game_->state();
+        (game_.modify()->*method)(tApp->user());
+        Game::State state_after = game_->state();
         t.commit();
-        ThechessNotifier::app_emit(event);
-        if (method == &Game::pause_agree)
+        Object object(GameObject, game_.id());
+        ThechessNotifier::app_emit(object);
+        if (state_after != state_before)
         {
-            tApp->server().tracker().add_or_update_task(event);
+            tApp->server().tracker().add_or_update_task(object);
         }
     }
 
@@ -399,24 +396,24 @@ private:
 
     void pause_propose_(TimeDeltaWidget* pause_duration)
     {
-        ThechessEvent event(GameObject, game_.id());
         dbo::Transaction t(tApp->session());
         game_.reread();
         game_.modify()
-            ->pause_propose(tApp->user(), pause_duration->value(), event);
+            ->pause_propose(tApp->user(), pause_duration->value());
         t.commit();
-        ThechessNotifier::app_emit(event);
+        Object object(GameObject, game_.id());
+        ThechessNotifier::app_emit(object);
     }
 
     void mistake_propose_()
     {
-        ThechessEvent event(GameObject, game_.id());
         dbo::Transaction t(tApp->session());
         game_.reread();
         game_.modify()
-            ->mistake_propose(tApp->user(), moves_widget_->current_move(), event);
+            ->mistake_propose(tApp->user(), moves_widget_->current_move());
         t.commit();
-        ThechessNotifier::app_emit(event);
+        Object object(GameObject, game_.id());
+        ThechessNotifier::app_emit(object);
     }
 
     void show_analysis_()
@@ -449,12 +446,12 @@ private:
 
     void comment_handler_(const Wt::WString& text)
     {
-        ThechessEvent event(GameObject, game_.id());
         dbo::Transaction t(tApp->session());
         game_.reread();
-        game_.modify()->set_comment(tApp->user(), text, event);
+        game_.modify()->set_comment(tApp->user(), text);
         t.commit();
-        ThechessNotifier::app_emit(event);
+        Object object(GameObject, game_.id());
+        ThechessNotifier::app_emit(object);
     }
 
     void print_comment_()

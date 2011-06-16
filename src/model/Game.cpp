@@ -82,38 +82,32 @@ UserPtr Game::other_user(const UserPtr user) const
     return user_of(chess::other_color(color_of(user)));
 }
 
-bool Game::check(ThechessEvent& event)
+void Game::check(Objects& objects)
 {
-    bool result = false;
     if (state() == confirmed && white()->online() && black()->online())
     {
         start_();
-        event.set_event(ge_state);
-        result = true;
     }
     else if (state() == confirmed && competition())
     {
         if (now() - confirmed_ > competition()->force_start_delay())
         {
             start_();
-            event.set_event(ge_state);
-            result = true;
         }
     }
     else if (state() == pause && now() > pause_until())
     {
         stop_pause_();
-        event.set_event(ge_state);
-        result = true;
     }
     else if (state() == active && total_limit_now(order_user()) < td_null)
     {
         UserPtr winner = user_of(chess::other_color(order_color()));
         finish_(timeout, winner);
-        event.set_event(ge_state);
-        result = true;
     }
-    return result;
+    if (is_ended() && competition())
+    {
+        objects.push_back(Object(CompetitionObject, competition().id()));
+    }
 }
 
 Td Game::limit_private(chess::Color color) const
@@ -311,7 +305,7 @@ bool Game::can_join(UserPtr user) const
     return user && user != init() && is_challenge();
 }
 
-void Game::join(UserPtr user, ThechessEvent& event)
+void Game::join(UserPtr user)
 {
     if (can_join(user))
     {
@@ -327,9 +321,7 @@ void Game::join(UserPtr user, ThechessEvent& event)
         {
             set_random_(init(), user);
         }
-        event.set_event(ge_state);
         confirm_();
-        check(event);
     }
 }
 
@@ -338,23 +330,19 @@ bool Game::can_confirm(UserPtr user) const
     return user && user != init() && is_creation();
 }
 
-void Game::confirm(UserPtr user, ThechessEvent& event)
+void Game::confirm(UserPtr user)
 {
     if (can_confirm(user))
     {
-        event.set_event(ge_state);
         confirm_();
-        check(event);
     }
 }
 
-void Game::confirm_by_competition(ThechessEvent& event)
+void Game::confirm_by_competition()
 {
     if (competition())
     {
-        event.set_event(ge_state);
         confirm_();
-        check(event);
     }
 }
 
@@ -389,12 +377,11 @@ bool Game::can_cancel(UserPtr user) const
     return is_member(user) && user != init() && is_creation();
 }
 
-void Game::cancel(UserPtr user, ThechessEvent& event)
+void Game::cancel(UserPtr user)
 {
-    if (!check(event) && can_cancel(user))
+    if (can_cancel(user))
     {
         finish_(cancelled);
-        event.set_event(ge_state);
     }
 }
 
@@ -404,11 +391,11 @@ bool Game::can_move(UserPtr user) const
 }
 
 void Game::add_move(const chess::Move& move,
-    const chess::Board& board_after, ThechessEvent& event)
+    const chess::Board& board_after)
 {
-    if (!check(event) && state() == active)
+    if (state() == active)
     {
-        draw_discard(order_user(), event);
+        draw_discard(order_user());
         Td penalty = spent_time() - limit_std();
         if (penalty > td_null)
         {
@@ -418,16 +405,13 @@ void Game::add_move(const chess::Move& move,
         chess::FinishState s = board_after.test_end();
         UserPtr order_user_now = order_user();
         push_move_(move);
-        event.move = move;
         if (s == chess::checkmate)
         {
             finish_(mate, order_user_now);
-            event.set_event(ge_state);
         }
         if (s == chess::stalemate)
         {
             finish_(draw_stalemate);
-            event.set_event(ge_state);
         }
     }
 }
@@ -445,13 +429,12 @@ bool Game::can_pause_propose(const UserPtr user, const Td& td) const
     return can_pause_propose(user) && pause_limit() >= td && td > td_null;
 }
 
-void Game::pause_propose(const UserPtr user, const Td& td, ThechessEvent& event)
+void Game::pause_propose(const UserPtr user, const Td& td)
 {
-    if (!check(event) && can_pause_propose(user, td))
+    if (can_pause_propose(user, td))
     {
         pause_proposed_td_ = td;
         pause_proposer_ = user;
-        event.set_event(ge_dialog);
     }
 }
 
@@ -470,14 +453,13 @@ bool Game::can_pause_agree(const UserPtr user) const
     return can_pause_discard(user) && pause_proposer() == other_user(user);
 }
 
-void Game::pause_agree(const UserPtr user, ThechessEvent& event)
+void Game::pause_agree(const UserPtr user)
 {
-    if (!check(event) && can_pause_agree(user))
+    if (can_pause_agree(user))
     {
         pause_proposer_.reset();
         state_ = pause;
         pause_until_ = now() + pause_proposed_td();
-        event.set_event(ge_state);
     }
 }
 
@@ -486,13 +468,12 @@ bool Game::can_pause_discard(const UserPtr user) const
     return state() == active && is_pause_proposed() && is_member(user);
 }
 
-void Game::pause_discard(const UserPtr user, ThechessEvent& event)
+void Game::pause_discard(const UserPtr user)
 {
-    if (!check(event) && can_pause_discard(user))
+    if (can_pause_discard(user))
     {
         pause_proposer_.reset();
         pause_proposed_td_ = td_null;
-        event.set_event(ge_dialog);
     }
 }
 
@@ -510,13 +491,12 @@ bool Game::can_mistake_propose(const UserPtr user, int mistake_move) const
         mistake_move >= moves_init() && mistake_move < moves().size();
 }
 
-void Game::mistake_propose(const UserPtr user, int mistake_move, ThechessEvent& event)
+void Game::mistake_propose(const UserPtr user, int mistake_move)
 {
-    if (!check(event) && can_mistake_propose(user, mistake_move))
+    if (can_mistake_propose(user, mistake_move))
     {
         mistake_move_ = mistake_move;
         mistake_proposer_ = user;
-        event.set_event(ge_dialog);
     }
 }
 
@@ -531,9 +511,9 @@ bool Game::can_mistake_agree(const UserPtr user) const
         mistake_proposer() == other_user(user);
 }
 
-void Game::mistake_agree(const UserPtr user, ThechessEvent& event)
+void Game::mistake_agree(const UserPtr user)
 {
-    if (!check(event) && can_mistake_agree(user))
+    if (can_mistake_agree(user))
     {
         Wt::WDateTime cached_now = now();
         Td spent = cached_now - lastmove_;
@@ -551,7 +531,6 @@ void Game::mistake_agree(const UserPtr user, ThechessEvent& event)
         mistake_proposer_.reset();
         pop_moves_(moves().size() - mistake_move());
         mistake_move_ = -1;
-        event.set_event(ge_mistake);
     }
 }
 
@@ -560,13 +539,12 @@ bool Game::can_mistake_discard(const UserPtr user) const
     return state() == active && is_mistake_proposed() && is_member(user);
 }
 
-void Game::mistake_discard(const UserPtr user, ThechessEvent& event)
+void Game::mistake_discard(const UserPtr user)
 {
-    if (!check(event) && can_mistake_discard(user))
+    if (can_mistake_discard(user))
     {
         mistake_proposer_.reset();
         mistake_move_ = -1;
-        event.set_event(ge_dialog);
     }
 }
 
@@ -578,12 +556,11 @@ bool Game::can_draw_propose(const UserPtr user) const
         is_member(user);
 }
 
-void Game::draw_propose(const UserPtr user, ThechessEvent& event)
+void Game::draw_propose(const UserPtr user)
 {
-    if (!check(event) && can_draw_propose(user))
+    if (can_draw_propose(user))
     {
         draw_proposer_ = user;
-        event.set_event(ge_dialog);
     }
 }
 
@@ -592,12 +569,11 @@ bool Game::can_draw_agree(const UserPtr user) const
     return can_draw_discard(user) && meet_first_draw();
 }
 
-void Game::draw_agree(const UserPtr user, ThechessEvent& event)
+void Game::draw_agree(const UserPtr user)
 {
-    if (!check(event) && can_draw_agree(user))
+    if (can_draw_agree(user))
     {
         draw_proposer_.reset();
-        event.set_event(ge_state);
         finish_(draw_agreed);
     }
 }
@@ -610,12 +586,11 @@ bool Game::can_draw_discard(const UserPtr user) const
         draw_proposer() == other_user(user);
 }
 
-void Game::draw_discard(const UserPtr user, ThechessEvent& event)
+void Game::draw_discard(const UserPtr user)
 {
-    if (!check(event) && can_draw_discard(user))
+    if (can_draw_discard(user))
     {
         draw_proposer_.reset();
-        event.set_event(ge_state);
     }
 }
 
@@ -699,12 +674,11 @@ bool Game::can_comment(const UserPtr user) const
     return is_member(user);
 }
 
-void Game::set_comment(const UserPtr user, const Wt::WString& t, ThechessEvent& event)
+void Game::set_comment(const UserPtr user, const Wt::WString& t)
 {
     if (can_comment(user))
     {
         comment_ = t;
-        event.set_event(ge_comment);
     }
 }
 

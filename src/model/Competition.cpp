@@ -14,11 +14,6 @@ void Competition::initialize_()
     CompetitionParameters::initialize_();
 }
 
-void Competition::check(ThechessEvent& event)
-{
-
-}
-
 Competition* Competition::create_new()
 {
     Competition* c = new Competition();
@@ -31,6 +26,16 @@ void Competition::create_competition(UserPtr user)
     state_ = RECRUITING;
     created_ = now();
     init_ = user;
+}
+
+void Competition::check(Objects& objects)
+{
+
+}
+
+Wt::WDateTime Competition::next_check() const
+{
+    return now() + minute; // FIXME
 }
 
 bool Competition::is_member(UserPtr user) const

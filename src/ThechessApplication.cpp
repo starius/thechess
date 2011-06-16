@@ -282,14 +282,14 @@ template<> void ThechessApplication::list_view<Game>()
     show_<widgets::GameListWidget>("/game/");
 }
 
-void ThechessApplication::thechess_notify(ThechessEvent event)
+void ThechessApplication::thechess_notify(Object object)
 {
     dbo::Transaction t(tApp->session());
-    static_cast<Object>(event).reread(tApp->session());
+    object.reread(tApp->session());
     std::pair<O2N::iterator, O2N::iterator> range =
-        tApp->notifiables_.equal_range(static_cast<Object>(event));
+        tApp->notifiables_.equal_range(object);
     std::set<Notifiable*>& waiting_notifiables = tApp->waiting_notifiables_;
-    tApp->notifying_object_ = &event;
+    tApp->notifying_object_ = &object;
     waiting_notifiables.clear();
     for (O2N::iterator it = range.first; it != range.second; ++it)
     {
@@ -301,7 +301,7 @@ void ThechessApplication::thechess_notify(ThechessEvent event)
         std::set<Notifiable*>::iterator it = waiting_notifiables.begin();
         Notifiable* notifiable = *it;
         waiting_notifiables.erase(it);
-        notifiable->notify(event);
+        notifiable->notify();
     }
     tApp->notifying_object_ = 0;
     tApp->triggerUpdate();

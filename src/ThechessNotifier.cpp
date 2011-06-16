@@ -41,13 +41,12 @@ void ThechessNotifier::stop_listenning(const Object& object)
     mutex_.unlock();
 }
 
-void ThechessNotifier::emit(const ThechessEvent& event, const std::string& this_app)
+void ThechessNotifier::emit(const Object& object, const std::string& this_app)
 {
-    if (event.object_type != NoEvent &&
-        (event.move != chess::move_null || event.raw_event() != 0))
+    if (object.type != NoEvent)
     {
         mutex_.lock();
-        O2I::iterator it = object2ids_.find(static_cast<Object>(event));
+        O2I::iterator it = object2ids_.find(object);
         if (it != object2ids_.end())
         {
             IdSet* id_set = it->second;
@@ -56,7 +55,7 @@ void ThechessNotifier::emit(const ThechessEvent& event, const std::string& this_
                 if (id != this_app)
                 {
                     server_.post(id, boost::bind(
-                        &ThechessApplication::thechess_notify, event));
+                        &ThechessApplication::thechess_notify, object));
                 }
             }
         }
@@ -64,12 +63,12 @@ void ThechessNotifier::emit(const ThechessEvent& event, const std::string& this_
     }
 }
 
-void ThechessNotifier::app_emit(const ThechessEvent& event)
+void ThechessNotifier::app_emit(const Object& object)
 {
-    if (event.object_type != NoEvent)
+    if (object.type != NoEvent)
     {
-        tApp->server().notifier().emit(event, tApp->sessionId());
-        tApp->thechess_notify(event);
+        tApp->server().notifier().emit(object, tApp->sessionId());
+        tApp->thechess_notify(object);
     }
 }
 

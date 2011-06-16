@@ -20,9 +20,9 @@ public:
     void stop_listenning(const model::Object& object); // by ThechessApplication
 
     // after successful transaction.commit()
-    void emit(const model::ThechessEvent& event,
+    void emit(const model::Object& object,
         const std::string& this_app=""); // not from WApplication
-    static void app_emit(const model::ThechessEvent& event); // from WApplication
+    static void app_emit(const model::Object& object); // from WApplication
 
 private:
     ThechessServer& server_;

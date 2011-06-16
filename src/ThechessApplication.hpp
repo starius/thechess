@@ -43,7 +43,7 @@ public:
     Notifiable(model::ObjectType ot, int id);
 
     virtual ~Notifiable();
-    virtual void notify(const model::ThechessEvent& event)=0; // under Transaction
+    virtual void notify()=0; // under Transaction
 
 private:
     const model::Object object_;
@@ -72,7 +72,7 @@ public:
     {
     }
 
-    static void thechess_notify(model::ThechessEvent event);
+    static void thechess_notify(model::Object object);
 
 private:
     ThechessServer& server_;

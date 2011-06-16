@@ -39,6 +39,7 @@ private:
 
     void io_run_();
     void check_(const boost::system::error_code& error);
+    void add_or_update_task_(const model::Object& object);
     void refresh_();
 };
 
