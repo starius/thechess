@@ -2,6 +2,7 @@
 #define THECHESS_MODEL_COMPETITION_HPP_
 
 #include <string>
+#include <map>
 
 #include <Wt/Dbo/Dbo>
 #include <Wt/Dbo/ptr>
@@ -25,6 +26,8 @@ namespace model {
 
 namespace thechess {
 namespace model {
+
+typedef std::map<UserPtr, std::map<UserPtr, std::vector<GamePtr> > > GamesTable;
 
 class Competition : public CompetitionParameters, public dbo::Dbo<Competition>
 {
@@ -71,6 +74,18 @@ public:
     bool is_member(UserPtr user) const;
     bool is_winner(UserPtr user) const;
 
+    const Users& members() const { return members_; }
+    const Games& games() const { return games_; }
+    const Users& winners() const { return winners_; }
+
+    std::vector<UserPtr> members_vector() const;
+    std::vector<GamePtr> games_vector() const;
+    std::vector<UserPtr> winners_vector() const;
+
+    GamesTable games_table() const;
+    Games games_with(UserPtr user) const;
+    std::vector<GamePtr> games_with(UserPtr user, GamesTable& gt) const;
+
     // auto-manage
     void check(Objects& objects);
     Wt::WDateTime next_check() const;
@@ -94,8 +109,6 @@ public:
     void cancel(UserPtr user);
 
     // methods of active stage
-    bool can_start() const;
-    void start();
 
 private:
     // common attributes
@@ -118,9 +131,23 @@ private:
 
     Users winners_;
 
-    void create_games_classical_();
-    void create_games_staged_();
-    void create_games_team_();
+    bool can_start_() const;
+    void start_(Objects& objects);
+    void cancel_();
+
+    void create_games_classical_(Objects& objects);
+    void create_games_staged_(Objects& objects);
+    void create_games_team_(Objects& objects);
+
+    bool process_(Objects& objects);
+    bool process_classical_(Objects& objects);
+    bool process_staged_(Objects& objects);
+    bool process_team_(Objects& objects);
+
+    void finish_(Objects& objects);
+
+    void find_winners_classical_(Objects& objects);
+    void find_winners_staged_(Objects& objects);
 };
 
 }
