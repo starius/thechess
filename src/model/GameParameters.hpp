@@ -21,7 +21,8 @@ namespace model {
 class GameParameters
 {
 public:
-    static GameParameters* create_new();
+    GameParameters();
+    GameParameters(bool);
 
     template<class Action>
     void persist(Action& a)
@@ -71,8 +72,6 @@ public:
 
 protected:
     chess::Moves moves_;
-
-    void initialize_();
 
 private:
     int moves_init_;

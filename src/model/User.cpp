@@ -10,9 +10,12 @@
 namespace thechess {
 namespace model {
 
-User* User::create_new()
+User::User(bool)
 {
-    return new User();
+}
+
+User::User()
+{
 }
 
 void User::set_password(const std::string& password)

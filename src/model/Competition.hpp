@@ -39,7 +39,8 @@ public:
         CANCELLED = 70
     };
 
-    static Competition* create_new();
+    Competition();
+    Competition(bool);
 
     static Wt::WString type2str(Type type);
 
@@ -95,9 +96,6 @@ public:
     // methods of active stage
     bool can_start() const;
     void start();
-
-protected:
-    void initialize_();
 
 private:
     // common attributes

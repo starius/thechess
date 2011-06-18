@@ -10,6 +10,24 @@
 namespace thechess {
 namespace model {
 
+Game::Game()
+{
+}
+
+Game::Game(bool):
+GameParameters(true),
+state_(proposed),
+colors_random_(false),
+created_(now()),
+competition_stage_(-1),
+pause_proposed_td_(td_null),
+mistake_move_(-1),
+moves_size_(moves_.size())
+{
+    rating_after_[chess::white] = -1;
+    rating_after_[chess::black] = -1;
+}
+
 bool Game::is_ended() const
 {
     return is_draw() || is_win() || state() == cancelled;
@@ -197,27 +215,6 @@ Wt::WDateTime Game::next_check() const
         result = pause_until();
     }
     return result;
-}
-
-void Game::initialize_()
-{
-    GameParameters::initialize_();
-    state_ = proposed;
-    colors_random_ = false;
-    mistake_move_ = -1;
-    pause_proposed_td_ = td_null;
-    created_ = now();
-    moves_size_ = moves().size();
-    rating_after_[chess::white] = -1;
-    rating_after_[chess::black] = -1;
-    competition_stage_ = -1;
-}
-
-Game* Game::create_new()
-{
-    Game* game = new Game();
-    game->initialize_();
-    return game;
 }
 
 void Game::propose_game(UserPtr init, UserPtr u, chess::Color c)

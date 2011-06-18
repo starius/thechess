@@ -32,14 +32,14 @@ namespace model {
 class User : public model::EloPlayer, public dbo::Dbo<User>
 {
 public:
-
-    static User* create_new();
-
     enum Rights {
         admin = 5,
         moderator = 2,
         regular_user = 0
     };
+
+    User();
+    User(bool);
 
     template<class Action>
     void persist(Action& a)

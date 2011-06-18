@@ -3,24 +3,21 @@
 
 namespace thechess {
 namespace model {
+using namespace config; // defaults
 
-void GameParameters::initialize_()
+GameParameters::GameParameters()
 {
-    using namespace config; // defaults
-    moves_ = chess::Moves();
-    moves_init_ = 0;
-    limit_std_ = defaults::limit_std;
-    limit_private_init_ = defaults::limit_private_init;
-    pause_limit_init_ = defaults::pause_limit_init;
-    norating_ = defaults::norating;
-    first_draw_ = defaults::first_draw;
 }
 
-GameParameters* GameParameters::create_new()
+GameParameters::GameParameters(bool):
+moves_(chess::Moves()),
+moves_init_(0),
+limit_std_(defaults::limit_std),
+limit_private_init_(defaults::limit_private_init),
+pause_limit_init_(defaults::pause_limit_init),
+norating_(defaults::norating),
+first_draw_(defaults::first_draw)
 {
-    GameParameters* gp = new GameParameters();
-    gp->initialize_();
-    return gp;
 }
 
 }

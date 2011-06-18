@@ -51,9 +51,8 @@ Wt::WContainerWidget(p), with_user_(false)
 
 void GameCreateWidget::print_()
 {
-    GameParameters* gp = GameParameters::create_new();
-    gpw_ = new GameParametersWidget(gp, this);
-    delete gp;
+    GameParameters gp(true);
+    gpw_ = new GameParametersWidget(&gp, this);
 
     color_ = new Wt::WComboBox();
     color_->addItem(tr("thechess.random"));
@@ -69,7 +68,7 @@ void GameCreateWidget::print_()
 void GameCreateWidget::button_handler_()
 {
     dbo::Transaction t(tApp->session());
-    GamePtr game = tApp->session().add(Game::create_new());
+    GamePtr game = tApp->session().add(new Game(true));
     gpw_->apply_parameters(game.modify());
     chess::Color color = selected_color_();
     if (with_user_)

@@ -27,7 +27,7 @@ Wt::WContainerWidget(p)
     else if (Competition::can_create_competition(tApp->user()))
     {
         new Wt::WText(tr("thechess.competition.create_welcome"), this);
-        CompetitionParameters* cp = CompetitionParameters::create_new();
+        CompetitionParameters* cp = new CompetitionParameters(true);
         cpw_ = new CompetitionParametersWidget(cp, /*allow_chechge_type*/ true, this);
         delete cp;
 
@@ -45,7 +45,7 @@ Wt::WContainerWidget(p)
 void CompetitionCreateWidget::button_handler_()
 {
     dbo::Transaction t(tApp->session());
-    CompetitionPtr comp = tApp->session().add(Competition::create_new());
+    CompetitionPtr comp = tApp->session().add(new Competition(true));
     cpw_->apply_parameters(comp.modify());
     comp.modify()->create_competition(tApp->user());
     t.commit();

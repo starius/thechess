@@ -24,7 +24,8 @@ class CompetitionParameters : public GameParameters
 public:
     typedef CompetitionType Type;
 
-    static CompetitionParameters* create_new();
+    CompetitionParameters();
+    CompetitionParameters(bool);
 
     template<class Action>
     void persist(Action& a)
@@ -79,9 +80,6 @@ public:
 
     Td relax_time() const { return relax_time_; }
     void set_relax_time(Td v) { relax_time_ = v; }
-
-protected:
-    void initialize_();
 
 private:
     Type type_;

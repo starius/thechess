@@ -48,6 +48,9 @@ public:
         mate = 64
     };
 
+    Game();
+    Game(bool);
+
     template<class Action>
     void persist(Action& a)
     {
@@ -79,8 +82,6 @@ public:
         dbo::field(a, rating_after_[1], "rating_after_black");
         dbo::field(a, comment_, "comment");
     }
-
-    static Game* create_new();
 
     void propose_game(UserPtr init, UserPtr u,
         chess::Color c);
@@ -190,9 +191,6 @@ public:
 
     CompetitionPtr competition() const { return competition_; }
     int competition_stage() const { return competition_stage_; }
-
-protected:
-    void initialize_();
 
 private:
     State state_;

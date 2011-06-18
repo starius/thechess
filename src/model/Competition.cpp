@@ -9,22 +9,19 @@
 namespace thechess {
 namespace model {
 
-void Competition::initialize_()
+Competition::Competition()
 {
-    CompetitionParameters::initialize_();
 }
 
-Competition* Competition::create_new()
+Competition::Competition(bool):
+CompetitionParameters(true),
+state_(RECRUITING),
+created_(now())
 {
-    Competition* c = new Competition();
-    c->initialize_();
-    return c;
 }
 
 void Competition::create_competition(UserPtr user)
 {
-    state_ = RECRUITING;
-    created_ = now();
     init_ = user;
 }
 
@@ -175,7 +172,7 @@ void Competition::create_games_classical_()
             black_games[black] += 1;
             N[white][black] += 1;
             N[black][white] += 1;
-            GamePtr game = session()->add(Game::create_new());
+            GamePtr game = session()->add(new Game(true));
             game.modify()->make_competition_game(white, black,
                 session()->load<Competition>(id()));
         }
@@ -193,7 +190,7 @@ void Competition::create_games_staged_()
     {
         UserPtr white = members[2*i];
         UserPtr black = members[2*i+1];
-        GamePtr game = session()->add(Game::create_new());
+        GamePtr game = session()->add(new Game(true));
         game.modify()->make_competition_game(white, black,
             session()->load<Competition>(id()), 0);
     }
