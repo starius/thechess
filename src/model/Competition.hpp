@@ -145,9 +145,11 @@ private:
     bool process_team_(Objects& objects);
 
     void finish_(Objects& objects);
-
     void find_winners_classical_(Objects& objects);
     void find_winners_staged_(Objects& objects);
+
+    GamePtr create_game_(UserPtr white, UserPtr black, int stage=-1,
+        bool no_draw=false);
 };
 
 }

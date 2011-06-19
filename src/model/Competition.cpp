@@ -249,9 +249,7 @@ void Competition::create_games_classical_(Objects& objects)
             black_games[black] += 1;
             N[white][black] += 1;
             N[black][white] += 1;
-            GamePtr game = session()->add(new Game(true));
-            game.modify()->make_competition_game(white, black,
-                session()->load<Competition>(id()));
+            create_game_(white, black);
         }
         objects.push_back(Object(UserObject, white.id()));
     }
@@ -268,9 +266,7 @@ void Competition::create_games_staged_(Objects& objects)
     {
         UserPtr white = members[2*i];
         UserPtr black = members[2*i+1];
-        GamePtr game = session()->add(new Game(true));
-        game.modify()->make_competition_game(white, black,
-            session()->load<Competition>(id()), 0);
+        create_game_(white, black, 0);
         objects.push_back(Object(UserObject, white.id()));
         objects.push_back(Object(UserObject, black.id()));
     }
@@ -376,6 +372,20 @@ void Competition::find_winners_classical_(Objects&)
     {
         winners_.insert(u);
     }
+}
+
+GamePtr Competition::create_game_(UserPtr white, UserPtr black, int stage, bool no_draw)
+{
+    GamePtr game = session()->add(new Game(true));
+    bool random = no_draw;
+    game.modify()->make_competition_game(white, black,
+        session()->load<Competition>(id()), stage, random);
+    game.modify()->set_game_parameters(this);
+    if (no_draw)
+    {
+        game.modify()->set_no_draw();
+    }
+    return game;
 }
 
 }
