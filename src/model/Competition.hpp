@@ -46,6 +46,8 @@ public:
     Competition(bool);
 
     static Wt::WString type2str(Type type);
+    static bool all_ended(const std::vector<GamePtr>& games);
+    static std::vector<UserPtr> winners_of_games(const std::vector<GamePtr>& games);
 
     template<class Action>
     void persist(Action& a)

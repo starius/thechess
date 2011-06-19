@@ -64,6 +64,47 @@ Wt::WDateTime Competition::next_check() const
     return result;
 }
 
+bool Competition::all_ended(const std::vector<GamePtr>& games)
+{
+    BOOST_FOREACH(GamePtr g, games)
+        if (!g->is_ended())
+            return false;
+    return true;
+}
+
+std::vector<UserPtr> Competition::winners_of_games(const std::vector<GamePtr>& games)
+{
+    typedef std::map<UserPtr, int> User2int;
+    User2int wins;
+    BOOST_FOREACH(GamePtr g, games)
+    {
+        BOOST_ASSERT(g->is_ended());
+        if (g->is_draw())
+        {
+            wins[g->white()] += 5;
+            wins[g->black()] += 5;
+        }
+        else
+        {
+            wins[g->winner()] += 10;
+        }
+    }
+    std::vector<UserPtr> winners;
+    int max_wins;
+    BOOST_FOREACH(User2int::value_type& user2int, wins)
+    {
+        UserPtr u = user2int.first;
+        int w = user2int.second;
+        if (max_wins == -1 || w > max_wins)
+        {
+            max_wins = w;
+            winners.clear();
+            winners.push_back(u);
+        }
+    }
+    return winners;
+}
+
 bool Competition::is_member(UserPtr user) const
 {
     return members_.find().where("id = ?").bind(user).resultList().size() == 1;
@@ -343,32 +384,7 @@ void Competition::finish_(Objects& objects)
 
 void Competition::find_winners_classical_(Objects&)
 {
-    std::map<UserPtr, int> wins;
-    BOOST_FOREACH(GamePtr g, games_vector())
-    {
-        BOOST_ASSERT(g->is_ended());
-        if (g->is_draw())
-        {
-            wins[g->white()] += 5;
-            wins[g->black()] += 5;
-        }
-        else
-        {
-            wins[g->winner()] += 10;
-        }
-    }
-    std::vector<UserPtr> winners;
-    int max_wins;
-    BOOST_FOREACH(UserPtr u, members_vector())
-    {
-        if (max_wins == -1 || wins[u] > max_wins)
-        {
-            max_wins = wins[u];
-            winners.clear();
-            winners.push_back(u);
-        }
-    }
-    BOOST_FOREACH(UserPtr u, winners)
+    BOOST_FOREACH(UserPtr u, winners_of_games(games_vector()))
     {
         winners_.insert(u);
     }
