@@ -44,6 +44,8 @@ public:
         dbo::field(a, max_simultaneous_games_, "max_simultaneous_games");
         dbo::field(a, games_factor_, "games_factor");
         dbo::field(a, relax_time_, "relax_time");
+        dbo::field(a, min_substages_, "min_substages");
+        dbo::field(a, increment_substages_, "increment_substages");
     }
 
     Type type() const { return type_; }
@@ -80,6 +82,10 @@ public:
 
     Td relax_time() const { return relax_time_; }
     void set_relax_time(Td v) { relax_time_ = v; }
+    int min_substages() const { return min_substages_; }
+    void set_min_substages(int v) { min_substages_ = v; }
+    int increment_substages() const { return increment_substages_; }
+    void set_increment_substages(int v) { increment_substages_ = v; }
 
 private:
     Type type_;
@@ -103,6 +109,8 @@ private:
 
     // staged
     Td relax_time_;
+    int min_substages_;
+    int increment_substages_;
 };
 
 }

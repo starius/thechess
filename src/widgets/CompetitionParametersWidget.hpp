@@ -45,6 +45,8 @@ private:
     MyDoubleSpinBox* games_factor_;
 
     TimeDeltaWidget* relax_time_;
+    MySpinBox* min_substages_;
+    MySpinBox* increment_substages_;
 
     void type_handler_();
     model::CompetitionType get_type_() const;

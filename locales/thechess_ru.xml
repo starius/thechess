@@ -287,6 +287,8 @@
     <message id='thechess.competition.max_simultaneous_games'>Одновременные игры</message>
     <message id='thechess.competition.games_factor'>Множитель партий</message>
     <message id='thechess.competition.relax_time'>Время на отдых</message>
+    <message id='thechess.competition.min_substages'>Подраундов в первом раунде</message>
+    <message id='thechess.competition.increment_substages'>Рост числа подраундов</message>
 
 </messages>
 

@@ -105,6 +105,18 @@ GameParametersWidget(cp, parent)
     item(tr("thechess.competition.relax_time"), "",
         relax_time_->form_widget(), relax_time_);
 
+    min_substages_ = new MySpinBox();
+    min_substages_->setRange(min::min_substages, max::min_substages);
+    min_substages_->setValue(cp->min_substages());
+    item(tr("thechess.competition.min_substages"), "",
+        min_substages_, min_substages_);
+
+    increment_substages_ = new MySpinBox();
+    increment_substages_->setRange(min::increment_substages, max::increment_substages);
+    increment_substages_->setValue(cp->increment_substages());
+    item(tr("thechess.competition.increment_substages"), "",
+        increment_substages_, increment_substages_);
+
     type_handler_();
 }
 
@@ -133,6 +145,8 @@ void CompetitionParametersWidget::apply_parameters(CompetitionParameters* cp)
     if (t == STAGED)
     {
         cp->set_relax_time(relax_time_->value());
+        cp->set_min_substages(min_substages_->value());
+        cp->set_increment_substages(increment_substages_->value());
     }
 
     if (cp->min_rating() > cp->max_rating())
@@ -164,6 +178,8 @@ void CompetitionParametersWidget::type_handler_()
     hide(max_simultaneous_games_);
     hide(games_factor_);
     hide(relax_time_);
+    hide(min_substages_);
+    hide(increment_substages_);
     if (t == CLASSICAL || t == STAGED)
     {
         show(users_);
@@ -177,6 +193,8 @@ void CompetitionParametersWidget::type_handler_()
     if (t == STAGED)
     {
         show(relax_time_);
+        show(min_substages_);
+        show(increment_substages_);
     }
 }
 

@@ -451,6 +451,8 @@
     <message id='thechess.competition.max_simultaneous_games'>Simultaneous games</message>
     <message id='thechess.competition.games_factor'>Games factor</message>
     <message id='thechess.competition.relax_time'>Relax time</message>
+    <message id='thechess.competition.min_substages'>First stage substages</message>
+    <message id='thechess.competition.increment_substages'>Substages increment</message>
 
 </messages>
 

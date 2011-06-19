@@ -75,6 +75,8 @@ namespace competition
         const int max_simultaneous_games = 1;
         const float games_factor = 0.01;
         const Td relax_time = day;
+        const int min_substages = 1;
+        const int increment_substages = 0;
     }
 
     namespace defaults
@@ -92,6 +94,8 @@ namespace competition
         const int max_simultaneous_games = 8;
         const float games_factor = 1.0;
         const Td relax_time = day;
+        const int min_substages = 3;
+        const int increment_substages = 1;
 
         const bool norating = true;
     }
@@ -110,6 +114,8 @@ namespace competition
         const int max_simultaneous_games = 50;
         const float games_factor = 10.0;
         const Td relax_time = week;
+        const int min_substages = 15;
+        const int increment_substages = 3;
     }
 }
 

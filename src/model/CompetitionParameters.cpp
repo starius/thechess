@@ -28,7 +28,9 @@ max_recruiting_time_(defaults::max_recruiting_time),
 max_simultaneous_games_(defaults::max_simultaneous_games),
 games_factor_(defaults::games_factor),
 
-relax_time_(defaults::relax_time)
+relax_time_(defaults::relax_time),
+min_substages_(defaults::min_substages),
+increment_substages_(defaults::increment_substages)
 {
     set_norating(defaults::norating);
 }
