@@ -77,7 +77,6 @@ public:
         dbo::field(a, mistake_move_, "mistake_move");
         dbo::field(a, mistake_proposer_, "mistake_proposer");
         dbo::field(a, draw_proposer_, "draw_proposer");
-        dbo::field(a, moves_size_, "moves_size");
         dbo::field(a, rating_after_[0], "rating_after_white");
         dbo::field(a, rating_after_[1], "rating_after_black");
         dbo::field(a, comment_, "comment");
@@ -152,7 +151,7 @@ public:
     int size_without_init() const;
     bool meet_first_draw() const;
     bool real_rating() const;
-    int human_size() const { return chess::Moves::size_to_human(moves_size_); }
+    int human_size() const { return chess::Moves::size_to_human(size()); }
 
     bool can_move(UserPtr user) const;
 
@@ -223,7 +222,6 @@ private:
 
     UserPtr draw_proposer_;
 
-    int moves_size_;
     int rating_after_[2];
 
     Wt::WString comment_;

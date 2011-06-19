@@ -21,8 +21,7 @@ colors_random_(false),
 created_(now()),
 competition_stage_(-1),
 pause_proposed_td_(td_null),
-mistake_move_(-1),
-moves_size_(moves_.size())
+mistake_move_(-1)
 {
     rating_after_[chess::white] = -1;
     rating_after_[chess::black] = -1;
@@ -652,13 +651,11 @@ void Game::elo_change_()
 void Game::push_move_(chess::Move move)
 {
     moves_.push_move(move);
-    moves_size_ += 1;
 }
 
 void Game::pop_moves_(int number)
 {
     moves_.pop_moves(number);
-    moves_size_ -= 1;
 }
 
 int Game::rating_after(chess::Color color) const

@@ -51,7 +51,7 @@ public:
         addColumn("G.winner_game_id", tr("thechess.winner"));
         addColumn("G.started", tr("thechess.started"));
         addColumn("G.ended", tr("thechess.ended"));
-        addColumn("G.moves_size", tr("thechess.moves_size"));
+        addColumn("G.id", tr("thechess.moves_size")); // dummy G.id
         addColumn("G.norating", tr("thechess.real_rating"));
         addColumn("G.comment", tr("thechess.comment"));
         setColumnFlags(n_column, Wt::ItemIsXHTMLText);
