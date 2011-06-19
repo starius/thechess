@@ -20,6 +20,11 @@ first_draw_(defaults::first_draw)
 {
 }
 
+void GameParameters::set_game_parameters(const GameParameters* other)
+{
+    *this = *other;
+}
+
 }
 }
 

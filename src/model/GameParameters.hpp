@@ -70,6 +70,8 @@ public:
         first_draw_ = first_draw;
     }
 
+    void set_game_parameters(const GameParameters* other);
+
 protected:
     chess::Moves moves_;
 
