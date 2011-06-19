@@ -157,6 +157,7 @@
     <message id='thechess.state.timeout'>Просрочена</message>
     <message id='thechess.state.cancelled'>Отменена</message>
     <message id='thechess.state.mate'>Мат</message>
+    <message id='thechess.state.no_draw_stalemate'>Пат в игре без ничьих, побеждают черные</message>
     <message id='thechess.state.state'>Неизвестное состояние</message>
     <message id='thechess.state'>Состояние</message>
 

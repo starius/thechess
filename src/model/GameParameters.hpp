@@ -71,6 +71,7 @@ public:
     }
 
     void set_game_parameters(const GameParameters* other);
+    void set_no_draw();
 
 protected:
     chess::Moves moves_;
@@ -86,6 +87,8 @@ private:
 
     int first_draw_;
 };
+
+const int NO_DRAW = -1;
 
 }
 }

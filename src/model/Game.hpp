@@ -45,7 +45,8 @@ public:
         surrendered = 61,
         timeout = 62,
         cancelled = 63,
-        mate = 64
+        mate = 64,
+        no_draw_stalemate = 65
     };
 
     Game();

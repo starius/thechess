@@ -324,6 +324,7 @@
     <message id='thechess.state.timeout'>Timeout</message>
     <message id='thechess.state.cancelled'>Cancelled</message>
     <message id='thechess.state.mate'>Mate</message>
+    <message id='thechess.state.no_draw_stalemate'>Stalemate in game without draws, so black wins</message>
     <message id='thechess.state.state'>Undefined state</message>
     <message id='thechess.state'>State</message>
 

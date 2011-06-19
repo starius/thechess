@@ -40,7 +40,8 @@ bool Game::is_draw() const
 
 bool Game::is_win() const
 {
-    return state() == surrendered || state() == timeout || state() == mate;
+    return state() == surrendered || state() == timeout ||
+        state() == mate || state() == no_draw_stalemate;
 }
 
 const char* Game::state2str_id(State state)
@@ -58,6 +59,7 @@ const char* Game::state2str_id(State state)
     if (state == timeout) { return "thechess.state.timeout"; }
     if (state == cancelled) { return "thechess.state.cancelled"; }
     if (state == mate) { return "thechess.state.mate"; }
+    if (state == no_draw_stalemate) { return "thechess.state.no_draw_stalemate"; }
     return "thechess.state.state";
 }
 
@@ -407,7 +409,14 @@ void Game::add_move(const chess::Move& move,
         }
         if (s == chess::stalemate)
         {
-            finish_(draw_stalemate);
+            if (first_draw() != NO_DRAW)
+            {
+                finish_(draw_stalemate);
+            }
+            else
+            {
+                finish_(no_draw_stalemate, black());
+            }
         }
     }
 }
@@ -610,7 +619,7 @@ int Game::size_without_init() const
 
 bool Game::meet_first_draw() const
 {
-    return size_without_init() >= first_draw();
+    return size_without_init() >= first_draw() && first_draw() != NO_DRAW;
 }
 
 bool Game::real_rating() const
