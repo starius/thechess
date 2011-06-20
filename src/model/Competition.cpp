@@ -3,6 +3,7 @@
 #include <boost/foreach.hpp>
 
 #include "model/Competition.hpp"
+#include "model/StagedCompetition.hpp"
 #include "config.hpp"
 #include "rand.hpp"
 
@@ -38,9 +39,9 @@ void Competition::check(Objects& objects)
             cancel_();
         }
     }
-    if (state_ == ACTIVE && process_(objects))
+    if (state_ == ACTIVE)
     {
-        finish_(objects);
+        process_(objects);
     }
 }
 
@@ -255,14 +256,6 @@ void Competition::start_(Objects& objects)
     {
         create_games_classical_(objects);
     }
-    else if (type() == STAGED)
-    {
-        create_games_staged_(objects);
-    }
-    else if (type() == TEAM)
-    {
-        // FIXME
-    }
     state_ = ACTIVE;
     started_ = now();
 }
@@ -296,39 +289,27 @@ void Competition::create_games_classical_(Objects& objects)
     }
 }
 
-void Competition::create_games_staged_(Objects& objects)
+void Competition::process_(Objects& objects)
 {
-    std::vector<UserPtr> members(members_.begin(), members_.end());
-    std::random_shuffle(members.begin(), members.end(), random::rand_for_shuffle);
-    int members_size = members.size();
-    int max_pow2 = pow(2, floor(log2(members_size))) + 0.5;
-    int pairs = members_size - max_pow2 || members_size / 2;
-    for (int i = 0; i < pairs; i++)
-    {
-        UserPtr white = members[2*i];
-        UserPtr black = members[2*i+1];
-        create_game_(white, black, 0);
-        objects.push_back(Object(UserObject, white.id()));
-        objects.push_back(Object(UserObject, black.id()));
-    }
-}
-
-bool Competition::process_(Objects& objects)
-{
-    bool finished = false;
     if (type() == CLASSICAL)
     {
-        finished = process_classical_(objects);
+        if (process_classical_(objects))
+        {
+            std::vector<UserPtr> winners = winners_of_games(games_vector());
+            finish_(winners, objects);
+        }
     }
     else if (type() == STAGED)
     {
-        // FIXME
+        StagedCompetition sc(this);
+        sc.process(this, objects);
+        if (sc.winner())
+        {
+            std::vector<UserPtr> winners;
+            winners.push_back(sc.winner());
+            finish_(winners, objects);
+        }
     }
-    else if (type() == TEAM)
-    {
-        // FIXME
-    }
-    return finished;
 }
 
 bool Competition::process_classical_(Objects& objects)
@@ -364,30 +345,14 @@ bool Competition::process_classical_(Objects& objects)
     return finished;
 }
 
-void Competition::finish_(Objects& objects)
+void Competition::finish_(const std::vector<UserPtr>& winners, Objects&)
 {
-    if (type() == CLASSICAL)
-    {
-        find_winners_classical_(objects);
-    }
-    if (type() == STAGED)
-    {
-        // FIXME
-    }
-    if (type() == TEAM)
-    {
-        // FIXME
-    }
-    state_ = ENDED;
-    ended_ = now();
-}
-
-void Competition::find_winners_classical_(Objects&)
-{
-    BOOST_FOREACH(UserPtr u, winners_of_games(games_vector()))
+    BOOST_FOREACH(UserPtr u, winners)
     {
         winners_.insert(u);
     }
+    state_ = ENDED;
+    ended_ = now();
 }
 
 GamePtr Competition::create_game_(UserPtr white, UserPtr black, int stage, bool no_draw)

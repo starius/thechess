@@ -135,23 +135,18 @@ private:
 
     bool can_start_() const;
     void start_(Objects& objects);
+    void create_games_classical_(Objects& objects);
     void cancel_();
 
-    void create_games_classical_(Objects& objects);
-    void create_games_staged_(Objects& objects);
-    void create_games_team_(Objects& objects);
-
-    bool process_(Objects& objects);
+    void process_(Objects& objects);
     bool process_classical_(Objects& objects);
-    bool process_staged_(Objects& objects);
-    bool process_team_(Objects& objects);
 
-    void finish_(Objects& objects);
-    void find_winners_classical_(Objects& objects);
-    void find_winners_staged_(Objects& objects);
+    void finish_(const std::vector<UserPtr>& winners, Objects& objects);
 
     GamePtr create_game_(UserPtr white, UserPtr black, int stage=-1,
         bool no_draw=false);
+
+friend class StagedCompetition;
 };
 
 }
