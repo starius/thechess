@@ -74,6 +74,9 @@ public:
 
     static void thechess_notify(model::Object object);
 
+protected:
+    virtual void notify(const Wt::WEvent& e);
+
 private:
     ThechessServer& server_;
     ThechessSession session_;

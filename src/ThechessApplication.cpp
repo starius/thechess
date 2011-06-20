@@ -203,6 +203,18 @@ void ThechessApplication::logout()
     t.commit();
 }
 
+void ThechessApplication::notify(const Wt::WEvent& e)
+{
+    try
+    {
+        Wt::WApplication::notify(e);
+    }
+    catch (dbo::StaleObjectException)
+    {
+        session_.rereadAll();
+    }
+}
+
 Wt::WContainerWidget* ThechessApplication::mainpanel_()
 {
     return (Wt::WContainerWidget*)
