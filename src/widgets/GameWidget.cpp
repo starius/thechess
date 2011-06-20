@@ -260,6 +260,26 @@ private:
 
     void print_before_active_buttons_()
     {
+        if (game_->competition())
+        {
+            if (game_->has_competition_confirmed(game_->other_user(tApp->user())))
+            {
+                new Wt::WBreak(manager_);
+                new Wt::WText(tr("thechess.GameWidget.competition_other_proposed")
+                    .arg(game_->other_user(tApp->user())->username()), manager_);
+            }
+            if (game_->can_competition_confirm(tApp->user()))
+            {
+                new Wt::WText(tr("thechess.GameWidget.competition_confirm_welcome"), manager_);
+                button_<&Game::competition_confirm>("thechess.GameWidget.competition_confirm");
+            }
+            if (game_->can_competition_discard(tApp->user()))
+            {
+                new Wt::WBreak(manager_);
+                new Wt::WText(tr("thechess.GameWidget.competition_discard_welcome"), manager_);
+                button_<&Game::competition_discard>("thechess.GameWidget.competition_discard");
+            }
+        }
         if (game_->can_join(tApp->user()))
         {
             button_<&Game::join>("thechess.join");

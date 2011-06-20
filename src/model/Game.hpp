@@ -61,14 +61,16 @@ public:
         dbo::belongsTo(a, black_, "black");
         dbo::belongsTo(a, winner_, "winner_game");
         dbo::belongsTo(a, init_, "init_game");
+        dbo::field(a, competition_confirmer_[chess::white], "competition_confirmer_white");
+        dbo::field(a, competition_confirmer_[chess::black], "competition_confirmer_black");
         dbo::field(a, colors_random_, "colors_random");
         dbo::field(a, created_, "created");
         dbo::field(a, confirmed_, "confirmed");
         dbo::field(a, started_, "started");
         dbo::field(a, lastmove_, "lastmove");
         dbo::field(a, ended_, "ended");
-        dbo::field(a, limit_private_[0], "limit_private_white");
-        dbo::field(a, limit_private_[1], "limit_private_black");
+        dbo::field(a, limit_private_[chess::white], "limit_private_white");
+        dbo::field(a, limit_private_[chess::black], "limit_private_black");
         dbo::belongsTo(a, competition_, "competition");
         dbo::field(a, competition_stage_, "competition_stage");
         dbo::field(a, pause_until_, "pause_until");
@@ -78,8 +80,8 @@ public:
         dbo::field(a, mistake_move_, "mistake_move");
         dbo::field(a, mistake_proposer_, "mistake_proposer");
         dbo::field(a, draw_proposer_, "draw_proposer");
-        dbo::field(a, rating_after_[0], "rating_after_white");
-        dbo::field(a, rating_after_[1], "rating_after_black");
+        dbo::field(a, rating_after_[chess::white], "rating_after_white");
+        dbo::field(a, rating_after_[chess::black], "rating_after_black");
         dbo::field(a, comment_, "comment");
     }
 
@@ -101,6 +103,12 @@ public:
     void confirm_by_competition();
     bool can_cancel(UserPtr user) const;
     void cancel(UserPtr user);
+
+    bool has_competition_confirmed(UserPtr user) const;
+    bool can_competition_confirm(UserPtr user) const;
+    void competition_confirm(UserPtr user);
+    bool can_competition_discard(UserPtr user) const;
+    void competition_discard(UserPtr user);
 
     bool can_pause_propose(const UserPtr user) const;
     bool can_pause_propose(const UserPtr user, const Td& td) const;
@@ -200,6 +208,7 @@ private:
     UserPtr winner_;
 
     UserPtr init_;
+    bool competition_confirmer_[2]; // used with competition games only
     bool colors_random_;
 
     Wt::WDateTime created_;

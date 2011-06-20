@@ -25,6 +25,8 @@ mistake_move_(-1)
 {
     rating_after_[chess::white] = -1;
     rating_after_[chess::black] = -1;
+    competition_confirmer_[chess::white] = false;
+    competition_confirmer_[chess::black] = false;
 }
 
 bool Game::is_ended() const
@@ -362,8 +364,8 @@ void Game::confirm_()
 void Game::start_()
 {
     state_ = active;
-    limit_private_[0] = limit_private_init();
-    limit_private_[1] = limit_private_init();
+    limit_private_[chess::white] = limit_private_init();
+    limit_private_[chess::black] = limit_private_init();
     pause_limit_ = pause_limit_init();
     pause_proposer_.reset();
     mistake_proposer_.reset();
@@ -389,6 +391,49 @@ void Game::cancel(UserPtr user)
     if (can_cancel(user))
     {
         finish_(cancelled);
+    }
+}
+
+bool Game::has_competition_confirmed(UserPtr user) const
+{
+    return is_member(user) && competition_confirmer_[color_of(user)];
+}
+
+bool Game::can_competition_confirm(UserPtr user) const
+{
+    return is_member(user) &&
+        competition() &&
+        !init() &&
+        state_ == proposed &&
+        !has_competition_confirmed(user);
+}
+
+void Game::competition_confirm(UserPtr user)
+{
+    if (can_competition_confirm(user))
+    {
+        competition_confirmer_[color_of(user)] = true;
+        if (has_competition_confirmed(other_user(user)))
+        {
+            confirm_();
+        }
+    }
+}
+
+bool Game::can_competition_discard(UserPtr user) const
+{
+    return is_member(user) &&
+        competition() &&
+        !init() &&
+        state_ == proposed &&
+        has_competition_confirmed(user);
+}
+
+void Game::competition_discard(UserPtr user)
+{
+    if (can_competition_discard(user))
+    {
+        competition_confirmer_[color_of(user)] = false;
     }
 }
 

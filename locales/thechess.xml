@@ -370,6 +370,14 @@
     <message id='thechess.confirm'>Confirm</message>
     <message id='thechess.close'>X</message>
 
+    <message id='thechess.GameWidget.competition_other_proposed'>{1} proposed to confirm this game in advance</message>
+    <message id='thechess.GameWidget.competition_confirm_welcome'>This game can be confirmed in advance</message>
+    <message id='thechess.GameWidget.competition_confirm'>Confirm</message>
+    <message id='thechess.GameWidget.competition_discard_welcome'>
+        You have confirmed this game to be confirmed in advance
+    </message>
+    <message id='thechess.GameWidget.competition_discard'>Discard</message>
+
     <message id='thechess.pause_propose'>Propose a pause</message>
     <message id='thechess.format.pause_proposal'>
         Pause proposed, proposer: {1}, duration: {2}

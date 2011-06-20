@@ -202,6 +202,12 @@
     <message id='thechess.cancel'>Отменить</message>
     <message id='thechess.confirm'>Подтвердить</message>
 
+    <message id='thechess.GameWidget.competition_other_proposed'>{1} предлагает подтвердить игру заранее</message>
+    <message id='thechess.GameWidget.competition_confirm_welcome'>Игра может быть подтверждена заранее</message>
+    <message id='thechess.GameWidget.competition_confirm'>Подтвердить</message>
+    <message id='thechess.GameWidget.competition_discard_welcome'>Вы согласны подтвердить игру заранее</message>
+    <message id='thechess.GameWidget.competition_discard'>Отказаться</message>
+
     <message id='thechess.pause_propose'>Предложить перерыв</message>
     <message id='thechess.format.pause_proposal'>
         Перерыв предложен, предложил {1}, продолжительность: {2}
