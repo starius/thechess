@@ -103,6 +103,11 @@ UserPtr Game::other_user(const UserPtr user) const
 
 void Game::check(Objects& objects)
 {
+    if (state() == proposed && competition() && competition()->type() == STAGED &&
+        now() - created_ > competition()->relax_time())
+    {
+        confirm_();
+    }
     if (state() == confirmed && white()->online() && black()->online())
     {
         start_();
@@ -206,6 +211,10 @@ Wt::WDateTime Game::next_check() const
         result = lastmove() + limit_std() +
             std::min(limit_private(chess::white),
             limit_private(chess::black));
+    }
+    else if (state() == proposed && competition() && competition()->type() == STAGED)
+    {
+        result = created_ + competition()->relax_time();
     }
     else if (state() == confirmed && competition())
     {
