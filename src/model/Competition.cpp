@@ -65,6 +65,15 @@ Wt::WDateTime Competition::next_check() const
     return result;
 }
 
+const char* Competition::state2str(State state)
+{
+    if (state == RECRUITING) { return "thechess.competition.state.RECRUITING"; }
+    if (state == ACTIVE) { return "thechess.competition.state.ACTIVE"; }
+    if (state == ENDED) { return "thechess.competition.state.ENDED"; }
+    if (state == CANCELLED) { return "thechess.competition.state.CANCELLED"; }
+    return "thechess.state.state";
+}
+
 bool Competition::all_ended(const GamesVector& games)
 {
     BOOST_FOREACH(GamePtr g, games)

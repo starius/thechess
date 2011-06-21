@@ -69,6 +69,12 @@ public:
     }
 
     State state() const { return state_; }
+    static const char* state2str(State state);
+    UserPtr init() const { return init_; }
+
+    const Wt::WDateTime& created() const { return created_; }
+    const Wt::WDateTime& started() const { return started_; }
+    const Wt::WDateTime& ended() const { return ended_; }
 
     const Wt::WString& name() const { return name_; }
     void set_name(Wt::WString& v) { name_ = v; }

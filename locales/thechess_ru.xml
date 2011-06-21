@@ -296,5 +296,10 @@
     <message id='thechess.competition.min_substages'>Подраундов в первом раунде</message>
     <message id='thechess.competition.increment_substages'>Рост числа подраундов</message>
 
+    <message id='thechess.competition.state.RECRUITING'>набирающийся</message>
+    <message id='thechess.competition.state.ACTIVE'>активный</message>
+    <message id='thechess.competition.state.ENDED'>завершенный</message>
+    <message id='thechess.competition.state.CANCELLED'>отмененный</message>
+
 </messages>
 

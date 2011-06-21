@@ -462,5 +462,10 @@
     <message id='thechess.competition.min_substages'>First stage substages</message>
     <message id='thechess.competition.increment_substages'>Substages increment</message>
 
+    <message id='thechess.competition.state.RECRUITING'>recruiting</message>
+    <message id='thechess.competition.state.ACTIVE'>active</message>
+    <message id='thechess.competition.state.ENDED'>ended</message>
+    <message id='thechess.competition.state.CANCELLED'>cancelled</message>
+
 </messages>
 
