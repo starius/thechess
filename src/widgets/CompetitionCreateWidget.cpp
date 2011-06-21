@@ -68,7 +68,7 @@ void CompetitionCreateWidget::button_handler_()
 
     comp.modify()->create_competition(tApp->user());
     t.commit();
-    // tApp->view(comp); FIXME
+    tApp->view(comp);
 }
 
 }

@@ -30,6 +30,7 @@ namespace dbo = Wt::Dbo;
 #include "widgets/LoginWidget.hpp"
 #include "widgets/GameWidget.hpp"
 #include "widgets/GameCreateWidget.hpp"
+#include "widgets/CompetitionWidget.hpp"
 #include "widgets/CompetitionCreateWidget.hpp"
 #include "widgets/GameListWidget.hpp"
 #include "widgets/UserWidget.hpp"
@@ -267,7 +268,7 @@ void ThechessApplication::onPathChange_()
         }
         else
         {
-            //object_view_<Competition>("/competition/");
+            object_view_<Competition>("/competition/");
         }
     }
     else
@@ -287,6 +288,12 @@ void ThechessApplication::view(GamePtr game)
 {
     show_<widgets::GameWidget>(game,
         str(boost::format("/game/%i/") % game.id()));
+}
+
+void ThechessApplication::view(CompetitionPtr competition)
+{
+    show_<widgets::CompetitionWidget>(competition,
+        str(boost::format("/competition/%i/") % competition.id()));
 }
 
 template<> void ThechessApplication::list_view<Game>()

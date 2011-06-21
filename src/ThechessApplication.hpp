@@ -22,6 +22,7 @@ namespace dbo = Wt::Dbo;
 #include "model/Object.hpp"
 #include "model/User.hpp"
 #include "model/Game.hpp"
+#include "model/Competition.hpp"
 #include "model/Object.hpp"
 #include "ThechessServer.hpp"
 #include "ThechessSession.hpp"
@@ -33,6 +34,7 @@ namespace thechess {
 
 using model::UserPtr;
 using model::GamePtr;
+using model::CompetitionPtr;
 
 class ThechessSession;
 
@@ -67,6 +69,7 @@ public:
 
     void view(UserPtr user);
     void view(GamePtr game);
+    void view(CompetitionPtr competition);
 
     template<typename M> void list_view()
     {
