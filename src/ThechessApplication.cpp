@@ -336,10 +336,6 @@ void ThechessApplication::add_notifiable_(Notifiable* notifiable,
         server_.notifier().start_listenning(object);
     }
     notifiables_.insert(O2N::value_type(object, notifiable));
-    if (notifying_object_ && object == *notifying_object_)
-    {
-        waiting_notifiables_.insert(notifiable);
-    }
 }
 
 void ThechessApplication::remove_notifiable_(Notifiable* notifiable,
