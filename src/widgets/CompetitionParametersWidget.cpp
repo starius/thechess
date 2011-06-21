@@ -233,6 +233,32 @@ CompetitionType CompetitionParametersWidget::get_type_() const
     return t;
 }
 
+CompetitionParametersWidget2::CompetitionParametersWidget2(const model::Competition* c,
+    bool allow_change_type, Wt::WContainerWidget* parent):
+CompetitionParametersWidget(c, allow_change_type, parent)
+{
+    name_ = new Wt::WLineEdit(c->name());
+    name_->setMaxLength(config::competition::max_name);
+    item(tr("thechess.competition.name"), "", name_, name_);
+
+    description_ = new Wt::WTextEdit(c->description());
+    item(tr("thechess.competition.description"), "", description_, description_);
+}
+
+void CompetitionParametersWidget2::apply_parameters(model::Competition* c)
+{
+    CompetitionParametersWidget::apply_parameters(c);
+    std::wstring name = name_->text().value();
+    if (name.length() > config::competition::max_name)
+        name.resize(config::competition::max_name);
+    c->set_name(name);
+
+    std::wstring description = description_->text().value();
+    if (description.length() > config::competition::max_description)
+        description.resize(config::competition::max_description);
+    c->set_description(description);
+}
+
 }
 }
 

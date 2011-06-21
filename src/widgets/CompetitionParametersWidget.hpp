@@ -4,9 +4,11 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WComboBox>
 #include <Wt/WCheckBox>
+#include <Wt/WTextEdit>
 
 #include "widgets/GameParametersWidget.hpp"
 #include "model/CompetitionParameters.hpp"
+#include "model/Competition.hpp"
 
 namespace thechess {
 namespace widgets {
@@ -51,6 +53,19 @@ private:
     void type_handler_();
     model::CompetitionType get_type_() const;
     void set_type_(model::CompetitionType t);
+};
+
+class CompetitionParametersWidget2 : public CompetitionParametersWidget
+{
+public:
+    CompetitionParametersWidget2(const model::Competition* c,
+        bool allow_change_type=true, Wt::WContainerWidget* parent=0);
+
+    void apply_parameters(model::Competition* c);
+
+private:
+    Wt::WLineEdit* name_;
+    Wt::WTextEdit* description_;
 };
 
 }

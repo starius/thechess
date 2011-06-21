@@ -3,15 +3,10 @@
 
 #include <Wt/WContainerWidget>
 
-namespace Wt {
-    class WLineEdit;
-    class WTextEdit;
-}
-
 namespace thechess {
 namespace widgets {
 
-class CompetitionParametersWidget;
+class CompetitionParametersWidget2;
 
 class CompetitionCreateWidget : public Wt::WContainerWidget
 {
@@ -19,9 +14,7 @@ public:
     CompetitionCreateWidget(Wt::WContainerWidget* p=0);
 
 private:
-    CompetitionParametersWidget* cpw_;
-    Wt::WLineEdit* name_;
-    Wt::WTextEdit* description_;
+    CompetitionParametersWidget2* cpw_;
 
     void button_handler_();
 };
