@@ -9,6 +9,7 @@ namespace dbo = Wt::Dbo;
 #include "widgets/PleaseLoginWidget.hpp"
 #include "widgets/CompetitionParametersWidget.hpp"
 #include "model/Competition.hpp"
+#include "model/Object.hpp"
 #include "ThechessApplication.hpp"
 #include "config.hpp"
 
@@ -75,6 +76,7 @@ void CompetitionCreateWidget::button_handler_()
     comp.modify()->create_competition(tApp->user());
     t.commit();
     tApp->view(comp);
+    tApp->server().tracker().add_or_update_task(Object(CompetitionObject, comp.id()));
 }
 
 }

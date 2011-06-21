@@ -59,6 +59,7 @@ private:
 CompetitionWidget::CompetitionWidget(CompetitionPtr competition,
     Wt::WContainerWidget* p):
 Wt::WTemplate(tr("thechess.template.CompetitionWidget"), p),
+Notifiable(Object(CompetitionObject, competition.id())),
 c(competition)
 {
     reprint_();
@@ -79,6 +80,11 @@ void CompetitionWidget::reprint_()
     bindWidget("terms", new CompetitionTerms());
     bindWidget("view", new CompetitionView());
     bindWidget("manager", new CompetitionManager(c));
+}
+
+void CompetitionWidget::notify()
+{
+    reprint_();
 }
 
 }
