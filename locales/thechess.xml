@@ -450,6 +450,7 @@
     <message id='thechess.competition.new'>Create new competition</message>
     <message id='thechess.competition.create_welcome'>Create new competition</message>
     <message id='thechess.competition.change_welcome'>Change competition # {1}</message>
+    <message id='thechess.competition.change'>Change parameters</message>
     <message id='thechess.competition.type.CLASSICAL'>Classical</message>
     <message id='thechess.competition.type.STAGED'>Staged</message>
     <message id='thechess.competition.type.TEAM'>Team</message>
@@ -476,6 +477,7 @@
         <br /> <h2>Members of competition</h2> ${members}
         <br /> ${winners}
         <br /> <h2>Details</h2>${view}
+        <br /> <h2>Management</h2>${manager}
     </message>
 
     <message id='thechess.competition.state.RECRUITING'>recruiting</message>

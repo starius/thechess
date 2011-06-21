@@ -6,6 +6,8 @@
 namespace dbo = Wt::Dbo;
 
 #include "widgets/CompetitionWidget.hpp"
+#include "widgets/CompetitionCreateWidget.hpp"
+#include "ThechessApplication.hpp"
 
 namespace thechess {
 namespace widgets {
@@ -31,6 +33,29 @@ class CompetitionView : public Wt::WContainerWidget
 
 };
 
+class CompetitionManager : public Wt::WContainerWidget
+{
+public:
+    CompetitionManager(CompetitionPtr c):
+    c_(c)
+    {
+        if (c->can_change_parameters(tApp->user()))
+        {
+            Wt::WPushButton* change = new Wt::WPushButton(tr("thechess.competition.change"), this);
+            change->clicked().connect(this, &CompetitionManager::show_change_widget_);
+        }
+    }
+
+private:
+    CompetitionPtr c_;
+
+    void show_change_widget_()
+    {
+        dynamic_cast<Wt::WPushButton*>(sender())->hide();
+        new CompetitionCreateWidget(c_, this);
+    }
+};
+
 CompetitionWidget::CompetitionWidget(CompetitionPtr competition,
     Wt::WContainerWidget* p):
 Wt::WTemplate(tr("thechess.template.CompetitionWidget"), p),
@@ -53,6 +78,7 @@ void CompetitionWidget::reprint_()
     bindWidget("winners", new CompetitionWinners());
     bindWidget("terms", new CompetitionTerms());
     bindWidget("view", new CompetitionView());
+    bindWidget("manager", new CompetitionManager(c));
 }
 
 }

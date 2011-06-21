@@ -220,7 +220,7 @@ void Competition::kick(UserPtr kicker, UserPtr kicked)
 bool Competition::can_change_parameters(UserPtr user) const
 {
     return state_ == RECRUITING &&
-        user == init_;
+        (user == init_ || user->rights() >= User::moderator);
 }
 
 bool Competition::can_cancel(UserPtr user) const

@@ -284,6 +284,7 @@
     <message id='thechess.competition.new'>Создать турнир</message>
     <message id='thechess.competition.create_welcome'>Создать новый турнир</message>
     <message id='thechess.competition.change_welcome'>Изменить турнир № {1}</message>
+    <message id='thechess.competition.change'>Изменить параметры</message>
     <message id='thechess.competition.type.CLASSICAL'>Классический</message>
     <message id='thechess.competition.type.STAGED'>Ступенчаый</message>
     <message id='thechess.competition.type.TEAM'>Командный</message>
@@ -310,6 +311,7 @@
         <br /> <h2>Участники турнира</h2> ${members}
         <br /> ${winners}
         <br /> <h2>Подробности</h2>${view}
+        <br /> <h2>Управление</h2>${manager}
     </message>
 
     <message id='thechess.competition.state.RECRUITING'>набирающийся</message>
