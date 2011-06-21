@@ -117,6 +117,9 @@ namespace competition
         const int min_substages = 15;
         const int increment_substages = 3;
     }
+
+    const unsigned int max_name = 50;
+    const unsigned int max_description = 1000;
 }
 
 namespace elo

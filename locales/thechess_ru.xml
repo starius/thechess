@@ -295,6 +295,8 @@
     <message id='thechess.competition.relax_time'>Время на отдых</message>
     <message id='thechess.competition.min_substages'>Подраундов в первом раунде</message>
     <message id='thechess.competition.increment_substages'>Рост числа подраундов</message>
+    <message id='thechess.competition.name'>Название</message>
+    <message id='thechess.competition.description'>Описание</message>
 
     <message id='thechess.competition.state.RECRUITING'>набирающийся</message>
     <message id='thechess.competition.state.ACTIVE'>активный</message>

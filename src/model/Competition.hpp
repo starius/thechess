@@ -77,9 +77,9 @@ public:
     const Wt::WDateTime& ended() const { return ended_; }
 
     const Wt::WString& name() const { return name_; }
-    void set_name(Wt::WString& v) { name_ = v; }
+    void set_name(const Wt::WString& v) { name_ = v; }
     const Wt::WString& description() const { return description_; }
-    void set_description(Wt::WString& v) { description_ = v; }
+    void set_description(const Wt::WString& v) { description_ = v; }
 
     bool is_member(UserPtr user) const;
     bool is_winner(UserPtr user) const;

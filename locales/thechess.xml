@@ -461,6 +461,8 @@
     <message id='thechess.competition.relax_time'>Relax time</message>
     <message id='thechess.competition.min_substages'>First stage substages</message>
     <message id='thechess.competition.increment_substages'>Substages increment</message>
+    <message id='thechess.competition.name'>Title</message>
+    <message id='thechess.competition.description'>Description</message>
 
     <message id='thechess.competition.state.RECRUITING'>recruiting</message>
     <message id='thechess.competition.state.ACTIVE'>active</message>

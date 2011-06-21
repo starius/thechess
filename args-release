@@ -1,2 +1,2 @@
---docroot /usr/share/thechess/files/;/resources,/img,/js,/css --approot /usr/share/thechess/ --http-address 0.0.0.0 --http-port 8004
+--docroot /usr/share/thechess/files/;/resources,/img,/js,/css,/tinymce --approot /usr/share/thechess/ --http-address 0.0.0.0 --http-port 8004
 

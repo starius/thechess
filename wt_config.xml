@@ -9,6 +9,7 @@
     <properties>
         <property name="baseURL"></property>
         <property name="resourcesURL">resources/</property>
+        <property name="tinyMCEBaseURL">tinymce/</property>
     </properties>
     <user-agents type="bot">
       <user-agent>.*Googlebot.*</user-agent>
