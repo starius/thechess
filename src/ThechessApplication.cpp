@@ -139,7 +139,7 @@ void ThechessApplication::cookie_session_write_()
             session().add(new CookieSession(cookie_id));
     }
     setCookie("cookie_session", cookie_id, config::cookie_session_age,
-        "", bookmarkUrl("/"));
+        "", makeAbsoluteUrl(""));
     cookie_session.modify()->set_user(user());
     cookie_session.modify()->use();
     t.commit();
