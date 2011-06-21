@@ -3,6 +3,8 @@
 
 #include <Wt/WContainerWidget>
 
+#include "model/Competition.hpp"
+
 namespace thechess {
 namespace widgets {
 
@@ -12,9 +14,11 @@ class CompetitionCreateWidget : public Wt::WContainerWidget
 {
 public:
     CompetitionCreateWidget(Wt::WContainerWidget* p=0);
+    CompetitionCreateWidget(model::CompetitionPtr c, Wt::WContainerWidget* p=0);
 
 private:
     CompetitionParametersWidget2* cpw_;
+    model::CompetitionPtr c_;
 
     void button_handler_();
 };

@@ -363,6 +363,7 @@
     <message id='thechess.apply'>Apply</message>
     <message id='thechess.reset'>Reset</message>
     <message id='thechess.create'>Create</message>
+    <message id='thechess.save'>Save</message>
     <message id='thechess.agree'>Agree</message>
     <message id='thechess.discard'>Discard</message>
     <message id='thechess.join'>Join</message>
@@ -445,8 +446,10 @@
     <message id='thechess.competition_parameters'>Competition parameters</message>
     <message id='thechess.refresh'>Refresh</message>
     <message id='thechess.competition.cant_create'>You have no permission to create competition</message>
+    <message id='thechess.competition.cant_change'>You have no permission to change this competition</message>
     <message id='thechess.competition.new'>Create new competition</message>
     <message id='thechess.competition.create_welcome'>Create new competition</message>
+    <message id='thechess.competition.change_welcome'>Change competition # {1}</message>
     <message id='thechess.competition.type.CLASSICAL'>Classical</message>
     <message id='thechess.competition.type.STAGED'>Staged</message>
     <message id='thechess.competition.type.TEAM'>Team</message>

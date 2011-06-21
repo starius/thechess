@@ -28,7 +28,7 @@ Wt::WContainerWidget(p)
     {
         new Wt::WText(tr("thechess.competition.create_welcome"), this);
         Competition* c = new Competition(true);
-        cpw_ = new CompetitionParametersWidget2(c, /*allow_chechge_type*/ true, this);
+        cpw_ = new CompetitionParametersWidget2(c, /*allow_change_type*/ true, this);
         delete c;
 
         new Wt::WBreak(this);
@@ -42,10 +42,35 @@ Wt::WContainerWidget(p)
     t.commit();
 }
 
+CompetitionCreateWidget::CompetitionCreateWidget(model::CompetitionPtr c,
+    Wt::WContainerWidget* p):
+Wt::WContainerWidget(p), c_(c)
+{
+    dbo::Transaction t(tApp->session());
+    if (!tApp->user())
+    {
+        new PleaseLoginWidget(this);
+    }
+    else if (c->can_change_parameters(tApp->user()))
+    {
+        new Wt::WText(tr("thechess.competition.change_welcome").arg(int(c.id())), this);
+        cpw_ = new CompetitionParametersWidget2(&(*c), /*allow_change_type*/ true, this);
+
+        new Wt::WBreak(this);
+        Wt::WPushButton* ok_ = new Wt::WPushButton(tr("thechess.save"), this);
+        ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler_);
+    }
+    else
+    {
+        new Wt::WText(tr("thechess.competition.cant_change"), this);
+    }
+    t.commit();
+}
+
 void CompetitionCreateWidget::button_handler_()
 {
     dbo::Transaction t(tApp->session());
-    CompetitionPtr comp = tApp->session().add(new Competition(true));
+    CompetitionPtr comp = c_ ? c_ : tApp->session().add(new Competition(true));
     cpw_->apply_parameters(comp.modify());
     comp.modify()->create_competition(tApp->user());
     t.commit();

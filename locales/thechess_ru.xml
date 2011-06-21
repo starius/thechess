@@ -196,6 +196,7 @@
     <message id='thechess.apply'>Применить</message>
     <message id='thechess.reset'>Сброс</message>
     <message id='thechess.create'>Создать</message>
+    <message id='thechess.save'>Сохранить</message>
     <message id='thechess.agree'>Согласиться</message>
     <message id='thechess.discard'>Отказаться</message>
     <message id='thechess.join'>Присоединиться</message>
@@ -279,8 +280,10 @@
     <message id='thechess.competition_parameters'>Параметры турнира</message>
     <message id='thechess.refresh'>Обновить</message>
     <message id='thechess.competition.cant_create'>Вы не можете создавать турниры</message>
+    <message id='thechess.competition.cant_change'>Вы не можете изменять этот турнир</message>
     <message id='thechess.competition.new'>Создать турнир</message>
     <message id='thechess.competition.create_welcome'>Создать новый турнир</message>
+    <message id='thechess.competition.change_welcome'>Изменить турнир № {1}</message>
     <message id='thechess.competition.type.CLASSICAL'>Классический</message>
     <message id='thechess.competition.type.STAGED'>Ступенчаый</message>
     <message id='thechess.competition.type.TEAM'>Командный</message>
