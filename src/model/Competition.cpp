@@ -65,7 +65,7 @@ Wt::WDateTime Competition::next_check() const
     return result;
 }
 
-bool Competition::all_ended(const std::vector<GamePtr>& games)
+bool Competition::all_ended(const GamesVector& games)
 {
     BOOST_FOREACH(GamePtr g, games)
         if (!g->is_ended())
@@ -73,7 +73,7 @@ bool Competition::all_ended(const std::vector<GamePtr>& games)
     return true;
 }
 
-std::vector<UserPtr> Competition::winners_of_games(const std::vector<GamePtr>& games)
+UsersVector Competition::winners_of_games(const GamesVector& games)
 {
     typedef std::map<UserPtr, int> User2int;
     User2int wins;
@@ -90,7 +90,7 @@ std::vector<UserPtr> Competition::winners_of_games(const std::vector<GamePtr>& g
             wins[g->winner()] += 10;
         }
     }
-    std::vector<UserPtr> winners;
+    UsersVector winners;
     int max_wins;
     BOOST_FOREACH(User2int::value_type& user2int, wins)
     {
@@ -116,19 +116,19 @@ bool Competition::is_winner(UserPtr user) const
     return winners_.find().where("id = ?").bind(user).resultList().size() == 1;
 }
 
-std::vector<UserPtr> Competition::members_vector() const
+UsersVector Competition::members_vector() const
 {
-    return std::vector<UserPtr>(members_.begin(), members_.end());
+    return UsersVector(members_.begin(), members_.end());
 }
 
-std::vector<GamePtr> Competition::games_vector() const
+GamesVector Competition::games_vector() const
 {
-    return std::vector<GamePtr>(games_.begin(), games_.end());
+    return GamesVector(games_.begin(), games_.end());
 }
 
-std::vector<UserPtr> Competition::winners_vector() const
+UsersVector Competition::winners_vector() const
 {
-    return std::vector<UserPtr>(winners_.begin(), winners_.end());
+    return UsersVector(winners_.begin(), winners_.end());
 }
 
 Games Competition::games_with(UserPtr user) const
@@ -137,10 +137,10 @@ Games Competition::games_with(UserPtr user) const
         .bind(user).bind(user);
 }
 
-std::vector<GamePtr> Competition::games_with(UserPtr user,
+GamesVector Competition::games_with(UserPtr user,
     GamesTable& gt) const
 {
-    std::vector<GamePtr> result;
+    GamesVector result;
     BOOST_FOREACH(GamesTable::value_type& i, gt)
         BOOST_FOREACH(GamePtr game, i.second[user])
             result.push_back(game);
@@ -262,7 +262,7 @@ void Competition::start_(Objects& objects)
 
 void Competition::create_games_classical_(Objects& objects)
 {
-    std::vector<UserPtr> members(members_.begin(), members_.end());
+    UsersVector members(members_.begin(), members_.end());
     std::random_shuffle(members.begin(), members.end(), random::rand_for_shuffle);
     int white_games_per_user = std::max(1, int((members.size()-1) * games_factor()));
     std::map<UserPtr, int> black_games;
@@ -295,7 +295,7 @@ void Competition::process_(Objects& objects)
     {
         if (process_classical_(objects))
         {
-            std::vector<UserPtr> winners = winners_of_games(games_vector());
+            UsersVector winners = winners_of_games(games_vector());
             finish_(winners, objects);
         }
     }
@@ -305,7 +305,7 @@ void Competition::process_(Objects& objects)
         sc.process(this, objects);
         if (sc.winner())
         {
-            std::vector<UserPtr> winners;
+            UsersVector winners;
             winners.push_back(sc.winner());
             finish_(winners, objects);
         }
@@ -316,7 +316,7 @@ bool Competition::process_classical_(Objects& objects)
 {
     BOOST_ASSERT(type() == CLASSICAL);
     std::map<UserPtr, int> used;
-    std::vector<GamePtr> proposed;
+    GamesVector proposed;
     BOOST_FOREACH(GamePtr g, games_vector())
     {
         if (g->state() == Game::active || g->state() == Game::confirmed)
@@ -345,7 +345,7 @@ bool Competition::process_classical_(Objects& objects)
     return finished;
 }
 
-void Competition::finish_(const std::vector<UserPtr>& winners, Objects&)
+void Competition::finish_(const UsersVector& winners, Objects&)
 {
     BOOST_FOREACH(UserPtr u, winners)
     {

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 #include <Wt/Dbo/Dbo>
 #include <Wt/Dbo/ptr>
@@ -15,6 +16,7 @@ namespace model {
     class Competition;
     typedef dbo::ptr<Competition> CompetitionPtr;
     typedef dbo::collection<CompetitionPtr> Competitions;
+    typedef std::vector<CompetitionPtr> CompetitionsVector;
 }
 }
 
@@ -27,7 +29,7 @@ namespace model {
 namespace thechess {
 namespace model {
 
-typedef std::map<UserPtr, std::map<UserPtr, std::vector<GamePtr> > > GamesTable;
+typedef std::map<UserPtr, std::map<UserPtr, GamesVector> > GamesTable;
 
 class Competition : public CompetitionParameters, public dbo::Dbo<Competition>
 {
@@ -46,8 +48,8 @@ public:
     Competition(bool);
 
     static Wt::WString type2str(Type type);
-    static bool all_ended(const std::vector<GamePtr>& games);
-    static std::vector<UserPtr> winners_of_games(const std::vector<GamePtr>& games);
+    static bool all_ended(const GamesVector& games);
+    static UsersVector winners_of_games(const GamesVector& games);
 
     template<class Action>
     void persist(Action& a)
@@ -80,13 +82,13 @@ public:
     const Games& games() const { return games_; }
     const Users& winners() const { return winners_; }
 
-    std::vector<UserPtr> members_vector() const;
-    std::vector<GamePtr> games_vector() const;
-    std::vector<UserPtr> winners_vector() const;
+    UsersVector members_vector() const;
+    GamesVector games_vector() const;
+    UsersVector winners_vector() const;
 
     GamesTable games_table() const;
     Games games_with(UserPtr user) const;
-    std::vector<GamePtr> games_with(UserPtr user, GamesTable& gt) const;
+    GamesVector games_with(UserPtr user, GamesTable& gt) const;
 
     // auto-manage
     void check(Objects& objects);
@@ -141,7 +143,7 @@ private:
     void process_(Objects& objects);
     bool process_classical_(Objects& objects);
 
-    void finish_(const std::vector<UserPtr>& winners, Objects& objects);
+    void finish_(const UsersVector& winners, Objects& objects);
 
     GamePtr create_game_(UserPtr white, UserPtr black, int stage=-1,
         bool no_draw=false);

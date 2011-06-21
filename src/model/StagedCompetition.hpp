@@ -39,7 +39,7 @@ public:
     typedef std::map<UserPtr, State> States;
     typedef std::map<UserPtr, int> Stages;
     typedef std::multimap<int, UserPair> Paires;
-    typedef std::map<UserPair, std::vector<GamePtr> > Games;
+    typedef std::map<UserPair, GamesVector> Games;
     typedef std::map<UserPair, UserPtr> Winners;
 
     StagedCompetition(const Competition* competition);

@@ -17,6 +17,7 @@ namespace model {
     class User;
     typedef dbo::ptr<User> UserPtr;
     typedef dbo::collection<UserPtr> Users;
+    typedef std::vector<UserPtr> UsersVector;
 }
 }
 

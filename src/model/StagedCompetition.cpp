@@ -96,8 +96,7 @@ void StagedCompetition::read_pair_(int stage, const UserPair& pair)
     stages_[pair.second()] = stage;
     if (Competition::all_ended(games_[pair]))
     {
-        std::vector<UserPtr> winners =
-            Competition::winners_of_games(games_[pair]);
+        UsersVector winners = Competition::winners_of_games(games_[pair]);
         if (winners.size() == 1)
         {
             states_[pair.first()] = LOSER;
@@ -118,7 +117,7 @@ void StagedCompetition::read_pair_(int stage, const UserPair& pair)
 
 void StagedCompetition::start_competition_()
 {
-    std::vector<UserPtr> members = competition_->members_vector();
+    UsersVector members = competition_->members_vector();
     std::random_shuffle(members.begin(), members.end(), random::rand_for_shuffle);
     int members_size = members.size();
     int max_pow2 = pow(2, floor(log2(members_size))) + 0.5;
@@ -138,8 +137,7 @@ void StagedCompetition::start_competition_()
 
 void StagedCompetition::join_users_()
 {
-    typedef std::vector<UserPtr> UserVector;
-    typedef std::map<int, UserVector> Unpaired;
+    typedef std::map<int, UsersVector> Unpaired;
     Unpaired unpaired;
     BOOST_FOREACH(States::value_type& user_and_state, states_)
         if (user_and_state.second == UNPAIRED)
@@ -147,7 +145,7 @@ void StagedCompetition::join_users_()
     BOOST_FOREACH(Unpaired::value_type& stage_and_users, unpaired)
     {
         int stage = stage_and_users.first;
-        UserVector& users = stage_and_users.second;
+        UsersVector& users = stage_and_users.second;
         std::random_shuffle(users.begin(), users.end(), random::rand_for_shuffle);
         while (users.size() >= 2)
         {

@@ -172,7 +172,7 @@ void ThechessApplication::set_user(UserPtr user)
     user_ = user;
     user_.reread();
     user_.modify()->login();
-    std::vector<GamePtr> games_vector;
+    GamesVector games_vector;
     {
         Games games = user_->games().where("state in (?,?,?)")
             .bind(Game::confirmed)

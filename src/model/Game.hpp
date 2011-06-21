@@ -2,6 +2,7 @@
 #define THECHESS_MODEL_GAME_H_
 
 #include <string>
+#include <vector>
 
 #include <Wt/WObject>
 #include <Wt/WString>
@@ -16,6 +17,7 @@ namespace model {
     class Game;
     typedef dbo::ptr<Game> GamePtr;
     typedef dbo::collection<GamePtr> Games;
+    typedef std::vector<GamePtr> GamesVector;
 }
 }
 
