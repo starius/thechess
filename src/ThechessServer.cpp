@@ -26,7 +26,7 @@ options_((setServerConfiguration(argc, argv), *this)), // options_ needs read co
 pool_(ThechessSession::new_connection(options_), options_.connections_in_pool()),
 notifier_(*this), tracker_(*this)
 {
-    addEntryPoint(Wt::Application, boost::bind(createApplication, this, _1), "");
+    addEntryPoint(Wt::Application, boost::bind(createApplication, this, _1), "", "/favicon.ico");
     ThechessSession session(pool_);
     session.reconsider(tracker_);
 }

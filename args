@@ -1,2 +1,2 @@
---docroot files/;/resources,/img,/js,/css,/tinymce --approot . --http-address 0.0.0.0 --http-port 8003
+--docroot files/;/resources,/img,/js,/css,/tinymce,/favicon.ico --approot . --http-address 0.0.0.0 --http-port 8003
 
