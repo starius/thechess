@@ -117,12 +117,12 @@ UsersVector Competition::winners_of_games(const GamesVector& games)
 
 bool Competition::is_member(UserPtr user) const
 {
-    return members_.find().where("id = ?").bind(user).resultList().size() == 1;
+    return user && members_.find().where("id = ?").bind(user.id()).resultList().size() == 1;
 }
 
 bool Competition::is_winner(UserPtr user) const
 {
-    return winners_.find().where("id = ?").bind(user).resultList().size() == 1;
+    return user && winners_.find().where("id = ?").bind(user.id()).resultList().size() == 1;
 }
 
 UsersVector Competition::members_vector() const
@@ -143,7 +143,7 @@ UsersVector Competition::winners_vector() const
 Games Competition::games_with(UserPtr user) const
 {
     return games_.find().where("white_id = ? or black_id = ?")
-        .bind(user).bind(user);
+        .bind(user.id()).bind(user.id());
 }
 
 GamesVector Competition::games_with(UserPtr user,
@@ -173,7 +173,7 @@ GamesTable Competition::games_table() const
 bool Competition::can_join(UserPtr user) const
 {
     return state_ == RECRUITING &&
-        !is_member(user) &&
+        user && !is_member(user) &&
         user->elo_rating() >= min_rating() &&
         user->elo_rating() <= max_rating() &&
         user->classification() >= min_classification() &&
@@ -213,13 +213,13 @@ void Competition::kick(UserPtr kicker, UserPtr kicked)
 {
     if (can_kick(kicker, kicked))
     {
-        kick(kicker, kicked);
+        members_.erase(kicked);
     }
 }
 
 bool Competition::can_change_parameters(UserPtr user) const
 {
-    return state_ == RECRUITING &&
+    return state_ == RECRUITING && user &&
         (user == init_ || user->rights() >= User::moderator);
 }
 
