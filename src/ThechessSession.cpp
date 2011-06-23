@@ -67,6 +67,11 @@ void ThechessSession::reconsider(TaskTracker& tracker)
     {
         tracker.add_or_update_task(Object(GameObject, game.id()));
     }
+    Competitions cs = find<Competition>().where("state < ?").bind(Competition::ENDED);
+    BOOST_FOREACH(CompetitionPtr c, cs)
+    {
+        tracker.add_or_update_task(Object(CompetitionObject, c.id()));
+    }
     t2.commit();
 }
 
