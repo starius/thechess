@@ -200,6 +200,7 @@
     <message id='thechess.agree'>Согласиться</message>
     <message id='thechess.discard'>Отказаться</message>
     <message id='thechess.join'>Присоединиться</message>
+    <message id='thechess.leave'>Выйти</message>
     <message id='thechess.cancel'>Отменить</message>
     <message id='thechess.confirm'>Подтвердить</message>
 

@@ -367,6 +367,7 @@
     <message id='thechess.agree'>Agree</message>
     <message id='thechess.discard'>Discard</message>
     <message id='thechess.join'>Join</message>
+    <message id='thechess.leave'>Leave</message>
     <message id='thechess.cancel'>Cancel</message>
     <message id='thechess.confirm'>Confirm</message>
     <message id='thechess.close'>X</message>
