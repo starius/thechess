@@ -82,6 +82,9 @@ dbo::SqlConnection* ThechessSession::new_connection(const ThechessOptions& optio
         std::string path = expand_path(options.database_value());
         connection = new dbo::backend::Sqlite3(path);
     }
+#ifdef RUN_TESTS
+    connection->setProperty("show-queries", "true");
+#endif
     return connection;
 }
 
