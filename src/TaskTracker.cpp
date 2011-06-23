@@ -128,7 +128,7 @@ void TaskTracker::refresh_()
 {
     if (!w2t.empty())
     {
-        Wt::WDateTime next_check = std::max(w2t.begin()->first, now()+second);
+        Wt::WDateTime next_check = std::max(w2t.begin()->first, now() + config::tracker::delay);
         timer_.expires_at(next_check.toPosixTime()); // internally calls cancel
         timer_.async_wait(boost::bind(&TaskTracker::check_, this, _1));
     }
