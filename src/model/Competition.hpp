@@ -147,7 +147,7 @@ private:
     void cancel_();
 
     void process_(Objects& objects);
-    bool process_classical_(Objects& objects);
+    void process_classical_(Objects& objects);
 
     void finish_(const UsersVector& winners, Objects& objects);
 

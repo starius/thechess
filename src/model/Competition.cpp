@@ -302,9 +302,11 @@ void Competition::process_(Objects& objects)
 {
     if (type() == CLASSICAL)
     {
-        if (process_classical_(objects))
+        process_classical_(objects);
+        GamesVector g(games_vector());
+        if (all_ended(g))
         {
-            UsersVector winners = winners_of_games(games_vector());
+            UsersVector winners = winners_of_games(g);
             finish_(winners, objects);
         }
     }
@@ -321,7 +323,7 @@ void Competition::process_(Objects& objects)
     }
 }
 
-bool Competition::process_classical_(Objects& objects)
+void Competition::process_classical_(Objects& objects)
 {
     BOOST_ASSERT(type() == CLASSICAL);
     std::map<UserPtr, int> used;
@@ -338,7 +340,6 @@ bool Competition::process_classical_(Objects& objects)
             proposed.push_back(g);
         }
     }
-    bool finished = proposed.empty();
     std::random_shuffle(proposed.begin(), proposed.end(), random::rand_for_shuffle);
     BOOST_FOREACH(GamePtr g, proposed)
     {
@@ -351,7 +352,6 @@ bool Competition::process_classical_(Objects& objects)
             used[g->black()] += 1;
         }
     }
-    return finished;
 }
 
 void Competition::finish_(const UsersVector& winners, Objects&)
