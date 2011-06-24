@@ -31,7 +31,16 @@ public:
 
 class CompetitionWinners : public Wt::WContainerWidget
 {
-
+public:
+    CompetitionWinners(CompetitionPtr c)
+    {
+        setList(true);
+        BOOST_FOREACH(UserPtr user, c->winners_vector())
+        {
+            Wt::WContainerWidget* item = new Wt::WContainerWidget(this);
+            new Wt::WText(user->username(), item);
+        }
+    }
 };
 
 class CompetitionTerms : public Wt::WContainerWidget
@@ -116,7 +125,7 @@ void CompetitionWidget::reprint_()
     bindString("state", tr(Competition::state2str(c->state())));
 
     bindWidget("members", new CompetitionMembers(c));
-    bindWidget("winners", new CompetitionWinners());
+    bindWidget("winners", new CompetitionWinners(c));
     bindWidget("terms", new CompetitionTerms());
     bindWidget("view", new CompetitionView());
     bindWidget("manager", new CompetitionManager(c));

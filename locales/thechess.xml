@@ -476,7 +476,7 @@
         <br /> Description: ${description}
         <br /> <h2>Conditions for participation</h2> ${terms}
         <br /> <h2>Members of competition</h2> ${members}
-        <br /> ${winners}
+        <br /> <h2>Winners</h2> ${winners}
         <br /> <h2>Details</h2>${view}
         <br /> <h2>Management</h2>${manager}
     </message>
