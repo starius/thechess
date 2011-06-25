@@ -67,13 +67,11 @@ private:
     void rating_changes_()
     {
         rating_button_->hide();
-        rating_and_me_button_->hide();
         new RatingChanges(user_, this);
     }
 
     void rating_changes_and_me_()
     {
-        rating_button_->hide();
         rating_and_me_button_->hide();
         RatingChanges* rc = new RatingChanges(user_, this);
         rc->add_user(tApp->user());
