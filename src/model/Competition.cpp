@@ -174,8 +174,8 @@ bool Competition::can_join(UserPtr user) const
 {
     return state_ == RECRUITING &&
         user && !is_member(user) &&
-        user->elo_rating() >= min_rating() &&
-        user->elo_rating() <= max_rating() &&
+        user->games_stat().elo() >= min_rating() &&
+        user->games_stat().elo() <= max_rating() &&
         user->classification() >= min_classification() &&
         user->classification() <= max_classification();
 }

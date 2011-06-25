@@ -701,14 +701,14 @@ void Game::elo_change_()
     black_.reread();
     if (is_win())
     {
-        winner_.modify()->win(other_user(winner_).modify());
+        winner_.modify()->games_stat().win(&(other_user(winner_).modify()->games_stat()));
     }
     if (is_draw())
     {
-        EloPlayer::draw(white().modify(), black().modify());
+        white_.modify()->games_stat().draw(&(black_.modify()->games_stat()));
     }
-    rating_after_[chess::white] = white()->elo_rating();
-    rating_after_[chess::black] = black()->elo_rating();
+    rating_after_[chess::white] = white()->games_stat().elo();
+    rating_after_[chess::black] = black()->games_stat().elo();
 }
 
 void Game::push_move_(chess::Move move)

@@ -35,7 +35,7 @@ public:
             start_button_->clicked()
                 .connect(this, &UserWidgetImpl::game_form_);
         }
-        if (user->number_of_games() > 0)
+        if (user->games_stat().all() > 0)
         {
             rating_button_ = new Wt::WPushButton(
                 Wt::WString::tr("thechess.rating_changes"), this);

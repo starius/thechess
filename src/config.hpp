@@ -124,10 +124,10 @@ namespace competition
 
 namespace elo
 {
-    const int init_rating = 1200;
-    const int big_rating = 2400;
+    const int init = 1200;
+    const int big = 2400;
     const float big_K = 10;
-    const int beginner_number_of_games = 30;
+    const int beginner_all = 30;
     const float beginner_K = 25;
     const float other_K = 15;
 }

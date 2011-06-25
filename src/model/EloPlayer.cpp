@@ -3,23 +3,35 @@
 #include <boost/foreach.hpp>
 
 #include "model/EloPlayer.hpp"
+#include "config.hpp"
 
 namespace thechess {
 namespace model {
-
 namespace elo = config::elo;
 
 const float victory = 1.0;
 const float fail = 0.0;
 
-int EloPlayer::number_of_draws() const
+EloPlayer::EloPlayer()
 {
-    return number_of_games_ - number_of_wins_ - number_of_fails_;
+}
+
+EloPlayer::EloPlayer(bool):
+elo_(config::elo::init),
+all_(0),
+wins_(0),
+fails_(0)
+{
+}
+
+int EloPlayer::draws() const
+{
+    return all_ - wins_ - fails_;
 }
 
 float EloPlayer::Q() const
 {
-    return pow(10.0, float(elo_rating_) / 400);
+    return pow(10.0, float(elo_) / 400);
 }
 
 float EloPlayer::E(float q_sum) const
@@ -34,63 +46,47 @@ float EloPlayer::E(const EloPlayer* other) const
 
 float EloPlayer::K() const
 {
-    return (elo_rating_ >= elo::big_rating) ? elo::big_K : (
-        (number_of_games_ < elo::beginner_number_of_games) ?
-        elo::beginner_K : elo::other_K);
+    return (elo_ >= elo::big) ? elo::big_K :
+        (all_ < elo::beginner_all) ? elo::beginner_K : elo::other_K;
 }
 
-void EloPlayer::apply_result_(float E, float S)
+void EloPlayer::apply_result_(float q_sum, float S)
 {
-    elo_rating_ += round(K() * (S - E));
-    number_of_games_ += 1;
+    elo_ += round(K() * (S - E(q_sum)));
+    all_ += 1;
     if (S == victory)
-    {
-        number_of_wins_ += 1;
-    }
+        wins_ += 1;
     else if (S == fail)
-    {
-        number_of_fails_ += 1;
-    }
+        fails_ += 1;
 }
 
 void EloPlayer::win(EloPlayer* loser)
 {
-    this->apply_result_(this->E(loser), victory);
-    loser->apply_result_(loser->E(this), fail);
+    float q_sum = Q() + loser->Q();
+    this->apply_result_(q_sum, victory);
+    loser->apply_result_(q_sum, fail);
 }
 
-void EloPlayer::win(const std::list<EloPlayer*>& losers)
+void EloPlayer::draw(EloPlayer* other)
+{
+    float q_sum = Q() + other->Q();
+    this->apply_result_(q_sum, 0.5);
+    other->apply_result_(q_sum, 0.5);
+}
+
+void EloPlayer::multiple(const EloPlayers& winners, const EloPlayers& losers)
 {
     float q_sum = 0;
-    BOOST_FOREACH(EloPlayer* loser, losers)
-    {
-        q_sum += loser->Q();
-    }
-    BOOST_FOREACH(EloPlayer* loser, losers)
-    {
-        loser->apply_result_(loser->E(q_sum), fail);
-    }
-    this->apply_result_(this->E(q_sum), victory);
-}
-
-void EloPlayer::draw(EloPlayer* a, EloPlayer* b)
-{
-    a->apply_result_(a->E(b), 0.5);
-    b->apply_result_(b->E(a), 0.5);
-}
-
-void EloPlayer::draw(const std::list<EloPlayer*>& players)
-{
-    float q_sum = 0;
-    BOOST_FOREACH(EloPlayer* player, players)
-    {
+    BOOST_FOREACH(EloPlayer* player, winners)
         q_sum += player->Q();
-    }
-    BOOST_FOREACH(EloPlayer* player, players)
-    {
-        player->apply_result_(player->E(q_sum), 1.0 / players.size());
-    }
+    BOOST_FOREACH(EloPlayer* player, losers)
+        q_sum += player->Q();
+    BOOST_FOREACH(EloPlayer* player, winners)
+        player->apply_result_(q_sum, victory / winners.size());
+    BOOST_FOREACH(EloPlayer* player, losers)
+        player->apply_result_(q_sum, fail);
 }
 
 }
 }
+

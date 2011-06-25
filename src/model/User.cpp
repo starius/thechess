@@ -13,7 +13,8 @@ namespace model {
 User::User(bool):
 rights_(regular_user),
 sessions_(0),
-classification_(NO_CLASSIFICATION)
+classification_(NO_CLASSIFICATION),
+games_stat_(true)
 {
 }
 

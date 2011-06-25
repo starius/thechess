@@ -30,7 +30,7 @@ namespace model {
 namespace thechess {
 namespace model {
 
-class User : public model::EloPlayer, public dbo::Dbo<User>
+class User : public dbo::Dbo<User>
 {
 public:
     enum Rights {
@@ -45,8 +45,6 @@ public:
     template<class Action>
     void persist(Action& a)
     {
-        EloPlayer::persist(a);
-
         dbo::field(a, username_, "username");
         dbo::field(a, password_, "password");
         dbo::field(a, rights_, "rights");
@@ -64,6 +62,8 @@ public:
         dbo::hasMany(a, init_competitions_, dbo::ManyToOne, "init_competitions");
         dbo::hasMany(a, virtual_allower_, dbo::ManyToOne, "virtual_allower");
         dbo::hasMany(a, won_competitions_, dbo::ManyToMany, "winners_competition");
+
+        dbo::field(a, games_stat_, "games_stat");
     }
 
     void set_password(const std::string& password);
@@ -87,6 +87,9 @@ public:
     bool classification_confirmed() const;
     UserPtr classification_confirmer() const;
 
+    const EloPlayer& games_stat() const { return games_stat_; }
+    EloPlayer& games_stat() { return games_stat_; }
+
 private:
     Wt::WString username_;
     std::string password_; // UTF8
@@ -106,6 +109,8 @@ private:
     Competitions init_competitions_;
     Competitions virtual_allower_;
     Competitions won_competitions_;
+
+    EloPlayer games_stat_;
 };
 
 }
