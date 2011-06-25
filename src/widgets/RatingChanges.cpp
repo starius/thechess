@@ -83,6 +83,15 @@ public:
     {
     }
 
+    ~MultiRatingModel()
+    {
+        BOOST_FOREACH(RatingModel* model, models_)
+        {
+            delete model;
+        }
+        models_.clear();
+    }
+
     void add_user(UserPtr user)
     {
         RatingModel* model = new RatingModel(user, this);
@@ -152,9 +161,9 @@ public:
         int ended_column = ENDED_COLUMN + shift;
         model_->add_user(user);
         Wt::Chart::WDataSeries series(rating_after_column, Wt::Chart::CurveSeries);
+        chart_->addSeries(series);
         series.setXSeriesColumn(ended_column);
         series.setMarker(Wt::Chart::CircleMarker);
-        chart_->addSeries(series);
         number_of_users_ += 1;
     }
 
