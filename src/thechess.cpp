@@ -1,5 +1,3 @@
-#ifndef THECHESS_HPP_
-#define THECHESS_HPP_
 
 #include <Wt/WServer>
 
@@ -22,6 +20,4 @@ int main(int argc, char **argv)
         server.stop();
     }
 }
-
-#endif
 
