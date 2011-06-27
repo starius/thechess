@@ -259,6 +259,10 @@
         ${name}: ${limit_private} + ${limit_std}
     </message>
 
+    <message id='thechess.format.interval'>
+        from {1} to {2}
+    </message>
+
     <message id='thechess.template.interval'>
         from ${min} to ${max}
     </message>

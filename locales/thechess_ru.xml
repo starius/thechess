@@ -97,6 +97,10 @@
     <message id="Wt.true">Да</message>
     <message id="Wt.false">Нет</message>
 
+    <message id='thechess.format.interval'>
+        от {1} до {2}
+    </message>
+
     <message id='thechess.template.interval'>
         от ${min} до ${max}
     </message>

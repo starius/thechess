@@ -45,7 +45,41 @@ public:
 
 class CompetitionTerms : public Wt::WContainerWidget
 {
+public:
+    CompetitionTerms(CompetitionPtr c)
+    {
+        kw("thechess.competition.rating", tr("thechess.format.interval")
+            .arg(c->min_rating()).arg(c->max_rating()));
+        kw("thechess.competition.classification", tr("thechess.format.interval")
+            .arg(classification2str(c->min_classification()))
+            .arg(classification2str(c->max_classification())));
+        kw("thechess.competition.force_start_delay", td2str(c->force_start_delay()));
+        if (c->type() == CLASSICAL || c->type() == STAGED)
+        {
+            kw("thechess.competition.users", tr("thechess.format.interval")
+                .arg(c->min_users()).arg(c->max_users()));
+            kw("thechess.competition.recruiting_time", tr("thechess.format.interval")
+                .arg(td2str(c->min_recruiting_time())).arg(td2str(c->max_recruiting_time())));
+        }
+        if (c->type() == CLASSICAL)
+        {
+            kw("thechess.competition.max_simultaneous_games", c->max_simultaneous_games());
+            kw("thechess.competition.games_factor", c->games_factor());
+        }
+        if (c->type() == STAGED)
+        {
+            kw("thechess.competition.relax_time", td2str(c->relax_time()));
+            kw("thechess.competition.min_substages", c->min_substages());
+            kw("thechess.competition.increment_substages", c->increment_substages());
+        }
+    }
 
+    template<typename T>
+    void kw(const char* tr_id, const T& s)
+    {
+        new Wt::WText(tr("thechess.format.kw").arg(tr(tr_id)).arg(s), this);
+        new Wt::WBreak(this);
+    }
 };
 
 class CompetitionView : public Wt::WContainerWidget
@@ -126,7 +160,7 @@ void CompetitionWidget::reprint_()
 
     bindWidget("members", new CompetitionMembers(c));
     bindWidget("winners", new CompetitionWinners(c));
-    bindWidget("terms", new CompetitionTerms());
+    bindWidget("terms", new CompetitionTerms(c));
     bindWidget("view", new CompetitionView());
     bindWidget("manager", new CompetitionManager(c));
     t.commit();
