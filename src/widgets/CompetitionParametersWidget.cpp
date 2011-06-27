@@ -26,9 +26,9 @@ GameParametersWidget(cp, parent)
     section(tr("thechess.competition_parameters"));
 
     type_ = new Wt::WComboBox();
-    type_->addItem(tr("thechess.competition.type.CLASSICAL"));
-    type_->addItem(tr("thechess.competition.type.STAGED"));
-    type_->addItem(tr("thechess.competition.type.TEAM"));
+    type_->addItem(Competition::type2str(CLASSICAL));
+    type_->addItem(Competition::type2str(STAGED));
+    type_->addItem(Competition::type2str(TEAM));
     cell = item(tr("thechess.competition.type"), "", type_, type_);
     set_type_(cp->type());
     if (allow_change_type)
