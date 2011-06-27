@@ -21,6 +21,14 @@ created_(now())
 {
 }
 
+Wt::WString Competition::type2str(Type type)
+{
+    if (type == CLASSICAL) { return Wt::WString::tr("thechess.competition.type.CLASSICAL"); }
+    if (type == STAGED) { return Wt::WString::tr("thechess.competition.type.STAGED"); }
+    if (type == TEAM) { return Wt::WString::tr("thechess.competition.type.TEAM"); }
+    return Wt::WString::tr("thechess.competition.type");
+}
+
 void Competition::create_competition(UserPtr user)
 {
     init_ = user;
