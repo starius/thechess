@@ -310,6 +310,7 @@
     <message id='thechess.template.CompetitionWidget'>
         <h1>Турнир № ${id} ${name}</h1>
         Турнир создан ${created}, стартовал ${started}, был закрыт ${ended}.
+        <br /> Тип турнира: ${type}.
         <br /> Статус турнира: ${state}.
         <br /> Описание: ${description}
         <br /> <h2>Условия к участникам</h2> ${terms}

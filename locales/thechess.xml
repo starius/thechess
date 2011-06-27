@@ -476,6 +476,7 @@
     <message id='thechess.template.CompetitionWidget'>
         <h1>Competition # ${id} ${name}</h1>
         The competition was created ${created}, started ${started}, closed ${ended}.
+        <br /> Competition type: ${type}.
         <br /> Competition state: ${state}.
         <br /> Description: ${description}
         <br /> <h2>Conditions for participation</h2> ${terms}

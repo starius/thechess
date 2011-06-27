@@ -151,6 +151,7 @@ void CompetitionWidget::reprint_()
 {
     dbo::Transaction t(tApp->session());
     bindInt("id", c.id());
+    bindString("type", Competition::type2str(c->type()));
     bindString("name", c->name(), Wt::PlainText);
     bindString("description", c->description());
     bindString("created", c->created().toString());
