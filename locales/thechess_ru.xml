@@ -291,7 +291,7 @@
     <message id='thechess.competition.change_welcome'>Изменить турнир № {1}</message>
     <message id='thechess.competition.change'>Изменить параметры</message>
     <message id='thechess.competition.type.CLASSICAL'>Классический</message>
-    <message id='thechess.competition.type.STAGED'>Ступенчаый</message>
+    <message id='thechess.competition.type.STAGED'>Ступенчатый</message>
     <message id='thechess.competition.type.TEAM'>Командный</message>
     <message id='thechess.competition.type'>Тип</message>
     <message id='thechess.competition.rating'>Рейтинг участников</message>
