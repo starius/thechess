@@ -21,6 +21,7 @@ namespace dbo = Wt::Dbo;
 #include <Wt/WBorderLayout>
 #include <Wt/WHBoxLayout>
 #include <Wt/Dbo/Exception>
+#include <Wt/WLogger>
 
 #include "ThechessApplication.hpp"
 
@@ -213,6 +214,16 @@ void ThechessApplication::notify(const Wt::WEvent& e)
     catch (dbo::StaleObjectException)
     {
         session_.rereadAll();
+    }
+    catch (std::exception& e)
+    {
+        log("fatal") << e.what();
+        quit();
+    }
+    catch (...)
+    {
+        log("fatal") << "Unknown exception.";
+        quit();
     }
 }
 
