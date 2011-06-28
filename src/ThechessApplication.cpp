@@ -1,9 +1,10 @@
 
-#include <boost/bind.hpp>
-#include <boost/foreach.hpp>
 #include <cstdlib>
+#include <stdexcept>
 #include <vector>
 #include <utility>
+#include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 #include <boost/assert.hpp>
 
 #include <Wt/WEnvironment>
@@ -20,7 +21,6 @@ namespace dbo = Wt::Dbo;
 #include <Wt/WBorderLayout>
 #include <Wt/WHBoxLayout>
 #include <Wt/Dbo/Exception>
-#include <stdexcept>
 
 #include "ThechessApplication.hpp"
 
