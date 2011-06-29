@@ -325,5 +325,7 @@
     <message id='thechess.competition.state.ENDED'>завершенный</message>
     <message id='thechess.competition.state.CANCELLED'>отмененный</message>
 
+    <message id='thechess.competition.score'>Счет</message>
+
 </messages>
 

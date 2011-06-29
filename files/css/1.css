@@ -52,3 +52,15 @@ td
     font: 14px 'Arial', Tahoma, Arial;
 }
 
+.thechess-table-border td
+{
+    padding: 3px 5px;
+    border: 1px solid gray;
+    text-align: center;
+}
+
+.thechess-td-right
+{
+    text-align: right !important;
+}
+

@@ -1,7 +1,10 @@
 
 #include <boost/foreach.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include <Wt/WText>
+#include <Wt/WTable>
+#include <Wt/WCompositeWidget>
 #include <Wt/WPushButton>
 #include <Wt/WBreak>
 #include <Wt/Dbo/Transaction>
@@ -82,9 +85,107 @@ public:
     }
 };
 
-class CompetitionView : public Wt::WContainerWidget
-{
+const int NAME_COLUMN = 0;
+const int N_COLUMN = 1;
+const int N_ROW = 0;
+const int LEFT_SHIFT = 1;
+const int TOP_SHIFT = 2;
 
+class ClassicalView : public Wt::WContainerWidget
+{
+public:
+    ClassicalView(CompetitionPtr c)
+    {
+        gt_ = c->games_table();
+        table_ = new Wt::WTable(this);
+        table_->setStyleClass("thechess-table-border");
+        members = c->members_vector();
+        score_column_ = members.size() + TOP_SHIFT;
+        headers_();
+        scores_(c);
+        show_wins_();
+    }
+
+private:
+    Wt::WTable* table_;
+    GamesTable gt_;
+    UsersVector members;
+    int score_column_;
+
+    void headers_()
+    {
+        table_->elementAt(0, 0)->setColumnSpan(2);
+        int i = 0;
+        BOOST_FOREACH(UserPtr user, members)
+        {
+            std::string i_str = boost::lexical_cast<std::string>(i+1);
+            table_->elementAt(i + LEFT_SHIFT, NAME_COLUMN)
+                ->setStyleClass("thechess-td-right");
+            table_->elementAt(i + LEFT_SHIFT, NAME_COLUMN)
+                ->addWidget(new Wt::WText(user->username()));
+            table_->elementAt(i + LEFT_SHIFT, N_COLUMN)
+                ->addWidget(new Wt::WText(i_str));
+            table_->elementAt(N_ROW, i + TOP_SHIFT)
+                ->addWidget(new Wt::WText(i_str));
+            i++;
+        }
+    }
+
+    void scores_(CompetitionPtr c)
+    {
+        table_->elementAt(0, score_column_)
+            ->addWidget(new Wt::WText(tr("thechess.competition.score")));
+        std::map<UserPtr, float> wins;
+        Competition::wins_number(c->games_vector(), wins);
+        int i = 0;
+        BOOST_FOREACH(UserPtr user, members)
+        {
+            table_->elementAt(i + LEFT_SHIFT, score_column_)
+                ->addWidget(new Wt::WText(boost::lexical_cast<std::string>(wins[user])));
+            i++;
+        }
+    }
+
+    void show_wins_()
+    {
+        int members_size = members.size();
+        for (int row = 0; row < members_size; ++row)
+        {
+            UserPtr urow = members[row];
+            for (int col = 0; col < members_size; ++col)
+            {
+                UserPtr ucol = members[col];
+                Wt::WTableCell* cell = table_->elementAt(row + LEFT_SHIFT, col + TOP_SHIFT);
+                if (row == col)
+                {
+                    new Wt::WText(tr("thechess.competition.dash"), cell);
+                }
+                else
+                {
+                    std::map<UserPtr, float> wins;
+                    Competition::wins_number(gt_[urow][ucol], wins);
+                    Competition::wins_number(gt_[ucol][urow], wins);
+                    new Wt::WText(boost::lexical_cast<std::string>(wins[urow]) +
+                        "/" + boost::lexical_cast<std::string>(wins[ucol]), cell);
+                }
+            }
+        }
+    }
+};
+
+class CompetitionView : public Wt::WCompositeWidget
+{
+public:
+    CompetitionView(CompetitionPtr c)
+    {
+        if (c->state() >= Competition::ACTIVE)
+        {
+            if (c->type() == CLASSICAL)
+                setImplementation(new ClassicalView(c));
+        }
+        if (!implementation())
+            setImplementation(new Wt::WContainerWidget());
+    }
 };
 
 class CompetitionManager : public Wt::WContainerWidget
@@ -162,7 +263,7 @@ void CompetitionWidget::reprint_()
     bindWidget("members", new CompetitionMembers(c));
     bindWidget("winners", new CompetitionWinners(c));
     bindWidget("terms", new CompetitionTerms(c));
-    bindWidget("view", new CompetitionView());
+    bindWidget("view", new CompetitionView(c));
     bindWidget("manager", new CompetitionManager(c));
     t.commit();
 }

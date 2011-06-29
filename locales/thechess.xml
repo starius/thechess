@@ -491,5 +491,8 @@
     <message id='thechess.competition.state.ENDED'>ended</message>
     <message id='thechess.competition.state.CANCELLED'>cancelled</message>
 
+    <message id='thechess.competition.dash'>&mdash;</message>
+    <message id='thechess.competition.score'>Score</message>
+
 </messages>
 
