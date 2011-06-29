@@ -1,4 +1,5 @@
 
+#include <cstdlib>
 #include <algorithm>
 #include <boost/foreach.hpp>
 
@@ -90,35 +91,41 @@ bool Competition::all_ended(const GamesVector& games)
     return true;
 }
 
-UsersVector Competition::winners_of_games(const GamesVector& games)
+void Competition::wins_number(const GamesVector& games,
+    std::map<UserPtr, float>& wins)
 {
-    typedef std::map<UserPtr, int> User2int;
-    User2int wins;
     BOOST_FOREACH(GamePtr g, games)
     {
-        BOOST_ASSERT(g->is_ended());
         if (g->is_draw())
         {
-            wins[g->white()] += 5;
-            wins[g->black()] += 5;
+            wins[g->white()] += 0.5;
+            wins[g->black()] += 0.5;
         }
         else
         {
-            wins[g->winner()] += 10;
+            wins[g->winner()] += 1;
         }
     }
+}
+
+UsersVector Competition::winners_of_games(const GamesVector& games)
+{
+    typedef std::map<UserPtr, float> User2float;
+    User2float wins;
+    wins_number(games, wins);
     UsersVector winners;
-    int max_wins;
-    BOOST_FOREACH(User2int::value_type& user2int, wins)
+    float max_wins = -1;
+    BOOST_FOREACH(User2float::value_type& user2float, wins)
     {
-        UserPtr u = user2int.first;
-        int w = user2int.second;
-        if (max_wins == -1 || w > max_wins)
+        UserPtr u = user2float.first;
+        float w = user2float.second;
+        if (max_wins < 0 || w - max_wins > 0.1)
         {
             max_wins = w;
             winners.clear();
-            winners.push_back(u);
         }
+        if (abs(w - max_wins) < 0.1)
+            winners.push_back(u);
     }
     return winners;
 }

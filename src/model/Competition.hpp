@@ -49,6 +49,8 @@ public:
 
     static Wt::WString type2str(Type type);
     static bool all_ended(const GamesVector& games);
+    static void wins_number(const GamesVector& games,
+        std::map<UserPtr, float>& wins);
     static UsersVector winners_of_games(const GamesVector& games);
 
     template<class Action>
