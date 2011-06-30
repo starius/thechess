@@ -417,9 +417,11 @@ bool Board::test_attack(Xy xy, Color c) const
     }
     else
     {
-        Board copy(*this);
-        copy.field(xy, Field(c, pawn));
-        return copy.test_attack(xy);
+        Field previous = field(xy);
+        const_cast<Board*>(this)->field(xy, Field(c, pawn));
+        bool result = test_attack(xy);
+        const_cast<Board*>(this)->field(xy, previous);
+        return result;
     }
 }
 
