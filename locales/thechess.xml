@@ -345,6 +345,7 @@
 
     <message id='thechess.challenge'>Challenge</message>
     <message id='thechess.game_list'>List of games</message>
+    <message id='thechess.competition_list'>List of Competitions</message>
     <message id='thechess.start_game'>Start a game</message>
     <message id='thechess.rating_changes'>Rating changes</message>
     <message id='thechess.rating_changes_and_me'>
@@ -472,6 +473,11 @@
     <message id='thechess.competition.increment_substages'>Substages increment</message>
     <message id='thechess.competition.name'>Title</message>
     <message id='thechess.competition.description'>Description</message>
+
+    <message id='thechess.competition.state'>State</message>
+    <message id='thechess.competition.winners'>Winners</message>
+    <message id='thechess.competition.started'>Started</message>
+    <message id='thechess.competition.ended'>Ended</message>
 
     <message id='thechess.template.CompetitionWidget'>
         <h1>Competition # ${id} ${name}</h1>

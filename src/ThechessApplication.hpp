@@ -147,6 +147,7 @@ friend class Notifiable;
 };
 
 template<> void ThechessApplication::list_view<model::Game>();
+template<> void ThechessApplication::list_view<model::Competition>();
 
 }
 

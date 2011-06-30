@@ -34,6 +34,7 @@ namespace dbo = Wt::Dbo;
 #include "widgets/CompetitionWidget.hpp"
 #include "widgets/CompetitionCreateWidget.hpp"
 #include "widgets/GameListWidget.hpp"
+#include "widgets/CompetitionListWidget.hpp"
 #include "widgets/UserWidget.hpp"
 #include "widgets/MainMenu.hpp"
 #include "ThechessSession.hpp"
@@ -310,6 +311,11 @@ void ThechessApplication::view(CompetitionPtr competition)
 template<> void ThechessApplication::list_view<Game>()
 {
     show_<widgets::GameListWidget>("/game/");
+}
+
+template<> void ThechessApplication::list_view<Competition>()
+{
+    show_<widgets::CompetitionListWidget>("/competition/");
 }
 
 void ThechessApplication::thechess_notify(Object object)

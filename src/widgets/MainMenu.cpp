@@ -20,6 +20,7 @@ public:
         button_("thechess.challenge", "/game/challenge/");
         button_("thechess.competition.new", "/competition/new/");
         button_("thechess.game_list", "/game/");
+        button_("thechess.competition_list", "/competition/");
         button_("thechess.login", "/login/");
         button_("thechess.logout", "/logout/");
     }

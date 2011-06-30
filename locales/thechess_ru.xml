@@ -178,6 +178,7 @@
 
     <message id='thechess.challenge'>Вызов</message>
     <message id='thechess.game_list'>Список игр</message>
+    <message id='thechess.competition_list'>Список турниров</message>
     <message id='thechess.start_game'>Начать игру</message>
     <message id='thechess.rating_changes'>Изменения рейтинга</message>
     <message id='thechess.rating_changes_and_me'>
@@ -306,6 +307,11 @@
     <message id='thechess.competition.increment_substages'>Рост числа подраундов</message>
     <message id='thechess.competition.name'>Название</message>
     <message id='thechess.competition.description'>Описание</message>
+
+    <message id='thechess.competition.state'>Статус</message>
+    <message id='thechess.competition.winners'>Победители</message>
+    <message id='thechess.competition.started'>начат</message>
+    <message id='thechess.competition.ended'>завершен</message>
 
     <message id='thechess.template.CompetitionWidget'>
         <h1>Турнир № ${id} ${name}</h1>
