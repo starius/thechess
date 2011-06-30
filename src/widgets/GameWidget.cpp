@@ -264,7 +264,6 @@ private:
         {
             if (game_->has_competition_confirmed(game_->other_user(tApp->user())))
             {
-                new Wt::WBreak(manager_);
                 new Wt::WText(tr("thechess.GameWidget.competition_other_proposed")
                     .arg(game_->other_user(tApp->user())->username()), manager_);
             }
@@ -275,7 +274,6 @@ private:
             }
             if (game_->can_competition_discard(tApp->user()))
             {
-                new Wt::WBreak(manager_);
                 new Wt::WText(tr("thechess.GameWidget.competition_discard_welcome"), manager_);
                 button_<&Game::competition_discard>("thechess.GameWidget.competition_discard");
             }
