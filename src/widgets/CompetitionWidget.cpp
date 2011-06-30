@@ -12,6 +12,7 @@ namespace dbo = Wt::Dbo;
 
 #include "widgets/CompetitionWidget.hpp"
 #include "widgets/CompetitionCreateWidget.hpp"
+#include "widgets/PleaseLoginWidget.hpp"
 #include "ThechessApplication.hpp"
 
 namespace thechess {
@@ -194,18 +195,27 @@ public:
     CompetitionManager(CompetitionPtr c):
     c_(c)
     {
-        if (c->can_join(tApp->user()))
+        if (tApp->user())
         {
-            button_<&Competition::join>("thechess.join");
+            if (c->can_join(tApp->user()))
+            {
+                button_<&Competition::join>("thechess.join");
+            }
+            else if (c->can_leave(tApp->user()))
+            {
+                button_<&Competition::leave>("thechess.leave");
+            }
+            if (c->can_change_parameters(tApp->user()))
+            {
+                Wt::WPushButton* change =
+                    new Wt::WPushButton(tr("thechess.competition.change"), this);
+                change->clicked().connect(this,
+                    &CompetitionManager::show_change_widget_);
+            }
         }
-        else if (c->can_leave(tApp->user()))
+        else
         {
-            button_<&Competition::leave>("thechess.leave");
-        }
-        if (c->can_change_parameters(tApp->user()))
-        {
-            Wt::WPushButton* change = new Wt::WPushButton(tr("thechess.competition.change"), this);
-            change->clicked().connect(this, &CompetitionManager::show_change_widget_);
+            new PleaseLoginWidget(this);
         }
     }
 
