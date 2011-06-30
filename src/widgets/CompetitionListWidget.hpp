@@ -4,6 +4,7 @@
 #include <boost/tuple/tuple.hpp>
 
 #include <Wt/WContainerWidget>
+#include <Wt/WCheckBox>
 #include <Wt/Dbo/Query>
 namespace dbo = Wt::Dbo;
 
@@ -25,8 +26,11 @@ public:
 
 private:
     CompetitionListModel* model_;
+    Wt::WCheckBox* only_my_;
 
     Q query_();
+    void apply_();
+    void manager_();
 };
 
 }

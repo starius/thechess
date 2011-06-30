@@ -94,12 +94,14 @@ public:
 CompetitionListWidget::CompetitionListWidget(Wt::WContainerWidget* p):
 Wt::WContainerWidget(p)
 {
+    manager_();
     model_ = new CompetitionListModel(query_(), this);
     new CompetitionListView(model_, this);
 }
 
 Q CompetitionListWidget::query_()
 {
+    bool only_my = only_my_->isChecked() && tApp->user();
     ThechessOptions::DatabaseType t = tApp->server().options().database_type();
     std::stringstream sql;
     sql << "select C, ";
@@ -107,12 +109,41 @@ Q CompetitionListWidget::query_()
         sql << "array_to_string(array_agg(distinct W.username), ', ') ";
     else if(t == ThechessOptions::Sqlite3)
         sql << "group_concat(W.username, ', ') ";
-    sql << "from thechess_competition C ";
+    if (only_my)
+        sql << "from members_competitions M left join thechess_competition C "
+               "on C.id=M.thechess_competition_id ";
+    else
+        sql << "from thechess_competition C ";
     sql << "left join winners_competition WC on WC.thechess_competition_id=C.id ";
     sql << "left join thechess_user W on WC.thechess_user_id=W.id ";
+    if (only_my)
+        sql << "where M.thechess_user_id = ?";
     Q q = tApp->session().query<Result>(sql.str());
     q.groupBy("C");
+    if (only_my)
+        q.bind(tApp->user().id());
     return q;
+}
+
+void CompetitionListWidget::apply_()
+{
+    model_->setQuery(query_(), /* keep_columns */ true);
+}
+
+void CompetitionListWidget::manager_()
+{
+    only_my_ = new Wt::WCheckBox(tr("thechess.only_my"), this);
+    only_my_->changed().connect(this, &CompetitionListWidget::apply_);
+    if (!tApp->user())
+    {
+        only_my_->setEnabled(false);
+    }
+    if (!tApp->environment().ajax())
+    {
+        Wt::WPushButton* apply_button =
+            new Wt::WPushButton(tr("thechess.apply"), this);
+        apply_button->clicked().connect(this, &CompetitionListWidget::apply_);
+    }
 }
 
 }
