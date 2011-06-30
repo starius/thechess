@@ -278,17 +278,20 @@ private:
                 button_<&Game::competition_discard>("thechess.GameWidget.competition_discard");
             }
         }
-        if (game_->can_join(tApp->user()))
+        else
         {
-            button_<&Game::join>("thechess.join");
-        }
-        if (game_->can_confirm(tApp->user()))
-        {
-            button_<&Game::confirm>("thechess.confirm");
-        }
-        if (game_->can_cancel(tApp->user()))
-        {
-            button_<&Game::cancel>("thechess.cancel");
+            if (game_->can_join(tApp->user()))
+            {
+                button_<&Game::join>("thechess.join");
+            }
+            else if (game_->can_confirm(tApp->user()))
+            {
+                button_<&Game::confirm>("thechess.confirm");
+            }
+            if (game_->can_cancel(tApp->user()))
+            {
+                button_<&Game::cancel>("thechess.cancel");
+            }
         }
     }
 
