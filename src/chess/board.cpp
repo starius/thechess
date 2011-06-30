@@ -423,6 +423,15 @@ bool Board::test_attack(Xy xy, Color c) const
     }
 }
 
+bool Board::test_attack(Move move) const
+{
+    Field previous = field(move.from());
+    const_cast<Board*>(this)->unset(move.from());
+    bool result = test_attack(move.to(), previous.color());
+    const_cast<Board*>(this)->field(move.from(), previous);
+    return result;
+}
+
 FinishState Board::test_end() const
 {
     FinishState state = nothing;

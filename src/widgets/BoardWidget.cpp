@@ -289,7 +289,7 @@ private:
                 Wt::WImage* img = image_at(xy);
                 img->decorationStyle().setCursor(Wt::PointingHandCursor);
                 can_move = true;
-                if (board_.test_attack(xy, board_.order()))
+                if (board_.test_attack(chess::Move(from_, xy)))
                 {
                     img->decorationStyle().setBackgroundColor(Wt::magenta);
                 }

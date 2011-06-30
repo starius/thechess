@@ -53,6 +53,7 @@ public:
 
     bool test_move(const Move move) const;
     bool test_attack(Xy xy, Color c) const;
+    bool test_attack(Move move) const;
     FinishState test_end() const;
 
     const std::string to_string() const
