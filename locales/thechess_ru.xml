@@ -310,6 +310,7 @@
 
     <message id='thechess.competition.state'>Статус</message>
     <message id='thechess.competition.winners'>Победители</message>
+    <message id='thechess.competition.members_number'>участники</message>
     <message id='thechess.competition.started'>начат</message>
     <message id='thechess.competition.ended'>завершен</message>
 

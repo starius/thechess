@@ -476,6 +476,7 @@
 
     <message id='thechess.competition.state'>State</message>
     <message id='thechess.competition.winners'>Winners</message>
+    <message id='thechess.competition.members_number'>members</message>
     <message id='thechess.competition.started'>Started</message>
     <message id='thechess.competition.ended'>Ended</message>
 

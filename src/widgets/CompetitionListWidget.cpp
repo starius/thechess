@@ -28,8 +28,9 @@ const int name_column = 1;
 const int type_column = 2;
 const int state_column = 3;
 const int winners_column = 4;
-const int started_column = 5;
-const int ended_column = 6;
+const int members_column = 5;
+const int started_column = 6;
+const int ended_column = 7;
 
 class CompetitionListModel : public BaseQM
 {
@@ -43,6 +44,7 @@ public:
         addColumn("C.type", tr("thechess.competition.type"));
         addColumn("C.state", tr("thechess.competition.state"));
         addColumn("C.id", tr("thechess.competition.winners"));
+        addColumn("C.id", tr("thechess.competition.members_number"));
         addColumn("C.started", tr("thechess.competition.started"));
         addColumn("C.ended", tr("thechess.competition.ended"));
     }
@@ -60,6 +62,8 @@ public:
                 return tr(Competition::state2str(o->state()));
             else if (index.column() == winners_column)
                 return resultRow(index.row()).get<1>();
+            else if (index.column() == members_column)
+                return resultRow(index.row()).get<2>();
         }
         else if (role == Wt::InternalPathRole && index.column() == n_column)
             return str(boost::format("/competition/%i/") % o.id());
@@ -79,12 +83,13 @@ public:
     Wt::WTableView(p)
     {
         setModel(model);
-        resize(831, 450);
+        resize(881, 450);
         setColumnWidth(n_column, 40);
         setColumnWidth(name_column, 200);
         setColumnWidth(type_column, 100);
         setColumnWidth(state_column, 110);
         setColumnWidth(winners_column, 90);
+        setColumnWidth(members_column, 50);
         setColumnWidth(started_column, 120);
         setColumnWidth(ended_column, 120);
         setRowHeaderCount(1); // fixed id_columns when scrolling
@@ -106,18 +111,20 @@ Q CompetitionListWidget::query_()
     std::stringstream sql;
     sql << "select C, ";
     if(t == ThechessOptions::Postgres)
-        sql << "array_to_string(array_agg(distinct W.username), ', ') ";
+        sql << "array_to_string(array_agg(distinct W.username), ', '), ";
     else if(t == ThechessOptions::Sqlite3)
-        sql << "group_concat(W.username, ', ') ";
+        sql << "group_concat(W.username, ', '), ";
+    sql << "count(distinct M.thechess_user_id) ";
     if (only_my)
-        sql << "from members_competitions M left join thechess_competition C "
-               "on C.id=M.thechess_competition_id ";
+        sql << "from members_competitions I left join thechess_competition C "
+               "on C.id=I.thechess_competition_id ";
     else
         sql << "from thechess_competition C ";
     sql << "left join winners_competition WC on WC.thechess_competition_id=C.id ";
     sql << "left join thechess_user W on WC.thechess_user_id=W.id ";
+    sql << "left join members_competitions M on M.thechess_competition_id=C.id ";
     if (only_my)
-        sql << "where M.thechess_user_id = ?";
+        sql << "where I.thechess_user_id = ?";
     Q q = tApp->session().query<Result>(sql.str());
     q.groupBy("C");
     if (only_my)
