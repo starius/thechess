@@ -193,7 +193,7 @@ class CompetitionManager : public Wt::WContainerWidget
 {
 public:
     CompetitionManager(CompetitionPtr c):
-    c_(c)
+    c_(c), is_editing_(false)
     {
         if (tApp->user())
         {
@@ -219,13 +219,18 @@ public:
         }
     }
 
+    bool is_editing() const { return is_editing_; }
+
 private:
     CompetitionPtr c_;
+    bool is_editing_;
 
     void show_change_widget_()
     {
         dynamic_cast<Wt::WPushButton*>(sender())->hide();
-        new CompetitionCreateWidget(c_, this);
+        is_editing_ = true;
+        CompetitionCreateWidget* ccw = new CompetitionCreateWidget(c_, this);
+        ccw->saved().connect(this, &CompetitionManager::save_handler_);
     }
 
     typedef void (Competition::*CompetitionMethod)(UserPtr);
@@ -246,6 +251,11 @@ private:
         Wt::WPushButton* b;
         b = new Wt::WPushButton(tr(title_id), this);
         b->clicked().connect(this, &CompetitionManager::action_<method>);
+    }
+
+    void save_handler_()
+    {
+        is_editing_ = false;
     }
 };
 
@@ -274,7 +284,9 @@ void CompetitionWidget::reprint_()
     bindWidget("winners", new CompetitionWinners(c));
     bindWidget("terms", new CompetitionTerms(c));
     bindWidget("view", new CompetitionView(c));
-    bindWidget("manager", new CompetitionManager(c));
+    if (!resolveWidget("manager") ||
+        !dynamic_cast<CompetitionManager*>(resolveWidget("manager"))->is_editing())
+        bindWidget("manager", new CompetitionManager(c));
     t.commit();
 }
 
