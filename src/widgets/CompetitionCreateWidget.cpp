@@ -33,7 +33,7 @@ Wt::WContainerWidget(p)
         delete c;
 
         new Wt::WBreak(this);
-        Wt::WPushButton* ok_ = new Wt::WPushButton(tr("thechess.create"), this);
+        ok_ = new Wt::WPushButton(tr("thechess.create"), this);
         ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler_);
     }
     else
@@ -58,7 +58,7 @@ Wt::WContainerWidget(p), c_(c)
         cpw_ = new CompetitionParametersWidget2(&(*c), /*allow_change_type*/ true, this);
 
         new Wt::WBreak(this);
-        Wt::WPushButton* ok_ = new Wt::WPushButton(tr("thechess.save"), this);
+        ok_ = new Wt::WPushButton(tr("thechess.save"), this);
         ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler_);
     }
     else
@@ -66,6 +66,11 @@ Wt::WContainerWidget(p), c_(c)
         new Wt::WText(tr("thechess.competition.cant_change"), this);
     }
     t.commit();
+}
+
+Wt::EventSignal<Wt::WMouseEvent>& CompetitionCreateWidget::saved()
+{
+    return ok_->clicked();
 }
 
 void CompetitionCreateWidget::button_handler_()
