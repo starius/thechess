@@ -449,6 +449,8 @@
     <message id='thechess.CLASSIFICATION_J'>class J</message>
     <message id='thechess.NO_CLASSIFICATION'>without category</message>
 
+    <message id='thechess.user.online_time'>Spent online {1}</message>
+
     <message id='thechess.competition_parameters'>Competition parameters</message>
     <message id='thechess.refresh'>Refresh</message>
     <message id='thechess.competition.cant_create'>You have no permission to create competition</message>

@@ -11,7 +11,7 @@
 #include "widgets/GameCreateWidget.hpp"
 #include "ThechessApplication.hpp"
 #include "model/Game.hpp"
-
+#include "time_intervals.hpp"
 
 namespace thechess {
 namespace widgets {
@@ -27,6 +27,9 @@ public:
         new Wt::WText(user_->username(), this);
         new Wt::WBreak(this);
         new Wt::WText(user_->classification_str(), this);
+        new Wt::WBreak(this);
+        new Wt::WText(tr("thechess.user.online_time")
+            .arg(td2str(user_->online_time())), this);
         new Wt::WBreak(this);
         if (tApp->user() && tApp->user() != user_)
         {
