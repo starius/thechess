@@ -41,6 +41,20 @@ dbo::Query<GamePtr> User::games() const
         .bind(id()).bind(id());
 }
 
+void User::login()
+{
+    if (sessions_ == 0)
+        last_enter_ = now();
+    sessions_ += 1;
+}
+
+void User::logout()
+{
+    sessions_ -= 1;
+    if (sessions_ == 0)
+        online_time_ += now() - last_enter_;
+}
+
 bool User::can_set_classification(UserPtr user) const
 {
     return user && user.id() == id();

@@ -6,6 +6,7 @@
 #include <Wt/Dbo/Dbo>
 #include <Wt/Dbo/ptr>
 #include <Wt/WString>
+#include <Wt/WDateTime>
 #include <Wt/Dbo/WtSqlTraits>
 #include <Wt/Dbo/collection>
 #include <Wt/Dbo/Query>
@@ -26,6 +27,7 @@ namespace model {
 #include "model/EloPlayer.hpp"
 #include "model/CookieSession.hpp"
 #include "model/UserClassification.hpp"
+#include "time_intervals.hpp"
 
 namespace thechess {
 namespace model {
@@ -49,6 +51,8 @@ public:
         dbo::field(a, password_, "password");
         dbo::field(a, rights_, "rights");
         dbo::field(a, sessions_, "sessions");
+        dbo::field(a, last_enter_, "last_enter");
+        dbo::field(a, online_time_, "online_time");
         dbo::field(a, classification_, "classification");
         dbo::field(a, classification_confirmer_, "classification_confirmer");
         dbo::hasMany(a, classification_confirmed_, dbo::ManyToOne, "classification_confirmer");
@@ -72,9 +76,10 @@ public:
     void set_username(Wt::WString username) { username_ = username; }
     Rights rights() const { return rights_; }
     void set_rights(Rights rights) { rights_ = rights; }
-    void login() { sessions_ += 1; }
-    void logout() { sessions_ -= 1; }
+    void login();
+    void logout();
     bool online() const { return sessions_ != 0; }
+    const Td& online_time() const { return online_time_; }
     dbo::Query<GamePtr> games() const;
 
     bool can_set_classification(UserPtr user) const;
@@ -95,6 +100,8 @@ private:
     std::string password_; // UTF8
     Rights rights_; // default constructor: 0
     int sessions_;
+    Wt::WDateTime last_enter_;
+    Td online_time_;
 
     Games white_games_;
     Games black_games_;
