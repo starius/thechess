@@ -266,13 +266,14 @@ private:
             {
                 new Wt::WText(tr("thechess.GameWidget.competition_other_proposed")
                     .arg(game_->other_user(tApp->user())->username()), manager_);
+                new Wt::WBreak(manager_);
             }
             if (game_->can_competition_confirm(tApp->user()))
             {
                 new Wt::WText(tr("thechess.GameWidget.competition_confirm_welcome"), manager_);
                 button_<&Game::competition_confirm>("thechess.GameWidget.competition_confirm");
             }
-            if (game_->can_competition_discard(tApp->user()))
+            else if (game_->can_competition_discard(tApp->user()))
             {
                 new Wt::WText(tr("thechess.GameWidget.competition_discard_welcome"), manager_);
                 button_<&Game::competition_discard>("thechess.GameWidget.competition_discard");
