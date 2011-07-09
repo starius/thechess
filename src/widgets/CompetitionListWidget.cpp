@@ -113,7 +113,7 @@ Q CompetitionListWidget::query_()
     if(t == ThechessOptions::Postgres)
         sql << "array_to_string(array_agg(distinct W.username), ', '), ";
     else if(t == ThechessOptions::Sqlite3)
-        sql << "group_concat(W.username, ', '), ";
+        sql << "group_concat(distinct W.username), ";
     sql << "count(distinct M.thechess_user_id) ";
     if (only_my)
         sql << "from members_competitions I left join thechess_competition C "
