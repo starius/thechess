@@ -68,7 +68,8 @@ void StagedCompetition::read_games_()
     {
         UserPair pair(game->white(), game->black());
         int stage = game->competition_stage();
-        paires_.insert(std::make_pair(stage, pair));
+        if (games_.find(pair) == games_.end())
+            paires_.insert(std::make_pair(stage, pair));
         games_[pair].push_back(game);
     }
 }
