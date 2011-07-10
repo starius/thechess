@@ -295,6 +295,8 @@
 
     <message id='thechess.user.online_time'>Время, проведенное на сайте: {1}</message>
 
+    <message id='thechess.competition'>турнир</message>
+
     <message id='thechess.competition_parameters'>Параметры турнира</message>
     <message id='thechess.refresh'>Обновить</message>
     <message id='thechess.competition.cant_create'>Вы не можете создавать турниры</message>

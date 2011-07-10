@@ -8,8 +8,10 @@
  */
 
 #include <iostream>
+#include <boost/lexical_cast.hpp>
 
 #include <Wt/WObject>
+#include <Wt/WAnchor>
 #include <Wt/WContainerWidget>
 #include <Wt/WViewWidget>
 #include <Wt/WText>
@@ -78,15 +80,25 @@ protected:
             item_(Wt::WString::trn("thechess.first_draw_full",
                 game_->first_draw()/2).arg(game_->first_draw()/2), result);
         }
-        if (game_->state() == Game::confirmed && game_->competition())
+        CompetitionPtr c = game_->competition();
+        if (c)
         {
-            time_(game_->when_confirmed()+game_->competition()->force_start_delay(),
+            Wt::WContainerWidget* li = new Wt::WContainerWidget(result);
+            Wt::WAnchor* a = new Wt::WAnchor(li);
+            Wt::WString text = tr("thechess.competition") + " ";
+            text += c->name().empty() ? boost::lexical_cast<std::string>(c.id()) : c->name();
+            a->setText(text);
+            a->setRefInternalPath(str(boost::format("/competition/%i/") % c.id()));
+        }
+        if (game_->state() == Game::confirmed && c)
+        {
+            time_(game_->when_confirmed()+c->force_start_delay(),
                 "thechess.GameWidget.force_start", result);
         }
-        if (game_->state() == Game::proposed && game_->competition() &&
-            game_->competition()->type() == STAGED)
+        if (game_->state() == Game::proposed && c &&
+            c->type() == STAGED)
         {
-            time_(game_->created() + game_->competition()->relax_time(),
+            time_(game_->created() + c->relax_time(),
                 "thechess.GameWidget.force_confirm", result);
         }
         t.commit();
