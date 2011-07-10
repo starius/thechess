@@ -36,7 +36,7 @@ namespace min
     const Td limit_private_init = 5 * minute;
     const Td pause_limit_init = td_null;
 
-    const int first_draw = 10 * 2;
+    const int first_draw = 2;
 }
 
 namespace defaults
@@ -76,14 +76,14 @@ namespace competition
         const int min_rating = 100;
         const Classification max_classification = CLASSIFICATION_F;
         const Classification min_classification = NO_CLASSIFICATION;
-        const Td force_start_delay = 18 * hour;
-        const Td min_recruiting_time = hour;
+        const Td force_start_delay = minute;
+        const Td min_recruiting_time = minute;
         const Td max_recruiting_time = 2 * hour;
-        const int min_users = 5;
-        const int max_users = 10;
+        const int min_users = 2;
+        const int max_users = 5;
         const int max_simultaneous_games = 1;
         const float games_factor = 0.01;
-        const Td relax_time = day;
+        const Td relax_time = minute;
         const int min_substages = 1;
         const int increment_substages = 0;
     }
