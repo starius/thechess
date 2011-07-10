@@ -184,6 +184,7 @@
     <message id='thechess.pause_until'>приостановлена до</message>
     <message id='thechess.ended'>завершена</message>
     <message id='thechess.GameWidget.force_start'>форсированный старт</message>
+    <message id='thechess.GameWidget.force_confirm'>форсированное подтверждение</message>
 
     <message id='thechess.challenge'>Вызов</message>
     <message id='thechess.game_list'>Список игр</message>

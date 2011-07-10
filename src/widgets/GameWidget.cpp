@@ -83,6 +83,12 @@ protected:
             time_(game_->when_confirmed()+game_->competition()->force_start_delay(),
                 "thechess.GameWidget.force_start", result);
         }
+        if (game_->state() == Game::proposed && game_->competition() &&
+            game_->competition()->type() == STAGED)
+        {
+            time_(game_->created() + game_->competition()->relax_time(),
+                "thechess.GameWidget.force_confirm", result);
+        }
         t.commit();
         return result;
     }

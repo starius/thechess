@@ -351,6 +351,7 @@
     <message id='thechess.pause_until'>paused until</message>
     <message id='thechess.ended'>ended</message>
     <message id='thechess.GameWidget.force_start'>forced start</message>
+    <message id='thechess.GameWidget.force_confirm'>forced confirmation</message>
 
     <message id='thechess.challenge'>Challenge</message>
     <message id='thechess.game_list'>List of games</message>
