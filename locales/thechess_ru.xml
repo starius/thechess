@@ -345,6 +345,8 @@
     <message id='thechess.competition.state.CANCELLED'>отмененный</message>
 
     <message id='thechess.competition.score'>Счет</message>
+    <message id='thechess.competition.show_games'>Показать номера партий</message>
+    <message id='thechess.competition.show_wins'>Показать число побед</message>
 
     <message id='thechess.staged.tree'>Дерево</message>
     <message id='thechess.staged.stage'>Раунд</message>

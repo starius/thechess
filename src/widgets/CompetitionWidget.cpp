@@ -101,6 +101,15 @@ public:
     }
 };
 
+void game_reference_(GamePtr game, Wt::WContainerWidget* c)
+{
+    if (c->count())
+        new Wt::WText(", ", c);
+    Wt::WAnchor* a = new Wt::WAnchor(c);
+    a->setText(boost::lexical_cast<std::string>(game.id()));
+    a->setRefInternalPath(str(boost::format("/game/%i") % game.id()));
+}
+
 const int NAME_COLUMN = 0;
 const int N_COLUMN = 1;
 const int N_ROW = 0;
@@ -110,7 +119,8 @@ const int TOP_SHIFT = 2;
 class ClassicalView : public Wt::WContainerWidget
 {
 public:
-    ClassicalView(CompetitionPtr c)
+    ClassicalView(CompetitionPtr c):
+    show_wins_(true)
     {
         gt_ = c->games_table();
         table_ = new Wt::WTable(this);
@@ -119,7 +129,9 @@ public:
         score_column_ = members.size() + TOP_SHIFT;
         headers_();
         scores_(c);
-        show_wins_();
+        fill_button_ = new Wt::WPushButton(this);
+        fill_button_->clicked().connect(this, &ClassicalView::change_fill_type_);
+        fill_table_();
     }
 
 private:
@@ -127,6 +139,8 @@ private:
     GamesTable gt_;
     UsersVector members;
     int score_column_;
+    bool show_wins_;
+    Wt::WPushButton* fill_button_;
 
     void headers_()
     {
@@ -162,8 +176,18 @@ private:
         }
     }
 
-    void show_wins_()
+    void change_fill_type_()
     {
+        show_wins_ = !show_wins_;
+        fill_table_();
+    }
+
+    void fill_table_()
+    {
+        if (show_wins_)
+            fill_button_->setText(tr("thechess.competition.show_games"));
+        else
+            fill_button_->setText(tr("thechess.competition.show_wins"));
         int members_size = members.size();
         for (int row = 0; row < members_size; ++row)
         {
@@ -172,17 +196,25 @@ private:
             {
                 UserPtr ucol = members[col];
                 Wt::WTableCell* cell = table_->elementAt(row + LEFT_SHIFT, col + TOP_SHIFT);
+                cell->clear();
                 if (row == col)
                 {
                     new Wt::WText(tr("thechess.competition.dash"), cell);
                 }
-                else
+                else if (show_wins_)
                 {
                     std::map<UserPtr, float> wins;
                     Competition::wins_number(gt_[urow][ucol], wins);
                     Competition::wins_number(gt_[ucol][urow], wins);
                     new Wt::WText(boost::lexical_cast<std::string>(wins[urow]) +
                         "/" + boost::lexical_cast<std::string>(wins[ucol]), cell);
+                }
+                else
+                {
+                    BOOST_FOREACH(GamePtr game, gt_[ucol][urow])
+                        game_reference_(game, cell);
+                    BOOST_FOREACH(GamePtr game, gt_[urow][ucol])
+                        game_reference_(game, cell);
                 }
             }
         }
@@ -254,13 +286,7 @@ private:
         if (g != sc_.games().end())
         {
             BOOST_FOREACH(GamePtr game, g->second)
-            {
-                if (games->count())
-                    new Wt::WText(", ", games);
-                Wt::WAnchor* a = new Wt::WAnchor(games);
-                a->setText(boost::lexical_cast<std::string>(game.id()));
-                a->setRefInternalPath(str(boost::format("/game/%i") % game.id()));
-            }
+                game_reference_(game, games);
         }
         n->setColumnWidget(GAMES_COLUMN, games);
         if (stage > 0)

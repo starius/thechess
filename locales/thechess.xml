@@ -512,6 +512,8 @@
 
     <message id='thechess.competition.dash'>&mdash;</message>
     <message id='thechess.competition.score'>Score</message>
+    <message id='thechess.competition.show_games'>Show games</message>
+    <message id='thechess.competition.show_wins'>Show numbers of victories</message>
 
     <message id='thechess.staged.tree'>Tree</message>
     <message id='thechess.staged.stage'>Stage</message>
