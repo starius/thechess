@@ -201,7 +201,8 @@ bool Competition::can_join(UserPtr user) const
         user->games_stat().elo() >= min_rating() &&
         user->games_stat().elo() <= max_rating() &&
         user->classification() >= min_classification() &&
-        user->classification() <= max_classification();
+        user->classification() <= max_classification() &&
+        static_cast<int>(members_.size()) < max_users();
 }
 
 void Competition::join(UserPtr user)
