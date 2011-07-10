@@ -503,5 +503,11 @@
     <message id='thechess.competition.dash'>&mdash;</message>
     <message id='thechess.competition.score'>Score</message>
 
+    <message id='thechess.staged.tree'>Tree</message>
+    <message id='thechess.staged.stage'>Stage</message>
+    <message id='thechess.staged.games_list'>Games list</message>
+    <message id='thechess.staged.winner'>Winner</message>
+    <message id='thechess.staged.pair_format'>{1} - {2}</message>
+
 </messages>
 
