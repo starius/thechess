@@ -108,6 +108,9 @@ private:
     void cookie_session_read_();
     void cookie_session_write_();
 
+    void add_my_games_();
+    void remove_my_games_();
+
     void onPathChange_();
     Wt::WContainerWidget* mainpanel_();
     void set_mainpanel_(Wt::WWidget* widget);

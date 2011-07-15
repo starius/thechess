@@ -46,6 +46,7 @@ namespace dbo = Wt::Dbo;
 #include "widgets/CompetitionListWidget.hpp"
 #include "widgets/UserWidget.hpp"
 #include "widgets/MainMenu.hpp"
+#include "widgets/MyGamesList.hpp"
 #include "ThechessSession.hpp"
 #include "model/User.hpp"
 #include "model/CookieSession.hpp"
@@ -156,6 +157,18 @@ void ThechessApplication::cookie_session_write_()
     t.commit();
 }
 
+void ThechessApplication::add_my_games_()
+{
+    layout_->addWidget(new widgets::MyGamesList(user()), Wt::WBorderLayout::East);
+}
+
+void ThechessApplication::remove_my_games_()
+{
+    Wt::WWidget* my_games_list = layout_->widgetAt(Wt::WBorderLayout::East);
+    layout_->removeWidget(my_games_list);
+    delete my_games_list;
+}
+
 void ThechessApplication::after_user_change_()
 {
     std::string path = internalPathNextPart("/");
@@ -180,6 +193,7 @@ void ThechessApplication::set_user(UserPtr user)
     if (user_)
     {
         user_.modify()->logout();
+        remove_my_games_();
     }
     user_ = user;
     user_.reread();
@@ -198,6 +212,7 @@ void ThechessApplication::set_user(UserPtr user)
     }
     cookie_session_write_();
     after_user_change_();
+    add_my_games_();
     t.commit();
 }
 
@@ -209,6 +224,7 @@ void ThechessApplication::logout()
     {
         user_.modify()->logout();
         user_.reset();
+        remove_my_games_();
     }
     cookie_session_write_();
     after_user_change_();
