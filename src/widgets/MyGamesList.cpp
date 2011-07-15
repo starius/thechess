@@ -1,0 +1,128 @@
+/*
+ * thechess, chess game web application written in C++ and based on Wt
+ * Copyright (C) 2010 Boris Nagaev
+ *
+ * thechess is licensed under the GNU GPL Version 2.
+ * Other versions of the GPL do not apply.
+ * See the LICENSE file for terms of use.
+ */
+
+#include <boost/foreach.hpp>
+
+#include <Wt/WTable>
+#include <Wt/WAnchor>
+#include <Wt/WContainerWidget>
+#include <Wt/Dbo/Transaction>
+namespace dbo = Wt::Dbo;
+
+#include "widgets/MyGamesList.hpp"
+#include "model/Game.hpp"
+#include "model/Object.hpp"
+#include "ThechessApplication.hpp"
+
+namespace thechess {
+namespace widgets {
+using namespace model;
+
+class MyGamesListImp;
+
+class MyGameAnchor : public Wt::WAnchor, public Notifiable
+{
+public:
+    MyGameAnchor(const GamePtr& game, MyGamesListImp* list):
+    Notifiable(Object(GameObject, game.id())),
+    game_id_(game.id()), list_(list)
+    {
+        setText(boost::lexical_cast<std::string>(game_id_));
+        setRefInternalPath(str(boost::format("/game/%i/") % game_id_));
+        setInline(false);
+    }
+
+    virtual void notify();
+
+    int game_id() const
+    {
+        return game_id_;
+    }
+
+private:
+    int game_id_;
+    MyGamesListImp* list_;
+};
+
+typedef std::map<int, MyGameAnchor*> Anchors;
+
+class MyGamesListImp : public Wt::WContainerWidget, public Notifiable
+{
+public:
+    MyGamesListImp(const UserPtr& user):
+    Notifiable(Object(UserObject, user.id())),
+    user_id_(user.id())
+    {
+        update_games_list_();
+    }
+
+    virtual void notify()
+    {
+        update_games_list_();
+    }
+
+private:
+    int user_id_;
+    Anchors anchors_;
+
+    void update_games_list_()
+    {
+        dbo::Transaction t(tApp->session());
+        std::set<int> games;
+        UserPtr user = tApp->session().load<User>(user_id_);
+        Games games_collection = user->games().where("state < ?").bind(Game::min_ended);
+        GamesVector games_vector(games_collection.begin(), games_collection.end());
+        BOOST_FOREACH(GamePtr game, games_vector)
+        {
+            games.insert(game.id());
+            if (anchors_.find(game.id()) == anchors_.end())
+            {
+                MyGameAnchor* a = new MyGameAnchor(game, this);
+                anchors_[game.id()] = a;
+                addWidget(a);
+            }
+        }
+        std::vector<MyGameAnchor*> to_remove;
+        BOOST_FOREACH(Anchors::value_type& game_id_and_a, anchors_)
+            if (games.find(game_id_and_a.first) == games.end())
+                to_remove.push_back(game_id_and_a.second);
+        BOOST_FOREACH(MyGameAnchor* a, to_remove)
+            remove_anchor_(a);
+        t.commit();
+    }
+
+    void remove_anchor_(MyGameAnchor* a)
+    {
+        anchors_.erase(a->game_id());
+        removeWidget(a);
+        delete a;
+    }
+
+friend class MyGameAnchor;
+};
+
+void MyGameAnchor::notify()
+{
+    dbo::Transaction t(tApp->session());
+    GamePtr game = tApp->session().load<Game>(game_id_);
+    game.reread();
+    if (game->state() > Game::min_ended)
+        list_->remove_anchor_(this);
+    t.commit();
+}
+
+MyGamesList::MyGamesList(UserPtr user, Wt::WContainerWidget* p):
+Wt::WCompositeWidget(p)
+{
+    setImplementation(new MyGamesListImp(user));
+}
+
+}
+}
+
