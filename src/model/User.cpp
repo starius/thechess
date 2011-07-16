@@ -46,8 +46,8 @@ bool User::test_password(const std::string& password) const
 
 dbo::Query<GamePtr> User::games() const
 {
-    return session()->find<Game>().where("white_id = ? or black_id = ?")
-        .bind(id()).bind(id());
+    return session()->find<Game>().where("white_id = ? or black_id = ? or init_game_id = ?")
+        .bind(id()).bind(id()).bind(id());
 }
 
 void User::login()
