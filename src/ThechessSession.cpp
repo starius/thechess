@@ -95,6 +95,8 @@ dbo::SqlConnection* ThechessSession::new_connection(const ThechessOptions& optio
     {
         std::string path = expand_path(options.database_value());
         connection = new dbo::backend::Sqlite3(path);
+        connection->executeSql("PRAGMA synchronous = normal");
+        connection->executeSql("PRAGMA journal_mode = wal");
     }
 #ifdef RUN_TESTS
     connection->setProperty("show-queries", "true");
