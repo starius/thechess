@@ -15,6 +15,7 @@
     <web-sockets>true</web-sockets>
     <behind-reverse-proxy>false</behind-reverse-proxy>
     <progressive-bootstrap>false</progressive-bootstrap>
+    <log-response-time>true</log-response-time>
     <properties>
         <property name="baseURL"></property>
         <property name="resourcesURL">resources/</property>
