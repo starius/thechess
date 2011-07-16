@@ -10,6 +10,7 @@
 #include <iostream>
 #include <boost/lexical_cast.hpp>
 
+#include <Wt/WLogger>
 #include <Wt/WObject>
 #include <Wt/WAnchor>
 #include <Wt/WContainerWidget>
@@ -48,8 +49,21 @@ public:
 protected:
     virtual Wt::WWidget *renderView()
     {
-        dbo::Transaction t(tApp->session());
         Wt::WContainerWidget* result = new Wt::WContainerWidget();
+        try
+        {
+            add_items(result);
+        }
+        catch (std::exception& e)
+        {
+            tApp->log("warning") << e.what();
+        }
+        return result;
+    }
+
+    void add_items(Wt::WContainerWidget* result)
+    {
+        dbo::Transaction t(tApp->session());
         result->setList(true);
         kw_(game_->str_state(), "thechess.state", result);
         user_(game_->white(), "thechess.white", result);
@@ -102,7 +116,6 @@ protected:
                 "thechess.GameWidget.force_confirm", result);
         }
         t.commit();
-        return result;
     }
 
 private:

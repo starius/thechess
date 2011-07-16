@@ -11,6 +11,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/format.hpp>
 
+#include <Wt/WLogger>
 #include <Wt/WText>
 #include <Wt/WTemplate>
 #include <Wt/WBreak>
@@ -121,8 +122,15 @@ Wt::WViewWidget(parent), game_(game)
 
 Wt::WWidget* GameCountdown::renderView()
 {
-    std::cout << " ------- GameCountdown::renderView ------- " << std::endl;
-    return new GameCountdownImpl(game_);
+    try
+    {
+        return new GameCountdownImpl(game_);
+    }
+    catch (std::exception& e)
+    {
+        tApp->log("warning") << e.what();
+    }
+    return new Wt::WText();
 }
 
 }
