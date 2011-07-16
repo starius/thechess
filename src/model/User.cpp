@@ -60,6 +60,8 @@ void User::login()
 void User::logout()
 {
     sessions_ -= 1;
+    if (sessions_ < 0)
+        sessions_ = 0;
     if (sessions_ == 0)
         online_time_ += now() - last_enter_;
 }
