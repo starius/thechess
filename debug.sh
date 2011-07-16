@@ -5,5 +5,5 @@
 # Other versions of the GPL do not apply.
 # See the LICENSE file for terms of use.
 
-gdb --args ./build/thechess.wt `cat args`
+gdb --args ./build/thechess.wt `cat args` --gdb
 
