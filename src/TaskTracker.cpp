@@ -62,13 +62,13 @@ void TaskTracker::add_or_update_task(const Object& object)
 
 void TaskTracker::check_(const boost::system::error_code& error)
 {
-    std::cout << "TaskTracker::check_()" <<std::endl;
     if (!error)
     {
-        std::cout << "TaskTracker::check_() ok" <<std::endl;
+        std::cout << "TaskTracker::check_()" <<std::endl;
         mutex_.lock();
         Wt::WDateTime cached_now = now();
         Objects objects;
+        bool need_reread;
         while (!w2t.empty())
         {
             W2T_It w2t_it = w2t.begin();
@@ -79,33 +79,41 @@ void TaskTracker::check_(const boost::system::error_code& error)
                 try
                 {
                     dbo::Transaction t(session_);
+                    if (need_reread)
+                        session_.rereadAll();
+                    need_reread = false;
                     Wt::WDateTime new_time = object.process(objects, session_);
                     t.commit();
+                    std::cout << "TaskTracker::check_ commit" << std::endl;
                     server_.notifier().emit(object);
                     if (new_time.isValid() && new_time > cached_now)
                     {
-                        // update
                         t2i[object] = w2t.insert(std::make_pair(new_time, object));
                     }
                     else
                     {
-                        // delete
                         t2i.erase(object);
                     }
                 }
-                catch (dbo::StaleObjectException)
+                catch (dbo::ObjectNotFoundException e)
                 {
-                    // reread
-                    object.reread(session_);
-                    // update
+                    std::cerr << e.what() << std::endl;
+                    t2i.erase(object);
+                }
+                catch (dbo::StaleObjectException& e)
+                {
+                    std::cerr << e.what() << std::endl;
+                    need_reread = true;
                     Wt::WDateTime new_time = cached_now +
                         config::tracker::stale_object_delay;
                     t2i[object] = w2t.insert(std::make_pair(new_time, object));
                 }
-                catch (...) // dbo::ObjectNotFoundException
+                catch (std::exception& e) // database locked?
                 {
-                    // delete
-                    t2i.erase(object);
+                    std::cerr << e.what() << std::endl;
+                    Wt::WDateTime new_time = cached_now +
+                        config::tracker::unknown_error_delay;
+                    t2i[object] = w2t.insert(std::make_pair(new_time, object));
                 }
                 w2t.erase(w2t_it);
             }
