@@ -96,3 +96,13 @@ a.thechess-deselected
     padding: 2px 5px;
 }
 
+a.thechess-excited
+{
+    font-weight: bolder;
+    color: Firebrick;
+}
+
+a.thechess-unexcited
+{
+}
+

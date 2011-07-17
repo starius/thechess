@@ -36,6 +36,18 @@ public:
         setText(boost::lexical_cast<std::string>(game_id_));
         setRefInternalPath(str(boost::format("/game/%i/") % game_id_));
         setInline(false);
+        if (game->can_confirm(tApp->user()))
+            excite();
+        else if (game->can_competition_confirm(tApp->user()))
+            excite();
+        else if (game->can_pause_agree(tApp->user()))
+            excite();
+        else if (game->can_mistake_agree(tApp->user()))
+            excite();
+        else if (game->can_draw_agree(tApp->user()))
+            excite();
+        else if (game->can_move(tApp->user()))
+            excite();
         deselect();
     }
 
@@ -56,6 +68,18 @@ public:
     {
         removeStyleClass("thechess-selected");
         addStyleClass("thechess-deselected");
+    }
+
+    void excite()
+    {
+        addStyleClass("thechess-excited");
+        removeStyleClass("thechess-unexcited");
+    }
+
+    void unexcite()
+    {
+        removeStyleClass("thechess-excited");
+        addStyleClass("thechess-unexcited");
     }
 
 private:
@@ -130,10 +154,12 @@ private:
             {
                 MyGameAnchor* a = it->second;
                 a->deselect();
+                a->unexcite();
             }
         }
         last_clicked_ = target->game_id();
         target->select();
+        target->unexcite();
     }
 
 friend class MyGameAnchor;
@@ -146,6 +172,8 @@ void MyGameAnchor::notify()
     game.reread();
     if (game->state() > Game::min_ended)
         list_->remove_anchor_(this);
+    else
+        excite();
     t.commit();
 }
 
