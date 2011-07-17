@@ -128,12 +128,6 @@ private:
                 addWidget(a);
             }
         }
-        std::vector<MyGameAnchor*> to_remove;
-        BOOST_FOREACH(Anchors::value_type& game_id_and_a, anchors_)
-            if (games.find(game_id_and_a.first) == games.end())
-                to_remove.push_back(game_id_and_a.second);
-        BOOST_FOREACH(MyGameAnchor* a, to_remove)
-            remove_anchor_(a);
         t.commit();
     }
 
