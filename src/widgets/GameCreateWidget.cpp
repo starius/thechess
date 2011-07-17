@@ -21,6 +21,7 @@ namespace dbo = Wt::Dbo;
 #include "widgets/GameParametersWidget.hpp"
 #include "model/Game.hpp"
 #include "ThechessApplication.hpp"
+#include "ThechessNotifier.hpp"
 
 namespace thechess {
 namespace widgets {
@@ -89,6 +90,11 @@ void GameCreateWidget::button_handler_()
         game.modify()->propose_challenge(tApp->user(), color);
     }
     t.commit();
+    ThechessNotifier::app_emit(Object(UserObject, tApp->user().id()));
+    if (with_user_)
+    {
+        ThechessNotifier::app_emit(Object(UserObject, user_.id()));
+    }
     tApp->view(game);
 }
 

@@ -433,6 +433,10 @@ private:
         {
             tApp->server().tracker().add_or_update_task(object);
         }
+        if (method == &Game::join)
+        {
+            ThechessNotifier::app_emit(Object(UserObject, tApp->user().id()));
+        }
     }
 
     template <GameMember method>
