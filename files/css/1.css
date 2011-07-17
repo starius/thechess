@@ -106,3 +106,23 @@ a.thechess-unexcited
 {
 }
 
+a.thechess-active
+{
+    background-color: #90EE90;
+}
+
+a.thechess-pause
+{
+    background-color: #90EED4;
+}
+
+a.thechess-confirmed
+{
+    background-color: #EEE990;
+}
+
+a.thechess-proposed
+{
+    background-color: white;
+}
+

@@ -53,6 +53,7 @@ public:
         else if (game->can_move(tApp->user()))
             excite();
         deselect();
+        style_by_state(game->state());
     }
 
     virtual void notify();
@@ -84,6 +85,22 @@ public:
     {
         removeStyleClass("thechess-excited");
         addStyleClass("thechess-unexcited");
+    }
+
+    void style_by_state(Game::State state)
+    {
+        removeStyleClass("thechess-active");
+        removeStyleClass("thechess-pause");
+        removeStyleClass("thechess-proposed");
+        removeStyleClass("thechess-confirmed");
+        if (state == Game::active)
+            addStyleClass("thechess-active");
+        if (state == Game::pause)
+            addStyleClass("thechess-pause");
+        if (state == Game::proposed)
+            addStyleClass("thechess-proposed");
+        if (state == Game::confirmed)
+            addStyleClass("thechess-confirmed");
     }
 
 private:
@@ -188,6 +205,7 @@ private:
         {
             extract_anchor_(a);
             insert_anchor_(a, game->state());
+            a->style_by_state(game->state());
         }
         t.commit();
     }
