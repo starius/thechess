@@ -36,6 +36,7 @@ public:
         setText(boost::lexical_cast<std::string>(game_id_));
         setRefInternalPath(str(boost::format("/game/%i/") % game_id_));
         setInline(false);
+        deselect();
     }
 
     virtual void notify();
@@ -43,6 +44,18 @@ public:
     int game_id() const
     {
         return game_id_;
+    }
+
+    void select()
+    {
+        addStyleClass("thechess-selected");
+        removeStyleClass("thechess-deselected");
+    }
+
+    void deselect()
+    {
+        removeStyleClass("thechess-selected");
+        addStyleClass("thechess-deselected");
     }
 
 private:
@@ -57,7 +70,8 @@ class MyGamesListImp : public Wt::WContainerWidget, public Notifiable
 public:
     MyGamesListImp(const UserPtr& user):
     Notifiable(Object(UserObject, user.id())),
-    user_id_(user.id())
+    user_id_(user.id()),
+    last_clicked_(0)
     {
         update_games_list_();
     }
@@ -70,6 +84,7 @@ public:
 private:
     int user_id_;
     Anchors anchors_;
+    int last_clicked_;
 
     void update_games_list_()
     {
@@ -84,6 +99,7 @@ private:
             if (anchors_.find(game.id()) == anchors_.end())
             {
                 MyGameAnchor* a = new MyGameAnchor(game, this);
+                a->clicked().connect(this, &MyGamesListImp::click_handler_);
                 anchors_[game.id()] = a;
                 addWidget(a);
             }
@@ -102,6 +118,22 @@ private:
         anchors_.erase(a->game_id());
         removeWidget(a);
         delete a;
+    }
+
+    void click_handler_()
+    {
+        MyGameAnchor* target = dynamic_cast<MyGameAnchor*>(sender());
+        if (last_clicked_)
+        {
+            Anchors::iterator it = anchors_.find(last_clicked_);
+            if (it != anchors_.end())
+            {
+                MyGameAnchor* a = it->second;
+                a->deselect();
+            }
+        }
+        last_clicked_ = target->game_id();
+        target->select();
     }
 
 friend class MyGameAnchor;
