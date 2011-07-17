@@ -123,23 +123,28 @@ ThechessApplication::~ThechessApplication()
 
 void ThechessApplication::cookie_session_read_()
 {
-    dbo::Transaction t(session());
     try
     {
+        dbo::Transaction t(session());
+        UserPtr u;
         std::string cookie_id = environment().getCookie("cookie_session");
         CookieSessionPtr cookie_session =
             session().load<CookieSession>(cookie_id);
         if (cookie_session->user())
         {
-            set_user(cookie_session->user());
+            u = cookie_session->user();
         }
         cookie_session.modify()->use();
+        t.commit();
+        if (u)
+        {
+            set_user(cookie_session->user());
+        }
     }
     catch (std::exception& e)
     {
         log("warning") << e.what();
     }
-    t.commit();
 }
 
 void ThechessApplication::cookie_session_write_()
@@ -226,8 +231,8 @@ void ThechessApplication::set_user(UserPtr user)
     }
     cookie_session_write_();
     after_user_change_();
-    add_my_games_();
     t.commit();
+    add_my_games_();
 }
 
 void ThechessApplication::logout()
