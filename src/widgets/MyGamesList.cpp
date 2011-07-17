@@ -24,6 +24,10 @@ namespace thechess {
 namespace widgets {
 using namespace model;
 
+const int order_of_states_size = 4;
+const Game::State order_of_states[order_of_states_size] =
+    {Game::active, Game::pause, Game::confirmed, Game::proposed};
+
 class MyGamesListImp;
 
 class MyGameAnchor : public Wt::WAnchor, public Notifiable
@@ -97,6 +101,8 @@ public:
     user_id_(user.id()),
     last_clicked_(0)
     {
+        for (int i = 0; i < order_of_states_size; i++)
+            first_of_state_[i] = 0;
         update_games_list_();
     }
 
@@ -109,6 +115,7 @@ private:
     int user_id_;
     Anchors anchors_;
     int last_clicked_;
+    int first_of_state_[order_of_states_size];
 
     void update_games_list_()
     {
@@ -124,18 +131,65 @@ private:
             {
                 MyGameAnchor* a = new MyGameAnchor(game, this);
                 a->clicked().connect(this, &MyGamesListImp::click_handler_);
+                insert_anchor_(a, game->state());
                 anchors_[game.id()] = a;
-                addWidget(a);
             }
         }
         t.commit();
     }
 
-    void remove_anchor_(MyGameAnchor* a)
+    Game::State state_of_(MyGameAnchor* a) const
     {
-        anchors_.erase(a->game_id());
+        int index = indexOf(a);
+        for (int i = order_of_states_size-1; i >= 0; i--)
+            if (index >= first_of_state_[i])
+                return order_of_states[i];
+        return Game::min_ended;
+    }
+
+    void insert_anchor_(MyGameAnchor* a, Game::State state)
+    {
+        bool inserted = false;
+        for (int i = 0; i < order_of_states_size; i++)
+        {
+            if (order_of_states[i] == state)
+            {
+                insertWidget(first_of_state_[i], a);
+                inserted = true;
+            }
+            else if (inserted)
+                first_of_state_[i] += 1;
+        }
+    }
+
+    void extract_anchor_(MyGameAnchor* a)
+    {
+        int index = indexOf(a);
         removeWidget(a);
-        delete a;
+        for (int i = 0; i < order_of_states_size; i++)
+            if (first_of_state_[i] > index)
+                first_of_state_[i] -= 1;
+    }
+
+    void anchor_notify_handler_(MyGameAnchor* a)
+    {
+        a->excite();
+        dbo::Transaction t(tApp->session());
+        int game_id = a->game_id();
+        GamePtr game = tApp->session().load<Game>(game_id);
+        game.reread();
+        if (game->state() > Game::min_ended)
+        {
+            extract_anchor_(a);
+            anchors_.erase(game_id);
+            delete a;
+        }
+        else if (state_of_(a) != game->state())
+        {
+            extract_anchor_(a);
+            insert_anchor_(a, game->state());
+        }
+        t.commit();
     }
 
     void click_handler_()
@@ -161,14 +215,7 @@ friend class MyGameAnchor;
 
 void MyGameAnchor::notify()
 {
-    dbo::Transaction t(tApp->session());
-    GamePtr game = tApp->session().load<Game>(game_id_);
-    game.reread();
-    if (game->state() > Game::min_ended)
-        list_->remove_anchor_(this);
-    else
-        excite();
-    t.commit();
+    list_->anchor_notify_handler_(this);
 }
 
 MyGamesList::MyGamesList(UserPtr user, Wt::WContainerWidget* p):
