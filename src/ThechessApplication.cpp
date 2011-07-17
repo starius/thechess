@@ -80,9 +80,15 @@ active_(true), notifying_object_(0)
     widgets::MainMenu* main_menu = new widgets::MainMenu();
     layout_->addWidget(main_menu, Wt::WBorderLayout::West);
 
-    cookie_session_read_();
-
-    onPathChange_();
+    try
+    {
+        cookie_session_read_();
+        onPathChange_();
+    }
+    catch (std::exception& e)
+    {
+        log("warning") << e.what();
+    }
 }
 
 ThechessApplication::~ThechessApplication()
@@ -99,13 +105,20 @@ ThechessApplication::~ThechessApplication()
     notifiables_.clear();
     active_ = false;
 
-    dbo::Transaction t(session());
-    user_.reread();
-    if (user_)
+    try
     {
-        user_.modify()->logout();
+        dbo::Transaction t(session());
+        user_.reread();
+        if (user_)
+        {
+            user_.modify()->logout();
+        }
+        t.commit();
     }
-    t.commit();
+    catch (std::exception& e)
+    {
+        log("warning") << e.what();
+    }
 }
 
 void ThechessApplication::cookie_session_read_()
@@ -122,8 +135,9 @@ void ThechessApplication::cookie_session_read_()
         }
         cookie_session.modify()->use();
     }
-    catch (...)
+    catch (std::exception& e)
     {
+        log("warning") << e.what();
     }
     t.commit();
 }
@@ -237,18 +251,22 @@ void ThechessApplication::notify(const Wt::WEvent& e)
     {
         Wt::WApplication::notify(e);
     }
-    catch (dbo::StaleObjectException)
+    catch (dbo::StaleObjectException e)
     {
-        session_.rereadAll();
+        log("notice") << e.what();
+        try
+        {
+            dbo::Transaction t(session());
+            session().rereadAll();
+            t.commit();
+        }
+        catch (...)
+        {
+        }
     }
     catch (std::exception& e)
     {
         log("fatal") << e.what();
-        quit();
-    }
-    catch (...)
-    {
-        log("fatal") << "Unknown exception.";
         quit();
     }
 }
@@ -345,28 +363,35 @@ template<> void ThechessApplication::list_view<Competition>()
 
 void ThechessApplication::thechess_notify(Object object)
 {
-    dbo::Transaction t(tApp->session());
-    object.reread(tApp->session());
-    std::pair<O2N::iterator, O2N::iterator> range =
-        tApp->notifiables_.equal_range(object);
-    std::set<Notifiable*>& waiting_notifiables = tApp->waiting_notifiables_;
-    tApp->notifying_object_ = &object;
-    waiting_notifiables.clear();
-    for (O2N::iterator it = range.first; it != range.second; ++it)
+    try
     {
-        Notifiable* notifiable = it->second;
-        waiting_notifiables.insert(notifiable);
+        dbo::Transaction t(tApp->session());
+        object.reread(tApp->session());
+        std::pair<O2N::iterator, O2N::iterator> range =
+            tApp->notifiables_.equal_range(object);
+        std::set<Notifiable*>& waiting_notifiables = tApp->waiting_notifiables_;
+        tApp->notifying_object_ = &object;
+        waiting_notifiables.clear();
+        for (O2N::iterator it = range.first; it != range.second; ++it)
+        {
+            Notifiable* notifiable = it->second;
+            waiting_notifiables.insert(notifiable);
+        }
+        while (!waiting_notifiables.empty())
+        {
+            std::set<Notifiable*>::iterator it = waiting_notifiables.begin();
+            Notifiable* notifiable = *it;
+            waiting_notifiables.erase(it);
+            notifiable->notify();
+        }
+        tApp->notifying_object_ = 0;
+        tApp->triggerUpdate();
+        t.commit();
     }
-    while(!waiting_notifiables.empty())
+    catch (std::exception& e)
     {
-        std::set<Notifiable*>::iterator it = waiting_notifiables.begin();
-        Notifiable* notifiable = *it;
-        waiting_notifiables.erase(it);
-        notifiable->notify();
+        tApp->log("warning") << e.what();
     }
-    tApp->notifying_object_ = 0;
-    tApp->triggerUpdate();
-    t.commit();
 }
 
 void ThechessApplication::add_notifiable_(Notifiable* notifiable,
