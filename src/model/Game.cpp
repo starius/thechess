@@ -57,21 +57,21 @@ bool Game::is_win() const
 
 const char* Game::state2str_id(State state)
 {
-    if (state == proposed) { return "thechess.state.proposed"; }
-    if (state == confirmed) { return "thechess.state.confirmed"; }
-    if (state == active) { return "thechess.state.active"; }
-    if (state == pause) { return "thechess.state.pause"; }
-    if (state == draw_stalemate){return "thechess.state.draw_stalemate";}
-    if (state == draw_agreed) { return "thechess.state.draw_agreed"; }
-    if (state == draw_50) { return "thechess.state.draw_50"; }
-    if (state == draw_3) { return "thechess.state.draw_3"; }
-    if (state == draw_2_kings) { return "thechess.state.draw_2_kings"; }
-    if (state == surrendered) { return "thechess.state.surrendered"; }
-    if (state == timeout) { return "thechess.state.timeout"; }
-    if (state == cancelled) { return "thechess.state.cancelled"; }
-    if (state == mate) { return "thechess.state.mate"; }
-    if (state == no_draw_stalemate) { return "thechess.state.no_draw_stalemate"; }
-    return "thechess.state.state";
+    if (state == proposed) { return "tc.game.State_proposed"; }
+    if (state == confirmed) { return "tc.game.State_confirmed"; }
+    if (state == active) { return "tc.game.State_active"; }
+    if (state == pause) { return "tc.game.State_pause"; }
+    if (state == draw_stalemate){return "tc.game.State_draw_stalemate";}
+    if (state == draw_agreed) { return "tc.game.State_draw_agreed"; }
+    if (state == draw_50) { return "tc.game.State_draw_50"; }
+    if (state == draw_3) { return "tc.game.State_draw_3"; }
+    if (state == draw_2_kings) { return "tc.game.State_draw_2_kings"; }
+    if (state == surrendered) { return "tc.game.State_surrendered"; }
+    if (state == timeout) { return "tc.game.State_timeout"; }
+    if (state == cancelled) { return "tc.game.State_cancelled"; }
+    if (state == mate) { return "tc.game.State_mate"; }
+    if (state == no_draw_stalemate) { return "tc.game.State_no_draw_stalemate"; }
+    return "tc.game.State_state";
 }
 
 Wt::WString Game::str_state() const

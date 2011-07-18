@@ -31,10 +31,10 @@ RegisterWidget::RegisterWidget(Wt::WContainerWidget* parent) :
 Wt::WContainerWidget(parent)
 {
     table_ = new Wt::WTable(this);
-    Wt::WLabel* username_label = new Wt::WLabel(tr("thechess.username"),
+    Wt::WLabel* username_label = new Wt::WLabel(tr("tc.user.Username"),
         table_->elementAt(0,0));
     username_ = new Wt::WLineEdit(table_->elementAt(0, 1));
-    Wt::WLabel* password_label = new Wt::WLabel(tr("thechess.password"),
+    Wt::WLabel* password_label = new Wt::WLabel(tr("tc.user.Password"),
         table_->elementAt(1,0));
     password_ = new Wt::WLineEdit(table_->elementAt(1, 1));
     password_->setEchoMode(Wt::WLineEdit::Password);
@@ -55,7 +55,7 @@ Wt::WContainerWidget(parent)
     username_error_ = new Wt::WText(table_->elementAt(0, 2));
     password_error_ = new Wt::WText(table_->elementAt(1, 2));
 
-    button_ = new Wt::WPushButton(tr("thechess.register"), this);
+    button_ = new Wt::WPushButton(tr("tc.user.Register"), this);
     button_->clicked().connect(this, &RegisterWidget::try_register_);
 }
 

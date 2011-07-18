@@ -54,10 +54,10 @@ public:
         query.where("rating_after_white != -1");
         query.orderBy("ended");
         setQuery(query);
-        addColumn("id", Wt::WString::tr("thechess.number"));
-        addColumn("ended", Wt::WString::tr("thechess.ended"));
+        addColumn("id", Wt::WString::tr("tc.common.number"));
+        addColumn("ended", Wt::WString::tr("tc.game.ended"));
         addColumn("rating_after_white",
-            Wt::WString::tr("thechess.rating_after"));
+            Wt::WString::tr("tc.user.rating_after"));
         t.commit();
     }
 

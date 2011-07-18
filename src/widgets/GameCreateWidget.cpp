@@ -32,7 +32,7 @@ GameCreateWidget::GameCreateWidget(UserPtr user,
 Wt::WContainerWidget(p), with_user_(true), user_(user)
 {
     dbo::Transaction t(tApp->session());
-    new Wt::WText(tr("thechess.format.competitor")
+    new Wt::WText(tr("tc.game.Competitor")
         .arg(user->username()), this);
     if (!tApp->user())
     {
@@ -48,7 +48,7 @@ Wt::WContainerWidget(p), with_user_(true), user_(user)
 GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :
 Wt::WContainerWidget(p), with_user_(false)
 {
-    new Wt::WText(tr("thechess.challenge"), this);
+    new Wt::WText(tr("tc.game.Challenge"), this);
     if (!tApp->user())
     {
         new PleaseLoginWidget(this);
@@ -65,13 +65,13 @@ void GameCreateWidget::print_()
     gpw_ = new GameParametersWidget(&gp, this);
 
     color_ = new Wt::WComboBox();
-    color_->addItem(tr("thechess.random"));
-    color_->addItem(tr("thechess.white"));
-    color_->addItem(tr("thechess.black"));
-    gpw_->item(tr("thechess.your_color"), "", color_, color_);
+    color_->addItem(tr("tc.game.random"));
+    color_->addItem(tr("tc.game.white"));
+    color_->addItem(tr("tc.game.black"));
+    gpw_->item(tr("tc.game.your_color"), "", color_, color_);
 
     new Wt::WBreak(this);
-    Wt::WPushButton* ok_ = new Wt::WPushButton(tr("thechess.create"), this);
+    Wt::WPushButton* ok_ = new Wt::WPushButton(tr("tc.common.Create"), this);
     ok_->clicked().connect(this, &GameCreateWidget::button_handler_);
 }
 

@@ -5,7 +5,7 @@
 <!--
  thechess, chess game web application written in C++ and based on Wt
  Copyright (C) 2010 Boris Nagaev
- 
+
  thechess is licensed under the GNU GPL Version 2.
  Other versions of the GPL do not apply.
  See the LICENSE file for terms of use.
@@ -74,22 +74,22 @@
     <message id="Wt.WDateTime.years">{1} лет</message>
     <message id="Wt.WDateTime.null">-</message>
     <message id="Wt.WDateValidator.DateTooEarly">Дата должна быть после {1}</message>
-    <message id="wt.WDateValidator.DateToolate">Дата должна быть до {1}</message>
-    <message id="wt.WDateValidator.WrongDateRange">Дата должна быть между {1} и {2}</message>
-    <message id="wt.WDateValidator.WrongFormat">Должна быть в формате '{1}'</message>
-    <message id="wt.WDefaultLoadingIndicator.Loading">Загрузка...</message>
-    <message id="wt.WDoubleValidator.NotANumber">Должно быть числом</message>
-    <message id="wt.WDoubleValidator.TooSmall">Число должно быть больше {1}</message>
-    <message id="wt.WDoubleValidator.BadRange">Число должно быть от {1} до {2}</message>
-    <message id="wt.WDoubleValidator.TooLarge">Число должно быть меньше {1}</message>
-    <message id="wt.WInPlaceEdit.Save">Сохранить</message>
-    <message id="wt.winplaceedit.Cancel">Отменить</message>
-    <message id="wt.WIntValidator.NotAnInteger">Должно быть целым числом</message>
-    <message id="wt.WIntValidator.TooSmall">Число должно быть больше {1}</message>
-    <message id="wt.WIntValidator.BadRange">Число должно быть от {1} до {2}</message>
-    <message id="wt.WIntValidator.TooLarge">Число должно быть меньше {1}</message>
-    <message id="wt.WLengthValidator.TooShort">Ввод должен быть не меньше {1} символов</message>
-    <message id="wt.WLengthValidator.BadRange">Длина ввода должна быть от {1} до {2} символов</message>
+    <message id="Wt.WDateValidator.DateTooLate">Дата должна быть до {1}</message>
+    <message id="Wt.WDateValidator.WrongDateRange">Дата должна быть между {1} и {2}</message>
+    <message id="Wt.WDateValidator.WrongFormat">Должна быть в формате '{1}'</message>
+    <message id="Wt.WDefaultLoadingIndicator.Loading">Загрузка...</message>
+    <message id="Wt.WDoubleValidator.NotANumber">Должно быть числом</message>
+    <message id="Wt.WDoubleValidator.TooSmall">Число должно быть больше {1}</message>
+    <message id="Wt.WDoubleValidator.BadRange">Число должно быть от {1} до {2}</message>
+    <message id="Wt.WDoubleValidator.TooLarge">Число должно быть меньше {1}</message>
+    <message id="Wt.WInPlaceEdit.Save">Сохранить</message>
+    <message id="Wt.WInPlaceEdit.Cancel">Отменить</message>
+    <message id="Wt.WIntValidator.NotAnInteger">Должно быть целым числом</message>
+    <message id="Wt.WIntValidator.TooSmall">Число должно быть больше {1}</message>
+    <message id="Wt.WIntValidator.BadRange">Число должно быть от {1} до {2}</message>
+    <message id="Wt.WIntValidator.TooLarge">Число должно быть меньше {1}</message>
+    <message id="Wt.WLengthValidator.TooShort">Ввод должен быть не меньше {1} символов</message>
+    <message id="Wt.WLengthValidator.BadRange">Длина ввода должна быть от {1} до {2} символов</message>
     <message id="Wt.WLengthValidator.TooLong">Ввод должен быть не больше {1} символов</message>
     <message id="Wt.WMessageBox.Abort">Прервать</message>
     <message id="Wt.WMessageBox.Cancel">Отменить</message>
@@ -106,161 +106,146 @@
     <message id="Wt.true">Да</message>
     <message id="Wt.false">Нет</message>
 
-    <message id='thechess.format.interval'>
-        от {1} до {2}
+    <message id='tc.common.Agree'>Согласиться</message>
+    <message id='tc.common.Apply'>Применить</message>
+    <message id='tc.common.Cancel'>Отменить</message>
+    <message id='tc.common.Confirm'>Подтвердить</message>
+    <message id='tc.common.Create'>Создать</message>
+    <message id='tc.common.Discard'>Отказаться</message>
+    <message id='tc.common.interval'>от {1} до {2}</message>
+    <message id='tc.common.interval_template'>от ${min} до ${max}</message>
+    <message id='tc.common.Join'>Присоединиться</message>
+    <message id='tc.common.number'>№</message>
+    <message id='tc.common.Only_my'>Только мои</message>
+    <message id='tc.common.Refresh'>Обновить</message>
+    <message id='tc.common.Reset'>Сброс</message>
+    <message id='tc.common.Save'>Сохранить</message>
+    <message id='tc.common.winner'>победитель</message>
+
+    <message id='tc.competition.Cant_change'>Вы не можете изменять этот турнир</message>
+    <message id='tc.competition.Cant_create'>Вы не можете создавать турниры</message>
+    <message id='tc.competition.Change'>Изменить параметры</message>
+    <message id='tc.competition.Change_welcome'>Изменить турнир № {1}</message>
+    <message id='tc.competition.competition'>турнир</message>
+    <message id='tc.competition.Create_welcome'>Создать новый турнир</message>
+    <message id='tc.competition.Description'>Описание</message>
+    <message id='tc.competition.Ended'>Завершен</message>
+    <message id='tc.competition.Force_start_delay'>Форсированный старт партии</message>
+    <message id='tc.competition.Games_factor'>Множитель партий</message>
+    <message id='tc.competition.Games_list'>Список игр</message>
+    <message id='tc.competition.Increment_substages'>Рост числа подраундов</message>
+    <message id='tc.competition.List'>Список турниров</message>
+    <message id='tc.competition.Max_simultaneous_games'>Одновременные игры</message>
+    <message id='tc.competition.Members_classification'>Разряд участников</message>
+    <message id='tc.competition.members_number'>участники</message>
+    <message id='tc.competition.Min_substages'>Подраундов в первом раунде</message>
+    <message id='tc.competition.Name'>Название</message>
+    <message id='tc.competition.New'>Создать турнир</message>
+    <message id='tc.competition.Parameters'>Параметры турнира</message>
+    <message id='tc.competition.Rating'>Рейтинг участников</message>
+    <message id='tc.competition.Recruiting_time'>Время на сборы</message>
+    <message id='tc.competition.Relax_time'>Время на отдых</message>
+    <message id='tc.competition.Score'>Счет</message>
+    <message id='tc.competition.Show_games'>Показать номера партий</message>
+    <message id='tc.competition.Show_wins'>Показать число побед</message>
+    <message id='tc.competition.Stage'>Раунд</message>
+    <message id='tc.competition.Started'>Начат</message>
+    <message id='tc.competition.State'>Статус</message>
+    <message id='tc.competition.state_active'>активный</message>
+    <message id='tc.competition.state_cancelled'>отмененный</message>
+    <message id='tc.competition.state_ended'>завершенный</message>
+    <message id='tc.competition.state_recruiting'>набирающийся</message>
+    <message id='tc.competition.Tree'>Дерево</message>
+    <message id='tc.competition.Type'>Тип</message>
+    <message id='tc.competition.Type_classical'>Классический</message>
+    <message id='tc.competition.Type_staged'>Ступенчатый</message>
+    <message id='tc.competition.Type_team'>Командный</message>
+    <message id='tc.competition.Users'>Число участников</message>
+    <message id='tc.competition.Winner'>Победитель</message>
+    <message id='tc.competition.Winners'>Победители</message>
+    <message id='tc.competition.widget_template'>
+        <h1>Турнир № ${id} ${name}</h1>
+        Турнир создан ${created}, стартовал ${started}, был закрыт ${ended}.
+        <br /> Тип турнира: ${type}.
+        <br /> Статус турнира: ${state}.
+        <br /> Описание: ${description}
+        <br /> <h2>Условия к участникам</h2> ${terms}
+        <br /> <h2>Участники турнира</h2> ${members}
+        <br /> <h2>Победители</h2> ${winners}
+        <br /> <h2>Подробности</h2>${view}
+        <br /> <h2>Управление</h2>${manager}
     </message>
 
-    <message id='thechess.template.interval'>
-        от ${min} до ${max}
-    </message>
-
-    <message id='thechess.analysis'>Анализ</message>
-    <message id='thechess.format.analysis'>Анализ игры № {1}</message>
-
-    <message id='thechess.colors'>цвета</message>
-    <message id='thechess.colors_random'>выбраны случайно</message>
-    <message id='thechess.colors_not_random'>предопределены</message>
-    <message id='thechess.norating_false'>
-        результат игры повлияет на рейтинг участников
-    </message>
-    <message id='thechess.norating_true'>
-        результат игры не повлияет на рейтинг участников
-    </message>
-    <message id='thechess.real_rating_false'>
-        результат игры не влияет на рейтинг участников
-    </message>
-    <message id='thechess.real_rating_true'>
-        результат игры влияет на рейтинг участников
-    </message>
-
-    <message id='thechess.board.turn'>Перевернуть</message>
-
-    <message id='thechess.register'>Зарегистрироваться</message>
-    <message id='thechess.username'>Имя пользователя</message>
-    <message id='thechess.password'>Пароль</message>
-    <message id='thechess.login'>Войти</message>
-    <message id='thechess.logout'>Выйти</message>
-    <message id='thechess.please_login'>
-        Пожалуйста, войдите или зарегистрируйтесь
-    </message>
-
-    <message id='thechess.wrong_username_or_password'>
-        Неправильное имя пользователя или пароль
-    </message>
-
-    <message id='thechess.format.game_header'>Игра № {1}</message>
-    <message id='thechess.format.competitor'>Соперник: {1}</message>
-
-    <message id='thechess.state.proposed'>Предложенная</message>
-    <message id='thechess.state.confirmed'>Подтвержденная</message>
-    <message id='thechess.state.active'>Активная</message>
-    <message id='thechess.state.pause'>Приостановленная</message>
-    <message id='thechess.state.draw_stalemate'>Пат</message>
-    <message id='thechess.state.draw_agreed'>Ничья по соглашению</message>
-    <message id='thechess.state.draw_50'>
-        Ничья: 50 ходов не брались фигуры и не ходила пешка
-    </message>
-    <message id='thechess.state.draw_3'>
-        Трехкратное повторение позиции
-    </message>
-    <message id='thechess.state.draw_2_kings'>
-        Ничья ввиду невозможности поставить мат
-    </message>
-    <message id='thechess.state.surrendered'>Сдана</message>
-    <message id='thechess.state.timeout'>Просрочена</message>
-    <message id='thechess.state.cancelled'>Отменена</message>
-    <message id='thechess.state.mate'>Мат</message>
-    <message id='thechess.state.no_draw_stalemate'>Пат в игре без ничьих, побеждают черные</message>
-    <message id='thechess.state.state'>Неизвестное состояние</message>
-    <message id='thechess.state'>Состояние</message>
-
-    <message id='thechess.comment'>комментарий</message>
-    <message id='thechess.comment_welcome'>введите ваш комментарий здесь</message>
-
-    <message id='thechess.created'>создана</message>
-    <message id='thechess.confirmed'>подтверждена</message>
-    <message id='thechess.started'>начата</message>
-    <message id='thechess.lastmove'>последний ход (или его эквивалент)</message>
-    <message id='thechess.pause_until'>приостановлена до</message>
-    <message id='thechess.ended'>завершена</message>
-    <message id='thechess.GameWidget.force_start'>форсированный старт</message>
-    <message id='thechess.GameWidget.force_confirm'>форсированное подтверждение</message>
-
-    <message id='thechess.challenge'>Вызов</message>
-    <message id='thechess.game_list'>Список игр</message>
-    <message id='thechess.competition_list'>Список турниров</message>
-    <message id='thechess.start_game'>Начать игру</message>
-    <message id='thechess.rating_changes'>Изменения рейтинга</message>
-    <message id='thechess.rating_changes_and_me'>
-        Изменения рейтинга (в сравнении с моим рейтингом)
-    </message>
-
-    <message id='thechess.number'>№</message>
-    <message id='thechess.random'>случайный</message>
-    <message id='thechess.white'>белый</message>
-    <message id='thechess.black'>черный</message>
-    <message id='thechess.winner'>победитель</message>
-    <message id='thechess.init'>создатель игры</message>
-    <message id='thechess.order_user'>ходит</message>
-    <message id='thechess.moves_size'>ходов</message>
-    <message id='thechess.real_rating'>рейтинговая</message>
-    <message id='thechess.rating_after'>рейтинг после</message>
-
-    <message id='thechess.only_my'>Только мои</message>
-
-    <message id='thechess.apply'>Применить</message>
-    <message id='thechess.reset'>Сброс</message>
-    <message id='thechess.create'>Создать</message>
-    <message id='thechess.save'>Сохранить</message>
-    <message id='thechess.agree'>Согласиться</message>
-    <message id='thechess.discard'>Отказаться</message>
-    <message id='thechess.join'>Присоединиться</message>
-    <message id='thechess.leave'>Выйти</message>
-    <message id='thechess.cancel'>Отменить</message>
-    <message id='thechess.confirm'>Подтвердить</message>
-
-    <message id='thechess.GameWidget.competition_other_proposed'>{1} предлагает подтвердить игру заранее</message>
-    <message id='thechess.GameWidget.competition_confirm_welcome'>Игра может быть подтверждена заранее</message>
-    <message id='thechess.GameWidget.competition_confirm'>Подтвердить</message>
-    <message id='thechess.GameWidget.competition_discard_welcome'>Вы согласны подтвердить игру заранее</message>
-    <message id='thechess.GameWidget.competition_discard'>Отказаться</message>
-
-    <message id='thechess.pause_propose'>Предложить перерыв</message>
-    <message id='thechess.format.pause_proposal'>
-        Перерыв предложен, предложил {1}, продолжительность: {2}
-    </message>
-
-    <message id='thechess.draw_propose'>Предложить ничью</message>
-    <message id='thechess.format.draw_proposal'>
-        Ничья предложена, предложил {1}
-    </message>
-
-    <message id='thechess.mistake_welcome'>
-        Неверный ход? Выделите его и нажмите Откатить -
-        будет восстановлена позиция, предшествующая выделенному ходу
-    </message>
-    <message id='thechess.mistake_propose'>Откатить</message>
-    <message id='thechess.format.mistake_proposal'>
-        {1} предлагает откатить игру к позиции, предшествующей ходу {2} {3}
-    </message>
-    <message id='thechess.of_white'>белых</message>
-    <message id='thechess.of_black'>черных</message>
-
-    <message id='thechess.start_position'>Исходная позиция</message>
-
-    <message id='thechess.seconds'>секунд</message>
-    <message id='thechess.minutes'>минут</message>
-    <message id='thechess.hours'>часов</message>
-    <message id='thechess.days'>суток</message>
-    <message id='thechess.weeks'>недель</message>
-
-    <message id='thechess.game_parameters'>Параметры партии</message>
-    <message id='thechess.limit_std'>возобновляемый запас времени</message>
-    <message id='thechess.limit_private_init'>невозобновляемый запас</message>
-    <message id='thechess.pause_limit'>запас времени на паузы</message>
-    <message id='thechess.norating'>нерейтинговая</message>
-    <message id='thechess.first_draw'>число ходов для ничьей</message>
-    <message id='thechess.first_draw_full'>
+    <message id='tc.game.Analysis'>Анализ</message>
+    <message id='tc.game.Analysis_title'>Анализ игры № {1}</message>
+    <message id='tc.game.black'>черный</message>
+    <message id='tc.game.Challenge'>Вызов</message>
+    <message id='tc.game.colors'>цвета</message>
+    <message id='tc.game.colors_not_random'>предопределены</message>
+    <message id='tc.game.colors_random'>выбраны случайно</message>
+    <message id='tc.game.comment'>комментарий</message>
+    <message id='tc.game.comment_welcome'>введите ваш комментарий здесь</message>
+    <message id='tc.game.Competition_confirm'>Подтвердить</message>
+    <message id='tc.game.Competition_confirm_welcome'>Игра может быть подтверждена заранее</message>
+    <message id='tc.game.Competition_discard'>Отказаться</message>
+    <message id='tc.game.Competition_discard_welcome'>Вы согласны подтвердить игру заранее</message>
+    <message id='tc.game.Competition_other_proposed'>{1} предлагает подтвердить игру заранее</message>
+    <message id='tc.game.Competitor'>Соперник: {1}</message>
+    <message id='tc.game.confirmed'>подтверждена</message>
+    <message id='tc.game.created'>создана</message>
+    <message id='tc.game.Draw_proposal'>Ничья предложена, предложил {1}</message>
+    <message id='tc.game.Draw_propose'>Предложить ничью</message>
+    <message id='tc.game.ended'>завершена</message>
+    <message id='tc.game.first_draw'>число ходов для ничьей</message>
+    <message id='tc.game.force_confirm'>форсированное подтверждение</message>
+    <message id='tc.game.force_start'>форсированный старт</message>
+    <message id='tc.game.Header'>Игра № {1}</message>
+    <message id='tc.game.init'>создатель игры</message>
+    <message id='tc.game.lastmove'>последний ход (или его эквивалент)</message>
+    <message id='tc.game.Leave'>Выйти</message>
+    <message id='tc.game.limit_private_init'>невозобновляемый запас</message>
+    <message id='tc.game.limit_std'>возобновляемый запас времени</message>
+    <message id='tc.game.List'>Список игр</message>
+    <message id='tc.game.Mistake_proposal'>{1} предлагает откатить к позиции, предшествующей ходу {2} {3}</message>
+    <message id='tc.game.Mistake_propose'>Откатить</message>
+    <message id='tc.game.moves_size'>ходов</message>
+    <message id='tc.game.norating'>нерейтинговая</message>
+    <message id='tc.game.norating_false'>результат игры повлияет на рейтинг участников</message>
+    <message id='tc.game.norating_true'>результат игры не повлияет на рейтинг участников</message>
+    <message id='tc.game.of_black'>черных</message>
+    <message id='tc.game.of_white'>белых</message>
+    <message id='tc.game.order_user'>ходит</message>
+    <message id='tc.game.Overturn_board'>Перевернуть</message>
+    <message id='tc.game.Parameters'>Параметры партии</message>
+    <message id='tc.game.pause_limit'>запас времени на паузы</message>
+    <message id='tc.game.Pause_proposal'>Перерыв предложен, предложил {1}, продолжительность: {2}</message>
+    <message id='tc.game.Pause_propose'>Предложить перерыв</message>
+    <message id='tc.game.pause_until'>приостановлена до</message>
+    <message id='tc.game.random'>случайный</message>
+    <message id='tc.game.real_rating'>рейтинговая</message>
+    <message id='tc.game.real_rating_false'>результат игры не влияет на рейтинг участников</message>
+    <message id='tc.game.real_rating_true'>результат игры влияет на рейтинг участников</message>
+    <message id='tc.game.Start_position'>Исходная позиция</message>
+    <message id='tc.game.started'>начата</message>
+    <message id='tc.game.State'>Состояние</message>
+    <message id='tc.game.State_active'>Активная</message>
+    <message id='tc.game.State_cancelled'>Отменена</message>
+    <message id='tc.game.State_confirmed'>Подтвержденная</message>
+    <message id='tc.game.State_draw_2_kings'>Ничья ввиду невозможности поставить мат</message>
+    <message id='tc.game.State_draw_3'>Трехкратное повторение позиции</message>
+    <message id='tc.game.State_draw_50'>Ничья: 50 ходов не брались фигуры и не ходила пешка</message>
+    <message id='tc.game.State_draw_agreed'>Ничья по соглашению</message>
+    <message id='tc.game.State_draw_stalemate'>Пат</message>
+    <message id='tc.game.State_mate'>Мат</message>
+    <message id='tc.game.State_no_draw_stalemate'>Пат в игре без ничьих, побеждают черные</message>
+    <message id='tc.game.State_pause'>Приостановленная</message>
+    <message id='tc.game.State_proposed'>Предложенная</message>
+    <message id='tc.game.State_state'>Неизвестное состояние</message>
+    <message id='tc.game.State_surrendered'>Сдана</message>
+    <message id='tc.game.State_timeout'>Просрочена</message>
+    <message id='tc.game.white'>белый</message>
+    <message id='tc.game.your_color'>цвет ваших фигур</message>
+    <message id='tc.game.First_draw'>
         <plural case="0">
             Капитуляция или ничья может быть совершена, когда будет сделан {1} ход,
             не считая предопределенные ходы
@@ -274,86 +259,45 @@
             не считая предопределенные ходы
         </plural>
     </message>
-    <message id='thechess.your_color'>цвет ваших фигур</message>
-
-    <message id='thechess.SUPER_GRANDMASTER'>супергроссмейстер</message>
-    <message id='thechess.GRANDMASTER'>гроссмейстер</message>
-    <message id='thechess.INTERNATIONAL_MASTER'>международный мастер</message>
-    <message id='thechess.NATIONAL_MASTER'>национальный мастер</message>
-    <message id='thechess.EXPERT'>кандидат в мастера</message>
-    <message id='thechess.CLASSIFICATION_A'>первый разряд</message>
-    <message id='thechess.CLASSIFICATION_B'>второй разряд</message>
-    <message id='thechess.CLASSIFICATION_C'>третий разряд</message>
-    <message id='thechess.CLASSIFICATION_D'>средний любитель (4)</message>
-    <message id='thechess.CLASSIFICATION_E'>слабый любитель (5)</message>
-    <message id='thechess.CLASSIFICATION_F'>новичок (разряд F)</message>
-    <message id='thechess.CLASSIFICATION_G'>новичок (разряд G)</message>
-    <message id='thechess.CLASSIFICATION_H'>новичок (разряд H)</message>
-    <message id='thechess.CLASSIFICATION_I'>новичок (разряд I)</message>
-    <message id='thechess.CLASSIFICATION_J'>новичок (разряд J)</message>
-    <message id='thechess.NO_CLASSIFICATION'>без разряда</message>
-
-    <message id='thechess.user.online_time'>Время, проведенное на сайте: {1}</message>
-
-    <message id='thechess.competition'>турнир</message>
-
-    <message id='thechess.competition_parameters'>Параметры турнира</message>
-    <message id='thechess.refresh'>Обновить</message>
-    <message id='thechess.competition.cant_create'>Вы не можете создавать турниры</message>
-    <message id='thechess.competition.cant_change'>Вы не можете изменять этот турнир</message>
-    <message id='thechess.competition.new'>Создать турнир</message>
-    <message id='thechess.competition.create_welcome'>Создать новый турнир</message>
-    <message id='thechess.competition.change_welcome'>Изменить турнир № {1}</message>
-    <message id='thechess.competition.change'>Изменить параметры</message>
-    <message id='thechess.competition.type.CLASSICAL'>Классический</message>
-    <message id='thechess.competition.type.STAGED'>Ступенчатый</message>
-    <message id='thechess.competition.type.TEAM'>Командный</message>
-    <message id='thechess.competition.type'>Тип</message>
-    <message id='thechess.competition.rating'>Рейтинг участников</message>
-    <message id='thechess.competition.classification'>Разряд участников</message>
-    <message id='thechess.competition.force_start_delay'>Форсированный старт партии</message>
-    <message id='thechess.competition.users'>Число участников</message>
-    <message id='thechess.competition.recruiting_time'>Время на сборы</message>
-    <message id='thechess.competition.max_simultaneous_games'>Одновременные игры</message>
-    <message id='thechess.competition.games_factor'>Множитель партий</message>
-    <message id='thechess.competition.relax_time'>Время на отдых</message>
-    <message id='thechess.competition.min_substages'>Подраундов в первом раунде</message>
-    <message id='thechess.competition.increment_substages'>Рост числа подраундов</message>
-    <message id='thechess.competition.name'>Название</message>
-    <message id='thechess.competition.description'>Описание</message>
-
-    <message id='thechess.competition.state'>Статус</message>
-    <message id='thechess.competition.winners'>Победители</message>
-    <message id='thechess.competition.members_number'>участники</message>
-    <message id='thechess.competition.started'>начат</message>
-    <message id='thechess.competition.ended'>завершен</message>
-
-    <message id='thechess.template.CompetitionWidget'>
-        <h1>Турнир № ${id} ${name}</h1>
-        Турнир создан ${created}, стартовал ${started}, был закрыт ${ended}.
-        <br /> Тип турнира: ${type}.
-        <br /> Статус турнира: ${state}.
-        <br /> Описание: ${description}
-        <br /> <h2>Условия к участникам</h2> ${terms}
-        <br /> <h2>Участники турнира</h2> ${members}
-        <br /> <h2>Победители</h2> ${winners}
-        <br /> <h2>Подробности</h2>${view}
-        <br /> <h2>Управление</h2>${manager}
+    <message id='tc.game.Mistake_welcome'>
+        Неверный ход? Выделите его и нажмите Откатить -
+        будет восстановлена позиция, предшествующая выделенному ходу
     </message>
 
-    <message id='thechess.competition.state.RECRUITING'>набирающийся</message>
-    <message id='thechess.competition.state.ACTIVE'>активный</message>
-    <message id='thechess.competition.state.ENDED'>завершенный</message>
-    <message id='thechess.competition.state.CANCELLED'>отмененный</message>
+    <message id='tc.time.days'>суток</message>
+    <message id='tc.time.hours'>часов</message>
+    <message id='tc.time.minutes'>минут</message>
+    <message id='tc.time.seconds'>секунд</message>
+    <message id='tc.time.weeks'>недель</message>
 
-    <message id='thechess.competition.score'>Счет</message>
-    <message id='thechess.competition.show_games'>Показать номера партий</message>
-    <message id='thechess.competition.show_wins'>Показать число побед</message>
-
-    <message id='thechess.staged.tree'>Дерево</message>
-    <message id='thechess.staged.stage'>Раунд</message>
-    <message id='thechess.staged.games_list'>Список игр</message>
-    <message id='thechess.staged.winner'>Победитель</message>
+    <message id='tc.user.classification_a'>первый разряд</message>
+    <message id='tc.user.classification_b'>второй разряд</message>
+    <message id='tc.user.classification_c'>третий разряд</message>
+    <message id='tc.user.classification_d'>средний любитель (4)</message>
+    <message id='tc.user.classification_e'>слабый любитель (5)</message>
+    <message id='tc.user.classification_expert'>кандидат в мастера</message>
+    <message id='tc.user.classification_f'>новичок (разряд F)</message>
+    <message id='tc.user.classification_g'>новичок (разряд G)</message>
+    <message id='tc.user.classification_grandmaster'>гроссмейстер</message>
+    <message id='tc.user.classification_h'>новичок (разряд H)</message>
+    <message id='tc.user.classification_i'>новичок (разряд I)</message>
+    <message id='tc.user.classification_intarnational_master'>международный мастер</message>
+    <message id='tc.user.classification_j'>новичок (разряд J)</message>
+    <message id='tc.user.classification_national_master'>национальный мастер</message>
+    <message id='tc.user.classification_none'>без разряда</message>
+    <message id='tc.user.classification_super_grandmaster'>супергроссмейстер</message>
+    <message id='tc.user.Login'>Войти</message>
+    <message id='tc.user.Logout'>Выйти</message>
+    <message id='tc.user.Online_time'>Время, проведенное на сайте: {1}</message>
+    <message id='tc.user.Password'>Пароль</message>
+    <message id='tc.user.Please_login'>Пожалуйста, войдите или зарегистрируйтесь</message>
+    <message id='tc.user.rating_after'>рейтинг после</message>
+    <message id='tc.user.Rating_changes'>Изменения рейтинга</message>
+    <message id='tc.user.Rating_changes_and_me'>Изменения рейтинга (в сравнении с моим рейтингом)</message>
+    <message id='tc.user.Register'>Зарегистрироваться</message>
+    <message id='tc.user.Start_game'>Начать игру</message>
+    <message id='tc.user.Username'>Имя пользователя</message>
+    <message id='tc.user.Wrong_username_or_password'>Неправильное имя пользователя или пароль</message>
 
 </messages>
 

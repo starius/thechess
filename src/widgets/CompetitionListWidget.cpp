@@ -48,14 +48,14 @@ public:
     BaseQM(parent)
     {
         setQuery(query);
-        addColumn("C.id", tr("thechess.number"));
-        addColumn("C.name", tr("thechess.competition.name"));
-        addColumn("C.type", tr("thechess.competition.type"));
-        addColumn("C.state", tr("thechess.competition.state"));
-        addColumn("C.id", tr("thechess.competition.winners"));
-        addColumn("C.id", tr("thechess.competition.members_number"));
-        addColumn("C.started", tr("thechess.competition.started"));
-        addColumn("C.ended", tr("thechess.competition.ended"));
+        addColumn("C.id", tr("tc.common.number"));
+        addColumn("C.name", tr("tc.competition.Name"));
+        addColumn("C.type", tr("tc.competition.Type"));
+        addColumn("C.state", tr("tc.competition.State"));
+        addColumn("C.id", tr("tc.competition.Winners"));
+        addColumn("C.id", tr("tc.competition.members_number"));
+        addColumn("C.started", tr("tc.competition.Started"));
+        addColumn("C.ended", tr("tc.competition.Ended"));
     }
 
     boost::any data(const Wt::WModelIndex& index,
@@ -148,7 +148,7 @@ void CompetitionListWidget::apply_()
 
 void CompetitionListWidget::manager_()
 {
-    only_my_ = new Wt::WCheckBox(tr("thechess.only_my"), this);
+    only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"), this);
     only_my_->changed().connect(this, &CompetitionListWidget::apply_);
     if (!tApp->user())
     {
@@ -157,7 +157,7 @@ void CompetitionListWidget::manager_()
     if (!tApp->environment().ajax())
     {
         Wt::WPushButton* apply_button =
-            new Wt::WPushButton(tr("thechess.apply"), this);
+            new Wt::WPushButton(tr("tc.common.Apply"), this);
         apply_button->clicked().connect(this, &CompetitionListWidget::apply_);
     }
 }

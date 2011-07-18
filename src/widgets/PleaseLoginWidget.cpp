@@ -22,11 +22,11 @@ namespace widgets {
 PleaseLoginWidget::PleaseLoginWidget(Wt::WContainerWidget* parent) :
 Wt::WContainerWidget(parent)
 {
-    new Wt::WText(tr("thechess.please_login"), this);
+    new Wt::WText(tr("tc.user.Please_login"), this);
     new Wt::WBreak(this);
-    Wt::WPushButton* login = new Wt::WPushButton(tr("thechess.login"), this);
+    Wt::WPushButton* login = new Wt::WPushButton(tr("tc.user.Login"), this);
     login->clicked().connect(this, &PleaseLoginWidget::login_);
-    Wt::WPushButton* reg = new Wt::WPushButton(tr("thechess.register"), this);
+    Wt::WPushButton* reg = new Wt::WPushButton(tr("tc.user.Register"), this);
     reg->clicked().connect(this, &PleaseLoginWidget::register_);
 }
 

@@ -4,497 +4,359 @@
 <!--
  thechess, chess game web application written in C++ and based on Wt
  Copyright (C) 2010 Boris Nagaev
- 
+
  thechess is licensed under the GNU GPL Version 2.
  Other versions of the GPL do not apply.
  See the LICENSE file for terms of use.
 -->
 
-    <message id='thechess.template.board.white'>
-        <table class="thechess_board">
-            <tbody>
-                <tr align="center">
-                    <td></td>
-                    <td>a</td>
-                    <td>b</td>
-                    <td>c</td>
-                    <td>d</td>
-                    <td>e</td>
-                    <td>f</td>
-                    <td>g</td>
-                    <td>h</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>&nbsp;8</td>
-                    <td bgcolor="Gainsboro">${18}</td>
-                    <td bgcolor="gray">${28}</td>
-                    <td bgcolor="Gainsboro">${38}</td>
-                    <td bgcolor="gray">${48}</td>
-                    <td bgcolor="Gainsboro">${58}</td>
-                    <td bgcolor="gray">${68}</td>
-                    <td bgcolor="Gainsboro">${78}</td>
-                    <td bgcolor="gray">${88}</td>
-                    <td>&nbsp;8</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;7</td>
-                    <td bgcolor="gray">${17}</td>
-                    <td bgcolor="Gainsboro">${27}</td>
-                    <td bgcolor="gray">${37}</td>
-                    <td bgcolor="Gainsboro">${47}</td>
-                    <td bgcolor="gray">${57}</td>
-                    <td bgcolor="Gainsboro">${67}</td>
-                    <td bgcolor="gray">${77}</td>
-                    <td bgcolor="Gainsboro">${87}</td>
-                    <td>&nbsp;7</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;6</td>
-                    <td bgcolor="Gainsboro">${16}</td>
-                    <td bgcolor="gray">${26}</td>
-                    <td bgcolor="Gainsboro">${36}</td>
-                    <td bgcolor="gray">${46}</td>
-                    <td bgcolor="Gainsboro">${56}</td>
-                    <td bgcolor="gray">${66}</td>
-                    <td bgcolor="Gainsboro">${76}</td>
-                    <td bgcolor="gray">${86}</td>
-                    <td>&nbsp;6</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;5</td>
-                    <td bgcolor="gray">${15}</td>
-                    <td bgcolor="Gainsboro">${25}</td>
-                    <td bgcolor="gray">${35}</td>
-                    <td bgcolor="Gainsboro">${45}</td>
-                    <td bgcolor="gray">${55}</td>
-                    <td bgcolor="Gainsboro">${65}</td>
-                    <td bgcolor="gray">${75}</td>
-                    <td bgcolor="Gainsboro">${85}</td>
-                    <td>&nbsp;5</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;4</td>
-                    <td bgcolor="Gainsboro">${14}</td>
-                    <td bgcolor="gray">${24}</td>
-                    <td bgcolor="Gainsboro">${34}</td>
-                    <td bgcolor="gray">${44}</td>
-                    <td bgcolor="Gainsboro">${54}</td>
-                    <td bgcolor="gray">${64}</td>
-                    <td bgcolor="Gainsboro">${74}</td>
-                    <td bgcolor="gray">${84}</td>
-                    <td>&nbsp;4</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;3</td>
-                    <td bgcolor="gray">${13}</td>
-                    <td bgcolor="Gainsboro">${23}</td>
-                    <td bgcolor="gray">${33}</td>
-                    <td bgcolor="Gainsboro">${43}</td>
-                    <td bgcolor="gray">${53}</td>
-                    <td bgcolor="Gainsboro">${63}</td>
-                    <td bgcolor="gray">${73}</td>
-                    <td bgcolor="Gainsboro">${83}</td>
-                    <td>&nbsp;3</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;2</td>
-                    <td bgcolor="Gainsboro">${12}</td>
-                    <td bgcolor="gray">${22}</td>
-                    <td bgcolor="Gainsboro">${32}</td>
-                    <td bgcolor="gray">${42}</td>
-                    <td bgcolor="Gainsboro">${52}</td>
-                    <td bgcolor="gray">${62}</td>
-                    <td bgcolor="Gainsboro">${72}</td>
-                    <td bgcolor="gray">${82}</td>
-                    <td>&nbsp;2</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;1</td>
-                    <td bgcolor="gray">${11}</td>
-                    <td bgcolor="Gainsboro">${21}</td>
-                    <td bgcolor="gray">${31}</td>
-                    <td bgcolor="Gainsboro">${41}</td>
-                    <td bgcolor="gray">${51}</td>
-                    <td bgcolor="Gainsboro">${61}</td>
-                    <td bgcolor="gray">${71}</td>
-                    <td bgcolor="Gainsboro">${81}</td>
-                    <td>&nbsp;1</td>
-                </tr>
-                <tr align="center">
-                    <td></td>
-                    <td>a</td>
-                    <td>b</td>
-                    <td>c</td>
-                    <td>d</td>
-                    <td>e</td>
-                    <td>f</td>
-                    <td>g</td>
-                    <td>h</td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-    </message>
+<!--
+Convention on l9n files
 
-    <message id='thechess.template.board.black'>
-        <table class="thechess_board">
-            <tbody>
-                <tr align="center">
-                    <td></td>
-                    <td>h</td>
-                    <td>g</td>
-                    <td>f</td>
-                    <td>e</td>
-                    <td>d</td>
-                    <td>c</td>
-                    <td>b</td>
-                    <td>a</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>&nbsp;1</td>
-                    <td bgcolor="Gainsboro">${81}</td>
-                    <td bgcolor="gray">${71}</td>
-                    <td bgcolor="Gainsboro">${61}</td>
-                    <td bgcolor="gray">${51}</td>
-                    <td bgcolor="Gainsboro">${41}</td>
-                    <td bgcolor="gray">${31}</td>
-                    <td bgcolor="Gainsboro">${21}</td>
-                    <td bgcolor="gray">${11}</td>
-                    <td>&nbsp;1</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;2</td>
-                    <td bgcolor="gray">${82}</td>
-                    <td bgcolor="Gainsboro">${72}</td>
-                    <td bgcolor="gray">${62}</td>
-                    <td bgcolor="Gainsboro">${52}</td>
-                    <td bgcolor="gray">${42}</td>
-                    <td bgcolor="Gainsboro">${32}</td>
-                    <td bgcolor="gray">${22}</td>
-                    <td bgcolor="Gainsboro">${12}</td>
-                    <td>&nbsp;2</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;3</td>
-                    <td bgcolor="Gainsboro">${83}</td>
-                    <td bgcolor="gray">${73}</td>
-                    <td bgcolor="Gainsboro">${63}</td>
-                    <td bgcolor="gray">${53}</td>
-                    <td bgcolor="Gainsboro">${43}</td>
-                    <td bgcolor="gray">${33}</td>
-                    <td bgcolor="Gainsboro">${23}</td>
-                    <td bgcolor="gray">${13}</td>
-                    <td>&nbsp;3</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;4</td>
-                    <td bgcolor="gray">${84}</td>
-                    <td bgcolor="Gainsboro">${74}</td>
-                    <td bgcolor="gray">${64}</td>
-                    <td bgcolor="Gainsboro">${54}</td>
-                    <td bgcolor="gray">${44}</td>
-                    <td bgcolor="Gainsboro">${34}</td>
-                    <td bgcolor="gray">${24}</td>
-                    <td bgcolor="Gainsboro">${14}</td>
-                    <td>&nbsp;4</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;5</td>
-                    <td bgcolor="Gainsboro">${85}</td>
-                    <td bgcolor="gray">${75}</td>
-                    <td bgcolor="Gainsboro">${65}</td>
-                    <td bgcolor="gray">${55}</td>
-                    <td bgcolor="Gainsboro">${45}</td>
-                    <td bgcolor="gray">${35}</td>
-                    <td bgcolor="Gainsboro">${25}</td>
-                    <td bgcolor="gray">${15}</td>
-                    <td>&nbsp;5</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;6</td>
-                    <td bgcolor="gray">${86}</td>
-                    <td bgcolor="Gainsboro">${76}</td>
-                    <td bgcolor="gray">${66}</td>
-                    <td bgcolor="Gainsboro">${56}</td>
-                    <td bgcolor="gray">${46}</td>
-                    <td bgcolor="Gainsboro">${36}</td>
-                    <td bgcolor="gray">${26}</td>
-                    <td bgcolor="Gainsboro">${16}</td>
-                    <td>&nbsp;6</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;7</td>
-                    <td bgcolor="Gainsboro">${87}</td>
-                    <td bgcolor="gray">${77}</td>
-                    <td bgcolor="Gainsboro">${67}</td>
-                    <td bgcolor="gray">${57}</td>
-                    <td bgcolor="Gainsboro">${47}</td>
-                    <td bgcolor="gray">${37}</td>
-                    <td bgcolor="Gainsboro">${27}</td>
-                    <td bgcolor="gray">${17}</td>
-                    <td>&nbsp;7</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;8</td>
-                    <td bgcolor="gray">${88}</td>
-                    <td bgcolor="Gainsboro">${78}</td>
-                    <td bgcolor="gray">${68}</td>
-                    <td bgcolor="Gainsboro">${58}</td>
-                    <td bgcolor="gray">${48}</td>
-                    <td bgcolor="Gainsboro">${38}</td>
-                    <td bgcolor="gray">${28}</td>
-                    <td bgcolor="Gainsboro">${18}</td>
-                    <td>&nbsp;8</td>
-                </tr>
-                <tr align="center">
-                    <td></td>
-                    <td>h</td>
-                    <td>g</td>
-                    <td>f</td>
-                    <td>e</td>
-                    <td>d</td>
-                    <td>c</td>
-                    <td>b</td>
-                    <td>a</td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-    </message>
+Message id should be like "tc.SECTION.ID"
 
-    <message id='thechess.template.countdown'>
-        ${name}: ${limit_private} + ${limit_std}
-    </message>
+* SECTION:
+ * common
+ * competition
+ * game
+ * time
+ * user
+* Id should have same case-style, as value:
+ * lowercase
+ * uppercase
+ * capitalized
+ * cameled
+* words inside id should be separated with _, regardless of case-style
+* messages should be grouped by section (groups are separated by empty line)
+* messages should be ordered by id inside a group (case is ingnored)
+* multi-line messages should be moved to the end of group
+* ids of template messages should have suffix "_template"
+* max length of line: 120
+* messages should not start or end with space
+* no tabs are allowed
 
-    <message id='thechess.format.interval'>
-        from {1} to {2}
-    </message>
-
-    <message id='thechess.template.interval'>
-        from ${min} to ${max}
-    </message>
-
-    <message id='thechess.format.kw'>
-        {1}: {2}
-    </message>
-    <message id='thechess.template.kw'>
-        ${1}: ${2}
-    </message>
-
-    <message id='thechess.analysis'>Analysis</message>
-    <message id='thechess.format.analysis'>Analysis of game # {1}</message>
-
-    <message id='thechess.colors'>colors</message>
-    <message id='thechess.colors_random'>determined by chance</message>
-    <message id='thechess.colors_not_random'>predetermined </message>
-    <message id='thechess.norating_false'>
-        game result will affect members' rating
-    </message>
-    <message id='thechess.norating_true'>
-        game result will not affect members' rating
-    </message>
-    <message id='thechess.real_rating_false'>
-        game result does not affect members' rating
-    </message>
-    <message id='thechess.real_rating_true'>
-        game result affects members' rating
-    </message>
-
-    <message id='thechess.board.turn'>Overturn</message>
-
-    <message id='thechess.register'>Register</message>
-    <message id='thechess.username'>Username</message>
-    <message id='thechess.password'>Password</message>
-    <message id='thechess.login'>Login</message>
-    <message id='thechess.logout'>Logout</message>
-    <message id='thechess.please_login'>
-        Please, log in or register
-    </message>
-
-    <message id='thechess.wrong_username_or_password'>
-        Wrong username or password
-    </message>
-
-    <message id='thechess.format.game_header'>Game # {1}</message>
-    <message id='thechess.format.competitor'>Competitor: {1}</message>
-
-    <message id='thechess.state.proposed'>Proposed</message>
-    <message id='thechess.state.confirmed'>Confirmed</message>
-    <message id='thechess.state.active'>Active</message>
-    <message id='thechess.state.pause'>Paused</message>
-    <message id='thechess.state.draw_stalemate'>Stalemate</message>
-    <message id='thechess.state.draw_agreed'>Draw by agreement</message>
-    <message id='thechess.state.draw_50'>Fifty-move draw</message>
-    <message id='thechess.state.draw_3'>
-        Threefold repetition of a position
-    </message>
-    <message id='thechess.state.draw_2_kings'>
-        Draw by impossibility of checkmate
-    </message>
-    <message id='thechess.state.surrendered'>Surrendered</message>
-    <message id='thechess.state.timeout'>Timeout</message>
-    <message id='thechess.state.cancelled'>Cancelled</message>
-    <message id='thechess.state.mate'>Mate</message>
-    <message id='thechess.state.no_draw_stalemate'>Stalemate in game without draws, so black wins</message>
-    <message id='thechess.state.state'>Undefined state</message>
-    <message id='thechess.state'>State</message>
-
-    <message id='thechess.comment'>comment</message>
-    <message id='thechess.comment_welcome'>enter here your comment</message>
-
-    <message id='thechess.created'>created</message>
-    <message id='thechess.confirmed'>confirmed</message>
-    <message id='thechess.started'>started</message>
-    <message id='thechess.lastmove'>surrogate last move</message>
-    <message id='thechess.pause_until'>paused until</message>
-    <message id='thechess.ended'>ended</message>
-    <message id='thechess.GameWidget.force_start'>forced start</message>
-    <message id='thechess.GameWidget.force_confirm'>forced confirmation</message>
-
-    <message id='thechess.challenge'>Challenge</message>
-    <message id='thechess.game_list'>List of games</message>
-    <message id='thechess.competition_list'>List of Competitions</message>
-    <message id='thechess.start_game'>Start a game</message>
-    <message id='thechess.rating_changes'>Rating changes</message>
-    <message id='thechess.rating_changes_and_me'>
-        Rating changes (compared to my ones)
-    </message>
-
-    <message id='thechess.number'>#</message>
-    <message id='thechess.random'>random</message>
-    <message id='thechess.white'>white</message>
-    <message id='thechess.black'>black</message>
-    <message id='thechess.winner'>winner</message>
-    <message id='thechess.init'>game initiator</message>
-    <message id='thechess.order_user'>move maker</message>
-    <message id='thechess.moves_size'>#moves</message>
-    <message id='thechess.real_rating'>rating</message>
-    <message id='thechess.rating_after'>rating after</message>
-
-    <message id='thechess.only_my'>Only my</message>
-
-    <message id='thechess.apply'>Apply</message>
-    <message id='thechess.reset'>Reset</message>
-    <message id='thechess.create'>Create</message>
-    <message id='thechess.save'>Save</message>
-    <message id='thechess.agree'>Agree</message>
-    <message id='thechess.discard'>Discard</message>
-    <message id='thechess.join'>Join</message>
-    <message id='thechess.leave'>Leave</message>
-    <message id='thechess.cancel'>Cancel</message>
-    <message id='thechess.confirm'>Confirm</message>
-    <message id='thechess.close'>X</message>
-
-    <message id='thechess.GameWidget.competition_other_proposed'>{1} proposed to confirm this game in advance</message>
-    <message id='thechess.GameWidget.competition_confirm_welcome'>This game can be confirmed in advance</message>
-    <message id='thechess.GameWidget.competition_confirm'>Confirm</message>
-    <message id='thechess.GameWidget.competition_discard_welcome'>
-        You have confirmed this game to be confirmed in advance
-    </message>
-    <message id='thechess.GameWidget.competition_discard'>Discard</message>
-
-    <message id='thechess.pause_propose'>Propose a pause</message>
-    <message id='thechess.format.pause_proposal'>
-        Pause proposed, proposer: {1}, duration: {2}
-    </message>
-
-    <message id='thechess.draw_propose'>Propose a draw</message>
-    <message id='thechess.format.draw_proposal'>
-        Draw proposed, proposer: {1}
-    </message>
-
-    <message id='thechess.mistake_welcome'>
-        Wrong move? Select it and press Rollback -
-        game would be rolled back before selected move
-    </message>
-    <message id='thechess.mistake_propose'>Rollback</message>
-    <message id='thechess.format.mistake_proposal'>
-        {1} proposed to roll back game to position before move {2} {3}
-    </message>
-    <message id='thechess.of_white'>of white</message>
-    <message id='thechess.of_black'>of black</message>
-
-    <message id='thechess.start_position'>Start position</message>
-
-    <message id='thechess.seconds'>seconds</message>
-    <message id='thechess.minutes'>minutes</message>
-    <message id='thechess.hours'>hours</message>
-    <message id='thechess.days'>days</message>
-    <message id='thechess.weeks'>weeks</message>
-
-    <message id='thechess.game_parameters'>Game parameters</message>
-    <message id='thechess.limit_std'>renewable leeway</message>
-    <message id='thechess.limit_private_init'>non-renewable</message>
-    <message id='thechess.pause_limit'>pause leeway</message>
-    <message id='thechess.norating'>non-rating</message>
-    <message id='thechess.first_draw'>move number for draw</message>
-    <message id='thechess.first_draw_full'>
-        <plural case='0'>
-            Surrender or draw can be made when {1} non-predetermined move is done
-        </plural>
-        <plural case='1'>
-            Surrender or draw can be made when {1} non-predetermined moves are done
-        </plural>
-    </message>
-    <message id='thechess.your_color'>your color</message>
+Messages for board and Wt's translations are in the beginning
+-->
 
     <message id='Wt.WDateTime.null'>-</message>
 
-    <message id='thechess.SUPER_GRANDMASTER'>super-grandmaster</message>
-    <message id='thechess.GRANDMASTER'>grandmaster</message>
-    <message id='thechess.INTERNATIONAL_MASTER'>international master</message>
-    <message id='thechess.NATIONAL_MASTER'>national master</message>
-    <message id='thechess.EXPERT'>expert</message>
-    <message id='thechess.CLASSIFICATION_A'>class A</message>
-    <message id='thechess.CLASSIFICATION_B'>class B</message>
-    <message id='thechess.CLASSIFICATION_C'>class C</message>
-    <message id='thechess.CLASSIFICATION_D'>class D</message>
-    <message id='thechess.CLASSIFICATION_E'>class E</message>
-    <message id='thechess.CLASSIFICATION_F'>class F</message>
-    <message id='thechess.CLASSIFICATION_G'>class G</message>
-    <message id='thechess.CLASSIFICATION_H'>class H</message>
-    <message id='thechess.CLASSIFICATION_I'>class I</message>
-    <message id='thechess.CLASSIFICATION_J'>class J</message>
-    <message id='thechess.NO_CLASSIFICATION'>without category</message>
+    <message id='tc.game.board_white_template'>
+        <table class="thechess_board">
+            <tbody>
+                <tr align="center">
+                    <td></td>
+                    <td>a</td>
+                    <td>b</td>
+                    <td>c</td>
+                    <td>d</td>
+                    <td>e</td>
+                    <td>f</td>
+                    <td>g</td>
+                    <td>h</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;8</td>
+                    <td bgcolor="Gainsboro">${18}</td>
+                    <td bgcolor="gray">${28}</td>
+                    <td bgcolor="Gainsboro">${38}</td>
+                    <td bgcolor="gray">${48}</td>
+                    <td bgcolor="Gainsboro">${58}</td>
+                    <td bgcolor="gray">${68}</td>
+                    <td bgcolor="Gainsboro">${78}</td>
+                    <td bgcolor="gray">${88}</td>
+                    <td>&nbsp;8</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;7</td>
+                    <td bgcolor="gray">${17}</td>
+                    <td bgcolor="Gainsboro">${27}</td>
+                    <td bgcolor="gray">${37}</td>
+                    <td bgcolor="Gainsboro">${47}</td>
+                    <td bgcolor="gray">${57}</td>
+                    <td bgcolor="Gainsboro">${67}</td>
+                    <td bgcolor="gray">${77}</td>
+                    <td bgcolor="Gainsboro">${87}</td>
+                    <td>&nbsp;7</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;6</td>
+                    <td bgcolor="Gainsboro">${16}</td>
+                    <td bgcolor="gray">${26}</td>
+                    <td bgcolor="Gainsboro">${36}</td>
+                    <td bgcolor="gray">${46}</td>
+                    <td bgcolor="Gainsboro">${56}</td>
+                    <td bgcolor="gray">${66}</td>
+                    <td bgcolor="Gainsboro">${76}</td>
+                    <td bgcolor="gray">${86}</td>
+                    <td>&nbsp;6</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;5</td>
+                    <td bgcolor="gray">${15}</td>
+                    <td bgcolor="Gainsboro">${25}</td>
+                    <td bgcolor="gray">${35}</td>
+                    <td bgcolor="Gainsboro">${45}</td>
+                    <td bgcolor="gray">${55}</td>
+                    <td bgcolor="Gainsboro">${65}</td>
+                    <td bgcolor="gray">${75}</td>
+                    <td bgcolor="Gainsboro">${85}</td>
+                    <td>&nbsp;5</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;4</td>
+                    <td bgcolor="Gainsboro">${14}</td>
+                    <td bgcolor="gray">${24}</td>
+                    <td bgcolor="Gainsboro">${34}</td>
+                    <td bgcolor="gray">${44}</td>
+                    <td bgcolor="Gainsboro">${54}</td>
+                    <td bgcolor="gray">${64}</td>
+                    <td bgcolor="Gainsboro">${74}</td>
+                    <td bgcolor="gray">${84}</td>
+                    <td>&nbsp;4</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;3</td>
+                    <td bgcolor="gray">${13}</td>
+                    <td bgcolor="Gainsboro">${23}</td>
+                    <td bgcolor="gray">${33}</td>
+                    <td bgcolor="Gainsboro">${43}</td>
+                    <td bgcolor="gray">${53}</td>
+                    <td bgcolor="Gainsboro">${63}</td>
+                    <td bgcolor="gray">${73}</td>
+                    <td bgcolor="Gainsboro">${83}</td>
+                    <td>&nbsp;3</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;2</td>
+                    <td bgcolor="Gainsboro">${12}</td>
+                    <td bgcolor="gray">${22}</td>
+                    <td bgcolor="Gainsboro">${32}</td>
+                    <td bgcolor="gray">${42}</td>
+                    <td bgcolor="Gainsboro">${52}</td>
+                    <td bgcolor="gray">${62}</td>
+                    <td bgcolor="Gainsboro">${72}</td>
+                    <td bgcolor="gray">${82}</td>
+                    <td>&nbsp;2</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;1</td>
+                    <td bgcolor="gray">${11}</td>
+                    <td bgcolor="Gainsboro">${21}</td>
+                    <td bgcolor="gray">${31}</td>
+                    <td bgcolor="Gainsboro">${41}</td>
+                    <td bgcolor="gray">${51}</td>
+                    <td bgcolor="Gainsboro">${61}</td>
+                    <td bgcolor="gray">${71}</td>
+                    <td bgcolor="Gainsboro">${81}</td>
+                    <td>&nbsp;1</td>
+                </tr>
+                <tr align="center">
+                    <td></td>
+                    <td>a</td>
+                    <td>b</td>
+                    <td>c</td>
+                    <td>d</td>
+                    <td>e</td>
+                    <td>f</td>
+                    <td>g</td>
+                    <td>h</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </message>
 
-    <message id='thechess.user.online_time'>Spent online {1}</message>
+    <message id='tc.game.board_black_template'>
+        <table class="thechess_board">
+            <tbody>
+                <tr align="center">
+                    <td></td>
+                    <td>h</td>
+                    <td>g</td>
+                    <td>f</td>
+                    <td>e</td>
+                    <td>d</td>
+                    <td>c</td>
+                    <td>b</td>
+                    <td>a</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;1</td>
+                    <td bgcolor="Gainsboro">${81}</td>
+                    <td bgcolor="gray">${71}</td>
+                    <td bgcolor="Gainsboro">${61}</td>
+                    <td bgcolor="gray">${51}</td>
+                    <td bgcolor="Gainsboro">${41}</td>
+                    <td bgcolor="gray">${31}</td>
+                    <td bgcolor="Gainsboro">${21}</td>
+                    <td bgcolor="gray">${11}</td>
+                    <td>&nbsp;1</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;2</td>
+                    <td bgcolor="gray">${82}</td>
+                    <td bgcolor="Gainsboro">${72}</td>
+                    <td bgcolor="gray">${62}</td>
+                    <td bgcolor="Gainsboro">${52}</td>
+                    <td bgcolor="gray">${42}</td>
+                    <td bgcolor="Gainsboro">${32}</td>
+                    <td bgcolor="gray">${22}</td>
+                    <td bgcolor="Gainsboro">${12}</td>
+                    <td>&nbsp;2</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;3</td>
+                    <td bgcolor="Gainsboro">${83}</td>
+                    <td bgcolor="gray">${73}</td>
+                    <td bgcolor="Gainsboro">${63}</td>
+                    <td bgcolor="gray">${53}</td>
+                    <td bgcolor="Gainsboro">${43}</td>
+                    <td bgcolor="gray">${33}</td>
+                    <td bgcolor="Gainsboro">${23}</td>
+                    <td bgcolor="gray">${13}</td>
+                    <td>&nbsp;3</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;4</td>
+                    <td bgcolor="gray">${84}</td>
+                    <td bgcolor="Gainsboro">${74}</td>
+                    <td bgcolor="gray">${64}</td>
+                    <td bgcolor="Gainsboro">${54}</td>
+                    <td bgcolor="gray">${44}</td>
+                    <td bgcolor="Gainsboro">${34}</td>
+                    <td bgcolor="gray">${24}</td>
+                    <td bgcolor="Gainsboro">${14}</td>
+                    <td>&nbsp;4</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;5</td>
+                    <td bgcolor="Gainsboro">${85}</td>
+                    <td bgcolor="gray">${75}</td>
+                    <td bgcolor="Gainsboro">${65}</td>
+                    <td bgcolor="gray">${55}</td>
+                    <td bgcolor="Gainsboro">${45}</td>
+                    <td bgcolor="gray">${35}</td>
+                    <td bgcolor="Gainsboro">${25}</td>
+                    <td bgcolor="gray">${15}</td>
+                    <td>&nbsp;5</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;6</td>
+                    <td bgcolor="gray">${86}</td>
+                    <td bgcolor="Gainsboro">${76}</td>
+                    <td bgcolor="gray">${66}</td>
+                    <td bgcolor="Gainsboro">${56}</td>
+                    <td bgcolor="gray">${46}</td>
+                    <td bgcolor="Gainsboro">${36}</td>
+                    <td bgcolor="gray">${26}</td>
+                    <td bgcolor="Gainsboro">${16}</td>
+                    <td>&nbsp;6</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;7</td>
+                    <td bgcolor="Gainsboro">${87}</td>
+                    <td bgcolor="gray">${77}</td>
+                    <td bgcolor="Gainsboro">${67}</td>
+                    <td bgcolor="gray">${57}</td>
+                    <td bgcolor="Gainsboro">${47}</td>
+                    <td bgcolor="gray">${37}</td>
+                    <td bgcolor="Gainsboro">${27}</td>
+                    <td bgcolor="gray">${17}</td>
+                    <td>&nbsp;7</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;8</td>
+                    <td bgcolor="gray">${88}</td>
+                    <td bgcolor="Gainsboro">${78}</td>
+                    <td bgcolor="gray">${68}</td>
+                    <td bgcolor="Gainsboro">${58}</td>
+                    <td bgcolor="gray">${48}</td>
+                    <td bgcolor="Gainsboro">${38}</td>
+                    <td bgcolor="gray">${28}</td>
+                    <td bgcolor="Gainsboro">${18}</td>
+                    <td>&nbsp;8</td>
+                </tr>
+                <tr align="center">
+                    <td></td>
+                    <td>h</td>
+                    <td>g</td>
+                    <td>f</td>
+                    <td>e</td>
+                    <td>d</td>
+                    <td>c</td>
+                    <td>b</td>
+                    <td>a</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </message>
 
-    <message id='thechess.competition'>competition</message>
+    <message id='tc.common.Agree'>Agree</message>
+    <message id='tc.common.Apply'>Apply</message>
+    <message id='tc.common.Cancel'>Cancel</message>
+    <message id='tc.common.Confirm'>Confirm</message>
+    <message id='tc.common.Create'>Create</message>
+    <message id='tc.common.Discard'>Discard</message>
+    <message id='tc.common.interval'>from {1} to {2}</message>
+    <message id='tc.common.interval_template'>from ${min} to ${max}</message>
+    <message id='tc.common.Join'>Join</message>
+    <message id='tc.common.kw'>{1}: {2}</message>
+    <message id='tc.common.kw_template'>${1}: ${2}</message>
+    <message id='tc.common.number'>#</message>
+    <message id='tc.common.Only_my'>Only my</message>
+    <message id='tc.common.Refresh'>Refresh</message>
+    <message id='tc.common.Reset'>Reset</message>
+    <message id='tc.common.Save'>Save</message>
+    <message id='tc.common.winner'>winner</message>
+    <message id='tc.common.X_close'>X</message>
 
-    <message id='thechess.competition_parameters'>Competition parameters</message>
-    <message id='thechess.refresh'>Refresh</message>
-    <message id='thechess.competition.cant_create'>You have no permission to create competition</message>
-    <message id='thechess.competition.cant_change'>You have no permission to change this competition</message>
-    <message id='thechess.competition.new'>Create new competition</message>
-    <message id='thechess.competition.create_welcome'>Create new competition</message>
-    <message id='thechess.competition.change_welcome'>Change competition # {1}</message>
-    <message id='thechess.competition.change'>Change parameters</message>
-    <message id='thechess.competition.type.CLASSICAL'>Classical</message>
-    <message id='thechess.competition.type.STAGED'>Staged</message>
-    <message id='thechess.competition.type.TEAM'>Team</message>
-    <message id='thechess.competition.type'>Type</message>
-    <message id='thechess.competition.rating'>Rating of members</message>
-    <message id='thechess.competition.classification'>Classification of members</message>
-    <message id='thechess.competition.force_start_delay'>Forced start of game</message>
-    <message id='thechess.competition.users'>Number of users</message>
-    <message id='thechess.competition.recruiting_time'>Recruiting time</message>
-    <message id='thechess.competition.max_simultaneous_games'>Simultaneous games</message>
-    <message id='thechess.competition.games_factor'>Games factor</message>
-    <message id='thechess.competition.relax_time'>Relax time</message>
-    <message id='thechess.competition.min_substages'>First stage substages</message>
-    <message id='thechess.competition.increment_substages'>Substages increment</message>
-    <message id='thechess.competition.name'>Title</message>
-    <message id='thechess.competition.description'>Description</message>
-
-    <message id='thechess.competition.state'>State</message>
-    <message id='thechess.competition.winners'>Winners</message>
-    <message id='thechess.competition.members_number'>members</message>
-    <message id='thechess.competition.started'>Started</message>
-    <message id='thechess.competition.ended'>Ended</message>
-
-    <message id='thechess.template.CompetitionWidget'>
+    <message id='tc.competition.Cant_change'>You have no permission to change this competition</message>
+    <message id='tc.competition.Cant_create'>You have no permission to create competition</message>
+    <message id='tc.competition.Change'>Change parameters</message>
+    <message id='tc.competition.Change_welcome'>Change competition # {1}</message>
+    <message id='tc.competition.competition'>competition</message>
+    <message id='tc.competition.Create_welcome'>Create new competition</message>
+    <message id='tc.competition.dash'>&mdash;</message>
+    <message id='tc.competition.Description'>Description</message>
+    <message id='tc.competition.Ended'>Ended</message>
+    <message id='tc.competition.Force_start_delay'>Forced start of game</message>
+    <message id='tc.competition.Games_factor'>Games factor</message>
+    <message id='tc.competition.Games_list'>Games list</message>
+    <message id='tc.competition.Increment_substages'>Substages increment</message>
+    <message id='tc.competition.List'>List of Competitions</message>
+    <message id='tc.competition.Max_simultaneous_games'>Simultaneous games</message>
+    <message id='tc.competition.Members_classification'>Classification of members</message>
+    <message id='tc.competition.members_number'>members</message>
+    <message id='tc.competition.Min_substages'>First stage substages</message>
+    <message id='tc.competition.Name'>Title</message>
+    <message id='tc.competition.New'>Create new competition</message>
+    <message id='tc.competition.Parameters'>Competition parameters</message>
+    <message id='tc.competition.Rating'>Rating of members</message>
+    <message id='tc.competition.Recruiting_time'>Recruiting time</message>
+    <message id='tc.competition.Relax_time'>Relax time</message>
+    <message id='tc.competition.Score'>Score</message>
+    <message id='tc.competition.Show_games'>Show games</message>
+    <message id='tc.competition.Show_wins'>Show numbers of victories</message>
+    <message id='tc.competition.Stage'>Stage</message>
+    <message id='tc.competition.Started'>Started</message>
+    <message id='tc.competition.State'>State</message>
+    <message id='tc.competition.state_active'>active</message>
+    <message id='tc.competition.state_cancelled'>cancelled</message>
+    <message id='tc.competition.state_ended'>ended</message>
+    <message id='tc.competition.state_recruiting'>recruiting</message>
+    <message id='tc.competition.Tree'>Tree</message>
+    <message id='tc.competition.Type'>Type</message>
+    <message id='tc.competition.Type_classical'>Classical</message>
+    <message id='tc.competition.Type_staged'>Staged</message>
+    <message id='tc.competition.Type_team'>Team</message>
+    <message id='tc.competition.user_pair'>{1} - {2}</message>
+    <message id='tc.competition.Users'>Number of users</message>
+    <message id='tc.competition.Winner'>Winner</message>
+    <message id='tc.competition.Winners'>Winners</message>
+    <message id='tc.competition.widget_template'>
         <h1>Competition # ${id} ${name}</h1>
         The competition was created ${created}, started ${started}, closed ${ended}.
         <br /> Competition type: ${type}.
@@ -507,21 +369,123 @@
         <br /> <h2>Management</h2>${manager}
     </message>
 
-    <message id='thechess.competition.state.RECRUITING'>recruiting</message>
-    <message id='thechess.competition.state.ACTIVE'>active</message>
-    <message id='thechess.competition.state.ENDED'>ended</message>
-    <message id='thechess.competition.state.CANCELLED'>cancelled</message>
+    <message id='tc.game.Analysis'>Analysis</message>
+    <message id='tc.game.Analysis_title'>Analysis of game # {1}</message>
+    <message id='tc.game.black'>black</message>
+    <message id='tc.game.Challenge'>Challenge</message>
+    <message id='tc.game.colors'>colors</message>
+    <message id='tc.game.colors_not_random'>predetermined</message>
+    <message id='tc.game.colors_random'>determined by chance</message>
+    <message id='tc.game.comment'>comment</message>
+    <message id='tc.game.comment_welcome'>enter here your comment</message>
+    <message id='tc.game.Competition_confirm'>Confirm</message>
+    <message id='tc.game.Competition_confirm_welcome'>This game can be confirmed in advance</message>
+    <message id='tc.game.Competition_discard'>Discard</message>
+    <message id='tc.game.Competition_discard_welcome'>You have confirmed this game to be confirmed in advance</message>
+    <message id='tc.game.Competition_other_proposed'>{1} proposed to confirm this game in advance</message>
+    <message id='tc.game.Competitor'>Competitor: {1}</message>
+    <message id='tc.game.confirmed'>confirmed</message>
+    <message id='tc.game.countdown_template'>${name}: ${limit_private} + ${limit_std}</message>
+    <message id='tc.game.created'>created</message>
+    <message id='tc.game.Draw_proposal'>Draw proposed, proposer: {1}</message>
+    <message id='tc.game.Draw_propose'>Propose a draw</message>
+    <message id='tc.game.ended'>ended</message>
+    <message id='tc.game.first_draw'>move number for draw</message>
+    <message id='tc.game.force_confirm'>forced confirmation</message>
+    <message id='tc.game.force_start'>forced start</message>
+    <message id='tc.game.Header'>Game # {1}</message>
+    <message id='tc.game.init'>game initiator</message>
+    <message id='tc.game.lastmove'>surrogate last move</message>
+    <message id='tc.game.Leave'>Leave</message>
+    <message id='tc.game.limit_private_init'>non-renewable</message>
+    <message id='tc.game.limit_std'>renewable leeway</message>
+    <message id='tc.game.List'>List of games</message>
+    <message id='tc.game.Mistake_proposal'>{1} proposed to roll back game to position before move {2} {3}</message>
+    <message id='tc.game.Mistake_propose'>Rollback</message>
+    <message id='tc.game.moves_size'>#moves</message>
+    <message id='tc.game.norating'>non-rating</message>
+    <message id='tc.game.norating_false'>game result will affect members' rating</message>
+    <message id='tc.game.norating_true'>game result will not affect members' rating</message>
+    <message id='tc.game.of_black'>of black</message>
+    <message id='tc.game.of_white'>of white</message>
+    <message id='tc.game.order_user'>move maker</message>
+    <message id='tc.game.Overturn_board'>Overturn</message>
+    <message id='tc.game.Parameters'>Game parameters</message>
+    <message id='tc.game.pause_limit'>pause leeway</message>
+    <message id='tc.game.Pause_proposal'>Pause proposed, proposer: {1}, duration: {2}</message>
+    <message id='tc.game.Pause_propose'>Propose a pause</message>
+    <message id='tc.game.pause_until'>paused until</message>
+    <message id='tc.game.random'>random</message>
+    <message id='tc.game.real_rating'>rating</message>
+    <message id='tc.game.real_rating_false'>game result does not affect members' rating</message>
+    <message id='tc.game.real_rating_true'>game result affects members' rating</message>
+    <message id='tc.game.Start_position'>Start position</message>
+    <message id='tc.game.started'>started</message>
+    <message id='tc.game.State'>State</message>
+    <message id='tc.game.State_active'>Active</message>
+    <message id='tc.game.State_cancelled'>Cancelled</message>
+    <message id='tc.game.State_confirmed'>Confirmed</message>
+    <message id='tc.game.State_draw_2_kings'>Draw by impossibility of checkmate</message>
+    <message id='tc.game.State_draw_3'>Threefold repetition of a position</message>
+    <message id='tc.game.State_draw_50'>Fifty-move draw</message>
+    <message id='tc.game.State_draw_agreed'>Draw by agreement</message>
+    <message id='tc.game.State_draw_stalemate'>Stalemate</message>
+    <message id='tc.game.State_mate'>Mate</message>
+    <message id='tc.game.State_no_draw_stalemate'>Stalemate in game without draws, so black wins</message>
+    <message id='tc.game.State_pause'>Paused</message>
+    <message id='tc.game.State_proposed'>Proposed</message>
+    <message id='tc.game.State_state'>Undefined state</message>
+    <message id='tc.game.State_surrendered'>Surrendered</message>
+    <message id='tc.game.State_timeout'>Timeout</message>
+    <message id='tc.game.white'>white</message>
+    <message id='tc.game.your_color'>your color</message>
+    <message id='tc.game.First_draw'>
+        <plural case='0'>
+            Surrender or draw can be made when {1} non-predetermined move is done
+        </plural>
+        <plural case='1'>
+            Surrender or draw can be made when {1} non-predetermined moves are done
+        </plural>
+    </message>
+    <message id='tc.game.Mistake_welcome'>
+        Wrong move? Select it and press Rollback -
+        game would be rolled back before selected move
+    </message>
 
-    <message id='thechess.competition.dash'>&mdash;</message>
-    <message id='thechess.competition.score'>Score</message>
-    <message id='thechess.competition.show_games'>Show games</message>
-    <message id='thechess.competition.show_wins'>Show numbers of victories</message>
+    <message id='tc.time.days'>days</message>
+    <message id='tc.time.hours'>hours</message>
+    <message id='tc.time.minutes'>minutes</message>
+    <message id='tc.time.seconds'>seconds</message>
+    <message id='tc.time.weeks'>weeks</message>
 
-    <message id='thechess.staged.tree'>Tree</message>
-    <message id='thechess.staged.stage'>Stage</message>
-    <message id='thechess.staged.games_list'>Games list</message>
-    <message id='thechess.staged.winner'>Winner</message>
-    <message id='thechess.staged.pair_format'>{1} - {2}</message>
+    <message id='tc.user.classification_a'>class A</message>
+    <message id='tc.user.classification_b'>class B</message>
+    <message id='tc.user.classification_c'>class C</message>
+    <message id='tc.user.classification_d'>class D</message>
+    <message id='tc.user.classification_e'>class E</message>
+    <message id='tc.user.classification_expert'>expert</message>
+    <message id='tc.user.classification_f'>class F</message>
+    <message id='tc.user.classification_g'>class G</message>
+    <message id='tc.user.classification_grandmaster'>grandmaster</message>
+    <message id='tc.user.classification_h'>class H</message>
+    <message id='tc.user.classification_i'>class I</message>
+    <message id='tc.user.classification_intarnational_master'>international master</message>
+    <message id='tc.user.classification_j'>class J</message>
+    <message id='tc.user.classification_national_master'>national master</message>
+    <message id='tc.user.classification_none'>without category</message>
+    <message id='tc.user.classification_super_grandmaster'>super-grandmaster</message>
+    <message id='tc.user.Login'>Login</message>
+    <message id='tc.user.Logout'>Logout</message>
+    <message id='tc.user.Online_time'>Spent online {1}</message>
+    <message id='tc.user.Password'>Password</message>
+    <message id='tc.user.Please_login'>Please, log in or register</message>
+    <message id='tc.user.rating_after'>rating after</message>
+    <message id='tc.user.Rating_changes'>Rating changes</message>
+    <message id='tc.user.Rating_changes_and_me'>Rating changes (compared to my ones)</message>
+    <message id='tc.user.Register'>Register</message>
+    <message id='tc.user.Start_game'>Start a game</message>
+    <message id='tc.user.Username'>Username</message>
+    <message id='tc.user.Wrong_username_or_password'>Wrong username or password</message>
 
 </messages>
 

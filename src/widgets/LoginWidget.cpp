@@ -31,10 +31,10 @@ LoginWidget::LoginWidget(Wt::WContainerWidget* parent) :
 Wt::WContainerWidget(parent)
 {
     table_ = new Wt::WTable(this);
-    Wt::WLabel* username_label = new Wt::WLabel(tr("thechess.username"),
+    Wt::WLabel* username_label = new Wt::WLabel(tr("tc.user.Username"),
         table_->elementAt(0,0));
     username_ = new Wt::WLineEdit(table_->elementAt(0, 1));
-    Wt::WLabel* password_label = new Wt::WLabel(tr("thechess.password"),
+    Wt::WLabel* password_label = new Wt::WLabel(tr("tc.user.Password"),
         table_->elementAt(1,0));
     password_ = new Wt::WLineEdit(table_->elementAt(1, 1));
     password_->setEchoMode(Wt::WLineEdit::Password);
@@ -44,7 +44,7 @@ Wt::WContainerWidget(parent)
 
     error_ = new Wt::WText(this);
 
-    button_ = new Wt::WPushButton(tr("thechess.login"), this);
+    button_ = new Wt::WPushButton(tr("tc.user.Login"), this);
     button_->clicked().connect(this, &LoginWidget::try_);
 }
 
@@ -57,7 +57,7 @@ void LoginWidget::try_()
     .bind(username_->text());
     if (!user || !user->test_password(password_->text().toUTF8()))
     {
-        error_->setText(tr("thechess.wrong_username_or_password"));
+        error_->setText(tr("tc.user.Wrong_username_or_password"));
     }
     else
     {

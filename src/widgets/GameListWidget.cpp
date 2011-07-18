@@ -53,16 +53,16 @@ public:
     BaseQM(parent)
     {
         setQuery(query);
-        addColumn("G.id", tr("thechess.number"));
-        addColumn("G.white_id", tr("thechess.white"));
-        addColumn("G.black_id", tr("thechess.black"));
-        addColumn("G.state", tr("thechess.state"));
-        addColumn("G.winner_game_id", tr("thechess.winner"));
-        addColumn("G.started", tr("thechess.started"));
-        addColumn("G.ended", tr("thechess.ended"));
-        addColumn("G.id", tr("thechess.moves_size")); // dummy G.id
-        addColumn("G.norating", tr("thechess.real_rating"));
-        addColumn("G.comment", tr("thechess.comment"));
+        addColumn("G.id", tr("tc.common.number"));
+        addColumn("G.white_id", tr("tc.game.white"));
+        addColumn("G.black_id", tr("tc.game.black"));
+        addColumn("G.state", tr("tc.game.State"));
+        addColumn("G.winner_game_id", tr("tc.common.winner"));
+        addColumn("G.started", tr("tc.game.started"));
+        addColumn("G.ended", tr("tc.game.ended"));
+        addColumn("G.id", tr("tc.game.moves_size")); // dummy G.id
+        addColumn("G.norating", tr("tc.game.real_rating"));
+        addColumn("G.comment", tr("tc.game.comment"));
         setColumnFlags(n_column, Wt::ItemIsXHTMLText);
     }
 
@@ -205,7 +205,7 @@ private:
 
     void manager_()
     {
-        only_my_ = new Wt::WCheckBox(tr("thechess.only_my"), this);
+        only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"), this);
         only_my_->changed().connect(this, &GameListWidgetImpl::apply_);
         if (!tApp->user())
         {
@@ -214,7 +214,7 @@ private:
         if (!tApp->environment().ajax())
         {
             Wt::WPushButton* apply_button =
-                new Wt::WPushButton(tr("thechess.apply"), this);
+                new Wt::WPushButton(tr("tc.common.Apply"), this);
             apply_button->clicked().connect(this, &GameListWidgetImpl::apply_);
         }
     }

@@ -31,35 +31,35 @@ TableForm(parent)
 
     Wt::WContainerWidget* cell;
 
-    section(tr("thechess.game_parameters"));
+    section(tr("tc.game.Parameters"));
 
-    cell = item(tr("thechess.start_position"), "", 0, 0, false);
+    cell = item(tr("tc.game.Start_position"), "", 0, 0, false);
     moves_widget_ = new MovesWidget(gp->moves(), false, true,
         max::moves_init, false, chess::white, cell);
-    Wt::WPushButton* moves_reset_ = new Wt::WPushButton(tr("thechess.reset"), cell);
+    Wt::WPushButton* moves_reset_ = new Wt::WPushButton(tr("tc.common.Reset"), cell);
     moves_reset_->clicked().connect(moves_widget_, &MovesWidget::reset);
 
     limit_std_ = new TimeDeltaWidget(min::limit_std, gp->limit_std(), max::limit_std);
-    item(tr("thechess.limit_std"), "", limit_std_->form_widget(), limit_std_);
+    item(tr("tc.game.limit_std"), "", limit_std_->form_widget(), limit_std_);
 
     limit_private_init_ = new TimeDeltaWidget(min::limit_private_init,
         gp->limit_private_init(), max::limit_private_init);
-    item(tr("thechess.limit_private_init"), "",
+    item(tr("tc.game.limit_private_init"), "",
         limit_private_init_->form_widget(), limit_private_init_);
 
     pause_limit_init_ = new TimeDeltaWidget(min::pause_limit_init,
         gp->pause_limit_init(), max::pause_limit_init);
-    item(tr("thechess.pause_limit"), "",
+    item(tr("tc.game.pause_limit"), "",
         pause_limit_init_->form_widget(), pause_limit_init_);
 
     norating_ = new Wt::WCheckBox();
-    item(tr("thechess.norating"), "", norating_, norating_);
+    item(tr("tc.game.norating"), "", norating_, norating_);
     norating_->setCheckState(gp->norating() ? Wt::Checked : Wt::Unchecked);
 
     first_draw_ = new MySpinBox();
     first_draw_->setRange(min::first_draw / 2, max::first_draw / 2);
     first_draw_->setValue(gp->first_draw() / 2);
-    item(tr("thechess.first_draw"), "", first_draw_, first_draw_);
+    item(tr("tc.game.first_draw"), "", first_draw_, first_draw_);
 }
 
 void GameParametersWidget::apply_parameters(GameParameters* gp)

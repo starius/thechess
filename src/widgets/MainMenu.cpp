@@ -25,13 +25,13 @@ public:
     MainMenuImpl():
     Wt::WContainerWidget()
     {
-        button_("thechess.register", "/register/");
-        button_("thechess.challenge", "/game/challenge/");
-        button_("thechess.competition.new", "/competition/new/");
-        button_("thechess.game_list", "/game/");
-        button_("thechess.competition_list", "/competition/");
-        button_("thechess.login", "/login/");
-        button_("thechess.logout", "/logout/");
+        button_("tc.user.Register", "/register/");
+        button_("tc.game.Challenge", "/game/challenge/");
+        button_("tc.competition.New", "/competition/new/");
+        button_("tc.game.List", "/game/");
+        button_("tc.competition.List", "/competition/");
+        button_("tc.user.Login", "/login/");
+        button_("tc.user.Logout", "/logout/");
     }
 
 private:

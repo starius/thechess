@@ -33,10 +33,10 @@ created_(now())
 
 Wt::WString Competition::type2str(Type type)
 {
-    if (type == CLASSICAL) { return Wt::WString::tr("thechess.competition.type.CLASSICAL"); }
-    if (type == STAGED) { return Wt::WString::tr("thechess.competition.type.STAGED"); }
-    if (type == TEAM) { return Wt::WString::tr("thechess.competition.type.TEAM"); }
-    return Wt::WString::tr("thechess.competition.type");
+    if (type == CLASSICAL) { return Wt::WString::tr("tc.competition.Type_classical"); }
+    if (type == STAGED) { return Wt::WString::tr("tc.competition.Type_staged"); }
+    if (type == TEAM) { return Wt::WString::tr("tc.competition.Type_team"); }
+    return Wt::WString::tr("tc.competition.Type");
 }
 
 void Competition::create_competition(UserPtr user)
@@ -85,11 +85,11 @@ Wt::WDateTime Competition::next_check() const
 
 const char* Competition::state2str(State state)
 {
-    if (state == RECRUITING) { return "thechess.competition.state.RECRUITING"; }
-    if (state == ACTIVE) { return "thechess.competition.state.ACTIVE"; }
-    if (state == ENDED) { return "thechess.competition.state.ENDED"; }
-    if (state == CANCELLED) { return "thechess.competition.state.CANCELLED"; }
-    return "thechess.state.state";
+    if (state == RECRUITING) { return "tc.competition.state_recruiting"; }
+    if (state == ACTIVE) { return "tc.competition.state_active"; }
+    if (state == ENDED) { return "tc.competition.state_ended"; }
+    if (state == CANCELLED) { return "tc.competition.state_cancelled"; }
+    return "tc.game.State_state";
 }
 
 bool Competition::all_ended(const GamesVector& games)

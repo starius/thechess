@@ -67,36 +67,36 @@ class CompetitionTerms : public Wt::WContainerWidget
 public:
     CompetitionTerms(CompetitionPtr c)
     {
-        kw("thechess.competition.rating", tr("thechess.format.interval")
+        kw("tc.competition.Rating", tr("tc.common.interval")
             .arg(c->min_rating()).arg(c->max_rating()));
-        kw("thechess.competition.classification", tr("thechess.format.interval")
+        kw("tc.competition.Members_classification", tr("tc.common.interval")
             .arg(classification2str(c->min_classification()))
             .arg(classification2str(c->max_classification())));
-        kw("thechess.competition.force_start_delay", td2str(c->force_start_delay()));
+        kw("tc.competition.Force_start_delay", td2str(c->force_start_delay()));
         if (c->type() == CLASSICAL || c->type() == STAGED)
         {
-            kw("thechess.competition.users", tr("thechess.format.interval")
+            kw("tc.competition.Users", tr("tc.common.interval")
                 .arg(c->min_users()).arg(c->max_users()));
-            kw("thechess.competition.recruiting_time", tr("thechess.format.interval")
+            kw("tc.competition.Recruiting_time", tr("tc.common.interval")
                 .arg(td2str(c->min_recruiting_time())).arg(td2str(c->max_recruiting_time())));
         }
         if (c->type() == CLASSICAL)
         {
-            kw("thechess.competition.max_simultaneous_games", c->max_simultaneous_games());
-            kw("thechess.competition.games_factor", c->games_factor());
+            kw("tc.competition.Max_simultaneous_games", c->max_simultaneous_games());
+            kw("tc.competition.Games_factor", c->games_factor());
         }
         if (c->type() == STAGED)
         {
-            kw("thechess.competition.relax_time", td2str(c->relax_time()));
-            kw("thechess.competition.min_substages", c->min_substages());
-            kw("thechess.competition.increment_substages", c->increment_substages());
+            kw("tc.competition.Relax_time", td2str(c->relax_time()));
+            kw("tc.competition.Min_substages", c->min_substages());
+            kw("tc.competition.Increment_substages", c->increment_substages());
         }
     }
 
     template<typename T>
     void kw(const char* tr_id, const T& s)
     {
-        new Wt::WText(tr("thechess.format.kw").arg(tr(tr_id)).arg(s), this);
+        new Wt::WText(tr("tc.common.kw").arg(tr(tr_id)).arg(s), this);
         new Wt::WBreak(this);
     }
 };
@@ -164,7 +164,7 @@ private:
     void scores_(CompetitionPtr c)
     {
         table_->elementAt(0, score_column_)
-            ->addWidget(new Wt::WText(tr("thechess.competition.score")));
+            ->addWidget(new Wt::WText(tr("tc.competition.Score")));
         std::map<UserPtr, float> wins;
         Competition::wins_number(c->games_vector(), wins);
         int i = 0;
@@ -185,9 +185,9 @@ private:
     void fill_table_()
     {
         if (show_wins_)
-            fill_button_->setText(tr("thechess.competition.show_games"));
+            fill_button_->setText(tr("tc.competition.Show_games"));
         else
-            fill_button_->setText(tr("thechess.competition.show_wins"));
+            fill_button_->setText(tr("tc.competition.Show_wins"));
         int members_size = members.size();
         for (int row = 0; row < members_size; ++row)
         {
@@ -199,7 +199,7 @@ private:
                 cell->clear();
                 if (row == col)
                 {
-                    new Wt::WText(tr("thechess.competition.dash"), cell);
+                    new Wt::WText(tr("tc.competition.dash"), cell);
                 }
                 else if (show_wins_)
                 {
@@ -232,11 +232,11 @@ public:
     {
         calculate_competitors_();
         resize(650, 300);
-        addColumn(tr("thechess.staged.stage"), 100);
-        addColumn(tr("thechess.staged.games_list"), 300);
-        Wt::WTreeTableNode* r = new Wt::WTreeTableNode(tr("thechess.staged.tree"));
+        addColumn(tr("tc.competition.Stage"), 100);
+        addColumn(tr("tc.competition.Games_list"), 300);
+        Wt::WTreeTableNode* r = new Wt::WTreeTableNode(tr("tc.competition.Tree"));
         r->expand();
-        setTreeRoot(r, tr("thechess.staged.winner"));
+        setTreeRoot(r, tr("tc.competition.Winner"));
         BOOST_FOREACH(const StagedCompetition::Paires::value_type& stage_and_pair, sc_.paires())
         {
             int stage = stage_and_pair.first;
@@ -274,7 +274,7 @@ private:
         Wt::WString title;
         StagedCompetition::Winners::const_iterator winner = sc_.winners().find(pair);
         if (winner == sc_.winners().end() || stage == 0)
-            title = tr("thechess.staged.pair_format")
+            title = tr("tc.competition.user_pair")
                 .arg(pair.first()->username()).arg(pair.second()->username());
         else
             title = winner->second->username();
@@ -342,16 +342,16 @@ public:
         {
             if (c->can_join(tApp->user()))
             {
-                button_<&Competition::join>("thechess.join");
+                button_<&Competition::join>("tc.common.Join");
             }
             else if (c->can_leave(tApp->user()))
             {
-                button_<&Competition::leave>("thechess.leave");
+                button_<&Competition::leave>("tc.game.Leave");
             }
             if (c->can_change_parameters(tApp->user()))
             {
                 Wt::WPushButton* change =
-                    new Wt::WPushButton(tr("thechess.competition.change"), this);
+                    new Wt::WPushButton(tr("tc.competition.Change"), this);
                 change->clicked().connect(this,
                     &CompetitionManager::show_change_widget_);
             }
@@ -404,7 +404,7 @@ private:
 
 CompetitionWidget::CompetitionWidget(CompetitionPtr competition,
     Wt::WContainerWidget* p):
-Wt::WTemplate(tr("thechess.template.CompetitionWidget"), p),
+Wt::WTemplate(tr("tc.competition.widget_template"), p),
 Notifiable(Object(CompetitionObject, competition.id())),
 c(competition)
 {

@@ -37,7 +37,7 @@ public:
     SingleTimeout(const Wt::WString& name, bool active,
         const Td& limit_private_now, const Td& limit_std_now,
         Wt::WContainerWidget* parent=0) :
-    Wt::WTemplate(tr("thechess.template.countdown"), parent)
+    Wt::WTemplate(tr("tc.game.countdown_template"), parent)
     {
         bindString("name", name);
         Wt::WText* limit_private_text =

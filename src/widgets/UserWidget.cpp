@@ -37,26 +37,26 @@ public:
         new Wt::WBreak(this);
         new Wt::WText(user_->classification_str(), this);
         new Wt::WBreak(this);
-        new Wt::WText(tr("thechess.user.online_time")
+        new Wt::WText(tr("tc.user.Online_time")
             .arg(td2str(user_->online_time())), this);
         new Wt::WBreak(this);
         if (tApp->user() && tApp->user() != user_)
         {
             start_button_ = new Wt::WPushButton(
-                Wt::WString::tr("thechess.start_game"), this);
+                Wt::WString::tr("tc.user.Start_game"), this);
             start_button_->clicked()
                 .connect(this, &UserWidgetImpl::game_form_);
         }
         if (user->games_stat().all() > 0)
         {
             rating_button_ = new Wt::WPushButton(
-                Wt::WString::tr("thechess.rating_changes"), this);
+                Wt::WString::tr("tc.user.Rating_changes"), this);
             rating_button_->clicked()
                 .connect(this, &UserWidgetImpl::rating_changes_);
             if (tApp->user() && tApp->user() != user_)
             {
                 rating_and_me_button_ = new Wt::WPushButton(
-                    Wt::WString::tr("thechess.rating_changes_and_me"), this);
+                    Wt::WString::tr("tc.user.Rating_changes_and_me"), this);
                 rating_and_me_button_->clicked()
                     .connect(this, &UserWidgetImpl::rating_changes_and_me_);
             }

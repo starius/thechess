@@ -131,7 +131,7 @@ public:
         select_turn_into_ = new Wt::WContainerWidget(this);
         turn_button_place_ = new Wt::WContainerWidget(this);
         Wt::WPushButton *turn_button =
-            new Wt::WPushButton(tr("thechess.board.turn"), turn_button_place_);
+            new Wt::WPushButton(tr("tc.game.Overturn_board"), turn_button_place_);
         turn_button->clicked().connect(this, &BoardWidgetImpl::turn);
         taken_chessmen_ = new TakenChessmen(board_, this);
     }
@@ -139,7 +139,7 @@ public:
     const char* xml_message()
     {
         return bottom_ == chess::white ?
-            "thechess.template.board.white" : "thechess.template.board.black";
+            "tc.game.board_white_template" : "tc.game.board_black_template";
     }
 
     Wt::WImage*& image_at(chess::Xy xy)

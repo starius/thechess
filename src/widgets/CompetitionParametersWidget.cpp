@@ -32,13 +32,13 @@ GameParametersWidget(cp, parent)
     IntervalWidget* interval;
     Wt::WContainerWidget* cell;
 
-    section(tr("thechess.competition_parameters"));
+    section(tr("tc.competition.Parameters"));
 
     type_ = new Wt::WComboBox();
     type_->addItem(Competition::type2str(CLASSICAL));
     type_->addItem(Competition::type2str(STAGED));
     type_->addItem(Competition::type2str(TEAM));
-    cell = item(tr("thechess.competition.type"), "", type_, type_);
+    cell = item(tr("tc.competition.Type"), "", type_, type_);
     set_type_(cp->type());
     if (allow_change_type)
     {
@@ -50,7 +50,7 @@ GameParametersWidget(cp, parent)
         else
         {
             Wt::WPushButton* refresh =
-                new Wt::WPushButton(tr("thechess.refresh"), cell);
+                new Wt::WPushButton(tr("tc.common.Refresh"), cell);
             refresh->clicked().connect(this,
                 &CompetitionParametersWidget::type_handler_);
         }
@@ -67,18 +67,18 @@ GameParametersWidget(cp, parent)
     max_rating_->setRange(min::max_rating, max::max_rating);
     max_rating_->setValue(cp->max_rating());
     interval = new IntervalWidget(min_rating_, max_rating_);
-    item(tr("thechess.competition.rating"), "", min_rating_, interval);
+    item(tr("tc.competition.Rating"), "", min_rating_, interval);
 
     min_classification_ = new ClassificationWidget(min::min_classification,
         cp->min_classification(), max::min_classification);
     max_classification_ = new ClassificationWidget(min::max_classification,
         cp->max_classification(), max::max_classification);
     interval = new IntervalWidget(min_classification_, max_classification_);
-    item(tr("thechess.competition.classification"), "", min_classification_, interval);
+    item(tr("tc.competition.Members_classification"), "", min_classification_, interval);
 
     force_start_delay_ = new TimeDeltaWidget(min::force_start_delay,
         cp->force_start_delay(), max::force_start_delay);
-    item(tr("thechess.competition.force_start_delay"), "",
+    item(tr("tc.competition.Force_start_delay"), "",
         force_start_delay_->form_widget(), force_start_delay_);
 
     min_users_ = new MySpinBox();
@@ -88,42 +88,42 @@ GameParametersWidget(cp, parent)
     max_users_->setRange(min::max_users, max::max_users);
     max_users_->setValue(cp->max_users());
     users_ = new IntervalWidget(min_users_, max_users_);
-    item(tr("thechess.competition.users"), "", min_users_, users_);
+    item(tr("tc.competition.Users"), "", min_users_, users_);
 
     min_recruiting_time_ = new TimeDeltaWidget(min::min_recruiting_time,
         cp->min_recruiting_time(), max::min_recruiting_time);
     max_recruiting_time_ = new TimeDeltaWidget(min::max_recruiting_time,
         cp->max_recruiting_time(), max::max_recruiting_time);
     recruiting_time_ = new IntervalWidget(min_recruiting_time_, max_recruiting_time_);
-    item(tr("thechess.competition.recruiting_time"), "",
+    item(tr("tc.competition.Recruiting_time"), "",
         min_recruiting_time_->form_widget(), recruiting_time_);
 
     max_simultaneous_games_ = new MySpinBox();
     max_simultaneous_games_->setRange(min::max_simultaneous_games, max::max_simultaneous_games);
     max_simultaneous_games_->setValue(cp->max_simultaneous_games());
-    item(tr("thechess.competition.max_simultaneous_games"), "",
+    item(tr("tc.competition.Max_simultaneous_games"), "",
         max_simultaneous_games_, max_simultaneous_games_);
 
     games_factor_ = new MyDoubleSpinBox();
     games_factor_->setRange(min::games_factor, max::games_factor);
     games_factor_->setValue(cp->games_factor());
-    item(tr("thechess.competition.games_factor"), "", games_factor_, games_factor_);
+    item(tr("tc.competition.Games_factor"), "", games_factor_, games_factor_);
 
     relax_time_ = new TimeDeltaWidget(min::relax_time,
         cp->relax_time(), max::relax_time);
-    item(tr("thechess.competition.relax_time"), "",
+    item(tr("tc.competition.Relax_time"), "",
         relax_time_->form_widget(), relax_time_);
 
     min_substages_ = new MySpinBox();
     min_substages_->setRange(min::min_substages, max::min_substages);
     min_substages_->setValue(cp->min_substages());
-    item(tr("thechess.competition.min_substages"), "",
+    item(tr("tc.competition.Min_substages"), "",
         min_substages_, min_substages_);
 
     increment_substages_ = new MySpinBox();
     increment_substages_->setRange(min::increment_substages, max::increment_substages);
     increment_substages_->setValue(cp->increment_substages());
-    item(tr("thechess.competition.increment_substages"), "",
+    item(tr("tc.competition.Increment_substages"), "",
         increment_substages_, increment_substages_);
 
     type_handler_();
@@ -248,10 +248,10 @@ CompetitionParametersWidget(c, allow_change_type, parent)
 {
     name_ = new Wt::WLineEdit(c->name());
     name_->setMaxLength(config::competition::max_name);
-    item(tr("thechess.competition.name"), "", name_, name_);
+    item(tr("tc.competition.Name"), "", name_, name_);
 
     description_ = new Wt::WTextEdit(c->description());
-    item(tr("thechess.competition.description"), "", description_, description_);
+    item(tr("tc.competition.Description"), "", description_, description_);
 }
 
 void CompetitionParametersWidget2::apply_parameters(model::Competition* c)

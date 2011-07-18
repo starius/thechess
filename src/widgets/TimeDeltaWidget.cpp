@@ -31,11 +31,11 @@ public:
         spin_box_->setRange(min.total_seconds(), max.total_seconds());
         spin_box_->setValue(value.total_seconds());
         combo_box_ = new Wt::WComboBox(this);
-        combo_box_->addItem(tr("thechess.seconds"));
-        combo_box_->addItem(tr("thechess.minutes"));
-        combo_box_->addItem(tr("thechess.hours"));
-        combo_box_->addItem(tr("thechess.days"));
-        combo_box_->addItem(tr("thechess.weeks"));
+        combo_box_->addItem(tr("tc.time.seconds"));
+        combo_box_->addItem(tr("tc.time.minutes"));
+        combo_box_->addItem(tr("tc.time.hours"));
+        combo_box_->addItem(tr("tc.time.days"));
+        combo_box_->addItem(tr("tc.time.weeks"));
         combo_box_->activated()
             .connect(this, &TimeDeltaWidgetImpl::select_handler_);
         for (int i = intervals_size - 1; i >= 0; i--)
