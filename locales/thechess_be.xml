@@ -96,5 +96,199 @@
     <message id="Wt.WValidator.Invalid">Гэта поле не можа быць пустым</message>
     <message id="Wt.true">Да</message>
     <message id="Wt.false">Не</message>
+
+    <message id="tc.common.Agree">Пагадзіцца</message>
+    <message id="tc.common.Apply">Прымяніць</message>
+    <message id="tc.common.Cancel">Адмяніць</message>
+    <message id="tc.common.Confirm">Пацвердзіць</message>
+    <message id="tc.common.Create">Стварыць</message>
+    <message id="tc.common.Discard">Адмовіцца</message>
+    <message id="tc.common.interval">ад {1} да {2}</message>
+    <message id="tc.common.interval_template">ад ${min} да ${max}</message>
+    <message id="tc.common.Join">Далучыцца</message>
+    <message id="tc.common.number">№</message>
+    <message id="tc.common.Only_my">Толькі мае</message>
+    <message id="tc.common.Refresh">Аднавіць</message>
+    <message id="tc.common.Reset">Скід</message>
+    <message id="tc.common.Save">Захаваць</message>
+    <message id="tc.common.winner">пераможца</message>
+
+    <message id="tc.competition.Cant_change">Вы не можаце змяняць гэты турнір</message>
+    <message id="tc.competition.Cant_create">Вы не можаце ствараць турніры</message>
+    <message id="tc.competition.Change">Змяніць параметры</message>
+    <message id="tc.competition.Change_welcome">Змяніць турнір № {1}</message>
+    <message id="tc.competition.competition">турнір</message>
+    <message id="tc.competition.Create_welcome">Стварыць новы турнір</message>
+    <message id="tc.competition.Description">Апісанне</message>
+    <message id="tc.competition.Ended">Завершаны</message>
+    <message id="tc.competition.Force_start_delay">Фарсіраваны старт партыі</message>
+    <message id="tc.competition.Games_factor">Множнік партый</message>
+    <message id="tc.competition.Games_list">Спіс гульняў</message>
+    <message id="tc.competition.Increment_substages">Рост ліку падраўндаў</message>
+    <message id="tc.competition.List">Спіс турніраў</message>
+    <message id="tc.competition.Max_simultaneous_games">Адначасовыя гульні</message>
+    <message id="tc.competition.Members_classification">Разрад удзельнікаў</message>
+    <message id="tc.competition.members_number">удзельнікі</message>
+    <message id="tc.competition.Min_substages">Подраундов в первом раунде</message>
+    <message id="tc.competition.Name">Назва</message>
+    <message id="tc.competition.New">Стварыць турнір</message>
+    <message id="tc.competition.Parameters">Параметры турніру</message>
+    <message id="tc.competition.Rating">Рэйтынг удзельнікаў</message>
+    <message id="tc.competition.Recruiting_time">Час на зборы</message>
+    <message id="tc.competition.Relax_time">Час на адпачынак</message>
+    <message id="tc.competition.Score">Лік</message>
+    <message id="tc.competition.Show_games">Паказаць нумары партый</message>
+    <message id="tc.competition.Show_wins">Паказаць колькасць перамог</message>
+    <message id="tc.competition.Stage">Раунд</message>
+    <message id="tc.competition.Started">Пачаты</message>
+    <message id="tc.competition.State">Статус</message>
+    <message id="tc.competition.state_active">актыўны</message>
+    <message id="tc.competition.state_cancelled">адменены</message>
+    <message id="tc.competition.state_ended">завершаны</message>
+    <message id="tc.competition.state_recruiting">які набіраецца</message>
+    <message id="tc.competition.Tree">Дрэва</message>
+    <message id="tc.competition.Type">Тып</message>
+    <message id="tc.competition.Type_classical">Класічны</message>
+    <message id="tc.competition.Type_staged">Ступеністы</message>
+    <message id="tc.competition.Type_team">Камандны</message>
+    <message id="tc.competition.Users">Колькасць удзельнікаў</message>
+    <message id="tc.competition.Winner">Пераможца</message>
+    <message id="tc.competition.Winners">Пераможцы</message>
+    <message id="tc.competition.widget_template">
+        <h1>Турнір № ${id} ${name}</h1>
+        Турнір створаны ${created}, стартаваў ${started}, быў зачынены ${ended}.
+        <br /> Тып турніру: ${type}.
+        <br /> Статут турніру: ${state}.
+        <br /> Апісанне: ${description}
+        <br /> <h2>Умовы да ўдзельнікаў </h2> ${terms}
+        <br /> <h2>Удзельнікі турніру</h2> ${members}
+        <br /> <h2>Пераможцы</h2> ${winners}
+        <br /> <h2>Падрабязнасці</h2> ${view}
+        <br /> <h2>Кіраванне</h2> ${manager}
+    </message>
+
+    <message id="tc.game.Analysis">Аналіз</message>
+    <message id="tc.game.Analysis_title">Аналіз гульні № {1}</message>
+    <message id="tc.game.black">чорны</message>
+    <message id="tc.game.Challenge">Выклік</message>
+    <message id="tc.game.colors">колеры</message>
+    <message id="tc.game.colors_not_random">наканаваны</message>
+    <message id="tc.game.colors_random">абраны выпадкова</message>
+    <message id="tc.game.comment">каментар</message>
+    <message id="tc.game.comment_welcome">увядзіце ваш каментар тут</message>
+    <message id="tc.game.Competition_confirm">Пацвердзіць</message>
+    <message id="tc.game.Competition_confirm_welcome">Гульня можа быць пацверджана загадзя</message>
+    <message id="tc.game.Competition_discard">Адмовіцца</message>
+    <message id="tc.game.Competition_discard_welcome">Вы згодны пацвердзіць гульню загадзя</message>
+    <message id="tc.game.Competition_other_proposed">{1} прапануе пацвердзіць гульню загадзя</message>
+    <message id="tc.game.Competitor">Супернік: {1}</message>
+    <message id="tc.game.confirmed">пацверджана</message>
+    <message id="tc.game.created">створана</message>
+    <message id="tc.game.Draw_proposal">Нічыя прапанавана, прапанаваў {1}</message>
+    <message id="tc.game.Draw_propose">Прапанаваць нічыю</message>
+    <message id="tc.game.ended">завершана</message>
+    <message id="tc.game.first_draw">колькасць хадоў для нічыёй</message>
+    <message id="tc.game.force_confirm">фарсіраванае пацверджанне</message>
+    <message id="tc.game.force_start">фарсіраваны старт</message>
+    <message id="tc.game.Header">Гульня № {1}</message>
+    <message id="tc.game.init">стваральнік гульні</message>
+    <message id="tc.game.lastmove">апошні ход (ці яго эквівалент)</message>
+    <message id="tc.game.Leave">Выйсці</message>
+    <message id="tc.game.limit_private_init">неўзнаўляльны запас</message>
+    <message id="tc.game.limit_std">узнаўляльны запас часу</message>
+    <message id="tc.game.List">Спіс гульняў</message>
+    <message id="tc.game.Mistake_proposal">{1} прапануе адкаціць да пазіцыі, папярэдняй ходу {2} {3}</message>
+    <message id="tc.game.Mistake_propose">Адкаціць</message>
+    <message id="tc.game.moves_size">хадоў</message>
+    <message id="tc.game.norating">нерэйтынгавая</message>
+    <message id="tc.game.norating_false">вынік гульні паўплывае на рэйтынг удзельнікаў</message>
+    <message id="tc.game.norating_true">вынік гульні не паўплывае на рэйтынг удзельнікаў</message>
+    <message id="tc.game.of_black">чорных</message>
+    <message id="tc.game.of_white">белых</message>
+    <message id="tc.game.order_user">ходзіць</message>
+    <message id="tc.game.Overturn_board">Перавярнуць</message>
+    <message id="tc.game.Parameters">Параметры партыі</message>
+    <message id="tc.game.pause_limit">запас часу на паўзы</message>
+    <message id="tc.game.Pause_proposal">Перапынак прапанаваны, прапанаваў{1}, працягласць: {2}</message>
+    <message id="tc.game.Pause_propose">Прапанаваць перапынак</message>
+    <message id="tc.game.pause_until">прыпынена да</message>
+    <message id="tc.game.random">выпадковы</message>
+    <message id="tc.game.real_rating">рэйтынгавая</message>
+    <message id="tc.game.real_rating_false">вынік гульні не ўплывае на рэйтынг удзельнікаў</message>
+    <message id="tc.game.real_rating_true">вынік гульні ўплывае на рэйтынг удзельнікаў</message>
+    <message id="tc.game.Start_position">Зыходная пазіцыя</message>
+    <message id="tc.game.started">пачата</message>
+    <message id="tc.game.State">Стан</message>
+    <message id="tc.game.State_active">Актыўная</message>
+    <message id="tc.game.State_cancelled">Адменена</message>
+    <message id="tc.game.State_confirmed">Пацверджаная</message>
+    <message id="tc.game.State_draw_2_kings">Нічыя з прычыны немагчымасці паставіць мат</message>
+    <message id="tc.game.State_draw_3">Трохкратны паўтор пазіцыі</message>
+    <message id="tc.game.State_draw_50">Нічыя: 50 хадоў не браліся фігуры і не хадзіла пешка</message>
+    <message id="tc.game.State_draw_agreed">Нічыя па дамове</message>
+    <message id="tc.game.State_draw_stalemate">Пат</message>
+    <message id="tc.game.State_mate">Мат</message>
+    <message id="tc.game.State_no_draw_stalemate">Пат у гульні без нічыіх, перамагаюць чорныя</message>
+    <message id="tc.game.State_pause">Прыпыненая</message>
+    <message id="tc.game.State_proposed">Прапанаваная</message>
+    <message id="tc.game.State_state">Невядомы стан</message>
+    <message id="tc.game.State_surrendered">Здадзена</message>
+    <message id="tc.game.State_timeout">Пратэрмінавана</message>
+    <message id="tc.game.white">белы</message>
+    <message id="tc.game.your_color">колер вашых фігураў</message>
+    <message id="tc.game.First_draw">
+        <plural case="0">
+            Капітуляцыя ці нічыя можа быць здзейснена, калі будзе зроблены {1} ход,
+            не лічачы наканаваныя хады
+        </plural>
+        <plural case="1">
+            Капітуляцыя ці нічыя можа быць здзейснена, калі будуць зроблены {1} ходу,
+            не лічачы наканаваныя хады
+        </plural>
+        <plural case="2">
+            Капітуляцыя ці нічыя можа быць здзейснена, калі будуць зроблены {1} хадоў,
+            не лічачы наканаваныя хады
+        </plural>
+    </message>
+    <message id="tc.game.Mistake_welcome">
+        Памылковы ход? Вылучыце яго і націсніце Адкаціць -
+        будзе адноўлена пазіцыя, папярэдняя вылучанаму ходу
+    </message>
+
+    <message id="tc.time.days">сутак</message>
+    <message id="tc.time.hours">гадзін</message>
+    <message id="tc.time.minutes">хвілін</message>
+    <message id="tc.time.seconds">секунд</message>
+    <message id="tc.time.weeks">тыдняў</message>
+
+    <message id="tc.user.classification_a">першы разрад</message>
+    <message id="tc.user.classification_b">другі разрад</message>
+    <message id="tc.user.classification_c">трэці разрад</message>
+    <message id="tc.user.classification_d">сярэдні аматар(4)</message>
+    <message id="tc.user.classification_e">слабы аматар(5)</message>
+    <message id="tc.user.classification_expert">кандыдат у майстры</message>
+    <message id="tc.user.classification_f">навічок (разряд F)</message>
+    <message id="tc.user.classification_g">навічок (разряд G)</message>
+    <message id="tc.user.classification_grandmaster">гросмайстар</message>
+    <message id="tc.user.classification_h">навічок (разряд H)</message>
+    <message id="tc.user.classification_i">навічок (разряд I)</message>
+    <message id="tc.user.classification_intarnational_master">міжнародны майстар</message>
+    <message id="tc.user.classification_j">навічок (разряд J)</message>
+    <message id="tc.user.classification_national_master">нацыянальны майстар</message>
+    <message id="tc.user.classification_none">без разраду</message>
+    <message id="tc.user.classification_super_grandmaster">супергросмайстар</message>
+    <message id="tc.user.Login">Увайсці</message>
+    <message id="tc.user.Logout">Выйсці</message>
+    <message id="tc.user.Online_time">Час, праведзены на сайце: {1}</message>
+    <message id="tc.user.Password">Пароль</message>
+    <message id="tc.user.Please_login">Калі ласка, увайдзіце ці зарэгіструйцеся</message>
+    <message id="tc.user.rating_after">рэйтынг пасля</message>
+    <message id="tc.user.Rating_changes">Змяненні рэйтынгу</message>
+    <message id="tc.user.Rating_changes_and_me">Змяненні рэйтынгу (у параўнанні з маім рэйтынгам)</message>
+    <message id="tc.user.Register">Зарэгістравацца</message>
+    <message id="tc.user.Start_game">Пачаць гульню</message>
+    <message id="tc.user.Username">Імя карыстальніка</message>
+    <message id="tc.user.Wrong_username_or_password">Няправільнае імя карыстальніка ці пароль</message>
+
 </messages>
 
