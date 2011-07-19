@@ -8,6 +8,7 @@
  */
 
 #include <boost/format.hpp>
+#include <boost/tuple/tuple.hpp>
 
 #include <Wt/WContainerWidget>
 #include <Wt/WTableView>
@@ -31,7 +32,7 @@ namespace thechess {
 namespace widgets {
 using namespace model;
 
-typedef GamePtr Result;
+typedef boost::tuple<GamePtr, Wt::WString, Wt::WString, Wt::WString> Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 
@@ -46,6 +47,8 @@ const int moves_size_column = 7;
 const int real_rating_column = 8;
 const int comment_column = 9;
 
+const int game_in_tuple = 0;
+
 class QM : public BaseQM
 {
 public:
@@ -54,97 +57,47 @@ public:
     {
         setQuery(query);
         addColumn("G.id", tr("tc.common.number"));
-        addColumn("G.white_id", tr("tc.game.white"));
-        addColumn("G.black_id", tr("tc.game.black"));
-        addColumn("G.state", tr("tc.game.State"));
-        addColumn("G.winner_game_id", tr("tc.common.winner"));
+        addColumn("Wh.username", tr("tc.game.white"));
+        addColumn("B.username", tr("tc.game.black"));
+        addColumn("G.state", tr("tc.game.State")); // dummy
+        addColumn("Wi.username", tr("tc.common.winner"));
         addColumn("G.started", tr("tc.game.started"));
         addColumn("G.ended", tr("tc.game.ended"));
         addColumn("G.id", tr("tc.game.moves_size")); // dummy G.id
-        addColumn("G.norating", tr("tc.game.real_rating"));
+        addColumn("G.norating", tr("tc.game.real_rating")); // dummy
         addColumn("G.comment", tr("tc.game.comment"));
-        setColumnFlags(n_column, Wt::ItemIsXHTMLText);
     }
 
     boost::any data(const Wt::WModelIndex& index,
         int role=Wt::DisplayRole) const
     {
+        dbo::Transaction t(tApp->session());
+        GamePtr game = resultRow(index.row()).get<game_in_tuple>();
         if (role == Wt::DisplayRole)
         {
-            dbo::Transaction t(tApp->session());
-            GamePtr game = resultRow(index.row());
-            if (index.column() == n_column)
-            {
-                return game.id();
-            }
-            else if (index.column() == white_column)
-            {
-                UserPtr user = game->white();
-                return user ? user->username() : "";
-            }
-            else if (index.column() == black_column)
-            {
-                UserPtr user = game->black();
-                return user ? user->username() : "";
-            }
-            else if (index.column() == state_column)
-            {
+            if (index.column() == state_column)
                 return game->str_state();
-            }
-            else if (index.column() == winner_column)
-            {
-                UserPtr user = game->winner();
-                return user ? user->username() : "";
-            }
-            else if (index.column() == started_column)
-            {
-                return game->started();
-            }
-            else if (index.column() == ended_column)
-            {
-                return game->ended();
-            }
             else if (index.column() == moves_size_column)
-            {
                 return game->human_size();
-            }
             else if (index.column() == real_rating_column)
-            {
                 return game->real_rating();
-            }
-            else if (index.column() == comment_column)
-            {
-                return game->comment();
-            }
-            t.commit();
         }
-
-        if (role == Wt::InternalPathRole)
+        else if (role == Wt::InternalPathRole)
         {
-            dbo::Transaction t(tApp->session());
-            GamePtr game = resultRow(index.row());
+            UserPtr user;
             if (index.column() == n_column)
-            {
                 return str(boost::format("/game/%i/") % game.id());
-            }
             else if (index.column() == white_column)
-            {
-                UserPtr user = game->white();
-                return user ? str(boost::format("/user/%i/") % user.id()) : "";
-            }
+                user = game->white();
             else if (index.column() == black_column)
-            {
-                UserPtr user = game->black();
-                return user ? str(boost::format("/user/%i/") % user.id()) : "";
-            }
+                user = game->black();
             else if (index.column() == winner_column)
-            {
-                UserPtr user = game->winner();
-                return user ? str(boost::format("/user/%i/") % user.id()) : "";
-            }
-            t.commit();
+                user = game->winner();
+            if (user.id() > 0) // FIXME http://redmine.webtoolkit.eu/issues/909
+                return str(boost::format("/user/%i/") % user.id());
         }
-        return "";
+        t.commit();
+        return BaseQM::data(index, role);
     }
 
     static Wt::WString tr(const char* key)
@@ -180,7 +133,11 @@ public:
     static Q all_games()
     {
         return tApp->session()
-            .query<Result>("select G from thechess_game G");
+            .query<Result>("select G, Wh.username, B.username, Wi.username "
+            "from thechess_game G "
+            "left join thechess_user Wh on G.white_id=Wh.id "
+            "left join thechess_user B on G.black_id=B.id "
+            "left join thechess_user Wi on G.winner_game_id=Wi.id ");
     }
 
     Q query()
