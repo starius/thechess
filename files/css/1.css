@@ -126,3 +126,8 @@ a.thechess-proposed
     background-color: white;
 }
 
+.Wt-tableview .Wt-plaintable td
+{
+    overflow-x: hidden !important;
+}
+

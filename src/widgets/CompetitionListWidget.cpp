@@ -92,15 +92,15 @@ public:
     Wt::WTableView(p)
     {
         setModel(model);
-        resize(881, 450);
+        resize(770, 450);
         setColumnWidth(n_column, 40);
-        setColumnWidth(name_column, 200);
-        setColumnWidth(type_column, 100);
-        setColumnWidth(state_column, 110);
-        setColumnWidth(winners_column, 90);
+        setColumnWidth(name_column, 170);
+        setColumnWidth(type_column, 75);
+        setColumnWidth(state_column, 75);
+        setColumnWidth(winners_column, 160);
         setColumnWidth(members_column, 50);
-        setColumnWidth(started_column, 120);
-        setColumnWidth(ended_column, 120);
+        setColumnWidth(started_column, 70);
+        setColumnWidth(ended_column, 70);
         setRowHeaderCount(1); // fixed id_columns when scrolling
     }
 };

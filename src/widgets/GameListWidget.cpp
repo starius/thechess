@@ -42,10 +42,9 @@ const int black_column = 2;
 const int state_column = 3;
 const int winner_column = 4;
 const int started_column = 5;
-const int ended_column = 6;
+const int real_rating_column = 6;
 const int moves_size_column = 7;
-const int real_rating_column = 8;
-const int comment_column = 9;
+const int comment_column = 8;
 
 const int game_in_tuple = 0;
 
@@ -62,9 +61,8 @@ public:
         addColumn("G.state", tr("tc.game.State")); // dummy
         addColumn("Wi.username", tr("tc.common.winner"));
         addColumn("G.started", tr("tc.game.started"));
-        addColumn("G.ended", tr("tc.game.ended"));
-        addColumn("G.id", tr("tc.game.moves_size")); // dummy G.id
         addColumn("G.norating", tr("tc.game.real_rating")); // dummy
+        addColumn("G.id", tr("tc.game.moves_size")); // dummy
         addColumn("G.comment", tr("tc.game.comment"));
     }
 
@@ -117,17 +115,16 @@ public:
 
         table_view_ = new Wt::WTableView(this);
         table_view_->setModel(query_model_);
-        table_view_->resize(1200, 300);
-        table_view_->setColumnWidth(n_column, 40);
-        table_view_->setColumnWidth(white_column, 90);
-        table_view_->setColumnWidth(black_column, 90);
-        table_view_->setColumnWidth(state_column, 140);
-        table_view_->setColumnWidth(winner_column, 90);
-        table_view_->setColumnWidth(started_column, 120);
-        table_view_->setColumnWidth(ended_column, 120);
-        table_view_->setColumnWidth(moves_size_column, 40);
+        table_view_->resize(770, 450);
+        table_view_->setColumnWidth(n_column, 65);
+        table_view_->setColumnWidth(white_column, 75);
+        table_view_->setColumnWidth(black_column, 75);
+        table_view_->setColumnWidth(state_column, 80);
+        table_view_->setColumnWidth(winner_column, 120);
+        table_view_->setColumnWidth(started_column, 70);
         table_view_->setColumnWidth(real_rating_column, 40);
-        table_view_->setColumnWidth(comment_column, 200);
+        table_view_->setColumnWidth(moves_size_column, 40);
+        table_view_->setColumnWidth(comment_column, 120);
     }
 
     static Q all_games()
