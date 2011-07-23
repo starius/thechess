@@ -58,7 +58,9 @@ public:
         return !(*this == other);
     }
 
-    std::string str(const Board& board, const Board& board_after) const;
+    std::string pgn_from(const Board& board) const;
+    std::string pgn(const Board& board, const Board& board_after,
+        bool skip_chessmen=false) const;
 
 private:
     unsigned from_ : 7;

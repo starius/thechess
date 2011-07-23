@@ -100,17 +100,23 @@ public:
             chess::Move move = cached_moves_->move_at(n);
             const chess::Board& board = cached_moves_->board_at(n);
             const chess::Board& board_after = cached_moves_->board_at(n + 1);
-            std::string text = move.str(board, board_after);
+            std::string text = move.pgn(board, board_after, /*skip_chessmen*/ true);
             if (move.turn_into() != chess::chessman_null)
             {
                 chess::Color color = board.color(move.from());
                 chess::Field ti_field(color, move.turn_into());
                 std::string ti_src =
                     wApp->resolveRelativeUrl(BoardWidget::image(ti_field));
+                char shah = ' ';
+                if (board_after.test_shah())
+                    shah = board_after.test_end() == chess::checkmate ? '#' : '+';
                 return str(boost::format(
-                    "<table><tr><td style='vertical-align:middle;'>%s =</td>"
-                    "<td><img src='%s' /></td></tr></table>") %
-                    text % ti_src);
+                    "<table><tr>"
+                    "<td style='vertical-align:middle;'>%s =</td>"
+                    "<td><img src='%s' /></td>"
+                    "<td style='vertical-align:middle;'>%s</td>"
+                    "</tr></table>") %
+                    text % ti_src % shah);
             }
             else
             {
