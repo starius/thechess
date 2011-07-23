@@ -211,6 +211,8 @@ public:
     CompetitionPtr competition() const { return competition_; }
     int competition_stage() const { return competition_stage_; }
 
+    void pgn(std::ostream& out, bool reduced=false) const;
+
 private:
     State state_;
 

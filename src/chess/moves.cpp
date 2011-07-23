@@ -10,11 +10,15 @@
 
 #include <iostream>
 #include <cstdio>
+#include <string>
+#include <algorithm>
+#include <boost/format.hpp>
 
 #include "chess/hex.hpp"
 #include "chess/moves.hpp"
 #include "chess/move.hpp"
 #include "chess/xy.hpp"
+#include "utils.hpp"
 
 namespace thechess {
 namespace chess {
@@ -169,6 +173,24 @@ int Moves::check() const
     return -1;
 }
 
+void Moves::pgn(std::ostream& out, const std::string& result, bool reduced) const
+{
+    PlainTextWritter ptw(out);
+    chess::Board board;
+    chess::Board board_after;
+    THECHESS_MOVES_FOREACH (move_it, this, board)
+    {
+        chess::Move move = *move_it;
+        board_after.make_move(move);
+        std::string move_str = move.pgn(board, board_after);
+        if (order(move_it.n) == white)
+            move_str = str(boost::format("%i. ") % n_to_human(move_it.n)) + move_str;
+        ptw.write_word(move_str);
+    }
+    if (result != "*")
+        ptw.write_word(result);
+    out << std::endl;
+}
 
 }
 }

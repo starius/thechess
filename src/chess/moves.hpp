@@ -86,6 +86,9 @@ public:
         return order_int(move_n) == 0 ? white : black;
     }
 
+    void pgn(std::ostream& out, const std::string& result,
+        bool reduced=false) const;
+
 private:
     byte q(int i) const { return (byte)((*this)[i]); }
 
