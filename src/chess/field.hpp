@@ -39,6 +39,7 @@ enum Chessman
 };
 
 const int Chessman_count = 7;
+const char* const letters_chessmen = "-BKNPQR";
 
 //~ inline bool operator !(const Color& c) { return (Color)((bool)c); }
 
@@ -47,6 +48,11 @@ Wt::WString color2str(Color color);
 inline Color other_color(Color color)
 {
     return color == white ? black : white;
+}
+
+inline char chessman_char(Chessman chessman)
+{
+    return letters_chessmen[(int)chessman];
 }
 
 class Field // Color & Chessman
