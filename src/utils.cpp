@@ -38,5 +38,25 @@ std::string first_file(const char* const files[], const int files_size)
     return 0;
 }
 
+PlainTextWritter::PlainTextWritter(std::ostream& out, const short cpl):
+out_(out), cpl_(cpl), current_cpl_(0)
+{ }
+
+void PlainTextWritter::write_word(const std::string& word)
+{
+    if (current_cpl_ + word.length() > cpl_)
+    {
+        out_ << std::endl;
+        current_cpl_ = 0;
+    }
+    else if (current_cpl_)
+    {
+        out_ << ' ';
+        current_cpl_ += 1;
+    }
+    out_ << word;
+    current_cpl_ += word.length();
+}
+
 }
 

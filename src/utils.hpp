@@ -11,12 +11,24 @@
 #define THECHESS_UTILS_HPP_
 
 #include <string>
+#include <ostream>
 
 namespace thechess
 {
 
 std::string expand_path(const std::string& path);
 std::string first_file(const char* const files[], const int files_size);
+
+class PlainTextWritter
+{
+public:
+    PlainTextWritter(std::ostream& out, const short cpl=79);
+    void write_word(const std::string& word);
+private:
+    std::ostream& out_;
+    const unsigned short cpl_;
+    unsigned short current_cpl_;
+};
 
 }
 
