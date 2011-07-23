@@ -33,8 +33,9 @@ ThechessServer::ThechessServer(int argc, char **argv):
 Wt::WServer(argv[0], first_file(c::wt_config_files, c::wt_config_files_size)),
 options_((setServerConfiguration(argc, argv), *this)), // options_ needs read conf
 pool_(ThechessSession::new_connection(options_), options_.connections_in_pool()),
-notifier_(*this), tracker_(*this)
+notifier_(*this), tracker_(*this), pgn_(*this)
 {
+    addResource(&pgn_, "/pgn/");
     addEntryPoint(Wt::Application, boost::bind(createApplication, this, _1), "", "/favicon.ico");
     ThechessSession session(pool_);
     session.reconsider(tracker_);

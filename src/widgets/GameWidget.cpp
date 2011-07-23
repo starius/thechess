@@ -188,6 +188,9 @@ public:
         print_comment_();
 
         game_status_ = new GameStatus(game_, this);
+        new Wt::WAnchor(str(boost::format("/pgn/?game=%i") % game.id()),
+            tr("tc.game.Download_pgn"), this);
+
         status_and_manager_();
         countdown_print_();
         t.commit();

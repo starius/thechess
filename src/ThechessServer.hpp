@@ -17,6 +17,7 @@
 #include "ThechessSession.hpp"
 #include "ThechessNotifier.hpp"
 #include "TaskTracker.hpp"
+#include "widgets/PgnResource.hpp"
 
 namespace dbo = Wt::Dbo;
 
@@ -36,6 +37,7 @@ private:
     dbo::FixedSqlConnectionPool pool_;
     ThechessNotifier notifier_;
     TaskTracker tracker_;
+    widgets::PgnResource pgn_;
 };
 
 }

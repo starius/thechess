@@ -387,6 +387,7 @@ Messages for board and Wt's translations are in the beginning
     <message id='tc.game.confirmed'>confirmed</message>
     <message id='tc.game.countdown_template'>${name}: ${limit_private} + ${limit_std}</message>
     <message id='tc.game.created'>created</message>
+    <message id='tc.game.Download_pgn'>Download PGN file</message>
     <message id='tc.game.Draw_proposal'>Draw proposed, proposer: {1}</message>
     <message id='tc.game.Draw_propose'>Propose a draw</message>
     <message id='tc.game.ended'>ended</message>
