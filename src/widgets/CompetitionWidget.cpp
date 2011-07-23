@@ -107,7 +107,7 @@ void game_reference_(GamePtr game, Wt::WContainerWidget* c)
         new Wt::WText(", ", c);
     Wt::WAnchor* a = new Wt::WAnchor(c);
     a->setText(boost::lexical_cast<std::string>(game.id()));
-    a->setRefInternalPath(str(boost::format("/game/%i") % game.id()));
+    a->setRefInternalPath(str(boost::format("/game/%i/") % game.id()));
 }
 
 const int NAME_COLUMN = 0;
