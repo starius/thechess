@@ -792,6 +792,11 @@ void Game::pgn_additional_(std::ostream& out) const
         out << "[UTCTime \"" << started_.toString("HH:mm:ss") << "\"]" << std::endl;
     out << "[Termination \"" << pgn_termination_() << "\"]" << std::endl;
     out << "[Mode \"" << "ICS" << "\"]" << std::endl;
+    if (rating_after(chess::white) != -1)
+    {
+        out << "[WhiteElo \"" << rating_after(chess::white) << "\"]" << std::endl;
+        out << "[BlackElo \"" << rating_after(chess::black) << "\"]" << std::endl;
+    }
     if (moves_init())
     {
         pgn_init_moves_(out);
