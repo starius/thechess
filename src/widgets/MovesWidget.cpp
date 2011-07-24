@@ -101,20 +101,20 @@ public:
             const chess::Board& board = cached_moves_->board_at(n);
             const chess::Board& board_after = cached_moves_->board_at(n + 1);
             std::string text = move.pgn(board, board_after, /*skip_chessmen*/ true);
+            char shah = ' ';
+            if (board_after.test_shah())
+                shah = board_after.test_end() == chess::checkmate ? '#' : '+';
             if (move.turn_into() != chess::chessman_null)
             {
                 chess::Color color = board.color(move.from());
                 chess::Field ti_field(color, move.turn_into());
                 std::string ti_src =
                     wApp->resolveRelativeUrl(BoardWidget::image(ti_field));
-                char shah = ' ';
-                if (board_after.test_shah())
-                    shah = board_after.test_end() == chess::checkmate ? '#' : '+';
                 return str(boost::format(
                     "<table><tr>"
                     "<td style='vertical-align:middle;'>%s =</td>"
                     "<td><img src='%s' /></td>"
-                    "<td style='vertical-align:middle;'>%s</td>"
+                    "<td style='vertical-align:middle;'>%c</td>"
                     "</tr></table>") %
                     text % ti_src % shah);
             }
@@ -126,8 +126,8 @@ public:
                 return str(boost::format(
                     "<table><tr>"
                     "<td><img src='%s' /></td>"
-                    "<td style='vertical-align:middle;'>%s</td>"
-                    "</tr></table>") % img % text);
+                    "<td style='vertical-align:middle;'>%s%c</td>"
+                    "</tr></table>") % img % text % shah);
             }
         }
         return std::string("");
