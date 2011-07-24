@@ -12,6 +12,7 @@
 #include <cassert>
 #include <cstring>
 #include <cstdlib>
+#include <cctype>
 
 #include "chess/board.hpp"
 #include "chess/xy.hpp"
@@ -642,6 +643,81 @@ bool Board::test_takes(const Move move) const
 bool Board::test_castling(const Move move) const
 {
     return chessman(move.from()) == king && abs(move.dx()) == 2;
+}
+
+void Board::fen_pieces(std::ostream& out) const
+{
+    for (Yname y=y_8; y >= y_1; y = (Yname)((int)y - 1))
+    {
+        if (y < y_8)
+            out << '/';
+        int empty_fields = 0;
+        THECHESS_X_FOREACH (x)
+        {
+            Xy xy(x, y);
+            if (isset(xy))
+            {
+                if (empty_fields)
+                {
+                    out << empty_fields;
+                    empty_fields = 0;
+                }
+                char piece = chessman_char(chessman(xy));
+                if (color(xy) == black)
+                    piece = tolower(piece);
+                out << piece;
+            }
+            else
+                empty_fields += 1;
+        }
+        if (empty_fields)
+            out << empty_fields;
+    }
+}
+
+void Board::fen_castling(std::ostream& out) const
+{
+    bool castling_availability = false;
+    if (castling(Xy(x_h, y_1)))
+    {
+        out << 'K';
+        castling_availability = true;
+    }
+    if (castling(Xy(x_a, y_1)))
+    {
+        out << 'Q';
+        castling_availability = true;
+    }
+    if (castling(Xy(x_h, y_8)))
+    {
+        out << 'k';
+        castling_availability = true;
+    }
+    if (castling(Xy(x_a, y_8)))
+    {
+        out << 'q';
+        castling_availability = true;
+    }
+    if (!castling_availability)
+        out << '-';
+}
+
+void Board::fen(std::ostream& out, int halfmove, int fullmove) const
+{
+    fen_pieces(out);
+    out << ' ';
+    out << (order() == white ? 'w' : 'b');
+    out << ' ';
+    fen_castling(out);
+    out << ' ';
+    if (long_pawn())
+        out << x_char(long_pawn_x()) << (order() == white ? '6' : '3');
+    else
+        out << '-';
+    out << ' ';
+    out << halfmove;
+    out << ' ';
+    out << fullmove;
 }
 
 }

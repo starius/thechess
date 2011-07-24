@@ -18,6 +18,7 @@ namespace thechess {
 }
 
 #include <string>
+#include <ostream>
 
 #include "tests.hpp"
 #include "move.hpp"
@@ -80,6 +81,8 @@ public:
     bool test_takes(const Move move) const;
     bool test_castling(const Move move) const;
 
+    void fen(std::ostream& out, int halfmove, int fullmove) const;
+
 private:
     Fields fields_;
     byte q(Xy xy) const; // quarta of this field
@@ -99,6 +102,10 @@ private:
     void simple_move(const Move move);
     bool simple_test_move(Move move) const;
     bool test_attack(Xy xy) const;
+
+    void fen_pieces(std::ostream& out) const;
+    void fen_castling(std::ostream& out) const;
+
 friend void run_tests();
 };
 
