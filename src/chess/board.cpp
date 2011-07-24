@@ -440,6 +440,17 @@ bool Board::test_attack(Move move) const
     const_cast<Board*>(this)->unset(move.from());
     bool result = test_attack(move.to(), previous.color());
     const_cast<Board*>(this)->field(move.from(), previous);
+    if (!result && previous.chessman() == pawn && abs(move.dy()) == 2)
+    {
+        // take on the aisle
+        const_cast<Board*>(this)->simple_move(move);
+        Xy middle(move.from().x(), (move.from().y()+move.to().y())/2);
+        const_cast<Board*>(this)->change_order();
+        result |= test_move(Move(Xy(move.to().x()-1,move.to().y()), middle));
+        result |= test_move(Move(Xy(move.to().x()+1,move.to().y()), middle));
+        const_cast<Board*>(this)->change_order();
+        const_cast<Board*>(this)->simple_move(Move(move.to(), move.from()));
+    }
     return result;
 }
 
