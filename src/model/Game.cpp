@@ -16,6 +16,7 @@
 #include "model/EloPlayer.hpp"
 #include "rand.hpp"
 #include "TaskTracker.hpp"
+#include "chess/board.hpp"
 
 namespace thechess {
 namespace model {
@@ -749,6 +750,54 @@ void Game::set_comment(const UserPtr user, const Wt::WString& t)
     }
 }
 
+const char* Game::pgn_termination_() const
+{
+    if (!is_ended())
+        return "unterminated";
+    else if (state_ == timeout)
+        return "time forfeit";
+    else if (state_ == draw_50 || state_ == draw_3 || state_ == draw_2_kings)
+        return "adjudication";
+    else if (state_ == cancelled)
+        return "abandoned"; // ?? FIXME
+    return "normal";
+}
+
+void Game::pgn_init_moves_(std::ostream& out) const
+{
+    out << "[SetUp \"" << "1" << "\"]" << std::endl;
+    chess::Board board;
+    int halfmove_clock = 0;
+    THECHESS_MOVES_TO (move_it, &(moves_), board, moves_init())
+    {
+        chess::Move move(*move_it);
+        if (board.chessman(move.from()) == chess::pawn || board.test_takes(move))
+            halfmove_clock = 0;
+        else
+            halfmove_clock += 1;
+    }
+    int fullmove_number = chess::Moves::size_to_human(moves_init() + 1);
+    out << "[FEN \"";
+    board.fen(out, halfmove_clock, fullmove_number);
+    out << "\"]" << std::endl;
+}
+
+void Game::pgn_additional_(std::ostream& out) const
+{
+    out << "[PlyCount \"" << size() << "\"]" << std::endl;
+    long t1 = limit_private_init().total_seconds();
+    long t2 = limit_std().total_seconds();
+    out << "[TimeControl \"" << t1 << '/' << t2 << "\"]" << std::endl;
+    if (started_.isValid())
+        out << "[UTCTime \"" << started_.toString("HH:mm:ss") << "\"]" << std::endl;
+    out << "[Termination \"" << pgn_termination_() << "\"]" << std::endl;
+    out << "[Mode \"" << "ICS" << "\"]" << std::endl;
+    if (moves_init())
+    {
+        pgn_init_moves_(out);
+    }
+}
+
 // see http://cfajohnson.com/chess/SAN/SAN_DOC/Standard
 void Game::pgn(std::ostream& out, bool reduced) const
 {
@@ -766,6 +815,10 @@ void Game::pgn(std::ostream& out, bool reduced) const
     out << "[White \"" << white << "\"]" << std::endl;
     out << "[Black \"" << black << "\"]" << std::endl;
     out << "[Result \"" << result << "\"]" << std::endl;
+    if (!reduced)
+    {
+        pgn_additional_(out);
+    }
     out << std::endl;
     moves_.pgn(out, result, reduced);
 }

@@ -262,6 +262,10 @@ private:
 
     void push_move_(chess::Move move);
     void pop_moves_(int number);
+
+    const char* pgn_termination_() const;
+    void pgn_init_moves_(std::ostream& out) const;
+    void pgn_additional_(std::ostream& out) const;
 };
 
 }
