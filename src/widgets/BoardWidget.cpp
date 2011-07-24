@@ -29,6 +29,8 @@
 #include <Wt/WWidget>
 #include <Wt/WViewWidget>
 #include <Wt/WBreak>
+#include <Wt/WApplication>
+#include <Wt/WEnvironment>
 
 #include "widgets/BoardWidget.hpp"
 #include "chess/move.hpp"
@@ -36,6 +38,8 @@
 
 namespace thechess {
 namespace widgets {
+
+class BoardWidgetImpl;
 
 struct ChessmanStat
 {
@@ -107,6 +111,21 @@ private:
     const chess::Board& board_;
 };
 
+class DnDChessman : public Wt::WImage
+{
+public:
+    DnDChessman(chess::Xy xy, BoardWidgetImpl* bwi):
+    xy_(xy), bwi_(bwi)
+    { }
+
+    void activate();
+    void dropEvent(Wt::WDropEvent dropEvent);
+
+private:
+    chess::Xy xy_;
+    BoardWidgetImpl* bwi_;
+};
+
 class BoardWidgetImpl : public Wt::WContainerWidget
 {
 public:
@@ -120,7 +139,7 @@ public:
         board_template_ = new Wt::WTemplate(tr(xml_message()), this);
         THECHESS_XY_FOREACH(xy)
         {
-            Wt::WImage* img = new Wt::WImage();
+            DnDChessman* img = new DnDChessman(xy, this);
             image_at(xy) = img;
             std::string id = str(boost::format("%d%d")
                     % (xy.x() + 1) % (xy.y() + 1));
@@ -142,7 +161,7 @@ public:
             "tc.game.board_white_template" : "tc.game.board_black_template";
     }
 
-    Wt::WImage*& image_at(chess::Xy xy)
+    DnDChessman*& image_at(chess::Xy xy)
     {
         return images_[xy.i()];
     }
@@ -195,6 +214,8 @@ public:
     }
 
 private:
+    friend class DnDChessman;
+
     chess::Board board_;
     chess::Color bottom_;
     bool active_;
@@ -212,7 +233,8 @@ private:
     TakenChessmen* taken_chessmen_;
     Wt::WTemplate* board_template_;
     bool select_turn_into_flag_;
-    Wt::WImage* images_[64];
+    DnDChessman* images_[64];
+    Wt::WImage* draggable_;
 
     Wt::Signal<chess::Move> move_;
 
@@ -377,29 +399,33 @@ private:
         }
         else if (from_ != chess::xy_null)
         {
-            if (board_.test_move(chess::Move(from_, xy)))
+            try_move_(chess::Move(from_, xy));
+        }
+    }
+
+    void try_move_(const chess::Move move)
+    {
+        if (board_.test_move(move))
+        {
+            if (move.could_turn_into(board_))
             {
-                chess::Move move(from_, xy);
-                if (move.could_turn_into(board_))
-                {
-                    select_turn_into_flag_ = true;
-                    print_select_(move);
-                    return;
-                }
-                else
-                {
-                    modify_undo_();
-                    lastmove_ = move;
-                    from_ = chess::xy_null;
-                    move_.emit(move);
-                }
+                select_turn_into_flag_ = true;
+                print_select_(move);
+                return;
             }
             else
             {
                 modify_undo_();
+                lastmove_ = move;
                 from_ = chess::xy_null;
-                modify_();
+                move_.emit(move);
             }
+        }
+        else
+        {
+            modify_undo_();
+            from_ = chess::xy_null;
+            modify_();
         }
     }
 
@@ -467,20 +493,46 @@ private:
         if (!activated_ && active_)
         {
             activated_ = true;
+            draggable_ = new Wt::WImage(this);
+            if (wApp->environment().ajax())
+                doJavaScript(
+                    "$(" + jsRef() + ").mouseleave(function(e) {"
+                    "$(" + draggable_->jsRef() + ").hide();"
+                    "});"
+                    );
             THECHESS_XY_FOREACH(xy)
             {
-                Wt::WImage* img = image_at(xy);
-                img->clicked()
-                .connect(boost::bind(&BoardWidgetImpl::onclick_,
-                    this, xy));
+                DnDChessman* img = image_at(xy);
+                img->activate();
             }
         }
     }
 
 };
 
+void DnDChessman::activate()
+{
+    setDraggable("chessman", bwi_->draggable_);
+    acceptDrops("chessman");
+    if (wApp->environment().ajax())
+    {
+        mouseWentDown().connect(boost::bind(&BoardWidgetImpl::onclick_, bwi_, xy_));
+        mouseWentDown().connect(
+            "function(sender, e) {"
+            "$(" + bwi_->draggable_->jsRef() + ").attr('src', $(sender).attr('src'));"
+            "}");
+    }
+    else
+        clicked().connect(boost::bind(&BoardWidgetImpl::onclick_, bwi_, xy_));
+}
 
-
+void DnDChessman::dropEvent(Wt::WDropEvent dropEvent)
+{
+    DnDChessman* source = dynamic_cast<DnDChessman*>(dropEvent.source());
+    if (source->xy_ != xy_)
+        bwi_->try_move_(chess::Move(source->xy_, xy_));
+    doJavaScript("$(" + bwi_->draggable_->jsRef() + ").hide();");
+}
 
 std::string BoardWidget::image(chess::Field field, bool big)
 {
