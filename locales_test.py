@@ -36,6 +36,7 @@ for filename in os.listdir('locales'):
             print filename, 'Error: line "%s" is too long' % line
     xml_file = StringIO(open(path).read().replace('&', ampersand))
     messages = parse(xml_file).getroot()
+    prev_message = None
     for message in messages:
         Id = message.get('id')
         text = message.text
@@ -54,6 +55,7 @@ for filename in os.listdir('locales'):
                 print filename, Id, 'Error: unknown Wt message (old wt.xml?)'
         else:
             tc, section, id = Id.split('.')
+            message.section = section
             if section not in sections:
                 print filename, Id, 'Error: unknown section "%s"' % section
             if '-' in id:
@@ -62,6 +64,23 @@ for filename in os.listdir('locales'):
                 print filename, Id, 'Error: tc id should start with letter of same case as message'
             if '${' in text and not id.endswith('_template'):
                 print filename, Id, 'Error: id of tc template message should end with "_template"'
+            if hasattr(prev_message, 'section'):
+                if prev_message.section != section and '\n\n' not in prev_message.tail:
+                    print filename, 'Error: sections %s and %s should be separated by empty line' % \
+                        (prev_message.section, section)
+                elif prev_message.section == section:
+                    if '\n\n' in prev_message.tail:
+                        print filename, 'Error: section %s should not be separated with empty line near %s' % \
+                            (section, Id)
+                    if '\n' in prev_message.text and '\n' not in message.text:
+                        print filename, 'Error: non-multiline message %s follows multimessages' % Id
+                    if '\n' in prev_message.text and '\n' in message.text \
+                        and prev_message.get('id') > Id and not 'board' in Id:
+                        print filename, 'Error: multiline messages %s and %s are unordered' % \
+                            (prev_message.get('id'), Id)
+
+        prev_message = message
+
     short_messages = [m.get('id').lower() for m in messages
         if m.text and '\n' not in m.text and m.get('id').startswith('tc.')]
     for m1, m2 in zip(short_messages, short_messages):
