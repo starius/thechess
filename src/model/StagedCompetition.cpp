@@ -150,8 +150,10 @@ void StagedCompetition::join_users_()
     typedef std::map<int, UsersVector> Unpaired;
     Unpaired unpaired;
     BOOST_FOREACH(States::value_type& user_and_state, states_)
+    {
         if (user_and_state.second == UNPAIRED)
             unpaired[stages_[user_and_state.first]].push_back(user_and_state.first);
+    }
     BOOST_FOREACH(Unpaired::value_type& stage_and_users, unpaired)
     {
         int stage = stage_and_users.first;

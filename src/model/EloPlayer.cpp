@@ -87,13 +87,21 @@ void EloPlayer::multiple(const EloPlayers& winners, const EloPlayers& losers)
 {
     float q_sum = 0;
     BOOST_FOREACH(EloPlayer* player, winners)
+    {
         q_sum += player->Q();
+    }
     BOOST_FOREACH(EloPlayer* player, losers)
+    {
         q_sum += player->Q();
+    }
     BOOST_FOREACH(EloPlayer* player, winners)
+    {
         player->apply_result_(q_sum, victory / winners.size());
+    }
     BOOST_FOREACH(EloPlayer* player, losers)
+    {
         player->apply_result_(q_sum, fail);
+    }
 }
 
 }

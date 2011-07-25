@@ -212,9 +212,13 @@ private:
                 else
                 {
                     BOOST_FOREACH(GamePtr game, gt_[ucol][urow])
+                    {
                         game_reference_(game, cell);
+                    }
                     BOOST_FOREACH(GamePtr game, gt_[urow][ucol])
+                    {
                         game_reference_(game, cell);
+                    }
                 }
             }
         }
@@ -286,7 +290,9 @@ private:
         if (g != sc_.games().end())
         {
             BOOST_FOREACH(GamePtr game, g->second)
+            {
                 game_reference_(game, games);
+            }
         }
         n->setColumnWidget(GAMES_COLUMN, games);
         if (stage > 0)

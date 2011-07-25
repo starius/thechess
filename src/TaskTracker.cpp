@@ -123,7 +123,9 @@ void TaskTracker::check_(const boost::system::error_code& error)
             }
         }
         BOOST_FOREACH(Object object, objects)
+        {
             add_or_update_task_(object);
+        }
         refresh_();
         mutex_.unlock();
     }

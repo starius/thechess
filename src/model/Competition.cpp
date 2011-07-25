@@ -95,8 +95,10 @@ const char* Competition::state2str(State state)
 bool Competition::all_ended(const GamesVector& games)
 {
     BOOST_FOREACH(GamePtr g, games)
+    {
         if (!g->is_ended())
             return false;
+    }
     return true;
 }
 
@@ -175,11 +177,19 @@ GamesVector Competition::games_with(UserPtr user,
 {
     GamesVector result;
     BOOST_FOREACH(GamesTable::value_type& i, gt)
+    {
         BOOST_FOREACH(GamePtr game, i.second[user])
+        {
             result.push_back(game);
+        }
+    }
     BOOST_FOREACH(GamesTable::mapped_type::value_type& i, gt[user])
+    {
         BOOST_FOREACH(GamePtr game, i.second)
+        {
             result.push_back(game);
+        }
+    }
     return result;
 }
 
