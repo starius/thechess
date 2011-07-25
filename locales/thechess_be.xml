@@ -184,6 +184,7 @@
     <message id="tc.game.Competitor">Супернік: {1}</message>
     <message id="tc.game.confirmed">пацверджана</message>
     <message id="tc.game.created">створана</message>
+    <message id='tc.game.Download_pgn'>Спампаваць PGN файл</message>
     <message id="tc.game.Draw_proposal">Нічыя прапанавана, прапанаваў {1}</message>
     <message id="tc.game.Draw_propose">Прапанаваць нічыю</message>
     <message id="tc.game.ended">завершана</message>
