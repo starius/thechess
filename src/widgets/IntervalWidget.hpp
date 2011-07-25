@@ -16,11 +16,10 @@
 namespace thechess {
 namespace widgets {
 
-class IntervalWidget : public Wt::WTemplate
-{
+class IntervalWidget : public Wt::WTemplate {
 public:
     IntervalWidget(Wt::WWidget* min, Wt::WWidget* max,
-        Wt::WContainerWidget* parent=0);
+                   Wt::WContainerWidget* parent=0);
 };
 
 }

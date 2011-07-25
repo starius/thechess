@@ -28,8 +28,7 @@ namespace dbo = Wt::Dbo;
 namespace thechess {
 using namespace model;
 
-ThechessSession::ThechessSession(dbo::FixedSqlConnectionPool& pool)
-{
+ThechessSession::ThechessSession(dbo::FixedSqlConnectionPool& pool) {
     setConnectionPool(pool);
     mapClass<User>("thechess_user");
     mapClass<Game>("thechess_game");
@@ -37,10 +36,8 @@ ThechessSession::ThechessSession(dbo::FixedSqlConnectionPool& pool)
     mapClass<Competition>("thechess_competition");
 }
 
-void ThechessSession::reconsider(TaskTracker& tracker)
-{
-    try
-    {
+void ThechessSession::reconsider(TaskTracker& tracker) {
+    try {
         dbo::Transaction t(*this);
         createTables();
         std::cerr << "Created database" << std::endl;
@@ -59,9 +56,7 @@ void ThechessSession::reconsider(TaskTracker& tracker)
         std::cerr<< "and user user (password 123)" << std::endl;
 
         t.commit();
-    }
-    catch (std::exception& e)
-    {
+    } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
         std::cerr << "Using existing database" << std::endl;
     }
@@ -72,27 +67,21 @@ void ThechessSession::reconsider(TaskTracker& tracker)
 
     dbo::Transaction t2(*this);
     Games games = find<Game>().where("state < ?").bind(Game::min_ended);
-    BOOST_FOREACH(GamePtr game, games)
-    {
+    BOOST_FOREACH(GamePtr game, games) {
         tracker.add_or_update_task(Object(GameObject, game.id()));
     }
     Competitions cs = find<Competition>().where("state < ?").bind(Competition::ENDED);
-    BOOST_FOREACH(CompetitionPtr c, cs)
-    {
+    BOOST_FOREACH(CompetitionPtr c, cs) {
         tracker.add_or_update_task(Object(CompetitionObject, c.id()));
     }
     t2.commit();
 }
 
-dbo::SqlConnection* ThechessSession::new_connection(const ThechessOptions& options)
-{
+dbo::SqlConnection* ThechessSession::new_connection(const ThechessOptions& options) {
     dbo::SqlConnection* connection;
-    if (options.database_type() == ThechessOptions::Postgres)
-    {
+    if (options.database_type() == ThechessOptions::Postgres) {
         connection = new dbo::backend::Postgres(options.database_value());
-    }
-    else if (options.database_type() == ThechessOptions::Sqlite3)
-    {
+    } else if (options.database_type() == ThechessOptions::Sqlite3) {
         std::string path = expand_path(options.database_value());
         connection = new dbo::backend::Sqlite3(path);
         connection->executeSql("PRAGMA synchronous = normal");

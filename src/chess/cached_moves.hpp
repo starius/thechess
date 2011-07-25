@@ -16,16 +16,15 @@
 #include <vector>
 
 namespace thechess {
-    namespace chess {
-        class CachedMoves;
-    }
+namespace chess {
+class CachedMoves;
+}
 }
 
 namespace thechess {
-    namespace chess {
+namespace chess {
 
-class CachedMoves : public Moves
-{
+class CachedMoves : public Moves {
 public:
     CachedMoves(int moves_count=0);
     //CachedMoves(std::string moves);
@@ -40,7 +39,7 @@ public:
     const Board& board_at(int n) const;
 
     void foreach(void *func(Move move, const Board& board),
-        int from=0, int to=-1) const;
+                 int from=0, int to=-1) const;
 
     std::vector<Board> boards_; // stores boards before this move
 private:

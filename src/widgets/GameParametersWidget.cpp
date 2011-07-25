@@ -24,9 +24,8 @@ namespace widgets {
 using namespace model;
 
 GameParametersWidget::GameParametersWidget(const GameParameters* gp,
-    Wt::WContainerWidget* parent) :
-TableForm(parent)
-{
+        Wt::WContainerWidget* parent) :
+    TableForm(parent) {
     using namespace config; // max, min
 
     Wt::WContainerWidget* cell;
@@ -35,7 +34,7 @@ TableForm(parent)
 
     cell = item(tr("tc.game.Start_position"), "", 0, 0, false);
     moves_widget_ = new MovesWidget(gp->moves(), false, true,
-        max::moves_init, false, chess::white, cell);
+                                    max::moves_init, false, chess::white, cell);
     Wt::WPushButton* moves_reset_ = new Wt::WPushButton(tr("tc.common.Reset"), cell);
     moves_reset_->clicked().connect(moves_widget_, &MovesWidget::reset);
 
@@ -43,14 +42,14 @@ TableForm(parent)
     item(tr("tc.game.limit_std"), "", limit_std_->form_widget(), limit_std_);
 
     limit_private_init_ = new TimeDeltaWidget(min::limit_private_init,
-        gp->limit_private_init(), max::limit_private_init);
+            gp->limit_private_init(), max::limit_private_init);
     item(tr("tc.game.limit_private_init"), "",
-        limit_private_init_->form_widget(), limit_private_init_);
+         limit_private_init_->form_widget(), limit_private_init_);
 
     pause_limit_init_ = new TimeDeltaWidget(min::pause_limit_init,
-        gp->pause_limit_init(), max::pause_limit_init);
+                                            gp->pause_limit_init(), max::pause_limit_init);
     item(tr("tc.game.pause_limit"), "",
-        pause_limit_init_->form_widget(), pause_limit_init_);
+         pause_limit_init_->form_widget(), pause_limit_init_);
 
     norating_ = new Wt::WCheckBox();
     item(tr("tc.game.norating"), "", norating_, norating_);
@@ -62,8 +61,7 @@ TableForm(parent)
     item(tr("tc.game.first_draw"), "", first_draw_, first_draw_);
 }
 
-void GameParametersWidget::apply_parameters(GameParameters* gp)
-{
+void GameParametersWidget::apply_parameters(GameParameters* gp) {
     gp->set_init_moves(moves_widget_->moves());
     gp->set_limit_std(limit_std_->value());
     gp->set_limit_private_init(limit_private_init_->value());

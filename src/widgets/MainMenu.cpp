@@ -19,12 +19,10 @@
 namespace thechess {
 namespace widgets {
 
-class MainMenuImpl : public Wt::WContainerWidget
-{
+class MainMenuImpl : public Wt::WContainerWidget {
 public:
     MainMenuImpl():
-    Wt::WContainerWidget()
-    {
+        Wt::WContainerWidget() {
         button_("tc.user.Register", "/register/");
         button_("tc.game.Challenge", "/game/challenge/");
         button_("tc.competition.New", "/competition/new/");
@@ -35,8 +33,7 @@ public:
     }
 
 private:
-    void button_(const char* title_id, const std::string path)
-    {
+    void button_(const char* title_id, const std::string path) {
         Wt::WAnchor* button = new Wt::WAnchor(this);
         button->setText(tr(title_id));
         button->setRefInternalPath(path);
@@ -45,8 +42,7 @@ private:
 };
 
 MainMenu::MainMenu(Wt::WContainerWidget* parent) :
-Wt::WCompositeWidget(parent)
-{
+    Wt::WCompositeWidget(parent) {
     impl_ = new MainMenuImpl();
     setImplementation(impl_);
 }

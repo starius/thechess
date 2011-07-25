@@ -16,7 +16,7 @@ namespace dbo = Wt::Dbo;
 #include "model/Game.hpp"
 
 namespace Wt {
-    class WContainerWidget;
+class WContainerWidget;
 }
 
 namespace thechess {
@@ -26,8 +26,7 @@ using model::GamePtr;
 
 class GameWidgetImpl;
 
-class GameWidget : public Wt::WCompositeWidget
-{
+class GameWidget : public Wt::WCompositeWidget {
 public:
     GameWidget(GamePtr game, Wt::WContainerWidget* parent=0);
 private:

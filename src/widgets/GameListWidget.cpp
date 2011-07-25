@@ -48,12 +48,10 @@ const int comment_column = 8;
 
 const int game_in_tuple = 0;
 
-class QM : public BaseQM
-{
+class QM : public BaseQM {
 public:
     QM(const Q& query, Wt::WObject *parent=0) :
-    BaseQM(parent)
-    {
+        BaseQM(parent) {
         setQuery(query);
         addColumn("G.id", tr("tc.common.number"));
         addColumn("Wh.username", tr("tc.game.white"));
@@ -67,49 +65,45 @@ public:
     }
 
     boost::any data(const Wt::WModelIndex& index,
-        int role=Wt::DisplayRole) const
-    {
+                    int role=Wt::DisplayRole) const {
         dbo::Transaction t(tApp->session());
         GamePtr game = resultRow(index.row()).get<game_in_tuple>();
-        if (role == Wt::DisplayRole)
-        {
-            if (index.column() == state_column)
+        if (role == Wt::DisplayRole) {
+            if (index.column() == state_column) {
                 return game->str_state();
-            else if (index.column() == moves_size_column)
+            } else if (index.column() == moves_size_column) {
                 return game->human_size();
-            else if (index.column() == real_rating_column)
+            } else if (index.column() == real_rating_column) {
                 return game->real_rating();
-        }
-        else if (role == Wt::InternalPathRole)
-        {
+            }
+        } else if (role == Wt::InternalPathRole) {
             UserPtr user;
-            if (index.column() == n_column)
+            if (index.column() == n_column) {
                 return str(boost::format("/game/%i/") % game.id());
-            else if (index.column() == white_column)
+            } else if (index.column() == white_column) {
                 user = game->white();
-            else if (index.column() == black_column)
+            } else if (index.column() == black_column) {
                 user = game->black();
-            else if (index.column() == winner_column)
+            } else if (index.column() == winner_column) {
                 user = game->winner();
-            if (user.id() > 0) // FIXME http://redmine.webtoolkit.eu/issues/909
+            }
+            if (user.id() > 0) { // FIXME http://redmine.webtoolkit.eu/issues/909
                 return str(boost::format("/user/%i/") % user.id());
+            }
         }
         t.commit();
         return BaseQM::data(index, role);
     }
 
-    static Wt::WString tr(const char* key)
-    {
+    static Wt::WString tr(const char* key) {
         return Wt::WString::tr(key);
     }
 };
 
-class GameListWidgetImpl : public Wt::WContainerWidget
-{
+class GameListWidgetImpl : public Wt::WContainerWidget {
 public:
     GameListWidgetImpl() :
-    Wt::WContainerWidget()
-    {
+        Wt::WContainerWidget() {
         manager_();
         query_model_ = new QM(query(), this);
 
@@ -127,22 +121,19 @@ public:
         table_view_->setColumnWidth(comment_column, 120);
     }
 
-    static Q all_games()
-    {
+    static Q all_games() {
         return tApp->session()
-            .query<Result>("select G, Wh.username, B.username, Wi.username "
-            "from thechess_game G "
-            "left join thechess_user Wh on G.white_id=Wh.id "
-            "left join thechess_user B on G.black_id=B.id "
-            "left join thechess_user Wi on G.winner_game_id=Wi.id ");
+               .query<Result>("select G, Wh.username, B.username, Wi.username "
+                              "from thechess_game G "
+                              "left join thechess_user Wh on G.white_id=Wh.id "
+                              "left join thechess_user B on G.black_id=B.id "
+                              "left join thechess_user Wi on G.winner_game_id=Wi.id ");
     }
 
-    Q query()
-    {
+    Q query() {
         dbo::Transaction t(tApp->session());
         Q q = all_games();
-        if (only_my_->isChecked() && tApp->user())
-        {
+        if (only_my_->isChecked() && tApp->user()) {
             int id = tApp->user()->id();
             q.where("G.white_id = ? or G.black_id = ? or G.init_game_id = ?")
             .bind(id).bind(id).bind(id);
@@ -157,32 +148,27 @@ private:
     Wt::WTableView* table_view_;
     Wt::WCheckBox* only_my_;
 
-    void manager_()
-    {
+    void manager_() {
         only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"), this);
         only_my_->changed().connect(this, &GameListWidgetImpl::apply_);
-        if (!tApp->user())
-        {
+        if (!tApp->user()) {
             only_my_->setEnabled(false);
         }
-        if (!tApp->environment().ajax())
-        {
+        if (!tApp->environment().ajax()) {
             Wt::WPushButton* apply_button =
                 new Wt::WPushButton(tr("tc.common.Apply"), this);
             apply_button->clicked().connect(this, &GameListWidgetImpl::apply_);
         }
     }
 
-    void apply_()
-    {
+    void apply_() {
         query_model_->setQuery(query(), /* keep_columns */ true);
     }
 
 };
 
 GameListWidget::GameListWidget(Wt::WContainerWidget* parent) :
-WCompositeWidget(parent)
-{
+    WCompositeWidget(parent) {
     impl_ = new GameListWidgetImpl();
     setImplementation(impl_);
 }

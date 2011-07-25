@@ -28,39 +28,30 @@ namespace widgets {
 using namespace model;
 
 GameCreateWidget::GameCreateWidget(UserPtr user,
-    Wt::WContainerWidget* p) :
-Wt::WContainerWidget(p), with_user_(true), user_(user)
-{
+                                   Wt::WContainerWidget* p) :
+    Wt::WContainerWidget(p), with_user_(true), user_(user) {
     dbo::Transaction t(tApp->session());
     new Wt::WText(tr("tc.game.Competitor")
-        .arg(user->username()), this);
-    if (!tApp->user())
-    {
+                  .arg(user->username()), this);
+    if (!tApp->user()) {
         new PleaseLoginWidget(this);
-    }
-    else
-    {
+    } else {
         print_();
     }
     t.commit();
 }
 
 GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :
-Wt::WContainerWidget(p), with_user_(false)
-{
+    Wt::WContainerWidget(p), with_user_(false) {
     new Wt::WText(tr("tc.game.Challenge"), this);
-    if (!tApp->user())
-    {
+    if (!tApp->user()) {
         new PleaseLoginWidget(this);
-    }
-    else
-    {
+    } else {
         print_();
     }
 }
 
-void GameCreateWidget::print_()
-{
+void GameCreateWidget::print_() {
     GameParameters gp(true);
     gpw_ = new GameParametersWidget(&gp, this);
 
@@ -75,38 +66,29 @@ void GameCreateWidget::print_()
     ok_->clicked().connect(this, &GameCreateWidget::button_handler_);
 }
 
-void GameCreateWidget::button_handler_()
-{
+void GameCreateWidget::button_handler_() {
     dbo::Transaction t(tApp->session());
     GamePtr game = tApp->session().add(new Game(true));
     gpw_->apply_parameters(game.modify());
     chess::Color color = selected_color_();
-    if (with_user_)
-    {
+    if (with_user_) {
         game.modify()->propose_game(tApp->user(), user_, color);
-    }
-    else
-    {
+    } else {
         game.modify()->propose_challenge(tApp->user(), color);
     }
     t.commit();
     ThechessNotifier::app_emit(Object(UserObject, tApp->user().id()));
-    if (with_user_)
-    {
+    if (with_user_) {
         ThechessNotifier::app_emit(Object(UserObject, user_.id()));
     }
     tApp->view(game);
 }
 
-chess::Color GameCreateWidget::selected_color_() const
-{
+chess::Color GameCreateWidget::selected_color_() const {
     chess::Color color = chess::color_null;
-    if (color_->currentIndex() == 1)
-    {
+    if (color_->currentIndex() == 1) {
         color = chess::white;
-    }
-    else if (color_->currentIndex() == 2)
-    {
+    } else if (color_->currentIndex() == 2) {
         color = chess::black;
     }
     return color;

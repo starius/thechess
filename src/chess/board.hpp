@@ -12,9 +12,9 @@
 #define THECHESS_BOARD_H_
 
 namespace thechess {
-    namespace chess {
-        class Board;
-    }
+namespace chess {
+class Board;
+}
 }
 
 #include <string>
@@ -34,20 +34,20 @@ const int fields_size = 34;
 typedef unsigned char byte;
 typedef byte Fields[34];
 
-enum FinishState
-{
+enum FinishState {
     nothing = 0,
     checkmate = 1, // мат
     stalemate = 2  // пат
 };
 
-class Board
-{
+class Board {
 public:
     void init_chessmans(Yname y, Color color);
     void init_pawns(Yname y, Color color);
     Board();
-    const Fields& fields() const { return fields_; }
+    const Fields& fields() const {
+        return fields_;
+    }
 
     bool isset(Xy xy) const;
     Color color(Xy xy) const;
@@ -66,16 +66,21 @@ public:
     bool test_attack(Move move) const;
     FinishState test_end() const;
 
-    const std::string to_string() const
-        { return std::string((char*)fields_, sizeof(fields_)); }
+    const std::string to_string() const {
+        return std::string((char*)fields_, sizeof(fields_));
+    }
     const std::string to_table() const;
 
     Xy some_target(Xy from) const;
     Xy some_source(Xy to) const;
     Move some_move() const;
-    bool can_move(Xy from) const { return some_target(from) != xy_null; }
+    bool can_move(Xy from) const {
+        return some_target(from) != xy_null;
+    }
     bool test_shah(Color color) const;
-    bool test_shah() const { return test_shah(order()); }
+    bool test_shah() const {
+        return test_shah(order());
+    }
     Xy find_king(Color c) const;
 
     bool test_takes(const Move move) const;
@@ -106,7 +111,7 @@ private:
     void fen_pieces(std::ostream& out) const;
     void fen_castling(std::ostream& out) const;
 
-friend void run_tests();
+    friend void run_tests();
 };
 
 }

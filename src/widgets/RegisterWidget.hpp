@@ -13,16 +13,15 @@
 #include <Wt/WContainerWidget>
 
 namespace Wt {
-    class WPushButton;
-    class WLineEdit;
-    class WTable;
+class WPushButton;
+class WLineEdit;
+class WTable;
 }
 
 namespace thechess {
 namespace widgets {
 
-class RegisterWidget : public Wt::WContainerWidget
-{
+class RegisterWidget : public Wt::WContainerWidget {
 public:
     RegisterWidget(Wt::WContainerWidget *parent=0);
 

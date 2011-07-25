@@ -15,8 +15,7 @@
 namespace thechess {
 namespace widgets {
 
-class PleaseLoginWidget : public Wt::WContainerWidget
-{
+class PleaseLoginWidget : public Wt::WContainerWidget {
 public:
     PleaseLoginWidget(Wt::WContainerWidget* parent=0);
 private:

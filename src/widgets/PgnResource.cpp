@@ -22,46 +22,36 @@ namespace widgets {
 using namespace model;
 
 PgnResource::PgnResource(GamePtr game, ThechessServer& server, Wt::WObject* p):
-Wt::WResource(p), game_(game), session_(server.pool())
-{
+    Wt::WResource(p), game_(game), session_(server.pool()) {
     suggestFileName(boost::lexical_cast<std::string>(game_.id()) + ".pgn");
 }
 
 PgnResource::PgnResource(ThechessServer& server, Wt::WObject* p):
-Wt::WResource(p), session_(server.pool())
-{
+    Wt::WResource(p), session_(server.pool()) {
     suggestFileName("none.pgn"); // FIXME http://redmine.webtoolkit.eu/issues/920
 }
 
-PgnResource::~PgnResource()
-{
+PgnResource::~PgnResource() {
     beingDeleted();
 }
 
 void PgnResource::handleRequest(const Wt::Http::Request& request,
-    Wt::Http::Response& response)
-{
+                                Wt::Http::Response& response) {
     dbo::Transaction t(session_);
     GamePtr g;
     const std::string* game_id_str = request.getParameter("game");
-    if (game_id_str)
-    {
+    if (game_id_str) {
         suggestFileName((*game_id_str) + ".pgn");
-        try
-        {
+        try {
             int game_id = boost::lexical_cast<int>(*game_id_str);
             g = session_.load<Game>(game_id);
-        }
-        catch (...)
+        } catch (...)
         { }
-    }
-    else if (game_)
-    {
+    } else if (game_) {
         g = game_;
         g.reread();
     }
-    if (!g)
-    {
+    if (!g) {
         suggestFileName("none.pgn");
         response.out() << "No such game" << std::endl;
         return;

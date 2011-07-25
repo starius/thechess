@@ -20,9 +20,9 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 namespace model {
-    class CookieSession;
-    typedef dbo::ptr<CookieSession> CookieSessionPtr;
-    typedef dbo::collection<CookieSessionPtr> CookieSessions;
+class CookieSession;
+typedef dbo::ptr<CookieSession> CookieSessionPtr;
+typedef dbo::collection<CookieSessionPtr> CookieSessions;
 }
 }
 
@@ -32,27 +32,35 @@ namespace model {
 namespace thechess {
 namespace model {
 
-class CookieSession
-{
+class CookieSession {
 public:
     CookieSession();
     CookieSession(const std::string& cookie_id);
 
     template<class Action>
-    void persist(Action& a)
-    {
+    void persist(Action& a) {
         dbo::belongsTo(a, user_, "user");
         dbo::id(a, cookie_id_, "cookie_id");
         dbo::field(a, used_, "used");
     }
 
-    const std::string& cookie_id() const { return cookie_id_; }
+    const std::string& cookie_id() const {
+        return cookie_id_;
+    }
 
-    UserPtr user() const { return user_; }
-    void set_user(UserPtr user) { user_ = user; }
+    UserPtr user() const {
+        return user_;
+    }
+    void set_user(UserPtr user) {
+        user_ = user;
+    }
 
-    void use() { used_ = Wt::WDateTime::currentDateTime(); }
-    const Wt::WDateTime& used() const { return used_; }
+    void use() {
+        used_ = Wt::WDateTime::currentDateTime();
+    }
+    const Wt::WDateTime& used() const {
+        return used_;
+    }
 
 private:
     UserPtr user_;
@@ -68,16 +76,16 @@ namespace Dbo {
 
 template<>
 struct dbo_traits<thechess::model::CookieSession> :
-public dbo_default_traits
-{
+    public dbo_default_traits {
     typedef std::string IdType;
 
-    static IdType invalidId()
-    {
+    static IdType invalidId() {
         return std::string();
     }
 
-    static const char *surrogateIdField() { return 0; }
+    static const char *surrogateIdField() {
+        return 0;
+    }
 };
 
 }

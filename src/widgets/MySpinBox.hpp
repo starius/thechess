@@ -14,21 +14,19 @@
 #include <Wt/WDoubleSpinBox>
 
 namespace Wt {
-    class WContainerWidget;
+class WContainerWidget;
 }
 
 namespace thechess {
 namespace widgets {
 
-class MySpinBox : public Wt::WSpinBox
-{
+class MySpinBox : public Wt::WSpinBox {
 public:
     MySpinBox(Wt::WContainerWidget* parent=0);
     int value() const;
 };
 
-class MyDoubleSpinBox : public Wt::WDoubleSpinBox
-{
+class MyDoubleSpinBox : public Wt::WDoubleSpinBox {
 public:
     MyDoubleSpinBox(Wt::WContainerWidget* parent=0);
     double value() const;

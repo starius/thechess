@@ -19,8 +19,7 @@ namespace widgets {
 
 class CompetitionParametersWidget2;
 
-class CompetitionCreateWidget : public Wt::WContainerWidget
-{
+class CompetitionCreateWidget : public Wt::WContainerWidget {
 public:
     CompetitionCreateWidget(Wt::WContainerWidget* p=0);
     CompetitionCreateWidget(model::CompetitionPtr c, Wt::WContainerWidget* p=0);

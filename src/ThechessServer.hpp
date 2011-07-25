@@ -23,8 +23,7 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 
-class ThechessServer : public Wt::WServer
-{
+class ThechessServer : public Wt::WServer {
 public:
     ThechessServer(int argc, char **argv);
     const ThechessOptions& options() const;

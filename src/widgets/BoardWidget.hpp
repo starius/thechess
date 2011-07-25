@@ -24,7 +24,7 @@
 #include "chess/field.hpp"
 
 namespace Wt {
-  class WContainerWidget;
+class WContainerWidget;
 }
 
 namespace thechess {
@@ -34,12 +34,11 @@ namespace widgets {
 class BoardWidgetImpl;
 
 
-class BoardWidget : public Wt::WCompositeWidget
-{
+class BoardWidget : public Wt::WCompositeWidget {
 public:
     BoardWidget(bool big=false, bool active=false, chess::Color bottom=chess::white,
-        const chess::Board& board=chess::Board(),
-        Wt::WContainerWidget *parent=0);
+                const chess::Board& board=chess::Board(),
+                Wt::WContainerWidget *parent=0);
 
     static std::string image(chess::Field field, bool big=false);
 

@@ -24,8 +24,7 @@ namespace thechess {
 
 class ThechessServer;
 
-class TaskTracker
-{
+class TaskTracker {
 public:
     TaskTracker(ThechessServer& server);
     ~TaskTracker();

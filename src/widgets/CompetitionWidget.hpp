@@ -19,11 +19,10 @@
 namespace thechess {
 namespace widgets {
 
-class CompetitionWidget : public Wt::WTemplate, public Notifiable
-{
+class CompetitionWidget : public Wt::WTemplate, public Notifiable {
 public:
     CompetitionWidget(model::CompetitionPtr competition,
-        Wt::WContainerWidget* p=0);
+                      Wt::WContainerWidget* p=0);
 
     virtual void notify();
 

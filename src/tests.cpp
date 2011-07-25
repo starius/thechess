@@ -29,8 +29,7 @@ namespace dbo = Wt::Dbo;
 namespace thechess {
 namespace chess {
 
-void run_tests()
-{
+void run_tests() {
     Board test_board;
 
     assert(test_board.isset(Xy(x_e, y_2)) == true);
@@ -66,8 +65,7 @@ void run_tests()
     // rand (binomial test, p=q=1/2)
     const int n = 10000;
     int sum = 0;
-    for (int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++) {
         sum += random::rr(2);
     }
     int sigma = sqrt(n*0.5*0.5);

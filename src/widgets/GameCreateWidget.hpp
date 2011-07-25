@@ -18,7 +18,7 @@ namespace dbo = Wt::Dbo;
 #include "chess/field.hpp"
 
 namespace Wt {
-    class WComboBox;
+class WComboBox;
 };
 
 namespace thechess {
@@ -28,8 +28,7 @@ using model::UserPtr;
 
 class GameParametersWidget;
 
-class GameCreateWidget : public Wt::WContainerWidget
-{
+class GameCreateWidget : public Wt::WContainerWidget {
 public:
     GameCreateWidget(UserPtr user, Wt::WContainerWidget* p=0);
     GameCreateWidget(Wt::WContainerWidget* p=0);

@@ -13,7 +13,7 @@
 #include <Wt/WCompositeWidget>
 
 namespace Wt {
-    class WContainerWidget;
+class WContainerWidget;
 }
 
 namespace thechess {
@@ -21,8 +21,7 @@ namespace widgets {
 
 class GameListWidgetImpl;
 
-class GameListWidget : public Wt::WCompositeWidget
-{
+class GameListWidget : public Wt::WCompositeWidget {
 public:
     GameListWidget(Wt::WContainerWidget* parent=0);
 private:

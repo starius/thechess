@@ -13,11 +13,9 @@
 
 #include "utils.hpp"
 
-namespace thechess
-{
+namespace thechess {
 
-std::string expand_path(const std::string& path)
-{
+std::string expand_path(const std::string& path) {
     wordexp_t exp_result;
     wordexp(path.c_str(), &exp_result, 0);
     std::string result(exp_result.we_wordv[0]);
@@ -25,13 +23,10 @@ std::string expand_path(const std::string& path)
     return result;
 }
 
-std::string first_file(const char* const files[], const int files_size)
-{
-    for (int i=0; i < files_size; i++)
-    {
+std::string first_file(const char* const files[], const int files_size) {
+    for (int i=0; i < files_size; i++) {
         std::string filename = expand_path(files[i]);
-        if (std::ifstream(filename.c_str()))
-        {
+        if (std::ifstream(filename.c_str())) {
             return filename;
         }
     }
@@ -39,18 +34,14 @@ std::string first_file(const char* const files[], const int files_size)
 }
 
 PlainTextWritter::PlainTextWritter(std::ostream& out, const short cpl):
-out_(out), cpl_(cpl), current_cpl_(0)
+    out_(out), cpl_(cpl), current_cpl_(0)
 { }
 
-void PlainTextWritter::write_word(const std::string& word)
-{
-    if (current_cpl_ + word.length() > cpl_)
-    {
+void PlainTextWritter::write_word(const std::string& word) {
+    if (current_cpl_ + word.length() > cpl_) {
         out_ << std::endl;
         current_cpl_ = 0;
-    }
-    else if (current_cpl_)
-    {
+    } else if (current_cpl_) {
         out_ << ' ';
         current_cpl_ += 1;
     }

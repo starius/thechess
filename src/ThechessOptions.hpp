@@ -16,11 +16,9 @@
 
 namespace thechess {
 
-class ThechessOptions
-{
+class ThechessOptions {
 public:
-    enum DatabaseType
-    {
+    enum DatabaseType {
         Postgres,
         Sqlite3
     };

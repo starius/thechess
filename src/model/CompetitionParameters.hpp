@@ -16,7 +16,7 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 namespace model {
-    class CompetitionParameters;
+class CompetitionParameters;
 }
 }
 
@@ -28,8 +28,7 @@ namespace model {
 namespace thechess {
 namespace model {
 
-class CompetitionParameters : public GameParameters
-{
+class CompetitionParameters : public GameParameters {
 public:
     typedef CompetitionType Type;
 
@@ -37,8 +36,7 @@ public:
     CompetitionParameters(bool);
 
     template<class Action>
-    void persist(Action& a)
-    {
+    void persist(Action& a) {
         GameParameters::persist(a);
         dbo::field(a, type_, "type");
         dbo::field(a, min_rating_, "min_rating");
@@ -57,44 +55,104 @@ public:
         dbo::field(a, increment_substages_, "increment_substages");
     }
 
-    Type type() const { return type_; }
-    void set_type(Type v) { type_ = v; }
+    Type type() const {
+        return type_;
+    }
+    void set_type(Type v) {
+        type_ = v;
+    }
 
-    int min_rating() const { return min_rating_; }
-    void set_min_rating(int v) { min_rating_ = v; }
-    int max_rating() const { return max_rating_; }
-    void set_max_rating(int v) { max_rating_ = v; }
+    int min_rating() const {
+        return min_rating_;
+    }
+    void set_min_rating(int v) {
+        min_rating_ = v;
+    }
+    int max_rating() const {
+        return max_rating_;
+    }
+    void set_max_rating(int v) {
+        max_rating_ = v;
+    }
 
-    Classification min_classification() const { return min_classification_; }
-    void set_min_classification(Classification v) { min_classification_ = v; }
-    Classification max_classification() const { return max_classification_; }
-    void set_max_classification(Classification v) { max_classification_ = v; }
+    Classification min_classification() const {
+        return min_classification_;
+    }
+    void set_min_classification(Classification v) {
+        min_classification_ = v;
+    }
+    Classification max_classification() const {
+        return max_classification_;
+    }
+    void set_max_classification(Classification v) {
+        max_classification_ = v;
+    }
 
-    Td force_start_delay() const { return force_start_delay_; }
-    void set_force_start_delay(Td v) { force_start_delay_ = v; }
+    Td force_start_delay() const {
+        return force_start_delay_;
+    }
+    void set_force_start_delay(Td v) {
+        force_start_delay_ = v;
+    }
 
-    int min_users() const { return min_users_; }
-    void set_min_users(int v) { min_users_ = v; }
-    int max_users() const { return max_users_; }
-    void set_max_users(int v) { max_users_ = v; }
+    int min_users() const {
+        return min_users_;
+    }
+    void set_min_users(int v) {
+        min_users_ = v;
+    }
+    int max_users() const {
+        return max_users_;
+    }
+    void set_max_users(int v) {
+        max_users_ = v;
+    }
 
-    Td min_recruiting_time() const { return min_recruiting_time_; }
-    void set_min_recruiting_time(Td v) { min_recruiting_time_ = v; }
-    Td max_recruiting_time() const { return max_recruiting_time_; }
-    void set_max_recruiting_time(Td v) { max_recruiting_time_ = v; }
+    Td min_recruiting_time() const {
+        return min_recruiting_time_;
+    }
+    void set_min_recruiting_time(Td v) {
+        min_recruiting_time_ = v;
+    }
+    Td max_recruiting_time() const {
+        return max_recruiting_time_;
+    }
+    void set_max_recruiting_time(Td v) {
+        max_recruiting_time_ = v;
+    }
 
-    int max_simultaneous_games() const { return max_simultaneous_games_; }
-    void set_max_simultaneous_games(int v) { max_simultaneous_games_ = v; }
+    int max_simultaneous_games() const {
+        return max_simultaneous_games_;
+    }
+    void set_max_simultaneous_games(int v) {
+        max_simultaneous_games_ = v;
+    }
 
-    float games_factor() const { return games_factor_; }
-    void set_games_factor(float v) { games_factor_ = v; }
+    float games_factor() const {
+        return games_factor_;
+    }
+    void set_games_factor(float v) {
+        games_factor_ = v;
+    }
 
-    Td relax_time() const { return relax_time_; }
-    void set_relax_time(Td v) { relax_time_ = v; }
-    int min_substages() const { return min_substages_; }
-    void set_min_substages(int v) { min_substages_ = v; }
-    int increment_substages() const { return increment_substages_; }
-    void set_increment_substages(int v) { increment_substages_ = v; }
+    Td relax_time() const {
+        return relax_time_;
+    }
+    void set_relax_time(Td v) {
+        relax_time_ = v;
+    }
+    int min_substages() const {
+        return min_substages_;
+    }
+    void set_min_substages(int v) {
+        min_substages_ = v;
+    }
+    int increment_substages() const {
+        return increment_substages_;
+    }
+    void set_increment_substages(int v) {
+        increment_substages_ = v;
+    }
 
 private:
     Type type_;

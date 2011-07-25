@@ -24,8 +24,7 @@ namespace thechess {
 
 class TaskTracker;
 
-class ThechessSession : public dbo::Session
-{
+class ThechessSession : public dbo::Session {
 public:
     ThechessSession(dbo::FixedSqlConnectionPool& pool);
     void reconsider(TaskTracker& tracker);

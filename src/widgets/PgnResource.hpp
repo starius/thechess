@@ -19,15 +19,14 @@ namespace thechess {
 class ThechessServer;
 namespace widgets {
 
-class PgnResource : public Wt::WResource
-{
+class PgnResource : public Wt::WResource {
 public:
     PgnResource(model::GamePtr game, ThechessServer& server, Wt::WObject* p=0);
     PgnResource(ThechessServer& server, Wt::WObject* p=0);
     ~PgnResource();
 
     virtual void handleRequest(const Wt::Http::Request& request,
-        Wt::Http::Response& response);
+                               Wt::Http::Response& response);
 
 private:
     model::GamePtr game_;

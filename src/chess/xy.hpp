@@ -14,15 +14,14 @@
 #include <string>
 
 namespace thechess {
- namespace chess {
+namespace chess {
 
 class Xy;
 
 const char* const letters_abc = "abcdefgh";
 const char* const letters_123 = "12345678";
 
-enum Xname
-{
+enum Xname {
     x_end = 8,
     x_a = 0,    x_1 = 0,
     x_b = 1,    x_2 = 1,
@@ -34,8 +33,7 @@ enum Xname
     x_h = 7,    x_8 = 7
 };
 
-enum Yname
-{
+enum Yname {
     y_end = 8,
     y_1 = 0,
     y_2 = 1,
@@ -48,59 +46,90 @@ enum Yname
 };
 
 
-inline char x_char(Xname x)
-{
+inline char x_char(Xname x) {
     return letters_abc[(int)x];
 }
 
-inline char y_char(Yname y)
-{
+inline char y_char(Yname y) {
     return letters_123[(int)y];
 }
 
-inline std::string x_string(Xname x)
-{
+inline std::string x_string(Xname x) {
     return std::string(1, x_char(x));
 }
 
-inline std::string y_string(Yname y)
-{
+inline std::string y_string(Yname y) {
     return std::string(1, y_char(y));
 }
 
-class Xy
-{
+class Xy {
 public:
     Xy(Xname x, Yname y);
     Xy(unsigned x, unsigned y);
     Xy(unsigned i); // for rage creation
     Xy(); // no xy
-    bool operator==(const Xy& xy1) const { return i() == xy1.i(); }
-    bool operator!=(const Xy& xy1) const { return i() != xy1.i(); }
+    bool operator==(const Xy& xy1) const {
+        return i() == xy1.i();
+    }
+    bool operator!=(const Xy& xy1) const {
+        return i() != xy1.i();
+    }
 
-    Xname x() const { return (Xname)x_(); }
-    Yname y() const { return (Yname)y_(); }
-    void x(Xname v) { x_((unsigned)v); }
-    void y(Yname v) { y_((unsigned)v); }
+    Xname x() const {
+        return (Xname)x_();
+    }
+    Yname y() const {
+        return (Yname)y_();
+    }
+    void x(Xname v) {
+        x_((unsigned)v);
+    }
+    void y(Yname v) {
+        y_((unsigned)v);
+    }
 
-    unsigned i() const { return i_; }
-    void i(unsigned v) { i_ = v; }
+    unsigned i() const {
+        return i_;
+    }
+    void i(unsigned v) {
+        i_ = v;
+    }
 
-    unsigned x_() const { return i_ / 8; }
-    unsigned y_() const { return i_ % 8; }
-    void x_(unsigned v) { i_ = v * 8 + y_(); }
-    void y_(unsigned v) { i_ = x_() * 8 + v; }
+    unsigned x_() const {
+        return i_ / 8;
+    }
+    unsigned y_() const {
+        return i_ % 8;
+    }
+    void x_(unsigned v) {
+        i_ = v * 8 + y_();
+    }
+    void y_(unsigned v) {
+        i_ = x_() * 8 + v;
+    }
 
-    static Xy begin() { return Xy(0); };
-    static Xy end() { return Xy(64); };
-    Xy& operator++ () { i_ += 1; return *this; }
+    static Xy begin() {
+        return Xy(0);
+    };
+    static Xy end() {
+        return Xy(64);
+    };
+    Xy& operator++ () {
+        i_ += 1;
+        return *this;
+    }
 
-    operator int() const { return i_; }
-    operator unsigned() const { return i_; }
+    operator int() const {
+        return i_;
+    }
+    operator unsigned() const {
+        return i_;
+    }
 
-    std::string str() const
-        { return std::string(1, letters_abc[x_()]) +
-        std::string(1, letters_123[y_()]); }
+    std::string str() const {
+        return std::string(1, letters_abc[x_()]) +
+               std::string(1, letters_123[y_()]);
+    }
 
 protected:
     unsigned i_ : 7; // 0-63

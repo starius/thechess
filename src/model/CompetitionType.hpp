@@ -13,8 +13,7 @@
 namespace thechess {
 namespace model {
 
-enum CompetitionType
-{
+enum CompetitionType {
     CLASSICAL = 10,
     STAGED = 20,
     TEAM = 30

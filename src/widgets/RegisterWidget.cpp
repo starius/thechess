@@ -28,14 +28,13 @@ namespace widgets {
 using namespace model;
 
 RegisterWidget::RegisterWidget(Wt::WContainerWidget* parent) :
-Wt::WContainerWidget(parent)
-{
+    Wt::WContainerWidget(parent) {
     table_ = new Wt::WTable(this);
     Wt::WLabel* username_label = new Wt::WLabel(tr("tc.user.Username"),
-        table_->elementAt(0,0));
+            table_->elementAt(0,0));
     username_ = new Wt::WLineEdit(table_->elementAt(0, 1));
     Wt::WLabel* password_label = new Wt::WLabel(tr("tc.user.Password"),
-        table_->elementAt(1,0));
+            table_->elementAt(1,0));
     password_ = new Wt::WLineEdit(table_->elementAt(1, 1));
     password_->setEchoMode(Wt::WLineEdit::Password);
 
@@ -59,31 +58,24 @@ Wt::WContainerWidget(parent)
     button_->clicked().connect(this, &RegisterWidget::try_register_);
 }
 
-void RegisterWidget::try_register_()
-{
+void RegisterWidget::try_register_() {
     username_error_->setText(tr(""));
     Wt::WValidator::State Valid = Wt::WValidator::Valid;
     bool ok = true;
-    if (username_->validate() != Valid)
-    {
+    if (username_->validate() != Valid) {
         ok = false;
     }
-    if (password_->validate() != Valid)
-    {
+    if (password_->validate() != Valid) {
         ok = false;
     }
-    if (ok)
-    {
+    if (ok) {
         dbo::Transaction t(tApp->session());
         UserPtr check_username = tApp->session().find<User>()
-        .where("username = ?")
-        .bind(username_->text());
-        if (check_username)
-        {
+                                 .where("username = ?")
+                                 .bind(username_->text());
+        if (check_username) {
             username_error_->setText(tr("thechess.already_used"));
-        }
-        else
-        {
+        } else {
             User* u = new User(true);
             u->set_username(username_->text());
             u->set_password(password_->text().toUTF8());

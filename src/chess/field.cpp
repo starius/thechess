@@ -16,15 +16,13 @@ namespace chess {
 
 
 Field::Field(Color color, Chessman chessman) :
-    color_(color), chessman_(chessman)
-{
+    color_(color), chessman_(chessman) {
 }
 
-Wt::WString color2str(Color color)
-{
+Wt::WString color2str(Color color) {
     return (color == white) ? Wt::WString::tr("tc.game.white") :
-        ((color == black) ? Wt::WString::tr("tc.game.black") :
-        Wt::WString::tr("thechess.nocolor"));
+           ((color == black) ? Wt::WString::tr("tc.game.black") :
+            Wt::WString::tr("thechess.nocolor"));
 }
 
 }

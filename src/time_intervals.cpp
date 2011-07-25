@@ -14,58 +14,47 @@ namespace thechess {
 
 static Wt::WDateTime time(Wt::WDateTime::currentDateTime());
 
-std::string td2str(const Td& td)
-{
+std::string td2str(const Td& td) {
     return ptime::to_simple_string(ptime::seconds(td.total_seconds()));
 }
 
-Td operator -(const Wt::WDateTime& a, const Wt::WDateTime& b)
-{
+Td operator -(const Wt::WDateTime& a, const Wt::WDateTime& b) {
     return a.toPosixTime() - b.toPosixTime();
 }
 
-Wt::WDateTime operator +(const Wt::WDateTime& a, const Td& b)
-{
+Wt::WDateTime operator +(const Wt::WDateTime& a, const Td& b) {
     return Wt::WDateTime::fromPosixTime(a.toPosixTime() + b);
 }
 
-Wt::WDateTime operator -(const Wt::WDateTime& a, const Td& b)
-{
+Wt::WDateTime operator -(const Wt::WDateTime& a, const Td& b) {
     return a + (-b);
 }
 
-Wt::WDateTime& operator +=(Wt::WDateTime& a, const Td& b)
-{
+Wt::WDateTime& operator +=(Wt::WDateTime& a, const Td& b) {
     return a = a + b;
 }
 
-Wt::WDateTime& operator -=(Wt::WDateTime& a, const Td& b)
-{
+Wt::WDateTime& operator -=(Wt::WDateTime& a, const Td& b) {
     return a = a - b;
 }
 
-Td operator /(const Td& a, const double& b)
-{
+Td operator /(const Td& a, const double& b) {
     return ptime::milliseconds(double(a.total_milliseconds()) /  b);
 }
 
-Td operator *(const Td& a, const double& b)
-{
+Td operator *(const Td& a, const double& b) {
     return ptime::milliseconds(double(a.total_milliseconds()) *  b);
 }
 
-Td operator *(const double& b, const Td& a)
-{
+Td operator *(const double& b, const Td& a) {
     return a * b;
 }
 
-double operator /(const Td& a, const Td& b)
-{
+double operator /(const Td& a, const Td& b) {
     return double(a.total_milliseconds()) / double(b.total_milliseconds());
 }
 
-Wt::WDateTime now()
-{
+Wt::WDateTime now() {
     return Wt::WDateTime::currentDateTime();
 }
 

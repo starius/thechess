@@ -15,16 +15,14 @@
 
 using namespace thechess;
 
-int main(int argc, char **argv)
-{
-    #ifdef RUN_TESTS
+int main(int argc, char **argv) {
+#ifdef RUN_TESTS
     thechess::chess::run_tests();
-    #endif // RUN_TESTS
+#endif // RUN_TESTS
 
     ThechessServer server(argc, argv);
 
-    if (server.start())
-    {
+    if (server.start()) {
         Wt::WServer::waitForShutdown();
         server.stop();
     }

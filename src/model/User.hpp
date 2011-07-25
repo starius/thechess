@@ -24,10 +24,10 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 namespace model {
-    class User;
-    typedef dbo::ptr<User> UserPtr;
-    typedef dbo::collection<UserPtr> Users;
-    typedef std::vector<UserPtr> UsersVector;
+class User;
+typedef dbo::ptr<User> UserPtr;
+typedef dbo::collection<UserPtr> Users;
+typedef std::vector<UserPtr> UsersVector;
 }
 }
 
@@ -41,8 +41,7 @@ namespace model {
 namespace thechess {
 namespace model {
 
-class User : public dbo::Dbo<User>
-{
+class User : public dbo::Dbo<User> {
 public:
     enum Rights {
         admin = 5,
@@ -54,8 +53,7 @@ public:
     User(bool);
 
     template<class Action>
-    void persist(Action& a)
-    {
+    void persist(Action& a) {
         dbo::field(a, username_, "username");
         dbo::field(a, password_, "password");
         dbo::field(a, rights_, "rights");
@@ -81,14 +79,26 @@ public:
 
     void set_password(const std::string& password);
     bool test_password(const std::string& password) const;
-    const Wt::WString& username() const { return username_; }
-    void set_username(Wt::WString username) { username_ = username; }
-    Rights rights() const { return rights_; }
-    void set_rights(Rights rights) { rights_ = rights; }
+    const Wt::WString& username() const {
+        return username_;
+    }
+    void set_username(Wt::WString username) {
+        username_ = username;
+    }
+    Rights rights() const {
+        return rights_;
+    }
+    void set_rights(Rights rights) {
+        rights_ = rights;
+    }
     void login();
     void logout();
-    bool online() const { return sessions_ != 0; }
-    const Td& online_time() const { return online_time_; }
+    bool online() const {
+        return sessions_ != 0;
+    }
+    const Td& online_time() const {
+        return online_time_;
+    }
     dbo::Query<GamePtr> games() const;
 
     bool can_set_classification(UserPtr user) const;
@@ -101,8 +111,12 @@ public:
     bool classification_confirmed() const;
     UserPtr classification_confirmer() const;
 
-    const EloPlayer& games_stat() const { return games_stat_; }
-    EloPlayer& games_stat() { return games_stat_; }
+    const EloPlayer& games_stat() const {
+        return games_stat_;
+    }
+    EloPlayer& games_stat() {
+        return games_stat_;
+    }
 
 private:
     Wt::WString username_;

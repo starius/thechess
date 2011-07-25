@@ -20,8 +20,7 @@
 namespace thechess {
 namespace model {
 
-class UserPair
-{
+class UserPair {
 public:
     UserPair();
     UserPair(UserPtr first, UserPtr second);
@@ -29,17 +28,22 @@ public:
     bool operator<(const UserPair& other) const;
     bool operator==(const UserPair& other) const;
     bool operator!=(const UserPair& other) const;
-    operator bool() const { return first_ && second_; }
-    UserPtr first() const { return first_; }
-    UserPtr second() const {return second_; }
+    operator bool() const {
+        return first_ && second_;
+    }
+    UserPtr first() const {
+        return first_;
+    }
+    UserPtr second() const {
+        return second_;
+    }
 
 private:
     UserPtr first_;
     UserPtr second_;
 };
 
-class StagedCompetition
-{
+class StagedCompetition {
 public:
     enum State {
         LOSER, PAIRED, WINNER, UNPAIRED
@@ -54,12 +58,24 @@ public:
     StagedCompetition(const Competition* competition);
     void process(Competition* competition, Objects& objects);
 
-    const States& states() const { return states_; }
-    const Stages& stages() const { return stages_; }
-    const Paires& paires() const { return paires_; }
-    const Games& games() const { return games_; }
-    const Winners& winners() const { return winners_; }
-    UserPtr winner() const { return winner_; }
+    const States& states() const {
+        return states_;
+    }
+    const Stages& stages() const {
+        return stages_;
+    }
+    const Paires& paires() const {
+        return paires_;
+    }
+    const Games& games() const {
+        return games_;
+    }
+    const Winners& winners() const {
+        return winners_;
+    }
+    UserPtr winner() const {
+        return winner_;
+    }
 
 private:
     const Competition* competition_;

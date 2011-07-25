@@ -42,12 +42,10 @@ const int ENDED_COLUMN = 1;
 const int RATING_AFTER_COLUMN = 2;
 const int COLUMNS = 3;
 
-class RatingModel : public BaseQM
-{
+class RatingModel : public BaseQM {
 public:
     RatingModel(UserPtr user, Wt::WObject *parent=0) :
-    BaseQM(parent), user_(user)
-    {
+        BaseQM(parent), user_(user) {
         dbo::Transaction t(tApp->session());
         dbo::Query<Result> query = tApp->session().find<Game>();
         query.where("white_id = ? or black_id = ?").bind(user_.id()).bind(user_.id());
@@ -57,25 +55,20 @@ public:
         addColumn("id", Wt::WString::tr("tc.common.number"));
         addColumn("ended", Wt::WString::tr("tc.game.ended"));
         addColumn("rating_after_white",
-            Wt::WString::tr("tc.user.rating_after"));
+                  Wt::WString::tr("tc.user.rating_after"));
         t.commit();
     }
 
     boost::any data(const Wt::WModelIndex& index,
-        int role=Wt::DisplayRole) const
-    {
-        if (index.column() == ENDED_COLUMN && role == Wt::DisplayRole)
-        {
+                    int role=Wt::DisplayRole) const {
+        if (index.column() == ENDED_COLUMN && role == Wt::DisplayRole) {
             GamePtr game = resultRow(index.row());
             return Wt::WDate(game->ended().date());
         }
-        if (index.column() == RATING_AFTER_COLUMN && role == Wt::DisplayRole)
-        {
+        if (index.column() == RATING_AFTER_COLUMN && role == Wt::DisplayRole) {
             GamePtr game = resultRow(index.row());
             return game->rating_after(game->color_of(user_));
-        }
-        else
-        {
+        } else {
             return BaseQM::data(index, role);
         }
     }
@@ -84,52 +77,41 @@ private:
     const UserPtr user_;
 };
 
-class MultiRatingModel : public Wt::WAbstractTableModel
-{
+class MultiRatingModel : public Wt::WAbstractTableModel {
 public:
     MultiRatingModel(Wt::WObject* parent=0):
-    Wt::WAbstractTableModel(parent), column_count_(0), row_count_(0)
-    {
+        Wt::WAbstractTableModel(parent), column_count_(0), row_count_(0) {
     }
 
-    ~MultiRatingModel()
-    {
-        BOOST_FOREACH(RatingModel* model, models_)
-        {
+    ~MultiRatingModel() {
+        BOOST_FOREACH(RatingModel* model, models_) {
             delete model;
         }
         models_.clear();
     }
 
-    void add_user(UserPtr user)
-    {
+    void add_user(UserPtr user) {
         RatingModel* model = new RatingModel(user, this);
         models_.push_back(model);
         column_count_ += COLUMNS;
         row_count_ = std::max(row_count_, model->rowCount());
     }
 
-    virtual int columnCount(const Wt::WModelIndex& /* parent */) const
-    {
+    virtual int columnCount(const Wt::WModelIndex& /* parent */) const {
         return column_count_;
     }
 
-    virtual int rowCount(const Wt::WModelIndex& /* parent */) const
-    {
+    virtual int rowCount(const Wt::WModelIndex& /* parent */) const {
         return row_count_;
     }
 
     boost::any data(const Wt::WModelIndex& index,
-        int role=Wt::DisplayRole) const
-    {
+                    int role=Wt::DisplayRole) const {
         RatingModel* model = models_[index.column() / COLUMNS];
         int column = index.column() % COLUMNS;
-        if (index.row() < model->rowCount())
-        {
+        if (index.row() < model->rowCount()) {
             return model->index(index.row(), column).data(role);
-        }
-        else if (index.column() % COLUMNS == ENDED_COLUMN)
-        {
+        } else if (index.column() % COLUMNS == ENDED_COLUMN) {
             return Wt::WDate::currentServerDate();
         }
         return "";
@@ -141,30 +123,25 @@ private:
     int row_count_;
 };
 
-class RatingChangesImpl : public Wt::WContainerWidget
-{
+class RatingChangesImpl : public Wt::WContainerWidget {
 public:
     RatingChangesImpl(UserPtr user=UserPtr()):
-    Wt::WContainerWidget(), number_of_users_(0)
-    {
+        Wt::WContainerWidget(), number_of_users_(0) {
         model_ = new MultiRatingModel(this);
         chart_ = new Wt::Chart::WCartesianChart(Wt::Chart::ScatterPlot, this);
         chart_->setModel(model_);
         chart_->setXSeriesColumn(ENDED_COLUMN); // useless
         chart_->axis(Wt::Chart::XAxis).setScale(Wt::Chart::DateScale);
         chart_->resize(400, 200);
-        if (!wApp->environment().ajax())
-        {
+        if (!wApp->environment().ajax()) {
             chart_->setPreferredMethod(Wt::WPaintedWidget::PngImage);
         }
-        if (user)
-        {
+        if (user) {
             add_user(user);
         }
     }
 
-    void add_user(UserPtr user)
-    {
+    void add_user(UserPtr user) {
         int shift = number_of_users_ * COLUMNS;
         int rating_after_column = RATING_AFTER_COLUMN + shift;
         int ended_column = ENDED_COLUMN + shift;
@@ -183,14 +160,12 @@ private:
 };
 
 RatingChanges::RatingChanges(UserPtr user, Wt::WContainerWidget* parent):
-Wt::WCompositeWidget(parent)
-{
+    Wt::WCompositeWidget(parent) {
     impl_ = new RatingChangesImpl(user);
     setImplementation(impl_);
 }
 
-void RatingChanges::add_user(UserPtr user)
-{
+void RatingChanges::add_user(UserPtr user) {
     impl_->add_user(user);
 }
 

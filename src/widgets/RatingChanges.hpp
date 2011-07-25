@@ -15,7 +15,7 @@
 #include "model/User.hpp"
 
 namespace Wt {
-  class WContainerWidget;
+class WContainerWidget;
 }
 
 namespace thechess {
@@ -25,8 +25,7 @@ using model::UserPtr;
 
 class RatingChangesImpl;
 
-class RatingChanges : public Wt::WCompositeWidget
-{
+class RatingChanges : public Wt::WCompositeWidget {
 public:
     RatingChanges(UserPtr user, Wt::WContainerWidget* parent=0);
     void add_user(UserPtr user);

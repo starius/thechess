@@ -15,7 +15,7 @@
 #include "model/Game.hpp"
 
 namespace Wt {
-    class WContainerWidget;
+class WContainerWidget;
 }
 
 namespace thechess {
@@ -24,8 +24,7 @@ namespace widgets {
 
 using model::GamePtr;
 
-class GameCountdown : public Wt::WViewWidget
-{
+class GameCountdown : public Wt::WViewWidget {
 public:
     GameCountdown(GamePtr game, Wt::WContainerWidget* parent=0);
 private:

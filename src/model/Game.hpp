@@ -23,10 +23,10 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 namespace model {
-    class Game;
-    typedef dbo::ptr<Game> GamePtr;
-    typedef dbo::collection<GamePtr> Games;
-    typedef std::vector<GamePtr> GamesVector;
+class Game;
+typedef dbo::ptr<Game> GamePtr;
+typedef dbo::collection<GamePtr> Games;
+typedef std::vector<GamePtr> GamesVector;
 }
 }
 
@@ -39,8 +39,7 @@ namespace model {
 namespace thechess {
 namespace model {
 
-class Game : public GameParameters, public dbo::Dbo<Game>
-{
+class Game : public GameParameters, public dbo::Dbo<Game> {
 public:
     enum State {
         proposed = 0,
@@ -64,8 +63,7 @@ public:
     Game(bool);
 
     template<class Action>
-    void persist(Action& a)
-    {
+    void persist(Action& a) {
         GameParameters::persist(a);
         dbo::field(a, state_, "state");
         dbo::belongsTo(a, white_, "white");
@@ -97,10 +95,10 @@ public:
     }
 
     void propose_game(UserPtr init, UserPtr u,
-        chess::Color c);
+                      chess::Color c);
     void propose_challenge(UserPtr init, chess::Color c);
     void make_competition_game(UserPtr white, UserPtr black,
-        CompetitionPtr competition, int competition_stage=-1, bool random=false);
+                               CompetitionPtr competition, int competition_stage=-1, bool random=false);
 
     void check(Objects& objects);
     Wt::WDateTime next_check() const;
@@ -125,10 +123,18 @@ public:
     bool can_pause_propose(const UserPtr user, const Td& td) const;
     void pause_propose(const UserPtr user, const Td& td);
     bool is_pause_proposed() const;
-    const UserPtr pause_proposer() const { return pause_proposer_; }
-    Td pause_limit() const { return pause_limit_; }
-    Td pause_proposed_td() const { return pause_proposed_td_; }
-    const Wt::WDateTime& pause_until() const { return pause_until_; }
+    const UserPtr pause_proposer() const {
+        return pause_proposer_;
+    }
+    Td pause_limit() const {
+        return pause_limit_;
+    }
+    Td pause_proposed_td() const {
+        return pause_proposed_td_;
+    }
+    const Wt::WDateTime& pause_until() const {
+        return pause_until_;
+    }
     Wt::WDateTime pause_started() const;
     bool can_pause_agree(const UserPtr user) const;
     void pause_agree(const UserPtr user);
@@ -139,8 +145,12 @@ public:
     bool can_mistake_propose(const UserPtr user, int mistake_move) const;
     void mistake_propose(const UserPtr user, int mistake_move);
     bool is_mistake_proposed() const;
-    const UserPtr mistake_proposer() const { return mistake_proposer_;}
-    int mistake_move() const { return mistake_move_; }
+    const UserPtr mistake_proposer() const {
+        return mistake_proposer_;
+    }
+    int mistake_move() const {
+        return mistake_move_;
+    }
     bool can_mistake_agree(const UserPtr user) const;
     void mistake_agree(const UserPtr user);
     bool can_mistake_discard(const UserPtr user) const;
@@ -148,8 +158,12 @@ public:
 
     bool can_draw_propose(const UserPtr user) const;
     void draw_propose(const UserPtr user);
-    const UserPtr draw_proposer() const { return draw_proposer_;}
-    bool is_draw_proposed() const { return draw_proposer_; }
+    const UserPtr draw_proposer() const {
+        return draw_proposer_;
+    }
+    bool is_draw_proposed() const {
+        return draw_proposer_;
+    }
     bool can_draw_agree(const UserPtr user) const;
     void draw_agree(const UserPtr user);
     bool can_draw_discard(const UserPtr user) const;
@@ -158,20 +172,32 @@ public:
     chess::Color order_color() const;
     UserPtr order_user() const;
 
-    UserPtr init() const { return init_; }
-    UserPtr white() const { return white_; }
-    UserPtr black() const { return black_; }
-    UserPtr winner() const { return winner_; }
+    UserPtr init() const {
+        return init_;
+    }
+    UserPtr white() const {
+        return white_;
+    }
+    UserPtr black() const {
+        return black_;
+    }
+    UserPtr winner() const {
+        return winner_;
+    }
     chess::Color color_of(const UserPtr user) const;
     bool is_member(const UserPtr user) const;
     UserPtr user_of(chess::Color color) const;
     UserPtr other_user(const UserPtr user) const;
 
-    int size() const { return moves_.size(); }
+    int size() const {
+        return moves_.size();
+    }
     int size_without_init() const;
     bool meet_first_draw() const;
     bool real_rating() const;
-    int human_size() const { return chess::Moves::size_to_human(size()); }
+    int human_size() const {
+        return chess::Moves::size_to_human(size());
+    }
 
     bool can_move(UserPtr user) const;
 
@@ -180,15 +206,29 @@ public:
     bool is_win() const;
     static const char* state2str_id(State state);
     Wt::WString str_state() const;
-    State state() const { return state_; }
+    State state() const {
+        return state_;
+    }
     Td limit_private(chess::Color color) const;
     Td limit_private(UserPtr user) const;
-    Td limit_private() const { return limit_private(order_color()); }
-    const Wt::WDateTime& created() const { return created_; }
-    const Wt::WDateTime& when_confirmed() const { return confirmed_; }
-    const Wt::WDateTime& started() const { return started_; }
-    const Wt::WDateTime& lastmove() const { return lastmove_; }
-    const Wt::WDateTime& ended() const { return ended_; }
+    Td limit_private() const {
+        return limit_private(order_color());
+    }
+    const Wt::WDateTime& created() const {
+        return created_;
+    }
+    const Wt::WDateTime& when_confirmed() const {
+        return confirmed_;
+    }
+    const Wt::WDateTime& started() const {
+        return started_;
+    }
+    const Wt::WDateTime& lastmove() const {
+        return lastmove_;
+    }
+    const Wt::WDateTime& ended() const {
+        return ended_;
+    }
 
     Td spent_time() const;
     Td spent_time(UserPtr user) const;
@@ -197,19 +237,27 @@ public:
     Td limit_private_now(UserPtr user) const;
     Td limit_std_now(UserPtr user) const;
 
-    bool colors_random() const { return colors_random_; }
+    bool colors_random() const {
+        return colors_random_;
+    }
 
     void add_move(const chess::Move& move,
-        const chess::Board& board_after);
+                  const chess::Board& board_after);
 
     int rating_after(chess::Color color) const;
 
-    const Wt::WString& comment() const { return comment_; }
+    const Wt::WString& comment() const {
+        return comment_;
+    }
     bool can_comment(const UserPtr user) const;
     void set_comment(const UserPtr user, const Wt::WString& t);
 
-    CompetitionPtr competition() const { return competition_; }
-    int competition_stage() const { return competition_stage_; }
+    CompetitionPtr competition() const {
+        return competition_;
+    }
+    int competition_stage() const {
+        return competition_stage_;
+    }
 
     void pgn(std::ostream& out, bool reduced=false) const;
 
@@ -249,8 +297,12 @@ private:
 
     Wt::WString comment_;
 
-    void set_white_(UserPtr user) { white_ = user; }
-    void set_black_(UserPtr user) { black_ = user; }
+    void set_white_(UserPtr user) {
+        white_ = user;
+    }
+    void set_black_(UserPtr user) {
+        black_ = user;
+    }
     void set_of_color_(UserPtr user, chess::Color color);
     void set_random_(UserPtr user1, UserPtr user2);
 

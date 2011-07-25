@@ -22,48 +22,41 @@ namespace thechess {
 namespace model {
 
 Object::Object(ObjectType ot, int i) :
-type(ot), id(i)
-{
+    type(ot), id(i) {
 }
 
-void Object::reread(dbo::Session& session) const
-{
+void Object::reread(dbo::Session& session) const {
     dbo::Transaction t(session);
-    if (type == GameObject)
-    {
+    if (type == GameObject) {
         session.load<Game>(id).reread();
     }
-    if (type == UserObject)
-    {
+    if (type == UserObject) {
         session.load<User>(id).reread();
     }
-    if (type == CompetitionObject)
-    {
+    if (type == CompetitionObject) {
         session.load<Competition>(id).reread();
     }
     t.commit();
 }
 
-Wt::WDateTime Object::process(Objects& objects, dbo::Session& session) const
-{
+Wt::WDateTime Object::process(Objects& objects, dbo::Session& session) const {
     Wt::WDateTime result;
-    if (type == GameObject)
-    {
+    if (type == GameObject) {
         GamePtr game = session.load<Game>(id);
         game.reread();
         game.modify()->check(objects);
         result = game->next_check();
     }
-    if (type == CompetitionObject)
-    {
+    if (type == CompetitionObject) {
         CompetitionPtr c = session.load<Competition>(id);
         c.reread();
         c.modify()->check(objects);
         result = c->next_check();
     }
     // FIXME: UserObject, CompetitionObject
-    if (result.isValid())
+    if (result.isValid()) {
         result += config::tracker::delay;
+    }
     return result;
 }
 

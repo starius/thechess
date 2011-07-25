@@ -22,10 +22,10 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 namespace model {
-    class Competition;
-    typedef dbo::ptr<Competition> CompetitionPtr;
-    typedef dbo::collection<CompetitionPtr> Competitions;
-    typedef std::vector<CompetitionPtr> CompetitionsVector;
+class Competition;
+typedef dbo::ptr<Competition> CompetitionPtr;
+typedef dbo::collection<CompetitionPtr> Competitions;
+typedef std::vector<CompetitionPtr> CompetitionsVector;
 }
 }
 
@@ -40,13 +40,11 @@ namespace model {
 
 typedef std::map<UserPtr, std::map<UserPtr, GamesVector> > GamesTable;
 
-class Competition : public CompetitionParameters, public dbo::Dbo<Competition>
-{
+class Competition : public CompetitionParameters, public dbo::Dbo<Competition> {
 public:
     typedef CompetitionType Type;
 
-    enum State
-    {
+    enum State {
         RECRUITING = 10,
         ACTIVE = 30,
         ENDED = 50,
@@ -59,12 +57,11 @@ public:
     static Wt::WString type2str(Type type);
     static bool all_ended(const GamesVector& games);
     static void wins_number(const GamesVector& games,
-        std::map<UserPtr, float>& wins);
+                            std::map<UserPtr, float>& wins);
     static UsersVector winners_of_games(const GamesVector& games);
 
     template<class Action>
-    void persist(Action& a)
-    {
+    void persist(Action& a) {
         CompetitionParameters::persist(a);
         dbo::field(a, state_, "state");
         dbo::field(a, name_, "name");
@@ -79,25 +76,49 @@ public:
         dbo::hasMany(a, winners_, dbo::ManyToMany, "winners_competition");
     }
 
-    State state() const { return state_; }
+    State state() const {
+        return state_;
+    }
     static const char* state2str(State state);
-    UserPtr init() const { return init_; }
+    UserPtr init() const {
+        return init_;
+    }
 
-    const Wt::WDateTime& created() const { return created_; }
-    const Wt::WDateTime& started() const { return started_; }
-    const Wt::WDateTime& ended() const { return ended_; }
+    const Wt::WDateTime& created() const {
+        return created_;
+    }
+    const Wt::WDateTime& started() const {
+        return started_;
+    }
+    const Wt::WDateTime& ended() const {
+        return ended_;
+    }
 
-    const Wt::WString& name() const { return name_; }
-    void set_name(const Wt::WString& v) { name_ = v; }
-    const Wt::WString& description() const { return description_; }
-    void set_description(const Wt::WString& v) { description_ = v; }
+    const Wt::WString& name() const {
+        return name_;
+    }
+    void set_name(const Wt::WString& v) {
+        name_ = v;
+    }
+    const Wt::WString& description() const {
+        return description_;
+    }
+    void set_description(const Wt::WString& v) {
+        description_ = v;
+    }
 
     bool is_member(UserPtr user) const;
     bool is_winner(UserPtr user) const;
 
-    const Users& members() const { return members_; }
-    const Games& games() const { return games_; }
-    const Users& winners() const { return winners_; }
+    const Users& members() const {
+        return members_;
+    }
+    const Games& games() const {
+        return games_;
+    }
+    const Users& winners() const {
+        return winners_;
+    }
 
     UsersVector members_vector() const;
     GamesVector games_vector() const;
@@ -112,7 +133,9 @@ public:
     Wt::WDateTime next_check() const;
 
     // methods of recruiting state
-    static bool can_create_competition(UserPtr /*user*/) { return true; }
+    static bool can_create_competition(UserPtr /*user*/) {
+        return true;
+    }
     void create_competition(UserPtr user);
 
     bool can_join(UserPtr user) const;
@@ -163,9 +186,9 @@ private:
     void finish_(const UsersVector& winners, Objects& objects);
 
     GamePtr create_game_(UserPtr white, UserPtr black, int stage=-1,
-        bool no_draw=false);
+                         bool no_draw=false);
 
-friend class StagedCompetition;
+    friend class StagedCompetition;
 };
 
 }

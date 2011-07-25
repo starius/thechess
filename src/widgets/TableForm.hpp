@@ -20,14 +20,13 @@
 namespace thechess {
 namespace widgets {
 
-class TableForm : public Wt::WTable
-{
+class TableForm : public Wt::WTable {
 public:
     TableForm(Wt::WContainerWidget* parent=0);
     void section(const Wt::WString& header);
     Wt::WContainerWidget* item(const Wt::WString& name,
-        const Wt::WString& description="",
-        Wt::WFormWidget* fw=0, Wt::WWidget* input=0, bool row=true);
+                               const Wt::WString& description="",
+                               Wt::WFormWidget* fw=0, Wt::WWidget* input=0, bool row=true);
     void show(Wt::WWidget* input);
     void hide(Wt::WWidget* input);
 

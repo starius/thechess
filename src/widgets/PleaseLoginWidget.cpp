@@ -20,8 +20,7 @@ namespace thechess {
 namespace widgets {
 
 PleaseLoginWidget::PleaseLoginWidget(Wt::WContainerWidget* parent) :
-Wt::WContainerWidget(parent)
-{
+    Wt::WContainerWidget(parent) {
     new Wt::WText(tr("tc.user.Please_login"), this);
     new Wt::WBreak(this);
     Wt::WPushButton* login = new Wt::WPushButton(tr("tc.user.Login"), this);
@@ -30,14 +29,12 @@ Wt::WContainerWidget(parent)
     reg->clicked().connect(this, &PleaseLoginWidget::register_);
 }
 
-void PleaseLoginWidget::login_()
-{
+void PleaseLoginWidget::login_() {
     clear();
     new LoginWidget(this);
 }
 
-void PleaseLoginWidget::register_()
-{
+void PleaseLoginWidget::register_() {
     clear();
     new RegisterWidget(this);
 }

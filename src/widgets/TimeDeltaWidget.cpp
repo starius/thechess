@@ -20,12 +20,10 @@ namespace widgets {
 const int intervals_size = 5;
 const Td intervals[5] = {second, minute, hour, day, week};
 
-class TimeDeltaWidgetImpl : public Wt::WContainerWidget
-{
+class TimeDeltaWidgetImpl : public Wt::WContainerWidget {
 public:
     TimeDeltaWidgetImpl(const Td& min, const Td& value, const Td& max) :
-    Wt::WContainerWidget(), min_(min), max_(max), interval_(second)
-    {
+        Wt::WContainerWidget(), min_(min), max_(max), interval_(second) {
         setInline(true);
         spin_box_ = new MyDoubleSpinBox(this);
         spin_box_->setRange(min.total_seconds(), max.total_seconds());
@@ -37,11 +35,9 @@ public:
         combo_box_->addItem(tr("tc.time.days"));
         combo_box_->addItem(tr("tc.time.weeks"));
         combo_box_->activated()
-            .connect(this, &TimeDeltaWidgetImpl::select_handler_);
-        for (int i = intervals_size - 1; i >= 0; i--)
-        {
-            if (value >= intervals[i])
-            {
+        .connect(this, &TimeDeltaWidgetImpl::select_handler_);
+        for (int i = intervals_size - 1; i >= 0; i--) {
+            if (value >= intervals[i]) {
                 combo_box_->setCurrentIndex(i);
                 select_handler_(i);
                 break;
@@ -49,13 +45,11 @@ public:
         }
     }
 
-    Td value() const
-    {
+    Td value() const {
         return spin_box_->value() * intervals[combo_box_->currentIndex()];
     }
 
-    Wt::WFormWidget* form_widget()
-    {
+    Wt::WFormWidget* form_widget() {
         return spin_box_;
     }
 
@@ -66,8 +60,7 @@ private:
     Td max_;
     Td interval_;
 
-    void select_handler_(int i)
-    {
+    void select_handler_(int i) {
         Td s = spin_box_->value() * interval_;
         interval_ = intervals[i];
         spin_box_->setRange(min_ / interval_, max_ / interval_);
@@ -77,21 +70,18 @@ private:
 
 
 TimeDeltaWidget::TimeDeltaWidget(const Td& min, const Td& value,
-    const Td& max, Wt::WContainerWidget* parent) :
-WCompositeWidget(parent)
-{
+                                 const Td& max, Wt::WContainerWidget* parent) :
+    WCompositeWidget(parent) {
     impl_ = new TimeDeltaWidgetImpl(min, value, max);
     setImplementation(impl_);
 }
 
-Td TimeDeltaWidget::value() const
-{
+Td TimeDeltaWidget::value() const {
     return impl_->value();
 }
 
 
-Wt::WFormWidget* TimeDeltaWidget::form_widget()
-{
+Wt::WFormWidget* TimeDeltaWidget::form_widget() {
     return impl_->form_widget();
 }
 

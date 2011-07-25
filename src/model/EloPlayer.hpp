@@ -26,16 +26,23 @@ namespace dbo = Wt::Dbo;
 namespace thechess {
 namespace model {
 
-class EloPlayer
-{
+class EloPlayer {
 public:
     EloPlayer();
     EloPlayer(bool);
 
-    const int& elo() const { return elo_; }
-    const int& all() const { return all_; }
-    const int& wins() const { return wins_; }
-    const int& fails() const { return fails_; }
+    const int& elo() const {
+        return elo_;
+    }
+    const int& all() const {
+        return all_;
+    }
+    const int& wins() const {
+        return wins_;
+    }
+    const int& fails() const {
+        return fails_;
+    }
     int draws() const;
 
     float K() const;
@@ -63,8 +70,7 @@ namespace Wt {
 namespace Dbo {
 
 template<class Action>
-void field(Action& a, thechess::model::EloPlayer& p, const std::string& name)
-{
+void field(Action& a, thechess::model::EloPlayer& p, const std::string& name) {
     field(a, const_cast<int&>(p.elo()), name + "_elo");
     field(a, const_cast<int&>(p.all()), name + "_all");
     field(a, const_cast<int&>(p.wins()), name + "_wins");

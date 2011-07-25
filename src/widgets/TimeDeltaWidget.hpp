@@ -17,8 +17,8 @@ namespace dbo = Wt::Dbo;
 #include "time_intervals.hpp"
 
 namespace Wt {
-    class WContainerWidget;
-    class WFormWidget;
+class WContainerWidget;
+class WFormWidget;
 }
 
 namespace thechess {
@@ -26,11 +26,10 @@ namespace widgets {
 
 class TimeDeltaWidgetImpl;
 
-class TimeDeltaWidget : public Wt::WCompositeWidget
-{
+class TimeDeltaWidget : public Wt::WCompositeWidget {
 public:
     TimeDeltaWidget(const Td& min, const Td& value, const Td& max,
-        Wt::WContainerWidget* parent=0);
+                    Wt::WContainerWidget* parent=0);
     Td value() const;
     Wt::WFormWidget* form_widget(); // for labbels
 

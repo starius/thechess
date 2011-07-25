@@ -30,20 +30,17 @@ enum ObjectType {
     CompetitionObject
 }; // change Object::reread() after changing this
 
-struct Object
-{
+struct Object {
     Object(ObjectType ot, int i);
 
     ObjectType type;
     int id;
 
-    bool operator<(const Object& b) const
-    {
+    bool operator<(const Object& b) const {
         return id<b.id || (id==b.id && type<b.type);
     }
 
-    bool operator==(const Object& b) const
-    {
+    bool operator==(const Object& b) const {
         return id == b.id && type == b.type;
     }
 

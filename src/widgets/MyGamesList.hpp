@@ -15,7 +15,7 @@
 #include "model/User.hpp"
 
 namespace Wt {
-    class WContainerWidget;
+class WContainerWidget;
 }
 
 namespace thechess {
@@ -23,8 +23,7 @@ namespace widgets {
 
 class MyGamesListImpl;
 
-class MyGamesList : public Wt::WCompositeWidget
-{
+class MyGamesList : public Wt::WCompositeWidget {
 public:
     MyGamesList(model::UserPtr user, Wt::WContainerWidget* p=0);
 };

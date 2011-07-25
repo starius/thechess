@@ -27,12 +27,11 @@ namespace widgets {
 
 class MovesWidgetImpl;
 
-class MovesWidget : public Wt::WCompositeWidget
-{
+class MovesWidget : public Wt::WCompositeWidget {
 public:
     MovesWidget(const chess::Moves& moves, bool big=false,
-        bool active=false, int max_moves=-1, bool append_only=false,
-        chess::Color bottom=chess::white, Wt::WContainerWidget* parent=0);
+                bool active=false, int max_moves=-1, bool append_only=false,
+                chess::Color bottom=chess::white, Wt::WContainerWidget* parent=0);
 
     const chess::Moves& moves() const;
     const chess::Board& board() const;
