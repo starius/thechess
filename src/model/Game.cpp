@@ -678,7 +678,7 @@ void Game::pgn(std::ostream& out, bool reduced) const {
     Wt::WString round = competition_stage_ != -1 ? boost::lexical_cast<std::string>(competition_ + 1) : "-";
     Wt::WString white = white_ ? white_->username() : "?";
     Wt::WString black = black_ ? black_->username() : "?";
-    std::string result = !is_ended() ? "*" : winner_ == white_ ? "1-0" : winner_ == black_ ? "0-1" : "1/2-1/2";
+    std::string result = is_draw() ? "1/2-1/2" : !winner_ ? "*" : winner_ == white_ ? "1-0" : "0-1";
     out << "[Event \"" << event << "\"]" << std::endl;
     out << "[Site \"" << site << "\"]" << std::endl;
     out << "[Date \"" << date << "\"]" << std::endl;
