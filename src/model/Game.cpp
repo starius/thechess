@@ -275,7 +275,7 @@ bool Game::is_creation() const {
 }
 
 bool Game::can_join(UserPtr user) const {
-    return user && user != init() && is_challenge();
+    return user && !is_member(user) && is_challenge();
 }
 
 void Game::join(UserPtr user) {
@@ -292,7 +292,7 @@ void Game::join(UserPtr user) {
 }
 
 bool Game::can_confirm(UserPtr user) const {
-    return user && user != init() && is_creation();
+    return user && is_member(user) && is_creation();
 }
 
 void Game::confirm(UserPtr user) {
