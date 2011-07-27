@@ -41,8 +41,8 @@ public:
     void foreach(void *func(Move move, const Board& board),
                  int from=0, int to=-1) const;
 
-    std::vector<Board> boards_; // stores boards before this move
 private:
+    std::vector<Board> boards_; // stores boards before this move
 
     void boards_rebuild_();
     void set_move(int n, Move move); // to forbid this
