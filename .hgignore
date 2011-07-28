@@ -3,4 +3,5 @@ syntax: glob
 *build*
 *user_pictures*
 *.swp
+doc/
 
