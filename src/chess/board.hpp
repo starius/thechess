@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-//
 #ifndef THECHESS_BOARD_H_
 #define THECHESS_BOARD_H_
 
@@ -36,26 +35,20 @@ typedef byte Fields[34];
 
 enum FinishState {
     nothing = 0,
-    checkmate = 1, // мат
-    stalemate = 2  // пат
+    checkmate = 1,
+    stalemate = 2
 };
 
 class Board {
 public:
-    void init_chessmans(Yname y, Color color);
-    void init_pawns(Yname y, Color color);
     Board();
-    const Fields& fields() const {
-        return fields_;
-    }
+
+    void make_move(const Move move);
 
     bool isset(Xy xy) const;
     Color color(Xy xy) const;
     Chessman chessman(Xy xy) const;
     Field field(Xy xy) const;
-
-    void make_move(const Move move);
-
     Color order() const;
     bool castling(Xy rock_xy) const;
     bool long_pawn() const;
@@ -64,12 +57,8 @@ public:
     bool test_move(const Move move) const;
     bool test_attack(Xy xy, Color c) const;
     bool test_attack(Move move) const;
-    FinishState test_end() const;
-
-    const std::string to_string() const {
-        return std::string((char*)fields_, sizeof(fields_));
-    }
-    const std::string to_table() const;
+    bool test_takes(const Move move) const;
+    bool test_castling(const Move move) const;
 
     Xy some_target(Xy from) const;
     Xy some_source(Xy to) const;
@@ -77,19 +66,22 @@ public:
     bool can_move(Xy from) const {
         return some_target(from) != xy_null;
     }
+
     bool test_shah(Color color) const;
     bool test_shah() const {
         return test_shah(order());
     }
     Xy find_king(Color c) const;
-
-    bool test_takes(const Move move) const;
-    bool test_castling(const Move move) const;
+    FinishState test_end() const;
 
     void fen(std::ostream& out, int halfmove, int fullmove) const;
 
 private:
     Fields fields_;
+
+    void init_chessmans(Yname y, Color color);
+    void init_pawns(Yname y, Color color);
+
     byte q(Xy xy) const; // quarta of this field
     void q(Xy xy, byte q_);
 
