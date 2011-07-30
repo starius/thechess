@@ -140,6 +140,9 @@ public:
 
     /* @} */
 
+    /** \name Checking */
+    /* @{ */
+
     /** Run self-checks for planned action.
     \param objects collection to expand with other modified dbo \ref Object.
 
@@ -157,6 +160,11 @@ public:
 
     /** Return the datetime of next expected check */
     Wt::WDateTime next_check() const;
+
+    /* @} */
+
+    /** \name Methods of pre-started state */
+    /* @{ */
 
     /** Return if the game is a challenge */
     bool is_challenge() const;
@@ -193,6 +201,8 @@ public:
     On success the game changes its state to \ref cancelled
     */
     void cancel(UserPtr user);
+
+    /* @} */
 
     /** \name Pause management */
     /* @{ */
@@ -318,6 +328,9 @@ public:
 
     /* @} */
 
+    /** \name Information about members */
+    /* @{ */
+
     /** Return the active color */
     chess::Color order_color() const;
 
@@ -355,6 +368,8 @@ public:
 
     /** Return another member of the game */
     UserPtr other_user(const UserPtr user) const;
+
+    /* @} */
 
     /** Return the number of half-moves of the game */
     int size() const {
@@ -397,6 +412,9 @@ public:
     State state() const {
         return state_;
     }
+
+    /** \name Datetimes and time durations */
+    /* @{ */
 
     /** Return private time limit of user of given color */
     Td limit_private(chess::Color color) const;
@@ -454,6 +472,8 @@ public:
     /** Return standard time limit taking spent time into account */
     Td limit_std_now(UserPtr user) const;
 
+    /* @} */
+
     /** Return if pieces colors were distributed randomly */
     bool colors_random() const {
         return colors_random_;
@@ -469,6 +489,9 @@ public:
     /** Return elo rating of the user after the game if changed or -1 */
     int rating_after(chess::Color color) const;
 
+    /** \name Comment-related methods */
+    /* @{ */
+
     /** Return text of comment of this game by members of game */
     const Wt::WString& comment() const {
         return comment_;
@@ -479,6 +502,8 @@ public:
 
     /** The user tries to set the comment */
     void set_comment(const UserPtr user, const Wt::WString& t);
+
+    /* @} */
 
     /** \name Competition-related methods */
     /* @{ */
