@@ -74,6 +74,9 @@ public:
     Game();
 #endif
 
+    /** \name Creation of game */
+    /* @{ */
+
     /** Create new game to be added to database. */
     Game(bool);
 
@@ -134,6 +137,8 @@ public:
     */
     void make_competition_game(UserPtr white, UserPtr black,
                                CompetitionPtr competition, int competition_stage=-1, bool random=false);
+
+    /* @} */
 
     /** Run self-checks for planned action.
     \param objects collection to expand with other modified dbo \ref Object.
@@ -209,6 +214,9 @@ public:
     /** The user tries to discard previously confirmed competition game */
     void competition_discard(UserPtr user);
 
+    /** \name Pause management */
+    /* @{ */
+
     /** Return if user can propose a pause */
     bool can_pause_propose(const UserPtr user) const;
 
@@ -256,6 +264,11 @@ public:
     /** The user tries to discard proposed pause */
     void pause_discard(const UserPtr user);
 
+    /* @} */
+
+    /** \name Mistake and rollback management */
+    /* @{ */
+
     /** Return if the user can propose to rollback mistake */
     bool can_mistake_propose(const UserPtr user) const;
 
@@ -290,6 +303,11 @@ public:
     /** The user tries to discard rollback mistake */
     void mistake_discard(const UserPtr user);
 
+    /* @} */
+
+    /** \name Draw by agreement */
+    /* @{ */
+
     /** Return if the user can propose a draw by agreement */
     bool can_draw_propose(const UserPtr user) const;
 
@@ -318,6 +336,7 @@ public:
     /** The user tries to discard the draw by agreement */
     void draw_discard(const UserPtr user);
 
+    /* @} */
 
     /** Return the active color */
     chess::Color order_color() const;
@@ -481,6 +500,9 @@ public:
     /** The user tries to set the comment */
     void set_comment(const UserPtr user, const Wt::WString& t);
 
+    /** \name Competition-related methods */
+    /* @{ */
+
     /** Return the competition to which the game is attributed */
     CompetitionPtr competition() const {
         return competition_;
@@ -490,6 +512,8 @@ public:
     int competition_stage() const {
         return competition_stage_;
     }
+
+    /* @} */
 
     /** Write PGN representation of game to stream.
     \param reduced whether reduced export PGN format is used
