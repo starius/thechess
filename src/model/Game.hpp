@@ -184,11 +184,6 @@ public:
     */
     void confirm(UserPtr user);
 
-    /** Method should be called only from competition processing code.
-    On success the game changes its state to \ref confirmed
-    */
-    void confirm_by_competition();
-
     /** Return if user can cancel the game.
     Non-init member of creation can confirm it
     */
@@ -198,21 +193,6 @@ public:
     On success the game changes its state to \ref cancelled
     */
     void cancel(UserPtr user);
-
-    /** Return if user has confimed the competition game */
-    bool has_competition_confirmed(UserPtr user) const;
-
-    /** Return if user can confime the competition game */
-    bool can_competition_confirm(UserPtr user) const;
-
-    /** The user tries to confirm the game */
-    void competition_confirm(UserPtr user);
-
-    /** Return if user can discard previously confimed competition game */
-    bool can_competition_discard(UserPtr user) const;
-
-    /** The user tries to discard previously confirmed competition game */
-    void competition_discard(UserPtr user);
 
     /** \name Pause management */
     /* @{ */
@@ -512,6 +492,26 @@ public:
     int competition_stage() const {
         return competition_stage_;
     }
+
+    /** Return if user has confimed the competition game */
+    bool has_competition_confirmed(UserPtr user) const;
+
+    /** Return if user can confime the competition game */
+    bool can_competition_confirm(UserPtr user) const;
+
+    /** The user tries to confirm the game */
+    void competition_confirm(UserPtr user);
+
+    /** Return if user can discard previously confimed competition game */
+    bool can_competition_discard(UserPtr user) const;
+
+    /** The user tries to discard previously confirmed competition game */
+    void competition_discard(UserPtr user);
+
+    /** Method should be called only from competition processing code.
+    On success the game changes its state to \ref confirmed
+    */
+    void confirm_by_competition();
 
     /* @} */
 
