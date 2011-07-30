@@ -371,6 +371,9 @@ public:
 
     /* @} */
 
+    /** \name Information about game */
+    /* @{ */
+
     /** Return the number of half-moves of the game */
     int size() const {
         return moves_.size();
@@ -390,9 +393,6 @@ public:
         return chess::Moves::size_to_human(size());
     }
 
-    /** Return if given user can add a move to this game */
-    bool can_move(UserPtr user) const;
-
     /** Return if the game is ended, ie is a win, draw or cancelled */
     bool is_ended() const;
 
@@ -402,9 +402,6 @@ public:
     /** Return if the game is a win */
     bool is_win() const;
 
-    /** Convert given state to i18n id */
-    static const char* state2str_id(State state);
-
     /** Return string representation of state */
     Wt::WString str_state() const;
 
@@ -412,6 +409,31 @@ public:
     State state() const {
         return state_;
     }
+
+    /** Return if pieces colors were distributed randomly */
+    bool colors_random() const {
+        return colors_random_;
+    }
+
+    /** Return elo rating of the user after the game if changed or -1 */
+    int rating_after(chess::Color color) const;
+
+    /* @} */
+
+    /** \name Making a move */
+    /* @{ */
+
+    /** Return if given user can add a move to this game */
+    bool can_move(UserPtr user) const;
+
+    /** Add move to game.
+    Method was added to avoid additional checking of move (optimization).
+    You must check move yourself before call this method!
+    */
+    void add_move(const chess::Move& move,
+                  const chess::Board& board_after);
+
+    /* @} */
 
     /** \name Datetimes and time durations */
     /* @{ */
@@ -474,21 +496,6 @@ public:
 
     /* @} */
 
-    /** Return if pieces colors were distributed randomly */
-    bool colors_random() const {
-        return colors_random_;
-    }
-
-    /** Add move to game.
-    Method was added to avoid additional checking of move (optimization).
-    You must check move yourself before call this method!
-    */
-    void add_move(const chess::Move& move,
-                  const chess::Board& board_after);
-
-    /** Return elo rating of the user after the game if changed or -1 */
-    int rating_after(chess::Color color) const;
-
     /** \name Comment-related methods */
     /* @{ */
 
@@ -546,6 +553,9 @@ public:
     \sa http://www.chessclub.com/help/PGN-spec
     */
     void pgn(std::ostream& out, bool reduced=false) const;
+
+    /** Convert given state to i18n id */
+    static const char* state2str_id(State state);
 
 private:
     State state_;
