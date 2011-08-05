@@ -8,7 +8,7 @@ HEADERS = $$system("find -name '*.hpp'")
 CONFIG(release) {
     QMAKE_LFLAGS_RELEASE += -flto
     QMAKE_CXXFLAGS_RELEASE += -flto
-    QMAKE_POST_LINK += upx -9 thechess.wt
+    QMAKE_POST_LINK += upx -9 $(TARGET)
     SOURCES -= tests.cpp
 }
 CONFIG(debug) {
