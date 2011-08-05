@@ -6,11 +6,19 @@ from StringIO import StringIO
 import fnmatch
 import os
 import re
+import argparse
 
 ampersand = '-thechess_ampersand'
 
+p = argparse.ArgumentParser(description='Wt l9n checker')
+p.add_argument('--wt', help='path to wt.xml', metavar='FILE', type=argparse.FileType('r'), required=True)
+p.add_argument('--prefix', help='Current project prefix', metavar='STR', default='tc.')
+p.add_argument('--sections', help='The list of allowed sections', nargs='+',
+    default=['common', 'competition', 'game', 'time', 'user'])
+args = p.parse_args()
+
 try:
-    wt_messages = parse(open("wt.xml")).getroot()
+    wt_messages = parse(args.wt).getroot()
 except:
     print 'Error: put wt.xml file into current directory'
     quit()
@@ -19,7 +27,7 @@ wt_ids = set()
 for message in wt_messages:
     wt_ids.add(message.get('id'))
 
-sections = ['common', 'competition', 'game', 'time', 'user']
+sections = args.sections
 
 filename2ids = {}
 id2text = {}
@@ -48,22 +56,22 @@ for filename in os.listdir('locales'):
             print filename, Id, 'Error: duplicate message'
         ids.add(Id)
         id2text[Id] = text
-        if not Id.startswith('Wt.') and not Id.startswith('tc.'):
-            print filename, Id, 'Error: message id should start with Wt. or tc.'
+        if not Id.startswith('Wt.') and not Id.startswith(args.prefix):
+            print filename, Id, 'Error: message id should start with Wt. or %s' % args.prefix
         if Id.startswith('Wt.'):
             if Id not in wt_ids:
                 print filename, Id, 'Error: unknown Wt message (old wt.xml?)'
         else:
-            tc, section, id = Id.split('.')
+            prefix, section, id = Id.split('.')
             message.section = section
             if section not in sections:
                 print filename, Id, 'Error: unknown section "%s"' % section
             if '-' in id:
-                print filename, Id, 'Error: tc id should not contain "-"'
+                print filename, Id, 'Error: id should not contain "-"'
             if text and id[0].islower() != text[0].islower() and text[0].isalpha():
-                print filename, Id, 'Error: tc id should start with letter of same case as message'
+                print filename, Id, 'Error: id should start with letter of same case as message'
             if '${' in text and not id.endswith('_template'):
-                print filename, Id, 'Error: id of tc template message should end with "_template"'
+                print filename, Id, 'Error: id of template message should end with "_template"'
             if hasattr(prev_message, 'section'):
                 if prev_message.section != section and '\n\n' not in prev_message.tail:
                     print filename, 'Error: sections %s and %s should be separated by empty line' % \
@@ -82,7 +90,7 @@ for filename in os.listdir('locales'):
         prev_message = message
 
     short_messages = [m.get('id').lower() for m in messages
-        if m.text and '\n' not in m.text and m.get('id').startswith('tc.')]
+        if m.text and '\n' not in m.text and m.get('id').startswith(args.prefix)]
     for m1, m2 in zip(short_messages, short_messages):
         if m1 != m2:
             print filename, 'Error: messages are unsorted, started from %s != %s' % (m1, m2)
@@ -98,7 +106,7 @@ for filename, ids in filename2ids.items():
             continue
         print filename, 'Warning: id "%s" not found' % Id
 
-l9n_re = re.compile(r'"(tc\.[^"]+)"')
+l9n_re = re.compile(r'"(%s[^"]+)"' % re.escape(args.prefix))
 
 for root, dirnames, filenames in os.walk('src'):
     for filename in fnmatch.filter(filenames, '*.?pp'):
