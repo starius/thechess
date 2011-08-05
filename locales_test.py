@@ -62,7 +62,10 @@ for filename in os.listdir('locales'):
             if Id not in wt_ids:
                 print filename, Id, 'Error: unknown Wt message (old wt.xml?)'
         else:
-            prefix, section, id = Id.split('.')
+            try:
+                prefix, section, id = Id.split('.')
+            except:
+                print filename, Id, "Error: can't match to %ssection.id" % args.prefix
             message.section = section
             if section not in sections:
                 print filename, Id, 'Error: unknown section "%s"' % section
