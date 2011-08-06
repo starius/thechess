@@ -96,7 +96,7 @@ for filename in os.listdir('locales'):
 
     short_messages = [m.get('id').lower() for m in messages
         if m.text and '\n' not in m.text and m.get('id').startswith(args.prefix)]
-    for m1, m2 in zip(short_messages, short_messages):
+    for m1, m2 in zip(short_messages, sorted(short_messages)):
         if m1 != m2:
             print filename, 'Error: messages are unsorted, started from %s != %s' % (m1, m2)
 
