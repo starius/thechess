@@ -47,6 +47,8 @@ for filename in os.listdir('locales'):
     prev_message = None
     for message in messages:
         Id = message.get('id')
+        if not message.text:
+            message.text = ''
         text = message.text
         if message.tag != 'message':
             print filename, Id, 'Error: wrong tag "%s"' % message.tag
