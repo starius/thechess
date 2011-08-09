@@ -337,10 +337,6 @@ private:
     }
 
     void history_select_() {
-        int page = (chess::Moves::n_to_human(current_move_) - 1) /
-                   moves_table_view_->pageSize();
-        moves_table_view_->setCurrentPage(page); // html
-
         //FIXME - wron row is shown
         Wt::WModelIndex index = moves_model_->n2index(current_move_);
         moves_table_view_->scrollTo(index); // ajax
