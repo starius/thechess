@@ -9,6 +9,7 @@
 
 
 #include <string>
+#include <stdexcept>
 #include <boost/foreach.hpp>
 
 #include <Wt/Dbo/backend/Sqlite3>
@@ -86,6 +87,8 @@ dbo::SqlConnection* ThechessSession::new_connection(const ThechessOptions& optio
         connection = new dbo::backend::Sqlite3(path);
         connection->executeSql("PRAGMA synchronous = normal");
         connection->executeSql("PRAGMA journal_mode = wal");
+    } else {
+        throw std::logic_error("ThechessSession::new_connection(): unknown database type");
     }
 #ifdef RUN_TESTS
     connection->setProperty("show-queries", "true");
