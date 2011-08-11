@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<messages nplurals="3" plural="(n%10 == 0 || n%10 &gt;= 5 || n/10%10 == 1) ? 2 : n%10==1 ? 0 : 1">
+
+    <message id="Wt.WAbstractItemView.PageIOfN"><b>{1}</b>из<b>{2}</b></message>
+    <message id="Wt.WAbstractItemView.PageBar.First">« Перша</message>
+    <message id="Wt.WAbstractItemView.PageBar.Previous">‹ Попередня</message>
+    <message id="Wt.WAbstractItemView.PageBar.Next">Наступна ›</message>
+    <message id="Wt.WAbstractItemView.PageBar.Last">Остання »</message>
+    <message id="Wt.WCalendar.PrevMonth">«</message>
+    <message id="Wt.WCalendar.NextMonth">»</message>
+    <message id="Wt.WDate.Monday">Понеділок</message>
+    <message id="Wt.WDate.Tuesday">Вівторок</message>
+    <message id="Wt.WDate.Wednesday">Середа</message>
+    <message id="Wt.WDate.Thursday">Четвер</message>
+    <message id="Wt.WDate.Friday">П’ятниця</message>
+    <message id="Wt.WDate.Saturday">Субота</message>
+    <message id="Wt.WDate.Sunday">Неділя</message>
+    <message id="Wt.WDate.3.Mon">Пнд</message>
+    <message id="Wt.WDate.3.Tue">Втр</message>
+    <message id="Wt.WDate.3.Wed">Срд</message>
+    <message id="Wt.WDate.3.Thu">Чтв</message>
+    <message id="Wt.WDate.3.Fri">Птн</message>
+    <message id="Wt.WDate.3.Sat">Сбт</message>
+    <message id="Wt.WDate.3.Sun">Ндл</message>
+    <message id="Wt.WDate.January">Січень</message>
+    <message id="Wt.WDate.February">Лютий</message>
+    <message id="Wt.WDate.March">Березень</message>
+    <message id="Wt.WDate.April">Квітень</message>
+    <message id="Wt.WDate.May">Травень</message>
+    <message id="Wt.WDate.June">Червень</message>
+    <message id="Wt.WDate.July">Липень</message>
+    <message id="Wt.WDate.August">Серпень</message>
+    <message id="Wt.WDate.September">Вересень</message>
+    <message id="Wt.WDate.October">Жовтень</message>
+    <message id="Wt.WDate.November">Листопад</message>
+    <message id="Wt.WDate.December">Грудень</message>
+    <message id="Wt.WDate.3.Jan">Січ</message>
+    <message id="Wt.WDate.3.Feb">Лют</message>
+    <message id="Wt.WDate.3.Mar">Бер</message>
+    <message id="Wt.WDate.3.Apr">Квіт</message>
+    <message id="Wt.WDate.3.May">Трав</message>
+    <message id="Wt.WDate.3.Jun">Черв</message>
+    <message id="Wt.WDate.3.Jul">Лип</message>
+    <message id="Wt.WDate.3.Aug">Серп</message>
+    <message id="Wt.WDate.3.Sep">Вер</message>
+    <message id="Wt.WDate.3.Oct">Жовт</message>
+    <message id="Wt.WDate.3.Nov">Лист</message>
+    <message id="Wt.WDate.3.Dec">Груд</message>
+    <message id="Wt.WDatePicker.Close">Закрити</message>
+    <message id="Wt.WDateTime.LessThanASecond">менше секунди</message>
+    <message id="Wt.WDateTime.second">одна секунда</message>
+    <message id="Wt.WDateTime.seconds">{1} секунд</message>
+    <message id="Wt.WDateTime.minute">одна хвилина</message>
+    <message id="Wt.WDateTime.minutes">{1} хвилин</message>
+    <message id="Wt.WDateTime.hour">одна година</message>
+    <message id="Wt.WDateTime.hours">{1} годин</message>
+    <message id="Wt.WDateTime.day">один день</message>
+    <message id="Wt.WDateTime.days">{1} днів</message>
+    <message id="Wt.WDateTime.week">один тиждень</message>
+    <message id="Wt.WDateTime.weeks">{1} тижнів</message>
+    <message id="Wt.WDateTime.month">один місяць</message>
+    <message id="Wt.WDateTime.months">{1} місяців</message>
+    <message id="Wt.WDateTime.year">один рік</message>
+    <message id="Wt.WDateTime.years">{1} років</message>
+    <message id="Wt.WDateTime.null">-</message>
+    <message id="Wt.WDateValidator.DateTooEarly">Дата повинна бути після {1}</message>
+    <message id="Wt.WDateValidator.DateTooLate">Дата повинна бути до {1}</message>
+    <message id="Wt.WDateValidator.WrongDateRange">Дата повинна бути між {1} і {2}</message>
+    <message id="Wt.WDateValidator.WrongFormat">Повинна бути в форматі '{1}'</message>
+    <message id="Wt.WDefaultLoadingIndicator.Loading">Завантаження...</message>
+    <message id="Wt.WDoubleValidator.NotANumber">Повинно бути числом</message>
+    <message id="Wt.WDoubleValidator.TooSmall">Число повинно бути більше {1}</message>
+    <message id="Wt.WDoubleValidator.BadRange">Число повинно бути від {1} до {2}</message>
+    <message id="Wt.WDoubleValidator.TooLarge">Число повинно бути менше {1}</message>
+    <message id="Wt.WInPlaceEdit.Save">Зберегти</message>
+    <message id="Wt.WInPlaceEdit.Cancel">Скасувати</message>
+    <message id="Wt.WIntValidator.NotAnInteger">Повинно бути цілим числом</message>
+    <message id="Wt.WIntValidator.TooSmall">Число повинно бути більше {1}</message>
+    <message id="Wt.WIntValidator.BadRange">Число повинно бути від {1} до {2}</message>
+    <message id="Wt.WIntValidator.TooLarge">Число повинно бути менше {1}</message>
+    <message id="Wt.WLengthValidator.TooShort">Ввід повинен бути не менше {1} символів</message>
+    <message id="Wt.WLengthValidator.BadRange">Довжина вводу повинна бути від {1} до {2} символів</message>
+    <message id="Wt.WLengthValidator.TooLong">Ввід повинен бути не більше {1} символів</message>
+    <message id="Wt.WMessageBox.Abort">Перервати</message>
+    <message id="Wt.WMessageBox.Cancel">Скасувати</message>
+    <message id="Wt.WMessageBox.Ignore">Пропустити</message>
+    <message id="Wt.WMessageBox.No">Ні</message>
+    <message id="Wt.WMessageBox.NoToAll">Ні для всіх</message>
+    <message id="Wt.WMessageBox.Ok">Ok</message>
+    <message id="Wt.WMessageBox.Retry">Повторити</message>
+    <message id="Wt.WMessageBox.Yes">Так</message>
+    <message id="Wt.WMessageBox.YesToAll">Так для всіх</message>
+    <message id="Wt.WOverlayLoadingIndicator.Loading">Завантаження...</message>
+    <message id="Wt.WRegExpValidator.Invalid">Некоректний ввід</message>
+    <message id="Wt.WValidator.Invalid">Це поле не може бути пустим</message>
+    <message id="Wt.true">Так</message>
+    <message id="Wt.false">Ні</message>
+
+    <message id="tc.common.Agree">Погодитись</message>
+    <message id="tc.common.Apply">Застосувати</message>
+    <message id="tc.common.Cancel">Скасувати</message>
+    <message id="tc.common.Confirm">Підтвердити</message>
+    <message id="tc.common.Create">Створити</message>
+    <message id="tc.common.Discard">Відмовитись</message>
+    <message id="tc.common.interval">від {1} до {2}</message>
+    <message id="tc.common.interval_template">від ${min} до ${max}</message>
+    <message id="tc.common.Join">Приєднатися</message>
+    <message id="tc.common.number">№</message>
+    <message id="tc.common.Only_my">Тільки мої</message>
+    <message id="tc.common.Refresh">Поновити</message>
+    <message id="tc.common.Reset">Скидання</message>
+    <message id="tc.common.Save">Зберегти</message>
+    <message id="tc.common.winner">переможець</message>
+
+    <message id="tc.competition.Cant_change">Ви не можете змінювати цей турнір</message>
+    <message id="tc.competition.Cant_create">Ви не можете створювати турніри</message>
+    <message id="tc.competition.Change">Змінити параметри</message>
+    <message id="tc.competition.Change_welcome">Змінити турнір № {1}</message>
+    <message id="tc.competition.competition">турнір</message>
+    <message id="tc.competition.Create_welcome">Створити новий турнір</message>
+    <message id="tc.competition.Description">Опис</message>
+    <message id="tc.competition.Ended">Завершено</message>
+    <message id="tc.competition.Force_start_delay">Форсований старт партії</message>
+    <message id="tc.competition.Games_factor">Множник партій</message>
+    <message id="tc.competition.Games_list">Перелік ігор</message>
+    <message id="tc.competition.Increment_substages">Зростання числа підраундів</message>
+    <message id="tc.competition.List">Перелік турнірів</message>
+    <message id="tc.competition.Max_simultaneous_games">Одночасні ігри</message>
+    <message id="tc.competition.Members_classification">Розряд учасників</message>
+    <message id="tc.competition.members_number">учасники</message>
+    <message id="tc.competition.Min_substages">Підраундів в першому раунді</message>
+    <message id="tc.competition.Name">Назва</message>
+    <message id="tc.competition.New">Створити турнір</message>
+    <message id="tc.competition.Parameters">Параметри турніру</message>
+    <message id="tc.competition.Rating">Рейтинг учасників</message>
+    <message id="tc.competition.Recruiting_time">Час на збори</message>
+    <message id="tc.competition.Relax_time">Час на відпочинок</message>
+    <message id="tc.competition.Score">Рахунок</message>
+    <message id="tc.competition.Show_games">Показати номери партій</message>
+    <message id="tc.competition.Show_wins">Показати число перемог</message>
+    <message id="tc.competition.Stage">Раунд</message>
+    <message id="tc.competition.Started">Розпочато</message>
+    <message id="tc.competition.State">Статус</message>
+    <message id="tc.competition.state_active">активний</message>
+    <message id="tc.competition.state_cancelled">скасований</message>
+    <message id="tc.competition.state_ended">завершений</message>
+    <message id="tc.competition.state_recruiting">що набирається</message>
+    <message id="tc.competition.Tree">Дерево</message>
+    <message id="tc.competition.Type">Тип</message>
+    <message id="tc.competition.Type_classical">Класичний</message>
+    <message id="tc.competition.Type_staged">Ступеневий</message>
+    <message id="tc.competition.Type_team">Командний</message>
+    <message id="tc.competition.Users">Число учасників</message>
+    <message id="tc.competition.Winner">Переможець</message>
+    <message id="tc.competition.Winners">Переможці</message>
+    <message id="tc.competition.widget_template">
+        <h1>Турнір № ${id} ${name}</h1>
+        Турнір створено ${created}, стартував ${started}, було закрито ${ended}.
+        <br/>Тип турніру: ${type}.
+        <br/>Статус турніру: ${state}.
+        <br/>Опис: ${description}
+        <br/><h2>Умови до учасників</h2> ${terms}
+        <br/><h2>Учасники турніру</h2> ${members}
+        <br/><h2>Переможці</h2> ${winners}
+        <br/><h2>Подробиці</h2>${view}
+        <br/><h2>Керування</h2>${manager}
+    </message>
+
+    <message id="tc.game.Analysis">Аналіз</message>
+    <message id="tc.game.Analysis_title">Аналіз гри № {1}</message>
+    <message id="tc.game.black">чорний</message>
+    <message id="tc.game.Challenge">Виклик</message>
+    <message id="tc.game.colors">кольори</message>
+    <message id="tc.game.colors_not_random">зумовлені</message>
+    <message id="tc.game.colors_random">обрані випадково</message>
+    <message id="tc.game.comment">коментар</message>
+    <message id="tc.game.comment_welcome">введіть ваш коментар тут</message>
+    <message id="tc.game.Competition_confirm">Підтвердити</message>
+    <message id="tc.game.Competition_confirm_welcome">Гра може бути підтверджена заздалегідь</message>
+    <message id="tc.game.Competition_discard">Відмовитись</message>
+    <message id="tc.game.Competition_discard_welcome">Ви згодні підтвердити гру заздалегідь</message>
+    <message id="tc.game.Competition_other_proposed">{1} пропонує підтвердити гру заздалегідь</message>
+    <message id="tc.game.Competitor">Суперник: {1}</message>
+    <message id="tc.game.confirmed">підтверджена</message>
+    <message id="tc.game.created">створена</message>
+    <message id="tc.game.Draw_proposal">Нічия запропонована, запропонував {1}</message>
+    <message id="tc.game.Draw_propose">Запропонувати нічию</message>
+    <message id="tc.game.ended">завершена</message>
+    <message id="tc.game.first_draw">число ходів для нічиєї</message>
+    <message id="tc.game.force_confirm">форсоване підтвердження</message>
+    <message id="tc.game.force_start">форсований старт</message>
+    <message id="tc.game.Header">Гра № {1}</message>
+    <message id="tc.game.init">створив гру</message>
+    <message id="tc.game.lastmove">останній хід (або його еквівалент)</message>
+    <message id="tc.game.Leave">Вийти</message>
+    <message id="tc.game.limit_private_init">не відновлюваний запас</message>
+    <message id="tc.game.limit_std">відновлюваний запас часу</message>
+    <message id="tc.game.List">Список игр</message>
+    <message id="tc.game.Mistake_proposal">{1} пропонує відкотити до позиції, що передує ходу {2} {3}</message>
+    <message id="tc.game.Mistake_propose">Відкотити</message>
+    <message id="tc.game.moves_size">ходів</message>
+    <message id="tc.game.norating">не рейтингова</message>
+    <message id="tc.game.norating_false">результат гри вплине на рейтинг учасників</message>
+    <message id="tc.game.norating_true">результат гри не вплине на рейтинг учасників</message>
+    <message id="tc.game.of_black">чорних</message>
+    <message id="tc.game.of_white">білих</message>
+    <message id="tc.game.order_user">ходить</message>
+    <message id="tc.game.Overturn_board">Перевернути</message>
+    <message id="tc.game.Parameters">Параметри партії</message>
+    <message id="tc.game.pause_limit">запас часу на паузи</message>
+    <message id="tc.game.Pause_proposal">Перерва запропонована, запропонував {1}, тривалість: {2}</message>
+    <message id="tc.game.Pause_propose">Запропонувати перерву</message>
+    <message id="tc.game.pause_until">призупинена до</message>
+    <message id="tc.game.random">випадковий</message>
+    <message id="tc.game.real_rating">рейтингова</message>
+    <message id="tc.game.real_rating_false">результат гри не впливає на рейтинг учасників</message>
+    <message id="tc.game.real_rating_true">результат гри впливає на рейтинг учасників</message>
+    <message id="tc.game.Start_position">Початкова позиція</message>
+    <message id="tc.game.started">розпочата</message>
+    <message id="tc.game.State">Стан</message>
+    <message id="tc.game.State_active">Активна</message>
+    <message id="tc.game.State_cancelled">Скасована</message>
+    <message id="tc.game.State_confirmed">Підтверджена</message>
+    <message id="tc.game.State_draw_2_kings">Нічия через неможливість поставити мат</message>
+    <message id="tc.game.State_draw_3">Триразове повторення позиції</message>
+    <message id="tc.game.State_draw_50">Нічия: 50 ходів не бралися фігури і не ходив пішак</message>
+    <message id="tc.game.State_draw_agreed">Нічия за згодою</message>
+    <message id="tc.game.State_draw_stalemate">Пат</message>
+    <message id="tc.game.State_mate">Мат</message>
+    <message id="tc.game.State_no_draw_stalemate">Пат в грі без нічиїх, перемагають чорні</message>
+    <message id="tc.game.State_pause">Призупинена</message>
+    <message id="tc.game.State_proposed">Запропонована</message>
+    <message id="tc.game.State_state">Невідомий стан</message>
+    <message id="tc.game.State_surrendered">Здана</message>
+    <message id="tc.game.State_timeout">Прострочена</message>
+    <message id="tc.game.white">білий</message>
+    <message id="tc.game.your_color">колір ваших фігур</message>
+    <message id="tc.game.First_draw">
+        <plural case="0">
+        Капітуляцію або нічию може бути здійснено, коли буде зроблено {1} хід,
+        не рахуючи зумовлені ходи
+        </plural>
+        <plural case="1">
+            Капітуляцію або нічию може бути здійснено, коли буде зроблено {1} ходи,
+            не рахуючи зумовлені ходи
+        </plural>
+        <plural case="2">
+            Капітуляцію або нічию може бути здійснено, коли буде зроблено {1} ходів,
+            не рахуючи зумовлені ходи
+        </plural>
+    </message>
+    <message id="tc.game.Mistake_welcome">
+        Невірний хід? Виділіть його та натисніть Відкотити -
+        буде відновлено позицію, що передує виділеному ходу
+    </message>
+
+    <message id="tc.time.days">діб</message>
+    <message id="tc.time.hours">годин</message>
+    <message id="tc.time.minutes">хвилин</message>
+    <message id="tc.time.seconds">секунд</message>
+    <message id="tc.time.weeks">тижнів</message>
+
+    <message id="tc.user.classification_a">перший розряд</message>
+    <message id="tc.user.classification_b">другий розряд</message>
+    <message id="tc.user.classification_c">третій розряд</message>
+    <message id="tc.user.classification_d">середній любитель (4)</message>
+    <message id="tc.user.classification_e">слабий любитель (5)</message>
+    <message id="tc.user.classification_expert">кандидат в майстри</message>
+    <message id="tc.user.classification_f">новачок (розряд F)</message>
+    <message id="tc.user.classification_g">новачок (розряд G)</message>
+    <message id="tc.user.classification_grandmaster">гросмейстер</message>
+    <message id="tc.user.classification_h">новачок (розряд H)</message>
+    <message id="tc.user.classification_i">новачок (розряд I)</message>
+    <message id="tc.user.classification_intarnational_master">міжнародний майстер</message>
+    <message id="tc.user.classification_j">новачок (розряд J)</message>
+    <message id="tc.user.classification_national_master">національний майстер</message>
+    <message id="tc.user.classification_none">без розряду</message>
+    <message id="tc.user.classification_super_grandmaster">супергросмейстер</message>
+    <message id="tc.user.Login">Увійти</message>
+    <message id="tc.user.Logout">Вийти</message>
+    <message id="tc.user.Online_time">Час, що проведено на сайті: {1}</message>
+    <message id="tc.user.Password">Пароль</message>
+    <message id="tc.user.Please_login">Будь ласка, увійдіть або зареєструйтесь</message>
+    <message id="tc.user.rating_after">рейтинг після</message>
+    <message id="tc.user.Rating_changes">Зміни рейтингу</message>
+    <message id="tc.user.Rating_changes_and_me">Зміни рейтингу (в порівнянні з моїм рейтингом)</message>
+    <message id="tc.user.Register">Зареєструватися</message>
+    <message id="tc.user.Start_game">Розпочати гру</message>
+    <message id="tc.user.Username">Ім'я користувача</message>
+    <message id="tc.user.Wrong_username_or_password">Неправильне ім'я користувача або пароль</message>
+
+</messages>
