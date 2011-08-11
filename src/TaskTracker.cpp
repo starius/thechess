@@ -62,7 +62,7 @@ void TaskTracker::check_(const boost::system::error_code& error) {
         mutex_.lock();
         Wt::WDateTime cached_now = now();
         Objects objects;
-        bool need_reread;
+        bool need_reread = false;
         while (!w2t.empty()) {
             W2T_It w2t_it = w2t.begin();
             const Wt::WDateTime& time = w2t_it->first;
