@@ -14,7 +14,6 @@
 #include <algorithm>
 #include <boost/format.hpp>
 
-#include "chess/hex.hpp"
 #include "chess/moves.hpp"
 #include "chess/move.hpp"
 #include "chess/xy.hpp"
