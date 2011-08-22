@@ -67,6 +67,12 @@ public:
     */
     void make_move(const Move move);
 
+    /** Return FEN notation of the board.
+    \param halfmove This is the number of halfmoves since
+        the last pawn advance or capture.
+    \param fullmove The number of the full move.
+        It starts at 1, and is incremented after Black's move.
+    */
     void fen(std::ostream& out, int halfmove, int fullmove) const;
 
     /** \name Low level methods */
@@ -114,10 +120,21 @@ public:
     /** \name Tests of move */
     /* @{ */
 
+    /** Return if the move can be applied to the board.
+    All chess rules are applied.
+    */
     bool test_move(const Move move) const;
+
+    /** Return if the square were attacked if it would be of given color */
     bool test_attack(Xy xy, Color c) const;
+
+    /** Return if the destination will be attacked after the move */
     bool test_attack(Move move) const;
+
+    /** Return if the destination is attacked by the move */
     bool test_takes(const Move move) const;
+
+    /** Return if the move is a castling */
     bool test_castling(const Move move) const;
 
     /* @} */
@@ -125,9 +142,16 @@ public:
     /** \name Searching for moves */
     /* @{ */
 
+    /** Return some target-of-move square for the piece */
     Xy some_target(Xy from) const;
+
+    /** Return some source-of-move square for the piece */
     Xy some_source(Xy to) const;
+
+    /** Return some possible move */
     Move some_move() const;
+
+    /** Return if the piece can be a target of any move */
     bool can_move(Xy from) const {
         return some_target(from) != xy_null;
     }
@@ -137,11 +161,20 @@ public:
     /** \name King-related methods */
     /* @{ */
 
+    /** Return if the board is in checking state for pieces of the color */
     bool test_shah(Color color) const;
+
+    /** Return if the board is in checking state.
+    This convenience method returns \c test_shah(order())
+    */
     bool test_shah() const {
         return test_shah(order());
     }
+
+    /** Return the square of the king of the color */
     Xy find_king(Color c) const;
+
+    /** Return finish state of the board */
     FinishState test_end() const;
 
     /* @} */
