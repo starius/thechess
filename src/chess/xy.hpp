@@ -54,14 +54,6 @@ inline char y_char(Yname y) {
     return letters_123[(int)y];
 }
 
-inline std::string x_string(Xname x) {
-    return std::string(1, x_char(x));
-}
-
-inline std::string y_string(Yname y) {
-    return std::string(1, y_char(y));
-}
-
 class Xy {
 public:
     Xy(Xname x, Yname y);

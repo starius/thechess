@@ -18,6 +18,11 @@ namespace thechess {
 std::string expand_path(const std::string& path);
 std::string first_file(const char* const files[], const int files_size);
 
+/** Convert \c char to \c std::string */
+inline std::string char2str(char c) {
+    return std::string(1, c);
+}
+
 class PlainTextWritter {
 public:
     PlainTextWritter(std::ostream& out, const short cpl=79);

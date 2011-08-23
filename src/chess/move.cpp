@@ -9,6 +9,7 @@
 
 
 #include "chess/move.hpp"
+#include "utils.hpp"
 
 namespace thechess {
 namespace chess {
@@ -47,7 +48,7 @@ bool Move::could_turn_into(const Board& board) const {
 std::string Move::pgn_from(const Board& board) const {
     chess::Chessman chessman = board.chessman(from());
     if (chessman == pawn && board.test_takes(*this)) {
-        return chess::x_string(from().x());
+        return char2str(chess::x_char(from().x()));
     }
     bool alt=false, alt_x=false, alt_y=false;
     THECHESS_XY_FOREACH (xy) {
@@ -66,9 +67,9 @@ std::string Move::pgn_from(const Board& board) const {
     if (alt_x && alt_y) {
         return from().str();
     } else if (alt_x) {
-        return chess::y_string(from().y());
+        return char2str(chess::y_char(from().y()));
     } else if (alt) {
-        return chess::x_string(from().x());
+        return char2str(chess::x_char(from().x()));
     }
     return "";
 }
