@@ -45,7 +45,7 @@ bool Move::could_turn_into(const Board& board) const {
     return board.chessman(from()) == pawn && (to().y() == y_1 || to().y() == y_8);
 }
 
-std::string Move::pgn_from(const Board& board) const {
+std::string Move::pgn_from_(const Board& board) const {
     chess::Chessman chessman = board.chessman(from());
     if (chessman == pawn && board.test_takes(*this)) {
         return char2str(chess::x_char(from().x()));
@@ -85,7 +85,7 @@ std::string Move::pgn(const Board& board, const Board& board_after,
         if (!skip_chessmen && chessman != chess::pawn) {
             result += chess::chessman_char(chessman);
         }
-        result += pgn_from(board);
+        result += pgn_from_(board);
         if (board.test_takes(*this)) {
             result += 'x';
         }

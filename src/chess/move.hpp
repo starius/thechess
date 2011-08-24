@@ -71,7 +71,6 @@ public:
         return !(*this == other);
     }
 
-    std::string pgn_from(const Board& board) const;
     std::string pgn(const Board& board, const Board& board_after,
                     bool skip_chessmen=false) const;
 
@@ -79,6 +78,8 @@ private:
     unsigned from_ : 7;
     unsigned to_ : 7;
     Chessman turn_into_ : 3;
+
+    std::string pgn_from_(const Board& board) const;
 };
 
 const Move move_null(xy_null, xy_null);
