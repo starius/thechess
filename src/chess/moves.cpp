@@ -143,7 +143,7 @@ void Moves::pgn(std::ostream& out, const std::string& result, bool reduced) cons
     THECHESS_MOVES_FOREACH (move_it, this, board) {
         chess::Move move = *move_it;
         board_after.make_move(move);
-        std::string move_str = move.pgn(board, board_after);
+        std::string move_str = move.san(board, board_after);
         if (order(move_it.n) == white) {
             move_str = str(boost::format("%i. ") % n_to_human(move_it.n)) + move_str;
         }
