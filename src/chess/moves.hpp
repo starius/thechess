@@ -12,7 +12,6 @@
 
 namespace thechess {
 namespace chess {
-struct MovesCheck;
 class Moves;
 class MovesIterator;
 }
@@ -30,13 +29,6 @@ typedef unsigned char byte;
 
 namespace thechess {
 namespace chess {
-
-/** \todo */
-struct MovesCheck {
-    bool correct;
-    int move_with_error;
-    Board board;
-};
 
 /** Vector of bytes */
 typedef std::vector<byte> svuc;
