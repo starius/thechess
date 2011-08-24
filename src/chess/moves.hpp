@@ -7,8 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-//
-
 #ifndef THECHESS_MOVES_H_
 #define THECHESS_MOVES_H_
 
@@ -27,67 +25,131 @@ class MovesIterator;
 #include "board.hpp"
 #include "tests.hpp"
 
+/** Type representing a byte */
 typedef unsigned char byte;
 
 namespace thechess {
 namespace chess {
 
+/** \todo */
 struct MovesCheck {
     bool correct;
     int move_with_error;
     Board board;
 };
 
+/** Vector of bytes */
 typedef std::vector<byte> svuc;
 
+/** Sequence of moves.
+This class was designed to store a sequence of moves very compactly.
+
+Sizes:
+ - move: 24 bits (3 bytes)
+ - half-move: 12 bits
+ - square: 6 bits
+ - file of rank: 3 bits
+*/
 class Moves : public svuc {
 public:
+    /** Constructor.
+    \param moves_count number of half-moves to preserve space for
+    */
     Moves(int moves_count=0);
+
+    /** Constructor.
+    Fills container with moves_count moves from array moves.
+    */
     Moves(Move moves[], int moves_count);
+
+    /** Get internal representation: vector of bytes */
     const svuc& as_svuc() const {
         return *this;
     }
+
+    /** Get internal representation: vector of bytes */
     svuc& as_svuc() {
         return *this;
     }
+
+    /** Return the number of half-moves */
     int size() const {
         return (this->svuc::size() * 8) / 12;
     }
 
+    /** Push the move to the end of container */
     void push_move(Move move);
+
+    /** Pop last move */
     void pop_move();
+
+    /** Pop several moves from the ending */
     void pop_moves(int number);
 
+    /** Return the half-move.
+    \param n index of move.
+    \param board board position preceeding the half-move.
+        This argument is nedded because of pawn promotions,
+        which are stored together with Move::to() (see Move::packed_to())
+    */
     Move move_at(int n, const Board& board) const {
         return Move(xy_(n, xy_from), xy_(n, xy_to), board);
     }
+
+    /** Return the half-move.
+    \param n 0-based number of move.
+    \note Does not work correctly for pawn promotions.
+    */
     Move move_at(int n) const {
         return Move(xy_(n, xy_from), xy_(n, xy_to));
     }
-    Board board_at(int n) const; // returns board position BEFORE move number n
 
-    int check() const; // -1 = no errors, other value -- n of wrong move
+    /** Return board position before the half-move */
+    Board board_at(int n) const;
 
+    /** Test correctness.
+    Returned value:
+     - -1 if no errors were found
+     - index of invalid half-move if any
+    */
+    int check() const;
+
+    /** Convert index of half-move to number of move */
     static int n_to_human(int move_n) {
         return (move_n + 2) / 2;
     }
+
+    /** Convert number of half-moves to number of moves */
     static int size_to_human(int size) {
         return n_to_human(size - 1);
     }
+
+    /** Convert number of move and active color to index of half-move */
     static int n_from_human(int human_i, Color color) {
         return (human_i - 1) * 2 + ((color == white) ? 0 : 1);
     }
+
+    /** Return number of moves.
+    \sa size()
+    */
     int human_size() const {
         return size_to_human(size());
     }
 
+    /** Return 0 for white half-move and 1 otherwise */
     static int order_int(int move_n) {
         return move_n % 2;
     }
+
+    /** Return active color of half-move */
     static Color order(int move_n) {
         return order_int(move_n) == 0 ? white : black;
     }
 
+    /** Write (PGN) movetext to stream.
+    \param result the value of Result tag (see PGN description)
+    \param reduced use reduced export PGN format
+    */
     void pgn(std::ostream& out, const std::string& result,
              bool reduced=false) const;
 
@@ -152,12 +214,6 @@ THECHESS_MOVES_FROM(move_it, moves, board, 0)
 
 }
 }
-
-
-/* moves_:
- * each move takes 12 bites, each Xy -- 6 bits, each coordinate -- 3 bits
- * pair of moves -- 3 bytes
- */
 
 #endif // THECHESS_MOVES_H_
 
