@@ -38,11 +38,6 @@ struct MovesCheck {
     Board board;
 };
 
-enum Xy_type {
-    xy_from = 0,
-    xy_to = 1
-};
-
 typedef std::vector<byte> svuc;
 
 class Moves : public svuc {
@@ -97,6 +92,11 @@ public:
              bool reduced=false) const;
 
 private:
+    enum Xy_type {
+        xy_from = 0,
+        xy_to = 1
+    };
+
     byte q(int i) const {
         return (byte)((*this)[i]);
     }
