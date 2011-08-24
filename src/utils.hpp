@@ -26,6 +26,7 @@ inline std::string char2str(char c) {
 class PlainTextWritter {
 public:
     PlainTextWritter(std::ostream& out, const short cpl=79);
+    virtual ~PlainTextWritter();
     void write_word(const std::string& word);
 private:
     std::ostream& out_;

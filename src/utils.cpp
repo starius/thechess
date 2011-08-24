@@ -37,6 +37,10 @@ PlainTextWritter::PlainTextWritter(std::ostream& out, const short cpl):
     out_(out), cpl_(cpl), current_cpl_(0)
 { }
 
+PlainTextWritter::~PlainTextWritter() {
+    out_ << std::endl;
+}
+
 void PlainTextWritter::write_word(const std::string& word) {
     if (current_cpl_ + word.length() > cpl_) {
         out_ << std::endl;

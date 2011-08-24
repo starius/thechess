@@ -152,7 +152,6 @@ void Moves::pgn(std::ostream& out, const std::string& result, bool reduced) cons
     if (result != "*") {
         ptw.write_word(result);
     }
-    out << std::endl;
 }
 
 }
