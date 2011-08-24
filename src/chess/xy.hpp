@@ -195,7 +195,7 @@ public:
                std::string(1, letters_123[y_()]);
     }
 
-protected:
+private:
     unsigned i_ : 7; // 0-63
 };
 
