@@ -169,38 +169,109 @@ private:
     friend void run_tests();
 };
 
+/** Iterator for Moves container.
+\sa THECHESS_MOVES_FOREACH
+*/
 class MovesIterator {
 public:
+    /** Constructor.
+    \param moves Container
+    \param board Board instance using while iterating.
+        This board should represent board position before \c from half-move.
+    \param from Starting half-move.
+    */
     MovesIterator(const Moves* moves, Board& board, int from=0);
-    //~ MovesIterator(const Moves* moves, int from=0);
+
+    /** Get current move */
     Move move() const {
         return moves_->move_at(n, board_);
     }
+
+    /** Indirection, get current move */
     Move operator*() const {
         return move();
     }
+
+    /** Increment, increases half-move index */
     MovesIterator& operator ++() {
         board_.make_move(move());
         n++;
         return *this;
     }
+
+    /** Pointer to Moves */
     const Moves* moves_;
+
+    /** Board position before current half-move */
     Board& board_;
+
+    /** Index of current half-move */
     int n;
 };
 
-
+/** Iterate moves from \c from to \c to (exclusive).
+Usage:
+\code
+Moves moves = ...
+Board board = moves.board_at(10);
+THECHESS_MOVES_FROM_TO (moves_it, moves, board, 10, 20) {
+    Move move = *move_it;
+    Board board_after = board;
+    board_after.make_move(move);
+    std::cout << move.san(board, board_after) << std::endl;
+}
+\endcode
+*/
 #define THECHESS_MOVES_FROM_TO(move_it, moves, board, from, to) \
 for (thechess::chess::MovesIterator move_it = \
 thechess::chess::MovesIterator(moves, board, from); \
 move_it.n < to; ++move_it)
 
+/** Iterate moves from the beginning to \c to (exclusive).
+Usage:
+\code
+Moves moves = ...
+Board board;
+THECHESS_MOVES_TO (moves_it, moves, board, 20) {
+    Move move = *move_it;
+    Board board_after = board;
+    board_after.make_move(move);
+    std::cout << move.san(board, board_after) << std::endl;
+}
+\endcode
+*/
 #define THECHESS_MOVES_TO(move_it, moves, board, to) \
 THECHESS_MOVES_FROM_TO(move_it, moves, board, 0, to)
 
+/** Iterate moves from \c from to the end.
+Usage:
+\code
+Moves moves = ...
+Board board = moves.board_at(10);
+THECHESS_MOVES_FROM (moves_it, moves, board, 10) {
+    Move move = *move_it;
+    Board board_after = board;
+    board_after.make_move(move);
+    std::cout << move.san(board, board_after) << std::endl;
+}
+\endcode
+*/
 #define THECHESS_MOVES_FROM(move_it, moves, board, from) \
 THECHESS_MOVES_FROM_TO(move_it, moves, board, from, (moves)->size())
 
+/** Iterate all moves.
+Usage:
+\code
+Moves moves = ...
+Board board;
+THECHESS_MOVES_FOREACH (moves_it, moves, board) {
+    Move move = *move_it;
+    Board board_after = board;
+    board_after.make_move(move);
+    std::cout << move.san(board, board_after) << std::endl;
+}
+\endcode
+*/
 #define THECHESS_MOVES_FOREACH(move_it, moves, board) \
 THECHESS_MOVES_FROM(move_it, moves, board, 0)
 
