@@ -66,9 +66,11 @@ endif
 
 build: $$(EXE)
 
+.PHONY: dep
 dep:
 	apt-get install spawn-fcgi `apt-cache depends witty| awk '{$$1 = ""; print $$0}'`
 
+.PHONY: build-dep
 build-dep:
 	apt-get install g++ ccache upx inkscape doxygen texlive graphviz \
 		libwt-dev libwtdbo-dev libwtdbopostgres-dev libwtdbosqlite-dev libwtfcgi-dev libwthttp-dev
@@ -102,9 +104,11 @@ $(BUILD)/%.hpp.gch:
 run: $(EXE) $$(WT_CONFIG)
 	$(RUN_COMMAND)
 
+.PHONY: doc
 doc: $$(headers) doc-main $$(sources)
 	doxygen
 
+.PHONY: style
 style:
 	astyle --style=java --add-brackets --lineend=linux --align-pointer=type --align-reference=type \
 		--delete-empty-lines --convert-tabs --pad-header --pad-oper --unpad-paren \
@@ -112,6 +116,7 @@ style:
 		--formatted --recursive '*.?pp'
 	sed '/^$$/N;/^\n$$/D' -i `find src -name '*.?pp'`
 
+.SECONDARY: $(WT_CONFIG)
 $(WT_CONFIG): /etc/wt/wt_config.xml Makefile
 	mkdir -p $(dir $@)
 	cp --backup=numbered $< $@
