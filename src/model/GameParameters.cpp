@@ -11,14 +11,13 @@
 #include "config.hpp"
 
 namespace thechess {
-namespace model {
 using namespace config; // defaults, min
 
 GameParameters::GameParameters() {
 }
 
 GameParameters::GameParameters(bool):
-    moves_(chess::Moves()),
+    moves_(Moves()),
     moves_init_(0),
     limit_std_(defaults::limit_std),
     limit_private_init_(defaults::limit_private_init),
@@ -38,6 +37,5 @@ void GameParameters::set_no_draw() {
     pause_limit_init_ = min::pause_limit_init;
 }
 
-}
 }
 

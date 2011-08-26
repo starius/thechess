@@ -21,12 +21,10 @@ namespace dbo = Wt::Dbo;
 #include <Wt/Dbo/WtSqlTraits>
 
 namespace thechess {
-namespace model {
 class Competition;
 typedef dbo::ptr<Competition> CompetitionPtr;
 typedef dbo::collection<CompetitionPtr> Competitions;
 typedef std::vector<CompetitionPtr> CompetitionsVector;
-}
 }
 
 #include "model/CompetitionParameters.hpp"
@@ -36,7 +34,6 @@ typedef std::vector<CompetitionPtr> CompetitionsVector;
 #include "model/Object.hpp"
 
 namespace thechess {
-namespace model {
 
 typedef std::map<UserPtr, std::map<UserPtr, GamesVector> > GamesTable;
 
@@ -191,7 +188,6 @@ private:
     friend class StagedCompetition;
 };
 
-}
 }
 
 #endif

@@ -29,8 +29,6 @@ namespace dbo = Wt::Dbo;
 #include "ThechessApplication.hpp"
 
 namespace thechess {
-namespace widgets {
-using namespace model;
 
 typedef GamePtr Result;
 typedef dbo::Query<Result> Q;
@@ -168,6 +166,5 @@ void RatingChanges::add_user(UserPtr user) {
     impl_->add_user(user);
 }
 
-}
 }
 

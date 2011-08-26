@@ -18,7 +18,6 @@
 #include "model/Game.hpp"
 
 namespace thechess {
-namespace model {
 
 class UserPair {
 public:
@@ -98,7 +97,6 @@ private:
     void create_games_(Competition* competition, Objects& objects);
 };
 
-}
 }
 
 #endif

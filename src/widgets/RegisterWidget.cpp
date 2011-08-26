@@ -23,8 +23,6 @@ namespace dbo = Wt::Dbo;
 #include "model/User.hpp"
 
 namespace thechess {
-namespace widgets {
-using namespace model;
 
 RegisterWidget::RegisterWidget(Wt::WContainerWidget* parent) :
     Wt::WContainerWidget(parent) {
@@ -83,5 +81,4 @@ void RegisterWidget::try_register_() {
     }
 }
 
-}
 }

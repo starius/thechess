@@ -15,9 +15,7 @@
 namespace dbo = Wt::Dbo;
 
 namespace thechess {
-namespace model {
 class CompetitionParameters;
-}
 }
 
 #include "model/GameParameters.hpp"
@@ -26,7 +24,6 @@ class CompetitionParameters;
 #include "model/td.hpp"
 
 namespace thechess {
-namespace model {
 
 class CompetitionParameters : public GameParameters {
 public:
@@ -180,7 +177,6 @@ private:
     int increment_substages_;
 };
 
-}
 }
 
 #endif

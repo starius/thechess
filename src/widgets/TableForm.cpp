@@ -16,7 +16,6 @@
 #include "widgets/TableForm.hpp"
 
 namespace thechess {
-namespace widgets {
 
 TableForm::TableForm(Wt::WContainerWidget* parent):
     Wt::WTable(parent) {
@@ -74,6 +73,5 @@ Wt::WTableRow* TableForm::parent_row_(Wt::WWidget* input) {
     return rowAt(dynamic_cast<Wt::WTableCell*>(input->parent())->row());
 }
 
-}
 }
 

@@ -37,12 +37,11 @@
 #include "chess/field.hpp"
 
 namespace thechess {
-namespace widgets {
 
 class BoardWidgetImpl;
 
 struct ChessmanStat {
-    ChessmanStat(const chess::Board& board) {
+    ChessmanStat(const Board& board) {
         memset(stat, 0x00, sizeof(stat));
         THECHESS_XY_FOREACH (xy) {
             if (board.isset(xy)) {
@@ -51,43 +50,43 @@ struct ChessmanStat {
         }
     }
 
-    int stat[chess::Color_count][chess::Chessman_count];
+    int stat[Color_count][Chessman_count];
 };
 
-ChessmanStat full_stat = ChessmanStat(chess::Board());
+ChessmanStat full_stat = ChessmanStat(Board());
 
 class TakenChessmenImpl : public Wt::WContainerWidget {
 public:
 
-    TakenChessmenImpl(const chess::Board& board):
+    TakenChessmenImpl(const Board& board):
         Wt::WContainerWidget(), taken_stat_(board) {
-        print_color_(chess::white);
+        print_color_(white);
         new Wt::WBreak(this);
-        print_color_(chess::black);
+        print_color_(black);
     }
 
 private:
     ChessmanStat taken_stat_;
 
-    void print_color_(chess::Color color) {
-        print_field_(color, chess::queen);
-        print_field_(color, chess::rock);
-        print_field_(color, chess::knight);
-        print_field_(color, chess::bishop);
-        print_field_(color, chess::pawn);
+    void print_color_(Color color) {
+        print_field_(color, queen);
+        print_field_(color, rock);
+        print_field_(color, knight);
+        print_field_(color, bishop);
+        print_field_(color, pawn);
     }
 
-    void print_field_(chess::Color color, chess::Chessman chessman) {
+    void print_field_(Color color, Chessman chessman) {
         int c = full_stat.stat[color][chessman] - taken_stat_.stat[color][chessman];
         for (int i = 0; i < c; i++) {
-            new Wt::WImage(BoardWidget::image(chess::Field(color, chessman)), this);
+            new Wt::WImage(BoardWidget::image(Field(color, chessman)), this);
         }
     }
 };
 
 class TakenChessmen : public Wt::WViewWidget {
 public:
-    TakenChessmen(const chess::Board& board, Wt::WContainerWidget* parent = 0) :
+    TakenChessmen(const Board& board, Wt::WContainerWidget* parent = 0) :
         Wt::WViewWidget(parent), board_(board) {
     }
 
@@ -96,12 +95,12 @@ public:
     }
 
 private:
-    const chess::Board& board_;
+    const Board& board_;
 };
 
 class DnDChessman : public Wt::WImage {
 public:
-    DnDChessman(chess::Xy xy, BoardWidgetImpl* bwi):
+    DnDChessman(Xy xy, BoardWidgetImpl* bwi):
         xy_(xy), bwi_(bwi)
     { }
 
@@ -109,14 +108,14 @@ public:
     void dropEvent(Wt::WDropEvent dropEvent);
 
 private:
-    chess::Xy xy_;
+    Xy xy_;
     BoardWidgetImpl* bwi_;
 };
 
 class BoardWidgetImpl : public Wt::WContainerWidget {
 public:
-    BoardWidgetImpl(bool big, bool active, chess::Color bottom,
-                    const chess::Board& board) :
+    BoardWidgetImpl(bool big, bool active, Color bottom,
+                    const Board& board) :
         Wt::WContainerWidget(), board_(board), bottom_(bottom),
         active_(active), activated_(false), big_(big), lastmove_show_(true),
         select_turn_into_flag_(false) {
@@ -140,19 +139,19 @@ public:
     }
 
     const char* xml_message() {
-        return bottom_ == chess::white ?
+        return bottom_ == white ?
                "tc.game.board_white_template" : "tc.game.board_black_template";
     }
 
-    DnDChessman*& image_at(chess::Xy xy) {
+    DnDChessman*& image_at(Xy xy) {
         return images_[xy.i()];
     }
 
-    Wt::Signal<chess::Move>& move() {
+    Wt::Signal<Move>& move() {
         return move_;
     }
 
-    void set(const chess::Board& board, chess::Move lastmove, bool active) {
+    void set(const Board& board, Move lastmove, bool active) {
         modify_undo_();
         color_noactive_undo_();
         lastmove_ = lastmove;
@@ -161,7 +160,7 @@ public:
         if (board_.test_shah()) {
             shah_xy_ = board_.find_king(board_.order());
         } else {
-            shah_xy_ = chess::xy_null;
+            shah_xy_ = xy_null;
         }
         active_ = active;
         check_activate_();
@@ -172,14 +171,14 @@ public:
         }
     }
 
-    void bottom_set(chess::Color bottom) {
+    void bottom_set(Color bottom) {
         bottom_ = bottom;
         correct_bottom_();
         board_template_->setTemplateText(tr(xml_message()));
     }
 
     void turn() {
-        bottom_set(chess::other_color(bottom_));
+        bottom_set(other_color(bottom_));
     }
 
     Wt::WContainerWidget* inner() {
@@ -189,16 +188,16 @@ public:
 private:
     friend class DnDChessman;
 
-    chess::Board board_;
-    chess::Color bottom_;
+    Board board_;
+    Color bottom_;
     bool active_;
     bool activated_;
     bool big_;
     bool lastmove_show_;
 
-    chess::Xy from_;
-    chess::Move lastmove_;
-    chess::Xy shah_xy_;
+    Xy from_;
+    Move lastmove_;
+    Xy shah_xy_;
 
     Wt::WGridLayout* layout_;
     Wt::WContainerWidget* select_turn_into_;
@@ -209,34 +208,34 @@ private:
     DnDChessman* images_[64];
     Wt::WImage* draggable_;
 
-    Wt::Signal<chess::Move> move_;
+    Wt::Signal<Move> move_;
 
     void color_black_white_(Wt::WImage* img) {
         img->decorationStyle().setBackgroundColor(Wt::WColor());
     }
 
-    void color_black_white_(chess::Xy xy) {
+    void color_black_white_(Xy xy) {
         color_black_white_(image_at(xy));
     }
 
     void color_noactive_() {
-        if (lastmove_show_ && lastmove_ != chess::move_null) {
+        if (lastmove_show_ && lastmove_ != move_null) {
             image_at(lastmove_.from())->decorationStyle()
             .setBackgroundColor(Wt::yellow);
             image_at(lastmove_.to())->decorationStyle()
             .setBackgroundColor(Wt::yellow);
         }
-        if (shah_xy_ != chess::xy_null) {
+        if (shah_xy_ != xy_null) {
             image_at(shah_xy_)->decorationStyle().setBackgroundColor(Wt::red);
         }
     }
 
     void color_noactive_undo_() {
-        if (lastmove_show_ && lastmove_ != chess::move_null) {
+        if (lastmove_show_ && lastmove_ != move_null) {
             color_black_white_(lastmove_.from());
             color_black_white_(lastmove_.to());
         }
-        if (shah_xy_ != chess::xy_null) {
+        if (shah_xy_ != xy_null) {
             color_black_white_(shah_xy_);
         }
     }
@@ -269,11 +268,11 @@ private:
     void modify_to_() {
         bool can_move = false;
         THECHESS_XY_FOREACH (xy) {
-            if (board_.test_move(chess::Move(from_, xy))) {
+            if (board_.test_move(Move(from_, xy))) {
                 Wt::WImage* img = image_at(xy);
                 img->decorationStyle().setCursor(Wt::PointingHandCursor);
                 can_move = true;
-                if (board_.test_attack(chess::Move(from_, xy))) {
+                if (board_.test_attack(Move(from_, xy))) {
                     img->decorationStyle().setBackgroundColor(Wt::magenta);
                 } else {
                     img->decorationStyle().setBackgroundColor(Wt::green);
@@ -297,7 +296,7 @@ private:
     }
 
     void modify_undo_() {
-        if (from_ == chess::xy_null) {
+        if (from_ == xy_null) {
             modify_from_undo_();
         } else {
             modify_to_undo_();
@@ -305,19 +304,19 @@ private:
         if (select_turn_into_flag_) {
             print_select_undo_();
         }
-        from_ = chess::xy_null;
+        from_ = xy_null;
     }
 
     void modify_() {
         color_noactive_();
-        if (from_ == chess::xy_null) {
+        if (from_ == xy_null) {
             modify_from_();
         } else {
             modify_to_();
         }
     }
 
-    void onclick_(chess::Xy xy) {
+    void onclick_(Xy xy) {
         if (select_turn_into_flag_) {
             return;
         }
@@ -326,18 +325,18 @@ private:
         }
         if (xy == from_) {
             modify_undo_();
-            from_ = chess::xy_null;
+            from_ = xy_null;
             modify_();
         } else if (board_.color(xy) == board_.order()) {
             modify_undo_();
             from_ = xy;
             modify_();
-        } else if (from_ != chess::xy_null) {
-            try_move_(chess::Move(from_, xy));
+        } else if (from_ != xy_null) {
+            try_move_(Move(from_, xy));
         }
     }
 
-    void try_move_(const chess::Move move) {
+    void try_move_(const Move move) {
         if (board_.test_move(move)) {
             if (move.could_turn_into(board_)) {
                 select_turn_into_flag_ = true;
@@ -346,21 +345,21 @@ private:
             } else {
                 modify_undo_();
                 lastmove_ = move;
-                from_ = chess::xy_null;
+                from_ = xy_null;
                 move_.emit(move);
             }
         } else {
             modify_undo_();
-            from_ = chess::xy_null;
+            from_ = xy_null;
             modify_();
         }
     }
 
-    void print_select_(chess::Move move) {
-        static chess::Chessman cc[] =
-        { chess::queen, chess::rock, chess::bishop, chess::knight };
-        BOOST_FOREACH (chess::Chessman c, cc) {
-            chess::Field cm = chess::Field(board_.order(), c);
+    void print_select_(Move move) {
+        static Chessman cc[] =
+        { queen, rock, bishop, knight };
+        BOOST_FOREACH (Chessman c, cc) {
+            Field cm = Field(board_.order(), c);
             std::string path = BoardWidget::image(cm, big_);
             Wt::WImage* img = new Wt::WImage(path, select_turn_into_);
             img->clicked().connect(boost::bind(
@@ -374,36 +373,36 @@ private:
         select_turn_into_flag_ = false;
     }
 
-    void select_onclick_(chess::Chessman chessman, chess::Move move) {
+    void select_onclick_(Chessman chessman, Move move) {
         if (!active_) {
             return;
         }
         modify_undo_();
-        from_ = chess::xy_null;
+        from_ = xy_null;
         move.turn_into(chessman);
         lastmove_ = move;
         move_.emit(move);
     }
 
-    int x(chess::Xname x) {
-        return (bottom_ == chess::white ? (int)x : (7 - (int)x)) + 1;
+    int x(Xname x) {
+        return (bottom_ == white ? (int)x : (7 - (int)x)) + 1;
     }
 
-    int y(chess::Yname y) {
-        return (bottom_ == chess::black ? (int)y : (7 - (int)y)) + 1;
+    int y(Yname y) {
+        return (bottom_ == black ? (int)y : (7 - (int)y)) + 1;
     }
 
-    chess::Xname x(int x) {
-        return (chess::Xname)(bottom_ == chess::white ? (x - 1) : (7 - (x - 1)));
+    Xname x(int x) {
+        return (Xname)(bottom_ == white ? (x - 1) : (7 - (x - 1)));
     }
 
-    chess::Yname y(int y) {
-        return (chess::Yname)(bottom_ == chess::black ? (y - 1) : (7 - (y - 1)));
+    Yname y(int y) {
+        return (Yname)(bottom_ == black ? (y - 1) : (7 - (y - 1)));
     }
 
     void correct_bottom_() {
-        if (bottom_ == chess::color_null) {
-            bottom_ = chess::white;
+        if (bottom_ == color_null) {
+            bottom_ = white;
         }
     }
 
@@ -443,31 +442,31 @@ void DnDChessman::activate() {
 void DnDChessman::dropEvent(Wt::WDropEvent dropEvent) {
     DnDChessman* source = dynamic_cast<DnDChessman*>(dropEvent.source());
     if (source->xy_ != xy_) {
-        bwi_->try_move_(chess::Move(source->xy_, xy_));
+        bwi_->try_move_(Move(source->xy_, xy_));
     }
     doJavaScript("$(" + bwi_->draggable_->jsRef() + ").hide();");
 }
 
-std::string BoardWidget::image(chess::Field field, bool big) {
+std::string BoardWidget::image(Field field, bool big) {
     return str(boost::format("img/chess/board/%d-%d%s.GIF")
                % (2 - (int)field.color())
                % (int)field.chessman()
                % (big ? "-B" : ""));
 }
 
-BoardWidget::BoardWidget(bool big, bool active, chess::Color bottom,
-                         const chess::Board& board, Wt::WContainerWidget* parent) :
+BoardWidget::BoardWidget(bool big, bool active, Color bottom,
+                         const Board& board, Wt::WContainerWidget* parent) :
     WCompositeWidget(parent) {
     impl_ = new BoardWidgetImpl(big, active, bottom, board);
     setImplementation(impl_);
 }
 
-void BoardWidget::bottom_set(chess::Color bottom) {
+void BoardWidget::bottom_set(Color bottom) {
     impl_->bottom_set(bottom);
 }
 
-void BoardWidget::set(const chess::Board& board,
-                      chess::Move lastmove, bool active) {
+void BoardWidget::set(const Board& board,
+                      Move lastmove, bool active) {
     impl_->set(board, lastmove, active);
 }
 
@@ -475,7 +474,7 @@ void BoardWidget::turn() {
     impl_->turn();
 }
 
-Wt::Signal<chess::Move>& BoardWidget::move() {
+Wt::Signal<Move>& BoardWidget::move() {
     return impl_->move();
 }
 
@@ -483,5 +482,4 @@ Wt::WContainerWidget* BoardWidget::inner() {
     return impl_->inner();
 }
 
-}
 }

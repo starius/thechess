@@ -29,8 +29,6 @@ namespace dbo = Wt::Dbo;
 #include "model/User.hpp"
 
 namespace thechess {
-namespace widgets {
-using namespace model;
 
 typedef boost::tuple<GamePtr, Wt::WString, Wt::WString, Wt::WString> Result;
 typedef dbo::Query<Result> Q;
@@ -172,5 +170,4 @@ GameListWidget::GameListWidget(Wt::WContainerWidget* parent) :
     setImplementation(impl_);
 }
 
-}
 }

@@ -21,8 +21,6 @@ namespace dbo = Wt::Dbo;
 #include "ThechessApplication.hpp"
 
 namespace thechess {
-namespace widgets {
-using namespace model;
 
 const int order_of_states_size = 4;
 const Game::State order_of_states[order_of_states_size] =
@@ -222,6 +220,5 @@ MyGamesList::MyGamesList(UserPtr user, Wt::WContainerWidget* p):
     setImplementation(new MyGamesListImp(user));
 }
 
-}
 }
 

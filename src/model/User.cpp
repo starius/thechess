@@ -16,7 +16,6 @@
 #include "config.hpp"
 
 namespace thechess {
-namespace model {
 
 User::User(bool):
     rights_(regular_user),
@@ -98,5 +97,4 @@ UserPtr User::classification_confirmer() const {
     return classification_confirmer_;
 }
 
-}
 }

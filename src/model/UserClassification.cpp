@@ -10,7 +10,6 @@
 #include "model/UserClassification.hpp"
 
 namespace thechess {
-namespace model {
 
 Wt::WString classification2str(Classification c) {
     if (c == SUPER_GRANDMASTER) {
@@ -61,6 +60,5 @@ Wt::WString classification2str(Classification c) {
     return Wt::WString::tr("tc.user.classification_none");
 }
 
-}
 }
 

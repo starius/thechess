@@ -17,7 +17,6 @@ class WContainerWidget;
 }
 
 namespace thechess {
-namespace widgets {
 
 class GameListWidgetImpl;
 
@@ -28,7 +27,6 @@ private:
     GameListWidgetImpl* impl_;
 };
 
-}
 }
 
 #endif

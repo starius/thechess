@@ -12,7 +12,6 @@
 #include "widgets/MySpinBox.hpp"
 
 namespace thechess {
-namespace widgets {
 
 MySpinBox::MySpinBox(Wt::WContainerWidget* parent) :
     Wt::WSpinBox(parent) {
@@ -42,6 +41,5 @@ double MyDoubleSpinBox::value() const {
     return v;
 }
 
-}
 }
 

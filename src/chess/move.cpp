@@ -11,7 +11,6 @@
 #include "utils.hpp"
 
 namespace thechess {
-namespace chess {
 
 Move::Move(Xy from, Xy to) :
     from_(from), to_(to), turn_into_(chessman_null) {
@@ -45,13 +44,13 @@ bool Move::could_turn_into(const Board& board) const {
 }
 
 std::string Move::san_from_(const Board& board) const {
-    chess::Chessman chessman = board.chessman(from());
+    Chessman chessman = board.chessman(from());
     if (chessman == pawn && board.test_takes(*this)) {
-        return char2str(chess::x_char(from().x()));
+        return char2str(x_char(from().x()));
     }
     bool alt = false, alt_x = false, alt_y = false;
     THECHESS_XY_FOREACH (xy) {
-        chess::Move alt_move(xy, to(), board);
+        Move alt_move(xy, to(), board);
         if (board.chessman(xy) == chessman && xy != from() &&
                 board.test_move(alt_move) && !board.test_castling(alt_move)) {
             alt = true;
@@ -66,9 +65,9 @@ std::string Move::san_from_(const Board& board) const {
     if (alt_x && alt_y) {
         return from().str();
     } else if (alt_x) {
-        return char2str(chess::y_char(from().y()));
+        return char2str(y_char(from().y()));
     } else if (alt) {
-        return char2str(chess::x_char(from().x()));
+        return char2str(x_char(from().x()));
     }
     return "";
 }
@@ -78,11 +77,11 @@ std::string Move::san(const Board& board, const Board& board_after,
     std::string result;
     result.reserve(10);
     if (board.test_castling(*this)) {
-        result += to().x() == chess::x_g ? "O-O" : "O-O-O";
+        result += to().x() == x_g ? "O-O" : "O-O-O";
     } else {
-        chess::Chessman chessman = board.chessman(from());
-        if (!skip_chessmen && chessman != chess::pawn) {
-            result += chess::chessman_char(chessman);
+        Chessman chessman = board.chessman(from());
+        if (!skip_chessmen && chessman != pawn) {
+            result += chessman_char(chessman);
         }
         result += san_from_(board);
         if (board.test_takes(*this)) {
@@ -90,8 +89,8 @@ std::string Move::san(const Board& board, const Board& board_after,
         }
         result += to().str();
         if (!skip_chessmen) {
-            if (turn_into() != chess::chessman_null) {
-                (result += '=') += chess::chessman_char(turn_into());
+            if (turn_into() != chessman_null) {
+                (result += '=') += chessman_char(turn_into());
             }
             if (board_after.test_shah()) {
                 result += board_after.test_end() == checkmate ? '#' : '+';
@@ -101,6 +100,5 @@ std::string Move::san(const Board& board, const Board& board_after,
     return result;
 }
 
-}
 }
 

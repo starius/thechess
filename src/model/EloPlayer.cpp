@@ -14,7 +14,6 @@
 #include "config.hpp"
 
 namespace thechess {
-namespace model {
 namespace elo = config::elo;
 
 const float victory = 1.0;
@@ -89,6 +88,5 @@ void EloPlayer::multiple(const EloPlayers& winners, const EloPlayers& losers) {
     }
 }
 
-}
 }
 

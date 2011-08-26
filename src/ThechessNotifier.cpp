@@ -13,7 +13,6 @@
 #include "ThechessApplication.hpp"
 
 namespace thechess {
-using namespace model;
 
 ThechessNotifier::ThechessNotifier(ThechessServer& server):
     server_(server) {

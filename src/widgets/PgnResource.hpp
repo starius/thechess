@@ -17,11 +17,10 @@
 
 namespace thechess {
 class ThechessServer;
-namespace widgets {
 
 class PgnResource : public Wt::WResource {
 public:
-    PgnResource(model::GamePtr game, ThechessServer& server, Wt::WObject* p = 0);
+    PgnResource(GamePtr game, ThechessServer& server, Wt::WObject* p = 0);
     PgnResource(ThechessServer& server, Wt::WObject* p = 0);
     ~PgnResource();
 
@@ -29,11 +28,10 @@ public:
                                Wt::Http::Response& response);
 
 private:
-    model::GamePtr game_;
+    GamePtr game_;
     ThechessSession session_;
 };
 
-}
 }
 
 #endif

@@ -26,7 +26,6 @@ namespace dbo = Wt::Dbo;
 #include "rand.hpp"
 
 namespace thechess {
-namespace chess {
 
 void run_tests() {
     Board test_board;
@@ -57,11 +56,10 @@ void run_tests() {
     const int n = 10000;
     int sum = 0;
     for (int i = 0; i < n; i++) {
-        sum += random::rr(2);
+        sum += rr(2);
     }
     int sigma = sqrt(n * 0.5 * 0.5);
     BOOST_ASSERT(abs(sum - n / 2) < 10 * sigma);
 }
 
-}
 }

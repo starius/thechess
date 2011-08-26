@@ -18,7 +18,6 @@
 namespace dbo = Wt::Dbo;
 
 namespace thechess {
-namespace model {
 
 struct Object;
 typedef std::vector<Object> Objects;
@@ -48,7 +47,6 @@ struct Object {
     Wt::WDateTime process(Objects& objects, dbo::Session& session) const;
 };
 
-}
 }
 
 #endif

@@ -17,22 +17,20 @@
 #include "ThechessApplication.hpp"
 
 namespace thechess {
-namespace widgets {
 
 class CompetitionWidget : public Wt::WTemplate, public Notifiable {
 public:
-    CompetitionWidget(model::CompetitionPtr competition,
+    CompetitionWidget(CompetitionPtr competition,
                       Wt::WContainerWidget* p = 0);
 
     virtual void notify();
 
 private:
-    model::CompetitionPtr c;
+    CompetitionPtr c;
 
     void reprint_();
 };
 
-}
 }
 
 #endif

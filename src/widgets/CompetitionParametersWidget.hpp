@@ -20,7 +20,6 @@
 #include "model/Competition.hpp"
 
 namespace thechess {
-namespace widgets {
 
 class MySpinBox;
 class MyDoubleSpinBox;
@@ -30,10 +29,10 @@ class IntervalWidget;
 
 class CompetitionParametersWidget : public GameParametersWidget {
 public:
-    CompetitionParametersWidget(const model::CompetitionParameters* cp,
+    CompetitionParametersWidget(const CompetitionParameters* cp,
                                 bool allow_change_type = true, Wt::WContainerWidget* parent = 0);
 
-    void apply_parameters(model::CompetitionParameters* cp);
+    void apply_parameters(CompetitionParameters* cp);
 
 private:
     Wt::WComboBox* type_;
@@ -59,23 +58,22 @@ private:
     MySpinBox* increment_substages_;
 
     void type_handler_();
-    model::CompetitionType get_type_() const;
-    void set_type_(model::CompetitionType t);
+    CompetitionType get_type_() const;
+    void set_type_(CompetitionType t);
 };
 
 class CompetitionParametersWidget2 : public CompetitionParametersWidget {
 public:
-    CompetitionParametersWidget2(const model::Competition* c,
+    CompetitionParametersWidget2(const Competition* c,
                                  bool allow_change_type = true, Wt::WContainerWidget* parent = 0);
 
-    void apply_parameters(model::Competition* c);
+    void apply_parameters(Competition* c);
 
 private:
     Wt::WLineEdit* name_;
     Wt::WTextEdit* description_;
 };
 
-}
 }
 
 #endif

@@ -12,7 +12,6 @@
 #include <Wt/WRandom>
 
 namespace thechess {
-namespace random {
 
 const unsigned int uint_min = 0;
 const unsigned int uint_max = UINT_MAX;
@@ -44,4 +43,4 @@ ptrdiff_t rand_for_shuffle(ptrdiff_t i) {
 }
 
 }
-}
+

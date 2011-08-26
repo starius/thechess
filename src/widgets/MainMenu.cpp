@@ -17,7 +17,6 @@
 #include "widgets/MainMenu.hpp"
 
 namespace thechess {
-namespace widgets {
 
 class MainMenuImpl : public Wt::WContainerWidget {
 public:
@@ -47,6 +46,5 @@ MainMenu::MainMenu(Wt::WContainerWidget* parent) :
     setImplementation(impl_);
 }
 
-}
 }
 

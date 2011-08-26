@@ -22,32 +22,30 @@
 #include "widgets/BoardWidget.hpp"
 
 namespace thechess {
-namespace widgets {
 
 class MovesWidgetImpl;
 
 class MovesWidget : public Wt::WCompositeWidget {
 public:
-    MovesWidget(const chess::Moves& moves, bool big = false,
+    MovesWidget(const Moves& moves, bool big = false,
                 bool active = false, int max_moves = -1, bool append_only = false,
-                chess::Color bottom = chess::white, Wt::WContainerWidget* parent = 0);
+                Color bottom = white, Wt::WContainerWidget* parent = 0);
 
-    const chess::Moves& moves() const;
-    const chess::Board& board() const;
-    Wt::Signal<chess::Move>& move();
+    const Moves& moves() const;
+    const Board& board() const;
+    Wt::Signal<Move>& move();
     int current_move() const;
 
-    void add_move(const chess::Move& move);
-    void bottom_set(chess::Color bottom);
+    void add_move(const Move& move);
+    void bottom_set(Color bottom);
     void reset();
-    void set_moves(const chess::Moves& moves);
+    void set_moves(const Moves& moves);
     void set_active(bool active);
 
 private:
     MovesWidgetImpl* impl_;
 };
 
-}
 }
 
 #endif // THECHESS_WIDGETS_MOVES_H_

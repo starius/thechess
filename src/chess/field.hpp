@@ -15,7 +15,6 @@
 #include <Wt/WString>
 
 namespace thechess {
-namespace chess {
 
 /** The enum for piece color */
 enum Color {
@@ -99,7 +98,6 @@ private:
     Chessman chessman_;
 };
 
-}
 }
 
 #endif // FIELD_H_

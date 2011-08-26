@@ -22,12 +22,10 @@ namespace dbo = Wt::Dbo;
 #include <Wt/Dbo/WtSqlTraits>
 
 namespace thechess {
-namespace model {
 class Game;
 typedef dbo::ptr<Game> GamePtr;
 typedef dbo::collection<GamePtr> Games;
 typedef std::vector<GamePtr> GamesVector;
-}
 }
 
 #include "model/GameParameters.hpp"
@@ -37,7 +35,6 @@ typedef std::vector<GamePtr> GamesVector;
 #include "model/Object.hpp"
 
 namespace thechess {
-namespace model {
 
 /** \brief Dbo-model that represents one game beetween two users.
 
@@ -89,16 +86,16 @@ public:
         dbo::belongsTo(a, black_, "black");
         dbo::belongsTo(a, winner_, "winner_game");
         dbo::belongsTo(a, init_, "init_game");
-        dbo::field(a, competition_confirmer_[chess::white], "competition_confirmer_white");
-        dbo::field(a, competition_confirmer_[chess::black], "competition_confirmer_black");
+        dbo::field(a, competition_confirmer_[white], "competition_confirmer_white");
+        dbo::field(a, competition_confirmer_[black], "competition_confirmer_black");
         dbo::field(a, colors_random_, "colors_random");
         dbo::field(a, created_, "created");
         dbo::field(a, confirmed_, "confirmed");
         dbo::field(a, started_, "started");
         dbo::field(a, lastmove_, "lastmove");
         dbo::field(a, ended_, "ended");
-        dbo::field(a, limit_private_[chess::white], "limit_private_white");
-        dbo::field(a, limit_private_[chess::black], "limit_private_black");
+        dbo::field(a, limit_private_[white], "limit_private_white");
+        dbo::field(a, limit_private_[black], "limit_private_black");
         dbo::belongsTo(a, competition_, "competition");
         dbo::field(a, competition_stage_, "competition_stage");
         dbo::field(a, pause_until_, "pause_until");
@@ -108,8 +105,8 @@ public:
         dbo::field(a, mistake_move_, "mistake_move");
         dbo::field(a, mistake_proposer_, "mistake_proposer");
         dbo::field(a, draw_proposer_, "draw_proposer");
-        dbo::field(a, rating_after_[chess::white], "rating_after_white");
-        dbo::field(a, rating_after_[chess::black], "rating_after_black");
+        dbo::field(a, rating_after_[white], "rating_after_white");
+        dbo::field(a, rating_after_[black], "rating_after_black");
         dbo::field(a, comment_, "comment");
     }
 #endif
@@ -120,13 +117,13 @@ public:
     \param c color of creator, or none color to set random colors
     */
     void propose_game(UserPtr init, UserPtr u,
-                      chess::Color c);
+                      Color c);
 
     /** Turn this game into challenge by one user.
     \param init the creator of game
     \param c color of creator, none color meens random color
     */
-    void propose_challenge(UserPtr init, chess::Color c);
+    void propose_challenge(UserPtr init, Color c);
 
     /** Turn this game into competition game.
     \param white the user playing white pieces
@@ -332,7 +329,7 @@ public:
     /* @{ */
 
     /** Return the active color */
-    chess::Color order_color() const;
+    Color order_color() const;
 
     /** Return the active user */
     UserPtr order_user() const;
@@ -358,13 +355,13 @@ public:
     }
 
     /** Return the pieces color of given user */
-    chess::Color color_of(const UserPtr user) const;
+    Color color_of(const UserPtr user) const;
 
     /** Return if the user is member of the game (black, white or init) */
     bool is_member(const UserPtr user) const;
 
     /** Return the user playing pieces of given color */
-    UserPtr user_of(chess::Color color) const;
+    UserPtr user_of(Color color) const;
 
     /** Return another member of the game */
     UserPtr other_user(const UserPtr user) const;
@@ -390,7 +387,7 @@ public:
 
     /** Return the number of moves of the game */
     int human_size() const {
-        return chess::Moves::size_to_human(size());
+        return Moves::size_to_human(size());
     }
 
     /** Return if the game is ended, ie is a win, draw or cancelled */
@@ -416,7 +413,7 @@ public:
     }
 
     /** Return elo rating of the user after the game if changed or -1 */
-    int rating_after(chess::Color color) const;
+    int rating_after(Color color) const;
 
     /* @} */
 
@@ -430,8 +427,8 @@ public:
     Method was added to avoid additional checking of move (optimization).
     You must check move yourself before call this method!
     */
-    void add_move(const chess::Move& move,
-                  const chess::Board& board_after);
+    void add_move(const Move& move,
+                  const Board& board_after);
 
     /* @} */
 
@@ -439,7 +436,7 @@ public:
     /* @{ */
 
     /** Return private time limit of user of given color */
-    Td limit_private(chess::Color color) const;
+    Td limit_private(Color color) const;
 
     /** Return private time limit of given user */
     Td limit_private(UserPtr user) const;
@@ -599,7 +596,7 @@ private:
     void set_black_(UserPtr user) {
         black_ = user;
     }
-    void set_of_color_(UserPtr user, chess::Color color);
+    void set_of_color_(UserPtr user, Color color);
     void set_random_(UserPtr user1, UserPtr user2);
 
     void confirm_();
@@ -608,7 +605,7 @@ private:
     void finish_(State state, UserPtr winner = UserPtr());
     void elo_change_();
 
-    void push_move_(chess::Move move);
+    void push_move_(Move move);
     void pop_moves_(int number);
 
     const char* pgn_termination_() const;
@@ -616,7 +613,6 @@ private:
     void pgn_additional_(std::ostream& out) const;
 };
 
-}
 }
 
 #endif // THECHESS_MODEL_GAME_H_

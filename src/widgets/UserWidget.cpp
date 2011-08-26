@@ -23,8 +23,6 @@
 #include "time_intervals.hpp"
 
 namespace thechess {
-namespace widgets {
-using namespace model;
 
 class UserWidgetImpl : public Wt::WContainerWidget {
 public:
@@ -88,5 +86,4 @@ UserWidget::UserWidget(UserPtr user, Wt::WContainerWidget* parent) :
     setImplementation(impl_);
 }
 
-}
 }

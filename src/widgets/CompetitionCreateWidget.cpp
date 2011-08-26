@@ -22,8 +22,6 @@ namespace dbo = Wt::Dbo;
 #include "config.hpp"
 
 namespace thechess {
-namespace widgets {
-using namespace model;
 
 CompetitionCreateWidget::CompetitionCreateWidget(Wt::WContainerWidget* p):
     Wt::WContainerWidget(p) {
@@ -44,7 +42,7 @@ CompetitionCreateWidget::CompetitionCreateWidget(Wt::WContainerWidget* p):
     t.commit();
 }
 
-CompetitionCreateWidget::CompetitionCreateWidget(model::CompetitionPtr c,
+CompetitionCreateWidget::CompetitionCreateWidget(CompetitionPtr c,
         Wt::WContainerWidget* p):
     Wt::WContainerWidget(p), c_(c) {
     dbo::Transaction t(tApp->session());
@@ -76,6 +74,5 @@ void CompetitionCreateWidget::button_handler_() {
     tApp->server().tracker().add_or_update_task(Object(CompetitionObject, comp.id()));
 }
 
-}
 }
 

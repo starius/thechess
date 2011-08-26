@@ -19,8 +19,6 @@
 #include "config.hpp"
 
 namespace thechess {
-namespace widgets {
-using namespace model;
 using namespace config::competition; // min, max
 
 CompetitionParametersWidget::CompetitionParametersWidget(
@@ -195,7 +193,7 @@ CompetitionType CompetitionParametersWidget::get_type_() const {
     return t;
 }
 
-CompetitionParametersWidget2::CompetitionParametersWidget2(const model::Competition* c,
+CompetitionParametersWidget2::CompetitionParametersWidget2(const Competition* c,
         bool allow_change_type, Wt::WContainerWidget* parent):
     CompetitionParametersWidget(c, allow_change_type, parent) {
     name_ = new Wt::WLineEdit(c->name());
@@ -205,7 +203,7 @@ CompetitionParametersWidget2::CompetitionParametersWidget2(const model::Competit
     item(tr("tc.competition.Description"), "", description_, description_);
 }
 
-void CompetitionParametersWidget2::apply_parameters(model::Competition* c) {
+void CompetitionParametersWidget2::apply_parameters(Competition* c) {
     CompetitionParametersWidget::apply_parameters(c);
     std::wstring name = name_->text().value();
     if (name.length() > config::competition::max_name) {
@@ -219,6 +217,5 @@ void CompetitionParametersWidget2::apply_parameters(model::Competition* c) {
     c->set_description(description);
 }
 
-}
 }
 

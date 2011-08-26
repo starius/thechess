@@ -19,7 +19,6 @@
 #include "chess/field.hpp"
 
 namespace thechess {
-namespace chess {
 
 void Board::init_chessmans(Yname y, Color color) {
     field(Xy(x_a, y), Field(color, rock));
@@ -549,6 +548,5 @@ void Board::fen(std::ostream& out, int halfmove, int fullmove) const {
     out << fullmove;
 }
 
-}
 }
 

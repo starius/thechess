@@ -16,7 +16,7 @@ using namespace thechess;
 
 int main(int argc, char** argv) {
 #ifdef RUN_TESTS
-    thechess::chess::run_tests();
+    thechess::run_tests();
 #endif // RUN_TESTS
     ThechessServer server(argc, argv);
     if (server.start()) {

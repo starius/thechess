@@ -14,7 +14,6 @@
 #include <string>
 
 namespace thechess {
-namespace chess {
 
 class Xy;
 
@@ -212,8 +211,8 @@ THECHESS_XY_FOREACH (xy) {
 \endcode
 */
 #define THECHESS_XY_FOREACH(xy) \
-for (thechess::chess::Xy xy = thechess::chess::Xy::begin(); \
-xy != thechess::chess::Xy::end(); ++xy)
+for (thechess::Xy xy = thechess::Xy::begin(); \
+xy != thechess::Xy::end(); ++xy)
 
 /** Iterate files.
 Usage:
@@ -224,9 +223,9 @@ THECHESS_X_FOREACH (x) {
 \endcode
 */
 #define THECHESS_X_FOREACH(x) \
-for (thechess::chess::Xname x = thechess::chess::x_a; \
-x != thechess::chess::x_end; \
-x = (thechess::chess::Xname)((int)x + 1))
+for (thechess::Xname x = thechess::x_a; \
+x != thechess::x_end; \
+x = (thechess::Xname)((int)x + 1))
 
 /** Iterate ranks.
 Usage:
@@ -237,11 +236,10 @@ THECHESS_Y_FOREACH (y) {
 \endcode
 */
 #define THECHESS_Y_FOREACH(y) \
-for (thechess::chess::Yname y = thechess::chess::y_1; \
-y != thechess::chess::y_end; \
-y = (thechess::chess::Yname)((int)y + 1))
+for (thechess::Yname y = thechess::y_1; \
+y != thechess::y_end; \
+y = (thechess::Yname)((int)y + 1))
 
-}
 }
 
 #endif // THECHESS_XY_H_

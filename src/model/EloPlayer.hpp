@@ -13,10 +13,8 @@
 #include <vector>
 
 namespace thechess {
-namespace model {
 class EloPlayer;
 typedef std::vector<EloPlayer*> EloPlayers;
-}
 }
 
 #include <Wt/Dbo/Dbo>
@@ -24,7 +22,6 @@ typedef std::vector<EloPlayer*> EloPlayers;
 namespace dbo = Wt::Dbo;
 
 namespace thechess {
-namespace model {
 
 class EloPlayer {
 public:
@@ -64,13 +61,12 @@ private:
 };
 
 }
-}
 
 namespace Wt {
 namespace Dbo {
 
 template<class Action>
-void field(Action& a, thechess::model::EloPlayer& p, const std::string& name) {
+void field(Action& a, thechess::EloPlayer& p, const std::string& name) {
     field(a, const_cast<int&>(p.elo()), name + "_elo");
     field(a, const_cast<int&>(p.all()), name + "_all");
     field(a, const_cast<int&>(p.wins()), name + "_wins");

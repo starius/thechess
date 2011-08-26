@@ -26,7 +26,6 @@
 namespace dbo = Wt::Dbo;
 
 namespace thechess {
-using namespace model;
 
 ThechessSession::ThechessSession(dbo::FixedSqlConnectionPool& pool) {
     setConnectionPool(pool);

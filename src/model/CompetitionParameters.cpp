@@ -11,7 +11,6 @@
 #include "config.hpp"
 
 namespace thechess {
-namespace model {
 namespace defaults = config::competition::defaults;
 
 CompetitionParameters::CompetitionParameters() {
@@ -40,6 +39,5 @@ CompetitionParameters::CompetitionParameters(bool):
     set_norating(defaults::norating);
 }
 
-}
 }
 

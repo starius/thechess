@@ -20,9 +20,6 @@ class WContainerWidget;
 }
 
 namespace thechess {
-namespace widgets {
-
-using model::GamePtr;
 
 class GameWidgetImpl;
 
@@ -33,7 +30,6 @@ private:
     GameWidgetImpl* impl_;
 };
 
-}
 }
 
 #endif

@@ -19,9 +19,6 @@ class WContainerWidget;
 }
 
 namespace thechess {
-namespace widgets {
-
-using model::UserPtr;
 
 class RatingChangesImpl;
 
@@ -34,7 +31,6 @@ private:
     RatingChangesImpl* impl_;
 };
 
-}
 }
 
 #endif

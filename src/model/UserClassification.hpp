@@ -13,7 +13,6 @@
 #include <Wt/WString>
 
 namespace thechess {
-namespace model {
 
 enum Classification {
     SUPER_GRANDMASTER = 110,
@@ -45,7 +44,6 @@ const Classification classifications[] = {
 };
 const int classifications_size = 16;
 
-}
 }
 
 #endif

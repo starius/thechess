@@ -36,7 +36,7 @@ private:
     dbo::FixedSqlConnectionPool pool_;
     ThechessNotifier notifier_;
     TaskTracker tracker_;
-    widgets::PgnResource pgn_;
+    PgnResource pgn_;
 };
 
 }

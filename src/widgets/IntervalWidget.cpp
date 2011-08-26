@@ -10,7 +10,6 @@
 #include "widgets/IntervalWidget.hpp"
 
 namespace thechess {
-namespace widgets {
 
 IntervalWidget:: IntervalWidget(Wt::WWidget* min, Wt::WWidget* max,
                                 Wt::WContainerWidget* parent):
@@ -19,6 +18,5 @@ IntervalWidget:: IntervalWidget(Wt::WWidget* min, Wt::WWidget* max,
     bindWidget("max", max);
 }
 
-}
 }
 

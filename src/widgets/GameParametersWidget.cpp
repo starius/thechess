@@ -19,8 +19,6 @@
 #include "config.hpp"
 
 namespace thechess {
-namespace widgets {
-using namespace model;
 
 GameParametersWidget::GameParametersWidget(const GameParameters* gp,
         Wt::WContainerWidget* parent) :
@@ -30,7 +28,7 @@ GameParametersWidget::GameParametersWidget(const GameParameters* gp,
     section(tr("tc.game.Parameters"));
     cell = item(tr("tc.game.Start_position"), "", 0, 0, false);
     moves_widget_ = new MovesWidget(gp->moves(), false, true,
-                                    max::moves_init, false, chess::white, cell);
+                                    max::moves_init, false, white, cell);
     Wt::WPushButton* moves_reset_ = new Wt::WPushButton(tr("tc.common.Reset"), cell);
     moves_reset_->clicked().connect(moves_widget_, &MovesWidget::reset);
     limit_std_ = new TimeDeltaWidget(min::limit_std, gp->limit_std(), max::limit_std);
@@ -61,6 +59,5 @@ void GameParametersWidget::apply_parameters(GameParameters* gp) {
     gp->set_first_draw(first_draw_->value() * 2);
 }
 
-}
 }
 

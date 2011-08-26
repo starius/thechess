@@ -19,7 +19,6 @@ class WTable;
 }
 
 namespace thechess {
-namespace widgets {
 
 class LoginWidget : public Wt::WContainerWidget {
 public:
@@ -35,7 +34,6 @@ private:
     void try_();
 };
 
-}
 }
 
 #endif

@@ -17,7 +17,6 @@
 #include "widgets/TableForm.hpp"
 
 namespace thechess {
-namespace widgets {
 
 class MySpinBox;
 class TimeDeltaWidget;
@@ -25,9 +24,9 @@ class MovesWidget;
 
 class GameParametersWidget : public TableForm {
 public:
-    GameParametersWidget(const model::GameParameters* gp,
+    GameParametersWidget(const GameParameters* gp,
                          Wt::WContainerWidget* parent = 0);
-    void apply_parameters(model::GameParameters* gp);
+    void apply_parameters(GameParameters* gp);
 
 private:
     MovesWidget* moves_widget_;
@@ -41,7 +40,6 @@ private:
     MySpinBox* first_draw_;
 };
 
-}
 }
 
 #endif

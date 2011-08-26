@@ -14,7 +14,6 @@
 #include <Wt/WTemplate>
 
 namespace thechess {
-namespace widgets {
 
 class IntervalWidget : public Wt::WTemplate {
 public:
@@ -22,7 +21,6 @@ public:
                    Wt::WContainerWidget* parent = 0);
 };
 
-}
 }
 
 #endif

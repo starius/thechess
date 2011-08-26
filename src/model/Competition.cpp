@@ -17,7 +17,6 @@
 #include "rand.hpp"
 
 namespace thechess {
-namespace model {
 
 Competition::Competition() {
 }
@@ -261,7 +260,7 @@ void Competition::start_(Objects& objects) {
 
 void Competition::create_games_classical_(Objects& objects) {
     UsersVector members(members_.begin(), members_.end());
-    std::random_shuffle(members.begin(), members.end(), random::rand_for_shuffle);
+    std::random_shuffle(members.begin(), members.end(), rand_for_shuffle);
     int white_games_per_user = std::max(1, int((members.size() - 1) * games_factor()));
     std::map<UserPtr, int> black_games;
     std::map<UserPtr, std::map<UserPtr, int> > N; // number of all games between them
@@ -317,7 +316,7 @@ void Competition::process_classical_(Objects& objects) {
             proposed.push_back(g);
         }
     }
-    std::random_shuffle(proposed.begin(), proposed.end(), random::rand_for_shuffle);
+    std::random_shuffle(proposed.begin(), proposed.end(), rand_for_shuffle);
     BOOST_FOREACH (GamePtr g, proposed) {
         if (used[g->white()] < max_simultaneous_games() &&
                 used[g->black()] < max_simultaneous_games()) {
@@ -349,6 +348,5 @@ GamePtr Competition::create_game_(UserPtr white, UserPtr black, int stage, bool 
     return game;
 }
 
-}
 }
 

@@ -19,7 +19,6 @@
 #include "chess/board.hpp"
 
 namespace thechess {
-namespace model {
 
 Game::Game() {
 }
@@ -32,10 +31,10 @@ Game::Game(bool):
     competition_stage_(-1),
     pause_proposed_td_(td_null),
     mistake_move_(-1) {
-    rating_after_[chess::white] = -1;
-    rating_after_[chess::black] = -1;
-    competition_confirmer_[chess::white] = false;
-    competition_confirmer_[chess::black] = false;
+    rating_after_[white] = -1;
+    rating_after_[black] = -1;
+    competition_confirmer_[white] = false;
+    competition_confirmer_[black] = false;
 }
 
 bool Game::is_ended() const {
@@ -102,14 +101,14 @@ Wt::WString Game::str_state() const {
     return Wt::WString::tr(state2str_id(state()));
 }
 
-chess::Color Game::color_of(const UserPtr user) const {
-    chess::Color color = chess::color_null;
+Color Game::color_of(const UserPtr user) const {
+    Color color = color_null;
     if (user) {
         if (user == white()) {
-            color = chess::white;
+            color = white;
         }
         if (user == black()) {
-            color = chess::black;
+            color = black;
         }
     }
     return color;
@@ -119,13 +118,13 @@ bool Game::is_member(const UserPtr user) const {
     return user && (user == white() || user == black() || user == init());
 }
 
-UserPtr Game::user_of(chess::Color color) const {
-    return (color == chess::white) ?
-           white() : ((color == chess::black) ? black() : UserPtr());
+UserPtr Game::user_of(Color color) const {
+    return (color == white) ?
+           white() : ((color == black) ? black() : UserPtr());
 }
 
 UserPtr Game::other_user(const UserPtr user) const {
-    return user_of(chess::other_color(color_of(user)));
+    return user_of(other_color(color_of(user)));
 }
 
 void Game::check(Objects& objects) {
@@ -142,7 +141,7 @@ void Game::check(Objects& objects) {
     } else if (state() == pause && now() > pause_until()) {
         stop_pause_();
     } else if (state() == active && total_limit_now(order_user()) < td_null) {
-        UserPtr winner = user_of(chess::other_color(order_color()));
+        UserPtr winner = user_of(other_color(order_color()));
         finish_(timeout, winner);
     }
     if (is_ended() && competition()) {
@@ -150,11 +149,11 @@ void Game::check(Objects& objects) {
     }
 }
 
-Td Game::limit_private(chess::Color color) const {
+Td Game::limit_private(Color color) const {
     Td result;
     if (state() < Game::active) {
         result = limit_private_init();
-    } else if (color != chess::color_null) {
+    } else if (color != color_null) {
         result = limit_private_[color];
     } else {
         result = td_null;
@@ -203,8 +202,8 @@ Wt::WDateTime Game::next_check() const {
     Wt::WDateTime result;
     if (state() == active) {
         result = lastmove() + limit_std() +
-                 std::min(limit_private(chess::white),
-                          limit_private(chess::black));
+                 std::min(limit_private(white),
+                          limit_private(black));
     } else if (state() == proposed && competition() && competition()->type() == STAGED) {
         result = created_ + competition()->relax_time();
     } else if (state() == confirmed && competition()) {
@@ -215,19 +214,19 @@ Wt::WDateTime Game::next_check() const {
     return result;
 }
 
-void Game::propose_game(UserPtr init, UserPtr u, chess::Color c) {
+void Game::propose_game(UserPtr init, UserPtr u, Color c) {
     init_ = init;
-    if (c == chess::color_null) {
+    if (c == color_null) {
         set_random_(init, u);
     } else {
         set_of_color_(init, c);
-        set_of_color_(u, chess::other_color(c));
+        set_of_color_(u, other_color(c));
     }
 }
 
-void Game::propose_challenge(UserPtr init, chess::Color c) {
+void Game::propose_challenge(UserPtr init, Color c) {
     init_ = init;
-    if (c != chess::color_null) {
+    if (c != color_null) {
         set_of_color_(init, c);
     } else {
         colors_random_ = true;
@@ -248,7 +247,7 @@ void Game::make_competition_game(UserPtr white, UserPtr black,
 
 void Game::set_random_(UserPtr user1, UserPtr user2) {
     colors_random_ = true;
-    if (random::rr(2) == 0) {
+    if (rr(2) == 0) {
         white_ = user1;
         black_ = user2;
     } else {
@@ -257,11 +256,11 @@ void Game::set_random_(UserPtr user1, UserPtr user2) {
     }
 }
 
-void Game::set_of_color_(UserPtr user, chess::Color color) {
-    if (color == chess::white) {
+void Game::set_of_color_(UserPtr user, Color color) {
+    if (color == white) {
         set_white_(user);
     }
-    if (color == chess::black) {
+    if (color == black) {
         set_black_(user);
     }
 }
@@ -314,8 +313,8 @@ void Game::confirm_() {
 
 void Game::start_() {
     state_ = active;
-    limit_private_[chess::white] = limit_private_init();
-    limit_private_[chess::black] = limit_private_init();
+    limit_private_[white] = limit_private_init();
+    limit_private_[black] = limit_private_init();
     pause_limit_ = pause_limit_init();
     pause_proposer_.reset();
     mistake_proposer_.reset();
@@ -379,8 +378,8 @@ bool Game::can_move(UserPtr user) const {
     return state() == active && !winner() && user == order_user();
 }
 
-void Game::add_move(const chess::Move& move,
-                    const chess::Board& board_after) {
+void Game::add_move(const Move& move,
+                    const Board& board_after) {
     if (state() == active) {
         draw_discard(order_user());
         Td penalty = spent_time() - limit_std();
@@ -388,13 +387,13 @@ void Game::add_move(const chess::Move& move,
             limit_private_[order_color()] -= penalty;
         }
         lastmove_ = now();
-        chess::FinishState s = board_after.test_end();
+        FinishState s = board_after.test_end();
         UserPtr order_user_now = order_user();
         push_move_(move);
-        if (s == chess::checkmate) {
+        if (s == checkmate) {
             finish_(mate, order_user_now);
         }
-        if (s == chess::stalemate) {
+        if (s == stalemate) {
             if (first_draw() != NO_DRAW) {
                 finish_(draw_stalemate);
             } else {
@@ -547,16 +546,16 @@ void Game::draw_discard(const UserPtr user) {
     }
 }
 
-chess::Color Game::order_color() const {
-    return (moves().size() % 2) ? chess::black : chess::white;
+Color Game::order_color() const {
+    return (moves().size() % 2) ? black : white;
 }
 
 UserPtr Game::order_user() const {
     UserPtr result;
-    if (order_color() == chess::white) {
+    if (order_color() == white) {
         result = white();
     }
-    if (order_color() == chess::black) {
+    if (order_color() == black) {
         result = black();
     }
     return result;
@@ -594,11 +593,11 @@ void Game::elo_change_() {
     if (is_draw()) {
         white_.modify()->games_stat().draw(&(black_.modify()->games_stat()));
     }
-    rating_after_[chess::white] = white()->games_stat().elo();
-    rating_after_[chess::black] = black()->games_stat().elo();
+    rating_after_[white] = white()->games_stat().elo();
+    rating_after_[black] = black()->games_stat().elo();
 }
 
-void Game::push_move_(chess::Move move) {
+void Game::push_move_(Move move) {
     moves_.push_move(move);
 }
 
@@ -606,8 +605,8 @@ void Game::pop_moves_(int number) {
     moves_.pop_moves(number);
 }
 
-int Game::rating_after(chess::Color color) const {
-    return (color == chess::color_null) ? -1 : rating_after_[color];
+int Game::rating_after(Color color) const {
+    return (color == color_null) ? -1 : rating_after_[color];
 }
 
 bool Game::can_comment(const UserPtr user) const {
@@ -635,17 +634,17 @@ const char* Game::pgn_termination_() const {
 
 void Game::pgn_init_moves_(std::ostream& out) const {
     out << "[SetUp \"" << "1" << "\"]" << std::endl;
-    chess::Board board;
+    Board board;
     int halfmove_clock = 0;
     THECHESS_MOVES_TO (move_it, &(moves_), board, moves_init()) {
-        chess::Move move(*move_it);
-        if (board.chessman(move.from()) == chess::pawn || board.test_takes(move)) {
+        Move move(*move_it);
+        if (board.chessman(move.from()) == pawn || board.test_takes(move)) {
             halfmove_clock = 0;
         } else {
             halfmove_clock += 1;
         }
     }
-    int fullmove_number = chess::Moves::size_to_human(moves_init() + 1);
+    int fullmove_number = Moves::size_to_human(moves_init() + 1);
     out << "[FEN \"";
     board.fen(out, halfmove_clock, fullmove_number);
     out << "\"]" << std::endl;
@@ -661,9 +660,9 @@ void Game::pgn_additional_(std::ostream& out) const {
     }
     out << "[Termination \"" << pgn_termination_() << "\"]" << std::endl;
     out << "[Mode \"" << "ICS" << "\"]" << std::endl;
-    if (rating_after(chess::white) != -1) {
-        out << "[WhiteElo \"" << rating_after(chess::white) << "\"]" << std::endl;
-        out << "[BlackElo \"" << rating_after(chess::black) << "\"]" << std::endl;
+    if (rating_after(white) != -1) {
+        out << "[WhiteElo \"" << rating_after(white) << "\"]" << std::endl;
+        out << "[BlackElo \"" << rating_after(black) << "\"]" << std::endl;
     }
     if (moves_init()) {
         pgn_init_moves_(out);
@@ -693,6 +692,5 @@ void Game::pgn(std::ostream& out, bool reduced) const {
     moves_.pgn(out, result, reduced);
 }
 
-}
 }
 

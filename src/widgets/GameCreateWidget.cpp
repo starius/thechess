@@ -23,8 +23,6 @@ namespace dbo = Wt::Dbo;
 #include "ThechessNotifier.hpp"
 
 namespace thechess {
-namespace widgets {
-using namespace model;
 
 GameCreateWidget::GameCreateWidget(UserPtr user,
                                    Wt::WContainerWidget* p) :
@@ -67,7 +65,7 @@ void GameCreateWidget::button_handler_() {
     dbo::Transaction t(tApp->session());
     GamePtr game = tApp->session().add(new Game(true));
     gpw_->apply_parameters(game.modify());
-    chess::Color color = selected_color_();
+    Color color = selected_color_();
     if (with_user_) {
         game.modify()->propose_game(tApp->user(), user_, color);
     } else {
@@ -81,15 +79,14 @@ void GameCreateWidget::button_handler_() {
     tApp->view(game);
 }
 
-chess::Color GameCreateWidget::selected_color_() const {
-    chess::Color color = chess::color_null;
+Color GameCreateWidget::selected_color_() const {
+    Color color = color_null;
     if (color_->currentIndex() == 1) {
-        color = chess::white;
+        color = white;
     } else if (color_->currentIndex() == 2) {
-        color = chess::black;
+        color = black;
     }
     return color;
 }
 
-}
 }

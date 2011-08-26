@@ -18,7 +18,6 @@
 #include "config.hpp"
 
 namespace thechess {
-namespace model {
 
 Object::Object(ObjectType ot, int i) :
     type(ot), id(i) {
@@ -59,6 +58,5 @@ Wt::WDateTime Object::process(Objects& objects, dbo::Session& session) const {
     return result;
 }
 
-}
 }
 

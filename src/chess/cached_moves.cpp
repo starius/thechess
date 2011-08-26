@@ -10,7 +10,6 @@
 #include "chess/cached_moves.hpp"
 
 namespace thechess {
-namespace chess {
 
 CachedMoves::CachedMoves(int moves_count) :
     Moves(moves_count), boards_(moves_count + 1) {
@@ -71,6 +70,5 @@ void CachedMoves::foreach(void* func(Move move, const Board& board),
     }
 }
 
-}
 }
 

@@ -13,7 +13,6 @@
 #include <Wt/WContainerWidget>
 
 namespace thechess {
-namespace widgets {
 
 class PleaseLoginWidget : public Wt::WContainerWidget {
 public:
@@ -23,7 +22,6 @@ private:
     void register_();
 };
 
-}
 }
 
 #endif

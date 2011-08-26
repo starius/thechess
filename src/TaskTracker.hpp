@@ -28,12 +28,12 @@ class TaskTracker {
 public:
     TaskTracker(ThechessServer& server);
     ~TaskTracker();
-    void add_or_update_task(const model::Object& object);
+    void add_or_update_task(const Object& object);
 
 private:
-    typedef std::multimap<Wt::WDateTime, model::Object> W2T;
+    typedef std::multimap<Wt::WDateTime, Object> W2T;
     typedef W2T::iterator W2T_It;
-    typedef std::map<model::Object, W2T_It> T2I;
+    typedef std::map<Object, W2T_It> T2I;
     typedef T2I::iterator T2I_It;
 
     W2T w2t;
@@ -47,7 +47,7 @@ private:
 
     void io_run_();
     void check_(const boost::system::error_code& error);
-    void add_or_update_task_(const model::Object& object);
+    void add_or_update_task_(const Object& object);
     void refresh_();
 };
 

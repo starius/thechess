@@ -18,7 +18,6 @@
 #include <Wt/WFormWidget>
 
 namespace thechess {
-namespace widgets {
 
 class TableForm : public Wt::WTable {
 public:
@@ -34,7 +33,6 @@ private:
     Wt::WTableRow* parent_row_(Wt::WWidget* input);
 };
 
-}
 }
 
 #endif

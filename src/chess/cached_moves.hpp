@@ -15,13 +15,10 @@
 #include <vector>
 
 namespace thechess {
-namespace chess {
 class CachedMoves;
-}
 }
 
 namespace thechess {
-namespace chess {
 
 /** Board-caching version of Moves */
 class CachedMoves : public Moves {
@@ -71,7 +68,6 @@ private:
     void set_move(int n, Move move); // to forbid this
 };
 
-}
 }
 
 #endif // THECHESS_CACHED_MOVES_H_

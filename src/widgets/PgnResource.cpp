@@ -18,8 +18,6 @@ namespace dbo = Wt::Dbo;
 #include "ThechessServer.hpp"
 
 namespace thechess {
-namespace widgets {
-using namespace model;
 
 PgnResource::PgnResource(GamePtr game, ThechessServer& server, Wt::WObject* p):
     Wt::WResource(p), game_(game), session_(server.pool()) {
@@ -60,6 +58,5 @@ void PgnResource::handleRequest(const Wt::Http::Request& request,
     t.commit();
 }
 
-}
 }
 

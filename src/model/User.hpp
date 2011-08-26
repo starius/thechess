@@ -23,12 +23,10 @@
 namespace dbo = Wt::Dbo;
 
 namespace thechess {
-namespace model {
 class User;
 typedef dbo::ptr<User> UserPtr;
 typedef dbo::collection<UserPtr> Users;
 typedef std::vector<UserPtr> UsersVector;
-}
 }
 
 #include "model/Game.hpp"
@@ -39,7 +37,6 @@ typedef std::vector<UserPtr> UsersVector;
 #include "time_intervals.hpp"
 
 namespace thechess {
-namespace model {
 
 class User : public dbo::Dbo<User> {
 public:
@@ -140,7 +137,6 @@ private:
     EloPlayer games_stat_;
 };
 
-}
 }
 
 #endif // THECHESS_MODEL_USER_H_

@@ -10,7 +10,6 @@
 #include <cstddef>
 
 namespace thechess {
-namespace random {
 
 unsigned int rand();
 
@@ -23,4 +22,4 @@ double drr(double start, double stop);
 ptrdiff_t rand_for_shuffle(ptrdiff_t i);
 
 }
-}
+

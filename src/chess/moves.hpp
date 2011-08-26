@@ -11,10 +11,8 @@
 #define THECHESS_MOVES_H_
 
 namespace thechess {
-namespace chess {
 class Moves;
 class MovesIterator;
-}
 }
 
 #include <vector>
@@ -28,7 +26,6 @@ class MovesIterator;
 typedef unsigned char byte;
 
 namespace thechess {
-namespace chess {
 
 /** Vector of bytes */
 typedef std::vector<byte> svuc;
@@ -223,8 +220,8 @@ THECHESS_MOVES_FROM_TO (moves_it, moves, board, 10, 20) {
 \endcode
 */
 #define THECHESS_MOVES_FROM_TO(move_it, moves, board, from, to) \
-for (thechess::chess::MovesIterator move_it = \
-thechess::chess::MovesIterator(moves, board, from); \
+for (thechess::MovesIterator move_it = \
+thechess::MovesIterator(moves, board, from); \
 move_it.n < to; ++move_it)
 
 /** Iterate moves from the beginning to \c to (exclusive).
@@ -275,7 +272,6 @@ THECHESS_MOVES_FOREACH (moves_it, moves, board) {
 #define THECHESS_MOVES_FOREACH(move_it, moves, board) \
 THECHESS_MOVES_FROM (move_it, moves, board, 0)
 
-}
 }
 
 #endif // THECHESS_MOVES_H_

@@ -22,7 +22,6 @@ class WFormWidget;
 }
 
 namespace thechess {
-namespace widgets {
 
 class TimeDeltaWidgetImpl;
 
@@ -37,7 +36,6 @@ private:
     TimeDeltaWidgetImpl* impl_;
 };
 
-}
 }
 
 #endif

@@ -30,8 +30,6 @@ namespace dbo = Wt::Dbo;
 #include "model/StagedCompetition.hpp"
 
 namespace thechess {
-namespace widgets {
-using namespace model;
 
 class CompetitionMembers : public Wt::WContainerWidget {
 public:
@@ -394,6 +392,5 @@ void CompetitionWidget::notify() {
     reprint_();
 }
 
-}
 }
 

@@ -16,7 +16,6 @@
 #include "widgets/RegisterWidget.hpp"
 
 namespace thechess {
-namespace widgets {
 
 PleaseLoginWidget::PleaseLoginWidget(Wt::WContainerWidget* parent) :
     Wt::WContainerWidget(parent) {
@@ -38,5 +37,4 @@ void PleaseLoginWidget::register_() {
     new RegisterWidget(this);
 }
 
-}
 }

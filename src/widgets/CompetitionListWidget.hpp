@@ -20,14 +20,13 @@ namespace dbo = Wt::Dbo;
 #include "model/Competition.hpp"
 
 namespace thechess {
-namespace widgets {
 
 class CompetitionListModel;
 class CompetitionListView;
 
 class CompetitionListWidget : public Wt::WContainerWidget {
 public:
-    typedef boost::tuple<model::CompetitionPtr, Wt::WString, int> Result;
+    typedef boost::tuple<CompetitionPtr, Wt::WString, int> Result;
     typedef dbo::Query<Result> Q;
 
     CompetitionListWidget(Wt::WContainerWidget* parent = 0);
@@ -41,7 +40,6 @@ private:
     void manager_();
 };
 
-}
 }
 
 #endif

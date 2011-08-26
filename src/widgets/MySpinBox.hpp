@@ -18,7 +18,6 @@ class WContainerWidget;
 }
 
 namespace thechess {
-namespace widgets {
 
 class MySpinBox : public Wt::WSpinBox {
 public:
@@ -32,7 +31,6 @@ public:
     double value() const;
 };
 
-}
 }
 
 #endif

@@ -15,15 +15,12 @@
 #include "model/UserClassification.hpp"
 
 namespace thechess {
-namespace widgets {
 
 class ClassificationWidget : public Wt::WComboBox {
 public:
-    typedef model::Classification Classification;
-
-    ClassificationWidget(Classification min = model::NO_CLASSIFICATION,
-                         Classification value = model::NO_CLASSIFICATION,
-                         Classification max = model::SUPER_GRANDMASTER,
+    ClassificationWidget(Classification min = NO_CLASSIFICATION,
+                         Classification value = NO_CLASSIFICATION,
+                         Classification max = SUPER_GRANDMASTER,
                          Wt::WContainerWidget* parent = 0);
     Classification value() const;
 
@@ -31,7 +28,6 @@ private:
     int first_i_;
 };
 
-}
 }
 
 #endif

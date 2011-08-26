@@ -16,7 +16,6 @@
 #include "model/Object.hpp"
 
 namespace thechess {
-namespace model {
 
 UserPair::UserPair() {
 }
@@ -109,7 +108,7 @@ void StagedCompetition::read_pair_(int stage, const UserPair& pair) {
 
 void StagedCompetition::start_competition_() {
     UsersVector members = competition_->members_vector();
-    std::random_shuffle(members.begin(), members.end(), random::rand_for_shuffle);
+    std::random_shuffle(members.begin(), members.end(), rand_for_shuffle);
     int members_size = members.size();
     int max_pow2 = pow(2, floor(log2(members_size))) + 0.5;
     int pairs = members_size - max_pow2 || members_size / 2;
@@ -135,7 +134,7 @@ void StagedCompetition::join_users_() {
     BOOST_FOREACH (Unpaired::value_type& stage_and_users, unpaired) {
         int stage = stage_and_users.first;
         UsersVector& users = stage_and_users.second;
-        std::random_shuffle(users.begin(), users.end(), random::rand_for_shuffle);
+        std::random_shuffle(users.begin(), users.end(), rand_for_shuffle);
         while (users.size() >= 2) {
             UserPtr first = users.back();
             users.pop_back();
@@ -169,6 +168,5 @@ void StagedCompetition::create_games_(Competition* competition, Objects& objects
     }
 }
 
-}
 }
 

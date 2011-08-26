@@ -65,7 +65,6 @@ const int first_draw = 5000 * 2;
 }
 
 namespace competition {
-using namespace model;
 namespace min {
 const int max_rating = 900;
 const int min_rating = 100;

@@ -15,9 +15,7 @@
 namespace dbo = Wt::Dbo;
 
 namespace thechess {
-namespace model {
 class GameParameters;
-}
 }
 
 #include "chess/moves.hpp"
@@ -25,7 +23,6 @@ class GameParameters;
 #include "time_intervals.hpp"
 
 namespace thechess {
-namespace model {
 
 class GameParameters {
 public:
@@ -43,11 +40,11 @@ public:
         dbo::field(a, first_draw_, "first_draw");
     }
 
-    const chess::Moves& moves() const {
+    const Moves& moves() const {
         return moves_;
     }
 
-    void set_init_moves(const chess::Moves& moves) {
+    void set_init_moves(const Moves& moves) {
         moves_ = moves;
         moves_init_ = moves_.size();
     }
@@ -95,7 +92,7 @@ public:
     void set_no_draw();
 
 protected:
-    chess::Moves moves_;
+    Moves moves_;
 
 private:
     int moves_init_;
@@ -111,7 +108,6 @@ private:
 
 const int NO_DRAW = -1;
 
-}
 }
 
 #endif

@@ -28,8 +28,6 @@ namespace dbo = Wt::Dbo;
 #include "widgets/GameCountdown.hpp"
 
 namespace thechess {
-namespace widgets {
-using namespace model;
 
 class SingleTimeout : public Wt::WTemplate {
 public:
@@ -114,5 +112,4 @@ Wt::WWidget* GameCountdown::renderView() {
     return new Wt::WText();
 }
 
-}
 }

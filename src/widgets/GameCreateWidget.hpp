@@ -22,9 +22,6 @@ class WComboBox;
 };
 
 namespace thechess {
-namespace widgets {
-
-using model::UserPtr;
 
 class GameParametersWidget;
 
@@ -41,10 +38,9 @@ private:
 
     void print_();
     void button_handler_();
-    chess::Color selected_color_() const;
+    Color selected_color_() const;
 };
 
-}
 }
 
 #endif

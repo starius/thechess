@@ -11,8 +11,6 @@
 #include "model/UserClassification.hpp"
 
 namespace thechess {
-namespace widgets {
-using namespace model;
 
 ClassificationWidget::ClassificationWidget(Classification min,
         Classification value, Classification max, Wt::WContainerWidget* parent):
@@ -35,6 +33,5 @@ Classification ClassificationWidget::value() const {
     return classifications[currentIndex() + first_i_];
 }
 
-}
 }
 

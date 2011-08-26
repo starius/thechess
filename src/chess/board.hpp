@@ -11,9 +11,7 @@
 #define THECHESS_BOARD_H_
 
 namespace thechess {
-namespace chess {
 class Board;
-}
 }
 
 #include <string>
@@ -25,7 +23,6 @@ class Board;
 #include "field.hpp"
 
 namespace thechess {
-namespace chess {
 
 const int order_byte = 32;
 const int castling_byte = 33;
@@ -209,7 +206,6 @@ private:
     friend void run_tests();
 };
 
-}
 }
 
 #endif // THECHESS_BOARD_H_

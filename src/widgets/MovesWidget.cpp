@@ -28,7 +28,6 @@
 #include "chess/move.hpp"
 
 namespace thechess {
-namespace widgets {
 
 const int moves_column_width = 100;
 const int n_column_width = 20;
@@ -37,14 +36,13 @@ const int navigationBarHeight = 25; // set in wt.css
 
 class MovesModel : public Wt::WAbstractTableModel {
 public:
-    MovesModel(chess::CachedMoves* cached_moves, WObject* parent = 0) :
+    MovesModel(CachedMoves* cached_moves, WObject* parent = 0) :
         Wt::WAbstractTableModel(parent), cached_moves_(cached_moves),
         max_show_move_(0) {
     }
 
     int index2n(const Wt::WModelIndex& index) const {
         // -2 means wrong move number
-        using namespace chess;
         int n;
         if (index.column() == 0) {
             n = -2;
@@ -59,7 +57,6 @@ public:
     }
 
     Wt::WModelIndex n2index(const int n) const {
-        using chess::Moves;
         return index(Moves::n_to_human(n) - 1, Moves::order_int(n) + 1);
     }
 
@@ -82,17 +79,17 @@ public:
             if (n == -2) {
                 return std::string("");
             }
-            chess::Move move = cached_moves_->move_at(n);
-            const chess::Board& board = cached_moves_->board_at(n);
-            const chess::Board& board_after = cached_moves_->board_at(n + 1);
+            Move move = cached_moves_->move_at(n);
+            const Board& board = cached_moves_->board_at(n);
+            const Board& board_after = cached_moves_->board_at(n + 1);
             std::string text = move.san(board, board_after, /*skip_chessmen*/ true);
             char shah = ' ';
             if (board_after.test_shah()) {
-                shah = board_after.test_end() == chess::checkmate ? '#' : '+';
+                shah = board_after.test_end() == checkmate ? '#' : '+';
             }
-            if (move.turn_into() != chess::chessman_null) {
-                chess::Color color = board.color(move.from());
-                chess::Field ti_field(color, move.turn_into());
+            if (move.turn_into() != chessman_null) {
+                Color color = board.color(move.from());
+                Field ti_field(color, move.turn_into());
                 std::string ti_src =
                     wApp->resolveRelativeUrl(BoardWidget::image(ti_field));
                 return str(boost::format(
@@ -103,7 +100,7 @@ public:
                                "</tr></table>") %
                            text % ti_src % shah);
             } else {
-                chess::Field field = board.field(move.from());
+                Field field = board.field(move.from());
                 std::string img =
                     wApp->resolveRelativeUrl(BoardWidget::image(field));
                 return str(boost::format(
@@ -125,8 +122,8 @@ public:
     }
 
     void move_changed(int move_i) {
-        int first = chess::Moves::n_to_human(move_i) - 1;
-        int last = chess::Moves::n_to_human(max_show_move_) - 1;
+        int first = Moves::n_to_human(move_i) - 1;
+        int last = Moves::n_to_human(max_show_move_) - 1;
         if (move_i <= max_show_move_) {
             beginRemoveRows(Wt::WModelIndex(), first, last);
             endRemoveRows();
@@ -140,15 +137,15 @@ public:
     }
 
 private:
-    chess::CachedMoves* cached_moves_;
+    CachedMoves* cached_moves_;
     int max_show_move_;
 };
 
 class MovesWidgetImpl : public Wt::WContainerWidget {
 public:
-    MovesWidgetImpl(const chess::Moves& moves,
+    MovesWidgetImpl(const Moves& moves,
                     bool big, bool active, int max_moves,
-                    bool append_only, chess::Color bottom) :
+                    bool append_only, Color bottom) :
         Wt::WContainerWidget(), cached_moves_(moves),
         current_move_(moves.size() - 1), max_moves_(max_moves),
         used_moves_(0), append_only_(append_only),
@@ -191,15 +188,15 @@ public:
         goto_move_(current_move_); // last move
     }
 
-    const chess::Moves& moves() const {
-        return (chess::Moves&)cached_moves_;
+    const Moves& moves() const {
+        return (Moves&)cached_moves_;
     }
 
-    const chess::Board& board() const {
+    const Board& board() const {
         return cached_moves_.board_at(cached_moves_.size());
     }
 
-    Wt::Signal<chess::Move>& move() {
+    Wt::Signal<Move>& move() {
         return move_signal_;
     }
 
@@ -207,7 +204,7 @@ public:
         return current_move_;
     }
 
-    void add_move(const chess::Move& move) {
+    void add_move(const Move& move) {
         int i = cached_moves_.size() - 1;
         if (i == -1 || move != cached_moves_.move_at(i)) {
             int n = cached_moves_.size();
@@ -216,18 +213,18 @@ public:
         }
     }
 
-    void bottom_set(chess::Color bottom) {
+    void bottom_set(Color bottom) {
         board_widget_->bottom_set(bottom);
     }
 
     void reset() {
-        cached_moves_ = chess::CachedMoves();
+        cached_moves_ = CachedMoves();
         goto_move_(-1);
         moves_model_->move_changed(0);
     }
 
-    void set_moves(const chess::Moves& moves) {
-        cached_moves_ = chess::CachedMoves(moves);
+    void set_moves(const Moves& moves) {
+        cached_moves_ = CachedMoves(moves);
         current_move_ = cached_moves_.size() - 1;
         moves_model_->move_changed(0);
         goto_move_(current_move_);
@@ -243,9 +240,9 @@ private:
     BoardWidget* board_widget_;
     MovesModel* moves_model_;
     Wt::WTableView* moves_table_view_;
-    Wt::Signal<chess::Move> move_signal_;
+    Wt::Signal<Move> move_signal_;
 
-    chess::CachedMoves cached_moves_;
+    CachedMoves cached_moves_;
     int current_move_;
     int max_moves_;
     int used_moves_;
@@ -260,12 +257,12 @@ private:
         }
     }
 
-    void reset_move_(int n, const chess::Move& move) {
+    void reset_move_(int n, const Move& move) {
         cached_moves_.reset_move(n, move);
         moves_model_->move_changed(n);
     }
 
-    void onmove_(const chess::Move& move) {
+    void onmove_(const Move& move) {
         if (active()) {
             current_move_ += 1;
             used_moves_ += 1;
@@ -324,8 +321,8 @@ private:
     }
 
     void move_select_() {
-        const chess::Board& board = cached_moves_.board_at(current_move_ + 1);
-        chess::Move lastmove = chess::move_null;
+        const Board& board = cached_moves_.board_at(current_move_ + 1);
+        Move lastmove = move_null;
         if (current_move_ != -1) {
             lastmove = cached_moves_.move_at(current_move_);
         }
@@ -346,9 +343,9 @@ private:
 
 };
 
-MovesWidget::MovesWidget(const chess::Moves& moves,
+MovesWidget::MovesWidget(const Moves& moves,
                          bool big, bool active, int max_moves,
-                         bool append_only, chess::Color bottom,
+                         bool append_only, Color bottom,
                          Wt::WContainerWidget* parent) :
     WCompositeWidget(parent) {
     impl_ = new MovesWidgetImpl(moves, big, active,
@@ -356,23 +353,23 @@ MovesWidget::MovesWidget(const chess::Moves& moves,
     setImplementation(impl_);
 }
 
-const chess::Moves& MovesWidget::moves() const {
+const Moves& MovesWidget::moves() const {
     return impl_->moves();
 }
 
-const chess::Board& MovesWidget::board() const {
+const Board& MovesWidget::board() const {
     return impl_->board();
 }
 
-Wt::Signal<chess::Move>& MovesWidget::move() {
+Wt::Signal<Move>& MovesWidget::move() {
     return impl_->move();
 }
 
-void MovesWidget::add_move(const chess::Move& move) {
+void MovesWidget::add_move(const Move& move) {
     impl_->add_move(move);
 }
 
-void MovesWidget::bottom_set(chess::Color bottom) {
+void MovesWidget::bottom_set(Color bottom) {
     impl_->bottom_set(bottom);
 }
 
@@ -380,7 +377,7 @@ void MovesWidget::reset() {
     impl_->reset();
 }
 
-void MovesWidget::set_moves(const chess::Moves& moves) {
+void MovesWidget::set_moves(const Moves& moves) {
     impl_->set_moves(moves);
 }
 
@@ -392,5 +389,4 @@ int MovesWidget::current_move() const {
     return impl_->current_move();
 }
 
-}
 }

@@ -19,18 +19,15 @@ namespace dbo = Wt::Dbo;
 #include <Wt/Dbo/WtSqlTraits>
 
 namespace thechess {
-namespace model {
 class CookieSession;
 typedef dbo::ptr<CookieSession> CookieSessionPtr;
 typedef dbo::collection<CookieSessionPtr> CookieSessions;
-}
 }
 
 #include "config.hpp"
 #include "model/User.hpp"
 
 namespace thechess {
-namespace model {
 
 class CookieSession {
 public:
@@ -69,13 +66,12 @@ private:
 };
 
 }
-}
 
 namespace Wt {
 namespace Dbo {
 
 template<>
-struct dbo_traits<thechess::model::CookieSession> :
+struct dbo_traits<thechess::CookieSession> :
     public dbo_default_traits {
     typedef std::string IdType;
 

@@ -29,7 +29,6 @@
 #include "config.hpp"
 
 namespace thechess {
-using namespace model;
 
 TaskTracker::TaskTracker(ThechessServer& server):
     server_(server), session_(server.pool()), timer_(io_),

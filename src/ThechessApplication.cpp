@@ -54,7 +54,6 @@ namespace dbo = Wt::Dbo;
 #include "TaskTracker.hpp"
 
 namespace thechess {
-using namespace model;
 
 ThechessApplication::ThechessApplication(const Wt::WEnvironment& env, ThechessServer& server) :
     Wt::WApplication(env), server_(server), session_(server.pool()),
@@ -73,7 +72,7 @@ ThechessApplication::ThechessApplication(const Wt::WEnvironment& env, ThechessSe
                        Wt::WBorderLayout::North);
     layout_->addWidget(new Wt::WContainerWidget(),
                        Wt::WBorderLayout::Center);
-    widgets::MainMenu* main_menu = new widgets::MainMenu();
+    MainMenu* main_menu = new MainMenu();
     layout_->addWidget(main_menu, Wt::WBorderLayout::West);
     try {
         cookie_session_read_();
@@ -148,7 +147,7 @@ void ThechessApplication::cookie_session_write_() {
 }
 
 void ThechessApplication::add_my_games_() {
-    layout_->addWidget(new widgets::MyGamesList(user()), Wt::WBorderLayout::East);
+    layout_->addWidget(new MyGamesList(user()), Wt::WBorderLayout::East);
 }
 
 void ThechessApplication::remove_my_games_() {
@@ -240,22 +239,22 @@ void ThechessApplication::onPathChange_() {
     std::cout << internalPath() << std::endl;
     std::string section = internalPathNextPart("/");
     if (section == "register") {
-        set_mainpanel_(new widgets::RegisterWidget());
+        set_mainpanel_(new RegisterWidget());
     } else if (section == "logout") {
         logout();
     } else if (section == "login") {
-        set_mainpanel_(new widgets::LoginWidget());
+        set_mainpanel_(new LoginWidget());
     } else if (section == "user") {
         object_view_<User>("/user/");
     } else if (section == "game") {
         if (internalPathNextPart("/game/") == "challenge") {
-            set_mainpanel_(new widgets::GameCreateWidget());
+            set_mainpanel_(new GameCreateWidget());
         } else {
             object_view_<Game>("/game/");
         }
     } else if (section == "competition") {
         if (internalPathNextPart("/competition/") == "new") {
-            set_mainpanel_(new widgets::CompetitionCreateWidget());
+            set_mainpanel_(new CompetitionCreateWidget());
         } else {
             object_view_<Competition>("/competition/");
         }
@@ -265,26 +264,23 @@ void ThechessApplication::onPathChange_() {
 }
 
 void ThechessApplication::view(UserPtr user) {
-    show_<widgets::UserWidget>(user,
-                               str(boost::format("/user/%i/") % user.id()));
+    show_<UserWidget>(user, str(boost::format("/user/%i/") % user.id()));
 }
 
 void ThechessApplication::view(GamePtr game) {
-    show_<widgets::GameWidget>(game,
-                               str(boost::format("/game/%i/") % game.id()));
+    show_<GameWidget>(game, str(boost::format("/game/%i/") % game.id()));
 }
 
 void ThechessApplication::view(CompetitionPtr competition) {
-    show_<widgets::CompetitionWidget>(competition,
-                                      str(boost::format("/competition/%i/") % competition.id()));
+    show_<CompetitionWidget>(competition, str(boost::format("/competition/%i/") % competition.id()));
 }
 
 template<> void ThechessApplication::list_view<Game>() {
-    show_<widgets::GameListWidget>("/game/");
+    show_<GameListWidget>("/game/");
 }
 
 template<> void ThechessApplication::list_view<Competition>() {
-    show_<widgets::CompetitionListWidget>("/competition/");
+    show_<CompetitionListWidget>("/competition/");
 }
 
 void ThechessApplication::thechess_notify(Object object) {

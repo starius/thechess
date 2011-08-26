@@ -12,9 +12,7 @@
 #define THECHESS_MOVE_H_
 
 namespace thechess {
-namespace chess {
 class Move;
-}
 }
 
 #include "xy.hpp"
@@ -22,7 +20,6 @@ class Move;
 #include "board.hpp"
 
 namespace thechess {
-namespace chess {
 
 /** Class representing a single half-move.
 A move consists of source and destination squares, and promoted piece letter
@@ -140,7 +137,6 @@ private:
 
 const Move move_null(xy_null, xy_null);
 
-}
 }
 
 #endif // THECHESS_MOVE_H_

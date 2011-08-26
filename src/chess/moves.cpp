@@ -19,7 +19,6 @@
 #include "utils.hpp"
 
 namespace thechess {
-namespace chess {
 
 MovesIterator::MovesIterator(const Moves* moves, Board& board, int from)
     :  moves_(moves), board_(board), n(from) {
@@ -134,10 +133,10 @@ int Moves::check() const {
 
 void Moves::pgn(std::ostream& out, const std::string& result, bool reduced) const {
     PlainTextWritter ptw(out);
-    chess::Board board;
-    chess::Board board_after;
+    Board board;
+    Board board_after;
     THECHESS_MOVES_FOREACH (move_it, this, board) {
-        chess::Move move = *move_it;
+        Move move = *move_it;
         board_after.make_move(move);
         std::string move_str = move.san(board, board_after);
         if (order(move_it.n) == white) {
@@ -150,6 +149,5 @@ void Moves::pgn(std::ostream& out, const std::string& result, bool reduced) cons
     }
 }
 
-}
 }
 

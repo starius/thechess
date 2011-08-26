@@ -15,7 +15,6 @@
 #include "time_intervals.hpp"
 
 namespace thechess {
-namespace widgets {
 
 const int intervals_size = 5;
 const Td intervals[5] = {second, minute, hour, day, week};
@@ -83,6 +82,5 @@ Wt::WFormWidget* TimeDeltaWidget::form_widget() {
     return impl_->form_widget();
 }
 
-}
 }
 

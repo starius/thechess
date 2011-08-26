@@ -24,8 +24,6 @@
 #include "ThechessApplication.hpp"
 
 namespace thechess {
-namespace widgets {
-using namespace model;
 
 typedef CompetitionListWidget::Result Result;
 typedef CompetitionListWidget::Q Q;
@@ -153,6 +151,5 @@ void CompetitionListWidget::manager_() {
     }
 }
 
-}
 }
 

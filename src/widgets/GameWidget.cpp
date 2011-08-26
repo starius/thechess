@@ -35,8 +35,6 @@ namespace dbo = Wt::Dbo;
 #include "chess/field.hpp"
 
 namespace thechess {
-namespace widgets {
-using namespace model;
 
 class GameStatus : public Wt::WViewWidget {
 public:
@@ -149,8 +147,8 @@ public:
         bool active = game_->can_move(tApp->user());
         bool big = false; // FIXME
         bool append_only = true;
-        chess::Color bottom = game_->color_of(tApp->user());
-        const chess::Moves& moves = game_->moves();
+        Color bottom = game_->color_of(tApp->user());
+        const Moves& moves = game_->moves();
         moves_widget_ = new MovesWidget(moves, big, active, max_moves,
                                         append_only, bottom, this);
         moves_widget_->move()
@@ -178,7 +176,7 @@ public:
             status_and_manager_();
         }
         if (game_->size() - moves_widget_->moves().size() == 1) {
-            chess::Move last_move =
+            Move last_move =
                 game_->moves().move_at(game_->size() - 1, moves_widget_->board());
             moves_widget_->add_move(last_move);
             if (game_->size_without_init() == 1) {
@@ -197,7 +195,7 @@ private:
     Wt::WContainerWidget* countdown_container_;
     Wt::WContainerWidget* comment_container_;
 
-    void move_handler_(const chess::Move& move) {
+    void move_handler_(const Move& move) {
         dbo::Transaction t(tApp->session());
         game_.reread();
         int game_size = game_->moves().size();
@@ -309,12 +307,11 @@ private:
 
     void print_mistake_buttons_() {
         if (game_->is_mistake_proposed()) {
-            using chess::Moves;
             new Wt::WBreak(manager_);
             new Wt::WText(tr("tc.game.Mistake_proposal")
                           .arg(game_->mistake_proposer()->username())
                           .arg(Moves::n_to_human(game_->mistake_move()))
-                          .arg(tr(Moves::order(game_->mistake_move()) == chess::white ?
+                          .arg(tr(Moves::order(game_->mistake_move()) == white ?
                                   "tc.game.of_white" : "tc.game.of_black")),
                           manager_);
             if (game_->can_mistake_agree(tApp->user())) {
@@ -409,8 +406,8 @@ private:
         bool active = true;
         bool big = false; // FIXME
         bool append_only = false;
-        chess::Color bottom = game_->color_of(tApp->user());
-        const chess::Moves& moves = game_->moves();
+        Color bottom = game_->color_of(tApp->user());
+        const Moves& moves = game_->moves();
         new MovesWidget(moves, big, active, max_moves,
                         append_only, bottom, analysis->contents());
         Wt::WPushButton* close = new Wt::WPushButton(tr("tc.common.X_close"));
@@ -461,5 +458,4 @@ GameWidget::GameWidget(GamePtr game, Wt::WContainerWidget* parent) :
     setImplementation(impl_);
 }
 
-}
 }

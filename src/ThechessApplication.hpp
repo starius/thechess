@@ -41,22 +41,18 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 
-using model::UserPtr;
-using model::GamePtr;
-using model::CompetitionPtr;
-
 class ThechessSession;
 
 class Notifiable {
 public:
-    Notifiable(const model::Object& object);
-    Notifiable(model::ObjectType ot, int id);
+    Notifiable(const Object& object);
+    Notifiable(ObjectType ot, int id);
 
     virtual ~Notifiable();
     virtual void notify() = 0; // under Transaction
 
 private:
-    const model::Object object_;
+    const Object object_;
 
     void add_to_application_();
 };
@@ -87,7 +83,7 @@ public:
     template<typename M> void list_view() {
     }
 
-    static void thechess_notify(model::Object object);
+    static void thechess_notify(Object object);
 
 protected:
     virtual void notify(const Wt::WEvent& e);
@@ -97,16 +93,16 @@ private:
     ThechessSession session_;
     UserPtr user_;
     Wt::WBorderLayout* layout_;
-    typedef std::multimap<model::Object, Notifiable*> O2N;
+    typedef std::multimap<Object, Notifiable*> O2N;
     O2N notifiables_;
     bool active_;
     std::set<Notifiable*> waiting_notifiables_;
-    const model::Object* notifying_object_;
+    const Object* notifying_object_;
 
     void add_notifiable_(Notifiable* notifiable,
-                         const model::Object& object);
+                         const Object& object);
     void remove_notifiable_(Notifiable* notifiable,
-                            const model::Object& object);
+                            const Object& object);
 
     void cookie_session_read_();
     void cookie_session_write_();
@@ -149,12 +145,12 @@ private:
         }
     }
 
-    friend class widgets::MainMenuImpl;
+    friend class MainMenuImpl;
     friend class Notifiable;
 };
 
-template<> void ThechessApplication::list_view<model::Game>();
-template<> void ThechessApplication::list_view<model::Competition>();
+template<> void ThechessApplication::list_view<Game>();
+template<> void ThechessApplication::list_view<Competition>();
 
 }
 
