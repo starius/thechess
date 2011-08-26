@@ -47,7 +47,7 @@ public:
     /** Constructor.
     \param moves_count number of half-moves to preserve space for
     */
-    Moves(int moves_count=0);
+    Moves(int moves_count = 0);
 
     /** Constructor.
     Fills container with moves_count moves from array moves.
@@ -143,7 +143,7 @@ public:
     \param reduced use reduced export PGN format
     */
     void pgn(std::ostream& out, const std::string& result,
-             bool reduced=false) const;
+             bool reduced = false) const;
 
 private:
     enum Xy_type {
@@ -180,7 +180,7 @@ public:
         This board should represent board position before \c from half-move.
     \param from Starting half-move.
     */
-    MovesIterator(const Moves* moves, Board& board, int from=0);
+    MovesIterator(const Moves* moves, Board& board, int from = 0);
 
     /** Get current move */
     Move move() const {
@@ -241,7 +241,7 @@ THECHESS_MOVES_TO (moves_it, moves, board, 20) {
 \endcode
 */
 #define THECHESS_MOVES_TO(move_it, moves, board, to) \
-THECHESS_MOVES_FROM_TO(move_it, moves, board, 0, to)
+THECHESS_MOVES_FROM_TO (move_it, moves, board, 0, to)
 
 /** Iterate moves from \c from to the end.
 Usage:
@@ -257,7 +257,7 @@ THECHESS_MOVES_FROM (moves_it, moves, board, 10) {
 \endcode
 */
 #define THECHESS_MOVES_FROM(move_it, moves, board, from) \
-THECHESS_MOVES_FROM_TO(move_it, moves, board, from, (moves)->size())
+THECHESS_MOVES_FROM_TO (move_it, moves, board, from, (moves)->size())
 
 /** Iterate all moves.
 Usage:
@@ -273,7 +273,7 @@ THECHESS_MOVES_FOREACH (moves_it, moves, board) {
 \endcode
 */
 #define THECHESS_MOVES_FOREACH(move_it, moves, board) \
-THECHESS_MOVES_FROM(move_it, moves, board, 0)
+THECHESS_MOVES_FROM (move_it, moves, board, 0)
 
 }
 }

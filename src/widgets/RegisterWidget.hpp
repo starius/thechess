@@ -23,7 +23,7 @@ namespace widgets {
 
 class RegisterWidget : public Wt::WContainerWidget {
 public:
-    RegisterWidget(Wt::WContainerWidget *parent=0);
+    RegisterWidget(Wt::WContainerWidget* parent = 0);
 
 private:
     Wt::WTable* table_;

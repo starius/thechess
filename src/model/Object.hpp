@@ -37,7 +37,7 @@ struct Object {
     int id;
 
     bool operator<(const Object& b) const {
-        return id<b.id || (id==b.id && type<b.type);
+        return id < b.id || (id == b.id && type < b.type);
     }
 
     bool operator==(const Object& b) const {

@@ -185,8 +185,8 @@ private:
 
     void finish_(const UsersVector& winners, Objects& objects);
 
-    GamePtr create_game_(UserPtr white, UserPtr black, int stage=-1,
-                         bool no_draw=false);
+    GamePtr create_game_(UserPtr white, UserPtr black, int stage = -1,
+                         bool no_draw = false);
 
     friend class StagedCompetition;
 };

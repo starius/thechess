@@ -29,7 +29,7 @@ class TimeDeltaWidgetImpl;
 class TimeDeltaWidget : public Wt::WCompositeWidget {
 public:
     TimeDeltaWidget(const Td& min, const Td& value, const Td& max,
-                    Wt::WContainerWidget* parent=0);
+                    Wt::WContainerWidget* parent = 0);
     Td value() const;
     Wt::WFormWidget* form_widget(); // for labbels
 

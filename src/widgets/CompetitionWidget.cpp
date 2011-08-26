@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <sstream>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
@@ -38,7 +37,7 @@ class CompetitionMembers : public Wt::WContainerWidget {
 public:
     CompetitionMembers(CompetitionPtr c) {
         setList(true);
-        BOOST_FOREACH(UserPtr user, c->members_vector()) {
+        BOOST_FOREACH (UserPtr user, c->members_vector()) {
             Wt::WContainerWidget* item = new Wt::WContainerWidget(this);
             new Wt::WText(user->username(), item);
         }
@@ -49,7 +48,7 @@ class CompetitionWinners : public Wt::WContainerWidget {
 public:
     CompetitionWinners(CompetitionPtr c) {
         setList(true);
-        BOOST_FOREACH(UserPtr user, c->winners_vector()) {
+        BOOST_FOREACH (UserPtr user, c->winners_vector()) {
             Wt::WContainerWidget* item = new Wt::WContainerWidget(this);
             new Wt::WText(user->username(), item);
         }
@@ -131,8 +130,8 @@ private:
     void headers_() {
         table_->elementAt(0, 0)->setColumnSpan(2);
         int i = 0;
-        BOOST_FOREACH(UserPtr user, members) {
-            std::string i_str = boost::lexical_cast<std::string>(i+1);
+        BOOST_FOREACH (UserPtr user, members) {
+            std::string i_str = boost::lexical_cast<std::string>(i + 1);
             table_->elementAt(i + LEFT_SHIFT, NAME_COLUMN)
             ->setStyleClass("thechess-td-right");
             table_->elementAt(i + LEFT_SHIFT, NAME_COLUMN)
@@ -151,7 +150,7 @@ private:
         std::map<UserPtr, float> wins;
         Competition::wins_number(c->games_vector(), wins);
         int i = 0;
-        BOOST_FOREACH(UserPtr user, members) {
+        BOOST_FOREACH (UserPtr user, members) {
             table_->elementAt(i + LEFT_SHIFT, score_column_)
             ->addWidget(new Wt::WText(boost::lexical_cast<std::string>(wins[user])));
             i++;
@@ -185,10 +184,10 @@ private:
                     new Wt::WText(boost::lexical_cast<std::string>(wins[urow]) +
                                   "/" + boost::lexical_cast<std::string>(wins[ucol]), cell);
                 } else {
-                    BOOST_FOREACH(GamePtr game, gt_[ucol][urow]) {
+                    BOOST_FOREACH (GamePtr game, gt_[ucol][urow]) {
                         game_reference_(game, cell);
                     }
-                    BOOST_FOREACH(GamePtr game, gt_[urow][ucol]) {
+                    BOOST_FOREACH (GamePtr game, gt_[urow][ucol]) {
                         game_reference_(game, cell);
                     }
                 }
@@ -211,18 +210,18 @@ public:
         Wt::WTreeTableNode* r = new Wt::WTreeTableNode(tr("tc.competition.Tree"));
         r->expand();
         setTreeRoot(r, tr("tc.competition.Winner"));
-        BOOST_FOREACH(const StagedCompetition::Paires::value_type& stage_and_pair, sc_.paires()) {
+        BOOST_FOREACH (const StagedCompetition::Paires::value_type& stage_and_pair, sc_.paires()) {
             int stage = stage_and_pair.first;
             const UserPair& pair = stage_and_pair.second;
             if (sc_.winners().find(pair) == sc_.winners().end()) {
                 print_pair_(stage, pair, r);
             }
         }
-        BOOST_FOREACH(const StagedCompetition::States::value_type& user_and_state, sc_.states()) {
+        BOOST_FOREACH (const StagedCompetition::States::value_type& user_and_state, sc_.states()) {
             UserPtr user = user_and_state.first;
             StagedCompetition::State state = user_and_state.second;
             if (state == StagedCompetition::UNPAIRED || state == StagedCompetition::WINNER) {
-                print_(sc_.stages().find(user)->second-1, user, r);
+                print_(sc_.stages().find(user)->second - 1, user, r);
             }
         }
     }
@@ -233,7 +232,7 @@ private:
     std::map<int, std::map<UserPtr, UserPtr> > competitors_;
 
     void calculate_competitors_() {
-        BOOST_FOREACH(const StagedCompetition::Paires::value_type& stage_and_pair, sc_.paires()) {
+        BOOST_FOREACH (const StagedCompetition::Paires::value_type& stage_and_pair, sc_.paires()) {
             int stage = stage_and_pair.first;
             const UserPair& pair = stage_and_pair.second;
             competitors_[stage][pair.first()] = pair.second();
@@ -252,27 +251,27 @@ private:
         }
         Wt::WTreeTableNode* n = new Wt::WTreeTableNode(title, 0, parent);
         n->setColumnWidget(STAGE_COLUMN,
-                           new Wt::WText(boost::lexical_cast<std::string>(stage+1)));
+                           new Wt::WText(boost::lexical_cast<std::string>(stage + 1)));
         Wt::WContainerWidget* games = new Wt::WContainerWidget();
         StagedCompetition::Games::const_iterator g = sc_.games().find(pair);
         if (g != sc_.games().end()) {
-            BOOST_FOREACH(GamePtr game, g->second) {
+            BOOST_FOREACH (GamePtr game, g->second) {
                 game_reference_(game, games);
             }
         }
         n->setColumnWidget(GAMES_COLUMN, games);
         if (stage > 0) {
-            print_(stage-1, pair.first(), n);
-            print_(stage-1, pair.second(), n);
+            print_(stage - 1, pair.first(), n);
+            print_(stage - 1, pair.second(), n);
         }
     }
 
     void print_user_(int stage, UserPtr user, Wt::WTreeTableNode* parent) {
         Wt::WTreeTableNode* n = new Wt::WTreeTableNode(user->username(), 0, parent);
         n->setColumnWidget(STAGE_COLUMN,
-                           new Wt::WText(boost::lexical_cast<std::string>(stage+1)));
+                           new Wt::WText(boost::lexical_cast<std::string>(stage + 1)));
         if (stage > 0) {
-            print_(stage-1, user, n);
+            print_(stage - 1, user, n);
         }
     }
 
@@ -380,7 +379,6 @@ void CompetitionWidget::reprint_() {
     bindString("started", c->started().toString());
     bindString("ended", c->ended().toString());
     bindString("state", tr(Competition::state2str(c->state())));
-
     bindWidget("members", new CompetitionMembers(c));
     bindWidget("winners", new CompetitionWinners(c));
     bindWidget("terms", new CompetitionTerms(c));

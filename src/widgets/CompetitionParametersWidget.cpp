@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <Wt/WPushButton>
 #include <Wt/WEnvironment>
 #include <Wt/WApplication>
@@ -30,9 +29,7 @@ CompetitionParametersWidget::CompetitionParametersWidget(
     GameParametersWidget(cp, parent) {
     IntervalWidget* interval;
     Wt::WContainerWidget* cell;
-
     section(tr("tc.competition.Parameters"));
-
     type_ = new Wt::WComboBox();
     type_->addItem(Competition::type2str(CLASSICAL));
     type_->addItem(Competition::type2str(STAGED));
@@ -52,7 +49,6 @@ CompetitionParametersWidget::CompetitionParametersWidget(
     } else {
         type_->disable();
     }
-
     min_rating_ = new MySpinBox();
     min_rating_->setRange(min::min_rating, max::min_rating);
     min_rating_->setValue(cp->min_rating());
@@ -61,19 +57,16 @@ CompetitionParametersWidget::CompetitionParametersWidget(
     max_rating_->setValue(cp->max_rating());
     interval = new IntervalWidget(min_rating_, max_rating_);
     item(tr("tc.competition.Rating"), "", min_rating_, interval);
-
     min_classification_ = new ClassificationWidget(min::min_classification,
             cp->min_classification(), max::min_classification);
     max_classification_ = new ClassificationWidget(min::max_classification,
             cp->max_classification(), max::max_classification);
     interval = new IntervalWidget(min_classification_, max_classification_);
     item(tr("tc.competition.Members_classification"), "", min_classification_, interval);
-
     force_start_delay_ = new TimeDeltaWidget(min::force_start_delay,
             cp->force_start_delay(), max::force_start_delay);
     item(tr("tc.competition.Force_start_delay"), "",
          force_start_delay_->form_widget(), force_start_delay_);
-
     min_users_ = new MySpinBox();
     min_users_->setRange(min::min_users, max::min_users);
     min_users_->setValue(cp->min_users());
@@ -82,7 +75,6 @@ CompetitionParametersWidget::CompetitionParametersWidget(
     max_users_->setValue(cp->max_users());
     users_ = new IntervalWidget(min_users_, max_users_);
     item(tr("tc.competition.Users"), "", min_users_, users_);
-
     min_recruiting_time_ = new TimeDeltaWidget(min::min_recruiting_time,
             cp->min_recruiting_time(), max::min_recruiting_time);
     max_recruiting_time_ = new TimeDeltaWidget(min::max_recruiting_time,
@@ -90,35 +82,29 @@ CompetitionParametersWidget::CompetitionParametersWidget(
     recruiting_time_ = new IntervalWidget(min_recruiting_time_, max_recruiting_time_);
     item(tr("tc.competition.Recruiting_time"), "",
          min_recruiting_time_->form_widget(), recruiting_time_);
-
     max_simultaneous_games_ = new MySpinBox();
     max_simultaneous_games_->setRange(min::max_simultaneous_games, max::max_simultaneous_games);
     max_simultaneous_games_->setValue(cp->max_simultaneous_games());
     item(tr("tc.competition.Max_simultaneous_games"), "",
          max_simultaneous_games_, max_simultaneous_games_);
-
     games_factor_ = new MyDoubleSpinBox();
     games_factor_->setRange(min::games_factor, max::games_factor);
     games_factor_->setValue(cp->games_factor());
     item(tr("tc.competition.Games_factor"), "", games_factor_, games_factor_);
-
     relax_time_ = new TimeDeltaWidget(min::relax_time,
                                       cp->relax_time(), max::relax_time);
     item(tr("tc.competition.Relax_time"), "",
          relax_time_->form_widget(), relax_time_);
-
     min_substages_ = new MySpinBox();
     min_substages_->setRange(min::min_substages, max::min_substages);
     min_substages_->setValue(cp->min_substages());
     item(tr("tc.competition.Min_substages"), "",
          min_substages_, min_substages_);
-
     increment_substages_ = new MySpinBox();
     increment_substages_->setRange(min::increment_substages, max::increment_substages);
     increment_substages_->setValue(cp->increment_substages());
     item(tr("tc.competition.Increment_substages"), "",
          increment_substages_, increment_substages_);
-
     type_handler_();
 }
 
@@ -146,7 +132,6 @@ void CompetitionParametersWidget::apply_parameters(CompetitionParameters* cp) {
         cp->set_min_substages(min_substages_->value());
         cp->set_increment_substages(increment_substages_->value());
     }
-
     if (cp->min_rating() > cp->max_rating()) {
         cp->set_max_rating(cp->min_rating());
     }
@@ -216,7 +201,6 @@ CompetitionParametersWidget2::CompetitionParametersWidget2(const model::Competit
     name_ = new Wt::WLineEdit(c->name());
     name_->setMaxLength(config::competition::max_name);
     item(tr("tc.competition.Name"), "", name_, name_);
-
     description_ = new Wt::WTextEdit(c->description());
     item(tr("tc.competition.Description"), "", description_, description_);
 }
@@ -228,7 +212,6 @@ void CompetitionParametersWidget2::apply_parameters(model::Competition* c) {
         name.resize(config::competition::max_name);
     }
     c->set_name(name);
-
     std::wstring description = description_->text().value();
     if (description.length() > config::competition::max_description) {
         description.resize(config::competition::max_description);

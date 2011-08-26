@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #define _XOPEN_SOURCE
 #include <unistd.h>
 

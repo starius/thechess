@@ -40,12 +40,12 @@ using namespace model;
 
 class GameStatus : public Wt::WViewWidget {
 public:
-    GameStatus(const GamePtr& game, Wt::WContainerWidget* parent=0):
+    GameStatus(const GamePtr& game, Wt::WContainerWidget* parent = 0):
         Wt::WViewWidget(parent), game_(game) {
     }
 
 protected:
-    virtual Wt::WWidget *renderView() {
+    virtual Wt::WWidget* renderView() {
         Wt::WContainerWidget* result = new Wt::WContainerWidget();
         try {
             add_items(result);
@@ -81,7 +81,7 @@ protected:
         }
         if (!game_->is_ended()) {
             item_(Wt::WString::trn("tc.game.First_draw",
-                                   game_->first_draw()/2).arg(game_->first_draw()/2), result);
+                                   game_->first_draw() / 2).arg(game_->first_draw() / 2), result);
         }
         CompetitionPtr c = game_->competition();
         if (c) {
@@ -93,7 +93,7 @@ protected:
             a->setRefInternalPath(str(boost::format("/competition/%i/") % c.id()));
         }
         if (game_->state() == Game::confirmed && c) {
-            time_(game_->when_confirmed()+c->force_start_delay(),
+            time_(game_->when_confirmed() + c->force_start_delay(),
                   "tc.game.force_start", result);
         }
         if (game_->state() == Game::proposed && c &&
@@ -143,10 +143,8 @@ public:
         Notifiable(Object(GameObject, game.id())),
         game_(game) {
         dbo::Transaction t(tApp->session());
-
         new Wt::WText(tr("tc.game.Header")
                       .arg((int)game.id()), this);
-
         int max_moves = -1;
         bool active = game_->can_move(tApp->user());
         bool big = false; // FIXME
@@ -157,17 +155,13 @@ public:
                                         append_only, bottom, this);
         moves_widget_->move()
         .connect(this, &GameWidgetImpl::move_handler_);
-
         countdown_container_ = new Wt::WContainerWidget(this);
         manager_ = new Wt::WContainerWidget(this);
-
         comment_container_ = new Wt::WContainerWidget(this);
         print_comment_();
-
         game_status_ = new GameStatus(game_, this);
         new Wt::WAnchor(str(boost::format("/pgn/?game=%i") % game.id()),
                         tr("tc.game.Download_pgn"), this);
-
         status_and_manager_();
         countdown_print_();
         t.commit();
@@ -185,7 +179,7 @@ public:
         }
         if (game_->size() - moves_widget_->moves().size() == 1) {
             chess::Move last_move =
-                game_->moves().move_at(game_->size()-1, moves_widget_->board());
+                game_->moves().move_at(game_->size() - 1, moves_widget_->board());
             moves_widget_->add_move(last_move);
             if (game_->size_without_init() == 1) {
                 print_manager_(); // to show Rollback button
@@ -209,7 +203,7 @@ private:
         int game_size = game_->moves().size();
         int moves_size = moves_widget_->moves().size();
         // additional protection
-        if (game_size == moves_size-1 && game_->can_move(tApp->user())) {
+        if (game_size == moves_size - 1 && game_->can_move(tApp->user())) {
             game_.modify()->add_move(move, moves_widget_->board());
         }
         bool game_ended = game_->is_ended();
@@ -241,7 +235,7 @@ private:
             if (game_->state() < Game::active) {
                 print_before_active_buttons_();
             }
-            if (game_->state()==Game::active || game_->state()==Game::pause) {
+            if (game_->state() == Game::active || game_->state() == Game::pause) {
                 print_pause_buttons_();
                 print_mistake_buttons_();
                 print_draw_buttons_();

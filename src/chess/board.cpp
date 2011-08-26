@@ -18,7 +18,6 @@
 #include "chess/xy.hpp"
 #include "chess/field.hpp"
 
-
 namespace thechess {
 namespace chess {
 
@@ -45,7 +44,6 @@ Board::Board() {
     init_pawns(y_2, white);
     init_chessmans(y_8, black);
     init_pawns(y_7, black);
-
     order(white);
     castling_reset();
     long_pawn(false);
@@ -53,16 +51,15 @@ Board::Board() {
 
 byte Board::q(Xy xy) const {
     int i = xy.i();
-    byte b = fields_[i/2];
-    return (i%2) ? (b & 0x0F) : (b >> 4);
+    byte b = fields_[i / 2];
+    return (i % 2) ? (b & 0x0F) : (b >> 4);
 }
 
 void Board::q(Xy xy, byte q_) {
     int i = xy.i();
-
-    fields_[i/2] = i%2 ?
-                   ((fields_[i/2] & 0xF0) | (q_ & 0x0F)) :
-                   ((fields_[i/2] & 0x0F) | (q_ << 4));
+    fields_[i / 2] = i % 2 ?
+                     ((fields_[i / 2] & 0xF0) | (q_ & 0x0F)) :
+                     ((fields_[i / 2] & 0x0F) | (q_ << 4));
 }
 
 bool Board::isset(Xy xy) const {
@@ -156,7 +153,6 @@ Xname Board::long_pawn_x() const {
     return Xname(fields_[castling_byte] & 0x07); // 0000 0111
 }
 
-
 void Board::long_pawn(bool value, int x) {
     if (value) {
         fields_[castling_byte] |= 0x08; // 0000 1000
@@ -167,7 +163,7 @@ void Board::long_pawn(bool value, int x) {
 }
 
 int sign(int a) {
-    return a>0 ? 1 : (a<0 ? -1 : 0);
+    return a > 0 ? 1 : (a < 0 ? -1 : 0);
 }
 
 void Board::simple_move(const Move move) {
@@ -177,9 +173,7 @@ void Board::simple_move(const Move move) {
 
 void Board::make_move(const Move move) {
     long_pawn(false);
-
     Field active = field(move.from());
-
     if (active.chessman() == pawn) {
         if (!isset(move.to()) && move.from().x() != move.to().x()) {
             // take on the aisle
@@ -189,7 +183,6 @@ void Board::make_move(const Move move) {
             long_pawn(true, move.to().x_());
         }
     }
-
     if (active.chessman() == king && move.from().x() == x_5) {
         // potential castling -- move rock
         if (move.to().x() == x_3) {
@@ -203,14 +196,11 @@ void Board::make_move(const Move move) {
                             Xy(x_6, move.from().y())));
         }
     }
-
     simple_move(move);
-
     if (move.turn_into() != chessman_null) {
         // turn pawn into ...
         chessman(move.to(), move.turn_into());
     }
-
     // forbid castling in case king or rock moved
     if (active.chessman() == king) {
         Xy rock = move.from();
@@ -225,7 +215,6 @@ void Board::make_move(const Move move) {
     if (chessman(move.to()) == rock) {
         castling_off(move.to());
     }
-
     // change order of move
     change_order();
 }
@@ -233,7 +222,6 @@ void Board::make_move(const Move move) {
 bool Board::simple_test_move(Move move) const {
     int dx = move.dx();
     int dy = move.dy();
-
     if (!isset(move.from())) {
         return false;
     }
@@ -241,37 +229,31 @@ bool Board::simple_test_move(Move move) const {
     if (active.color() == color(move.to())) {
         return false;
     }
-
     if (move.from().x() < x_a || move.from().x() > x_h ||
             move.to().x() < x_a || move.to().x() > x_h ||
             move.from().y() < y_1 || move.from().y() > y_8 ||
             move.to().y() < y_1 || move.to().y() > y_8) {
         return false;
     }
-
     if (move.from() == move.to()) {
         return false;
     }
-
     if (active.chessman() == pawn) {
         if (!isset(move.to()) && move.from().x() == move.to().x()) {
             // not eat
-
             if ((active.color() == white && dy == 1) ||
                     (active.color() == black && dy == -1)) {
                 return true;
             }
-
             if ((active.color() == white && dy == 2 && move.from().y() == y_2) ||
                     (active.color() == black && dy == -2 && move.from().y() == y_7)) {
-                int my = (int)move.from().y_() + dy/2;
+                int my = (int)move.from().y_() + dy / 2;
                 if (!isset(Xy(move.from().x_(), my))) {
                     return true;
                 }
             }
             return false;
         }
-
         if (isset(move.to()) && abs(dx) == 1) {
             if ((active.color() == white && dy == 1) ||
                     (active.color() == black && dy == -1)) {
@@ -280,26 +262,21 @@ bool Board::simple_test_move(Move move) const {
         }
         return false;
     }
-
     if (active.chessman() == king) {
         if (abs(dx) <= 1 && abs(dy) <= 1) {
             return true;
         }
         return false;
     }
-
     if (active.chessman() == knight) {
         if (abs(dx) == 2 && abs(dy) == 1) {
             return true;
         }
-
         if (abs(dx) == 1 && abs(dy) == 2) {
             return true;
         }
         return false;
     }
-
-
     if (active.chessman() == bishop && abs(dx) != abs(dy)) {
         return false;
     }
@@ -309,26 +286,23 @@ bool Board::simple_test_move(Move move) const {
     if (active.chessman() == queen && (dx != 0 && dy != 0) && abs(dx) != abs(dy)) {
         return false;
     }
-
     if (active.chessman() == bishop ||
             active.chessman() == rock ||
             active.chessman() == queen) {
         int vx = sign(dx);
         int vy = sign(dy);
-        for(Xy p = move.from(); p != move.to(); p.x_(p.x_() + vx), p.y_(p.y_() + vy)) {
+        for (Xy p = move.from(); p != move.to(); p.x_(p.x_() + vx), p.y_(p.y_() + vy)) {
             if (p != move.from() && isset(p)) {
                 return false;
             }
         }
         return true;
     }
-
     return false;
 }
 
 bool Board::test_attack(Xy xy) const {
     Color c = color(xy);
-
     THECHESS_XY_FOREACH (from) {
         if (isset(from) && color(from) != c) {
             if (simple_test_move(Move(from, xy))) {
@@ -359,10 +333,10 @@ bool Board::test_attack(Move move) const {
     if (!result && previous.chessman() == pawn && abs(move.dy()) == 2) {
         // take on the aisle
         const_cast<Board*>(this)->simple_move(move);
-        Xy middle(move.from().x(), (move.from().y()+move.to().y())/2);
+        Xy middle(move.from().x(), (move.from().y() + move.to().y()) / 2);
         const_cast<Board*>(this)->change_order();
-        result |= test_move(Move(Xy(move.to().x()-1,move.to().y()), middle));
-        result |= test_move(Move(Xy(move.to().x()+1,move.to().y()), middle));
+        result |= test_move(Move(Xy(move.to().x() - 1, move.to().y()), middle));
+        result |= test_move(Move(Xy(move.to().x() + 1, move.to().y()), middle));
         const_cast<Board*>(this)->change_order();
         const_cast<Board*>(this)->simple_move(Move(move.to(), move.from()));
     }
@@ -390,11 +364,9 @@ bool Board::test_move(const Move move) const {
     Board board_copy = *this;
     bool castling_test = false;
     Field active = field(move.from());
-
     if (active.color() != order()) {
         return false;
     }
-
     if (active.chessman() == king && move.from().x() == x_5 &&
             (move.to().x() == x_3 || move.to().x() == x_7)) {
         // only castling
@@ -404,24 +376,20 @@ bool Board::test_move(const Move move) const {
         if (move.from().y() != move.to().y()) {
             return false;
         }
-
         Xname rock_from_x = move.to().x() == x_3 ? x_1 : x_8;
         Xy rock_from = Xy(rock_from_x, move.to().y());
         if (!castling(rock_from)) {
             return false;
         }
-
         if (move.to().x() == x_3) {
             // check field crossed by rock
             if (isset(Xy(x_2, move.to().y()))) {
                 return false;
             }
         }
-
         if (isset(move.to())) {
             return false;
         }
-
         Xname rock_to_x = move.to().x() == x_3 ? x_4 : x_6;
         Xy rock_to = Xy(rock_to_x, move.to().y());
         if (isset(rock_to)) {
@@ -430,14 +398,11 @@ bool Board::test_move(const Move move) const {
         if (test_attack(rock_to, active.color())) {
             return false;
         }
-
         if (test_attack(move.from(), active.color())) {
             return false;
         }
-
         castling_test = true;
     }
-
     if (active.chessman() == pawn &&
             abs(move.dx()) == 1 && abs(move.dy()) == 1 && !isset(move.to())) {
         // take on the aisle
@@ -451,20 +416,15 @@ bool Board::test_move(const Move move) const {
         if (!long_pawn() || long_pawn_x() != eaten_pawn_xy.x()) {
             return false;
         }
-
         // imagine this pawn to be at move.to()
         board_copy.simple_move(Move(eaten_pawn_xy, move.to()));
     }
-
     //~ Yname move_to_y = real_to_y(move);
     //~ move.to().y(move_to_y);
-
     if (!castling_test && !board_copy.simple_test_move(move)) {
         return false;
     }
-
     board_copy.make_move(move);
-
     // shah test
     if (board_copy.test_shah(active.color())) {
         return false;
@@ -521,7 +481,7 @@ bool Board::test_castling(const Move move) const {
 }
 
 void Board::fen_pieces(std::ostream& out) const {
-    for (Yname y=y_8; y >= y_1; y = (Yname)((int)y - 1)) {
+    for (Yname y = y_8; y >= y_1; y = (Yname)((int)y - 1)) {
         if (y < y_8) {
             out << '/';
         }

@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <cstdlib>
 #include <string>
 #include <set>
@@ -33,7 +32,6 @@ ThechessOptions::ThechessOptions(const Wt::WServer& server):
             database_type_ = Sqlite3;
         }
     }
-
     server.readConfigurationProperty("database_value", database_value_);
     read_int_value("connections_in_pool", connections_in_pool_);
 }

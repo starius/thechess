@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <climits>
 
 #include <Wt/WRandom>

@@ -24,7 +24,7 @@ std::string expand_path(const std::string& path) {
 }
 
 std::string first_file(const char* const files[], const int files_size) {
-    for (int i=0; i < files_size; i++) {
+    for (int i = 0; i < files_size; i++) {
         std::string filename = expand_path(files[i]);
         if (std::ifstream(filename.c_str())) {
             return filename;

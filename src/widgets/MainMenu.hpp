@@ -23,7 +23,7 @@ class MainMenuImpl;
 
 class MainMenu : public Wt::WCompositeWidget {
 public:
-    MainMenu(Wt::WContainerWidget* parent=0);
+    MainMenu(Wt::WContainerWidget* parent = 0);
 private:
     MainMenuImpl* impl_;
 };

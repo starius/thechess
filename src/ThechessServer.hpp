@@ -25,7 +25,7 @@ namespace thechess {
 
 class ThechessServer : public Wt::WServer {
 public:
-    ThechessServer(int argc, char **argv);
+    ThechessServer(int argc, char** argv);
     const ThechessOptions& options() const;
     dbo::FixedSqlConnectionPool& pool();
     ThechessNotifier& notifier();

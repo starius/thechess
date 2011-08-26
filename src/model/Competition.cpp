@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <cstdlib>
 #include <algorithm>
 #include <boost/foreach.hpp>
@@ -90,7 +89,7 @@ const char* Competition::state2str(State state) {
 }
 
 bool Competition::all_ended(const GamesVector& games) {
-    BOOST_FOREACH(GamePtr g, games) {
+    BOOST_FOREACH (GamePtr g, games) {
         if (!g->is_ended()) {
             return false;
         }
@@ -100,7 +99,7 @@ bool Competition::all_ended(const GamesVector& games) {
 
 void Competition::wins_number(const GamesVector& games,
                               std::map<UserPtr, float>& wins) {
-    BOOST_FOREACH(GamePtr g, games) {
+    BOOST_FOREACH (GamePtr g, games) {
         if (g->is_draw()) {
             wins[g->white()] += 0.5;
             wins[g->black()] += 0.5;
@@ -116,7 +115,7 @@ UsersVector Competition::winners_of_games(const GamesVector& games) {
     wins_number(games, wins);
     UsersVector winners;
     float max_wins = -1;
-    BOOST_FOREACH(User2float::value_type& user2float, wins) {
+    BOOST_FOREACH (User2float::value_type& user2float, wins) {
         UserPtr u = user2float.first;
         float w = user2float.second;
         if (max_wins < 0 || w - max_wins > 0.1) {
@@ -158,13 +157,13 @@ Games Competition::games_with(UserPtr user) const {
 GamesVector Competition::games_with(UserPtr user,
                                     GamesTable& gt) const {
     GamesVector result;
-    BOOST_FOREACH(GamesTable::value_type& i, gt) {
-        BOOST_FOREACH(GamePtr game, i.second[user]) {
+    BOOST_FOREACH (GamesTable::value_type& i, gt) {
+        BOOST_FOREACH (GamePtr game, i.second[user]) {
             result.push_back(game);
         }
     }
-    BOOST_FOREACH(GamesTable::mapped_type::value_type& i, gt[user]) {
-        BOOST_FOREACH(GamePtr game, i.second) {
+    BOOST_FOREACH (GamesTable::mapped_type::value_type& i, gt[user]) {
+        BOOST_FOREACH (GamePtr game, i.second) {
             result.push_back(game);
         }
     }
@@ -174,7 +173,7 @@ GamesVector Competition::games_with(UserPtr user,
 GamesTable Competition::games_table() const {
     BOOST_ASSERT(type() == CLASSICAL || type() == TEAM);
     GamesTable result;
-    BOOST_FOREACH(GamePtr game, games_vector()) {
+    BOOST_FOREACH (GamePtr game, games_vector()) {
         result[game->white()][game->black()].push_back(game);
     }
     return result;
@@ -263,14 +262,14 @@ void Competition::start_(Objects& objects) {
 void Competition::create_games_classical_(Objects& objects) {
     UsersVector members(members_.begin(), members_.end());
     std::random_shuffle(members.begin(), members.end(), random::rand_for_shuffle);
-    int white_games_per_user = std::max(1, int((members.size()-1) * games_factor()));
+    int white_games_per_user = std::max(1, int((members.size() - 1) * games_factor()));
     std::map<UserPtr, int> black_games;
     std::map<UserPtr, std::map<UserPtr, int> > N; // number of all games between them
-    BOOST_FOREACH(UserPtr white, members) {
+    BOOST_FOREACH (UserPtr white, members) {
         std::map<UserPtr, int>& N_white = N[white];
         for (int i = 0; i < white_games_per_user; i++) {
             UserPtr black;
-            BOOST_FOREACH(UserPtr user, members) {
+            BOOST_FOREACH (UserPtr user, members) {
                 if (user != white && black_games[user] != white_games_per_user)
                     if (!black || N_white[user] < N_white[black]) {
                         black = user;
@@ -309,7 +308,7 @@ void Competition::process_classical_(Objects& objects) {
     BOOST_ASSERT(type() == CLASSICAL);
     std::map<UserPtr, int> used;
     GamesVector proposed;
-    BOOST_FOREACH(GamePtr g, games_vector()) {
+    BOOST_FOREACH (GamePtr g, games_vector()) {
         if (g->state() == Game::active || g->state() == Game::confirmed) {
             used[g->white()] += 1;
             used[g->black()] += 1;
@@ -319,7 +318,7 @@ void Competition::process_classical_(Objects& objects) {
         }
     }
     std::random_shuffle(proposed.begin(), proposed.end(), random::rand_for_shuffle);
-    BOOST_FOREACH(GamePtr g, proposed) {
+    BOOST_FOREACH (GamePtr g, proposed) {
         if (used[g->white()] < max_simultaneous_games() &&
                 used[g->black()] < max_simultaneous_games()) {
             g.modify()->confirm_by_competition();
@@ -331,7 +330,7 @@ void Competition::process_classical_(Objects& objects) {
 }
 
 void Competition::finish_(const UsersVector& winners, Objects&) {
-    BOOST_FOREACH(UserPtr u, winners) {
+    BOOST_FOREACH (UserPtr u, winners) {
         winners_.insert(u);
     }
     state_ = ENDED;

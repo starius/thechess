@@ -82,7 +82,6 @@ private:
     }
 };
 
-
 UserWidget::UserWidget(UserPtr user, Wt::WContainerWidget* parent) :
     WCompositeWidget(parent) {
     impl_ = new UserWidgetImpl(user);

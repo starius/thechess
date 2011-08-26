@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <string>
 #include <stdexcept>
 #include <boost/foreach.hpp>
@@ -42,37 +41,32 @@ void ThechessSession::reconsider(TaskTracker& tracker) {
         dbo::Transaction t(*this);
         createTables();
         std::cerr << "Created database" << std::endl;
-
         User* admin = new User(true);
         admin->set_username("admin");
         admin->set_rights(User::admin);
         admin->set_password("123");
         add(admin);
-        std::cerr<< "and admin user (password 123)" << std::endl;
-
+        std::cerr << "and admin user (password 123)" << std::endl;
         User* user = new User(true);
         user->set_username("user");
         user->set_password("123");
         add(user);
-        std::cerr<< "and user user (password 123)" << std::endl;
-
+        std::cerr << "and user user (password 123)" << std::endl;
         t.commit();
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
         std::cerr << "Using existing database" << std::endl;
     }
-
     dbo::Transaction t(*this);
     execute("update thechess_user set sessions = ?").bind(0);
     t.commit();
-
     dbo::Transaction t2(*this);
     Games games = find<Game>().where("state < ?").bind(Game::min_ended);
-    BOOST_FOREACH(GamePtr game, games) {
+    BOOST_FOREACH (GamePtr game, games) {
         tracker.add_or_update_task(Object(GameObject, game.id()));
     }
     Competitions cs = find<Competition>().where("state < ?").bind(Competition::ENDED);
-    BOOST_FOREACH(CompetitionPtr c, cs) {
+    BOOST_FOREACH (CompetitionPtr c, cs) {
         tracker.add_or_update_task(Object(CompetitionObject, c.id()));
     }
     t2.commit();

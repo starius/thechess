@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include "widgets/IntervalWidget.hpp"
 
 namespace thechess {

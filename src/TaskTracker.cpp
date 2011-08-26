@@ -51,14 +51,14 @@ void TaskTracker::io_run_() {
 void TaskTracker::add_or_update_task(const Object& object) {
     mutex_.lock();
     add_or_update_task_(object);
-    std::cout << "add_or_update_task() ok" <<std::endl;
+    std::cout << "add_or_update_task() ok" << std::endl;
     refresh_();
     mutex_.unlock();
 }
 
 void TaskTracker::check_(const boost::system::error_code& error) {
     if (!error) {
-        std::cout << "TaskTracker::check_()" <<std::endl;
+        std::cout << "TaskTracker::check_()" << std::endl;
         mutex_.lock();
         Wt::WDateTime cached_now = now();
         Objects objects;
@@ -103,7 +103,7 @@ void TaskTracker::check_(const boost::system::error_code& error) {
                 break;
             }
         }
-        BOOST_FOREACH(Object object, objects) {
+        BOOST_FOREACH (Object object, objects) {
             add_or_update_task_(object);
         }
         refresh_();

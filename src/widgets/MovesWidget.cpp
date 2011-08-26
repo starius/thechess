@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <iostream>
 #include <string>
 #include <boost/format.hpp>
@@ -38,7 +37,7 @@ const int navigationBarHeight = 25; // set in wt.css
 
 class MovesModel : public Wt::WAbstractTableModel {
 public:
-    MovesModel(chess::CachedMoves* cached_moves, WObject *parent=0) :
+    MovesModel(chess::CachedMoves* cached_moves, WObject* parent = 0) :
         Wt::WAbstractTableModel(parent), cached_moves_(cached_moves),
         max_show_move_(0) {
     }
@@ -61,7 +60,7 @@ public:
 
     Wt::WModelIndex n2index(const int n) const {
         using chess::Moves;
-        return index(Moves::n_to_human(n) - 1, Moves::order_int(n) +1);
+        return index(Moves::n_to_human(n) - 1, Moves::order_int(n) + 1);
     }
 
     virtual int rowCount(const Wt::WModelIndex& /*parent*/) const {
@@ -145,7 +144,6 @@ private:
     int max_show_move_;
 };
 
-
 class MovesWidgetImpl : public Wt::WContainerWidget {
 public:
     MovesWidgetImpl(const chess::Moves& moves,
@@ -155,7 +153,7 @@ public:
         current_move_(moves.size() - 1), max_moves_(max_moves),
         used_moves_(0), append_only_(append_only),
         active_(active), activated_(false) {
-        Wt::WHBoxLayout *layout = new Wt::WHBoxLayout();
+        Wt::WHBoxLayout* layout = new Wt::WHBoxLayout();
         setLayout(layout, Wt::AlignTop);
         layout->addWidget(board_widget_ =
                               new BoardWidget(big, this->active(), bottom));
@@ -172,7 +170,6 @@ public:
         Wt::WPushButton* goto_last =
             new Wt::WPushButton(">>", board_widget_->inner());
         goto_last->clicked().connect(this, &MovesWidgetImpl::goto_last_);
-
         moves_model_ = new MovesModel(&cached_moves_, this);
         layout->addWidget(moves_table_view_ = new Wt::WTableView());
         moves_table_view_->setModel(moves_model_);
@@ -288,11 +285,10 @@ private:
             current_move_ = n;
             move_select_();
         }
-
     }
 
     // -1 means start position
-    void goto_move_(int n=-1) {
+    void goto_move_(int n = -1) {
         current_move_ = n;
         move_select_();
         history_select_();
@@ -319,9 +315,9 @@ private:
     }
 
     bool active() const {
-        std::cout << "active " << ( active_ &&
-                                    (max_moves_ == -1 || used_moves_ < max_moves_) &&
-                                    (!append_only_ || current_move_ == cached_moves_.size() - 1) )<< std::endl;
+        std::cout << "active " << (active_ &&
+                                   (max_moves_ == -1 || used_moves_ < max_moves_) &&
+                                   (!append_only_ || current_move_ == cached_moves_.size() - 1)) << std::endl;
         return active_ &&
                (max_moves_ == -1 || used_moves_ < max_moves_) &&
                (!append_only_ || current_move_ == cached_moves_.size() - 1);
@@ -340,7 +336,6 @@ private:
         //FIXME - wron row is shown
         Wt::WModelIndex index = moves_model_->n2index(current_move_);
         moves_table_view_->scrollTo(index); // ajax
-
         if (current_move_ > -1) {
             moves_table_view_
             ->select(moves_model_->n2index(current_move_));
@@ -350,7 +345,6 @@ private:
     }
 
 };
-
 
 MovesWidget::MovesWidget(const chess::Moves& moves,
                          bool big, bool active, int max_moves,
@@ -369,7 +363,6 @@ const chess::Moves& MovesWidget::moves() const {
 const chess::Board& MovesWidget::board() const {
     return impl_->board();
 }
-
 
 Wt::Signal<chess::Move>& MovesWidget::move() {
     return impl_->move();

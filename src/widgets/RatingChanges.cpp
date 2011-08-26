@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <utility>
 #include <vector>
 #include <boost/foreach.hpp>
@@ -44,7 +43,7 @@ const int COLUMNS = 3;
 
 class RatingModel : public BaseQM {
 public:
-    RatingModel(UserPtr user, Wt::WObject *parent=0) :
+    RatingModel(UserPtr user, Wt::WObject* parent = 0) :
         BaseQM(parent), user_(user) {
         dbo::Transaction t(tApp->session());
         dbo::Query<Result> query = tApp->session().find<Game>();
@@ -60,7 +59,7 @@ public:
     }
 
     boost::any data(const Wt::WModelIndex& index,
-                    int role=Wt::DisplayRole) const {
+                    int role = Wt::DisplayRole) const {
         if (index.column() == ENDED_COLUMN && role == Wt::DisplayRole) {
             GamePtr game = resultRow(index.row());
             return Wt::WDate(game->ended().date());
@@ -79,12 +78,12 @@ private:
 
 class MultiRatingModel : public Wt::WAbstractTableModel {
 public:
-    MultiRatingModel(Wt::WObject* parent=0):
+    MultiRatingModel(Wt::WObject* parent = 0):
         Wt::WAbstractTableModel(parent), column_count_(0), row_count_(0) {
     }
 
     ~MultiRatingModel() {
-        BOOST_FOREACH(RatingModel* model, models_) {
+        BOOST_FOREACH (RatingModel* model, models_) {
             delete model;
         }
         models_.clear();
@@ -106,7 +105,7 @@ public:
     }
 
     boost::any data(const Wt::WModelIndex& index,
-                    int role=Wt::DisplayRole) const {
+                    int role = Wt::DisplayRole) const {
         RatingModel* model = models_[index.column() / COLUMNS];
         int column = index.column() % COLUMNS;
         if (index.row() < model->rowCount()) {
@@ -125,7 +124,7 @@ private:
 
 class RatingChangesImpl : public Wt::WContainerWidget {
 public:
-    RatingChangesImpl(UserPtr user=UserPtr()):
+    RatingChangesImpl(UserPtr user = UserPtr()):
         Wt::WContainerWidget(), number_of_users_(0) {
         model_ = new MultiRatingModel(this);
         chart_ = new Wt::Chart::WCartesianChart(Wt::Chart::ScatterPlot, this);

@@ -26,7 +26,7 @@ using model::GamePtr;
 
 class GameCountdown : public Wt::WViewWidget {
 public:
-    GameCountdown(GamePtr game, Wt::WContainerWidget* parent=0);
+    GameCountdown(GamePtr game, Wt::WContainerWidget* parent = 0);
 private:
     GamePtr game_;
 

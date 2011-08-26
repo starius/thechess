@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <Wt/WText>
 #include <Wt/WBreak>
 #include <Wt/WPushButton>
@@ -36,7 +35,6 @@ CompetitionCreateWidget::CompetitionCreateWidget(Wt::WContainerWidget* p):
         Competition* c = new Competition(true);
         cpw_ = new CompetitionParametersWidget2(c, /*allow_change_type*/ true, this);
         delete c;
-
         new Wt::WBreak(this);
         ok_ = new Wt::WPushButton(tr("tc.common.Create"), this);
         ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler_);
@@ -55,7 +53,6 @@ CompetitionCreateWidget::CompetitionCreateWidget(model::CompetitionPtr c,
     } else if (c->can_change_parameters(tApp->user())) {
         new Wt::WText(tr("tc.competition.Change_welcome").arg(int(c.id())), this);
         cpw_ = new CompetitionParametersWidget2(&(*c), /*allow_change_type*/ true, this);
-
         new Wt::WBreak(this);
         ok_ = new Wt::WPushButton(tr("tc.common.Save"), this);
         ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler_);

@@ -28,7 +28,7 @@ class UserWidgetImpl;
 
 class UserWidget : public Wt::WCompositeWidget {
 public:
-    UserWidget(UserPtr user, Wt::WContainerWidget* parent=0);
+    UserWidget(UserPtr user, Wt::WContainerWidget* parent = 0);
 private:
     UserWidgetImpl* impl_;
 };

@@ -17,7 +17,7 @@ namespace widgets {
 
 class PleaseLoginWidget : public Wt::WContainerWidget {
 public:
-    PleaseLoginWidget(Wt::WContainerWidget* parent=0);
+    PleaseLoginWidget(Wt::WContainerWidget* parent = 0);
 private:
     void login_();
     void register_();
@@ -25,6 +25,5 @@ private:
 
 }
 }
-
 
 #endif

@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <boost/foreach.hpp>
 
 #include "ThechessNotifier.hpp"
@@ -50,7 +49,7 @@ void ThechessNotifier::emit(const Object& object, const std::string& this_app) {
         O2I::iterator it = object2ids_.find(object);
         if (it != object2ids_.end()) {
             IdSet* id_set = it->second;
-            BOOST_FOREACH(const std::string& id, *id_set) {
+            BOOST_FOREACH (const std::string& id, *id_set) {
                 if (id != this_app) {
                     server_.post(id, boost::bind(
                                      &ThechessApplication::thechess_notify, object));

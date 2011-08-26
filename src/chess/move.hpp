@@ -128,7 +128,7 @@ public:
         This is usefull when these letters are rendered as images.
     */
     std::string san(const Board& board, const Board& board_after,
-                    bool skip_chessmen=false) const;
+                    bool skip_chessmen = false) const;
 
 private:
     unsigned from_ : 7;

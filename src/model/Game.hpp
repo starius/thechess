@@ -136,7 +136,7 @@ public:
     \param random if colors of pieces will be randomized
     */
     void make_competition_game(UserPtr white, UserPtr black,
-                               CompetitionPtr competition, int competition_stage=-1, bool random=false);
+                               CompetitionPtr competition, int competition_stage = -1, bool random = false);
 
     /* @} */
 
@@ -552,7 +552,7 @@ public:
     \sa http://cfajohnson.com/chess/SAN/SAN_DOC/Standard
     \sa http://www.chessclub.com/help/PGN-spec
     */
-    void pgn(std::ostream& out, bool reduced=false) const;
+    void pgn(std::ostream& out, bool reduced = false) const;
 
     /** Convert given state to i18n id */
     static const char* state2str_id(State state);
@@ -605,7 +605,7 @@ private:
     void confirm_();
     void start_();
     void stop_pause_();
-    void finish_(State state, UserPtr winner=UserPtr());
+    void finish_(State state, UserPtr winner = UserPtr());
     void elo_change_();
 
     void push_move_(chess::Move move);

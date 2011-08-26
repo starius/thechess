@@ -135,7 +135,7 @@ private:
         UserPtr user = tApp->session().load<User>(user_id_);
         Games games_collection = user->games().where("state < ?").bind(Game::min_ended);
         GamesVector games_vector(games_collection.begin(), games_collection.end());
-        BOOST_FOREACH(GamePtr game, games_vector) {
+        BOOST_FOREACH (GamePtr game, games_vector) {
             games.insert(game.id());
             if (anchors_.find(game.id()) == anchors_.end()) {
                 MyGameAnchor* a = new MyGameAnchor(game, this);
@@ -149,7 +149,7 @@ private:
 
     Game::State state_of_(MyGameAnchor* a) const {
         int index = indexOf(a);
-        for (int i = order_of_states_size-1; i >= 0; i--)
+        for (int i = order_of_states_size - 1; i >= 0; i--)
             if (index >= first_of_state_[i]) {
                 return order_of_states[i];
             }

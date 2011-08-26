@@ -7,13 +7,10 @@
  * See the LICENSE file for terms of use.
  */
 
-
-
 #include "chess/field.hpp"
 
 namespace thechess {
 namespace chess {
-
 
 Field::Field(Color color, Chessman chessman) :
     color_(color), chessman_(chessman) {

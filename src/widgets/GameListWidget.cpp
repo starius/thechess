@@ -50,7 +50,7 @@ const int game_in_tuple = 0;
 
 class QM : public BaseQM {
 public:
-    QM(const Q& query, Wt::WObject *parent=0) :
+    QM(const Q& query, Wt::WObject* parent = 0) :
         BaseQM(parent) {
         setQuery(query);
         addColumn("G.id", tr("tc.common.number"));
@@ -65,7 +65,7 @@ public:
     }
 
     boost::any data(const Wt::WModelIndex& index,
-                    int role=Wt::DisplayRole) const {
+                    int role = Wt::DisplayRole) const {
         dbo::Transaction t(tApp->session());
         GamePtr game = resultRow(index.row()).get<game_in_tuple>();
         if (role == Wt::DisplayRole) {
@@ -106,7 +106,6 @@ public:
         Wt::WContainerWidget() {
         manager_();
         query_model_ = new QM(query(), this);
-
         table_view_ = new Wt::WTableView(this);
         table_view_->setModel(query_model_);
         table_view_->resize(770, 450);

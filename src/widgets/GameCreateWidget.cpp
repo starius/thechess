@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <Wt/WText>
 #include <Wt/WComboBox>
 #include <Wt/WLabel>
@@ -54,13 +53,11 @@ GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :
 void GameCreateWidget::print_() {
     GameParameters gp(true);
     gpw_ = new GameParametersWidget(&gp, this);
-
     color_ = new Wt::WComboBox();
     color_->addItem(tr("tc.game.random"));
     color_->addItem(tr("tc.game.white"));
     color_->addItem(tr("tc.game.black"));
     gpw_->item(tr("tc.game.your_color"), "", color_, color_);
-
     new Wt::WBreak(this);
     Wt::WPushButton* ok_ = new Wt::WPushButton(tr("tc.common.Create"), this);
     ok_->clicked().connect(this, &GameCreateWidget::button_handler_);
@@ -93,7 +90,6 @@ chess::Color GameCreateWidget::selected_color_() const {
     }
     return color;
 }
-
 
 }
 }

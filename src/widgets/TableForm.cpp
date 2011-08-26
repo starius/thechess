@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <Wt/WTableCell>
 #include <Wt/WTableRow>
 #include <Wt/WTableColumn>
@@ -35,7 +34,6 @@ Wt::WContainerWidget* TableForm::item(const Wt::WString& name,
                                       const Wt::WString& description, Wt::WFormWidget* fw,
                                       Wt::WWidget* input, bool row) {
     int row_num = rowAt(rowCount())->rowNum();
-
     Wt::WTableCell* name_cell = elementAt(row_num, 0);
     Wt::WTableCell* input_cell = elementAt(row_num, 1);
     Wt::WTableCell* description_cell = elementAt(row_num, 2);
@@ -49,7 +47,6 @@ Wt::WContainerWidget* TableForm::item(const Wt::WString& name,
         input_cell->setStyleClass("thechess_tableform_input");
         description_cell->setStyleClass("thechess_tableform_description");
     }
-
     Wt::WLabel* name_label = new Wt::WLabel(name, name_cell);
     name_label->setInline(false);
     if (!description.empty()) {

@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include "chess/move.hpp"
 #include "utils.hpp"
 
@@ -38,7 +37,7 @@ Move::Move() :
 }
 
 Xy Move::packed_to() const {
-    return turn_into_==chessman_null ? to() : Xy(to().x(), (Yname)turn_into_);
+    return turn_into_ == chessman_null ? to() : Xy(to().x(), (Yname)turn_into_);
 }
 
 bool Move::could_turn_into(const Board& board) const {
@@ -50,7 +49,7 @@ std::string Move::san_from_(const Board& board) const {
     if (chessman == pawn && board.test_takes(*this)) {
         return char2str(chess::x_char(from().x()));
     }
-    bool alt=false, alt_x=false, alt_y=false;
+    bool alt = false, alt_x = false, alt_y = false;
     THECHESS_XY_FOREACH (xy) {
         chess::Move alt_move(xy, to(), board);
         if (board.chessman(xy) == chessman && xy != from() &&

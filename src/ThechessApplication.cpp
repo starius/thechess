@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <cstdlib>
 #include <stdexcept>
 #include <vector>
@@ -67,7 +66,6 @@ ThechessApplication::ThechessApplication(const Wt::WEnvironment& env, ThechessSe
     internalPathChanged().connect(this,
                                   &ThechessApplication::onPathChange_);
     setCssTheme("polished");
-
     Wt::WContainerWidget* root1 = new Wt::WContainerWidget(root());
     layout_ = new Wt::WBorderLayout();
     root1->setLayout(layout_, Wt::AlignTop | Wt::AlignJustify);
@@ -75,10 +73,8 @@ ThechessApplication::ThechessApplication(const Wt::WEnvironment& env, ThechessSe
                        Wt::WBorderLayout::North);
     layout_->addWidget(new Wt::WContainerWidget(),
                        Wt::WBorderLayout::Center);
-
     widgets::MainMenu* main_menu = new widgets::MainMenu();
     layout_->addWidget(main_menu, Wt::WBorderLayout::West);
-
     try {
         cookie_session_read_();
         onPathChange_();
@@ -92,12 +88,11 @@ ThechessApplication::~ThechessApplication() {
     for (O2N::iterator it = notifiables_.begin(); it != notifiables_.end(); ++it) {
         objects.insert(it->first);
     }
-    BOOST_FOREACH(const Object& object, objects) {
+    BOOST_FOREACH (const Object& object, objects) {
         server_.notifier().stop_listenning(object);
     }
     notifiables_.clear();
     active_ = false;
-
     try {
         dbo::Transaction t(session());
         user_.reread();
@@ -191,7 +186,7 @@ void ThechessApplication::set_user(UserPtr user) {
                       .bind(Game::pause);
         games_vector.assign(games.begin(), games.end());
     }
-    BOOST_FOREACH(GamePtr game, games_vector) {
+    BOOST_FOREACH (GamePtr game, games_vector) {
         server_.tracker().add_or_update_task(Object(GameObject, game.id()));
     }
     cookie_session_write_();
@@ -268,7 +263,6 @@ void ThechessApplication::onPathChange_() {
         set_mainpanel_(new Wt::WContainerWidget()); // FIXME index page
     }
 }
-
 
 void ThechessApplication::view(UserPtr user) {
     show_<widgets::UserWidget>(user,

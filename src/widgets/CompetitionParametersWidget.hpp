@@ -31,7 +31,7 @@ class IntervalWidget;
 class CompetitionParametersWidget : public GameParametersWidget {
 public:
     CompetitionParametersWidget(const model::CompetitionParameters* cp,
-                                bool allow_change_type=true, Wt::WContainerWidget* parent=0);
+                                bool allow_change_type = true, Wt::WContainerWidget* parent = 0);
 
     void apply_parameters(model::CompetitionParameters* cp);
 
@@ -66,7 +66,7 @@ private:
 class CompetitionParametersWidget2 : public CompetitionParametersWidget {
 public:
     CompetitionParametersWidget2(const model::Competition* c,
-                                 bool allow_change_type=true, Wt::WContainerWidget* parent=0);
+                                 bool allow_change_type = true, Wt::WContainerWidget* parent = 0);
 
     void apply_parameters(model::Competition* c);
 

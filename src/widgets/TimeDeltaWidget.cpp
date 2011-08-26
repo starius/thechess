@@ -68,7 +68,6 @@ private:
     }
 };
 
-
 TimeDeltaWidget::TimeDeltaWidget(const Td& min, const Td& value,
                                  const Td& max, Wt::WContainerWidget* parent) :
     WCompositeWidget(parent) {
@@ -79,7 +78,6 @@ TimeDeltaWidget::TimeDeltaWidget(const Td& min, const Td& value,
 Td TimeDeltaWidget::value() const {
     return impl_->value();
 }
-
 
 Wt::WFormWidget* TimeDeltaWidget::form_widget() {
     return impl_->form_widget();

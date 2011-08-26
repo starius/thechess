@@ -22,13 +22,13 @@ namespace widgets {
 
 class MySpinBox : public Wt::WSpinBox {
 public:
-    MySpinBox(Wt::WContainerWidget* parent=0);
+    MySpinBox(Wt::WContainerWidget* parent = 0);
     int value() const;
 };
 
 class MyDoubleSpinBox : public Wt::WDoubleSpinBox {
 public:
-    MyDoubleSpinBox(Wt::WContainerWidget* parent=0);
+    MyDoubleSpinBox(Wt::WContainerWidget* parent = 0);
     double value() const;
 };
 

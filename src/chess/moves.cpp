@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <iostream>
 #include <cstdio>
 #include <string>
@@ -44,15 +43,14 @@ Xy Moves::xy_(int i) const {
     */
     int first = (i * 6) / 8;
     int mod_i = i % 4;
-
     if (mod_i == 0) {
         return Xy((int)(q(first) >> 2));
     } else if (mod_i == 1) {
         // 0011 1111
-        return Xy((int)(((q(first) << 4) & 0x3F) | (q(first+1) >> 4)));
+        return Xy((int)(((q(first) << 4) & 0x3F) | (q(first + 1) >> 4)));
     } else if (mod_i == 2) {
         // 0011 1111
-        return Xy((int)(((q(first) << 2) & 0x3F) | (q(first+1) >> 6)));
+        return Xy((int)(((q(first) << 2) & 0x3F) | (q(first + 1) >> 6)));
     } else if (mod_i == 3) {
         return Xy((int)(q(first) & 0x3F)); // 0011 1111
     }
@@ -62,20 +60,19 @@ Xy Moves::xy_(int i) const {
 void Moves::xy_(int i, Xy xy) {
     int first = (i * 6) / 8;
     int mod_i = i % 4;
-
     if (mod_i == 0) {
         (*this)[first] &= 0x03; // 0000 0011
         (*this)[first] |= (byte)xy.i() << 2;
     } else if (mod_i == 1) {
         (*this)[first] &= 0xFC; // 1111 1100
         (*this)[first] |= (byte)xy.i() >> 4;
-        (*this)[first+1] &= 0x0F; // 0000 1111
-        (*this)[first+1] |= (byte)xy.i() << 4;
+        (*this)[first + 1] &= 0x0F; // 0000 1111
+        (*this)[first + 1] |= (byte)xy.i() << 4;
     } else if (mod_i == 2) {
         (*this)[first] &= 0xF0; // 1111 0000
         (*this)[first] |= (byte)xy.i() >> 2;
-        (*this)[first+1] &= 0x3F; //  0011 1111
-        (*this)[first+1] |= (byte)xy.i() << 6;
+        (*this)[first + 1] &= 0x3F; //  0011 1111
+        (*this)[first + 1] |= (byte)xy.i() << 6;
     } else if (mod_i == 3) {
         (*this)[first] &= 0xC0; // 1100 0000
         (*this)[first] |= (byte)xy.i();
@@ -86,7 +83,6 @@ void Moves::set_move(int n, Move move) {
     xy_(n, xy_from, move.from());
     xy_(n, xy_to, move.packed_to());
 }
-
 
 void Moves::push_move(Move move) {
     int current_size = size();
@@ -121,14 +117,14 @@ void Moves::pop_moves(int number) {
 
 Board Moves::board_at(int n) const {
     Board board;
-    THECHESS_MOVES_TO(move_it, this, board, n) {
+    THECHESS_MOVES_TO (move_it, this, board, n) {
     }
     return board;
 }
 
 int Moves::check() const {
     Board board;
-    THECHESS_MOVES_FOREACH(move_it, this, board) {
+    THECHESS_MOVES_FOREACH (move_it, this, board) {
         if (!board.test_move(*move_it)) {
             return move_it.n;
         }

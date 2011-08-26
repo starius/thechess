@@ -29,7 +29,7 @@ public:
 
     // after successful transaction.commit()
     void emit(const model::Object& object,
-              const std::string& this_app=""); // not from WApplication
+              const std::string& this_app = ""); // not from WApplication
     static void app_emit(const model::Object& object); // from WApplication
 
 private:

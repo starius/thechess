@@ -143,7 +143,7 @@ const Td stale_object_delay = second;
 const Td unknown_error_delay = 2 * second;
 }
 
-const int cookie_session_age = (5*365*day).total_seconds();
+const int cookie_session_age = (5 * 365 * day).total_seconds();
 
 }
 }

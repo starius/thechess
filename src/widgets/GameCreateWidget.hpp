@@ -30,8 +30,8 @@ class GameParametersWidget;
 
 class GameCreateWidget : public Wt::WContainerWidget {
 public:
-    GameCreateWidget(UserPtr user, Wt::WContainerWidget* p=0);
-    GameCreateWidget(Wt::WContainerWidget* p=0);
+    GameCreateWidget(UserPtr user, Wt::WContainerWidget* p = 0);
+    GameCreateWidget(Wt::WContainerWidget* p = 0);
 
 private:
     GameParametersWidget* gpw_;

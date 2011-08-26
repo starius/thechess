@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <sstream>
 #include <boost/foreach.hpp>
 
@@ -43,7 +42,7 @@ const int ended_column = 7;
 
 class CompetitionListModel : public BaseQM {
 public:
-    CompetitionListModel(const Q& query, Wt::WObject *parent=0) :
+    CompetitionListModel(const Q& query, Wt::WObject* parent = 0) :
         BaseQM(parent) {
         setQuery(query);
         addColumn("C.id", tr("tc.common.number"));
@@ -57,7 +56,7 @@ public:
     }
 
     boost::any data(const Wt::WModelIndex& index,
-                    int role=Wt::DisplayRole) const {
+                    int role = Wt::DisplayRole) const {
         dbo::Transaction t(tApp->session());
         CompetitionPtr o = resultRow(index.row()).get<0>();
         if (role == Wt::DisplayRole) {
@@ -83,7 +82,7 @@ public:
 
 class CompetitionListView : public Wt::WTableView {
 public:
-    CompetitionListView(CompetitionListModel* model, Wt::WContainerWidget* p=0):
+    CompetitionListView(CompetitionListModel* model, Wt::WContainerWidget* p = 0):
         Wt::WTableView(p) {
         setModel(model);
         resize(770, 450);
@@ -111,9 +110,9 @@ Q CompetitionListWidget::query_() {
     ThechessOptions::DatabaseType t = tApp->server().options().database_type();
     std::stringstream sql;
     sql << "select C, ";
-    if(t == ThechessOptions::Postgres) {
+    if (t == ThechessOptions::Postgres) {
         sql << "array_to_string(array_agg(distinct W.username), ', '), ";
-    } else if(t == ThechessOptions::Sqlite3) {
+    } else if (t == ThechessOptions::Sqlite3) {
         sql << "group_concat(distinct W.username), ";
     }
     sql << "count(distinct M.thechess_user_id) ";

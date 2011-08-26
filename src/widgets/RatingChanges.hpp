@@ -27,7 +27,7 @@ class RatingChangesImpl;
 
 class RatingChanges : public Wt::WCompositeWidget {
 public:
-    RatingChanges(UserPtr user, Wt::WContainerWidget* parent=0);
+    RatingChanges(UserPtr user, Wt::WContainerWidget* parent = 0);
     void add_user(UserPtr user);
 
 private:

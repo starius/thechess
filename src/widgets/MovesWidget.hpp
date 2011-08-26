@@ -12,7 +12,6 @@
 
 // move=-1 --> board=0 (start position) --> move=1 -->board=1 ...
 
-
 #include <Wt/WContainerWidget>
 #include <Wt/WSignal>
 #include <Wt/WCompositeWidget>
@@ -29,9 +28,9 @@ class MovesWidgetImpl;
 
 class MovesWidget : public Wt::WCompositeWidget {
 public:
-    MovesWidget(const chess::Moves& moves, bool big=false,
-                bool active=false, int max_moves=-1, bool append_only=false,
-                chess::Color bottom=chess::white, Wt::WContainerWidget* parent=0);
+    MovesWidget(const chess::Moves& moves, bool big = false,
+                bool active = false, int max_moves = -1, bool append_only = false,
+                chess::Color bottom = chess::white, Wt::WContainerWidget* parent = 0);
 
     const chess::Moves& moves() const;
     const chess::Board& board() const;

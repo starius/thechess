@@ -83,7 +83,7 @@ struct dbo_traits<thechess::model::CookieSession> :
         return std::string();
     }
 
-    static const char *surrogateIdField() {
+    static const char* surrogateIdField() {
         return 0;
     }
 };

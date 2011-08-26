@@ -35,7 +35,7 @@ class SingleTimeout : public Wt::WTemplate {
 public:
     SingleTimeout(const Wt::WString& name, bool active,
                   const Td& limit_private_now, const Td& limit_std_now,
-                  Wt::WContainerWidget* parent=0) :
+                  Wt::WContainerWidget* parent = 0) :
         Wt::WTemplate(tr("tc.game.countdown_template"), parent) {
         bindString("name", name);
         Wt::WText* limit_private_text =
@@ -50,7 +50,7 @@ public:
                              % limit_private_text->id()
                              % limit_private_now.total_milliseconds()
                              % limit_std_text->id()
-                             % limit_std_now.total_milliseconds() ));
+                             % limit_std_now.total_milliseconds()));
         }
     }
 
@@ -58,7 +58,7 @@ public:
 
 class GameCountdownImpl : public Wt::WContainerWidget {
 public:
-    GameCountdownImpl(GamePtr game, Wt::WContainerWidget* parent=0) :
+    GameCountdownImpl(GamePtr game, Wt::WContainerWidget* parent = 0) :
         Wt::WContainerWidget(parent), game_(game) {
         dbo::Transaction t(tApp->session());
         UserPtr user1;
@@ -73,7 +73,6 @@ public:
         } else if (game_->init()) {
             user1 = game_->init();
         }
-
         if (user1) {
             std::cout << "single_countdown_(user1);" << std::endl;
             single_countdown_(user1);

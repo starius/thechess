@@ -13,9 +13,8 @@ namespace thechess {
 namespace chess {
 
 CachedMoves::CachedMoves(int moves_count) :
-    Moves(moves_count), boards_(moves_count+1) {
+    Moves(moves_count), boards_(moves_count + 1) {
 }
-
 
 CachedMoves::CachedMoves(const Moves& moves) :
     Moves(moves), boards_(moves.size() + 1) {
@@ -25,7 +24,7 @@ CachedMoves::CachedMoves(const Moves& moves) :
 void CachedMoves::boards_rebuild_() {
     Board board;
     int i = 0;
-    THECHESS_MOVES_FOREACH(move_it, this, board) {
+    THECHESS_MOVES_FOREACH (move_it, this, board) {
         boards_[i] = board;
         i++;
     }
@@ -62,12 +61,12 @@ const Board& CachedMoves::board_at(int n) const {
     return boards_[n];
 }
 
-void CachedMoves::foreach(void *func(Move move, const Board& board),
+void CachedMoves::foreach(void* func(Move move, const Board& board),
                           int from, int to) const {
     if (to == -1) {
         to = size();
     }
-    for (int i=from; i<to; i++) {
+    for (int i = from; i < to; i++) {
         func(move_at(i), board_at(i));
     }
 }

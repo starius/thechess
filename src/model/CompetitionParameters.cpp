@@ -7,8 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
-
 #include "model/CompetitionParameters.hpp"
 #include "config.hpp"
 

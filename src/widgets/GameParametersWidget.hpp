@@ -26,7 +26,7 @@ class MovesWidget;
 class GameParametersWidget : public TableForm {
 public:
     GameParametersWidget(const model::GameParameters* gp,
-                         Wt::WContainerWidget* parent=0);
+                         Wt::WContainerWidget* parent = 0);
     void apply_parameters(model::GameParameters* gp);
 
 private:
@@ -43,7 +43,6 @@ private:
 
 }
 }
-
 
 #endif
 

@@ -29,7 +29,7 @@ public:
     /** Constructor.
     \sa Moves::Moves(int moves_count)
     */
-    CachedMoves(int moves_count=0);
+    CachedMoves(int moves_count = 0);
 
     /** Construct from Moves */
     CachedMoves(const Moves& moves);
@@ -61,8 +61,8 @@ public:
     \param to index of half-move to stop before.
         If to==-1, iterates from \c from to the end of the container.
     */
-    void foreach(void *func(Move move, const Board& board),
-                 int from=0, int to=-1) const;
+    void foreach(void* func(Move move, const Board& board),
+                 int from = 0, int to = -1) const;
 
 private:
     std::vector<Board> boards_; // stores boards before this move

@@ -53,7 +53,7 @@ public:
     Notifiable(model::ObjectType ot, int id);
 
     virtual ~Notifiable();
-    virtual void notify()=0; // under Transaction
+    virtual void notify() = 0; // under Transaction
 
 private:
     const model::Object object_;

@@ -51,7 +51,6 @@ private:
     void refresh_();
 };
 
-
 }
 
 #endif

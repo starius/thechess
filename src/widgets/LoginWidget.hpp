@@ -23,7 +23,7 @@ namespace widgets {
 
 class LoginWidget : public Wt::WContainerWidget {
 public:
-    LoginWidget(Wt::WContainerWidget *parent=0);
+    LoginWidget(Wt::WContainerWidget* parent = 0);
 
 private:
     Wt::WTable* table_;

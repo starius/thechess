@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include <algorithm>
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
@@ -63,7 +62,7 @@ void StagedCompetition::process(Competition* competition, Objects& objects) {
 }
 
 void StagedCompetition::read_games_() {
-    BOOST_FOREACH(GamePtr game, competition_->games_vector()) {
+    BOOST_FOREACH (GamePtr game, competition_->games_vector()) {
         UserPair pair(game->white(), game->black());
         int stage = game->competition_stage();
         if (games_.find(pair) == games_.end()) {
@@ -74,11 +73,11 @@ void StagedCompetition::read_games_() {
 }
 
 void StagedCompetition::read_paires_() {
-    BOOST_FOREACH(UserPtr user, competition_->members_vector()) {
+    BOOST_FOREACH (UserPtr user, competition_->members_vector()) {
         states_[user] = UNPAIRED;
         stages_[user] = 1; // if he was paired in 0 stage, it will be overwritten
     }
-    BOOST_FOREACH(Paires::value_type& stage_and_pair, paires_) {
+    BOOST_FOREACH (Paires::value_type& stage_and_pair, paires_) {
         int stage = stage_and_pair.first;
         UserPair pair = stage_and_pair.second;
         read_pair_(stage, pair);
@@ -115,8 +114,8 @@ void StagedCompetition::start_competition_() {
     int max_pow2 = pow(2, floor(log2(members_size))) + 0.5;
     int pairs = members_size - max_pow2 || members_size / 2;
     for (int i = 0; i < pairs; i++) {
-        UserPtr first = members[2*i];
-        UserPtr second = members[2*i+1];
+        UserPtr first = members[2 * i];
+        UserPtr second = members[2 * i + 1];
         states_[first] = PAIRED;
         states_[second] = PAIRED;
         stages_[first] = 0;
@@ -125,16 +124,15 @@ void StagedCompetition::start_competition_() {
     }
 }
 
-
 void StagedCompetition::join_users_() {
     typedef std::map<int, UsersVector> Unpaired;
     Unpaired unpaired;
-    BOOST_FOREACH(States::value_type& user_and_state, states_) {
+    BOOST_FOREACH (States::value_type& user_and_state, states_) {
         if (user_and_state.second == UNPAIRED) {
             unpaired[stages_[user_and_state.first]].push_back(user_and_state.first);
         }
     }
-    BOOST_FOREACH(Unpaired::value_type& stage_and_users, unpaired) {
+    BOOST_FOREACH (Unpaired::value_type& stage_and_users, unpaired) {
         int stage = stage_and_users.first;
         UsersVector& users = stage_and_users.second;
         std::random_shuffle(users.begin(), users.end(), random::rand_for_shuffle);
@@ -151,12 +149,12 @@ void StagedCompetition::join_users_() {
 }
 
 void StagedCompetition::create_games_(Competition* competition, Objects& objects) {
-    BOOST_FOREACH(Paires::value_type& stage_and_pair, paires_) {
+    BOOST_FOREACH (Paires::value_type& stage_and_pair, paires_) {
         int stage = stage_and_pair.first;
         UserPair pair = stage_and_pair.second;
         if (!winners_[pair] && Competition::all_ended(games_[pair])) {
             bool no_draw = static_cast<int>(games_[pair].size()) ==
-                           competition->min_substages() + stage*competition->increment_substages();
+                           competition->min_substages() + stage * competition->increment_substages();
             int n = no_draw ? 1 : 2;
             for (int i = 0; i < n; i++) {
                 UserPtr white = i ? pair.first() : pair.second();
@@ -173,5 +171,4 @@ void StagedCompetition::create_games_(Competition* competition, Objects& objects
 
 }
 }
-
 

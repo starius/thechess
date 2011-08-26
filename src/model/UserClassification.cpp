@@ -7,7 +7,6 @@
  * See the LICENSE file for terms of use.
  */
 
-
 #include "model/UserClassification.hpp"
 
 namespace thechess {
@@ -64,5 +63,4 @@ Wt::WString classification2str(Classification c) {
 
 }
 }
-
 

@@ -80,6 +80,5 @@ void field(Action& a, thechess::model::EloPlayer& p, const std::string& name) {
 }
 }
 
-
 #endif
 

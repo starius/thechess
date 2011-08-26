@@ -63,17 +63,14 @@ public:
         dbo::field(a, classification_, "classification");
         dbo::field(a, classification_confirmer_, "classification_confirmer");
         dbo::hasMany(a, classification_confirmed_, dbo::ManyToOne, "classification_confirmer");
-
         dbo::hasMany(a, white_games_, dbo::ManyToOne, "white");
         dbo::hasMany(a, black_games_, dbo::ManyToOne, "black");
         dbo::hasMany(a, won_games_, dbo::ManyToOne, "winner_game");
         dbo::hasMany(a, init_games_, dbo::ManyToOne, "init_game");
-
         dbo::hasMany(a, competitions_, dbo::ManyToMany, "members_competitions");
         dbo::hasMany(a, init_competitions_, dbo::ManyToOne, "init_competitions");
         dbo::hasMany(a, virtual_allower_, dbo::ManyToOne, "virtual_allower");
         dbo::hasMany(a, won_competitions_, dbo::ManyToMany, "winners_competition");
-
         dbo::field(a, games_stat_, "games_stat");
     }
 

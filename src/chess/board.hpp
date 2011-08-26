@@ -197,7 +197,7 @@ private:
     void change_order();
     void castling_reset();
     void castling_off(Xy rock_xy);
-    void long_pawn(bool value, int x=0);
+    void long_pawn(bool value, int x = 0);
 
     void simple_move(const Move move);
     bool simple_test_move(Move move) const;

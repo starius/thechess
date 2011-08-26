@@ -28,7 +28,7 @@ class GameWidgetImpl;
 
 class GameWidget : public Wt::WCompositeWidget {
 public:
-    GameWidget(GamePtr game, Wt::WContainerWidget* parent=0);
+    GameWidget(GamePtr game, Wt::WContainerWidget* parent = 0);
 private:
     GameWidgetImpl* impl_;
 };

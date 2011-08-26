@@ -30,7 +30,7 @@ public:
     typedef boost::tuple<model::CompetitionPtr, Wt::WString, int> Result;
     typedef dbo::Query<Result> Q;
 
-    CompetitionListWidget(Wt::WContainerWidget* parent=0);
+    CompetitionListWidget(Wt::WContainerWidget* parent = 0);
 
 private:
     CompetitionListModel* model_;
