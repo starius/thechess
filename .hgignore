@@ -1,7 +1,19 @@
 syntax: glob
+
 *.o
-*build*
-*user_pictures*
+*.wt
+
 *.swp
+
+*.orig
+*.org
+
+debug/
+build/
+release/
 doc/
+
+*.db
+
+*.png
 
