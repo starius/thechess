@@ -113,8 +113,10 @@ style:
 	astyle --style=java --add-brackets --lineend=linux --align-pointer=type --align-reference=type \
 		--delete-empty-lines --convert-tabs --pad-header --pad-oper --unpad-paren \
 		--indent-col1-comments \
-		--formatted --recursive '*.?pp'
+		--quiet --recursive '*.?pp'
 	sed '/^$$/N;/^\n$$/D' -i `find src -name '*.?pp'`
+	sed '/define/!s/\(FOREACH\|THECHESS_\w\+\)(/\1 (/' -i `find src -name '*.?pp'`
+	sed '/\(FOREACH\|THECHESS_\)/s/\(\w\) \([*&]\)/\1\2/' -i `find src -name '*.?pp'`
 
 .SECONDARY: $(WT_CONFIG)
 $(WT_CONFIG): /etc/wt/wt_config.xml Makefile
