@@ -35,7 +35,7 @@ public:
         : from_(from), to_(to), turn_into_(turn_into) {}
 
     /** Construct a half-move using source and destination squares.
-    turn_into() of a returned move returns \ref chessman_null.
+    turn_into() of a returned move returns \ref CHESSMAN_NULL.
     */
     Move(Xy from, Xy to);
 
@@ -49,7 +49,7 @@ public:
     Move(Xy from, Xy packed_to, const Board& board);
 
     /** Default constructor.
-    The result is \code Move(xy_null, xy_null, chessman_null) \endcode
+    The result is \code Move(XY_NULL, XY_NULL, CHESSMAN_NULL) \endcode
     */
     Move();
 
@@ -135,7 +135,7 @@ private:
     std::string san_from_(const Board& board) const;
 };
 
-const Move move_null(xy_null, xy_null);
+const Move MOVE_NULL(XY_NULL, XY_NULL);
 
 }
 

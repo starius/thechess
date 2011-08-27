@@ -13,39 +13,39 @@
 namespace thechess {
 
 Move::Move(Xy from, Xy to) :
-    from_(from), to_(to), turn_into_(chessman_null) {
+    from_(from), to_(to), turn_into_(CHESSMAN_NULL) {
 }
 
 // ?? no tests of valideness of chessman
 Move::Move(Xy from, Xy packed_to, const Board& board) :
-    from_(from), to_(packed_to), turn_into_(chessman_null) {
-    if (board.chessman(this->from()) == pawn) {
-        if (board.order() == white && this->from().y() == y_7) {
-            to_ = Xy(packed_to.x(), y_8);
+    from_(from), to_(packed_to), turn_into_(CHESSMAN_NULL) {
+    if (board.chessman(this->from()) == PAWN) {
+        if (board.order() == WHITE && this->from().y() == Y_7) {
+            to_ = Xy(packed_to.x(), Y_8);
             turn_into_ = (Chessman)packed_to.y();
         }
-        if (board.order() == black && this->from().y() == y_2) {
-            to_ = Xy(packed_to.x(), y_1);
+        if (board.order() == BLACK && this->from().y() == Y_2) {
+            to_ = Xy(packed_to.x(), Y_1);
             turn_into_ = (Chessman)packed_to.y();
         }
     }
 }
 
 Move::Move() :
-    from_(xy_null), to_(xy_null), turn_into_(chessman_null) {
+    from_(XY_NULL), to_(XY_NULL), turn_into_(CHESSMAN_NULL) {
 }
 
 Xy Move::packed_to() const {
-    return turn_into_ == chessman_null ? to() : Xy(to().x(), (Yname)turn_into_);
+    return turn_into_ == CHESSMAN_NULL ? to() : Xy(to().x(), (Yname)turn_into_);
 }
 
 bool Move::could_turn_into(const Board& board) const {
-    return board.chessman(from()) == pawn && (to().y() == y_1 || to().y() == y_8);
+    return board.chessman(from()) == PAWN && (to().y() == Y_1 || to().y() == Y_8);
 }
 
 std::string Move::san_from_(const Board& board) const {
     Chessman chessman = board.chessman(from());
-    if (chessman == pawn && board.test_takes(*this)) {
+    if (chessman == PAWN && board.test_takes(*this)) {
         return char2str(x_char(from().x()));
     }
     bool alt = false, alt_x = false, alt_y = false;
@@ -77,10 +77,10 @@ std::string Move::san(const Board& board, const Board& board_after,
     std::string result;
     result.reserve(10);
     if (board.test_castling(*this)) {
-        result += to().x() == x_g ? "O-O" : "O-O-O";
+        result += to().x() == X_G ? "O-O" : "O-O-O";
     } else {
         Chessman chessman = board.chessman(from());
-        if (!skip_chessmen && chessman != pawn) {
+        if (!skip_chessmen && chessman != PAWN) {
             result += chessman_char(chessman);
         }
         result += san_from_(board);
@@ -89,11 +89,11 @@ std::string Move::san(const Board& board, const Board& board_after,
         }
         result += to().str();
         if (!skip_chessmen) {
-            if (turn_into() != chessman_null) {
+            if (turn_into() != CHESSMAN_NULL) {
                 (result += '=') += chessman_char(turn_into());
             }
             if (board_after.test_shah()) {
-                result += board_after.test_end() == checkmate ? '#' : '+';
+                result += board_after.test_end() == CHECKMATE ? '#' : '+';
             }
         }
     }

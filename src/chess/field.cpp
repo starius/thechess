@@ -16,8 +16,8 @@ Field::Field(Color color, Chessman chessman) :
 }
 
 Wt::WString color2str(Color color) {
-    return (color == white) ? Wt::WString::tr("tc.game.white") :
-           ((color == black) ? Wt::WString::tr("tc.game.black") :
+    return (color == WHITE) ? Wt::WString::tr("tc.game.white") :
+           ((color == BLACK) ? Wt::WString::tr("tc.game.black") :
             Wt::WString::tr("thechess.nocolor"));
 }
 

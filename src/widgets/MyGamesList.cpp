@@ -22,16 +22,16 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 
-const int order_of_states_size = 4;
-const Game::State order_of_states[order_of_states_size] =
-{Game::active, Game::pause, Game::confirmed, Game::proposed};
+const int ORDER_OF_STATES_SIZE = 4;
+const Game::State ORDER_OF_STATES[ORDER_OF_STATES_SIZE] =
+{Game::ACTIVE, Game::PAUSE, Game::CONFIRMED, Game::PROPOSED};
 
 class MyGamesListImp;
 
 class MyGameAnchor : public Wt::WAnchor, public Notifiable {
 public:
     MyGameAnchor(const GamePtr& game, MyGamesListImp* list):
-        Notifiable(Object(GameObject, game.id())),
+        Notifiable(Object(GAME, game.id())),
         game_id_(game.id()), list_(list) {
         setText(boost::lexical_cast<std::string>(game_id_));
         setRefInternalPath(str(boost::format("/game/%i/") % game_id_));
@@ -84,16 +84,16 @@ public:
         removeStyleClass("thechess-pause");
         removeStyleClass("thechess-proposed");
         removeStyleClass("thechess-confirmed");
-        if (state == Game::active) {
+        if (state == Game::ACTIVE) {
             addStyleClass("thechess-active");
         }
-        if (state == Game::pause) {
+        if (state == Game::PAUSE) {
             addStyleClass("thechess-pause");
         }
-        if (state == Game::proposed) {
+        if (state == Game::PROPOSED) {
             addStyleClass("thechess-proposed");
         }
-        if (state == Game::confirmed) {
+        if (state == Game::CONFIRMED) {
             addStyleClass("thechess-confirmed");
         }
     }
@@ -108,10 +108,10 @@ typedef std::map<int, MyGameAnchor*> Anchors;
 class MyGamesListImp : public Wt::WContainerWidget, public Notifiable {
 public:
     MyGamesListImp(const UserPtr& user):
-        Notifiable(Object(UserObject, user.id())),
+        Notifiable(Object(USER, user.id())),
         user_id_(user.id()),
         last_clicked_(0) {
-        for (int i = 0; i < order_of_states_size; i++) {
+        for (int i = 0; i < ORDER_OF_STATES_SIZE; i++) {
             first_of_state_[i] = 0;
         }
         update_games_list_();
@@ -125,13 +125,13 @@ private:
     int user_id_;
     Anchors anchors_;
     int last_clicked_;
-    int first_of_state_[order_of_states_size];
+    int first_of_state_[ORDER_OF_STATES_SIZE];
 
     void update_games_list_() {
         dbo::Transaction t(tApp->session());
         std::set<int> games;
         UserPtr user = tApp->session().load<User>(user_id_);
-        Games games_collection = user->games().where("state < ?").bind(Game::min_ended);
+        Games games_collection = user->games().where("state < ?").bind(Game::MIN_ENDED);
         GamesVector games_vector(games_collection.begin(), games_collection.end());
         BOOST_FOREACH (GamePtr game, games_vector) {
             games.insert(game.id());
@@ -147,17 +147,17 @@ private:
 
     Game::State state_of_(MyGameAnchor* a) const {
         int index = indexOf(a);
-        for (int i = order_of_states_size - 1; i >= 0; i--)
+        for (int i = ORDER_OF_STATES_SIZE - 1; i >= 0; i--)
             if (index >= first_of_state_[i]) {
-                return order_of_states[i];
+                return ORDER_OF_STATES[i];
             }
-        return Game::min_ended;
+        return Game::MIN_ENDED;
     }
 
     void insert_anchor_(MyGameAnchor* a, Game::State state) {
         bool inserted = false;
-        for (int i = 0; i < order_of_states_size; i++) {
-            if (order_of_states[i] == state) {
+        for (int i = 0; i < ORDER_OF_STATES_SIZE; i++) {
+            if (ORDER_OF_STATES[i] == state) {
                 insertWidget(first_of_state_[i], a);
                 inserted = true;
             } else if (inserted) {
@@ -169,7 +169,7 @@ private:
     void extract_anchor_(MyGameAnchor* a) {
         int index = indexOf(a);
         removeWidget(a);
-        for (int i = 0; i < order_of_states_size; i++)
+        for (int i = 0; i < ORDER_OF_STATES_SIZE; i++)
             if (first_of_state_[i] > index) {
                 first_of_state_[i] -= 1;
             }
@@ -181,7 +181,7 @@ private:
         int game_id = a->game_id();
         GamePtr game = tApp->session().load<Game>(game_id);
         game.reread();
-        if (game->state() > Game::min_ended) {
+        if (game->state() > Game::MIN_ENDED) {
             extract_anchor_(a);
             anchors_.erase(game_id);
             delete a;

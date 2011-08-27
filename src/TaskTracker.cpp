@@ -32,7 +32,7 @@ namespace thechess {
 
 TaskTracker::TaskTracker(ThechessServer& server):
     server_(server), session_(server.pool()), timer_(io_),
-    dummy_timer_(io_, config::tracker::dummy_timer_expiry_time) {
+    dummy_timer_(io_, config::tracker::DUMMY_TIMER_EXPIRY_TIME) {
     dummy_timer_.async_wait(boost::bind(&TaskTracker::check_, this, _1));
     boost::thread(&TaskTracker::io_run_, this);
     refresh_();
@@ -89,12 +89,12 @@ void TaskTracker::check_(const boost::system::error_code& error) {
                     std::cerr << e.what() << std::endl;
                     need_reread = true;
                     Wt::WDateTime new_time = cached_now +
-                                             config::tracker::stale_object_delay;
+                                             config::tracker::STALE_OBJECT_DELAY;
                     t2i[object] = w2t.insert(std::make_pair(new_time, object));
                 } catch (std::exception& e) { // database locked?
                     std::cerr << e.what() << std::endl;
                     Wt::WDateTime new_time = cached_now +
-                                             config::tracker::unknown_error_delay;
+                                             config::tracker::UNKNOWN_ERROR_DELAY;
                     t2i[object] = w2t.insert(std::make_pair(new_time, object));
                 }
                 w2t.erase(w2t_it);
@@ -122,7 +122,7 @@ void TaskTracker::add_or_update_task_(const Object& object) {
 
 void TaskTracker::refresh_() {
     if (!w2t.empty()) {
-        Wt::WDateTime next_check = std::max(w2t.begin()->first, now() + config::tracker::delay);
+        Wt::WDateTime next_check = std::max(w2t.begin()->first, now() + config::tracker::DELAY);
         timer_.expires_at(next_check.toPosixTime()); // internally calls cancel
         timer_.async_wait(boost::bind(&TaskTracker::check_, this, _1));
     }

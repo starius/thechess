@@ -50,7 +50,7 @@ struct ChessmanStat {
         }
     }
 
-    int stat[Color_count][Chessman_count];
+    int stat[COLOR_COUNT][CHESSMAN_COUNT];
 };
 
 ChessmanStat full_stat = ChessmanStat(Board());
@@ -60,20 +60,20 @@ public:
 
     TakenChessmenImpl(const Board& board):
         Wt::WContainerWidget(), taken_stat_(board) {
-        print_color_(white);
+        print_color_(WHITE);
         new Wt::WBreak(this);
-        print_color_(black);
+        print_color_(BLACK);
     }
 
 private:
     ChessmanStat taken_stat_;
 
     void print_color_(Color color) {
-        print_field_(color, queen);
-        print_field_(color, rock);
-        print_field_(color, knight);
-        print_field_(color, bishop);
-        print_field_(color, pawn);
+        print_field_(color, QUEEN);
+        print_field_(color, ROCK);
+        print_field_(color, KNIGHT);
+        print_field_(color, BISHOP);
+        print_field_(color, PAWN);
     }
 
     void print_field_(Color color, Chessman chessman) {
@@ -139,7 +139,7 @@ public:
     }
 
     const char* xml_message() {
-        return bottom_ == white ?
+        return bottom_ == WHITE ?
                "tc.game.board_white_template" : "tc.game.board_black_template";
     }
 
@@ -160,7 +160,7 @@ public:
         if (board_.test_shah()) {
             shah_xy_ = board_.find_king(board_.order());
         } else {
-            shah_xy_ = xy_null;
+            shah_xy_ = XY_NULL;
         }
         active_ = active;
         check_activate_();
@@ -219,23 +219,23 @@ private:
     }
 
     void color_noactive_() {
-        if (lastmove_show_ && lastmove_ != move_null) {
+        if (lastmove_show_ && lastmove_ != MOVE_NULL) {
             image_at(lastmove_.from())->decorationStyle()
             .setBackgroundColor(Wt::yellow);
             image_at(lastmove_.to())->decorationStyle()
             .setBackgroundColor(Wt::yellow);
         }
-        if (shah_xy_ != xy_null) {
+        if (shah_xy_ != XY_NULL) {
             image_at(shah_xy_)->decorationStyle().setBackgroundColor(Wt::red);
         }
     }
 
     void color_noactive_undo_() {
-        if (lastmove_show_ && lastmove_ != move_null) {
+        if (lastmove_show_ && lastmove_ != MOVE_NULL) {
             color_black_white_(lastmove_.from());
             color_black_white_(lastmove_.to());
         }
-        if (shah_xy_ != xy_null) {
+        if (shah_xy_ != XY_NULL) {
             color_black_white_(shah_xy_);
         }
     }
@@ -296,7 +296,7 @@ private:
     }
 
     void modify_undo_() {
-        if (from_ == xy_null) {
+        if (from_ == XY_NULL) {
             modify_from_undo_();
         } else {
             modify_to_undo_();
@@ -304,12 +304,12 @@ private:
         if (select_turn_into_flag_) {
             print_select_undo_();
         }
-        from_ = xy_null;
+        from_ = XY_NULL;
     }
 
     void modify_() {
         color_noactive_();
-        if (from_ == xy_null) {
+        if (from_ == XY_NULL) {
             modify_from_();
         } else {
             modify_to_();
@@ -325,13 +325,13 @@ private:
         }
         if (xy == from_) {
             modify_undo_();
-            from_ = xy_null;
+            from_ = XY_NULL;
             modify_();
         } else if (board_.color(xy) == board_.order()) {
             modify_undo_();
             from_ = xy;
             modify_();
-        } else if (from_ != xy_null) {
+        } else if (from_ != XY_NULL) {
             try_move_(Move(from_, xy));
         }
     }
@@ -345,19 +345,19 @@ private:
             } else {
                 modify_undo_();
                 lastmove_ = move;
-                from_ = xy_null;
+                from_ = XY_NULL;
                 move_.emit(move);
             }
         } else {
             modify_undo_();
-            from_ = xy_null;
+            from_ = XY_NULL;
             modify_();
         }
     }
 
     void print_select_(Move move) {
         static Chessman cc[] =
-        { queen, rock, bishop, knight };
+        { QUEEN, ROCK, BISHOP, KNIGHT };
         BOOST_FOREACH (Chessman c, cc) {
             Field cm = Field(board_.order(), c);
             std::string path = BoardWidget::image(cm, big_);
@@ -378,31 +378,31 @@ private:
             return;
         }
         modify_undo_();
-        from_ = xy_null;
+        from_ = XY_NULL;
         move.turn_into(chessman);
         lastmove_ = move;
         move_.emit(move);
     }
 
     int x(Xname x) {
-        return (bottom_ == white ? (int)x : (7 - (int)x)) + 1;
+        return (bottom_ == WHITE ? (int)x : (7 - (int)x)) + 1;
     }
 
     int y(Yname y) {
-        return (bottom_ == black ? (int)y : (7 - (int)y)) + 1;
+        return (bottom_ == BLACK ? (int)y : (7 - (int)y)) + 1;
     }
 
     Xname x(int x) {
-        return (Xname)(bottom_ == white ? (x - 1) : (7 - (x - 1)));
+        return (Xname)(bottom_ == WHITE ? (x - 1) : (7 - (x - 1)));
     }
 
     Yname y(int y) {
-        return (Yname)(bottom_ == black ? (y - 1) : (7 - (y - 1)));
+        return (Yname)(bottom_ == BLACK ? (y - 1) : (7 - (y - 1)));
     }
 
     void correct_bottom_() {
-        if (bottom_ == color_null) {
-            bottom_ = white;
+        if (bottom_ == COLOR_NULL) {
+            bottom_ = WHITE;
         }
     }
 

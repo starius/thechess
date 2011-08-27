@@ -13,8 +13,7 @@
 
 namespace thechess {
 
-const unsigned int uint_min = 0;
-const unsigned int uint_max = UINT_MAX;
+const unsigned int UINT_MIN = 0;
 
 unsigned int rand() {
     return Wt::WRandom::get();
@@ -34,7 +33,7 @@ unsigned int rr(unsigned int start, unsigned int stop, unsigned int step) {
 
 double drr(double start, double stop) {
     double stop_start = stop - start;
-    const double max_min = uint_max - uint_min;
+    const double max_min = UINT_MAX - UINT_MIN;
     return start + double(rand()) / max_min * stop_start;
 }
 

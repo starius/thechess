@@ -343,7 +343,7 @@ private:
         c_.reread();
         (c_.modify()->*method)(tApp->user());
         t.commit();
-        Object object(CompetitionObject, c_.id());
+        Object object(COMPETITION, c_.id());
         tApp->server().tracker().add_or_update_task(object);
     }
 
@@ -362,7 +362,7 @@ private:
 CompetitionWidget::CompetitionWidget(CompetitionPtr competition,
                                      Wt::WContainerWidget* p):
     Wt::WTemplate(tr("tc.competition.widget_template"), p),
-    Notifiable(Object(CompetitionObject, competition.id())),
+    Notifiable(Object(COMPETITION, competition.id())),
     c(competition) {
     reprint_();
 }

@@ -24,17 +24,17 @@ class Board;
 
 namespace thechess {
 
-const int order_byte = 32;
-const int castling_byte = 33;
-const int fields_size = 34;
+const int ORDER_BYTE = 32;
+const int CASTLING_BYTE = 33;
+const int FIELDS_SIZE = 34;
 typedef unsigned char byte;
 typedef byte Fields[34];
 
 /** Result of testing if board is checkmate or stalemate */
 enum FinishState {
-    nothing = 0,
-    checkmate = 1,
-    stalemate = 2
+    NOTHING = 0,
+    CHECKMATE = 1,
+    STALEMATE = 2
 };
 
 /** Chess board representation.
@@ -79,16 +79,16 @@ public:
     bool isset(Xy xy) const;
 
     /** Return the color of the square.
-    If the square is empty, return \ref color_null */
+    If the square is empty, return \ref COLOR_NULL */
     Color color(Xy xy) const;
 
     /** Return the chessman of the square.
-    If the square is empty, return \ref chessman_null */
+    If the square is empty, return \ref CHESSMAN_NULL */
     Chessman chessman(Xy xy) const;
 
     /** Return the \ref Field structure of the square.
     If the square is empty, return \ref Field constructed from
-    \ref color_null and \ref chessman_null */
+    \ref COLOR_NULL and \ref CHESSMAN_NULL */
     Field field(Xy xy) const;
 
     /** Return active color.
@@ -108,7 +108,7 @@ public:
     bool long_pawn() const;
 
     /** Return the file of previous long pawn move.
-    If previous move was not long pawn move, return \ref x_a
+    If previous move was not long pawn move, return \ref X_A
     */
     Xname long_pawn_x() const;
 
@@ -150,7 +150,7 @@ public:
 
     /** Return if the piece can be a target of any move */
     bool can_move(Xy from) const {
-        return some_target(from) != xy_null;
+        return some_target(from) != XY_NULL;
     }
 
     /* @} */

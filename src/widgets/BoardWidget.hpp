@@ -33,7 +33,7 @@ class BoardWidgetImpl;
 
 class BoardWidget : public Wt::WCompositeWidget {
 public:
-    BoardWidget(bool big = false, bool active = false, Color bottom = white,
+    BoardWidget(bool big = false, bool active = false, Color bottom = WHITE,
                 const Board& board = Board(),
                 Wt::WContainerWidget* parent = 0);
 

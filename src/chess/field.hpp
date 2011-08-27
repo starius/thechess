@@ -18,41 +18,41 @@ namespace thechess {
 
 /** The enum for piece color */
 enum Color {
-    white = 0, /**< White color */
-    black = 1, /**< Black color */
-    color_null = 2 /**< Undetermined color, can be the return value */
+    WHITE = 0, /**< White color */
+    BLACK = 1, /**< Black color */
+    COLOR_NULL = 2 /**< Undetermined color, can be the return value */
 };
 
 /** The number of Color members */
-const int Color_count = 3;
+const int COLOR_COUNT = 3;
 
 /** Piece letter */
 enum Chessman {
-    chessman_null = 0, /**< Undefined piece letter, can be the return value */
-    bishop = 1, /**< Bishop */
-    king   = 2, /**< King */
-    knight = 3, /**< Knight */
-    pawn   = 4, /**< Pawn */
-    queen  = 5, /**< Queen */
-    rock   = 6  /**< Rock */
+    CHESSMAN_NULL = 0, /**< Undefined piece letter, can be the return value */
+    BISHOP = 1, /**< Bishop */
+    KING   = 2, /**< King */
+    KNIGHT = 3, /**< Knight */
+    PAWN   = 4, /**< Pawn */
+    QUEEN  = 5, /**< Queen */
+    ROCK   = 6  /**< Rock */
 };
 
 /** The number of Chessman members */
-const int Chessman_count = 7;
+const int CHESSMAN_COUNT = 7;
 
-const char* const letters_chessmen = "-BKNPQR";
+const char* const LETTERS_CHESSMEN = "-BKNPQR";
 
 /** Return l9n string for the color */
 Wt::WString color2str(Color color);
 
 /** If the color is white return black, else return white */
 inline Color other_color(Color color) {
-    return color == white ? black : white;
+    return color == WHITE ? BLACK : WHITE;
 }
 
 /** Return char of piece letter */
 inline char chessman_char(Chessman chessman) {
-    return letters_chessmen[(int)chessman];
+    return LETTERS_CHESSMEN[(int)chessman];
 }
 
 /** Piece.

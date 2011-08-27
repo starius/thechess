@@ -16,14 +16,14 @@
 namespace thechess {
 namespace elo = config::elo;
 
-const float victory = 1.0;
-const float fail = 0.0;
+const float VICTORY = 1.0;
+const float FAIL = 0.0;
 
 EloPlayer::EloPlayer() {
 }
 
 EloPlayer::EloPlayer(bool):
-    elo_(config::elo::init),
+    elo_(config::elo::INIT),
     all_(0),
     wins_(0),
     fails_(0) {
@@ -46,24 +46,24 @@ float EloPlayer::E(const EloPlayer* other) const {
 }
 
 float EloPlayer::K() const {
-    return (elo_ >= elo::big) ? elo::big_K :
-           (all_ < elo::beginner_all) ? elo::beginner_K : elo::other_K;
+    return (elo_ >= elo::BIG) ? elo::BIG_K :
+           (all_ < elo::BEGINNER_ALL) ? elo::BEGINNER_K : elo::OTHER_K;
 }
 
 void EloPlayer::apply_result_(float q_sum, float S) {
     elo_ += round(K() * (S - E(q_sum)));
     all_ += 1;
-    if (S == victory) {
+    if (S == VICTORY) {
         wins_ += 1;
-    } else if (S == fail) {
+    } else if (S == FAIL) {
         fails_ += 1;
     }
 }
 
 void EloPlayer::win(EloPlayer* loser) {
     float q_sum = Q() + loser->Q();
-    this->apply_result_(q_sum, victory);
-    loser->apply_result_(q_sum, fail);
+    this->apply_result_(q_sum, VICTORY);
+    loser->apply_result_(q_sum, FAIL);
 }
 
 void EloPlayer::draw(EloPlayer* other) {
@@ -81,10 +81,10 @@ void EloPlayer::multiple(const EloPlayers& winners, const EloPlayers& losers) {
         q_sum += player->Q();
     }
     BOOST_FOREACH (EloPlayer* player, winners) {
-        player->apply_result_(q_sum, victory / winners.size());
+        player->apply_result_(q_sum, VICTORY / winners.size());
     }
     BOOST_FOREACH (EloPlayer* player, losers) {
-        player->apply_result_(q_sum, fail);
+        player->apply_result_(q_sum, FAIL);
     }
 }
 

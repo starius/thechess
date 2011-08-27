@@ -16,13 +16,13 @@
 
 namespace thechess {
 
-const int intervals_size = 5;
-const Td intervals[5] = {second, minute, hour, day, week};
+const int INTERVALS_SIZE = 5;
+const Td INTERVALS[5] = {SECOND, MINUTE, HOUR, DAY, WEEK};
 
 class TimeDeltaWidgetImpl : public Wt::WContainerWidget {
 public:
     TimeDeltaWidgetImpl(const Td& min, const Td& value, const Td& max) :
-        Wt::WContainerWidget(), min_(min), max_(max), interval_(second) {
+        Wt::WContainerWidget(), min_(min), max_(max), interval_(SECOND) {
         setInline(true);
         spin_box_ = new MyDoubleSpinBox(this);
         spin_box_->setRange(min.total_seconds(), max.total_seconds());
@@ -35,8 +35,8 @@ public:
         combo_box_->addItem(tr("tc.time.weeks"));
         combo_box_->activated()
         .connect(this, &TimeDeltaWidgetImpl::select_handler_);
-        for (int i = intervals_size - 1; i >= 0; i--) {
-            if (value >= intervals[i]) {
+        for (int i = INTERVALS_SIZE - 1; i >= 0; i--) {
+            if (value >= INTERVALS[i]) {
                 combo_box_->setCurrentIndex(i);
                 select_handler_(i);
                 break;
@@ -45,7 +45,7 @@ public:
     }
 
     Td value() const {
-        return spin_box_->value() * intervals[combo_box_->currentIndex()];
+        return spin_box_->value() * INTERVALS[combo_box_->currentIndex()];
     }
 
     Wt::WFormWidget* form_widget() {
@@ -61,7 +61,7 @@ private:
 
     void select_handler_(int i) {
         Td s = spin_box_->value() * interval_;
-        interval_ = intervals[i];
+        interval_ = INTERVALS[i];
         spin_box_->setRange(min_ / interval_, max_ / interval_);
         spin_box_->setValue(s / interval_);
     }

@@ -34,17 +34,17 @@ typedef boost::tuple<GamePtr, Wt::WString, Wt::WString, Wt::WString> Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 
-const int n_column = 0;
-const int white_column = 1;
-const int black_column = 2;
-const int state_column = 3;
-const int winner_column = 4;
-const int started_column = 5;
-const int real_rating_column = 6;
-const int moves_size_column = 7;
-const int comment_column = 8;
+const int N_COLUMN = 0;
+const int WHITE_COLUMN = 1;
+const int BLACK_COLUMN = 2;
+const int STATE_COLUMN = 3;
+const int WINNER_COLUMN = 4;
+const int STARTED_COLUMN = 5;
+const int REAL_RATING_COLUMN = 6;
+const int MOVES_SIZE_COLUMN = 7;
+const int COMMENT_COLUMN = 8;
 
-const int game_in_tuple = 0;
+const int GAME_IN_TUPLE = 0;
 
 class QM : public BaseQM {
 public:
@@ -65,24 +65,24 @@ public:
     boost::any data(const Wt::WModelIndex& index,
                     int role = Wt::DisplayRole) const {
         dbo::Transaction t(tApp->session());
-        GamePtr game = resultRow(index.row()).get<game_in_tuple>();
+        GamePtr game = resultRow(index.row()).get<GAME_IN_TUPLE>();
         if (role == Wt::DisplayRole) {
-            if (index.column() == state_column) {
+            if (index.column() == STATE_COLUMN) {
                 return game->str_state();
-            } else if (index.column() == moves_size_column) {
+            } else if (index.column() == MOVES_SIZE_COLUMN) {
                 return game->human_size();
-            } else if (index.column() == real_rating_column) {
+            } else if (index.column() == REAL_RATING_COLUMN) {
                 return game->real_rating();
             }
         } else if (role == Wt::InternalPathRole) {
             UserPtr user;
-            if (index.column() == n_column) {
+            if (index.column() == N_COLUMN) {
                 return str(boost::format("/game/%i/") % game.id());
-            } else if (index.column() == white_column) {
+            } else if (index.column() == WHITE_COLUMN) {
                 user = game->white();
-            } else if (index.column() == black_column) {
+            } else if (index.column() == BLACK_COLUMN) {
                 user = game->black();
-            } else if (index.column() == winner_column) {
+            } else if (index.column() == WINNER_COLUMN) {
                 user = game->winner();
             }
             if (user.id() > 0) { // FIXME http://redmine.webtoolkit.eu/issues/909
@@ -107,15 +107,15 @@ public:
         table_view_ = new Wt::WTableView(this);
         table_view_->setModel(query_model_);
         table_view_->resize(770, 450);
-        table_view_->setColumnWidth(n_column, 65);
-        table_view_->setColumnWidth(white_column, 75);
-        table_view_->setColumnWidth(black_column, 75);
-        table_view_->setColumnWidth(state_column, 80);
-        table_view_->setColumnWidth(winner_column, 120);
-        table_view_->setColumnWidth(started_column, 70);
-        table_view_->setColumnWidth(real_rating_column, 40);
-        table_view_->setColumnWidth(moves_size_column, 40);
-        table_view_->setColumnWidth(comment_column, 120);
+        table_view_->setColumnWidth(N_COLUMN, 65);
+        table_view_->setColumnWidth(WHITE_COLUMN, 75);
+        table_view_->setColumnWidth(BLACK_COLUMN, 75);
+        table_view_->setColumnWidth(STATE_COLUMN, 80);
+        table_view_->setColumnWidth(WINNER_COLUMN, 120);
+        table_view_->setColumnWidth(STARTED_COLUMN, 70);
+        table_view_->setColumnWidth(REAL_RATING_COLUMN, 40);
+        table_view_->setColumnWidth(MOVES_SIZE_COLUMN, 40);
+        table_view_->setColumnWidth(COMMENT_COLUMN, 120);
     }
 
     static Q all_games() {

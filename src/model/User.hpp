@@ -41,9 +41,9 @@ namespace thechess {
 class User : public dbo::Dbo<User> {
 public:
     enum Rights {
-        admin = 5,
-        moderator = 2,
-        regular_user = 0
+        ADMIN = 5,
+        MODERATOR = 2,
+        REGULAR_USER = 0
     };
 
     User();

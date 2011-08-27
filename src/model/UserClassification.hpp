@@ -42,7 +42,7 @@ const Classification classifications[] = {
     CLASSIFICATION_G, CLASSIFICATION_H, CLASSIFICATION_I, CLASSIFICATION_J,
     NO_CLASSIFICATION
 };
-const int classifications_size = 16;
+const int CLASSIFICATIONS_SIZE = 16;
 
 }
 

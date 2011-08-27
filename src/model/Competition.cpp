@@ -219,7 +219,7 @@ void Competition::kick(UserPtr kicker, UserPtr kicked) {
 
 bool Competition::can_change_parameters(UserPtr user) const {
     return state_ == RECRUITING && user &&
-           (user == init_ || user->rights() >= User::moderator);
+           (user == init_ || user->rights() >= User::MODERATOR);
 }
 
 bool Competition::can_cancel(UserPtr user) const {
@@ -280,7 +280,7 @@ void Competition::create_games_classical_(Objects& objects) {
             N[black][white] += 1;
             create_game_(white, black);
         }
-        objects.push_back(Object(UserObject, white.id()));
+        objects.push_back(Object(USER, white.id()));
     }
 }
 
@@ -308,11 +308,11 @@ void Competition::process_classical_(Objects& objects) {
     std::map<UserPtr, int> used;
     GamesVector proposed;
     BOOST_FOREACH (GamePtr g, games_vector()) {
-        if (g->state() == Game::active || g->state() == Game::confirmed) {
+        if (g->state() == Game::ACTIVE || g->state() == Game::CONFIRMED) {
             used[g->white()] += 1;
             used[g->black()] += 1;
         }
-        if (g->state() == Game::proposed) {
+        if (g->state() == Game::PROPOSED) {
             proposed.push_back(g);
         }
     }
@@ -321,7 +321,7 @@ void Competition::process_classical_(Objects& objects) {
         if (used[g->white()] < max_simultaneous_games() &&
                 used[g->black()] < max_simultaneous_games()) {
             g.modify()->confirm_by_competition();
-            objects.push_back(Object(GameObject, g.id()));
+            objects.push_back(Object(GAME, g.id()));
             used[g->white()] += 1;
             used[g->black()] += 1;
         }

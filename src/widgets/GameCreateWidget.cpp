@@ -72,19 +72,19 @@ void GameCreateWidget::button_handler_() {
         game.modify()->propose_challenge(tApp->user(), color);
     }
     t.commit();
-    ThechessNotifier::app_emit(Object(UserObject, tApp->user().id()));
+    ThechessNotifier::app_emit(Object(USER, tApp->user().id()));
     if (with_user_) {
-        ThechessNotifier::app_emit(Object(UserObject, user_.id()));
+        ThechessNotifier::app_emit(Object(USER, user_.id()));
     }
     tApp->view(game);
 }
 
 Color GameCreateWidget::selected_color_() const {
-    Color color = color_null;
+    Color color = COLOR_NULL;
     if (color_->currentIndex() == 1) {
-        color = white;
+        color = WHITE;
     } else if (color_->currentIndex() == 2) {
-        color = black;
+        color = BLACK;
     }
     return color;
 }

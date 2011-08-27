@@ -90,11 +90,11 @@ protected:
             a->setText(text);
             a->setRefInternalPath(str(boost::format("/competition/%i/") % c.id()));
         }
-        if (game_->state() == Game::confirmed && c) {
+        if (game_->state() == Game::CONFIRMED && c) {
             time_(game_->when_confirmed() + c->force_start_delay(),
                   "tc.game.force_start", result);
         }
-        if (game_->state() == Game::proposed && c &&
+        if (game_->state() == Game::PROPOSED && c &&
                 c->type() == STAGED) {
             time_(game_->created() + c->relax_time(),
                   "tc.game.force_confirm", result);
@@ -138,7 +138,7 @@ class GameWidgetImpl : public Wt::WContainerWidget, public Notifiable {
 public:
     GameWidgetImpl(GamePtr game) :
         Wt::WContainerWidget(),
-        Notifiable(Object(GameObject, game.id())),
+        Notifiable(Object(GAME, game.id())),
         game_(game) {
         dbo::Transaction t(tApp->session());
         new Wt::WText(tr("tc.game.Header")
@@ -206,7 +206,7 @@ private:
         }
         bool game_ended = game_->is_ended();
         t.commit();
-        Object object(GameObject, game_.id());
+        Object object(GAME, game_.id());
         ThechessNotifier::app_emit(object);
         if (game_ended) {
             tApp->server().tracker().add_or_update_task(object);
@@ -230,10 +230,10 @@ private:
         manager_->clear();
         print_analysis_button_();
         if (tApp->user()) {
-            if (game_->state() < Game::active) {
+            if (game_->state() < Game::ACTIVE) {
                 print_before_active_buttons_();
             }
-            if (game_->state() == Game::active || game_->state() == Game::pause) {
+            if (game_->state() == Game::ACTIVE || game_->state() == Game::PAUSE) {
                 print_pause_buttons_();
                 print_mistake_buttons_();
                 print_draw_buttons_();
@@ -245,7 +245,7 @@ private:
     }
 
     void print_analysis_button_() {
-        if (game_->state() >= Game::active && game_->size()) {
+        if (game_->state() >= Game::ACTIVE && game_->size()) {
             Wt::WPushButton* b =
                 new Wt::WPushButton(tr("tc.game.Analysis"), manager_);
             b->clicked().connect(this, &GameWidgetImpl::show_analysis_);
@@ -294,9 +294,9 @@ private:
         } else if (game_->can_pause_propose(tApp->user())) {
             new Wt::WBreak(manager_);
             Td max = game_->pause_limit();
-            Td d = config::defaults::pause_factor * max;
+            Td d = config::defaults::PAUSE_FACTOR * max;
             TimeDeltaWidget* pause_duration =
-                new TimeDeltaWidget(td_null, d, max, manager_);
+                new TimeDeltaWidget(TD_NULL, d, max, manager_);
             Wt::WPushButton* b;
             b = new Wt::WPushButton(tr("tc.game.Pause_propose"),
                                     manager_);
@@ -311,7 +311,7 @@ private:
             new Wt::WText(tr("tc.game.Mistake_proposal")
                           .arg(game_->mistake_proposer()->username())
                           .arg(Moves::n_to_human(game_->mistake_move()))
-                          .arg(tr(Moves::order(game_->mistake_move()) == white ?
+                          .arg(tr(Moves::order(game_->mistake_move()) == WHITE ?
                                   "tc.game.of_white" : "tc.game.of_black")),
                           manager_);
             if (game_->can_mistake_agree(tApp->user())) {
@@ -361,13 +361,13 @@ private:
         (game_.modify()->*method)(tApp->user());
         Game::State state_after = game_->state();
         t.commit();
-        Object object(GameObject, game_.id());
+        Object object(GAME, game_.id());
         ThechessNotifier::app_emit(object);
         if (state_after != state_before) {
             tApp->server().tracker().add_or_update_task(object);
         }
         if (method == &Game::join) {
-            ThechessNotifier::app_emit(Object(UserObject, tApp->user().id()));
+            ThechessNotifier::app_emit(Object(USER, tApp->user().id()));
         }
     }
 
@@ -384,7 +384,7 @@ private:
         game_.modify()
         ->pause_propose(tApp->user(), pause_duration->value());
         t.commit();
-        Object object(GameObject, game_.id());
+        Object object(GAME, game_.id());
         ThechessNotifier::app_emit(object);
     }
 
@@ -394,7 +394,7 @@ private:
         game_.modify()
         ->mistake_propose(tApp->user(), moves_widget_->current_move());
         t.commit();
-        Object object(GameObject, game_.id());
+        Object object(GAME, game_.id());
         ThechessNotifier::app_emit(object);
     }
 
@@ -429,7 +429,7 @@ private:
         game_.reread();
         game_.modify()->set_comment(tApp->user(), text);
         t.commit();
-        Object object(GameObject, game_.id());
+        Object object(GAME, game_.id());
         ThechessNotifier::app_emit(object);
     }
 

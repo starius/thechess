@@ -29,7 +29,7 @@ class MovesWidget : public Wt::WCompositeWidget {
 public:
     MovesWidget(const Moves& moves, bool big = false,
                 bool active = false, int max_moves = -1, bool append_only = false,
-                Color bottom = white, Wt::WContainerWidget* parent = 0);
+                Color bottom = WHITE, Wt::WContainerWidget* parent = 0);
 
     const Moves& moves() const;
     const Board& board() const;

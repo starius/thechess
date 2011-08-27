@@ -139,7 +139,7 @@ void ThechessApplication::cookie_session_write_() {
         cookie_session =
             session().add(new CookieSession(cookie_id));
     }
-    setCookie("cookie_session", cookie_id, config::cookie_session_age,
+    setCookie("cookie_session", cookie_id, config::COOKIE_SESSION_AGE,
               "", makeAbsoluteUrl(""));
     cookie_session.modify()->set_user(user());
     cookie_session.modify()->use();
@@ -180,13 +180,13 @@ void ThechessApplication::set_user(UserPtr user) {
     GamesVector games_vector;
     {
         Games games = user_->games().where("state in (?,?,?)")
-                      .bind(Game::confirmed)
-                      .bind(Game::active)
-                      .bind(Game::pause);
+                      .bind(Game::CONFIRMED)
+                      .bind(Game::ACTIVE)
+                      .bind(Game::PAUSE);
         games_vector.assign(games.begin(), games.end());
     }
     BOOST_FOREACH (GamePtr game, games_vector) {
-        server_.tracker().add_or_update_task(Object(GameObject, game.id()));
+        server_.tracker().add_or_update_task(Object(GAME, game.id()));
     }
     cookie_session_write_();
     after_user_change_();

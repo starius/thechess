@@ -18,7 +18,7 @@
 namespace thechess {
 
 User::User(bool):
-    rights_(regular_user),
+    rights_(REGULAR_USER),
     sessions_(0),
     classification_(NO_CLASSIFICATION),
     games_stat_(true) {
@@ -29,8 +29,8 @@ User::User() {
 
 void User::set_password(const std::string& password) {
     std::string salt = "$.$";
-    salt[1] = config::crypt_id;
-    salt += Wt::WRandom::generateId(config::salt_length);
+    salt[1] = config::CRYPT_ID;
+    salt += Wt::WRandom::generateId(config::SALT_LENGTH);
     password_ = crypt(password.c_str(), salt.c_str());
 }
 
@@ -80,7 +80,7 @@ Wt::WString User::classification_str() const {
 }
 
 bool User::can_confirm_classification(UserPtr user) const {
-    return user && user->rights() >= moderator;
+    return user && user->rights() >= MODERATOR;
 }
 
 void User::confirm_classification(UserPtr user) {

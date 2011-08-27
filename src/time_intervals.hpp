@@ -21,12 +21,12 @@ namespace ptime = boost::posix_time;
 
 typedef ptime::time_duration Td;
 
-const Td td_null = ptime::seconds(0);
-const Td second = ptime::seconds(1);
-const Td minute = ptime::minutes(1);
-const Td hour = ptime::hours(1);
-const Td day = hour * 24;
-const Td week = day * 7;
+const Td TD_NULL = ptime::seconds(0);
+const Td SECOND = ptime::seconds(1);
+const Td MINUTE = ptime::minutes(1);
+const Td HOUR = ptime::hours(1);
+const Td DAY = HOUR * 24;
+const Td WEEK = DAY * 7;
 
 std::string td2str(const Td& td);
 Td operator -(const Wt::WDateTime& a, const Wt::WDateTime& b);

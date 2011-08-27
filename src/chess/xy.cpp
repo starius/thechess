@@ -24,7 +24,7 @@ Xy::Xy(unsigned i) :
 }
 
 Xy::Xy() :
-    i_(xy_null) {
+    i_(XY_NULL) {
 }
 
 }

@@ -48,23 +48,23 @@ GamePtr game = session.add(new Game(true));
 class Game : public GameParameters, public dbo::Dbo<Game> {
 public:
     enum State {
-        proposed = 0, /**< was proposed by user or planned by competition */
-        confirmed = 10, /**< is to be started when both users are online */
-        active = 20, /**< is running, clock is ticking */
-        pause = 30, /**< is paused until predefined time, clock is also paused */
+        PROPOSED = 0, /**< was proposed by user or planned by competition */
+        CONFIRMED = 10, /**< is to be started when both users are online */
+        ACTIVE = 20, /**< is running, clock is ticking */
+        PAUSE = 30, /**< is paused until predefined time, clock is also paused */
 #ifndef DOXYGEN_ONLY
-        min_ended = 50,
+        MIN_ENDED = 50,
 #endif
-        draw_stalemate = 50, /**< ended with stalemate */
-        draw_agreed = 51, /**< ended with draw by agreement */
-        draw_50 = 52, /**< ended because of 50 without pawn or takes */
-        draw_3 = 53, /**< ended because same position repeated thrice */
-        draw_2_kings = 54, /**< ended with low material draw */
-        surrendered = 61, /**< ended because one of users surrendered */
-        timeout = 62, /**< ended because of timeout */
-        cancelled = 63, /**< ended because user cancelled it */
-        mate = 64, /**< ended with checkmate */
-        no_draw_stalemate = 65 /**< ended with stalemate, black wins */
+        DRAW_STALEMATE = 50, /**< ended with stalemate */
+        DRAW_AGREED = 51, /**< ended with draw by agreement */
+        DRAW_50 = 52, /**< ended because of 50 without pawn or takes */
+        DRAW_3 = 53, /**< ended because same position repeated thrice */
+        DRAW_2_KINGS = 54, /**< ended with low material draw */
+        SURRENDERED = 61, /**< ended because one of users surrendered */
+        TIMEOUT = 62, /**< ended because of timeout */
+        CANCELLED = 63, /**< ended because user cancelled it */
+        MATE = 64, /**< ended with checkmate */
+        NO_DRAW_STALEMATE = 65 /**< ended with stalemate, black wins */
     };
 
 #ifndef DOXYGEN_ONLY
@@ -86,16 +86,16 @@ public:
         dbo::belongsTo(a, black_, "black");
         dbo::belongsTo(a, winner_, "winner_game");
         dbo::belongsTo(a, init_, "init_game");
-        dbo::field(a, competition_confirmer_[white], "competition_confirmer_white");
-        dbo::field(a, competition_confirmer_[black], "competition_confirmer_black");
+        dbo::field(a, competition_confirmer_[WHITE], "competition_confirmer_white");
+        dbo::field(a, competition_confirmer_[BLACK], "competition_confirmer_black");
         dbo::field(a, colors_random_, "colors_random");
         dbo::field(a, created_, "created");
         dbo::field(a, confirmed_, "confirmed");
         dbo::field(a, started_, "started");
         dbo::field(a, lastmove_, "lastmove");
         dbo::field(a, ended_, "ended");
-        dbo::field(a, limit_private_[white], "limit_private_white");
-        dbo::field(a, limit_private_[black], "limit_private_black");
+        dbo::field(a, limit_private_[WHITE], "limit_private_white");
+        dbo::field(a, limit_private_[BLACK], "limit_private_black");
         dbo::belongsTo(a, competition_, "competition");
         dbo::field(a, competition_stage_, "competition_stage");
         dbo::field(a, pause_until_, "pause_until");
@@ -105,8 +105,8 @@ public:
         dbo::field(a, mistake_move_, "mistake_move");
         dbo::field(a, mistake_proposer_, "mistake_proposer");
         dbo::field(a, draw_proposer_, "draw_proposer");
-        dbo::field(a, rating_after_[white], "rating_after_white");
-        dbo::field(a, rating_after_[black], "rating_after_black");
+        dbo::field(a, rating_after_[WHITE], "rating_after_white");
+        dbo::field(a, rating_after_[BLACK], "rating_after_black");
         dbo::field(a, comment_, "comment");
     }
 #endif
@@ -144,11 +144,11 @@ public:
     \param objects collection to expand with other modified dbo \ref Object.
 
     Possible changes caused by this method:
-     - \ref proposed into \ref confirmed, if \ref relax_time is out
-     - \ref confirmed into \ref active, if both users are online
-     - \ref confirmed into \ref active, if \ref force_start_delay is out
-     - \ref paused into \ref active, if current time is after \ref pause_until
-     - \ref active into \ref timeout, if time is over
+     - \ref PROPOSED into \ref CONFIRMED, if \ref relax_time is out
+     - \ref CONFIRMED into \ref ACTIVE, if both users are online
+     - \ref CONFIRMED into \ref ACTIVE, if \ref FORCE_START_DELAY is out
+     - \ref paused into \ref ACTIVE, if current time is after \ref pause_until
+     - \ref ACTIVE into \ref TIMEOUT, if time is over
 
     In the latter case, if the game is attributed to the competition,
     the competition is added to \p objects.
@@ -175,7 +175,7 @@ public:
     bool can_join(UserPtr user) const;
 
     /** Try to join the user.
-    On success the game changes its state to \ref confirmed
+    On success the game changes its state to \ref CONFIRMED
     */
     void join(UserPtr user);
 
@@ -185,7 +185,7 @@ public:
     bool can_confirm(UserPtr user) const;
 
     /** The user tries to confirm the game.
-    On success the game changes its state to \ref confirmed
+    On success the game changes its state to \ref CONFIRMED
     */
     void confirm(UserPtr user);
 
@@ -195,7 +195,7 @@ public:
     bool can_cancel(UserPtr user) const;
 
     /** The user tries to cancel the game.
-    On success the game changes its state to \ref cancelled
+    On success the game changes its state to \ref CANCELLED
     */
     void cancel(UserPtr user);
 
@@ -538,7 +538,7 @@ public:
     void competition_discard(UserPtr user);
 
     /** Method should be called only from competition processing code.
-    On success the game changes its state to \ref confirmed
+    On success the game changes its state to \ref CONFIRMED
     */
     void confirm_by_competition();
 

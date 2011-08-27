@@ -160,10 +160,10 @@ void StagedCompetition::create_games_(Competition* competition, Objects& objects
                 UserPtr black = i ? pair.second() : pair.first();
                 GamePtr game = competition->create_game_(white, black, stage, no_draw);
                 games_[pair].push_back(game);
-                objects.push_back(Object(GameObject, game.id()));
+                objects.push_back(Object(GAME, game.id()));
             }
-            objects.push_back(Object(UserObject, pair.first().id()));
-            objects.push_back(Object(UserObject, pair.second().id()));
+            objects.push_back(Object(USER, pair.first().id()));
+            objects.push_back(Object(USER, pair.second().id()));
         }
     }
 }

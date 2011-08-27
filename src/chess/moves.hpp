@@ -82,7 +82,7 @@ public:
         which are stored together with Move::to() (see Move::packed_to())
     */
     Move move_at(int n, const Board& board) const {
-        return Move(xy_(n, xy_from), xy_(n, xy_to), board);
+        return Move(xy_(n, XY_FROM), xy_(n, XY_TO), board);
     }
 
     /** Return the half-move.
@@ -90,7 +90,7 @@ public:
     \note Does not work correctly for pawn promotions.
     */
     Move move_at(int n) const {
-        return Move(xy_(n, xy_from), xy_(n, xy_to));
+        return Move(xy_(n, XY_FROM), xy_(n, XY_TO));
     }
 
     /** Return board position before the half-move */
@@ -115,7 +115,7 @@ public:
 
     /** Convert number of move and active color to index of half-move */
     static int n_from_human(int human_i, Color color) {
-        return (human_i - 1) * 2 + ((color == white) ? 0 : 1);
+        return (human_i - 1) * 2 + ((color == WHITE) ? 0 : 1);
     }
 
     /** Return number of moves.
@@ -132,7 +132,7 @@ public:
 
     /** Return active color of half-move */
     static Color order(int move_n) {
-        return order_int(move_n) == 0 ? white : black;
+        return order_int(move_n) == 0 ? WHITE : BLACK;
     }
 
     /** Write (PGN) movetext to stream.
@@ -144,8 +144,8 @@ public:
 
 private:
     enum Xy_type {
-        xy_from = 0,
-        xy_to = 1
+        XY_FROM = 0,
+        XY_TO = 1
     };
 
     byte q(int i) const {

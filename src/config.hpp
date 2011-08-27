@@ -19,130 +19,130 @@
 namespace thechess {
 namespace config {
 
-const char* const wt_config_files[] = {
+const char* const WT_CONFIG_FILES[] = {
     "wt_config.xml",
     "~/.thechess.wt_config.xml",
     "/etc/thechess/wt_config.xml",
     "/etc/wt/wt_config.xml"
 };
-const int wt_config_files_size = 4;
+const int WT_CONFIG_FILES_SIZE = 4;
 
-const char* const username_regex = "[a-zA-Z][a-zA-Z0-9._-]{2,29}";
-const char* const password_regex = "[a-zA-Z0-9._%+-@]{3,30}";
+const char* const USERNAME_REGEX = "[a-zA-Z][a-zA-Z0-9._-]{2,29}";
+const char* const PASSWORD_REGEX = "[a-zA-Z0-9._%+-@]{3,30}";
 
 namespace min {
-const Td limit_std = td_null;
-const Td limit_private_init = 5 * minute;
-const Td pause_limit_init = td_null;
+const Td LIMIT_STD = TD_NULL;
+const Td LIMIT_PRIVATE_INIT = 5 * MINUTE;
+const Td PAUSE_LIMIT_INIT = TD_NULL;
 
-const int first_draw = 2;
+const int FIRST_DRAW = 2;
 }
 
 namespace defaults {
-const Td limit_std = 2 * minute;
-const Td limit_private_init = 2 * hour;
-const Td pause_limit_init = day;
+const Td LIMIT_STD = 2 * MINUTE;
+const Td LIMIT_PRIVATE_INIT = 2 * HOUR;
+const Td PAUSE_LIMIT_INIT = DAY;
 
-const int first_draw = 10 * 2;
+const int FIRST_DRAW = 10 * 2;
 
-const double pause_factor = 0.5;
+const double PAUSE_FACTOR = 0.5;
 
-const ThechessOptions::DatabaseType database_type = ThechessOptions::Sqlite3;
-const char* const database_value = "~/thechess.db";
-const int connections_in_pool = 10;
+const ThechessOptions::DatabaseType DATABASE_TYPE = ThechessOptions::SQLITE3;
+const char* const DATABASE_VALUE = "~/thechess.db";
+const int CONNECTIONS_IN_POOL = 10;
 
-const bool norating = false;
+const bool NORATING = false;
 }
 
 namespace max {
-const int moves_init = 20 * 2;
+const int MOVES_INIT = 20 * 2;
 
-const Td limit_std = week;
-const Td limit_private_init = 4 * week;
-const Td pause_limit_init = week;
+const Td LIMIT_STD = WEEK;
+const Td LIMIT_PRIVATE_INIT = 4 * WEEK;
+const Td PAUSE_LIMIT_INIT = WEEK;
 
-const int first_draw = 5000 * 2;
+const int FIRST_DRAW = 5000 * 2;
 }
 
 namespace competition {
 namespace min {
-const int max_rating = 900;
-const int min_rating = 100;
-const Classification max_classification = CLASSIFICATION_F;
-const Classification min_classification = NO_CLASSIFICATION;
-const Td force_start_delay = minute;
-const Td min_recruiting_time = minute;
-const Td max_recruiting_time = 2 * hour;
-const int min_users = 2;
-const int max_users = 5;
-const int max_simultaneous_games = 1;
-const float games_factor = 0.01;
-const Td relax_time = minute;
-const int min_substages = 1;
-const int increment_substages = 0;
+const int MAX_RATING = 900;
+const int MIN_RATING = 100;
+const Classification MAX_CLASSIFICATION = CLASSIFICATION_F;
+const Classification MIN_CLASSIFICATION = NO_CLASSIFICATION;
+const Td FORCE_START_DELAY = MINUTE;
+const Td MIN_RECRUITING_TIME = MINUTE;
+const Td MAX_RECRUITING_TIME = 2 * HOUR;
+const int MIN_USERS = 2;
+const int MAX_USERS = 5;
+const int MAX_SIMULTANEOUS_GAMES = 1;
+const float GAMES_FACTOR = 0.01;
+const Td RELAX_TIME = MINUTE;
+const int MIN_SUBSTAGES = 1;
+const int INCREMENT_SUBSTAGES = 0;
 }
 
 namespace defaults {
-const CompetitionType competition_type = STAGED;
-const int max_rating = 2000;
-const int min_rating = 500;
-const Classification max_classification = SUPER_GRANDMASTER;
-const Classification min_classification = NO_CLASSIFICATION;
-const Td force_start_delay = day;
-const Td min_recruiting_time = 3 * day;
-const Td max_recruiting_time = week;
-const int min_users = 8;
-const int max_users = 16;
-const int max_simultaneous_games = 8;
-const float games_factor = 1.0;
-const Td relax_time = day;
-const int min_substages = 3;
-const int increment_substages = 1;
+const CompetitionType COMPETITION_TYPE = STAGED;
+const int MAX_RATING = 2000;
+const int MIN_RATING = 500;
+const Classification MAX_CLASSIFICATION = SUPER_GRANDMASTER;
+const Classification MIN_CLASSIFICATION = NO_CLASSIFICATION;
+const Td FORCE_START_DELAY = DAY;
+const Td MIN_RECRUITING_TIME = 3 * DAY;
+const Td MAX_RECRUITING_TIME = WEEK;
+const int MIN_USERS = 8;
+const int MAX_USERS = 16;
+const int MAX_SIMULTANEOUS_GAMES = 8;
+const float GAMES_FACTOR = 1.0;
+const Td RELAX_TIME = DAY;
+const int MIN_SUBSTAGES = 3;
+const int INCREMENT_SUBSTAGES = 1;
 
-const bool norating = true;
+const bool NORATING = true;
 }
 
 namespace max {
-const int max_rating = 3000;
-const int min_rating = 1700;
-const Classification max_classification = SUPER_GRANDMASTER;
-const Classification min_classification = NATIONAL_MASTER;
-const Td force_start_delay = week;
-const Td min_recruiting_time = 4 * week;
-const Td max_recruiting_time = 8 * week;
-const int min_users = 50;
-const int max_users = 100;
-const int max_simultaneous_games = 50;
-const float games_factor = 10.0;
-const Td relax_time = week;
-const int min_substages = 15;
-const int increment_substages = 3;
+const int MAX_RATING = 3000;
+const int MIN_RATING = 1700;
+const Classification MAX_CLASSIFICATION = SUPER_GRANDMASTER;
+const Classification MIN_CLASSIFICATION = NATIONAL_MASTER;
+const Td FORCE_START_DELAY = WEEK;
+const Td MIN_RECRUITING_TIME = 4 * WEEK;
+const Td MAX_RECRUITING_TIME = 8 * WEEK;
+const int MIN_USERS = 50;
+const int MAX_USERS = 100;
+const int MAX_SIMULTANEOUS_GAMES = 50;
+const float GAMES_FACTOR = 10.0;
+const Td RELAX_TIME = WEEK;
+const int MIN_SUBSTAGES = 15;
+const int INCREMENT_SUBSTAGES = 3;
 }
 
-const unsigned int max_name = 50;
-const unsigned int max_description = 1000;
+const unsigned int MAX_NAME = 50;
+const unsigned int MAX_DESCRIPTION = 1000;
 }
 
 namespace elo {
-const int init = 1200;
-const int big = 2400;
-const float big_K = 10;
-const int beginner_all = 30;
-const float beginner_K = 25;
-const float other_K = 15;
+const int INIT = 1200;
+const int BIG = 2400;
+const float BIG_K = 10;
+const int BEGINNER_ALL = 30;
+const float BEGINNER_K = 25;
+const float OTHER_K = 15;
 }
 
-const int salt_length = 16;
-const char crypt_id = '5'; // man 3 crypt
+const int SALT_LENGTH = 16;
+const char CRYPT_ID = '5'; // man 3 crypt
 
 namespace tracker {
-const Td delay = 0.01 * second;
-const Td dummy_timer_expiry_time = 100500 * day;
-const Td stale_object_delay = second;
-const Td unknown_error_delay = 2 * second;
+const Td DELAY = 0.01 * SECOND;
+const Td DUMMY_TIMER_EXPIRY_TIME = 100500 * DAY;
+const Td STALE_OBJECT_DELAY = SECOND;
+const Td UNKNOWN_ERROR_DELAY = 2 * SECOND;
 }
 
-const int cookie_session_age = (5 * 365 * day).total_seconds();
+const int COOKIE_SESSION_AGE = (5 * 365 * DAY).total_seconds();
 
 }
 }

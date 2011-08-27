@@ -15,7 +15,7 @@ namespace thechess {
 ClassificationWidget::ClassificationWidget(Classification min,
         Classification value, Classification max, Wt::WContainerWidget* parent):
     Wt::WComboBox(parent), first_i_(-1) {
-    for (int i = 0; i < classifications_size; i++) {
+    for (int i = 0; i < CLASSIFICATIONS_SIZE; i++) {
         Classification classification = classifications[i];
         if (min <= classification && classification <= max) {
             addItem(classification2str(classification));

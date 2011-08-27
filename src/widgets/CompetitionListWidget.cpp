@@ -29,14 +29,14 @@ typedef CompetitionListWidget::Result Result;
 typedef CompetitionListWidget::Q Q;
 typedef dbo::QueryModel<Result> BaseQM;
 
-const int n_column = 0;
-const int name_column = 1;
-const int type_column = 2;
-const int state_column = 3;
-const int winners_column = 4;
-const int members_column = 5;
-const int started_column = 6;
-const int ended_column = 7;
+const int N_COLUMN = 0;
+const int NAME_COLUMN = 1;
+const int TYPE_COLUMN = 2;
+const int STATE_COLUMN = 3;
+const int WINNERS_COLUMN = 4;
+const int MEMBERS_COLUMN = 5;
+const int STARTED_COLUMN = 6;
+const int ENDED_COLUMN = 7;
 
 class CompetitionListModel : public BaseQM {
 public:
@@ -58,16 +58,16 @@ public:
         dbo::Transaction t(tApp->session());
         CompetitionPtr o = resultRow(index.row()).get<0>();
         if (role == Wt::DisplayRole) {
-            if (index.column() == type_column) {
+            if (index.column() == TYPE_COLUMN) {
                 return Competition::type2str(o->type());
-            } else if (index.column() == state_column) {
+            } else if (index.column() == STATE_COLUMN) {
                 return tr(Competition::state2str(o->state()));
-            } else if (index.column() == winners_column) {
+            } else if (index.column() == WINNERS_COLUMN) {
                 return resultRow(index.row()).get<1>();
-            } else if (index.column() == members_column) {
+            } else if (index.column() == MEMBERS_COLUMN) {
                 return resultRow(index.row()).get<2>();
             }
-        } else if (role == Wt::InternalPathRole && index.column() == n_column) {
+        } else if (role == Wt::InternalPathRole && index.column() == N_COLUMN) {
             return str(boost::format("/competition/%i/") % o.id());
         }
         return BaseQM::data(index, role);
@@ -84,14 +84,14 @@ public:
         Wt::WTableView(p) {
         setModel(model);
         resize(770, 450);
-        setColumnWidth(n_column, 40);
-        setColumnWidth(name_column, 170);
-        setColumnWidth(type_column, 75);
-        setColumnWidth(state_column, 75);
-        setColumnWidth(winners_column, 160);
-        setColumnWidth(members_column, 50);
-        setColumnWidth(started_column, 70);
-        setColumnWidth(ended_column, 70);
+        setColumnWidth(N_COLUMN, 40);
+        setColumnWidth(NAME_COLUMN, 170);
+        setColumnWidth(TYPE_COLUMN, 75);
+        setColumnWidth(STATE_COLUMN, 75);
+        setColumnWidth(WINNERS_COLUMN, 160);
+        setColumnWidth(MEMBERS_COLUMN, 50);
+        setColumnWidth(STARTED_COLUMN, 70);
+        setColumnWidth(ENDED_COLUMN, 70);
         setRowHeaderCount(1); // fixed id_columns when scrolling
     }
 };
@@ -108,9 +108,9 @@ Q CompetitionListWidget::query_() {
     ThechessOptions::DatabaseType t = tApp->server().options().database_type();
     std::stringstream sql;
     sql << "select C, ";
-    if (t == ThechessOptions::Postgres) {
+    if (t == ThechessOptions::POSTGRES) {
         sql << "array_to_string(array_agg(distinct W.username), ', '), ";
-    } else if (t == ThechessOptions::Sqlite3) {
+    } else if (t == ThechessOptions::SQLITE3) {
         sql << "group_concat(distinct W.username), ";
     }
     sql << "count(distinct M.thechess_user_id) ";

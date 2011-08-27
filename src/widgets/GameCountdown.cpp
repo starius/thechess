@@ -86,7 +86,7 @@ private:
 
     void single_countdown_(UserPtr user) {
         const Wt::WString& name = user->username();
-        bool active = game_->state() == Game::active
+        bool active = game_->state() == Game::ACTIVE
                       && user == game_->order_user();
         Td limit_private_now = game_->limit_private_now(user);
         Td limit_std_now = game_->limit_std_now(user);

@@ -29,10 +29,10 @@
 
 namespace thechess {
 
-const int moves_column_width = 100;
-const int n_column_width = 20;
-const int moves_row_height = 35;
-const int navigationBarHeight = 25; // set in wt.css
+const int MOVES_COLUMN_WIDTH = 100;
+const int N_COLUMN_WIDTH = 20;
+const int MOVES_ROW_HEIGHT = 35;
+const int NAVIGATION_BAR_HEIGHT = 25; // set in wt.css
 
 class MovesModel : public Wt::WAbstractTableModel {
 public:
@@ -47,7 +47,7 @@ public:
         if (index.column() == 0) {
             n = -2;
         } else {
-            Color color = (index.column() == 1) ? white : black;
+            Color color = (index.column() == 1) ? WHITE : BLACK;
             n = Moves::n_from_human(index.row() + 1, color);
             if (n >= cached_moves_->size()) {
                 n = -2;
@@ -85,9 +85,9 @@ public:
             std::string text = move.san(board, board_after, /*skip_chessmen*/ true);
             char shah = ' ';
             if (board_after.test_shah()) {
-                shah = board_after.test_end() == checkmate ? '#' : '+';
+                shah = board_after.test_end() == CHECKMATE ? '#' : '+';
             }
-            if (move.turn_into() != chessman_null) {
+            if (move.turn_into() != CHESSMAN_NULL) {
                 Color color = board.color(move.from());
                 Field ti_field(color, move.turn_into());
                 std::string ti_src =
@@ -172,16 +172,16 @@ public:
         moves_table_view_->setModel(moves_model_);
         int moves_per_page = big ? 20 : 10;
         int width = wApp->environment().ajax() ?
-                    ((moves_column_width + 20) * 2 + (n_column_width + 7) + 20) : 400;
-        int height = moves_per_page * moves_row_height;
-        height += wApp->environment().ajax() ? 0 : navigationBarHeight;
+                    ((MOVES_COLUMN_WIDTH + 20) * 2 + (N_COLUMN_WIDTH + 7) + 20) : 400;
+        int height = moves_per_page * MOVES_ROW_HEIGHT;
+        height += wApp->environment().ajax() ? 0 : NAVIGATION_BAR_HEIGHT;
         moves_table_view_->resize(width, height);
-        moves_table_view_->setRowHeight(moves_row_height);
+        moves_table_view_->setRowHeight(MOVES_ROW_HEIGHT);
         moves_table_view_->setHeaderHeight(0);
         for (int i = 1; i < 3; i++) {
-            moves_table_view_->setColumnWidth(i, moves_column_width);
+            moves_table_view_->setColumnWidth(i, MOVES_COLUMN_WIDTH);
         }
-        moves_table_view_->setColumnWidth(0, n_column_width);
+        moves_table_view_->setColumnWidth(0, N_COLUMN_WIDTH);
         moves_table_view_->setSelectionBehavior(Wt::SelectItems);
         moves_table_view_->setSelectionMode(Wt::SingleSelection);
         moves_table_view_->clicked().connect(this, &MovesWidgetImpl::onselect_);
@@ -322,7 +322,7 @@ private:
 
     void move_select_() {
         const Board& board = cached_moves_.board_at(current_move_ + 1);
-        Move lastmove = move_null;
+        Move lastmove = MOVE_NULL;
         if (current_move_ != -1) {
             lastmove = cached_moves_.move_at(current_move_);
         }

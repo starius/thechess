@@ -17,8 +17,8 @@ enum CompetitionType {
     STAGED = 20,
     TEAM = 30
 };
-const CompetitionType competition_types[] = {CLASSICAL, STAGED, TEAM};
-const int competition_types_size = 3;
+const CompetitionType COMPETITION_TYPES[] = {CLASSICAL, STAGED, TEAM};
+const int COMPETITION_TYPES_SIZE = 3;
 
 }
 

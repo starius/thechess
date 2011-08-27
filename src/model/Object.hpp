@@ -23,10 +23,10 @@ struct Object;
 typedef std::vector<Object> Objects;
 
 enum ObjectType {
-    NoEvent,
-    GameObject,
-    UserObject,
-    CompetitionObject
+    NOEVENT,
+    GAME,
+    USER,
+    COMPETITION
 }; // change Object::reread() after changing this
 
 struct Object {

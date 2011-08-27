@@ -19,8 +19,8 @@ namespace thechess {
 class ThechessOptions {
 public:
     enum DatabaseType {
-        Postgres,
-        Sqlite3
+        POSTGRES,
+        SQLITE3
     };
     ThechessOptions(const Wt::WServer& server);
 

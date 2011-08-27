@@ -40,11 +40,11 @@ void ThechessSession::reconsider(TaskTracker& tracker) {
         dbo::Transaction t(*this);
         createTables();
         std::cerr << "Created database" << std::endl;
-        User* admin = new User(true);
-        admin->set_username("admin");
-        admin->set_rights(User::admin);
-        admin->set_password("123");
-        add(admin);
+        User* ADMIN = new User(true);
+        ADMIN->set_username("admin");
+        ADMIN->set_rights(User::ADMIN);
+        ADMIN->set_password("123");
+        add(ADMIN);
         std::cerr << "and admin user (password 123)" << std::endl;
         User* user = new User(true);
         user->set_username("user");
@@ -60,22 +60,22 @@ void ThechessSession::reconsider(TaskTracker& tracker) {
     execute("update thechess_user set sessions = ?").bind(0);
     t.commit();
     dbo::Transaction t2(*this);
-    Games games = find<Game>().where("state < ?").bind(Game::min_ended);
+    Games games = find<Game>().where("state < ?").bind(Game::MIN_ENDED);
     BOOST_FOREACH (GamePtr game, games) {
-        tracker.add_or_update_task(Object(GameObject, game.id()));
+        tracker.add_or_update_task(Object(GAME, game.id()));
     }
     Competitions cs = find<Competition>().where("state < ?").bind(Competition::ENDED);
     BOOST_FOREACH (CompetitionPtr c, cs) {
-        tracker.add_or_update_task(Object(CompetitionObject, c.id()));
+        tracker.add_or_update_task(Object(COMPETITION, c.id()));
     }
     t2.commit();
 }
 
 dbo::SqlConnection* ThechessSession::new_connection(const ThechessOptions& options) {
     dbo::SqlConnection* connection;
-    if (options.database_type() == ThechessOptions::Postgres) {
+    if (options.database_type() == ThechessOptions::POSTGRES) {
         connection = new dbo::backend::Postgres(options.database_value());
-    } else if (options.database_type() == ThechessOptions::Sqlite3) {
+    } else if (options.database_type() == ThechessOptions::SQLITE3) {
         std::string path = expand_path(options.database_value());
         connection = new dbo::backend::Sqlite3(path);
         connection->executeSql("PRAGMA synchronous = normal");

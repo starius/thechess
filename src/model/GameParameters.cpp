@@ -19,11 +19,11 @@ GameParameters::GameParameters() {
 GameParameters::GameParameters(bool):
     moves_(Moves()),
     moves_init_(0),
-    limit_std_(defaults::limit_std),
-    limit_private_init_(defaults::limit_private_init),
-    pause_limit_init_(defaults::pause_limit_init),
-    norating_(defaults::norating),
-    first_draw_(defaults::first_draw) {
+    limit_std_(defaults::LIMIT_STD),
+    limit_private_init_(defaults::LIMIT_PRIVATE_INIT),
+    pause_limit_init_(defaults::PAUSE_LIMIT_INIT),
+    norating_(defaults::NORATING),
+    first_draw_(defaults::FIRST_DRAW) {
 }
 
 void GameParameters::set_game_parameters(const GameParameters* other) {
@@ -32,9 +32,9 @@ void GameParameters::set_game_parameters(const GameParameters* other) {
 
 void GameParameters::set_no_draw() {
     first_draw_ = NO_DRAW;
-    limit_std_ = min::limit_std;
-    limit_private_init_ = min::limit_private_init;
-    pause_limit_init_ = min::pause_limit_init;
+    limit_std_ = min::LIMIT_STD;
+    limit_private_init_ = min::LIMIT_PRIVATE_INIT;
+    pause_limit_init_ = min::PAUSE_LIMIT_INIT;
 }
 
 }

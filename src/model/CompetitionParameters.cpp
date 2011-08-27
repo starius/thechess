@@ -19,24 +19,24 @@ CompetitionParameters::CompetitionParameters() {
 CompetitionParameters::CompetitionParameters(bool):
     GameParameters(true),
     type_(STAGED),
-    min_rating_(defaults::min_rating),
-    max_rating_(defaults::max_rating),
-    min_classification_(defaults::min_classification),
-    max_classification_(defaults::max_classification),
-    force_start_delay_(defaults::force_start_delay),
+    min_rating_(defaults::MIN_RATING),
+    max_rating_(defaults::MAX_RATING),
+    min_classification_(defaults::MIN_CLASSIFICATION),
+    max_classification_(defaults::MAX_CLASSIFICATION),
+    force_start_delay_(defaults::FORCE_START_DELAY),
 
-    min_users_(defaults::min_users),
-    max_users_(defaults::max_users),
-    min_recruiting_time_(defaults::min_recruiting_time),
-    max_recruiting_time_(defaults::max_recruiting_time),
+    min_users_(defaults::MIN_USERS),
+    max_users_(defaults::MAX_USERS),
+    min_recruiting_time_(defaults::MIN_RECRUITING_TIME),
+    max_recruiting_time_(defaults::MAX_RECRUITING_TIME),
 
-    max_simultaneous_games_(defaults::max_simultaneous_games),
-    games_factor_(defaults::games_factor),
+    max_simultaneous_games_(defaults::MAX_SIMULTANEOUS_GAMES),
+    games_factor_(defaults::GAMES_FACTOR),
 
-    relax_time_(defaults::relax_time),
-    min_substages_(defaults::min_substages),
-    increment_substages_(defaults::increment_substages) {
-    set_norating(defaults::norating);
+    relax_time_(defaults::RELAX_TIME),
+    min_substages_(defaults::MIN_SUBSTAGES),
+    increment_substages_(defaults::INCREMENT_SUBSTAGES) {
+    set_norating(defaults::NORATING);
 }
 
 }

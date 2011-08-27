@@ -37,11 +37,11 @@ RegisterWidget::RegisterWidget(Wt::WContainerWidget* parent) :
     username_label->setBuddy(username_);
     password_label->setBuddy(password_);
     Wt::WRegExpValidator* username_validator = new Wt::WRegExpValidator();
-    username_validator->setRegExp(thechess::config::username_regex);
+    username_validator->setRegExp(thechess::config::USERNAME_REGEX);
     username_validator->setMandatory(true);
     username_->setValidator(username_validator);
     Wt::WRegExpValidator* password_validator = new Wt::WRegExpValidator();
-    password_validator->setRegExp(thechess::config::password_regex);
+    password_validator->setRegExp(thechess::config::PASSWORD_REGEX);
     password_validator->setMandatory(true);
     password_->setValidator(password_validator);
     username_error_ = new Wt::WText(table_->elementAt(0, 2));

@@ -79,8 +79,8 @@ void Moves::xy_(int i, Xy xy) {
 }
 
 void Moves::set_move(int n, Move move) {
-    xy_(n, xy_from, move.from());
-    xy_(n, xy_to, move.packed_to());
+    xy_(n, XY_FROM, move.from());
+    xy_(n, XY_TO, move.packed_to());
 }
 
 void Moves::push_move(Move move) {
@@ -139,7 +139,7 @@ void Moves::pgn(std::ostream& out, const std::string& result, bool reduced) cons
         Move move = *move_it;
         board_after.make_move(move);
         std::string move_str = move.san(board, board_after);
-        if (order(move_it.n) == white) {
+        if (order(move_it.n) == WHITE) {
             move_str = str(boost::format("%i. ") % n_to_human(move_it.n)) + move_str;
         }
         ptw.write_word(move_str);

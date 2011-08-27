@@ -19,17 +19,17 @@ namespace thechess {
 
 ThechessOptions::ThechessOptions(const Wt::WServer& server):
     server_(server),
-    database_type_(config::defaults::database_type),
-    database_value_(config::defaults::database_value),
-    connections_in_pool_(config::defaults::connections_in_pool) {
+    database_type_(config::defaults::DATABASE_TYPE),
+    database_value_(config::defaults::DATABASE_VALUE),
+    connections_in_pool_(config::defaults::CONNECTIONS_IN_POOL) {
     std::string value;
     if (server.readConfigurationProperty("database_type", value)) {
         BOOST_ASSERT(value == "postgres" ||
                      value == "sqlite3");
         if (value == "postgres") {
-            database_type_ = Postgres;
+            database_type_ = POSTGRES;
         } else if (value == "sqlite3") {
-            database_type_ = Sqlite3;
+            database_type_ = SQLITE3;
         }
     }
     server.readConfigurationProperty("database_value", database_value_);

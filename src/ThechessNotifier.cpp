@@ -43,7 +43,7 @@ void ThechessNotifier::stop_listenning(const Object& object) {
 }
 
 void ThechessNotifier::emit(const Object& object, const std::string& this_app) {
-    if (object.type != NoEvent) {
+    if (object.type != NOEVENT) {
         mutex_.lock();
         O2I::iterator it = object2ids_.find(object);
         if (it != object2ids_.end()) {
@@ -60,7 +60,7 @@ void ThechessNotifier::emit(const Object& object, const std::string& this_app) {
 }
 
 void ThechessNotifier::app_emit(const Object& object) {
-    if (object.type != NoEvent) {
+    if (object.type != NOEVENT) {
         tApp->server().notifier().emit(object, tApp->sessionId());
         tApp->thechess_notify(object);
     }

@@ -25,13 +25,13 @@ Object::Object(ObjectType ot, int i) :
 
 void Object::reread(dbo::Session& session) const {
     dbo::Transaction t(session);
-    if (type == GameObject) {
+    if (type == GAME) {
         session.load<Game>(id).reread();
     }
-    if (type == UserObject) {
+    if (type == USER) {
         session.load<User>(id).reread();
     }
-    if (type == CompetitionObject) {
+    if (type == COMPETITION) {
         session.load<Competition>(id).reread();
     }
     t.commit();
@@ -39,21 +39,21 @@ void Object::reread(dbo::Session& session) const {
 
 Wt::WDateTime Object::process(Objects& objects, dbo::Session& session) const {
     Wt::WDateTime result;
-    if (type == GameObject) {
+    if (type == GAME) {
         GamePtr game = session.load<Game>(id);
         game.reread();
         game.modify()->check(objects);
         result = game->next_check();
     }
-    if (type == CompetitionObject) {
+    if (type == COMPETITION) {
         CompetitionPtr c = session.load<Competition>(id);
         c.reread();
         c.modify()->check(objects);
         result = c->next_check();
     }
-    // FIXME: UserObject, CompetitionObject
+    // FIXME: USER, COMPETITION
     if (result.isValid()) {
-        result += config::tracker::delay;
+        result += config::tracker::DELAY;
     }
     return result;
 }
