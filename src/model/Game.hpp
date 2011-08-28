@@ -452,7 +452,7 @@ public:
     }
 
     /** Return datetime when game was confirmed */
-    const Wt::WDateTime& when_confirmed() const {
+    const Wt::WDateTime& confirmed() const {
         return confirmed_;
     }
 

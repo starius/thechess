@@ -65,7 +65,7 @@ protected:
                "tc.game.colors_not_random"), "tc.game.colors", result);
         user_(game_->winner(), "tc.common.winner", result);
         time_(game_->created(), "tc.game.created", result);
-        time_(game_->when_confirmed(), "tc.game.confirmed", result);
+        time_(game_->confirmed(), "tc.game.confirmed", result);
         time_(game_->started(), "tc.game.started", result);
         time_(game_->lastmove(), "tc.game.lastmove", result);
         time_(game_->pause_until(), "tc.game.pause_until", result);
@@ -91,7 +91,7 @@ protected:
             a->setRefInternalPath(str(boost::format("/competition/%i/") % c.id()));
         }
         if (game_->state() == Game::CONFIRMED && c) {
-            time_(game_->when_confirmed() + c->force_start_delay(),
+            time_(game_->confirmed() + c->force_start_delay(),
                   "tc.game.force_start", result);
         }
         if (game_->state() == Game::PROPOSED && c &&
