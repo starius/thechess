@@ -18,10 +18,10 @@
 #include <Wt/WCompositeWidget>
 #include <Wt/WImage>
 
-#include "chess/board.hpp"
-#include "chess/xy.hpp"
-#include "chess/move.hpp"
-#include "chess/field.hpp"
+#include "chess/Board.hpp"
+#include "chess/Square.hpp"
+#include "chess/HalfMove.hpp"
+#include "chess/Piece.hpp"
 
 namespace Wt {
 class WContainerWidget;

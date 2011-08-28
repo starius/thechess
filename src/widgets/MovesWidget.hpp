@@ -16,9 +16,9 @@
 #include <Wt/WSignal>
 #include <Wt/WCompositeWidget>
 
-#include "chess/moves.hpp"
-#include "chess/field.hpp"
-#include "chess/cached_moves.hpp"
+#include "chess/Moves.hpp"
+#include "chess/Piece.hpp"
+#include "chess/CachedMoves.hpp"
 #include "widgets/BoardWidget.hpp"
 
 namespace thechess {

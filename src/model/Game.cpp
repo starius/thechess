@@ -16,7 +16,7 @@
 #include "model/EloPlayer.hpp"
 #include "rand.hpp"
 #include "TaskTracker.hpp"
-#include "chess/board.hpp"
+#include "chess/Board.hpp"
 
 namespace thechess {
 

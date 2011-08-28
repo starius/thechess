@@ -24,8 +24,8 @@
 #include <Wt/WTableView>
 
 #include "widgets/MovesWidget.hpp"
-#include "chess/field.hpp"
-#include "chess/move.hpp"
+#include "chess/Piece.hpp"
+#include "chess/HalfMove.hpp"
 
 namespace thechess {
 

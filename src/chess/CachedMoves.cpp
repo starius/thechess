@@ -7,7 +7,7 @@
  * See the LICENSE file for terms of use.
  */
 
-#include "chess/cached_moves.hpp"
+#include "chess/CachedMoves.hpp"
 
 namespace thechess {
 

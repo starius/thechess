@@ -10,8 +10,8 @@
 #ifndef THECHESS_CACHED_MOVES_H_
 #define THECHESS_CACHED_MOVES_H_
 
-#include "chess/moves.hpp"
-#include "chess/board.hpp"
+#include "chess/Moves.hpp"
+#include "chess/Board.hpp"
 #include <vector>
 
 namespace thechess {

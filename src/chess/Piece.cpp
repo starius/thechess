@@ -7,7 +7,7 @@
  * See the LICENSE file for terms of use.
  */
 
-#include "chess/field.hpp"
+#include "chess/Piece.hpp"
 
 namespace thechess {
 

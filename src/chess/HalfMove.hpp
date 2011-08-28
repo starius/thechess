@@ -15,9 +15,9 @@ namespace thechess {
 class Move;
 }
 
-#include "xy.hpp"
-#include "field.hpp"
-#include "board.hpp"
+#include "Square.hpp"
+#include "Piece.hpp"
+#include "Board.hpp"
 
 namespace thechess {
 

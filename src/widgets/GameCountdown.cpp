@@ -21,7 +21,7 @@
 #include <Wt/Dbo/Transaction>
 namespace dbo = Wt::Dbo;
 
-#include "chess/field.hpp"
+#include "chess/Piece.hpp"
 #include "model/Game.hpp"
 #include "model/User.hpp"
 #include "ThechessApplication.hpp"

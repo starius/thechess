@@ -33,8 +33,8 @@
 #include <Wt/WEnvironment>
 
 #include "widgets/BoardWidget.hpp"
-#include "chess/move.hpp"
-#include "chess/field.hpp"
+#include "chess/HalfMove.hpp"
+#include "chess/Piece.hpp"
 
 namespace thechess {
 

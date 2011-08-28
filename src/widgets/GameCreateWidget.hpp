@@ -15,7 +15,7 @@
 namespace dbo = Wt::Dbo;
 
 #include "model/User.hpp"
-#include "chess/field.hpp"
+#include "chess/Piece.hpp"
 
 namespace Wt {
 class WComboBox;

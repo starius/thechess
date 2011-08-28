@@ -17,9 +17,9 @@ class MovesIterator;
 
 #include <vector>
 
-#include "move.hpp"
-#include "xy.hpp"
-#include "board.hpp"
+#include "HalfMove.hpp"
+#include "Square.hpp"
+#include "Board.hpp"
 #include "tests.hpp"
 
 /** Type representing a byte */

@@ -18,8 +18,8 @@ namespace thechess {
 class GameParameters;
 }
 
-#include "chess/moves.hpp"
-#include "chess/field.hpp"
+#include "chess/Moves.hpp"
+#include "chess/Piece.hpp"
 #include "time_intervals.hpp"
 
 namespace thechess {

@@ -13,9 +13,9 @@
 #include <algorithm>
 #include <boost/format.hpp>
 
-#include "chess/moves.hpp"
-#include "chess/move.hpp"
-#include "chess/xy.hpp"
+#include "chess/Moves.hpp"
+#include "chess/HalfMove.hpp"
+#include "chess/Square.hpp"
 #include "utils.hpp"
 
 namespace thechess {

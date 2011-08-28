@@ -14,9 +14,9 @@
 #include <cstdlib>
 #include <cctype>
 
-#include "chess/board.hpp"
-#include "chess/xy.hpp"
-#include "chess/field.hpp"
+#include "chess/Board.hpp"
+#include "chess/Square.hpp"
+#include "chess/Piece.hpp"
 
 namespace thechess {
 

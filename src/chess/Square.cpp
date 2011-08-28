@@ -7,7 +7,7 @@
  * See the LICENSE file for terms of use.
  */
 
-#include "chess/xy.hpp"
+#include "chess/Square.hpp"
 
 namespace thechess {
 

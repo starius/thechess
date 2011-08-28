@@ -17,10 +17,10 @@
 namespace dbo = Wt::Dbo;
 
 #include "tests.hpp"
-#include "chess/board.hpp"
-#include "chess/move.hpp"
-#include "chess/moves.hpp"
-#include "chess/xy.hpp"
+#include "chess/Board.hpp"
+#include "chess/HalfMove.hpp"
+#include "chess/Moves.hpp"
+#include "chess/Square.hpp"
 #include "model/User.hpp"
 #include "ThechessApplication.hpp"
 #include "rand.hpp"

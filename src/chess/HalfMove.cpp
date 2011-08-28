@@ -7,7 +7,7 @@
  * See the LICENSE file for terms of use.
  */
 
-#include "chess/move.hpp"
+#include "chess/HalfMove.hpp"
 #include "utils.hpp"
 
 namespace thechess {

@@ -31,8 +31,8 @@ namespace dbo = Wt::Dbo;
 #include "model/Game.hpp"
 #include "ThechessApplication.hpp"
 #include "config.hpp"
-#include "chess/moves.hpp"
-#include "chess/field.hpp"
+#include "chess/Moves.hpp"
+#include "chess/Piece.hpp"
 
 namespace thechess {
 
