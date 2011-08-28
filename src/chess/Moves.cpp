@@ -28,14 +28,14 @@ Moves::Moves(int moves_count) :
     svuc(moves_count, '\0') {
 }
 
-Moves::Moves(Move moves[], int moves_count) :
+Moves::Moves(HalfMove moves[], int moves_count) :
     svuc(moves_count, '\0') {
     for (int i = 0; i < moves_count; i++) {
         set_move(i, moves[i]);
     }
 }
 
-Xy Moves::xy_(int i) const {
+Square Moves::square_(int i) const {
     /*
      0000 0000  0000 0000  0000 0000
      0      1        2       3
@@ -43,57 +43,57 @@ Xy Moves::xy_(int i) const {
     int first = (i * 6) / 8;
     int mod_i = i % 4;
     if (mod_i == 0) {
-        return Xy((int)(q(first) >> 2));
+        return Square((int)(q(first) >> 2));
     } else if (mod_i == 1) {
         // 0011 1111
-        return Xy((int)(((q(first) << 4) & 0x3F) | (q(first + 1) >> 4)));
+        return Square((int)(((q(first) << 4) & 0x3F) | (q(first + 1) >> 4)));
     } else if (mod_i == 2) {
         // 0011 1111
-        return Xy((int)(((q(first) << 2) & 0x3F) | (q(first + 1) >> 6)));
+        return Square((int)(((q(first) << 2) & 0x3F) | (q(first + 1) >> 6)));
     } else if (mod_i == 3) {
-        return Xy((int)(q(first) & 0x3F)); // 0011 1111
+        return Square((int)(q(first) & 0x3F)); // 0011 1111
     }
-    return Xy(0); // newer happened
+    return Square(0); // newer happened
 }
 
-void Moves::xy_(int i, Xy xy) {
+void Moves::square_(int i, Square square) {
     int first = (i * 6) / 8;
     int mod_i = i % 4;
     if (mod_i == 0) {
         (*this)[first] &= 0x03; // 0000 0011
-        (*this)[first] |= (byte)xy.i() << 2;
+        (*this)[first] |= (byte)square.i() << 2;
     } else if (mod_i == 1) {
         (*this)[first] &= 0xFC; // 1111 1100
-        (*this)[first] |= (byte)xy.i() >> 4;
+        (*this)[first] |= (byte)square.i() >> 4;
         (*this)[first + 1] &= 0x0F; // 0000 1111
-        (*this)[first + 1] |= (byte)xy.i() << 4;
+        (*this)[first + 1] |= (byte)square.i() << 4;
     } else if (mod_i == 2) {
         (*this)[first] &= 0xF0; // 1111 0000
-        (*this)[first] |= (byte)xy.i() >> 2;
+        (*this)[first] |= (byte)square.i() >> 2;
         (*this)[first + 1] &= 0x3F; //  0011 1111
-        (*this)[first + 1] |= (byte)xy.i() << 6;
+        (*this)[first + 1] |= (byte)square.i() << 6;
     } else if (mod_i == 3) {
         (*this)[first] &= 0xC0; // 1100 0000
-        (*this)[first] |= (byte)xy.i();
+        (*this)[first] |= (byte)square.i();
     }
 }
 
-void Moves::set_move(int n, Move move) {
-    xy_(n, XY_FROM, move.from());
-    xy_(n, XY_TO, move.packed_to());
+void Moves::set_move(int n, HalfMove half_move) {
+    square_(n, SQUARE_FROM, half_move.from());
+    square_(n, SQUARE_TO, half_move.packed_to());
 }
 
-void Moves::push_move(Move move) {
+void Moves::push_move(HalfMove half_move) {
     int current_size = size();
     if (current_size % 2 == 0) {
-        // adding move by white
+        // adding half_move by white
         push_back('\0');
         push_back('\0');
     } else {
-        // adding move by black
+        // adding half_move by black
         push_back('\0');
     }
-    set_move(current_size, move);
+    set_move(current_size, half_move);
 }
 
 void Moves::pop_move() {
@@ -136,9 +136,9 @@ void Moves::pgn(std::ostream& out, const std::string& result, bool reduced) cons
     Board board;
     Board board_after;
     THECHESS_MOVES_FOREACH (move_it, this, board) {
-        Move move = *move_it;
-        board_after.make_move(move);
-        std::string move_str = move.san(board, board_after);
+        HalfMove half_move = *move_it;
+        board_after.make_move(half_move);
+        std::string move_str = half_move.san(board, board_after);
         if (order(move_it.n) == WHITE) {
             move_str = str(boost::format("%i. ") % n_to_human(move_it.n)) + move_str;
         }

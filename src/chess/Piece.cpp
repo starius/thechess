@@ -11,8 +11,8 @@
 
 namespace thechess {
 
-Field::Field(Color color, Chessman chessman) :
-    color_(color), chessman_(chessman) {
+Piece::Piece(Color color, Letter letter) :
+    color_(color), piece_(letter) {
 }
 
 Wt::WString color2str(Color color) {

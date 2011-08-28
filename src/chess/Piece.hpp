@@ -27,8 +27,8 @@ enum Color {
 const int COLOR_COUNT = 3;
 
 /** Piece letter */
-enum Chessman {
-    CHESSMAN_NULL = 0, /**< Undefined piece letter, can be the return value */
+enum Letter {
+    LETTER_NULL = 0, /**< Undefined piece letter, can be the return value */
     BISHOP = 1, /**< Bishop */
     KING   = 2, /**< King */
     KNIGHT = 3, /**< Knight */
@@ -37,10 +37,10 @@ enum Chessman {
     ROCK   = 6  /**< Rock */
 };
 
-/** The number of Chessman members */
-const int CHESSMAN_COUNT = 7;
+/** The number of Letter members */
+const int LETTER_COUNT = 7;
 
-const char* const LETTERS_CHESSMEN = "-BKNPQR";
+const char* const PIECE_LETTERS = "-BKNPQR";
 
 /** Return l9n string for the color */
 Wt::WString color2str(Color color);
@@ -51,26 +51,26 @@ inline Color other_color(Color color) {
 }
 
 /** Return char of piece letter */
-inline char chessman_char(Chessman chessman) {
-    return LETTERS_CHESSMEN[(int)chessman];
+inline char piece_char(Letter letter) {
+    return PIECE_LETTERS[(int)letter];
 }
 
 /** Piece.
-This class consists of Color and Chessman members.
+This class consists of Color and Letter members.
 */
-class Field {
+class Piece {
 public:
     /** Construct a piece using a color and a letter */
-    Field(Color color, Chessman chessman);
+    Piece(Color color, Letter letter);
 
     /** Comparison operator */
-    bool operator==(const Field& field) const {
-        return color() == field.color() && chessman() == field.chessman();
+    bool operator==(const Piece& piece) const {
+        return color() == piece.color() && letter() == piece.letter();
     }
 
     /** Comparison operator */
-    bool operator!=(const Field& field) const {
-        return color() != field.color() || chessman() != field.chessman();
+    bool operator!=(const Piece& piece) const {
+        return color() != piece.color() || letter() != piece.letter();
     }
 
     /** Get piece color */
@@ -79,8 +79,8 @@ public:
     }
 
     /** Get piece letter */
-    Chessman chessman() const {
-        return chessman_;
+    Letter letter() const {
+        return piece_;
     }
 
     /** Set piece color */
@@ -89,13 +89,13 @@ public:
     }
 
     /** Set piece letter */
-    void chessman(Chessman v) {
-        chessman_ = v;
+    void letter(Letter v) {
+        piece_ = v;
     }
 
 private:
     Color color_;
-    Chessman chessman_;
+    Letter piece_;
 };
 
 }

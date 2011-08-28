@@ -9,7 +9,7 @@
 
 // vim: set noet ts=2 sw=2:
 /* Board widget
- * Signal: move()
+ * Signal: half_move()
  */
 
 #ifndef THECHESS_WIDGETS_BOARDWIDGET_H_
@@ -37,13 +37,13 @@ public:
                 const Board& board = Board(),
                 Wt::WContainerWidget* parent = 0);
 
-    static std::string image(Field field, bool big = false);
+    static std::string image(Piece piece, bool big = false);
 
     void bottom_set(Color bottom);
-    void set(const Board& board, Move lastmove, bool active);
+    void set(const Board& board, HalfMove lastmove, bool active);
 
     void turn();
-    Wt::Signal<Move>& move();
+    Wt::Signal<HalfMove>& half_move();
     Wt::WContainerWidget* inner();
 
 private:

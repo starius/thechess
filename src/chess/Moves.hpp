@@ -49,7 +49,7 @@ public:
     /** Constructor.
     Fills container with moves_count moves from array moves.
     */
-    Moves(Move moves[], int moves_count);
+    Moves(HalfMove moves[], int moves_count);
 
     /** Get internal representation: vector of bytes */
     const svuc& as_svuc() const {
@@ -66,31 +66,31 @@ public:
         return (this->svuc::size() * 8) / 12;
     }
 
-    /** Push the move to the end of container */
-    void push_move(Move move);
+    /** Push the half-move to the end of container */
+    void push_move(HalfMove half_move);
 
-    /** Pop last move */
+    /** Pop last half-move */
     void pop_move();
 
     /** Pop several moves from the ending */
     void pop_moves(int number);
 
     /** Return the half-move.
-    \param n index of move.
+    \param n index of half-move.
     \param board board position preceeding the half-move.
         This argument is nedded because of pawn promotions,
-        which are stored together with Move::to() (see Move::packed_to())
+        which are stored together with HalfMove::to() (see HalfMove::packed_to())
     */
-    Move move_at(int n, const Board& board) const {
-        return Move(xy_(n, XY_FROM), xy_(n, XY_TO), board);
+    HalfMove move_at(int n, const Board& board) const {
+        return HalfMove(square_(n, SQUARE_FROM), square_(n, SQUARE_TO), board);
     }
 
     /** Return the half-move.
-    \param n 0-based number of move.
+    \param n 0-based number of half-move.
     \note Does not work correctly for pawn promotions.
     */
-    Move move_at(int n) const {
-        return Move(xy_(n, XY_FROM), xy_(n, XY_TO));
+    HalfMove move_at(int n) const {
+        return HalfMove(square_(n, SQUARE_FROM), square_(n, SQUARE_TO));
     }
 
     /** Return board position before the half-move */
@@ -143,25 +143,25 @@ public:
              bool reduced = false) const;
 
 private:
-    enum Xy_type {
-        XY_FROM = 0,
-        XY_TO = 1
+    enum Square_type {
+        SQUARE_FROM = 0,
+        SQUARE_TO = 1
     };
 
     byte q(int i) const {
         return (byte)((*this)[i]);
     }
 
-    Xy xy_(int i) const;
-    Xy xy_(int n, Xy_type xy_type) const {
-        return xy_(n * 2 + (int)xy_type);
+    Square square_(int i) const;
+    Square square_(int n, Square_type square_type) const {
+        return square_(n * 2 + (int)square_type);
     }
-    void xy_(int i, Xy xy);
-    void xy_(int n, Xy_type xy_type, Xy xy) {
-        xy_(n * 2 + (int)xy_type, xy);
+    void square_(int i, Square square);
+    void square_(int n, Square_type square_type, Square square) {
+        square_(n * 2 + (int)square_type, square);
     }
 
-    void set_move(int n, Move move);
+    void set_move(int n, HalfMove half_move);
     void fill(int moves_count);
     friend void run_tests();
 };
@@ -179,19 +179,19 @@ public:
     */
     MovesIterator(const Moves* moves, Board& board, int from = 0);
 
-    /** Get current move */
-    Move move() const {
+    /** Get current half-move */
+    HalfMove half_move() const {
         return moves_->move_at(n, board_);
     }
 
-    /** Indirection, get current move */
-    Move operator*() const {
-        return move();
+    /** Indirection, get current half-move */
+    HalfMove operator*() const {
+        return half_move();
     }
 
     /** Increment, increases half-move index */
     MovesIterator& operator ++() {
-        board_.make_move(move());
+        board_.make_move(half_move());
         n++;
         return *this;
     }
@@ -212,10 +212,10 @@ Usage:
 Moves moves = ...
 Board board = moves.board_at(10);
 THECHESS_MOVES_FROM_TO (moves_it, moves, board, 10, 20) {
-    Move move = *move_it;
+    HalfMove half_move = *move_it;
     Board board_after = board;
-    board_after.make_move(move);
-    std::cout << move.san(board, board_after) << std::endl;
+    board_after.make_move(half_move);
+    std::cout << half_move.san(board, board_after) << std::endl;
 }
 \endcode
 */
@@ -230,10 +230,10 @@ Usage:
 Moves moves = ...
 Board board;
 THECHESS_MOVES_TO (moves_it, moves, board, 20) {
-    Move move = *move_it;
+    HalfMove half_move = *move_it;
     Board board_after = board;
-    board_after.make_move(move);
-    std::cout << move.san(board, board_after) << std::endl;
+    board_after.make_move(half_move);
+    std::cout << half_move.san(board, board_after) << std::endl;
 }
 \endcode
 */
@@ -246,10 +246,10 @@ Usage:
 Moves moves = ...
 Board board = moves.board_at(10);
 THECHESS_MOVES_FROM (moves_it, moves, board, 10) {
-    Move move = *move_it;
+    HalfMove half_move = *move_it;
     Board board_after = board;
-    board_after.make_move(move);
-    std::cout << move.san(board, board_after) << std::endl;
+    board_after.make_move(half_move);
+    std::cout << half_move.san(board, board_after) << std::endl;
 }
 \endcode
 */
@@ -262,10 +262,10 @@ Usage:
 Moves moves = ...
 Board board;
 THECHESS_MOVES_FOREACH (moves_it, moves, board) {
-    Move move = *move_it;
+    HalfMove half_move = *move_it;
     Board board_after = board;
-    board_after.make_move(move);
-    std::cout << move.san(board, board_after) << std::endl;
+    board_after.make_move(half_move);
+    std::cout << half_move.san(board, board_after) << std::endl;
 }
 \endcode
 */

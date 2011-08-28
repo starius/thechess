@@ -26,9 +26,9 @@ namespace thechess {
 
 const int ORDER_BYTE = 32;
 const int CASTLING_BYTE = 33;
-const int FIELDS_SIZE = 34;
+const int PIECES_SIZE = 34;
 typedef unsigned char byte;
-typedef byte Fields[34];
+typedef byte Pieces[34];
 
 /** Result of testing if board is checkmate or stalemate */
 enum FinishState {
@@ -40,17 +40,17 @@ enum FinishState {
 /** Chess board representation.
 Stores information about position, active color, castling availability,
 en passant target square. There are methods of the class to get information
-about board and to apply a move to board.
+about board and to apply moves to board.
 
 Objects of this class are very light, consuming only 34 bytes per object:
     - 64 * 4 bites = 32 bytes (0-31)
-      - 4 bites = (Color << 3 | Chessman)
+      - 4 bites = (Color << 3 | Letter)
       - if is not set: 4 bites = 0
     - 1 byte (32'd): bool Order (Color)
     - 1 byte (33'th):
       - castling (4) = a1, h1, a8, h8.
         Note: a1, h1 - white; a8, h8 - black, a1, a8 - long; h1, h8 - short
-      - Last pawn long move: 1 bit (0 if was not) + 3 bits (X of pawn)
+      - Pawn promotion: 1 bit (0 if was not) + 3 bits (FILE of pawn)
 
 */
 class Board {
@@ -59,16 +59,16 @@ public:
     /** Construct a board with start position */
     Board();
 
-    /** Apply the move to the board.
-    The validness of move is not tested.
+    /** Apply the half-move to the board.
+    The validness of half-move is not tested.
     */
-    void make_move(const Move move);
+    void make_move(const HalfMove half_move);
 
     /** Return FEN notation of the board.
     \param halfmove This is the number of halfmoves since
         the last pawn advance or capture.
     \param fullmove The number of the full move.
-        It starts at 1, and is incremented after Black's move.
+        It starts at 1, and is incremented after Black's half-move.
     */
     void fen(std::ostream& out, int halfmove, int fullmove) const;
 
@@ -76,20 +76,20 @@ public:
     /* @{ */
 
     /** Return if the square of board is not empty */
-    bool isset(Xy xy) const;
+    bool isset(Square square) const;
 
     /** Return the color of the square.
     If the square is empty, return \ref COLOR_NULL */
-    Color color(Xy xy) const;
+    Color color(Square square) const;
 
-    /** Return the chessman of the square.
-    If the square is empty, return \ref CHESSMAN_NULL */
-    Chessman chessman(Xy xy) const;
+    /** Return the letter of the square.
+    If the square is empty, return \ref LETTER_NULL */
+    Letter letter(Square square) const;
 
-    /** Return the \ref Field structure of the square.
-    If the square is empty, return \ref Field constructed from
-    \ref COLOR_NULL and \ref CHESSMAN_NULL */
-    Field field(Xy xy) const;
+    /** Return the \ref Piece structure of the square.
+    If the square is empty, return \ref Piece constructed from
+    \ref COLOR_NULL and \ref LETTER_NULL */
+    Piece piece(Square square) const;
 
     /** Return active color.
     For ended games, return the color of loser
@@ -102,55 +102,55 @@ public:
     caused by move involving the king or the rock.
     \sa test_move
     */
-    bool castling(Xy rock_xy) const;
+    bool castling(Square rock_square) const;
 
-    /** Return if the previous move was long pawn move */
+    /** Return if the previous half-move was long pawn half-move */
     bool long_pawn() const;
 
-    /** Return the file of previous long pawn move.
-    If previous move was not long pawn move, return \ref X_A
+    /** Return the file of previous long pawn half-move.
+    If previous half-move was not long pawn half-move, return \ref FILE_A
     */
-    Xname long_pawn_x() const;
+    File long_pawn_file() const;
 
     /* @} */
 
-    /** \name Tests of move */
+    /** \name Tests of half-move */
     /* @{ */
 
-    /** Return if the move can be applied to the board.
+    /** Return if the half-move can be applied to the board.
     All chess rules are applied.
     */
-    bool test_move(const Move move) const;
+    bool test_move(const HalfMove half_move) const;
 
     /** Return if the square were attacked if it would be of given color */
-    bool test_attack(Xy xy, Color c) const;
+    bool test_attack(Square square, Color c) const;
 
-    /** Return if the destination will be attacked after the move */
-    bool test_attack(Move move) const;
+    /** Return if the destination will be attacked after the half-move */
+    bool test_attack(HalfMove half_move) const;
 
-    /** Return if the destination is attacked by the move */
-    bool test_takes(const Move move) const;
+    /** Return if the destination is attacked by the half-move */
+    bool test_takes(const HalfMove half_move) const;
 
-    /** Return if the move is a castling */
-    bool test_castling(const Move move) const;
+    /** Return if the half-move is a castling */
+    bool test_castling(const HalfMove half_move) const;
 
     /* @} */
 
     /** \name Searching for moves */
     /* @{ */
 
-    /** Return some target-of-move square for the piece */
-    Xy some_target(Xy from) const;
+    /** Return some target square */
+    Square some_target(Square from) const;
 
-    /** Return some source-of-move square for the piece */
-    Xy some_source(Xy to) const;
+    /** Return some source square */
+    Square some_source(Square to) const;
 
-    /** Return some possible move */
-    Move some_move() const;
+    /** Return some possible half-move */
+    HalfMove some_move() const;
 
-    /** Return if the piece can be a target of any move */
-    bool can_move(Xy from) const {
-        return some_target(from) != XY_NULL;
+    /** Return if the square can be a target of any half-move */
+    bool can_move(Square from) const {
+        return some_target(from) != SQUARE_NULL;
     }
 
     /* @} */
@@ -169,7 +169,7 @@ public:
     }
 
     /** Return the square of the king of the color */
-    Xy find_king(Color c) const;
+    Square find_king(Color c) const;
 
     /** Return finish state of the board */
     FinishState test_end() const;
@@ -177,28 +177,28 @@ public:
     /* @} */
 
 private:
-    Fields fields_;
+    Pieces pieces_;
 
-    void init_chessmans(Yname y, Color color);
-    void init_pawns(Yname y, Color color);
+    void init_pieces(Rank rank, Color color);
+    void init_pawns(Rank rank, Color color);
 
-    byte q(Xy xy) const; // quarta of this field
-    void q(Xy xy, byte q_);
+    byte q(Square square) const; // quarta of this piece
+    void q(Square square, byte q_);
 
-    void unset(Xy xy);
-    void color(Xy xy, Color c);
-    void chessman(Xy xy, Chessman chessman);
-    void field(Xy xy, Field field);
+    void unset(Square square);
+    void color(Square square, Color c);
+    void letter(Square square, Letter letter);
+    void piece(Square square, Piece piece);
 
     void order(Color c);
     void change_order();
     void castling_reset();
-    void castling_off(Xy rock_xy);
-    void long_pawn(bool value, int x = 0);
+    void castling_off(Square rock_square);
+    void long_pawn(bool value, int file = 0);
 
-    void simple_move(const Move move);
-    bool simple_test_move(Move move) const;
-    bool test_attack(Xy xy) const;
+    void simple_move(const HalfMove half_move);
+    bool simple_test_move(HalfMove half_move) const;
+    bool test_attack(Square square) const;
 
     void fen_pieces(std::ostream& out) const;
     void fen_castling(std::ostream& out) const;

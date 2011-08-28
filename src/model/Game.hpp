@@ -52,7 +52,7 @@ public:
         CONFIRMED = 10, /**< is to be started when both users are online */
         ACTIVE = 20, /**< is running, clock is ticking */
         PAUSE = 30, /**< is paused until predefined time, clock is also paused */
-#ifndef DOXYGEN_ONLY
+#ifndef DOSQUAREGEN_ONLY
         MIN_ENDED = 50,
 #endif
         DRAW_STALEMATE = 50, /**< ended with stalemate */
@@ -67,7 +67,7 @@ public:
         NO_DRAW_STALEMATE = 65 /**< ended with stalemate, black wins */
     };
 
-#ifndef DOXYGEN_ONLY
+#ifndef DOSQUAREGEN_ONLY
     Game();
 #endif
 
@@ -77,7 +77,7 @@ public:
     /** Create new game to be added to database. */
     Game(bool);
 
-#ifndef DOXYGEN_ONLY
+#ifndef DOSQUAREGEN_ONLY
     template<class Action>
     void persist(Action& a) {
         GameParameters::persist(a);
@@ -259,7 +259,7 @@ public:
     /** Return if the user can propose to rollback mistake */
     bool can_mistake_propose(const UserPtr user) const;
 
-    /** Return if the user can propose to rollback mistake at given move */
+    /** Return if the user can propose to rollback mistake at given half_move */
     bool can_mistake_propose(const UserPtr user, int mistake_move) const;
 
     /** The user tries to propose to rollback mistake */
@@ -273,7 +273,7 @@ public:
         return mistake_proposer_;
     }
 
-    /** Return the move which is proposed to be rollbacked*/
+    /** Return the half_move which is proposed to be rollbacked*/
     int mistake_move() const {
         return mistake_move_;
     }
@@ -417,17 +417,17 @@ public:
 
     /* @} */
 
-    /** \name Making a move */
+    /** \name Making a half_move */
     /* @{ */
 
-    /** Return if given user can add a move to this game */
+    /** Return if given user can add a half_move to this game */
     bool can_move(UserPtr user) const;
 
-    /** Add move to game.
-    Method was added to avoid additional checking of move (optimization).
-    You must check move yourself before call this method!
+    /** Add half_move to game.
+    Method was added to avoid additional checking of half_move (optimization).
+    You must check half_move yourself before call this method!
     */
-    void add_move(const Move& move,
+    void add_move(const HalfMove& half_move,
                   const Board& board_after);
 
     /* @} */
@@ -461,7 +461,7 @@ public:
         return started_;
     }
 
-    /** Return (virtual) datetime of last move.
+    /** Return (virtual) datetime of last half_move.
     If the game was paused, this datetime is modified to reflect pause
     */
     const Wt::WDateTime& lastmove() const {
@@ -605,7 +605,7 @@ private:
     void finish_(State state, UserPtr winner = UserPtr());
     void elo_change_();
 
-    void push_move_(Move move);
+    void push_move_(HalfMove half_move);
     void pop_moves_(int number);
 
     const char* pgn_termination_() const;

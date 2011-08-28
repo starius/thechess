@@ -151,7 +151,7 @@ public:
         const Moves& moves = game_->moves();
         moves_widget_ = new MovesWidget(moves, big, active, max_moves,
                                         append_only, bottom, this);
-        moves_widget_->move()
+        moves_widget_->half_move()
         .connect(this, &GameWidgetImpl::move_handler_);
         countdown_container_ = new Wt::WContainerWidget(this);
         manager_ = new Wt::WContainerWidget(this);
@@ -176,7 +176,7 @@ public:
             status_and_manager_();
         }
         if (game_->size() - moves_widget_->moves().size() == 1) {
-            Move last_move =
+            HalfMove last_move =
                 game_->moves().move_at(game_->size() - 1, moves_widget_->board());
             moves_widget_->add_move(last_move);
             if (game_->size_without_init() == 1) {
@@ -195,14 +195,14 @@ private:
     Wt::WContainerWidget* countdown_container_;
     Wt::WContainerWidget* comment_container_;
 
-    void move_handler_(const Move& move) {
+    void move_handler_(const HalfMove& half_move) {
         dbo::Transaction t(tApp->session());
         game_.reread();
         int game_size = game_->moves().size();
         int moves_size = moves_widget_->moves().size();
         // additional protection
         if (game_size == moves_size - 1 && game_->can_move(tApp->user())) {
-            game_.modify()->add_move(move, moves_widget_->board());
+            game_.modify()->add_move(half_move, moves_widget_->board());
         }
         bool game_ended = game_->is_ended();
         t.commit();

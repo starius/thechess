@@ -10,7 +10,7 @@
 #ifndef THECHESS_WIDGETS_MOVES_H_
 #define THECHESS_WIDGETS_MOVES_H_
 
-// move=-1 --> board=0 (start position) --> move=1 -->board=1 ...
+// half_move=-1 --> board=0 (start position) --> half_move=1 -->board=1 ...
 
 #include <Wt/WContainerWidget>
 #include <Wt/WSignal>
@@ -33,10 +33,10 @@ public:
 
     const Moves& moves() const;
     const Board& board() const;
-    Wt::Signal<Move>& move();
+    Wt::Signal<HalfMove>& half_move();
     int current_move() const;
 
-    void add_move(const Move& move);
+    void add_move(const HalfMove& half_move);
     void bottom_set(Color bottom);
     void reset();
     void set_moves(const Moves& moves);

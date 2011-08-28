@@ -378,7 +378,7 @@ bool Game::can_move(UserPtr user) const {
     return state() == ACTIVE && !winner() && user == order_user();
 }
 
-void Game::add_move(const Move& move,
+void Game::add_move(const HalfMove& half_move,
                     const Board& board_after) {
     if (state() == ACTIVE) {
         draw_discard(order_user());
@@ -389,7 +389,7 @@ void Game::add_move(const Move& move,
         lastmove_ = now();
         FinishState s = board_after.test_end();
         UserPtr order_user_now = order_user();
-        push_move_(move);
+        push_move_(half_move);
         if (s == CHECKMATE) {
             finish_(MATE, order_user_now);
         }
@@ -597,8 +597,8 @@ void Game::elo_change_() {
     rating_after_[BLACK] = black()->games_stat().elo();
 }
 
-void Game::push_move_(Move move) {
-    moves_.push_move(move);
+void Game::push_move_(HalfMove half_move) {
+    moves_.push_move(half_move);
 }
 
 void Game::pop_moves_(int number) {
@@ -637,8 +637,8 @@ void Game::pgn_init_moves_(std::ostream& out) const {
     Board board;
     int halfmove_clock = 0;
     THECHESS_MOVES_TO (move_it, &(moves_), board, moves_init()) {
-        Move move(*move_it);
-        if (board.chessman(move.from()) == PAWN || board.test_takes(move)) {
+        HalfMove half_move(*move_it);
+        if (board.letter(half_move.from()) == PAWN || board.test_takes(half_move)) {
             halfmove_clock = 0;
         } else {
             halfmove_clock += 1;

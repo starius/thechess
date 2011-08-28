@@ -12,7 +12,7 @@
 #define THECHESS_MOVE_H_
 
 namespace thechess {
-class Move;
+class HalfMove;
 }
 
 #include "Square.hpp"
@@ -22,120 +22,120 @@ class Move;
 namespace thechess {
 
 /** Class representing a single half-move.
-A move consists of source and destination squares, and promoted piece letter
+A half-move consists of source and destination squares, and promoted piece letter
 for pawn promotion moves.
 
 The size of this class is 4 bytes.
 Inside Moves, it spends only 1.5 bytes per half-move.
 */
-class Move {
+class HalfMove {
 public:
     /** Construct a half-move using source, destination and promoted piece letter */
-    Move(Xy from, Xy to, Chessman turn_into)
+    HalfMove(Square from, Square to, Letter turn_into)
         : from_(from), to_(to), turn_into_(turn_into) {}
 
     /** Construct a half-move using source and destination squares.
-    turn_into() of a returned move returns \ref CHESSMAN_NULL.
+    turn_into() of a constructed half-move returns \ref LETTER_NULL.
     */
-    Move(Xy from, Xy to);
+    HalfMove(Square from, Square to);
 
     /** Construct a half-move using source, packed destination and board.
     This is used by Moves while reading.
-    In case of a pawn promotion packed_to is Xy(to.x(), (Yname)turn_into).
+    In case of a pawn promotion packed_to is Square(to.file(), (Rank)turn_into).
     Otherwise normal destination is used.
 
     This optimization let Moves spent only 1.5 bytes per half-move.
     */
-    Move(Xy from, Xy packed_to, const Board& board);
+    HalfMove(Square from, Square packed_to, const Board& board);
 
     /** Default constructor.
-    The result is \code Move(XY_NULL, XY_NULL, CHESSMAN_NULL) \endcode
+    The result is \code HalfMove(SQUARE_NULL, SQUARE_NULL, LETTER_NULL) \endcode
     */
-    Move();
+    HalfMove();
 
     /** Get the source */
-    Xy from() const {
+    Square from() const {
         return from_;
     }
 
     /** Get the destination */
-    Xy to() const {
+    Square to() const {
         return to_;
     }
 
     /** Get the promoted piece letter */
-    Chessman turn_into() const {
+    Letter turn_into() const {
         return turn_into_;
     }
 
     /** Set the source */
-    void from(Xy v) {
+    void from(Square v) {
         from_ = v;
     }
 
     /** Set the destination */
-    void to(Xy v) {
+    void to(Square v) {
         to_ = v;
     }
 
     /** Set the promoted piece letter */
-    void turn_into(Chessman v) {
+    void turn_into(Letter v) {
         turn_into_ = v;
     }
 
     /** Return the difference of the files */
     int dx() const {
-        return to().x_() - from().x_();
+        return to().file_() - from().file_();
     }
 
     /** Return the difference of the ranks */
     int dy() const {
-        return to().y_() - from().y_();
+        return to().rank_() - from().rank_();
     }
 
-    /** Return packed_to of this move.
+    /** Return packed_to.
     This is used by Moves while writing.
-    In case of a pawn promotion packed_to is Xy(to.x(), (Yname)turn_into).
+    In case of a pawn promotion packed_to is Square(to.file(), (Rank)turn_into).
     Otherwise normal destination is returned.
 
     This optimization let Moves spent only 1.5 bytes per half-move.
     */
-    Xy packed_to() const;
+    Square packed_to() const;
 
-    /** Return if the move is pawn promotion */
+    /** Return if the half-move is pawn promotion */
     bool could_turn_into(const Board& board) const;
 
     /** Comparison operator.
     Moves with same source and destination are considered equal,
     even if piece promotion letters differ.
     */
-    bool operator==(const Move& other) const {
+    bool operator==(const HalfMove& other) const {
         return from() == other.from() && to() == other.to();
     }
 
     /** Comparison operator.
-    \sa Move::operator==
+    \sa HalfMove::operator==
     */
-    bool operator!=(const Move& other) const {
+    bool operator!=(const HalfMove& other) const {
         return !(*this == other);
     }
 
-    /** Return SAN (Standard Algebraic Notation) of the move.
-    \param skip_chessmen if specified, all piece letters will be skipped.
+    /** Return SAN (Standard Algebraic Notation) of the half-move.
+    \param skip_pieces if specified, all piece letters will be skipped.
         This is usefull when these letters are rendered as images.
     */
     std::string san(const Board& board, const Board& board_after,
-                    bool skip_chessmen = false) const;
+                    bool skip_pieces = false) const;
 
 private:
     unsigned from_ : 7;
     unsigned to_ : 7;
-    Chessman turn_into_ : 3;
+    Letter turn_into_ : 3;
 
     std::string san_from_(const Board& board) const;
 };
 
-const Move MOVE_NULL(XY_NULL, XY_NULL);
+const HalfMove MOVE_NULL(SQUARE_NULL, SQUARE_NULL);
 
 }
 

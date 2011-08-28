@@ -11,20 +11,20 @@
 
 namespace thechess {
 
-Xy::Xy(Xname x, Yname y) :
-    i_((unsigned)x * 8 + (unsigned)y) {
+Square::Square(File file, Rank rank) :
+    i_((unsigned)file * 8 + (unsigned)rank) {
 }
 
-Xy::Xy(unsigned x, unsigned y) :
-    i_((unsigned)x * 8 + (unsigned)y) {
+Square::Square(unsigned file, unsigned rank) :
+    i_((unsigned)file * 8 + (unsigned)rank) {
 }
 
-Xy::Xy(unsigned i) :
+Square::Square(unsigned i) :
     i_(i) {
 }
 
-Xy::Xy() :
-    i_(XY_NULL) {
+Square::Square() :
+    i_(SQUARE_NULL) {
 }
 
 }

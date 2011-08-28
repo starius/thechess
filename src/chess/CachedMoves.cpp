@@ -30,10 +30,10 @@ void CachedMoves::boards_rebuild_() {
     boards_[size()] = board;
 }
 
-void CachedMoves::push_move(Move move) {
-    Moves::push_move(move);
+void CachedMoves::push_move(HalfMove half_move) {
+    Moves::push_move(half_move);
     Board board = boards_[boards_.size() - 1];
-    board.make_move(move);
+    board.make_move(half_move);
     boards_.push_back(board);
 }
 
@@ -47,12 +47,12 @@ void CachedMoves::pop_moves(int number) {
     boards_.erase(boards_.end() - number, boards_.end());
 }
 
-void CachedMoves::reset_move(int n, Move move) {
+void CachedMoves::reset_move(int n, HalfMove half_move) {
     pop_moves(size() - n);
-    push_move(move);
+    push_move(half_move);
 }
 
-Move CachedMoves::move_at(int n) const {
+HalfMove CachedMoves::move_at(int n) const {
     return Moves::move_at(n, boards_[n]);
 }
 
@@ -60,7 +60,7 @@ const Board& CachedMoves::board_at(int n) const {
     return boards_[n];
 }
 
-void CachedMoves::foreach(void* func(Move move, const Board& board),
+void CachedMoves::foreach(void* func(HalfMove half_move, const Board& board),
                           int from, int to) const {
     if (to == -1) {
         to = size();

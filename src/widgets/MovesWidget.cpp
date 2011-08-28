@@ -42,7 +42,7 @@ public:
     }
 
     int index2n(const Wt::WModelIndex& index) const {
-        // -2 means wrong move number
+        // -2 means wrong half_move number
         int n;
         if (index.column() == 0) {
             n = -2;
@@ -79,19 +79,19 @@ public:
             if (n == -2) {
                 return std::string("");
             }
-            Move move = cached_moves_->move_at(n);
+            HalfMove half_move = cached_moves_->move_at(n);
             const Board& board = cached_moves_->board_at(n);
             const Board& board_after = cached_moves_->board_at(n + 1);
-            std::string text = move.san(board, board_after, /*skip_chessmen*/ true);
+            std::string text = half_move.san(board, board_after, /*skip_pieces*/ true);
             char shah = ' ';
             if (board_after.test_shah()) {
                 shah = board_after.test_end() == CHECKMATE ? '#' : '+';
             }
-            if (move.turn_into() != CHESSMAN_NULL) {
-                Color color = board.color(move.from());
-                Field ti_field(color, move.turn_into());
+            if (half_move.turn_into() != LETTER_NULL) {
+                Color color = board.color(half_move.from());
+                Piece ti_piece(color, half_move.turn_into());
                 std::string ti_src =
-                    wApp->resolveRelativeUrl(BoardWidget::image(ti_field));
+                    wApp->resolveRelativeUrl(BoardWidget::image(ti_piece));
                 return str(boost::format(
                                "<table><tr>"
                                "<td style='vertical-align:middle;'>%s =</td>"
@@ -100,9 +100,9 @@ public:
                                "</tr></table>") %
                            text % ti_src % shah);
             } else {
-                Field field = board.field(move.from());
+                Piece piece = board.piece(half_move.from());
                 std::string img =
-                    wApp->resolveRelativeUrl(BoardWidget::image(field));
+                    wApp->resolveRelativeUrl(BoardWidget::image(piece));
                 return str(boost::format(
                                "<table><tr>"
                                "<td><img src='%s' /></td>"
@@ -185,7 +185,7 @@ public:
         moves_table_view_->setSelectionBehavior(Wt::SelectItems);
         moves_table_view_->setSelectionMode(Wt::SingleSelection);
         moves_table_view_->clicked().connect(this, &MovesWidgetImpl::onselect_);
-        goto_move_(current_move_); // last move
+        goto_move_(current_move_); // last half_move
     }
 
     const Moves& moves() const {
@@ -196,7 +196,7 @@ public:
         return cached_moves_.board_at(cached_moves_.size());
     }
 
-    Wt::Signal<Move>& move() {
+    Wt::Signal<HalfMove>& half_move() {
         return move_signal_;
     }
 
@@ -204,11 +204,11 @@ public:
         return current_move_;
     }
 
-    void add_move(const Move& move) {
+    void add_move(const HalfMove& half_move) {
         int i = cached_moves_.size() - 1;
-        if (i == -1 || move != cached_moves_.move_at(i)) {
+        if (i == -1 || half_move != cached_moves_.move_at(i)) {
             int n = cached_moves_.size();
-            reset_move_(n, move);
+            reset_move_(n, half_move);
             goto_move_(n);
         }
     }
@@ -240,7 +240,7 @@ private:
     BoardWidget* board_widget_;
     MovesModel* moves_model_;
     Wt::WTableView* moves_table_view_;
-    Wt::Signal<Move> move_signal_;
+    Wt::Signal<HalfMove> move_signal_;
 
     CachedMoves cached_moves_;
     int current_move_;
@@ -253,29 +253,29 @@ private:
     void check_activate_() {
         if (!activated_ && this->active()) {
             activated_ = true;
-            board_widget_->move().connect(this, &MovesWidgetImpl::onmove_);
+            board_widget_->half_move().connect(this, &MovesWidgetImpl::onmove_);
         }
     }
 
-    void reset_move_(int n, const Move& move) {
-        cached_moves_.reset_move(n, move);
+    void reset_move_(int n, const HalfMove& half_move) {
+        cached_moves_.reset_move(n, half_move);
         moves_model_->move_changed(n);
     }
 
-    void onmove_(const Move& move) {
+    void onmove_(const HalfMove& half_move) {
         if (active()) {
             current_move_ += 1;
             used_moves_ += 1;
-            reset_move_(current_move_, move);
+            reset_move_(current_move_, half_move);
             goto_move_(current_move_);
-            move_signal_.emit(move);
+            move_signal_.emit(half_move);
         }
     }
 
     void onselect_(const Wt::WModelIndex& index) {
         int n = moves_model_->index2n(index);
         if (n == -2 && index.column() == 2) {
-            // after last move
+            // after last half_move
             n = cached_moves_.size() - 1;
         }
         if (n != -2) {
@@ -322,7 +322,7 @@ private:
 
     void move_select_() {
         const Board& board = cached_moves_.board_at(current_move_ + 1);
-        Move lastmove = MOVE_NULL;
+        HalfMove lastmove = MOVE_NULL;
         if (current_move_ != -1) {
             lastmove = cached_moves_.move_at(current_move_);
         }
@@ -361,12 +361,12 @@ const Board& MovesWidget::board() const {
     return impl_->board();
 }
 
-Wt::Signal<Move>& MovesWidget::move() {
-    return impl_->move();
+Wt::Signal<HalfMove>& MovesWidget::half_move() {
+    return impl_->half_move();
 }
 
-void MovesWidget::add_move(const Move& move) {
-    impl_->add_move(move);
+void MovesWidget::add_move(const HalfMove& half_move) {
+    impl_->add_move(half_move);
 }
 
 void MovesWidget::bottom_set(Color bottom) {

@@ -31,10 +31,10 @@ public:
     /** Construct from Moves */
     CachedMoves(const Moves& moves);
 
-    /** Push the move to the end of container */
-    void push_move(Move move);
+    /** Push the half-move to the end of container */
+    void push_move(HalfMove half_move);
 
-    /** Pop last move */
+    /** Pop last half-move */
     void pop_move();
 
     /** Pop several moves from the ending */
@@ -42,12 +42,12 @@ public:
 
     /** Strip replace half-move and all its descendants.
     This method pops several moves (see pop_moves()) and
-    pushes the move (see push_move()).
+    pushes the half-move (see push_move()).
     */
-    void reset_move(int n, Move move);
+    void reset_move(int n, HalfMove half_move);
 
     /** Return the half-move */
-    Move move_at(int n) const;
+    HalfMove move_at(int n) const;
 
     /** Return board position before the half-move */
     const Board& board_at(int n) const;
@@ -58,14 +58,15 @@ public:
     \param to index of half-move to stop before.
         If to==-1, iterates from \c from to the end of the container.
     */
-    void foreach(void* func(Move move, const Board& board),
+    void foreach(void* func(HalfMove half_move, const Board& board),
                  int from = 0, int to = -1) const;
 
 private:
-    std::vector<Board> boards_; // stores boards before this move
+    /** Stores boards before current half-move */
+    std::vector<Board> boards_;
 
     void boards_rebuild_();
-    void set_move(int n, Move move); // to forbid this
+    void set_move(int n, HalfMove half_move);
 };
 
 }

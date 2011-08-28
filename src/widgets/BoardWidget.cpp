@@ -40,25 +40,25 @@ namespace thechess {
 
 class BoardWidgetImpl;
 
-struct ChessmanStat {
-    ChessmanStat(const Board& board) {
+struct PieceStat {
+    PieceStat(const Board& board) {
         memset(stat, 0x00, sizeof(stat));
-        THECHESS_XY_FOREACH (xy) {
-            if (board.isset(xy)) {
-                stat[board.color(xy)][board.chessman(xy)] += 1;
+        THECHESS_SQUARE_FOREACH (square) {
+            if (board.isset(square)) {
+                stat[board.color(square)][board.letter(square)] += 1;
             }
         }
     }
 
-    int stat[COLOR_COUNT][CHESSMAN_COUNT];
+    int stat[COLOR_COUNT][LETTER_COUNT];
 };
 
-ChessmanStat full_stat = ChessmanStat(Board());
+PieceStat full_stat = PieceStat(Board());
 
-class TakenChessmenImpl : public Wt::WContainerWidget {
+class TakenPiecesImpl : public Wt::WContainerWidget {
 public:
 
-    TakenChessmenImpl(const Board& board):
+    TakenPiecesImpl(const Board& board):
         Wt::WContainerWidget(), taken_stat_(board) {
         print_color_(WHITE);
         new Wt::WBreak(this);
@@ -66,49 +66,49 @@ public:
     }
 
 private:
-    ChessmanStat taken_stat_;
+    PieceStat taken_stat_;
 
     void print_color_(Color color) {
-        print_field_(color, QUEEN);
-        print_field_(color, ROCK);
-        print_field_(color, KNIGHT);
-        print_field_(color, BISHOP);
-        print_field_(color, PAWN);
+        print_piece_(color, QUEEN);
+        print_piece_(color, ROCK);
+        print_piece_(color, KNIGHT);
+        print_piece_(color, BISHOP);
+        print_piece_(color, PAWN);
     }
 
-    void print_field_(Color color, Chessman chessman) {
-        int c = full_stat.stat[color][chessman] - taken_stat_.stat[color][chessman];
+    void print_piece_(Color color, Letter letter) {
+        int c = full_stat.stat[color][letter] - taken_stat_.stat[color][letter];
         for (int i = 0; i < c; i++) {
-            new Wt::WImage(BoardWidget::image(Field(color, chessman)), this);
+            new Wt::WImage(BoardWidget::image(Piece(color, letter)), this);
         }
     }
 };
 
-class TakenChessmen : public Wt::WViewWidget {
+class TakenPieces : public Wt::WViewWidget {
 public:
-    TakenChessmen(const Board& board, Wt::WContainerWidget* parent = 0) :
+    TakenPieces(const Board& board, Wt::WContainerWidget* parent = 0) :
         Wt::WViewWidget(parent), board_(board) {
     }
 
     Wt::WWidget* renderView() {
-        return new TakenChessmenImpl(board_);
+        return new TakenPiecesImpl(board_);
     }
 
 private:
     const Board& board_;
 };
 
-class DnDChessman : public Wt::WImage {
+class DnDPiece : public Wt::WImage {
 public:
-    DnDChessman(Xy xy, BoardWidgetImpl* bwi):
-        xy_(xy), bwi_(bwi)
+    DnDPiece(Square square, BoardWidgetImpl* bwi):
+        square_(square), bwi_(bwi)
     { }
 
     void activate();
     void dropEvent(Wt::WDropEvent dropEvent);
 
 private:
-    Xy xy_;
+    Square square_;
     BoardWidgetImpl* bwi_;
 };
 
@@ -121,11 +121,11 @@ public:
         select_turn_into_flag_(false) {
         correct_bottom_();
         board_template_ = new Wt::WTemplate(tr(xml_message()), this);
-        THECHESS_XY_FOREACH (xy) {
-            DnDChessman* img = new DnDChessman(xy, this);
-            image_at(xy) = img;
+        THECHESS_SQUARE_FOREACH (square) {
+            DnDPiece* img = new DnDPiece(square, this);
+            image_at(square) = img;
             std::string id = str(boost::format("%d%d")
-                                 % (xy.x() + 1) % (xy.y() + 1));
+                                 % (square.file() + 1) % (square.rank() + 1));
             board_template_->bindWidget(id, img);
         }
         check_activate_();
@@ -135,7 +135,7 @@ public:
         Wt::WPushButton* turn_button =
             new Wt::WPushButton(tr("tc.game.Overturn_board"), turn_button_place_);
         turn_button->clicked().connect(this, &BoardWidgetImpl::turn);
-        taken_chessmen_ = new TakenChessmen(board_, this);
+        taken_pieces_ = new TakenPieces(board_, this);
     }
 
     const char* xml_message() {
@@ -143,24 +143,24 @@ public:
                "tc.game.board_white_template" : "tc.game.board_black_template";
     }
 
-    DnDChessman*& image_at(Xy xy) {
-        return images_[xy.i()];
+    DnDPiece*& image_at(Square square) {
+        return images_[square.i()];
     }
 
-    Wt::Signal<Move>& move() {
+    Wt::Signal<HalfMove>& half_move() {
         return move_;
     }
 
-    void set(const Board& board, Move lastmove, bool active) {
+    void set(const Board& board, HalfMove lastmove, bool active) {
         modify_undo_();
         color_noactive_undo_();
         lastmove_ = lastmove;
         board_ = board;
-        taken_chessmen_->update();
+        taken_pieces_->update();
         if (board_.test_shah()) {
-            shah_xy_ = board_.find_king(board_.order());
+            shah_square_ = board_.find_king(board_.order());
         } else {
-            shah_xy_ = XY_NULL;
+            shah_square_ = SQUARE_NULL;
         }
         active_ = active;
         check_activate_();
@@ -186,7 +186,7 @@ public:
     }
 
 private:
-    friend class DnDChessman;
+    friend class DnDPiece;
 
     Board board_;
     Color bottom_;
@@ -195,27 +195,27 @@ private:
     bool big_;
     bool lastmove_show_;
 
-    Xy from_;
-    Move lastmove_;
-    Xy shah_xy_;
+    Square from_;
+    HalfMove lastmove_;
+    Square shah_square_;
 
     Wt::WGridLayout* layout_;
     Wt::WContainerWidget* select_turn_into_;
     Wt::WContainerWidget* turn_button_place_;
-    TakenChessmen* taken_chessmen_;
+    TakenPieces* taken_pieces_;
     Wt::WTemplate* board_template_;
     bool select_turn_into_flag_;
-    DnDChessman* images_[64];
+    DnDPiece* images_[64];
     Wt::WImage* draggable_;
 
-    Wt::Signal<Move> move_;
+    Wt::Signal<HalfMove> move_;
 
     void color_black_white_(Wt::WImage* img) {
         img->decorationStyle().setBackgroundColor(Wt::WColor());
     }
 
-    void color_black_white_(Xy xy) {
-        color_black_white_(image_at(xy));
+    void color_black_white_(Square square) {
+        color_black_white_(image_at(square));
     }
 
     void color_noactive_() {
@@ -225,8 +225,8 @@ private:
             image_at(lastmove_.to())->decorationStyle()
             .setBackgroundColor(Wt::yellow);
         }
-        if (shah_xy_ != XY_NULL) {
-            image_at(shah_xy_)->decorationStyle().setBackgroundColor(Wt::red);
+        if (shah_square_ != SQUARE_NULL) {
+            image_at(shah_square_)->decorationStyle().setBackgroundColor(Wt::red);
         }
     }
 
@@ -235,31 +235,31 @@ private:
             color_black_white_(lastmove_.from());
             color_black_white_(lastmove_.to());
         }
-        if (shah_xy_ != XY_NULL) {
-            color_black_white_(shah_xy_);
+        if (shah_square_ != SQUARE_NULL) {
+            color_black_white_(shah_square_);
         }
     }
 
     void board_build_() {
-        THECHESS_XY_FOREACH (xy) {
-            Wt::WImage* img = image_at(xy);
-            img->setImageRef(BoardWidget::image(board_.field(xy), big_));
+        THECHESS_SQUARE_FOREACH (square) {
+            Wt::WImage* img = image_at(square);
+            img->setImageRef(BoardWidget::image(board_.piece(square), big_));
         }
     }
 
     void modify_from_() {
-        THECHESS_XY_FOREACH (xy) {
-            Wt::WImage* img = image_at(xy);
-            if (board_.can_move(xy)) {
+        THECHESS_SQUARE_FOREACH (square) {
+            Wt::WImage* img = image_at(square);
+            if (board_.can_move(square)) {
                 img->decorationStyle().setCursor(Wt::PointingHandCursor);
             }
         }
     }
 
     void modify_from_undo_() {
-        THECHESS_XY_FOREACH (xy) {
-            if (board_.color(xy) == board_.order()) {
-                Wt::WImage* img = image_at(xy);
+        THECHESS_SQUARE_FOREACH (square) {
+            if (board_.color(square) == board_.order()) {
+                Wt::WImage* img = image_at(square);
                 img->decorationStyle().setCursor(Wt::ArrowCursor);
             }
         }
@@ -267,12 +267,12 @@ private:
 
     void modify_to_() {
         bool can_move = false;
-        THECHESS_XY_FOREACH (xy) {
-            if (board_.test_move(Move(from_, xy))) {
-                Wt::WImage* img = image_at(xy);
+        THECHESS_SQUARE_FOREACH (square) {
+            if (board_.test_move(HalfMove(from_, square))) {
+                Wt::WImage* img = image_at(square);
                 img->decorationStyle().setCursor(Wt::PointingHandCursor);
                 can_move = true;
-                if (board_.test_attack(Move(from_, xy))) {
+                if (board_.test_attack(HalfMove(from_, square))) {
                     img->decorationStyle().setBackgroundColor(Wt::magenta);
                 } else {
                     img->decorationStyle().setBackgroundColor(Wt::green);
@@ -288,15 +288,15 @@ private:
     }
 
     void modify_to_undo_() {
-        THECHESS_XY_FOREACH (xy) {
-            Wt::WImage* img = image_at(xy);
+        THECHESS_SQUARE_FOREACH (square) {
+            Wt::WImage* img = image_at(square);
             img->decorationStyle().setCursor(Wt::ArrowCursor);
             color_black_white_(img);
         }
     }
 
     void modify_undo_() {
-        if (from_ == XY_NULL) {
+        if (from_ == SQUARE_NULL) {
             modify_from_undo_();
         } else {
             modify_to_undo_();
@@ -304,66 +304,66 @@ private:
         if (select_turn_into_flag_) {
             print_select_undo_();
         }
-        from_ = XY_NULL;
+        from_ = SQUARE_NULL;
     }
 
     void modify_() {
         color_noactive_();
-        if (from_ == XY_NULL) {
+        if (from_ == SQUARE_NULL) {
             modify_from_();
         } else {
             modify_to_();
         }
     }
 
-    void onclick_(Xy xy) {
+    void onclick_(Square square) {
         if (select_turn_into_flag_) {
             return;
         }
         if (!active_) {
             return;
         }
-        if (xy == from_) {
+        if (square == from_) {
             modify_undo_();
-            from_ = XY_NULL;
+            from_ = SQUARE_NULL;
             modify_();
-        } else if (board_.color(xy) == board_.order()) {
+        } else if (board_.color(square) == board_.order()) {
             modify_undo_();
-            from_ = xy;
+            from_ = square;
             modify_();
-        } else if (from_ != XY_NULL) {
-            try_move_(Move(from_, xy));
+        } else if (from_ != SQUARE_NULL) {
+            try_move_(HalfMove(from_, square));
         }
     }
 
-    void try_move_(const Move move) {
-        if (board_.test_move(move)) {
-            if (move.could_turn_into(board_)) {
+    void try_move_(const HalfMove half_move) {
+        if (board_.test_move(half_move)) {
+            if (half_move.could_turn_into(board_)) {
                 select_turn_into_flag_ = true;
-                print_select_(move);
+                print_select_(half_move);
                 return;
             } else {
                 modify_undo_();
-                lastmove_ = move;
-                from_ = XY_NULL;
-                move_.emit(move);
+                lastmove_ = half_move;
+                from_ = SQUARE_NULL;
+                move_.emit(half_move);
             }
         } else {
             modify_undo_();
-            from_ = XY_NULL;
+            from_ = SQUARE_NULL;
             modify_();
         }
     }
 
-    void print_select_(Move move) {
-        static Chessman cc[] =
+    void print_select_(HalfMove half_move) {
+        static Letter cc[] =
         { QUEEN, ROCK, BISHOP, KNIGHT };
-        BOOST_FOREACH (Chessman c, cc) {
-            Field cm = Field(board_.order(), c);
+        BOOST_FOREACH (Letter c, cc) {
+            Piece cm = Piece(board_.order(), c);
             std::string path = BoardWidget::image(cm, big_);
             Wt::WImage* img = new Wt::WImage(path, select_turn_into_);
             img->clicked().connect(boost::bind(
-                                       &BoardWidgetImpl::select_onclick_, this, c, move));
+                                       &BoardWidgetImpl::select_onclick_, this, c, half_move));
             img->decorationStyle().setCursor(Wt::PointingHandCursor);
         }
     }
@@ -373,31 +373,31 @@ private:
         select_turn_into_flag_ = false;
     }
 
-    void select_onclick_(Chessman chessman, Move move) {
+    void select_onclick_(Letter letter, HalfMove half_move) {
         if (!active_) {
             return;
         }
         modify_undo_();
-        from_ = XY_NULL;
-        move.turn_into(chessman);
-        lastmove_ = move;
-        move_.emit(move);
+        from_ = SQUARE_NULL;
+        half_move.turn_into(letter);
+        lastmove_ = half_move;
+        move_.emit(half_move);
     }
 
-    int x(Xname x) {
-        return (bottom_ == WHITE ? (int)x : (7 - (int)x)) + 1;
+    int file(File file) {
+        return (bottom_ == WHITE ? (int)file : (7 - (int)file)) + 1;
     }
 
-    int y(Yname y) {
-        return (bottom_ == BLACK ? (int)y : (7 - (int)y)) + 1;
+    int rank(Rank rank) {
+        return (bottom_ == BLACK ? (int)rank : (7 - (int)rank)) + 1;
     }
 
-    Xname x(int x) {
-        return (Xname)(bottom_ == WHITE ? (x - 1) : (7 - (x - 1)));
+    File file(int file) {
+        return (File)(bottom_ == WHITE ? (file - 1) : (7 - (file - 1)));
     }
 
-    Yname y(int y) {
-        return (Yname)(bottom_ == BLACK ? (y - 1) : (7 - (y - 1)));
+    Rank rank(int rank) {
+        return (Rank)(bottom_ == BLACK ? (rank - 1) : (7 - (rank - 1)));
     }
 
     void correct_bottom_() {
@@ -416,8 +416,8 @@ private:
                     "$(" + draggable_->jsRef() + ").hide();"
                     "});"
                 );
-            THECHESS_XY_FOREACH (xy) {
-                DnDChessman* img = image_at(xy);
+            THECHESS_SQUARE_FOREACH (square) {
+                DnDPiece* img = image_at(square);
                 img->activate();
             }
         }
@@ -425,32 +425,32 @@ private:
 
 };
 
-void DnDChessman::activate() {
-    setDraggable("chessman", bwi_->draggable_);
-    acceptDrops("chessman");
+void DnDPiece::activate() {
+    setDraggable("letter", bwi_->draggable_);
+    acceptDrops("letter");
     if (wApp->environment().ajax()) {
-        mouseWentDown().connect(boost::bind(&BoardWidgetImpl::onclick_, bwi_, xy_));
+        mouseWentDown().connect(boost::bind(&BoardWidgetImpl::onclick_, bwi_, square_));
         mouseWentDown().connect(
             "function(sender, e) {"
             "$(" + bwi_->draggable_->jsRef() + ").attr('src', $(sender).attr('src'));"
             "}");
     } else {
-        clicked().connect(boost::bind(&BoardWidgetImpl::onclick_, bwi_, xy_));
+        clicked().connect(boost::bind(&BoardWidgetImpl::onclick_, bwi_, square_));
     }
 }
 
-void DnDChessman::dropEvent(Wt::WDropEvent dropEvent) {
-    DnDChessman* source = dynamic_cast<DnDChessman*>(dropEvent.source());
-    if (source->xy_ != xy_) {
-        bwi_->try_move_(Move(source->xy_, xy_));
+void DnDPiece::dropEvent(Wt::WDropEvent dropEvent) {
+    DnDPiece* source = dynamic_cast<DnDPiece*>(dropEvent.source());
+    if (source->square_ != square_) {
+        bwi_->try_move_(HalfMove(source->square_, square_));
     }
     doJavaScript("$(" + bwi_->draggable_->jsRef() + ").hide();");
 }
 
-std::string BoardWidget::image(Field field, bool big) {
+std::string BoardWidget::image(Piece piece, bool big) {
     return str(boost::format("img/chess/board/%d-%d%s.GIF")
-               % (2 - (int)field.color())
-               % (int)field.chessman()
+               % (2 - (int)piece.color())
+               % (int)piece.letter()
                % (big ? "-B" : ""));
 }
 
@@ -466,7 +466,7 @@ void BoardWidget::bottom_set(Color bottom) {
 }
 
 void BoardWidget::set(const Board& board,
-                      Move lastmove, bool active) {
+                      HalfMove lastmove, bool active) {
     impl_->set(board, lastmove, active);
 }
 
@@ -474,8 +474,8 @@ void BoardWidget::turn() {
     impl_->turn();
 }
 
-Wt::Signal<Move>& BoardWidget::move() {
-    return impl_->move();
+Wt::Signal<HalfMove>& BoardWidget::half_move() {
+    return impl_->half_move();
 }
 
 Wt::WContainerWidget* BoardWidget::inner() {
