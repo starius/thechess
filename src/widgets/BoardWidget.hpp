@@ -52,4 +52,4 @@ private:
 
 }
 
-#endif // THECHESS_WIDGETS_BOARDWIDGET_H_
+#endif

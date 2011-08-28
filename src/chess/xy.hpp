@@ -242,5 +242,5 @@ y = (thechess::Yname)((int)y + 1))
 
 }
 
-#endif // THECHESS_XY_H_
+#endif
 

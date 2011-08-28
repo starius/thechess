@@ -615,5 +615,5 @@ private:
 
 }
 
-#endif // THECHESS_MODEL_GAME_H_
+#endif
 

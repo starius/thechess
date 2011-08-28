@@ -208,4 +208,4 @@ private:
 
 }
 
-#endif // THECHESS_BOARD_H_
+#endif

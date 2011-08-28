@@ -18,4 +18,4 @@ void run_tests();
 
 }
 
-#endif // THECHESS_TESTS_H_
+#endif

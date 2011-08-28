@@ -139,4 +139,4 @@ private:
 
 }
 
-#endif // THECHESS_MODEL_USER_H_
+#endif

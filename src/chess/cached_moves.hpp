@@ -70,4 +70,4 @@ private:
 
 }
 
-#endif // THECHESS_CACHED_MOVES_H_
+#endif

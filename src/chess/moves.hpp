@@ -274,5 +274,5 @@ THECHESS_MOVES_FROM (move_it, moves, board, 0)
 
 }
 
-#endif // THECHESS_MOVES_H_
+#endif
 

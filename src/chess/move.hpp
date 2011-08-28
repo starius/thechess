@@ -139,5 +139,5 @@ const Move MOVE_NULL(XY_NULL, XY_NULL);
 
 }
 
-#endif // THECHESS_MOVE_H_
+#endif
 

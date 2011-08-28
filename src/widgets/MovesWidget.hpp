@@ -48,4 +48,4 @@ private:
 
 }
 
-#endif // THECHESS_WIDGETS_MOVES_H_
+#endif

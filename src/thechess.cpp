@@ -17,7 +17,7 @@ using namespace thechess;
 int main(int argc, char** argv) {
 #ifdef RUN_TESTS
     thechess::run_tests();
-#endif // RUN_TESTS
+#endif
     ThechessServer server(argc, argv);
     if (server.start()) {
         Wt::WServer::waitForShutdown();

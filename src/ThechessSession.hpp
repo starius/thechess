@@ -33,5 +33,5 @@ public:
 
 }
 
-#endif // THECHESS_THECHESS_SESSION_H_
+#endif
 

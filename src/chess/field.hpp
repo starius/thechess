@@ -100,5 +100,5 @@ private:
 
 }
 
-#endif // FIELD_H_
+#endif
 

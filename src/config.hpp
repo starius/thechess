@@ -147,4 +147,4 @@ const int COOKIE_SESSION_AGE = (5 * 365 * DAY).total_seconds();
 }
 }
 
-#endif // THECHESS_CONFIG_H_
+#endif
