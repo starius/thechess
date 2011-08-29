@@ -355,7 +355,7 @@ Board::FinishState Board::test_end() const {
 
 bool Board::test_shah(Color c) const {
     Square king_square = find_king(c);
-    if (king_square != Square()) {
+    if (king_square) {
         return test_attack(king_square);
     } else {
         return true; // no king
@@ -457,7 +457,7 @@ Square Board::some_source(Square to) const {
 HalfMove Board::some_move() const {
     THECHESS_SQUARE_FOREACH (from) {
         Square to = some_target(from);
-        if (to != Square()) {
+        if (to) {
             return HalfMove(from, to);
         }
     }

@@ -78,6 +78,9 @@ public:
         return i() != square1.i();
     }
 
+    /** Check for null */
+    operator bool() const;
+
     /** Get the file */
     File file() const {
         return (File)file_();

@@ -52,5 +52,9 @@ std::string Square::str() const {
     return char2str(file_char()) + char2str(rank_char());
 }
 
+Square::operator bool() const {
+    return *this != Square();
+}
+
 }
 

@@ -225,7 +225,7 @@ private:
             image_at(lastmove_.to())->decorationStyle()
             .setBackgroundColor(Wt::yellow);
         }
-        if (shah_square_ != Square()) {
+        if (shah_square_) {
             image_at(shah_square_)->decorationStyle().setBackgroundColor(Wt::red);
         }
     }
@@ -235,7 +235,7 @@ private:
             color_black_white_(lastmove_.from());
             color_black_white_(lastmove_.to());
         }
-        if (shah_square_ != Square()) {
+        if (shah_square_) {
             color_black_white_(shah_square_);
         }
     }
@@ -296,7 +296,7 @@ private:
     }
 
     void modify_undo_() {
-        if (from_ == Square()) {
+        if (!from_) {
             modify_from_undo_();
         } else {
             modify_to_undo_();
@@ -309,7 +309,7 @@ private:
 
     void modify_() {
         color_noactive_();
-        if (from_ == Square()) {
+        if (!from_) {
             modify_from_();
         } else {
             modify_to_();
@@ -331,7 +331,7 @@ private:
             modify_undo_();
             from_ = square;
             modify_();
-        } else if (from_ != Square()) {
+        } else if (from_) {
             try_move_(HalfMove(from_, square));
         }
     }
