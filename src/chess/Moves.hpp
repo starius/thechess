@@ -41,7 +41,7 @@ Sizes:
  - move: 24 bits (3 bytes)
  - half-move: 12 bits
  - square: 6 bits
- - file of rank: 3 bits
+ - file or rank: 3 bits
 
 \ingroup chess
 */
