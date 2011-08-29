@@ -20,6 +20,9 @@
 
 namespace thechess {
 
+const int ORDER_BYTE = 32;
+const int CASTLING_BYTE = 33;
+
 void Board::init_pieces(Rank rank, Color color) {
     piece(Square(FILE_A, rank), Piece(color, ROCK));
     piece(Square(FILE_B, rank), Piece(color, KNIGHT));
@@ -48,13 +51,13 @@ Board::Board() {
     long_pawn(false);
 }
 
-byte Board::q(Square square) const {
+Board::byte Board::q(Square square) const {
     int i = square.i();
     byte b = pieces_[i / 2];
     return (i % 2) ? (b & 0x0F) : (b >> 4);
 }
 
-void Board::q(Square square, byte q_) {
+void Board::q(Square square, Board::byte q_) {
     int i = square.i();
     pieces_[i / 2] = i % 2 ?
                      ((pieces_[i / 2] & 0xF0) | (q_ & 0x0F)) :

@@ -24,12 +24,6 @@ class Board;
 
 namespace thechess {
 
-const int ORDER_BYTE = 32;
-const int CASTLING_BYTE = 33;
-const int PIECES_SIZE = 34;
-typedef unsigned char byte;
-typedef byte Pieces[34];
-
 /** Chess board representation.
 Stores information about position, active color, castling availability,
 en passant target square. There are methods of the class to get information
@@ -49,6 +43,7 @@ Objects of this class are very light, consuming only 34 bytes per object:
 */
 class Board {
 public:
+    typedef unsigned char byte;
 
     /** Result of testing if board is checkmate or stalemate */
     enum FinishState {
@@ -178,6 +173,9 @@ public:
     /* @} */
 
 private:
+    static const int PIECES_SIZE = 34;
+    typedef byte Pieces[PIECES_SIZE];
+
     Pieces pieces_;
 
     void init_pieces(Rank rank, Color color);
