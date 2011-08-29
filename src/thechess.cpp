@@ -12,6 +12,16 @@
 #include "ThechessServer.hpp"
 #include "tests.hpp"
 
+namespace thechess {
+
+/** \mainpage TheChess
+
+TheChess, chess game web application written in C++ and based on Wt
+
+*/
+
+}
+
 using namespace thechess;
 
 int main(int argc, char** argv) {

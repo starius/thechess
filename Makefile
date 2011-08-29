@@ -105,7 +105,7 @@ run: $(EXE) $$(WT_CONFIG)
 	$(RUN_COMMAND)
 
 .PHONY: doc
-doc: $$(headers) doc-main $$(sources)
+doc:
 	doxygen
 
 .PHONY: style
