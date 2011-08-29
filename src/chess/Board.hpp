@@ -52,6 +52,7 @@ Objects of this class are very light, consuming only 34 bytes per object:
         Note: a1, h1 - white; a8, h8 - black, a1, a8 - long; h1, h8 - short
       - Pawn promotion: 1 bit (0 if was not) + 3 bits (FILE of pawn)
 
+\ingroup chess
 */
 class Board {
 public:

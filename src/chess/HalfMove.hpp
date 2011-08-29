@@ -27,6 +27,8 @@ for pawn promotion moves.
 
 The size of this class is 4 bytes.
 Inside Moves, it spends only 1.5 bytes per half-move.
+
+\ingroup chess
 */
 class HalfMove {
 public:

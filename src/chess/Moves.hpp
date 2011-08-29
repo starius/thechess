@@ -22,6 +22,10 @@ class MovesIterator;
 #include "Board.hpp"
 #include "tests.hpp"
 
+/** \defgroup chess Chess container library
+Classes for dealing with chess data such as chess board and move history.
+*/
+
 /** Type representing a byte */
 typedef unsigned char byte;
 
@@ -38,6 +42,8 @@ Sizes:
  - half-move: 12 bits
  - square: 6 bits
  - file of rank: 3 bits
+
+\ingroup chess
 */
 class Moves : public svuc {
 public:

@@ -20,7 +20,9 @@ class CachedMoves;
 
 namespace thechess {
 
-/** Board-caching version of Moves */
+/** Board-caching version of Moves.
+\ingroup chess
+*/
 class CachedMoves : public Moves {
 public:
     /** Constructor.

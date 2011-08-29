@@ -61,6 +61,8 @@ inline char rank_char(Rank rank) {
 /** Square representation.
 Internal representation is i().
 7 bits are used.
+
+\ingroup chess
 */
 class Square {
 public:

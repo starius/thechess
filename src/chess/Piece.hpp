@@ -57,6 +57,8 @@ inline char piece_char(Letter letter) {
 
 /** Piece.
 This class consists of Color and Letter members.
+
+\ingroup chess
 */
 class Piece {
 public:
