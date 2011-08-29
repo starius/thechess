@@ -43,7 +43,7 @@ public:
 
     /** Construct a half-move using source, packed destination and board.
     This is used by Moves while reading.
-    In case of a pawn promotion packed_to is Square(to.file(), (Rank)turn_into).
+    In case of a pawn promotion packed_to is Square(to.file(), (Square::Rank)turn_into).
     Otherwise normal destination is used.
 
     This optimization let Moves spent only 1.5 bytes per half-move.
@@ -51,7 +51,7 @@ public:
     HalfMove(Square from, Square packed_to, const Board& board);
 
     /** Default constructor.
-    The result is \code HalfMove(SQUARE_NULL, SQUARE_NULL, LETTER_NULL) \endcode
+    The result is \code HalfMove(Square(), Square(), LETTER_NULL) \endcode
     */
     HalfMove();
 
@@ -97,7 +97,7 @@ public:
 
     /** Return packed_to.
     This is used by Moves while writing.
-    In case of a pawn promotion packed_to is Square(to.file(), (Rank)turn_into).
+    In case of a pawn promotion packed_to is Square(to.file(), (Square::Rank)turn_into).
     Otherwise normal destination is returned.
 
     This optimization let Moves spent only 1.5 bytes per half-move.
@@ -137,7 +137,7 @@ private:
     std::string san_from_(const Board& board) const;
 };
 
-const HalfMove MOVE_NULL(SQUARE_NULL, SQUARE_NULL);
+const HalfMove MOVE_NULL = HalfMove(Square(), Square());
 
 }
 

@@ -20,33 +20,33 @@ HalfMove::HalfMove(Square from, Square to) :
 HalfMove::HalfMove(Square from, Square packed_to, const Board& board) :
     from_(from), to_(packed_to), turn_into_(LETTER_NULL) {
     if (board.letter(this->from()) == PAWN) {
-        if (board.order() == WHITE && this->from().rank() == RANK_7) {
-            to_ = Square(packed_to.file(), RANK_8);
+        if (board.order() == WHITE && this->from().rank() == Square::RANK_7) {
+            to_ = Square(packed_to.file(), Square::RANK_8);
             turn_into_ = (Letter)packed_to.rank();
         }
-        if (board.order() == BLACK && this->from().rank() == RANK_2) {
-            to_ = Square(packed_to.file(), RANK_1);
+        if (board.order() == BLACK && this->from().rank() == Square::RANK_2) {
+            to_ = Square(packed_to.file(), Square::RANK_1);
             turn_into_ = (Letter)packed_to.rank();
         }
     }
 }
 
 HalfMove::HalfMove() :
-    from_(SQUARE_NULL), to_(SQUARE_NULL), turn_into_(LETTER_NULL) {
+    from_(Square()), to_(Square()), turn_into_(LETTER_NULL) {
 }
 
 Square HalfMove::packed_to() const {
-    return turn_into_ == LETTER_NULL ? to() : Square(to().file(), (Rank)turn_into_);
+    return turn_into_ == LETTER_NULL ? to() : Square(to().file(), (Square::Rank)turn_into_);
 }
 
 bool HalfMove::could_turn_into(const Board& board) const {
-    return board.letter(from()) == PAWN && (to().rank() == RANK_1 || to().rank() == RANK_8);
+    return board.letter(from()) == PAWN && (to().rank() == Square::RANK_1 || to().rank() == Square::RANK_8);
 }
 
 std::string HalfMove::san_from_(const Board& board) const {
     Letter letter = board.letter(from());
     if (letter == PAWN && board.test_takes(*this)) {
-        return char2str(file_char(from().file()));
+        return char2str(from().file_char());
     }
     bool alt = false, alt_file = false, alt_rank = false;
     THECHESS_SQUARE_FOREACH (square) {
@@ -65,9 +65,9 @@ std::string HalfMove::san_from_(const Board& board) const {
     if (alt_file && alt_rank) {
         return from().str();
     } else if (alt_file) {
-        return char2str(rank_char(from().rank()));
+        return char2str(from().rank_char());
     } else if (alt) {
-        return char2str(file_char(from().file()));
+        return char2str(from().file_char());
     }
     return "";
 }
@@ -77,7 +77,7 @@ std::string HalfMove::san(const Board& board, const Board& board_after,
     std::string result;
     result.reserve(10);
     if (board.test_castling(*this)) {
-        result += to().file() == FILE_G ? "O-O" : "O-O-O";
+        result += to().file() == Square::FILE_G ? "O-O" : "O-O-O";
     } else {
         Letter letter = board.letter(from());
         if (!skip_pieces && letter != PAWN) {

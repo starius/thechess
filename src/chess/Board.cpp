@@ -23,29 +23,29 @@ namespace thechess {
 const int ORDER_BYTE = 32;
 const int CASTLING_BYTE = 33;
 
-void Board::init_pieces(Rank rank, Color color) {
-    piece(Square(FILE_A, rank), Piece(color, ROCK));
-    piece(Square(FILE_B, rank), Piece(color, KNIGHT));
-    piece(Square(FILE_C, rank), Piece(color, BISHOP));
-    piece(Square(FILE_D, rank), Piece(color, QUEEN));
-    piece(Square(FILE_E, rank), Piece(color, KING));
-    piece(Square(FILE_F, rank), Piece(color, BISHOP));
-    piece(Square(FILE_G, rank), Piece(color, KNIGHT));
-    piece(Square(FILE_H, rank), Piece(color, ROCK));
+void Board::init_pieces(Square::Rank rank, Color color) {
+    piece(Square(Square::FILE_A, rank), Piece(color, ROCK));
+    piece(Square(Square::FILE_B, rank), Piece(color, KNIGHT));
+    piece(Square(Square::FILE_C, rank), Piece(color, BISHOP));
+    piece(Square(Square::FILE_D, rank), Piece(color, QUEEN));
+    piece(Square(Square::FILE_E, rank), Piece(color, KING));
+    piece(Square(Square::FILE_F, rank), Piece(color, BISHOP));
+    piece(Square(Square::FILE_G, rank), Piece(color, KNIGHT));
+    piece(Square(Square::FILE_H, rank), Piece(color, ROCK));
 }
 
-void Board::init_pawns(Rank rank, Color color) {
-    for (int file = FILE_A; file <= FILE_H; file++) {
-        piece(Square((File)file, rank), Piece(color, PAWN));
+void Board::init_pawns(Square::Rank rank, Color color) {
+    for (int file = Square::FILE_A; file <= Square::FILE_H; file++) {
+        piece(Square((Square::File)file, rank), Piece(color, PAWN));
     }
 }
 
 Board::Board() {
     memset(pieces_, 0x00, sizeof(pieces_));
-    init_pieces(RANK_1, WHITE);
-    init_pawns(RANK_2, WHITE);
-    init_pieces(RANK_8, BLACK);
-    init_pawns(RANK_7, BLACK);
+    init_pieces(Square::RANK_1, WHITE);
+    init_pawns(Square::RANK_2, WHITE);
+    init_pieces(Square::RANK_8, BLACK);
+    init_pawns(Square::RANK_7, BLACK);
     order(WHITE);
     castling_reset();
     long_pawn(false);
@@ -119,13 +119,13 @@ void Board::change_order() {
 }
 
 bool Board::castling(Square rock_square) const {
-    if (rock_square == Square(FILE_A, RANK_1)) {
+    if (rock_square == Square(Square::FILE_A, Square::RANK_1)) {
         return pieces_[CASTLING_BYTE] & ~0x7F; // 0111 1111
-    } else if (rock_square == Square(FILE_H, RANK_1)) {
+    } else if (rock_square == Square(Square::FILE_H, Square::RANK_1)) {
         return pieces_[CASTLING_BYTE] & ~0xBF; // 1011 1111
-    } else if (rock_square == Square(FILE_A, RANK_8)) {
+    } else if (rock_square == Square(Square::FILE_A, Square::RANK_8)) {
         return pieces_[CASTLING_BYTE] & ~0xDF; // 1101 1111
-    } else if (rock_square == Square(FILE_H, RANK_8)) {
+    } else if (rock_square == Square(Square::FILE_H, Square::RANK_8)) {
         return pieces_[CASTLING_BYTE] & ~0xEF; // 1110 1111
     }
     return false;
@@ -136,13 +136,13 @@ void Board::castling_reset() {
 }
 
 void Board::castling_off(Square rock_square) {
-    if (rock_square == Square(FILE_A, RANK_1)) {
+    if (rock_square == Square(Square::FILE_A, Square::RANK_1)) {
         pieces_[CASTLING_BYTE] &= 0x7F; // 0111 1111
-    } else if (rock_square == Square(FILE_H, RANK_1)) {
+    } else if (rock_square == Square(Square::FILE_H, Square::RANK_1)) {
         pieces_[CASTLING_BYTE] &= 0xBF; // 1011 1111
-    } else if (rock_square == Square(FILE_A, RANK_8)) {
+    } else if (rock_square == Square(Square::FILE_A, Square::RANK_8)) {
         pieces_[CASTLING_BYTE] &= 0xDF; // 1101 1111
-    } else if (rock_square == Square(FILE_H, RANK_8)) {
+    } else if (rock_square == Square(Square::FILE_H, Square::RANK_8)) {
         pieces_[CASTLING_BYTE] &= 0xEF; // 1110 1111
     }
 }
@@ -151,8 +151,8 @@ bool Board::long_pawn() const {
     return (pieces_[CASTLING_BYTE] & 0x08) ? true : false; // 0000 1000
 }
 
-File Board::long_pawn_file() const {
-    return File(pieces_[CASTLING_BYTE] & 0x07); // 0000 0111
+Square::File Board::long_pawn_file() const {
+    return Square::File(pieces_[CASTLING_BYTE] & 0x07); // 0000 0111
 }
 
 void Board::long_pawn(bool value, int file) {
@@ -185,17 +185,17 @@ void Board::make_move(const HalfMove half_move) {
             long_pawn(true, half_move.to().file_());
         }
     }
-    if (active.letter() == KING && half_move.from().file() == FILE_5) {
+    if (active.letter() == KING && half_move.from().file() == Square::FILE_5) {
         // potential castling -- move rock
-        if (half_move.to().file() == FILE_3) {
+        if (half_move.to().file() == Square::FILE_3) {
             simple_move(HalfMove(
-                            Square(FILE_1, half_move.from().rank()),
-                            Square(FILE_4, half_move.from().rank())));
+                            Square(Square::FILE_1, half_move.from().rank()),
+                            Square(Square::FILE_4, half_move.from().rank())));
         }
-        if (half_move.to().file() == FILE_7) {
+        if (half_move.to().file() == Square::FILE_7) {
             simple_move(HalfMove(
-                            Square(FILE_8, half_move.from().rank()),
-                            Square(FILE_6, half_move.from().rank())));
+                            Square(Square::FILE_8, half_move.from().rank()),
+                            Square(Square::FILE_6, half_move.from().rank())));
         }
     }
     simple_move(half_move);
@@ -206,9 +206,9 @@ void Board::make_move(const HalfMove half_move) {
     // forbid castling in case king or rock moved
     if (active.letter() == KING) {
         Square rock = half_move.from();
-        rock.file(FILE_1);
+        rock.file(Square::FILE_1);
         castling_off(rock);
-        rock.file(FILE_8);
+        rock.file(Square::FILE_8);
         castling_off(rock);
     }
     if (active.letter() == ROCK) {
@@ -231,10 +231,10 @@ bool Board::simple_test_move(HalfMove half_move) const {
     if (active.color() == color(half_move.to())) {
         return false;
     }
-    if (half_move.from().file() < FILE_A || half_move.from().file() > FILE_H ||
-            half_move.to().file() < FILE_A || half_move.to().file() > FILE_H ||
-            half_move.from().rank() < RANK_1 || half_move.from().rank() > RANK_8 ||
-            half_move.to().rank() < RANK_1 || half_move.to().rank() > RANK_8) {
+    if (half_move.from().file() < Square::FILE_A || half_move.from().file() > Square::FILE_H ||
+            half_move.to().file() < Square::FILE_A || half_move.to().file() > Square::FILE_H ||
+            half_move.from().rank() < Square::RANK_1 || half_move.from().rank() > Square::RANK_8 ||
+            half_move.to().rank() < Square::RANK_1 || half_move.to().rank() > Square::RANK_8) {
         return false;
     }
     if (half_move.from() == half_move.to()) {
@@ -247,8 +247,8 @@ bool Board::simple_test_move(HalfMove half_move) const {
                     (active.color() == BLACK && dy == -1)) {
                 return true;
             }
-            if ((active.color() == WHITE && dy == 2 && half_move.from().rank() == RANK_2) ||
-                    (active.color() == BLACK && dy == -2 && half_move.from().rank() == RANK_7)) {
+            if ((active.color() == WHITE && dy == 2 && half_move.from().rank() == Square::RANK_2) ||
+                    (active.color() == BLACK && dy == -2 && half_move.from().rank() == Square::RANK_7)) {
                 int my = (int)half_move.from().rank_() + dy / 2;
                 if (!isset(Square(half_move.from().file_(), my))) {
                     return true;
@@ -355,7 +355,7 @@ Board::FinishState Board::test_end() const {
 
 bool Board::test_shah(Color c) const {
     Square king_square = find_king(c);
-    if (king_square != SQUARE_NULL) {
+    if (king_square != Square()) {
         return test_attack(king_square);
     } else {
         return true; // no king
@@ -369,30 +369,30 @@ bool Board::test_move(const HalfMove half_move) const {
     if (active.color() != order()) {
         return false;
     }
-    if (active.letter() == KING && half_move.from().file() == FILE_5 &&
-            (half_move.to().file() == FILE_3 || half_move.to().file() == FILE_7)) {
+    if (active.letter() == KING && half_move.from().file() == Square::FILE_5 &&
+            (half_move.to().file() == Square::FILE_3 || half_move.to().file() == Square::FILE_7)) {
         // only castling
-        if (half_move.from().rank() != RANK_1 && half_move.from().rank() != RANK_8) {
+        if (half_move.from().rank() != Square::RANK_1 && half_move.from().rank() != Square::RANK_8) {
             return false;
         }
         if (half_move.from().rank() != half_move.to().rank()) {
             return false;
         }
-        File rock_from_file = half_move.to().file() == FILE_3 ? FILE_1 : FILE_8;
+        Square::File rock_from_file = half_move.to().file() == Square::FILE_3 ? Square::FILE_1 : Square::FILE_8;
         Square rock_from = Square(rock_from_file, half_move.to().rank());
         if (!castling(rock_from)) {
             return false;
         }
-        if (half_move.to().file() == FILE_3) {
+        if (half_move.to().file() == Square::FILE_3) {
             // check piece crossed by ROCK
-            if (isset(Square(FILE_2, half_move.to().rank()))) {
+            if (isset(Square(Square::FILE_2, half_move.to().rank()))) {
                 return false;
             }
         }
         if (isset(half_move.to())) {
             return false;
         }
-        File rock_to_file = half_move.to().file() == FILE_3 ? FILE_4 : FILE_6;
+        Square::File rock_to_file = half_move.to().file() == Square::FILE_3 ? Square::FILE_4 : Square::FILE_6;
         Square rock_to = Square(rock_to_file, half_move.to().rank());
         if (isset(rock_to)) {
             return false;
@@ -421,7 +421,7 @@ bool Board::test_move(const HalfMove half_move) const {
         // imagine this pawn to be at half_move.to()
         board_copy.simple_move(HalfMove(eaten_pawn_square, half_move.to()));
     }
-    //~ Rank move_to_rank = real_to_rank(half_move);
+    //~ Square::Rank move_to_rank = real_to_rank(half_move);
     //~ half_move.to().rank(move_to_rank);
     if (!castling_test && !board_copy.simple_test_move(half_move)) {
         return false;
@@ -442,7 +442,7 @@ Square Board::some_target(Square from) const {
             }
         }
     }
-    return SQUARE_NULL;
+    return Square();
 }
 
 Square Board::some_source(Square to) const {
@@ -451,13 +451,13 @@ Square Board::some_source(Square to) const {
             return from;
         }
     }
-    return SQUARE_NULL;
+    return Square();
 }
 
 HalfMove Board::some_move() const {
     THECHESS_SQUARE_FOREACH (from) {
         Square to = some_target(from);
-        if (to != SQUARE_NULL) {
+        if (to != Square()) {
             return HalfMove(from, to);
         }
     }
@@ -470,7 +470,7 @@ Square Board::find_king(Color c) const {
             return square;
         }
     }
-    return SQUARE_NULL;
+    return Square();
 }
 
 bool Board::test_takes(const HalfMove half_move) const {
@@ -483,8 +483,8 @@ bool Board::test_castling(const HalfMove half_move) const {
 }
 
 void Board::fen_pieces(std::ostream& out) const {
-    for (Rank rank = RANK_8; rank >= RANK_1; rank = (Rank)((int)rank - 1)) {
-        if (rank < RANK_8) {
+    for (Square::Rank rank = Square::RANK_8; rank >= Square::RANK_1; rank = (Square::Rank)((int)rank - 1)) {
+        if (rank < Square::RANK_8) {
             out << '/';
         }
         int empty_pieces = 0;
@@ -512,19 +512,19 @@ void Board::fen_pieces(std::ostream& out) const {
 
 void Board::fen_castling(std::ostream& out) const {
     bool castling_availability = false;
-    if (castling(Square(FILE_H, RANK_1))) {
+    if (castling(Square(Square::FILE_H, Square::RANK_1))) {
         out << 'K';
         castling_availability = true;
     }
-    if (castling(Square(FILE_A, RANK_1))) {
+    if (castling(Square(Square::FILE_A, Square::RANK_1))) {
         out << 'Q';
         castling_availability = true;
     }
-    if (castling(Square(FILE_H, RANK_8))) {
+    if (castling(Square(Square::FILE_H, Square::RANK_8))) {
         out << 'k';
         castling_availability = true;
     }
-    if (castling(Square(FILE_A, RANK_8))) {
+    if (castling(Square(Square::FILE_A, Square::RANK_8))) {
         out << 'q';
         castling_availability = true;
     }
@@ -541,7 +541,7 @@ void Board::fen(std::ostream& out, int halfmove, int fullmove) const {
     fen_castling(out);
     out << ' ';
     if (long_pawn()) {
-        out << file_char(long_pawn_file()) << (order() == WHITE ? '6' : '3');
+        out << Square::file_char(long_pawn_file()) << (order() == WHITE ? '6' : '3');
     } else {
         out << '-';
     }

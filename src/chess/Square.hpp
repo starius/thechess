@@ -15,49 +15,6 @@
 
 namespace thechess {
 
-class Square;
-
-const char* const LETTERS_ABC = "abcdefgh";
-const char* const LETTERS_123 = "12345678";
-
-/** File of square */
-enum File {
-    FILE_END = 8, /**< Dummy member for itarators */
-    FILE_A = 0, /**< File a (left most or queenside) */
-    FILE_1 = 0, /**< File a (left most or queenside) */
-    FILE_B = 1, /**< File b */    FILE_2 = 1, /**< File b */
-    FILE_C = 2, /**< File c */    FILE_3 = 2, /**< File c */
-    FILE_D = 3, /**< File d */    FILE_4 = 3, /**< File d */
-    FILE_E = 4, /**< File e */    FILE_5 = 4, /**< File e */
-    FILE_F = 5, /**< File f */    FILE_6 = 5, /**< File f */
-    FILE_G = 6, /**< File g */    FILE_7 = 6, /**< File g */
-    FILE_H = 7, /**< File h (right most or kingside) */
-    FILE_8 = 7, /**< File h (right most or kingside) */
-};
-
-/** Rank of square */
-enum Rank {
-    RANK_END = 8, /**< Dummy member for itarators */
-    RANK_1 = 0, /**< Rank 1 (White's first rank) */
-    RANK_2 = 1, /**< Rank 2 */
-    RANK_3 = 2, /**< Rank 3 */
-    RANK_4 = 3, /**< Rank 4 */
-    RANK_5 = 4, /**< Rank 5 */
-    RANK_6 = 5, /**< Rank 6 */
-    RANK_7 = 6, /**< Rank 7 */
-    RANK_8 = 7  /**< Rank 8 (Black's first rank) */
-};
-
-/** Return letter (\c char) of the file */
-inline char file_char(File file) {
-    return LETTERS_ABC[(int)file];
-}
-
-/** Return number (\c char) of the rank */
-inline char rank_char(Rank rank) {
-    return LETTERS_123[(int)rank];
-}
-
 /** Square representation.
 Internal representation is i().
 7 bits are used.
@@ -66,6 +23,34 @@ Internal representation is i().
 */
 class Square {
 public:
+    /** File of square */
+    enum File {
+        FILE_END = 8, /**< Dummy member for itarators */
+        FILE_A = 0, /**< File a (left most or queenside) */
+        FILE_1 = 0, /**< File a (left most or queenside) */
+        FILE_B = 1, /**< File b */    FILE_2 = 1, /**< File b */
+        FILE_C = 2, /**< File c */    FILE_3 = 2, /**< File c */
+        FILE_D = 3, /**< File d */    FILE_4 = 3, /**< File d */
+        FILE_E = 4, /**< File e */    FILE_5 = 4, /**< File e */
+        FILE_F = 5, /**< File f */    FILE_6 = 5, /**< File f */
+        FILE_G = 6, /**< File g */    FILE_7 = 6, /**< File g */
+        FILE_H = 7, /**< File h (right most or kingside) */
+        FILE_8 = 7, /**< File h (right most or kingside) */
+    };
+
+    /** Rank of square */
+    enum Rank {
+        RANK_END = 8, /**< Dummy member for itarators */
+        RANK_1 = 0, /**< Rank 1 (White's first rank) */
+        RANK_2 = 1, /**< Rank 2 */
+        RANK_3 = 2, /**< Rank 3 */
+        RANK_4 = 3, /**< Rank 4 */
+        RANK_5 = 4, /**< Rank 5 */
+        RANK_6 = 5, /**< Rank 6 */
+        RANK_7 = 6, /**< Rank 7 */
+        RANK_8 = 7  /**< Rank 8 (Black's first rank) */
+    };
+
     /** Construct a square from a file and a rank */
     Square(File file, Rank rank);
 
@@ -80,9 +65,7 @@ public:
     */
     Square(unsigned i);
 
-    /** Default constructor.
-    Similar to \code Square(SQUARE_NULL) \endcode
-    */
+    /** Create a <i>Null</i> square */
     Square();
 
     /** Comparison operator. */
@@ -187,22 +170,27 @@ public:
         return i_;
     }
 
+    /** Return letter (\c char) of the file */
+    static char file_char(File file);
+
+    /** Return letter (\c char) of the file */
+    char file_char() const;
+
+    /** Return number (\c char) of the rank */
+    static char rank_char(Rank rank);
+
+    /** Return number (\c char) of the rank */
+    char rank_char() const;
+
     /** String representation.
     File letter is concatenated with rank letter.
     \sa HalfMove::san
     */
-    std::string str() const {
-        return std::string(1, LETTERS_ABC[file_()]) +
-               std::string(1, LETTERS_123[rank_()]);
-    }
+    std::string str() const;
 
 private:
     unsigned i_ : 7; // 0-63
 };
-
-/** Undefined square.
-*/
-const Square SQUARE_NULL(64);
 
 /** Iterate squares.
 Usage:
@@ -220,27 +208,27 @@ square != thechess::Square::end(); ++square)
 Usage:
 \code
 THECHESS_FILE_FOREACH (file) {
-    std::cout << file_char(file) << std::endl;
+    std::cout << Square::file_char(file) << std::endl;
 }
 \endcode
 */
 #define THECHESS_FILE_FOREACH(file) \
-for (thechess::File file = thechess::FILE_A; \
-file != thechess::FILE_END; \
-file = (thechess::File)((int)file + 1))
+for (thechess::Square::File file = thechess::Square::FILE_A; \
+file != thechess::Square::FILE_END; \
+file = (thechess::Square::File)((int)file + 1))
 
 /** Iterate ranks.
 Usage:
 \code
 THECHESS_RANK_FOREACH (rank) {
-    std::cout << rank_char(rank) << std::endl;
+    std::cout << Square::rank_char(rank) << std::endl;
 }
 \endcode
 */
 #define THECHESS_RANK_FOREACH(rank) \
-for (thechess::Rank rank = thechess::RANK_1; \
-rank != thechess::RANK_END; \
-rank = (thechess::Rank)((int)rank + 1))
+for (thechess::Square::Rank rank = thechess::Square::RANK_1; \
+rank != thechess::Square::RANK_END; \
+rank = (thechess::Square::Rank)((int)rank + 1))
 
 }
 

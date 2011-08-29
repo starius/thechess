@@ -104,9 +104,9 @@ public:
     bool long_pawn() const;
 
     /** Return the file of previous long pawn half-move.
-    If previous half-move was not long pawn half-move, return \ref FILE_A
+    If previous half-move was not long pawn half-move, return \ref Square::FILE_A
     */
-    File long_pawn_file() const;
+    Square::File long_pawn_file() const;
 
     /* @} */
 
@@ -146,7 +146,7 @@ public:
 
     /** Return if the square can be a target of any half-move */
     bool can_move(Square from) const {
-        return some_target(from) != SQUARE_NULL;
+        return some_target(from) != Square();
     }
 
     /* @} */
@@ -178,8 +178,8 @@ private:
 
     Pieces pieces_;
 
-    void init_pieces(Rank rank, Color color);
-    void init_pawns(Rank rank, Color color);
+    void init_pieces(Square::Rank rank, Color color);
+    void init_pawns(Square::Rank rank, Color color);
 
     byte q(Square square) const; // quarta of this piece
     void q(Square square, byte q_);

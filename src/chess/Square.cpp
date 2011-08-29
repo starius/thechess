@@ -8,10 +8,15 @@
  */
 
 #include "chess/Square.hpp"
+#include "utils.hpp"
 
 namespace thechess {
 
-Square::Square(File file, Rank rank) :
+const char* const LETTERS_ABC = "abcdefgh";
+const char* const LETTERS_123 = "12345678";
+const int SQUARE_NULL = 64;
+
+Square::Square(Square::File file, Square::Rank rank) :
     i_((unsigned)file * 8 + (unsigned)rank) {
 }
 
@@ -25,6 +30,26 @@ Square::Square(unsigned i) :
 
 Square::Square() :
     i_(SQUARE_NULL) {
+}
+
+char Square::file_char(Square::File file) {
+    return LETTERS_ABC[(int)file];
+}
+
+char Square::file_char() const {
+    return file_char(file());
+}
+
+char Square::rank_char(Square::Rank rank) {
+    return LETTERS_123[(int)rank];
+}
+
+char Square::rank_char() const {
+    return rank_char(rank());
+}
+
+std::string Square::str() const {
+    return char2str(file_char()) + char2str(rank_char());
 }
 
 }

@@ -160,7 +160,7 @@ public:
         if (board_.test_shah()) {
             shah_square_ = board_.find_king(board_.order());
         } else {
-            shah_square_ = SQUARE_NULL;
+            shah_square_ = Square();
         }
         active_ = active;
         check_activate_();
@@ -225,7 +225,7 @@ private:
             image_at(lastmove_.to())->decorationStyle()
             .setBackgroundColor(Wt::yellow);
         }
-        if (shah_square_ != SQUARE_NULL) {
+        if (shah_square_ != Square()) {
             image_at(shah_square_)->decorationStyle().setBackgroundColor(Wt::red);
         }
     }
@@ -235,7 +235,7 @@ private:
             color_black_white_(lastmove_.from());
             color_black_white_(lastmove_.to());
         }
-        if (shah_square_ != SQUARE_NULL) {
+        if (shah_square_ != Square()) {
             color_black_white_(shah_square_);
         }
     }
@@ -296,7 +296,7 @@ private:
     }
 
     void modify_undo_() {
-        if (from_ == SQUARE_NULL) {
+        if (from_ == Square()) {
             modify_from_undo_();
         } else {
             modify_to_undo_();
@@ -304,12 +304,12 @@ private:
         if (select_turn_into_flag_) {
             print_select_undo_();
         }
-        from_ = SQUARE_NULL;
+        from_ = Square();
     }
 
     void modify_() {
         color_noactive_();
-        if (from_ == SQUARE_NULL) {
+        if (from_ == Square()) {
             modify_from_();
         } else {
             modify_to_();
@@ -325,13 +325,13 @@ private:
         }
         if (square == from_) {
             modify_undo_();
-            from_ = SQUARE_NULL;
+            from_ = Square();
             modify_();
         } else if (board_.color(square) == board_.order()) {
             modify_undo_();
             from_ = square;
             modify_();
-        } else if (from_ != SQUARE_NULL) {
+        } else if (from_ != Square()) {
             try_move_(HalfMove(from_, square));
         }
     }
@@ -345,12 +345,12 @@ private:
             } else {
                 modify_undo_();
                 lastmove_ = half_move;
-                from_ = SQUARE_NULL;
+                from_ = Square();
                 move_.emit(half_move);
             }
         } else {
             modify_undo_();
-            from_ = SQUARE_NULL;
+            from_ = Square();
             modify_();
         }
     }
@@ -378,26 +378,26 @@ private:
             return;
         }
         modify_undo_();
-        from_ = SQUARE_NULL;
+        from_ = Square();
         half_move.turn_into(letter);
         lastmove_ = half_move;
         move_.emit(half_move);
     }
 
-    int file(File file) {
+    int file(Square::File file) {
         return (bottom_ == WHITE ? (int)file : (7 - (int)file)) + 1;
     }
 
-    int rank(Rank rank) {
+    int rank(Square::Rank rank) {
         return (bottom_ == BLACK ? (int)rank : (7 - (int)rank)) + 1;
     }
 
-    File file(int file) {
-        return (File)(bottom_ == WHITE ? (file - 1) : (7 - (file - 1)));
+    Square::File file(int file) {
+        return (Square::File)(bottom_ == WHITE ? (file - 1) : (7 - (file - 1)));
     }
 
-    Rank rank(int rank) {
-        return (Rank)(bottom_ == BLACK ? (rank - 1) : (7 - (rank - 1)));
+    Square::Rank rank(int rank) {
+        return (Square::Rank)(bottom_ == BLACK ? (rank - 1) : (7 - (rank - 1)));
     }
 
     void correct_bottom_() {

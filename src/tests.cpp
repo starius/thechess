@@ -29,27 +29,27 @@ namespace thechess {
 
 void run_tests() {
     Board test_board;
-    assert(test_board.isset(Square(FILE_E, RANK_2)) == true);
-    assert(test_board.color(Square(FILE_E, RANK_1)) == WHITE);
-    assert(test_board.letter(Square(FILE_E, RANK_1)) == KING);
-    assert(test_board.color(Square(FILE_E, RANK_2)) == WHITE);
-    assert(test_board.letter(Square(FILE_E, RANK_2)) == PAWN);
+    assert(test_board.isset(Square(Square::FILE_E, Square::RANK_2)) == true);
+    assert(test_board.color(Square(Square::FILE_E, Square::RANK_1)) == WHITE);
+    assert(test_board.letter(Square(Square::FILE_E, Square::RANK_1)) == KING);
+    assert(test_board.color(Square(Square::FILE_E, Square::RANK_2)) == WHITE);
+    assert(test_board.letter(Square(Square::FILE_E, Square::RANK_2)) == PAWN);
     // PAWN
-    assert(test_board.simple_test_move(HalfMove(Square(FILE_E, RANK_2), Square(FILE_E, RANK_3))) == true);
-    assert(test_board.simple_test_move(HalfMove(Square(FILE_E, RANK_2), Square(FILE_E, RANK_4))) == true);
-    assert(test_board.simple_test_move(HalfMove(Square(FILE_E, RANK_2), Square(FILE_E, RANK_5))) == false);
-    assert(test_board.simple_test_move(HalfMove(Square(FILE_E, RANK_2), Square(FILE_E, RANK_8))) == false);
-    assert(test_board.test_move(HalfMove(Square(FILE_E, RANK_2), Square(FILE_E, RANK_3))) == true);
-    assert(test_board.test_move(HalfMove(Square(FILE_E, RANK_2), Square(FILE_E, RANK_4))) == true);
-    assert(test_board.test_move(HalfMove(Square(FILE_E, RANK_2), Square(FILE_E, RANK_5))) == false);
+    assert(test_board.simple_test_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_3))) == true);
+    assert(test_board.simple_test_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_4))) == true);
+    assert(test_board.simple_test_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_5))) == false);
+    assert(test_board.simple_test_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_8))) == false);
+    assert(test_board.test_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_3))) == true);
+    assert(test_board.test_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_4))) == true);
+    assert(test_board.test_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_5))) == false);
     // KNIGHT
-    assert(test_board.simple_test_move(HalfMove(Square(FILE_B, RANK_1), Square(FILE_C, RANK_3))) == true);
-    assert(test_board.simple_test_move(HalfMove(Square(FILE_B, RANK_1), Square(FILE_D, RANK_3))) == false);
+    assert(test_board.simple_test_move(HalfMove(Square(Square::FILE_B, Square::RANK_1), Square(Square::FILE_C, Square::RANK_3))) == true);
+    assert(test_board.simple_test_move(HalfMove(Square(Square::FILE_B, Square::RANK_1), Square(Square::FILE_D, Square::RANK_3))) == false);
     // KING
-    assert(test_board.simple_test_move(HalfMove(Square(FILE_E, RANK_1), Square(FILE_E, RANK_2))) == false);
+    assert(test_board.simple_test_move(HalfMove(Square(Square::FILE_E, Square::RANK_1), Square(Square::FILE_E, Square::RANK_2))) == false);
     Moves moves0 = Moves();
-    moves0.push_move(HalfMove(Square(FILE_E, RANK_2), Square(FILE_E, RANK_4)));
-    moves0.push_move(HalfMove(Square(FILE_E, RANK_7), Square(FILE_E, RANK_5)));
+    moves0.push_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_4)));
+    moves0.push_move(HalfMove(Square(Square::FILE_E, Square::RANK_7), Square(Square::FILE_E, Square::RANK_5)));
     assert(moves0.size() == 2);
     assert(moves0.check() == -1);
     // rand (binomial test, p=q=1/2)
