@@ -171,3 +171,4 @@ GameListWidget::GameListWidget(Wt::WContainerWidget* parent) :
 }
 
 }
+

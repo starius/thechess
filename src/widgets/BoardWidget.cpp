@@ -483,3 +483,4 @@ Wt::WContainerWidget* BoardWidget::inner() {
 }
 
 }
+

@@ -155,3 +155,4 @@ template<> void ThechessApplication::list_view<Competition>();
 }
 
 #endif
+

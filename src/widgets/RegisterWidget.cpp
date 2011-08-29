@@ -82,3 +82,4 @@ void RegisterWidget::try_register_() {
 }
 
 }
+

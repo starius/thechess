@@ -35,3 +35,4 @@ struct sql_value_traits<thechess::Td, void> {
 }
 
 #endif
+

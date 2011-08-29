@@ -87,3 +87,4 @@ UserWidget::UserWidget(UserPtr user, Wt::WContainerWidget* parent) :
 }
 
 }
+

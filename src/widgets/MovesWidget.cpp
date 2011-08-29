@@ -390,3 +390,4 @@ int MovesWidget::current_move() const {
 }
 
 }
+

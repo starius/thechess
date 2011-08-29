@@ -98,3 +98,4 @@ UserPtr User::classification_confirmer() const {
 }
 
 }
+

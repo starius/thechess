@@ -459,3 +459,4 @@ GameWidget::GameWidget(GamePtr game, Wt::WContainerWidget* parent) :
 }
 
 }
+
