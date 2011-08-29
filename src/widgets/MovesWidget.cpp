@@ -85,7 +85,7 @@ public:
             std::string text = half_move.san(board, board_after, /*skip_pieces*/ true);
             char shah = ' ';
             if (board_after.test_shah()) {
-                shah = board_after.test_end() == CHECKMATE ? '#' : '+';
+                shah = board_after.test_end() == Board::CHECKMATE ? '#' : '+';
             }
             if (half_move.turn_into() != LETTER_NULL) {
                 Color color = board.color(half_move.from());

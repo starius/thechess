@@ -342,7 +342,7 @@ bool Board::test_attack(HalfMove half_move) const {
     return result;
 }
 
-FinishState Board::test_end() const {
+Board::FinishState Board::test_end() const {
     FinishState state = NOTHING;
     if (some_move() == MOVE_NULL) {
         state = test_shah() ? CHECKMATE : STALEMATE;

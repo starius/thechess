@@ -30,13 +30,6 @@ const int PIECES_SIZE = 34;
 typedef unsigned char byte;
 typedef byte Pieces[34];
 
-/** Result of testing if board is checkmate or stalemate */
-enum FinishState {
-    NOTHING = 0,
-    CHECKMATE = 1,
-    STALEMATE = 2
-};
-
 /** Chess board representation.
 Stores information about position, active color, castling availability,
 en passant target square. There are methods of the class to get information
@@ -56,6 +49,13 @@ Objects of this class are very light, consuming only 34 bytes per object:
 */
 class Board {
 public:
+
+    /** Result of testing if board is checkmate or stalemate */
+    enum FinishState {
+        NOTHING = 0,
+        CHECKMATE = 1,
+        STALEMATE = 2
+    };
 
     /** Construct a board with start position */
     Board();

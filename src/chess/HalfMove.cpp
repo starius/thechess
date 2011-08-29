@@ -93,7 +93,7 @@ std::string HalfMove::san(const Board& board, const Board& board_after,
                 (result += '=') += piece_char(turn_into());
             }
             if (board_after.test_shah()) {
-                result += board_after.test_end() == CHECKMATE ? '#' : '+';
+                result += board_after.test_end() == Board::CHECKMATE ? '#' : '+';
             }
         }
     }

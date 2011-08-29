@@ -387,13 +387,13 @@ void Game::add_move(const HalfMove& half_move,
             limit_private_[order_color()] -= penalty;
         }
         lastmove_ = now();
-        FinishState s = board_after.test_end();
+        Board::FinishState s = board_after.test_end();
         UserPtr order_user_now = order_user();
         push_move_(half_move);
-        if (s == CHECKMATE) {
+        if (s == Board::CHECKMATE) {
             finish_(MATE, order_user_now);
         }
-        if (s == STALEMATE) {
+        if (s == Board::STALEMATE) {
             if (first_draw() != NO_DRAW) {
                 finish_(DRAW_STALEMATE);
             } else {
