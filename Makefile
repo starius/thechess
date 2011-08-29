@@ -117,6 +117,7 @@ style:
 	sed '/^$$/N;/^\n$$/D' -i `find src -name '*.?pp'`
 	sed '/define/!s/\(FOREACH\|THECHESS_\w\+\)(/\1 (/' -i `find src -name '*.?pp'`
 	sed '/\(FOREACH\|THECHESS_\)/s/\(\w\) \([*&]\)/\1\2/' -i `find src -name '*.?pp'`
+	sed '$$s@\(.\+\)@\1\n@g' -i `find -name '*.?pp'`
 
 .SECONDARY: $(WT_CONFIG)
 $(WT_CONFIG): /etc/wt/wt_config.xml Makefile
