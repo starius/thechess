@@ -322,7 +322,7 @@ private:
 
     void move_select_() {
         const Board& board = cached_moves_.board_at(current_move_ + 1);
-        HalfMove lastmove = MOVE_NULL;
+        HalfMove lastmove;
         if (current_move_ != -1) {
             lastmove = cached_moves_.move_at(current_move_);
         }

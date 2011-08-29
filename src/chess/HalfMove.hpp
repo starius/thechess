@@ -122,6 +122,9 @@ public:
         return !(*this == other);
     }
 
+    /** Check for null */
+    operator bool() const;
+
     /** Return SAN (Standard Algebraic Notation) of the half-move.
     \param skip_pieces if specified, all piece letters will be skipped.
         This is usefull when these letters are rendered as images.
@@ -136,8 +139,6 @@ private:
 
     std::string san_from_(const Board& board) const;
 };
-
-const HalfMove MOVE_NULL = HalfMove(Square(), Square());
 
 }
 

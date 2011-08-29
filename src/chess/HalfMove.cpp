@@ -72,6 +72,10 @@ std::string HalfMove::san_from_(const Board& board) const {
     return "";
 }
 
+HalfMove::operator bool() const {
+    return *this != HalfMove();
+}
+
 std::string HalfMove::san(const Board& board, const Board& board_after,
                           bool skip_pieces) const {
     std::string result;

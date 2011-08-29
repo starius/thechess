@@ -347,7 +347,7 @@ bool Board::test_attack(HalfMove half_move) const {
 
 Board::FinishState Board::test_end() const {
     FinishState state = NOTHING;
-    if (some_move() == MOVE_NULL) {
+    if (!some_move()) {
         state = test_shah() ? CHECKMATE : STALEMATE;
     }
     return state;
@@ -461,7 +461,7 @@ HalfMove Board::some_move() const {
             return HalfMove(from, to);
         }
     }
-    return MOVE_NULL;
+    return HalfMove();
 }
 
 Square Board::find_king(Color c) const {

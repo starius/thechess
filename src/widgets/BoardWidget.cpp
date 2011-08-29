@@ -219,7 +219,7 @@ private:
     }
 
     void color_noactive_() {
-        if (lastmove_show_ && lastmove_ != MOVE_NULL) {
+        if (lastmove_show_ && lastmove_) {
             image_at(lastmove_.from())->decorationStyle()
             .setBackgroundColor(Wt::yellow);
             image_at(lastmove_.to())->decorationStyle()
@@ -231,7 +231,7 @@ private:
     }
 
     void color_noactive_undo_() {
-        if (lastmove_show_ && lastmove_ != MOVE_NULL) {
+        if (lastmove_show_ && lastmove_) {
             color_black_white_(lastmove_.from());
             color_black_white_(lastmove_.to());
         }
