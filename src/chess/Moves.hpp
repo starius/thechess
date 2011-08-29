@@ -149,7 +149,7 @@ public:
              bool reduced = false) const;
 
 private:
-    enum Square_type {
+    enum SquareType {
         SQUARE_FROM = 0,
         SQUARE_TO = 1
     };
@@ -159,11 +159,11 @@ private:
     }
 
     Square square_(int i) const;
-    Square square_(int n, Square_type square_type) const {
+    Square square_(int n, SquareType square_type) const {
         return square_(n * 2 + (int)square_type);
     }
     void square_(int i, Square square);
-    void square_(int n, Square_type square_type, Square square) {
+    void square_(int n, SquareType square_type, Square square) {
         square_(n * 2 + (int)square_type, square);
     }
 
