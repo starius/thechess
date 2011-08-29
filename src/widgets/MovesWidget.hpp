@@ -29,7 +29,7 @@ class MovesWidget : public Wt::WCompositeWidget {
 public:
     MovesWidget(const Moves& moves, bool big = false,
                 bool active = false, int max_moves = -1, bool append_only = false,
-                Color bottom = WHITE, Wt::WContainerWidget* parent = 0);
+                Piece::Color bottom = Piece::WHITE, Wt::WContainerWidget* parent = 0);
 
     const Moves& moves() const;
     const Board& board() const;
@@ -37,7 +37,7 @@ public:
     int current_move() const;
 
     void add_move(const HalfMove& half_move);
-    void bottom_set(Color bottom);
+    void bottom_set(Piece::Color bottom);
     void reset();
     void set_moves(const Moves& moves);
     void set_active(bool active);

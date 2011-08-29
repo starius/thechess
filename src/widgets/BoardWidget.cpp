@@ -50,7 +50,7 @@ struct PieceStat {
         }
     }
 
-    int stat[COLOR_COUNT][LETTER_COUNT];
+    int stat[Piece::COLOR_COUNT][Piece::LETTER_COUNT];
 };
 
 PieceStat full_stat = PieceStat(Board());
@@ -60,23 +60,23 @@ public:
 
     TakenPiecesImpl(const Board& board):
         Wt::WContainerWidget(), taken_stat_(board) {
-        print_color_(WHITE);
+        print_color_(Piece::WHITE);
         new Wt::WBreak(this);
-        print_color_(BLACK);
+        print_color_(Piece::BLACK);
     }
 
 private:
     PieceStat taken_stat_;
 
-    void print_color_(Color color) {
-        print_piece_(color, QUEEN);
-        print_piece_(color, ROCK);
-        print_piece_(color, KNIGHT);
-        print_piece_(color, BISHOP);
-        print_piece_(color, PAWN);
+    void print_color_(Piece::Color color) {
+        print_piece_(color, Piece::QUEEN);
+        print_piece_(color, Piece::ROCK);
+        print_piece_(color, Piece::KNIGHT);
+        print_piece_(color, Piece::BISHOP);
+        print_piece_(color, Piece::PAWN);
     }
 
-    void print_piece_(Color color, Letter letter) {
+    void print_piece_(Piece::Color color, Piece::Letter letter) {
         int c = full_stat.stat[color][letter] - taken_stat_.stat[color][letter];
         for (int i = 0; i < c; i++) {
             new Wt::WImage(BoardWidget::image(Piece(color, letter)), this);
@@ -114,7 +114,7 @@ private:
 
 class BoardWidgetImpl : public Wt::WContainerWidget {
 public:
-    BoardWidgetImpl(bool big, bool active, Color bottom,
+    BoardWidgetImpl(bool big, bool active, Piece::Color bottom,
                     const Board& board) :
         Wt::WContainerWidget(), board_(board), bottom_(bottom),
         active_(active), activated_(false), big_(big), lastmove_show_(true),
@@ -139,7 +139,7 @@ public:
     }
 
     const char* xml_message() {
-        return bottom_ == WHITE ?
+        return bottom_ == Piece::WHITE ?
                "tc.game.board_white_template" : "tc.game.board_black_template";
     }
 
@@ -171,14 +171,14 @@ public:
         }
     }
 
-    void bottom_set(Color bottom) {
+    void bottom_set(Piece::Color bottom) {
         bottom_ = bottom;
         correct_bottom_();
         board_template_->setTemplateText(tr(xml_message()));
     }
 
     void turn() {
-        bottom_set(other_color(bottom_));
+        bottom_set(Piece::other_color(bottom_));
     }
 
     Wt::WContainerWidget* inner() {
@@ -189,7 +189,7 @@ private:
     friend class DnDPiece;
 
     Board board_;
-    Color bottom_;
+    Piece::Color bottom_;
     bool active_;
     bool activated_;
     bool big_;
@@ -356,9 +356,9 @@ private:
     }
 
     void print_select_(HalfMove half_move) {
-        static Letter cc[] =
-        { QUEEN, ROCK, BISHOP, KNIGHT };
-        BOOST_FOREACH (Letter c, cc) {
+        static Piece::Letter cc[] =
+        { Piece::QUEEN, Piece::ROCK, Piece::BISHOP, Piece::KNIGHT };
+        BOOST_FOREACH (Piece::Letter c, cc) {
             Piece cm = Piece(board_.order(), c);
             std::string path = BoardWidget::image(cm, big_);
             Wt::WImage* img = new Wt::WImage(path, select_turn_into_);
@@ -373,7 +373,7 @@ private:
         select_turn_into_flag_ = false;
     }
 
-    void select_onclick_(Letter letter, HalfMove half_move) {
+    void select_onclick_(Piece::Letter letter, HalfMove half_move) {
         if (!active_) {
             return;
         }
@@ -385,24 +385,24 @@ private:
     }
 
     int file(Square::File file) {
-        return (bottom_ == WHITE ? (int)file : (7 - (int)file)) + 1;
+        return (bottom_ == Piece::WHITE ? (int)file : (7 - (int)file)) + 1;
     }
 
     int rank(Square::Rank rank) {
-        return (bottom_ == BLACK ? (int)rank : (7 - (int)rank)) + 1;
+        return (bottom_ == Piece::BLACK ? (int)rank : (7 - (int)rank)) + 1;
     }
 
     Square::File file(int file) {
-        return (Square::File)(bottom_ == WHITE ? (file - 1) : (7 - (file - 1)));
+        return (Square::File)(bottom_ == Piece::WHITE ? (file - 1) : (7 - (file - 1)));
     }
 
     Square::Rank rank(int rank) {
-        return (Square::Rank)(bottom_ == BLACK ? (rank - 1) : (7 - (rank - 1)));
+        return (Square::Rank)(bottom_ == Piece::BLACK ? (rank - 1) : (7 - (rank - 1)));
     }
 
     void correct_bottom_() {
-        if (bottom_ == COLOR_NULL) {
-            bottom_ = WHITE;
+        if (bottom_ == Piece::COLOR_NULL) {
+            bottom_ = Piece::WHITE;
         }
     }
 
@@ -454,14 +454,14 @@ std::string BoardWidget::image(Piece piece, bool big) {
                % (big ? "-B" : ""));
 }
 
-BoardWidget::BoardWidget(bool big, bool active, Color bottom,
+BoardWidget::BoardWidget(bool big, bool active, Piece::Color bottom,
                          const Board& board, Wt::WContainerWidget* parent) :
     WCompositeWidget(parent) {
     impl_ = new BoardWidgetImpl(big, active, bottom, board);
     setImplementation(impl_);
 }
 
-void BoardWidget::bottom_set(Color bottom) {
+void BoardWidget::bottom_set(Piece::Color bottom) {
     impl_->bottom_set(bottom);
 }
 

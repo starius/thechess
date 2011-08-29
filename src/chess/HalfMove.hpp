@@ -33,11 +33,11 @@ Inside Moves, it spends only 1.5 bytes per half-move.
 class HalfMove {
 public:
     /** Construct a half-move using source, destination and promoted piece letter */
-    HalfMove(Square from, Square to, Letter turn_into)
+    HalfMove(Square from, Square to, Piece::Letter turn_into)
         : from_(from), to_(to), turn_into_(turn_into) {}
 
     /** Construct a half-move using source and destination squares.
-    turn_into() of a constructed half-move returns \ref LETTER_NULL.
+    turn_into() of a constructed half-move returns \ref Piece::LETTER_NULL.
     */
     HalfMove(Square from, Square to);
 
@@ -51,7 +51,7 @@ public:
     HalfMove(Square from, Square packed_to, const Board& board);
 
     /** Default constructor.
-    The result is \code HalfMove(Square(), Square(), LETTER_NULL) \endcode
+    The result is \code HalfMove(Square(), Square(), Piece::LETTER_NULL) \endcode
     */
     HalfMove();
 
@@ -66,7 +66,7 @@ public:
     }
 
     /** Get the promoted piece letter */
-    Letter turn_into() const {
+    Piece::Letter turn_into() const {
         return turn_into_;
     }
 
@@ -81,7 +81,7 @@ public:
     }
 
     /** Set the promoted piece letter */
-    void turn_into(Letter v) {
+    void turn_into(Piece::Letter v) {
         turn_into_ = v;
     }
 
@@ -135,7 +135,7 @@ public:
 private:
     unsigned from_ : 7;
     unsigned to_ : 7;
-    Letter turn_into_ : 3;
+    Piece::Letter turn_into_ : 3;
 
     std::string san_from_(const Board& board) const;
 };

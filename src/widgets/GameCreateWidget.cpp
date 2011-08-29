@@ -65,7 +65,7 @@ void GameCreateWidget::button_handler_() {
     dbo::Transaction t(tApp->session());
     GamePtr game = tApp->session().add(new Game(true));
     gpw_->apply_parameters(game.modify());
-    Color color = selected_color_();
+    Piece::Color color = selected_color_();
     if (with_user_) {
         game.modify()->propose_game(tApp->user(), user_, color);
     } else {
@@ -79,12 +79,12 @@ void GameCreateWidget::button_handler_() {
     tApp->view(game);
 }
 
-Color GameCreateWidget::selected_color_() const {
-    Color color = COLOR_NULL;
+Piece::Color GameCreateWidget::selected_color_() const {
+    Piece::Color color = Piece::COLOR_NULL;
     if (color_->currentIndex() == 1) {
-        color = WHITE;
+        color = Piece::WHITE;
     } else if (color_->currentIndex() == 2) {
-        color = BLACK;
+        color = Piece::BLACK;
     }
     return color;
 }

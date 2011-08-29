@@ -33,13 +33,13 @@ class BoardWidgetImpl;
 
 class BoardWidget : public Wt::WCompositeWidget {
 public:
-    BoardWidget(bool big = false, bool active = false, Color bottom = WHITE,
+    BoardWidget(bool big = false, bool active = false, Piece::Color bottom = Piece::WHITE,
                 const Board& board = Board(),
                 Wt::WContainerWidget* parent = 0);
 
     static std::string image(Piece piece, bool big = false);
 
-    void bottom_set(Color bottom);
+    void bottom_set(Piece::Color bottom);
     void set(const Board& board, HalfMove lastmove, bool active);
 
     void turn();

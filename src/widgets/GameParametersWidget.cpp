@@ -28,7 +28,7 @@ GameParametersWidget::GameParametersWidget(const GameParameters* gp,
     section(tr("tc.game.Parameters"));
     cell = item(tr("tc.game.Start_position"), "", 0, 0, false);
     moves_widget_ = new MovesWidget(gp->moves(), false, true,
-                                    max::MOVES_INIT, false, WHITE, cell);
+                                    max::MOVES_INIT, false, Piece::WHITE, cell);
     Wt::WPushButton* moves_reset_ = new Wt::WPushButton(tr("tc.common.Reset"), cell);
     moves_reset_->clicked().connect(moves_widget_, &MovesWidget::reset);
     limit_std_ = new TimeDeltaWidget(min::LIMIT_STD, gp->limit_std(), max::LIMIT_STD);

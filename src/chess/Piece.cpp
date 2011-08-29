@@ -11,14 +11,24 @@
 
 namespace thechess {
 
-Piece::Piece(Color color, Letter letter) :
+const char* const PIECE_LETTERS = "-BKNPQR";
+
+Piece::Piece(Piece::Color color, Piece::Letter letter) :
     color_(color), piece_(letter) {
 }
 
-Wt::WString color2str(Color color) {
-    return (color == WHITE) ? Wt::WString::tr("tc.game.white") :
-           ((color == BLACK) ? Wt::WString::tr("tc.game.black") :
+Wt::WString Piece::color_str() const {
+    return (color() == WHITE) ? Wt::WString::tr("tc.game.white") :
+           ((color() == BLACK) ? Wt::WString::tr("tc.game.black") :
             Wt::WString::tr("thechess.nocolor"));
+}
+
+Piece::Color Piece::other_color(Piece::Color color) {
+    return color == WHITE ? BLACK : WHITE;
+}
+
+char Piece::piece_char(Piece::Letter letter) {
+    return PIECE_LETTERS[(int)letter];
 }
 
 }

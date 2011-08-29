@@ -38,7 +38,7 @@ private:
 
     void print_();
     void button_handler_();
-    Color selected_color_() const;
+    Piece::Color selected_color_() const;
 };
 
 }

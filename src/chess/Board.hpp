@@ -75,22 +75,22 @@ public:
     bool isset(Square square) const;
 
     /** Return the color of the square.
-    If the square is empty, return \ref COLOR_NULL */
-    Color color(Square square) const;
+    If the square is empty, return \ref Piece::COLOR_NULL */
+    Piece::Color color(Square square) const;
 
     /** Return the letter of the square.
-    If the square is empty, return \ref LETTER_NULL */
-    Letter letter(Square square) const;
+    If the square is empty, return \ref Piece::LETTER_NULL */
+    Piece::Letter letter(Square square) const;
 
     /** Return the \ref Piece structure of the square.
     If the square is empty, return \ref Piece constructed from
-    \ref COLOR_NULL and \ref LETTER_NULL */
+    \ref Piece::COLOR_NULL and \ref Piece::LETTER_NULL */
     Piece piece(Square square) const;
 
     /** Return active color.
     For ended games, return the color of loser
     */
-    Color order() const;
+    Piece::Color order() const;
 
     /** Return availability of castling involving the rock.
     The castling may be impossible even if this method returns true,
@@ -119,7 +119,7 @@ public:
     bool test_move(const HalfMove half_move) const;
 
     /** Return if the square were attacked if it would be of given color */
-    bool test_attack(Square square, Color c) const;
+    bool test_attack(Square square, Piece::Color c) const;
 
     /** Return if the destination will be attacked after the half-move */
     bool test_attack(HalfMove half_move) const;
@@ -155,7 +155,7 @@ public:
     /* @{ */
 
     /** Return if the board is in checking state for pieces of the color */
-    bool test_shah(Color color) const;
+    bool test_shah(Piece::Color color) const;
 
     /** Return if the board is in checking state.
     This convenience method returns \c test_shah(order())
@@ -165,7 +165,7 @@ public:
     }
 
     /** Return the square of the king of the color */
-    Square find_king(Color c) const;
+    Square find_king(Piece::Color c) const;
 
     /** Return finish state of the board */
     FinishState test_end() const;
@@ -178,18 +178,18 @@ private:
 
     Pieces pieces_;
 
-    void init_pieces(Square::Rank rank, Color color);
-    void init_pawns(Square::Rank rank, Color color);
+    void init_pieces(Square::Rank rank, Piece::Color color);
+    void init_pawns(Square::Rank rank, Piece::Color color);
 
     byte q(Square square) const; // quarta of this piece
     void q(Square square, byte q_);
 
     void unset(Square square);
-    void color(Square square, Color c);
-    void letter(Square square, Letter letter);
+    void color(Square square, Piece::Color c);
+    void letter(Square square, Piece::Letter letter);
     void piece(Square square, Piece piece);
 
-    void order(Color c);
+    void order(Piece::Color c);
     void change_order();
     void castling_reset();
     void castling_off(Square rock_square);

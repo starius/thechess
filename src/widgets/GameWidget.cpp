@@ -147,7 +147,7 @@ public:
         bool active = game_->can_move(tApp->user());
         bool big = false; // FIXME
         bool append_only = true;
-        Color bottom = game_->color_of(tApp->user());
+        Piece::Color bottom = game_->color_of(tApp->user());
         const Moves& moves = game_->moves();
         moves_widget_ = new MovesWidget(moves, big, active, max_moves,
                                         append_only, bottom, this);
@@ -311,7 +311,7 @@ private:
             new Wt::WText(tr("tc.game.Mistake_proposal")
                           .arg(game_->mistake_proposer()->username())
                           .arg(Moves::n_to_human(game_->mistake_move()))
-                          .arg(tr(Moves::order(game_->mistake_move()) == WHITE ?
+                          .arg(tr(Moves::order(game_->mistake_move()) == Piece::WHITE ?
                                   "tc.game.of_white" : "tc.game.of_black")),
                           manager_);
             if (game_->can_mistake_agree(tApp->user())) {
@@ -406,7 +406,7 @@ private:
         bool active = true;
         bool big = false; // FIXME
         bool append_only = false;
-        Color bottom = game_->color_of(tApp->user());
+        Piece::Color bottom = game_->color_of(tApp->user());
         const Moves& moves = game_->moves();
         new MovesWidget(moves, big, active, max_moves,
                         append_only, bottom, analysis->contents());

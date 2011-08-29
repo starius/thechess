@@ -30,11 +30,11 @@ namespace thechess {
 void run_tests() {
     Board test_board;
     assert(test_board.isset(Square(Square::FILE_E, Square::RANK_2)) == true);
-    assert(test_board.color(Square(Square::FILE_E, Square::RANK_1)) == WHITE);
-    assert(test_board.letter(Square(Square::FILE_E, Square::RANK_1)) == KING);
-    assert(test_board.color(Square(Square::FILE_E, Square::RANK_2)) == WHITE);
-    assert(test_board.letter(Square(Square::FILE_E, Square::RANK_2)) == PAWN);
-    // PAWN
+    assert(test_board.color(Square(Square::FILE_E, Square::RANK_1)) == Piece::WHITE);
+    assert(test_board.letter(Square(Square::FILE_E, Square::RANK_1)) == Piece::KING);
+    assert(test_board.color(Square(Square::FILE_E, Square::RANK_2)) == Piece::WHITE);
+    assert(test_board.letter(Square(Square::FILE_E, Square::RANK_2)) == Piece::PAWN);
+    // Piece::PAWN
     assert(test_board.simple_test_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_3))) == true);
     assert(test_board.simple_test_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_4))) == true);
     assert(test_board.simple_test_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_5))) == false);
@@ -42,10 +42,10 @@ void run_tests() {
     assert(test_board.test_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_3))) == true);
     assert(test_board.test_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_4))) == true);
     assert(test_board.test_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_5))) == false);
-    // KNIGHT
+    // Piece::KNIGHT
     assert(test_board.simple_test_move(HalfMove(Square(Square::FILE_B, Square::RANK_1), Square(Square::FILE_C, Square::RANK_3))) == true);
     assert(test_board.simple_test_move(HalfMove(Square(Square::FILE_B, Square::RANK_1), Square(Square::FILE_D, Square::RANK_3))) == false);
-    // KING
+    // Piece::KING
     assert(test_board.simple_test_move(HalfMove(Square(Square::FILE_E, Square::RANK_1), Square(Square::FILE_E, Square::RANK_2))) == false);
     Moves moves0 = Moves();
     moves0.push_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_4)));

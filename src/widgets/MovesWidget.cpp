@@ -47,7 +47,7 @@ public:
         if (index.column() == 0) {
             n = -2;
         } else {
-            Color color = (index.column() == 1) ? WHITE : BLACK;
+            Piece::Color color = (index.column() == 1) ? Piece::WHITE : Piece::BLACK;
             n = Moves::n_from_human(index.row() + 1, color);
             if (n >= cached_moves_->size()) {
                 n = -2;
@@ -87,8 +87,8 @@ public:
             if (board_after.test_shah()) {
                 shah = board_after.test_end() == Board::CHECKMATE ? '#' : '+';
             }
-            if (half_move.turn_into() != LETTER_NULL) {
-                Color color = board.color(half_move.from());
+            if (half_move.turn_into() != Piece::LETTER_NULL) {
+                Piece::Color color = board.color(half_move.from());
                 Piece ti_piece(color, half_move.turn_into());
                 std::string ti_src =
                     wApp->resolveRelativeUrl(BoardWidget::image(ti_piece));
@@ -145,7 +145,7 @@ class MovesWidgetImpl : public Wt::WContainerWidget {
 public:
     MovesWidgetImpl(const Moves& moves,
                     bool big, bool active, int max_moves,
-                    bool append_only, Color bottom) :
+                    bool append_only, Piece::Color bottom) :
         Wt::WContainerWidget(), cached_moves_(moves),
         current_move_(moves.size() - 1), max_moves_(max_moves),
         used_moves_(0), append_only_(append_only),
@@ -213,7 +213,7 @@ public:
         }
     }
 
-    void bottom_set(Color bottom) {
+    void bottom_set(Piece::Color bottom) {
         board_widget_->bottom_set(bottom);
     }
 
@@ -345,7 +345,7 @@ private:
 
 MovesWidget::MovesWidget(const Moves& moves,
                          bool big, bool active, int max_moves,
-                         bool append_only, Color bottom,
+                         bool append_only, Piece::Color bottom,
                          Wt::WContainerWidget* parent) :
     WCompositeWidget(parent) {
     impl_ = new MovesWidgetImpl(moves, big, active,
@@ -369,7 +369,7 @@ void MovesWidget::add_move(const HalfMove& half_move) {
     impl_->add_move(half_move);
 }
 
-void MovesWidget::bottom_set(Color bottom) {
+void MovesWidget::bottom_set(Piece::Color bottom) {
     impl_->bottom_set(bottom);
 }
 

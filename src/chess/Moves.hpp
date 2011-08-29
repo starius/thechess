@@ -120,8 +120,8 @@ public:
     }
 
     /** Convert number of move and active color to index of half-move */
-    static int n_from_human(int human_i, Color color) {
-        return (human_i - 1) * 2 + ((color == WHITE) ? 0 : 1);
+    static int n_from_human(int human_i, Piece::Color color) {
+        return (human_i - 1) * 2 + ((color == Piece::WHITE) ? 0 : 1);
     }
 
     /** Return number of moves.
@@ -137,8 +137,8 @@ public:
     }
 
     /** Return active color of half-move */
-    static Color order(int move_n) {
-        return order_int(move_n) == 0 ? WHITE : BLACK;
+    static Piece::Color order(int move_n) {
+        return order_int(move_n) == 0 ? Piece::WHITE : Piece::BLACK;
     }
 
     /** Write (PGN) movetext to stream.

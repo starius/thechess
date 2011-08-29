@@ -86,16 +86,16 @@ public:
         dbo::belongsTo(a, black_, "black");
         dbo::belongsTo(a, winner_, "winner_game");
         dbo::belongsTo(a, init_, "init_game");
-        dbo::field(a, competition_confirmer_[WHITE], "competition_confirmer_white");
-        dbo::field(a, competition_confirmer_[BLACK], "competition_confirmer_black");
+        dbo::field(a, competition_confirmer_[Piece::WHITE], "competition_confirmer_white");
+        dbo::field(a, competition_confirmer_[Piece::BLACK], "competition_confirmer_black");
         dbo::field(a, colors_random_, "colors_random");
         dbo::field(a, created_, "created");
         dbo::field(a, confirmed_, "confirmed");
         dbo::field(a, started_, "started");
         dbo::field(a, lastmove_, "lastmove");
         dbo::field(a, ended_, "ended");
-        dbo::field(a, limit_private_[WHITE], "limit_private_white");
-        dbo::field(a, limit_private_[BLACK], "limit_private_black");
+        dbo::field(a, limit_private_[Piece::WHITE], "limit_private_white");
+        dbo::field(a, limit_private_[Piece::BLACK], "limit_private_black");
         dbo::belongsTo(a, competition_, "competition");
         dbo::field(a, competition_stage_, "competition_stage");
         dbo::field(a, pause_until_, "pause_until");
@@ -105,8 +105,8 @@ public:
         dbo::field(a, mistake_move_, "mistake_move");
         dbo::field(a, mistake_proposer_, "mistake_proposer");
         dbo::field(a, draw_proposer_, "draw_proposer");
-        dbo::field(a, rating_after_[WHITE], "rating_after_white");
-        dbo::field(a, rating_after_[BLACK], "rating_after_black");
+        dbo::field(a, rating_after_[Piece::WHITE], "rating_after_white");
+        dbo::field(a, rating_after_[Piece::BLACK], "rating_after_black");
         dbo::field(a, comment_, "comment");
     }
 #endif
@@ -117,13 +117,13 @@ public:
     \param c color of creator, or none color to set random colors
     */
     void propose_game(UserPtr init, UserPtr u,
-                      Color c);
+                      Piece::Color c);
 
     /** Turn this game into challenge by one user.
     \param init the creator of game
     \param c color of creator, none color meens random color
     */
-    void propose_challenge(UserPtr init, Color c);
+    void propose_challenge(UserPtr init, Piece::Color c);
 
     /** Turn this game into competition game.
     \param white the user playing white pieces
@@ -329,7 +329,7 @@ public:
     /* @{ */
 
     /** Return the active color */
-    Color order_color() const;
+    Piece::Color order_color() const;
 
     /** Return the active user */
     UserPtr order_user() const;
@@ -355,13 +355,13 @@ public:
     }
 
     /** Return the pieces color of given user */
-    Color color_of(const UserPtr user) const;
+    Piece::Color color_of(const UserPtr user) const;
 
     /** Return if the user is member of the game (black, white or init) */
     bool is_member(const UserPtr user) const;
 
     /** Return the user playing pieces of given color */
-    UserPtr user_of(Color color) const;
+    UserPtr user_of(Piece::Color color) const;
 
     /** Return another member of the game */
     UserPtr other_user(const UserPtr user) const;
@@ -413,7 +413,7 @@ public:
     }
 
     /** Return elo rating of the user after the game if changed or -1 */
-    int rating_after(Color color) const;
+    int rating_after(Piece::Color color) const;
 
     /* @} */
 
@@ -436,7 +436,7 @@ public:
     /* @{ */
 
     /** Return private time limit of user of given color */
-    Td limit_private(Color color) const;
+    Td limit_private(Piece::Color color) const;
 
     /** Return private time limit of given user */
     Td limit_private(UserPtr user) const;
@@ -596,7 +596,7 @@ private:
     void set_black_(UserPtr user) {
         black_ = user;
     }
-    void set_of_color_(UserPtr user, Color color);
+    void set_of_color_(UserPtr user, Piece::Color color);
     void set_random_(UserPtr user1, UserPtr user2);
 
     void confirm_();

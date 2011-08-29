@@ -16,45 +16,6 @@
 
 namespace thechess {
 
-/** The enum for piece color */
-enum Color {
-    WHITE = 0, /**< White color */
-    BLACK = 1, /**< Black color */
-    COLOR_NULL = 2 /**< Undetermined color, can be the return value */
-};
-
-/** The number of Color members */
-const int COLOR_COUNT = 3;
-
-/** Piece letter */
-enum Letter {
-    LETTER_NULL = 0, /**< Undefined piece letter, can be the return value */
-    BISHOP = 1, /**< Bishop */
-    KING   = 2, /**< King */
-    KNIGHT = 3, /**< Knight */
-    PAWN   = 4, /**< Pawn */
-    QUEEN  = 5, /**< Queen */
-    ROCK   = 6  /**< Rock */
-};
-
-/** The number of Letter members */
-const int LETTER_COUNT = 7;
-
-const char* const PIECE_LETTERS = "-BKNPQR";
-
-/** Return l9n string for the color */
-Wt::WString color2str(Color color);
-
-/** If the color is white return black, else return white */
-inline Color other_color(Color color) {
-    return color == WHITE ? BLACK : WHITE;
-}
-
-/** Return char of piece letter */
-inline char piece_char(Letter letter) {
-    return PIECE_LETTERS[(int)letter];
-}
-
 /** Piece.
 This class consists of Color and Letter members.
 
@@ -62,6 +23,30 @@ This class consists of Color and Letter members.
 */
 class Piece {
 public:
+    /** The enum for piece color */
+    enum Color {
+        WHITE = 0, /**< White color */
+        BLACK = 1, /**< Black color */
+        COLOR_NULL = 2 /**< Undetermined color, can be the return value */
+    };
+
+    /** The number of Color members */
+    static const int COLOR_COUNT = 3;
+
+    /** Piece letter */
+    enum Letter {
+        LETTER_NULL = 0, /**< Undefined piece letter, can be the return value */
+        BISHOP = 1, /**< Bishop */
+        KING   = 2, /**< King */
+        KNIGHT = 3, /**< Knight */
+        PAWN   = 4, /**< Pawn */
+        QUEEN  = 5, /**< Queen */
+        ROCK   = 6  /**< Rock */
+    };
+
+    /** The number of Letter members */
+    static const int LETTER_COUNT = 7;
+
     /** Construct a piece using a color and a letter */
     Piece(Color color, Letter letter);
 
@@ -94,6 +79,15 @@ public:
     void letter(Letter v) {
         piece_ = v;
     }
+
+    /** Return l9n string for the color */
+    Wt::WString color_str() const;
+
+    /** If the color is white return black, else return white */
+    static Color other_color(Color color);
+
+    /** Return char of piece letter */
+    static char piece_char(Letter letter);
 
 private:
     Color color_;

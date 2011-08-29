@@ -139,7 +139,7 @@ void Moves::pgn(std::ostream& out, const std::string& result, bool reduced) cons
         HalfMove half_move = *move_it;
         board_after.make_move(half_move);
         std::string move_str = half_move.san(board, board_after);
-        if (order(move_it.n) == WHITE) {
+        if (order(move_it.n) == Piece::WHITE) {
             move_str = str(boost::format("%i. ") % n_to_human(move_it.n)) + move_str;
         }
         ptw.write_word(move_str);
