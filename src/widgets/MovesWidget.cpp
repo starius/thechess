@@ -79,9 +79,9 @@ public:
             if (n == -2) {
                 return std::string("");
             }
-            HalfMove half_move = cached_moves_->move_at(n);
-            const Board& board = cached_moves_->board_at(n);
-            const Board& board_after = cached_moves_->board_at(n + 1);
+            HalfMove half_move = cached_moves_->half_move(n);
+            const Board& board = cached_moves_->board(n);
+            const Board& board_after = cached_moves_->board(n + 1);
             std::string text = half_move.san(board, board_after, /*skip_pieces*/ true);
             char shah = ' ';
             if (board_after.test_shah()) {
@@ -193,7 +193,7 @@ public:
     }
 
     const Board& board() const {
-        return cached_moves_.board_at(cached_moves_.size());
+        return cached_moves_.board(cached_moves_.size());
     }
 
     Wt::Signal<HalfMove>& half_move() {
@@ -206,7 +206,7 @@ public:
 
     void add_move(const HalfMove& half_move) {
         int i = cached_moves_.size() - 1;
-        if (i == -1 || half_move != cached_moves_.move_at(i)) {
+        if (i == -1 || half_move != cached_moves_.half_move(i)) {
             int n = cached_moves_.size();
             reset_move_(n, half_move);
             goto_move_(n);
@@ -258,7 +258,7 @@ private:
     }
 
     void reset_move_(int n, const HalfMove& half_move) {
-        cached_moves_.reset_move(n, half_move);
+        cached_moves_.reset_half_move(n, half_move);
         moves_model_->move_changed(n);
     }
 
@@ -321,10 +321,10 @@ private:
     }
 
     void move_select_() {
-        const Board& board = cached_moves_.board_at(current_move_ + 1);
+        const Board& board = cached_moves_.board(current_move_ + 1);
         HalfMove lastmove;
         if (current_move_ != -1) {
-            lastmove = cached_moves_.move_at(current_move_);
+            lastmove = cached_moves_.half_move(current_move_);
         }
         board_widget_->set(board, lastmove, active());
     }

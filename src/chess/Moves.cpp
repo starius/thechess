@@ -24,14 +24,14 @@ MovesIterator::MovesIterator(const Moves* moves, Board& board, int from)
     :  moves_(moves), board_(board), n(from) {
 }
 
-Moves::Moves(int moves_count) :
-    svuc_(moves_count, '\0') {
+Moves::Moves(int size) :
+    svuc_(size, '\0') {
 }
 
-Moves::Moves(HalfMove moves[], int moves_count) :
-    svuc_(moves_count, '\0') {
-    for (int i = 0; i < moves_count; i++) {
-        set_move(i, moves[i]);
+Moves::Moves(HalfMove moves[], int size) :
+    svuc_(size, '\0') {
+    for (int i = 0; i < size; i++) {
+        set_half_move_(i, moves[i]);
     }
 }
 
@@ -78,12 +78,12 @@ void Moves::square_(int i, Square square) {
     }
 }
 
-void Moves::set_move(int n, HalfMove half_move) {
+void Moves::set_half_move_(int n, HalfMove half_move) {
     square_(n, SQUARE_FROM, half_move.from());
     square_(n, SQUARE_TO, half_move.packed_to());
 }
 
-void Moves::push_move(HalfMove half_move) {
+void Moves::push(HalfMove half_move) {
     int current_size = size();
     if (current_size % 2 == 0) {
         // adding half_move by white
@@ -93,10 +93,10 @@ void Moves::push_move(HalfMove half_move) {
         // adding half_move by black
         svuc_.push_back('\0');
     }
-    set_move(current_size, half_move);
+    set_half_move_(current_size, half_move);
 }
 
-void Moves::pop_move() {
+void Moves::pop() {
     int current_size = size();
     if (current_size % 2 == 0) {
         // delete one byte
@@ -108,13 +108,13 @@ void Moves::pop_move() {
     }
 }
 
-void Moves::pop_moves(int number) {
+void Moves::pop(int number) {
     for (int i = 0; i < number; i++) {
-        pop_move();
+        pop();
     }
 }
 
-Board Moves::board_at(int n) const {
+Board Moves::board(int n) const {
     Board board;
     THECHESS_MOVES_TO (move_it, this, board, n) {
     }

@@ -598,11 +598,11 @@ void Game::elo_change_() {
 }
 
 void Game::push_move_(HalfMove half_move) {
-    moves_.push_move(half_move);
+    moves_.push(half_move);
 }
 
 void Game::pop_moves_(int number) {
-    moves_.pop_moves(number);
+    moves_.pop(number);
 }
 
 int Game::rating_after(Piece::Color color) const {

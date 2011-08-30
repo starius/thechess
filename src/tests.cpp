@@ -48,8 +48,8 @@ void run_tests() {
     // Piece::KING
     assert(test_board.simple_test_move(HalfMove(Square(Square::FILE_E, Square::RANK_1), Square(Square::FILE_E, Square::RANK_2))) == false);
     Moves moves0 = Moves();
-    moves0.push_move(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_4)));
-    moves0.push_move(HalfMove(Square(Square::FILE_E, Square::RANK_7), Square(Square::FILE_E, Square::RANK_5)));
+    moves0.push(HalfMove(Square(Square::FILE_E, Square::RANK_2), Square(Square::FILE_E, Square::RANK_4)));
+    moves0.push(HalfMove(Square(Square::FILE_E, Square::RANK_7), Square(Square::FILE_E, Square::RANK_5)));
     assert(moves0.size() == 2);
     assert(moves0.check() == -1);
     // rand (binomial test, p=q=1/2)

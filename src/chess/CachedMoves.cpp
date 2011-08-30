@@ -11,8 +11,8 @@
 
 namespace thechess {
 
-CachedMoves::CachedMoves(int moves_count) :
-    Moves(moves_count), boards_(moves_count + 1) {
+CachedMoves::CachedMoves(int size) :
+    Moves(size), boards_(size + 1) {
 }
 
 CachedMoves::CachedMoves(const Moves& moves) :
@@ -30,33 +30,33 @@ void CachedMoves::boards_rebuild_() {
     boards_[size()] = board;
 }
 
-void CachedMoves::push_move(HalfMove half_move) {
-    Moves::push_move(half_move);
+void CachedMoves::push(HalfMove half_move) {
+    Moves::push(half_move);
     Board board = boards_[boards_.size() - 1];
     board.make_move(half_move);
     boards_.push_back(board);
 }
 
-void CachedMoves::pop_move() {
-    Moves::pop_move();
+void CachedMoves::pop() {
+    Moves::pop();
     boards_.pop_back();
 }
 
-void CachedMoves::pop_moves(int number) {
-    Moves::pop_moves(number);
+void CachedMoves::pop(int number) {
+    Moves::pop(number);
     boards_.erase(boards_.end() - number, boards_.end());
 }
 
-void CachedMoves::reset_move(int n, HalfMove half_move) {
-    pop_moves(size() - n);
-    push_move(half_move);
+void CachedMoves::reset_half_move(int n, HalfMove half_move) {
+    pop(size() - n);
+    push(half_move);
 }
 
-HalfMove CachedMoves::move_at(int n) const {
-    return Moves::move_at(n, boards_[n]);
+HalfMove CachedMoves::half_move(int n) const {
+    return Moves::half_move(n, boards_[n]);
 }
 
-const Board& CachedMoves::board_at(int n) const {
+const Board& CachedMoves::board(int n) const {
     return boards_[n];
 }
 
@@ -66,7 +66,7 @@ void CachedMoves::foreach(void* func(HalfMove half_move, const Board& board),
         to = size();
     }
     for (int i = from; i < to; i++) {
-        func(move_at(i), board_at(i));
+        func(half_move(i), board(i));
     }
 }
 

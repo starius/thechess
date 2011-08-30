@@ -48,14 +48,14 @@ public:
     typedef std::vector<byte> svuc;
 
     /** Constructor.
-    \param moves_count number of half-moves to preserve space for
+    \param size number of half-moves to preserve space for
     */
-    Moves(int moves_count = 0);
+    Moves(int size = 0);
 
     /** Constructor.
-    Fills container with moves_count moves from array moves.
+    Fills container with size half-moves from array moves.
     */
-    Moves(HalfMove moves[], int moves_count);
+    Moves(HalfMove moves[], int size);
 
     /** Get internal representation: vector of bytes */
     const svuc& as_svuc() const {
@@ -73,13 +73,13 @@ public:
     }
 
     /** Push the half-move to the end of container */
-    void push_move(HalfMove half_move);
+    void push(HalfMove half_move);
 
     /** Pop last half-move */
-    void pop_move();
+    void pop();
 
-    /** Pop several moves from the ending */
-    void pop_moves(int number);
+    /** Pop several half-moves from the ending */
+    void pop(int number);
 
     /** Return the half-move.
     \param n index of half-move.
@@ -87,7 +87,7 @@ public:
         This argument is nedded because of pawn promotions,
         which are stored together with HalfMove::to() (see HalfMove::packed_to())
     */
-    HalfMove move_at(int n, const Board& board) const {
+    HalfMove half_move(int n, const Board& board) const {
         return HalfMove(square_(n, SQUARE_FROM), square_(n, SQUARE_TO), board);
     }
 
@@ -95,12 +95,12 @@ public:
     \param n 0-based number of half-move.
     \note Does not work correctly for pawn promotions.
     */
-    HalfMove move_at(int n) const {
+    HalfMove half_move(int n) const {
         return HalfMove(square_(n, SQUARE_FROM), square_(n, SQUARE_TO));
     }
 
     /** Return board position before the half-move */
-    Board board_at(int n) const;
+    Board board(int n) const;
 
     /** Test correctness.
     Returned value:
@@ -169,7 +169,7 @@ private:
         square_(n * 2 + (int)square_type, square);
     }
 
-    void set_move(int n, HalfMove half_move);
+    void set_half_move_(int n, HalfMove half_move);
     friend void run_tests();
 };
 
@@ -188,7 +188,7 @@ public:
 
     /** Get current half-move */
     HalfMove half_move() const {
-        return moves_->move_at(n, board_);
+        return moves_->half_move(n, board_);
     }
 
     /** Indirection, get current half-move */
@@ -217,7 +217,7 @@ public:
 Usage:
 \code
 Moves moves = ...
-Board board = moves.board_at(10);
+Board board = moves.board(10);
 THECHESS_MOVES_FROM_TO (moves_it, moves, board, 10, 20) {
     HalfMove half_move = *move_it;
     Board board_after = board;
@@ -251,7 +251,7 @@ THECHESS_MOVES_FROM_TO (move_it, moves, board, 0, to)
 Usage:
 \code
 Moves moves = ...
-Board board = moves.board_at(10);
+Board board = moves.board(10);
 THECHESS_MOVES_FROM (moves_it, moves, board, 10) {
     HalfMove half_move = *move_it;
     Board board_after = board;

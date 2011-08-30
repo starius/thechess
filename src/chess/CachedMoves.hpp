@@ -26,33 +26,33 @@ namespace thechess {
 class CachedMoves : public Moves {
 public:
     /** Constructor.
-    \sa Moves::Moves(int moves_count)
+    \sa Moves::Moves(int size)
     */
-    CachedMoves(int moves_count = 0);
+    CachedMoves(int size = 0);
 
     /** Construct from Moves */
     CachedMoves(const Moves& moves);
 
     /** Push the half-move to the end of container */
-    void push_move(HalfMove half_move);
+    void push(HalfMove half_move);
 
     /** Pop last half-move */
-    void pop_move();
+    void pop();
 
-    /** Pop several moves from the ending */
-    void pop_moves(int number);
+    /** Pop several half-moves from the ending */
+    void pop(int number);
 
     /** Strip replace half-move and all its descendants.
-    This method pops several moves (see pop_moves()) and
-    pushes the half-move (see push_move()).
+    This method pops several moves (see pop()) and
+    pushes the half-move (see push()).
     */
-    void reset_move(int n, HalfMove half_move);
+    void reset_half_move(int n, HalfMove half_move);
 
     /** Return the half-move */
-    HalfMove move_at(int n) const;
+    HalfMove half_move(int n) const;
 
     /** Return board position before the half-move */
-    const Board& board_at(int n) const;
+    const Board& board(int n) const;
 
     /** Apply func to range of half-moves.
     \param func function to apply

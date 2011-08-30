@@ -177,7 +177,7 @@ public:
         }
         if (game_->size() - moves_widget_->moves().size() == 1) {
             HalfMove last_move =
-                game_->moves().move_at(game_->size() - 1, moves_widget_->board());
+                game_->moves().half_move(game_->size() - 1, moves_widget_->board());
             moves_widget_->add_move(last_move);
             if (game_->size_without_init() == 1) {
                 print_manager_(); // to show Rollback button
