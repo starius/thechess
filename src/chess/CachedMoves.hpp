@@ -68,7 +68,6 @@ private:
     std::vector<Board> boards_;
 
     void boards_rebuild_();
-    void set_move(int n, HalfMove half_move);
 };
 
 }
