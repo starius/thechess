@@ -26,13 +26,7 @@ class MovesIterator;
 Classes for dealing with chess data such as chess board and move history.
 */
 
-/** Type representing a byte */
-typedef unsigned char byte;
-
 namespace thechess {
-
-/** Vector of bytes */
-typedef std::vector<byte> svuc;
 
 /** Sequence of moves.
 This class was designed to store a sequence of moves very compactly.
@@ -45,8 +39,14 @@ Sizes:
 
 \ingroup chess
 */
-class Moves : public svuc {
+class Moves {
 public:
+    /** Type representing a byte */
+    typedef unsigned char byte;
+
+    /** Vector of bytes */
+    typedef std::vector<byte> svuc;
+
     /** Constructor.
     \param moves_count number of half-moves to preserve space for
     */
@@ -59,17 +59,17 @@ public:
 
     /** Get internal representation: vector of bytes */
     const svuc& as_svuc() const {
-        return *this;
+        return svuc_;
     }
 
     /** Get internal representation: vector of bytes */
     svuc& as_svuc() {
-        return *this;
+        return svuc_;
     }
 
     /** Return the number of half-moves */
     int size() const {
-        return (this->svuc::size() * 8) / 12;
+        return (svuc_.size() * 8) / 12;
     }
 
     /** Push the half-move to the end of container */
@@ -149,13 +149,15 @@ public:
              bool reduced = false) const;
 
 private:
+    svuc svuc_;
+
     enum SquareType {
         SQUARE_FROM = 0,
         SQUARE_TO = 1
     };
 
     byte q(int i) const {
-        return (byte)((*this)[i]);
+        return svuc_[i];
     }
 
     Square square_(int i) const;

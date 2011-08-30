@@ -25,11 +25,11 @@ MovesIterator::MovesIterator(const Moves* moves, Board& board, int from)
 }
 
 Moves::Moves(int moves_count) :
-    svuc(moves_count, '\0') {
+    svuc_(moves_count, '\0') {
 }
 
 Moves::Moves(HalfMove moves[], int moves_count) :
-    svuc(moves_count, '\0') {
+    svuc_(moves_count, '\0') {
     for (int i = 0; i < moves_count; i++) {
         set_move(i, moves[i]);
     }
@@ -60,21 +60,21 @@ void Moves::square_(int i, Square square) {
     int first = (i * 6) / 8;
     int mod_i = i % 4;
     if (mod_i == 0) {
-        (*this)[first] &= 0x03; // 0000 0011
-        (*this)[first] |= (byte)square.i() << 2;
+        svuc_[first] &= 0x03; // 0000 0011
+        svuc_[first] |= (byte)square.i() << 2;
     } else if (mod_i == 1) {
-        (*this)[first] &= 0xFC; // 1111 1100
-        (*this)[first] |= (byte)square.i() >> 4;
-        (*this)[first + 1] &= 0x0F; // 0000 1111
-        (*this)[first + 1] |= (byte)square.i() << 4;
+        svuc_[first] &= 0xFC; // 1111 1100
+        svuc_[first] |= (byte)square.i() >> 4;
+        svuc_[first + 1] &= 0x0F; // 0000 1111
+        svuc_[first + 1] |= (byte)square.i() << 4;
     } else if (mod_i == 2) {
-        (*this)[first] &= 0xF0; // 1111 0000
-        (*this)[first] |= (byte)square.i() >> 2;
-        (*this)[first + 1] &= 0x3F; //  0011 1111
-        (*this)[first + 1] |= (byte)square.i() << 6;
+        svuc_[first] &= 0xF0; // 1111 0000
+        svuc_[first] |= (byte)square.i() >> 2;
+        svuc_[first + 1] &= 0x3F; //  0011 1111
+        svuc_[first + 1] |= (byte)square.i() << 6;
     } else if (mod_i == 3) {
-        (*this)[first] &= 0xC0; // 1100 0000
-        (*this)[first] |= (byte)square.i();
+        svuc_[first] &= 0xC0; // 1100 0000
+        svuc_[first] |= (byte)square.i();
     }
 }
 
@@ -87,11 +87,11 @@ void Moves::push_move(HalfMove half_move) {
     int current_size = size();
     if (current_size % 2 == 0) {
         // adding half_move by white
-        push_back('\0');
-        push_back('\0');
+        svuc_.push_back('\0');
+        svuc_.push_back('\0');
     } else {
         // adding half_move by black
-        push_back('\0');
+        svuc_.push_back('\0');
     }
     set_move(current_size, half_move);
 }
@@ -100,11 +100,11 @@ void Moves::pop_move() {
     int current_size = size();
     if (current_size % 2 == 0) {
         // delete one byte
-        pop_back();
+        svuc_.pop_back();
     } else {
         // delete two bytes
-        pop_back();
-        pop_back();
+        svuc_.pop_back();
+        svuc_.pop_back();
     }
 }
 
