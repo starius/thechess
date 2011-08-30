@@ -11,8 +11,8 @@
 
 namespace thechess {
 
-CachedMoves::CachedMoves(int size) :
-    Moves(size), boards_(size + 1) {
+CachedMoves::CachedMoves() :
+    boards_(1) {
 }
 
 CachedMoves::CachedMoves(const Moves& moves) :

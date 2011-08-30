@@ -47,10 +47,10 @@ public:
     /** Vector of bytes */
     typedef std::vector<byte> svuc;
 
-    /** Constructor.
-    \param size number of half-moves to preserve space for
+    /** Default constructor.
+    Empty container
     */
-    Moves(int size = 0);
+    Moves();
 
     /** Constructor.
     Fills container with size half-moves from array moves.

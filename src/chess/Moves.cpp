@@ -24,9 +24,8 @@ MovesIterator::MovesIterator(const Moves* moves, Board& board, int from)
     :  moves_(moves), board_(board), n(from) {
 }
 
-Moves::Moves(int size) :
-    svuc_(size, '\0') {
-}
+Moves::Moves()
+{ }
 
 Moves::Moves(HalfMove moves[], int size) :
     svuc_(size, '\0') {

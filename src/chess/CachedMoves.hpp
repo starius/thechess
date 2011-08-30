@@ -25,10 +25,10 @@ namespace thechess {
 */
 class CachedMoves : public Moves {
 public:
-    /** Constructor.
-    \sa Moves::Moves(int size)
+    /** Default constructor.
+    Empty container
     */
-    CachedMoves(int size = 0);
+    CachedMoves();
 
     /** Construct from Moves */
     CachedMoves(const Moves& moves);
