@@ -170,7 +170,6 @@ private:
     }
 
     void set_move(int n, HalfMove half_move);
-    void fill(int moves_count);
     friend void run_tests();
 };
 
