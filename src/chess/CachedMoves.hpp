@@ -39,29 +39,11 @@ public:
     /** Pop last half-move */
     void pop();
 
-    /** Pop several half-moves from the ending */
-    void pop(int number);
-
-    /** Strip replace half-move and all its descendants.
-    This method pops several moves (see pop()) and
-    pushes the half-move (see push()).
-    */
-    void reset_half_move(int n, HalfMove half_move);
-
     /** Return the half-move */
     HalfMove half_move(int n) const;
 
     /** Return board position before the half-move */
     const Board& board(int n) const;
-
-    /** Apply func to range of half-moves.
-    \param func function to apply
-    \param from index of half-move to begin iteration
-    \param to index of half-move to stop before.
-        If to==-1, iterates from \c from to the end of the container.
-    */
-    void foreach(void* func(HalfMove half_move, const Board& board),
-                 int from = 0, int to = -1) const;
 
 private:
     /** Stores boards before current half-move */

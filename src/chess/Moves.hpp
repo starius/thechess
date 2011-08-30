@@ -57,6 +57,10 @@ public:
     */
     Moves(HalfMove moves[], int size);
 
+    /** Destructor */
+    virtual ~Moves()
+    { }
+
     /** Get internal representation: vector of bytes */
     const svuc& as_svuc() const {
         return svuc_;
@@ -73,13 +77,19 @@ public:
     }
 
     /** Push the half-move to the end of container */
-    void push(HalfMove half_move);
+    virtual void push(HalfMove half_move);
 
     /** Pop last half-move */
-    void pop();
+    virtual void pop();
 
     /** Pop several half-moves from the ending */
     void pop(int number);
+
+    /** Strip replace half-move and all its descendants.
+    This method pops several moves (see pop()) and
+    pushes the half-move (see push()).
+    */
+    void reset_half_move(int n, HalfMove half_move);
 
     /** Return the half-move.
     \param n index of half-move.
@@ -95,11 +105,13 @@ public:
     \param n 0-based number of half-move.
     \note Does not work correctly for pawn promotions.
     */
-    HalfMove half_move(int n) const {
+    virtual HalfMove half_move(int n) const {
         return HalfMove(square_(n, SQUARE_FROM), square_(n, SQUARE_TO));
     }
 
-    /** Return board position before the half-move */
+    /** Return board position before the half-move.
+    \note Takes O(n) time. Use CachedMoves::board instead
+    */
     Board board(int n) const;
 
     /** Test correctness.
@@ -147,6 +159,15 @@ public:
     */
     void pgn(std::ostream& out, const std::string& result,
              bool reduced = false) const;
+
+    /** Apply func to range of half-moves.
+    \param func function to apply
+    \param from index of half-move to begin iteration
+    \param to index of half-move to stop before.
+        If to==-1, iterates from \c from to the end of the container.
+    */
+    void foreach(void* func(HalfMove half_move, const Board& board),
+                 int from = 0, int to = -1) const;
 
 private:
     svuc svuc_;

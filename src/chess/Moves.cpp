@@ -114,6 +114,11 @@ void Moves::pop(int number) {
     }
 }
 
+void Moves::reset_half_move(int n, HalfMove half_move) {
+    pop(size() - n);
+    push(half_move);
+}
+
 Board Moves::board(int n) const {
     Board board;
     THECHESS_MOVES_TO (move_it, this, board, n) {
@@ -148,6 +153,17 @@ void Moves::pgn(std::ostream& out, const std::string& result, bool reduced) cons
         ptw.write_word(result);
     }
 }
+
+void Moves::foreach(void* func(HalfMove half_move, const Board& board),
+                    int from, int to) const {
+    if (to == -1) {
+        to = size();
+    }
+    for (int i = from; i < to; i++) {
+        func(half_move(i), board(i));
+    }
+}
+
 
 }
 
