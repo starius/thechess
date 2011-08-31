@@ -43,8 +43,6 @@ Objects of this class are very light, consuming only 34 bytes per object:
 */
 class Board {
 public:
-    typedef unsigned char byte;
-
     /** Result of testing if board is checkmate or stalemate */
     enum FinishState {
         NOTHING = 0,
@@ -173,6 +171,7 @@ public:
     /* @} */
 
 private:
+    typedef unsigned char byte;
     static const int PIECES_SIZE = 34;
     typedef byte Pieces[PIECES_SIZE];
 
