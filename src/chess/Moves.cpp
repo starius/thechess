@@ -211,5 +211,70 @@ Piece::Color Moves::order(int move_n) {
     return order_int(move_n) == 0 ? Piece::WHITE : Piece::BLACK;
 }
 
+bool Moves::base_iterator::operator ==(const base_iterator& other) const {
+    return n_ == other.n_;
+}
+
+bool Moves::base_iterator::operator !=(const base_iterator& other) const {
+    return !(*this == other);
+}
+
+bool Moves::base_iterator::operator <(const base_iterator& other) const {
+    return n_ < other.n_;
+}
+
+bool Moves::base_iterator::operator <=(const base_iterator& other) const {
+    return n_ <= other.n_;
+}
+
+Moves::base_iterator& Moves::base_iterator::operator ++() {
+    ++n_;
+    return *this;
+}
+
+Moves::base_iterator::base_iterator(const Moves& moves, int from):
+    moves_(&moves), n_(from)
+{ }
+
+HalfMove Moves::const_iterator::operator*() const {
+    sync_board_();
+    return half_move_();
+}
+
+const Board& Moves::const_iterator::board() const {
+    sync_board_();
+    return board_;
+}
+
+Moves::const_iterator::const_iterator(const Moves& moves, int from):
+    base_iterator(moves, from), board_n_(0)
+{ }
+
+void Moves::const_iterator::sync_board_() const {
+    for (; board_n_ < n_; board_n_++) {
+        board_.make_move(half_move_());
+    }
+}
+
+HalfMove Moves::const_iterator::half_move_() const {
+    return moves_->half_move(board_n_, board_);
+}
+
+Moves::const_iterator Moves::begin() const {
+    return iter(0);
+}
+
+Moves::const_iterator Moves::end() const {
+    return iter(size());
+}
+
+Moves::const_iterator Moves::back() const {
+    return iter(size() - 1);
+}
+
+Moves::const_iterator Moves::iter(int from) const {
+    return const_iterator(*this, from);
+}
+
 }
 

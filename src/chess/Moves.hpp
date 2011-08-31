@@ -12,10 +12,10 @@
 
 namespace thechess {
 class Moves;
-class MovesIterator;
 }
 
 #include <vector>
+#include <iterator>
 
 #include "HalfMove.hpp"
 #include "Square.hpp"
@@ -165,6 +165,91 @@ public:
     */
     void foreach(void* func(HalfMove half_move, const Board& board),
                  int from = 0, int to = -1) const;
+
+protected:
+    /** Base const itarator */
+    class base_iterator :
+        public std::iterator<std::input_iterator_tag, HalfMove> {
+    public:
+        /** Get moves */
+        const Moves& moves() const {
+            return *moves_;
+        }
+
+        /** Get half-move index */
+        int n() const {
+            return n_;
+        }
+
+        /** Increment, increases half-move index.
+        Lazy method.
+        */
+        base_iterator& operator ++();
+
+        /** Comparison operator */
+        bool operator ==(const base_iterator& other) const;
+
+        /** Comparison operator */
+        bool operator !=(const base_iterator& other) const;
+
+        /** Comparison operator */
+        bool operator <(const base_iterator& other) const;
+
+        /** Comparison operator */
+        bool operator <=(const base_iterator& other) const;
+
+    protected:
+        /** Pointer to Moves */
+        const Moves* moves_;
+
+        /** Index of current half-move */
+        int n_;
+
+        base_iterator(const Moves& moves, int from = 0);
+    };
+
+public:
+    /** Const iterator with lazy applying of moves.
+    Moves are applied from dereference operator and board().
+    Constructor and increment operator do not cause applying of moves.
+    */
+    class const_iterator : public base_iterator {
+    public:
+        /** Indirection, get current half-move */
+        HalfMove operator*() const;
+
+        /** Get board before current half-move */
+        const Board& board() const;
+
+        friend class Moves;
+
+    private:
+        /** Board position */
+        mutable Board board_;
+
+        /** Index of half-move following board position */
+        mutable int board_n_;
+
+        const_iterator(const Moves& moves, int from = 0);
+
+        /** Update board to position before n() */
+        void sync_board_() const;
+
+        /** Return half-move following board position */
+        HalfMove half_move_() const;
+    };
+
+    /** Return iterator referring to the first half-move */
+    const_iterator begin() const;
+
+    /** Return iterator referring to the past-the-end half-move */
+    const_iterator end() const;
+
+    /** Return iterator referring to the last half-move */
+    const_iterator back() const;
+
+    /** Return iterator referring to the half-move */
+    const_iterator iter(int from = 0) const;
 
 private:
     svuc svuc_;
