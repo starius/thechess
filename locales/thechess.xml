@@ -406,7 +406,7 @@ and need not be sorted.
     <message id='tc.game.of_black'>of black</message>
     <message id='tc.game.of_white'>of white</message>
     <message id='tc.game.order_user'>move maker</message>
-    <message id='tc.game.Overturn_board'>Overturn</message>
+    <message id='tc.game.Overturn_board'>Flip</message>
     <message id='tc.game.Parameters'>Game parameters</message>
     <message id='tc.game.pause_limit'>pause leeway</message>
     <message id='tc.game.Pause_proposal'>Pause proposed, proposer: {1}, duration: {2}</message>
