@@ -53,10 +53,9 @@ Square Moves::square_(int i) const {
     } else if (mod_i == 2) {
         // 0011 1111
         return Square((int)(((q(first) << 2) & 0x3F) | (q(first + 1) >> 6)));
-    } else if (mod_i == 3) {
+    } else { /* if (mod_i == 3) */
         return Square((int)(q(first) & 0x3F)); // 0011 1111
     }
-    return Square(0); // newer happened
 }
 
 void Moves::square_(int i, Square square) {
