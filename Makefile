@@ -51,6 +51,7 @@ tosource = src/$*.cpp
 precompiled = $(BUILD)/model/all.hpp.gch
 toheader = src/$*.hpp
 endif
+CHESS_OBJECTS = $(filter $(BUILD)/chess/%,$(objects))
 
 ifeq ($(MODE), http)
 RUN_COMMAND = WT_CONFIG_XML=$(WT_CONFIG) $(EXE_PATH) --http-address=$(ADDRESS) --http-port=$(PORT) \
@@ -65,6 +66,8 @@ endif
 endif
 
 build: $$(EXE)
+
+chess: $$(CHESS_OBJECTS)
 
 .PHONY: dep
 dep:
