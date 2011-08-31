@@ -45,6 +45,33 @@ public:
     /** Return board position before the half-move */
     const Board& board(int n) const;
 
+    /** Const iterator */
+    class const_iterator : public Moves::base_iterator {
+    public:
+        /** Indirection, get current half-move */
+        HalfMove operator*() const;
+
+        /** Get board before current half-move */
+        const Board& board() const;
+
+        friend class CachedMoves;
+
+    private:
+        const_iterator(const CachedMoves& moves, int from = 0);
+    };
+
+    /** Return iterator referring to the first half-move */
+    const_iterator begin() const;
+
+    /** Return iterator referring to the past-the-end half-move */
+    const_iterator end() const;
+
+    /** Return iterator referring to the last half-move */
+    const_iterator back() const;
+
+    /** Return iterator referring to the half-move */
+    const_iterator iter(int from = 0) const;
+
 private:
     /** Stores boards before current half-move */
     std::vector<Board> boards_;
