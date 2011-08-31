@@ -464,6 +464,14 @@ HalfMove Board::some_move() const {
     return HalfMove();
 }
 
+bool Board::can_move(Square from) const {
+    return some_target(from) != Square();
+}
+
+bool Board::test_shah() const {
+    return test_shah(order());
+}
+
 Square Board::find_king(Piece::Color c) const {
     THECHESS_SQUARE_FOREACH (square) {
         if (piece(square) == Piece(c, Piece::KING)) {

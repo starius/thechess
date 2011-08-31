@@ -35,6 +35,14 @@ HalfMove::HalfMove() :
     from_(Square()), to_(Square()), turn_into_(Piece::LETTER_NULL) {
 }
 
+int HalfMove::dx() const {
+    return to().file_() - from().file_();
+}
+
+int HalfMove::dy() const {
+    return to().rank_() - from().rank_();
+}
+
 Square HalfMove::packed_to() const {
     return turn_into_ == Piece::LETTER_NULL ? to() : Square(to().file(), (Square::Rank)turn_into_);
 }
@@ -70,6 +78,14 @@ std::string HalfMove::san_from_(const Board& board) const {
         return char2str(from().file_char());
     }
     return "";
+}
+
+bool HalfMove::operator==(const HalfMove& other) const {
+    return from() == other.from() && to() == other.to();
+}
+
+bool HalfMove::operator!=(const HalfMove& other) const {
+    return !(*this == other);
 }
 
 HalfMove::operator bool() const {

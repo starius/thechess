@@ -86,14 +86,10 @@ public:
     }
 
     /** Return the difference of the files */
-    int dx() const {
-        return to().file_() - from().file_();
-    }
+    int dx() const;
 
     /** Return the difference of the ranks */
-    int dy() const {
-        return to().rank_() - from().rank_();
-    }
+    int dy() const;
 
     /** Return packed_to.
     This is used by Moves while writing.
@@ -111,16 +107,12 @@ public:
     Moves with same source and destination are considered equal,
     even if piece promotion letters differ.
     */
-    bool operator==(const HalfMove& other) const {
-        return from() == other.from() && to() == other.to();
-    }
+    bool operator==(const HalfMove& other) const;
 
     /** Comparison operator.
     \sa HalfMove::operator==
     */
-    bool operator!=(const HalfMove& other) const {
-        return !(*this == other);
-    }
+    bool operator!=(const HalfMove& other) const;
 
     /** Check for null */
     operator bool() const;

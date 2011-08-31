@@ -72,9 +72,7 @@ public:
     }
 
     /** Return the number of half-moves */
-    int size() const {
-        return (svuc_.size() * 8) / 12;
-    }
+    int size() const;
 
     /** Push the half-move to the end of container */
     virtual void push(HalfMove half_move);
@@ -97,17 +95,13 @@ public:
         This argument is nedded because of pawn promotions,
         which are stored together with HalfMove::to() (see HalfMove::packed_to())
     */
-    HalfMove half_move(int n, const Board& board) const {
-        return HalfMove(square_(n, SQUARE_FROM), square_(n, SQUARE_TO), board);
-    }
+    HalfMove half_move(int n, const Board& board) const;
 
     /** Return the half-move.
     \param n 0-based number of half-move.
     \note Does not work correctly for pawn promotions.
     */
-    virtual HalfMove half_move(int n) const {
-        return HalfMove(square_(n, SQUARE_FROM), square_(n, SQUARE_TO));
-    }
+    virtual HalfMove half_move(int n) const;
 
     /** Return board position before the half-move.
     \note Takes O(n) time. Use CachedMoves::board instead
@@ -122,36 +116,24 @@ public:
     int check() const;
 
     /** Convert index of half-move to number of move */
-    static int n_to_human(int move_n) {
-        return (move_n + 2) / 2;
-    }
+    static int n_to_human(int move_n);
 
     /** Convert number of half-moves to number of moves */
-    static int size_to_human(int size) {
-        return n_to_human(size - 1);
-    }
+    static int size_to_human(int size);
 
     /** Convert number of move and active color to index of half-move */
-    static int n_from_human(int human_i, Piece::Color color) {
-        return (human_i - 1) * 2 + ((color == Piece::WHITE) ? 0 : 1);
-    }
+    static int n_from_human(int human_i, Piece::Color color);
 
     /** Return number of moves.
     \sa size()
     */
-    int human_size() const {
-        return size_to_human(size());
-    }
+    int human_size() const;
 
     /** Return 0 for white half-move and 1 otherwise */
-    static int order_int(int move_n) {
-        return move_n % 2;
-    }
+    static int order_int(int move_n);
 
     /** Return active color of half-move */
-    static Piece::Color order(int move_n) {
-        return order_int(move_n) == 0 ? Piece::WHITE : Piece::BLACK;
-    }
+    static Piece::Color order(int move_n);
 
     /** Write (PGN) movetext to stream.
     \param result the value of Result tag (see PGN description)
@@ -177,18 +159,12 @@ private:
         SQUARE_TO = 1
     };
 
-    byte q(int i) const {
-        return svuc_[i];
-    }
+    byte q(int i) const;
 
     Square square_(int i) const;
-    Square square_(int n, SquareType square_type) const {
-        return square_(n * 2 + (int)square_type);
-    }
+    Square square_(int n, SquareType square_type) const;
     void square_(int i, Square square);
-    void square_(int n, SquareType square_type, Square square) {
-        square_(n * 2 + (int)square_type, square);
-    }
+    void square_(int n, SquareType square_type, Square square);
 
     void set_half_move_(int n, HalfMove half_move);
     friend void run_tests();

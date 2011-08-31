@@ -17,6 +17,14 @@ Piece::Piece(Piece::Color color, Piece::Letter letter) :
     color_(color), piece_(letter) {
 }
 
+bool Piece::operator==(const Piece& piece) const {
+    return color() == piece.color() && letter() == piece.letter();
+}
+
+bool Piece::operator!=(const Piece& piece) const {
+    return color() != piece.color() || letter() != piece.letter();
+}
+
 Wt::WString Piece::color_str() const {
     return (color() == WHITE) ? Wt::WString::tr("tc.game.white") :
            ((color() == BLACK) ? Wt::WString::tr("tc.game.black") :

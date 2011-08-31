@@ -34,6 +34,10 @@ Moves::Moves(HalfMove moves[], int size) :
     }
 }
 
+Moves::byte Moves::q(int i) const {
+    return svuc_[i];
+}
+
 Square Moves::square_(int i) const {
     /*
      0000 0000  0000 0000  0000 0000
@@ -77,9 +81,21 @@ void Moves::square_(int i, Square square) {
     }
 }
 
+Square Moves::square_(int n, SquareType square_type) const {
+    return square_(n * 2 + (int)square_type);
+}
+
+void Moves::square_(int n, Moves::SquareType square_type, Square square) {
+    square_(n * 2 + (int)square_type, square);
+}
+
 void Moves::set_half_move_(int n, HalfMove half_move) {
     square_(n, SQUARE_FROM, half_move.from());
     square_(n, SQUARE_TO, half_move.packed_to());
+}
+
+int Moves::size() const {
+    return (svuc_.size() * 8) / 12;
 }
 
 void Moves::push(HalfMove half_move) {
@@ -116,6 +132,14 @@ void Moves::pop(int number) {
 void Moves::reset_half_move(int n, HalfMove half_move) {
     pop(size() - n);
     push(half_move);
+}
+
+HalfMove Moves::half_move(int n, const Board& board) const {
+    return HalfMove(square_(n, SQUARE_FROM), square_(n, SQUARE_TO), board);
+}
+
+HalfMove Moves::half_move(int n) const {
+    return HalfMove(square_(n, SQUARE_FROM), square_(n, SQUARE_TO));
 }
 
 Board Moves::board(int n) const {
@@ -163,6 +187,29 @@ void Moves::foreach(void* func(HalfMove half_move, const Board& board),
     }
 }
 
+int Moves::n_to_human(int move_n) {
+    return (move_n + 2) / 2;
+}
+
+int Moves::size_to_human(int size) {
+    return n_to_human(size - 1);
+}
+
+int Moves::n_from_human(int human_i, Piece::Color color) {
+    return (human_i - 1) * 2 + ((color == Piece::WHITE) ? 0 : 1);
+}
+
+int Moves::human_size() const {
+    return size_to_human(size());
+}
+
+int Moves::order_int(int move_n) {
+    return move_n % 2;
+}
+
+Piece::Color Moves::order(int move_n) {
+    return order_int(move_n) == 0 ? Piece::WHITE : Piece::BLACK;
+}
 
 }
 

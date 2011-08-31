@@ -143,9 +143,7 @@ public:
     HalfMove some_move() const;
 
     /** Return if the square can be a target of any half-move */
-    bool can_move(Square from) const {
-        return some_target(from) != Square();
-    }
+    bool can_move(Square from) const;
 
     /* @} */
 
@@ -158,9 +156,7 @@ public:
     /** Return if the board is in checking state.
     This convenience method returns \c test_shah(order())
     */
-    bool test_shah() const {
-        return test_shah(order());
-    }
+    bool test_shah() const;
 
     /** Return the square of the king of the color */
     Square find_king(Piece::Color c) const;

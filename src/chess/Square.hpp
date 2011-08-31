@@ -69,37 +69,25 @@ public:
     Square();
 
     /** Comparison operator. */
-    bool operator==(const Square& square1) const {
-        return i() == square1.i();
-    }
+    bool operator==(const Square& square1) const;
 
     /** Comparison operator. */
-    bool operator!=(const Square& square1) const {
-        return i() != square1.i();
-    }
+    bool operator!=(const Square& square1) const;
 
     /** Check for null */
     operator bool() const;
 
     /** Get the file */
-    File file() const {
-        return (File)file_();
-    }
+    File file() const;
 
     /** Get the rank */
-    Rank rank() const {
-        return (Rank)rank_();
-    }
+    Rank rank() const;
 
     /** Set the file */
-    void file(File v) {
-        file_((unsigned)v);
-    }
+    void file(File v);
 
     /** Set the rank */
-    void rank(Rank v) {
-        rank_((unsigned)v);
-    }
+    void rank(Rank v);
 
     /** Get internal representation.
     \code i = 8 * file + rank \endcode
@@ -118,46 +106,31 @@ public:
     /** Return file as an integer.
     \todo Remove this method
     */
-    unsigned file_() const {
-        return i_ / 8;
-    }
+    unsigned file_() const;
 
     /** Return rank as an integer.
     \todo Remove this method
     */
-    unsigned rank_() const {
-        return i_ % 8;
-    }
+    unsigned rank_() const;
 
     /** Set the file using \c unsigned-represented file.
     \todo Rename this method to file().
     */
-    void file_(unsigned v) {
-        i_ = v * 8 + rank_();
-    }
+    void file_(unsigned v);
 
     /** Set the rank using \c unsigned-represented rank.
     \todo Rename this method to rank().
     */
-    void rank_(unsigned v) {
-        i_ = file_() * 8 + v;
-    }
+    void rank_(unsigned v);
 
     /** Get the first square for iteration by i() */
-    static Square begin() {
-        return Square(0);
-    };
+    static Square begin();
 
     /** Get the end square for iteration by i() */
-    static Square end() {
-        return Square(64);
-    };
+    static Square end();
 
     /** Increment operator for iteration by i() */
-    Square& operator++ () {
-        i_ += 1;
-        return *this;
-    }
+    Square& operator++ ();
 
     /** Convert to \c int.
     Return i().

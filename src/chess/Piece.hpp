@@ -51,14 +51,10 @@ public:
     Piece(Color color, Letter letter);
 
     /** Comparison operator */
-    bool operator==(const Piece& piece) const {
-        return color() == piece.color() && letter() == piece.letter();
-    }
+    bool operator==(const Piece& piece) const;
 
     /** Comparison operator */
-    bool operator!=(const Piece& piece) const {
-        return color() != piece.color() || letter() != piece.letter();
-    }
+    bool operator!=(const Piece& piece) const;
 
     /** Get piece color */
     Color color() const {
