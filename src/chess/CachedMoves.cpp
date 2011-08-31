@@ -46,6 +46,11 @@ const Board& CachedMoves::board(int n) const {
     return boards_[n];
 }
 
+CachedMoves::const_iterator& CachedMoves::const_iterator::operator --() {
+    --n_;
+    return *this;
+}
+
 HalfMove CachedMoves::const_iterator::operator*() const {
     return static_cast<const CachedMoves*>(moves_)->half_move(n_);
 }

@@ -51,6 +51,9 @@ public:
         /** Indirection, get current half-move */
         HalfMove operator*() const;
 
+        /** Decrement, decreases half-move index */
+        const_iterator& operator --();
+
         /** Get board before current half-move */
         const Board& board() const;
 
