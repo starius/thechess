@@ -61,6 +61,9 @@ public:
     virtual ~Moves()
     { }
 
+    /** \name Getters */
+    /* @{ */
+
     /** Get internal representation: vector of bytes */
     const svuc& as_svuc() const {
         return svuc_;
@@ -70,24 +73,6 @@ public:
     svuc& as_svuc() {
         return svuc_;
     }
-
-    /** Return the number of half-moves */
-    int size() const;
-
-    /** Push the half-move to the end of container */
-    virtual void push(HalfMove half_move);
-
-    /** Pop last half-move */
-    virtual void pop();
-
-    /** Pop several half-moves from the ending */
-    void pop(int number);
-
-    /** Strip replace half-move and all its descendants.
-    This method pops several moves (see pop()) and
-    pushes the half-move (see push()).
-    */
-    void reset_half_move(int n, HalfMove half_move);
 
     /** Return the half-move.
     \param n index of half-move.
@@ -108,12 +93,33 @@ public:
     */
     Board board(int n) const;
 
-    /** Test correctness.
-    Returned value:
-     - -1 if no errors were found
-     - index of invalid half-move if any
+    /* @} */
+
+    /** \name Modifiers */
+    /* @{ */
+
+    /** Push the half-move to the end of container */
+    virtual void push(HalfMove half_move);
+
+    /** Pop last half-move */
+    virtual void pop();
+
+    /** Pop several half-moves from the ending */
+    void pop(int number);
+
+    /** Strip replace half-move and all its descendants.
+    This method pops several moves (see pop()) and
+    pushes the half-move (see push()).
     */
-    int check() const;
+    void reset_half_move(int n, HalfMove half_move);
+
+    /* @} */
+
+    /** \name Numbers */
+    /* @{ */
+
+    /** Return the number of half-moves */
+    int size() const;
 
     /** Convert index of half-move to number of move */
     static int n_to_human(int move_n);
@@ -134,6 +140,15 @@ public:
 
     /** Return active color of half-move */
     static Piece::Color order(int move_n);
+
+    /* @} */
+
+    /** Test correctness.
+    Returned value:
+     - -1 if no errors were found
+     - index of invalid half-move if any
+    */
+    int check() const;
 
     /** Write (PGN) movetext to stream.
     \param result the value of Result tag (see PGN description)
