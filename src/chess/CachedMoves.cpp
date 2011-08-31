@@ -21,13 +21,9 @@ CachedMoves::CachedMoves(const Moves& moves) :
 }
 
 void CachedMoves::boards_rebuild_() {
-    Board board;
-    int i = 0;
-    THECHESS_MOVES_FOREACH (move_it, this, board) {
-        boards_[i] = board;
-        i++;
+    for (Moves::const_iterator i = Moves::begin(); i <= Moves::end(); ++i) {
+        boards_[i.n()] = i.board();
     }
-    boards_[size()] = board;
 }
 
 void CachedMoves::push(HalfMove half_move) {

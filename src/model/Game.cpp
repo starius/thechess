@@ -634,18 +634,22 @@ const char* Game::pgn_termination_() const {
 
 void Game::pgn_init_moves_(std::ostream& out) const {
     out << "[SetUp \"" << "1" << "\"]" << std::endl;
-    Board board;
     int halfmove_clock = 0;
-    THECHESS_MOVES_TO (move_it, &(moves_), board, moves_init()) {
-        HalfMove half_move(*move_it);
+    Moves::const_iterator i = moves_.begin();
+    Moves::const_iterator e = moves_.iter(moves_init());
+    for (; i < e; ++i) {
+        HalfMove half_move = *i;
+        const Board& board = i.board();
         if (board.letter(half_move.from()) == Piece::PAWN || board.test_takes(half_move)) {
             halfmove_clock = 0;
         } else {
             halfmove_clock += 1;
         }
     }
+    ++i;
     int fullmove_number = Moves::size_to_human(moves_init() + 1);
     out << "[FEN \"";
+    const Board& board = i.board();
     board.fen(out, halfmove_clock, fullmove_number);
     out << "\"]" << std::endl;
 }

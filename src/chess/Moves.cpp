@@ -143,17 +143,15 @@ HalfMove Moves::half_move(int n) const {
 }
 
 Board Moves::board(int n) const {
-    Board board;
-    THECHESS_MOVES_TO (move_it, this, board, n) {
-    }
-    return board;
+    return iter(n).board();
 }
 
 int Moves::check() const {
-    Board board;
-    THECHESS_MOVES_FOREACH (move_it, this, board) {
-        if (!board.test_move(*move_it)) {
-            return move_it.n;
+    for (const_iterator i = begin(); i != end(); ++i) {
+        const Board& board = i.board();
+        HalfMove half_move = *i;
+        if (!board.test_move(half_move)) {
+            return i.n();
         }
     }
     return -1;
@@ -161,14 +159,15 @@ int Moves::check() const {
 
 void Moves::pgn(std::ostream& out, const std::string& result, bool /*reduced*/) const {
     PlainTextWritter ptw(out);
-    Board board;
-    Board board_after;
-    THECHESS_MOVES_FOREACH (move_it, this, board) {
-        HalfMove half_move = *move_it;
-        board_after.make_move(half_move);
+    const_iterator after = begin();
+    for (const_iterator i = begin(); i != end(); ++i) {
+        const Board& board = i.board();
+        HalfMove half_move = *i;
+        ++after;
+        const Board& board_after = after.board();
         std::string move_str = half_move.san(board, board_after);
-        if (order(move_it.n) == Piece::WHITE) {
-            move_str = str(boost::format("%i. ") % n_to_human(move_it.n)) + move_str;
+        if (order(i.n()) == Piece::WHITE) {
+            move_str = str(boost::format("%i. ") % n_to_human(i.n())) + move_str;
         }
         ptw.write_word(move_str);
     }
