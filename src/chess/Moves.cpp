@@ -159,7 +159,7 @@ int Moves::check() const {
     return -1;
 }
 
-void Moves::pgn(std::ostream& out, const std::string& result, bool reduced) const {
+void Moves::pgn(std::ostream& out, const std::string& result, bool /*reduced*/) const {
     PlainTextWritter ptw(out);
     Board board;
     Board board_after;
