@@ -20,10 +20,6 @@
 
 namespace thechess {
 
-MovesIterator::MovesIterator(const Moves* moves, Board& board, int from)
-    :  moves_(moves), board_(board), n(from) {
-}
-
 Moves::Moves()
 { }
 
