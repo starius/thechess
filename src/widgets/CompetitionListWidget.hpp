@@ -26,16 +26,12 @@ class CompetitionListView;
 
 class CompetitionListWidget : public Wt::WContainerWidget {
 public:
-    typedef boost::tuple<CompetitionPtr, Wt::WString, int> Result;
-    typedef dbo::Query<Result> Q;
-
     CompetitionListWidget(Wt::WContainerWidget* parent = 0);
 
 private:
     CompetitionListModel* model_;
     Wt::WCheckBox* only_my_;
 
-    Q query_();
     void apply_();
     void manager_();
 };

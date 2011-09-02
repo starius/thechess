@@ -30,21 +30,24 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 
+namespace RP {
 typedef GamePtr Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 
-const int ID_COLUMN = 0;
-const int ENDED_COLUMN = 1;
-const int RATING_AFTER_COLUMN = 2;
-const int COLUMNS = 3;
+}
 
-class RatingModel : public BaseQM {
+class RatingModel : public RP::BaseQM {
 public:
+    static const int ID_COLUMN = 0;
+    static const int ENDED_COLUMN = 1;
+    static const int RATING_AFTER_COLUMN = 2;
+    static const int COLUMNS = 3;
+
     RatingModel(UserPtr user, Wt::WObject* parent = 0) :
-        BaseQM(parent), user_(user) {
+        RP::BaseQM(parent), user_(user) {
         dbo::Transaction t(tApp->session());
-        dbo::Query<Result> query = tApp->session().find<Game>();
+        RP::Q query = tApp->session().find<Game>();
         query.where("white_id = ? or black_id = ?").bind(user_.id()).bind(user_.id());
         query.where("rating_after_white != -1");
         query.orderBy("ended");
@@ -66,7 +69,7 @@ public:
             GamePtr game = resultRow(index.row());
             return game->rating_after(game->color_of(user_));
         } else {
-            return BaseQM::data(index, role);
+            return RP::BaseQM::data(index, role);
         }
     }
 
@@ -90,7 +93,7 @@ public:
     void add_user(UserPtr user) {
         RatingModel* model = new RatingModel(user, this);
         models_.push_back(model);
-        column_count_ += COLUMNS;
+        column_count_ += RatingModel::COLUMNS;
         row_count_ = std::max(row_count_, model->rowCount());
     }
 
@@ -104,11 +107,11 @@ public:
 
     boost::any data(const Wt::WModelIndex& index,
                     int role = Wt::DisplayRole) const {
-        RatingModel* model = models_[index.column() / COLUMNS];
-        int column = index.column() % COLUMNS;
+        RatingModel* model = models_[index.column() / RatingModel::COLUMNS];
+        int column = index.column() % RatingModel::COLUMNS;
         if (index.row() < model->rowCount()) {
             return model->index(index.row(), column).data(role);
-        } else if (index.column() % COLUMNS == ENDED_COLUMN) {
+        } else if (index.column() % RatingModel::COLUMNS == RatingModel::ENDED_COLUMN) {
             return Wt::WDate::currentServerDate();
         }
         return "";
@@ -127,7 +130,7 @@ public:
         model_ = new MultiRatingModel(this);
         chart_ = new Wt::Chart::WCartesianChart(Wt::Chart::ScatterPlot, this);
         chart_->setModel(model_);
-        chart_->setXSeriesColumn(ENDED_COLUMN); // useless
+        chart_->setXSeriesColumn(RatingModel::ENDED_COLUMN); // useless
         chart_->axis(Wt::Chart::XAxis).setScale(Wt::Chart::DateScale);
         chart_->resize(400, 200);
         if (!wApp->environment().ajax()) {
@@ -139,9 +142,9 @@ public:
     }
 
     void add_user(UserPtr user) {
-        int shift = number_of_users_ * COLUMNS;
-        int rating_after_column = RATING_AFTER_COLUMN + shift;
-        int ended_column = ENDED_COLUMN + shift;
+        int shift = number_of_users_ * RatingModel::COLUMNS;
+        int rating_after_column = RatingModel::RATING_AFTER_COLUMN + shift;
+        int ended_column = RatingModel::ENDED_COLUMN + shift;
         model_->add_user(user);
         Wt::Chart::WDataSeries series(rating_after_column, Wt::Chart::CurveSeries);
         chart_->addSeries(series);

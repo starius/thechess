@@ -30,26 +30,28 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 
+namespace GLP {
 typedef boost::tuple<GamePtr, Wt::WString, Wt::WString, Wt::WString> Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 
-const int N_COLUMN = 0;
-const int WHITE_COLUMN = 1;
-const int BLACK_COLUMN = 2;
-const int STATE_COLUMN = 3;
-const int WINNER_COLUMN = 4;
-const int STARTED_COLUMN = 5;
-const int REAL_RATING_COLUMN = 6;
-const int MOVES_SIZE_COLUMN = 7;
-const int COMMENT_COLUMN = 8;
-
 const int GAME_IN_TUPLE = 0;
+}
 
-class QM : public BaseQM {
+class GameListModel : public GLP::BaseQM {
 public:
-    QM(const Q& query, Wt::WObject* parent = 0) :
-        BaseQM(parent) {
+    static const int N_COLUMN = 0;
+    static const int WHITE_COLUMN = 1;
+    static const int BLACK_COLUMN = 2;
+    static const int STATE_COLUMN = 3;
+    static const int WINNER_COLUMN = 4;
+    static const int STARTED_COLUMN = 5;
+    static const int REAL_RATING_COLUMN = 6;
+    static const int MOVES_SIZE_COLUMN = 7;
+    static const int COMMENT_COLUMN = 8;
+
+    GameListModel(const GLP::Q& query, Wt::WObject* parent = 0) :
+        GLP::BaseQM(parent) {
         setQuery(query);
         addColumn("G.id", tr("tc.common.number"));
         addColumn("Wh.username", tr("tc.game.white"));
@@ -65,7 +67,7 @@ public:
     boost::any data(const Wt::WModelIndex& index,
                     int role = Wt::DisplayRole) const {
         dbo::Transaction t(tApp->session());
-        GamePtr game = resultRow(index.row()).get<GAME_IN_TUPLE>();
+        GamePtr game = resultRow(index.row()).get<GLP::GAME_IN_TUPLE>();
         if (role == Wt::DisplayRole) {
             if (index.column() == STATE_COLUMN) {
                 return game->str_state();
@@ -90,7 +92,7 @@ public:
             }
         }
         t.commit();
-        return BaseQM::data(index, role);
+        return GLP::BaseQM::data(index, role);
     }
 
     static Wt::WString tr(const char* key) {
@@ -103,33 +105,33 @@ public:
     GameListWidgetImpl() :
         Wt::WContainerWidget() {
         manager_();
-        query_model_ = new QM(query(), this);
+        query_model_ = new GameListModel(query(), this);
         table_view_ = new Wt::WTableView(this);
         table_view_->setModel(query_model_);
         table_view_->resize(770, 450);
-        table_view_->setColumnWidth(N_COLUMN, 65);
-        table_view_->setColumnWidth(WHITE_COLUMN, 75);
-        table_view_->setColumnWidth(BLACK_COLUMN, 75);
-        table_view_->setColumnWidth(STATE_COLUMN, 80);
-        table_view_->setColumnWidth(WINNER_COLUMN, 120);
-        table_view_->setColumnWidth(STARTED_COLUMN, 70);
-        table_view_->setColumnWidth(REAL_RATING_COLUMN, 40);
-        table_view_->setColumnWidth(MOVES_SIZE_COLUMN, 40);
-        table_view_->setColumnWidth(COMMENT_COLUMN, 120);
+        table_view_->setColumnWidth(GameListModel::N_COLUMN, 65);
+        table_view_->setColumnWidth(GameListModel::WHITE_COLUMN, 75);
+        table_view_->setColumnWidth(GameListModel::BLACK_COLUMN, 75);
+        table_view_->setColumnWidth(GameListModel::STATE_COLUMN, 80);
+        table_view_->setColumnWidth(GameListModel::WINNER_COLUMN, 120);
+        table_view_->setColumnWidth(GameListModel::STARTED_COLUMN, 70);
+        table_view_->setColumnWidth(GameListModel::REAL_RATING_COLUMN, 40);
+        table_view_->setColumnWidth(GameListModel::MOVES_SIZE_COLUMN, 40);
+        table_view_->setColumnWidth(GameListModel::COMMENT_COLUMN, 120);
     }
 
-    static Q all_games() {
+    static GLP::Q all_games() {
         return tApp->session()
-               .query<Result>("select G, Wh.username, B.username, Wi.username "
-                              "from thechess_game G "
-                              "left join thechess_user Wh on G.white_id=Wh.id "
-                              "left join thechess_user B on G.black_id=B.id "
-                              "left join thechess_user Wi on G.winner_game_id=Wi.id ");
+               .query<GLP::Result>("select G, Wh.username, B.username, Wi.username "
+                                   "from thechess_game G "
+                                   "left join thechess_user Wh on G.white_id=Wh.id "
+                                   "left join thechess_user B on G.black_id=B.id "
+                                   "left join thechess_user Wi on G.winner_game_id=Wi.id ");
     }
 
-    Q query() {
+    GLP::Q query() {
         dbo::Transaction t(tApp->session());
-        Q q = all_games();
+        GLP::Q q = all_games();
         if (only_my_->isChecked() && tApp->user()) {
             int id = tApp->user()->id();
             q.where("G.white_id = ? or G.black_id = ? or G.init_game_id = ?")
@@ -141,7 +143,7 @@ public:
     }
 
 private:
-    QM* query_model_;
+    GameListModel* query_model_;
     Wt::WTableView* table_view_;
     Wt::WCheckBox* only_my_;
 
