@@ -21,14 +21,12 @@
 
 namespace thechess {
 
-namespace c = config;
-
 Wt::WApplication* createApplication(ThechessServer* server, const Wt::WEnvironment& env) {
     return new thechess::ThechessApplication(env, *server);
 }
 
 ThechessServer::ThechessServer(int argc, char** argv):
-    Wt::WServer(argv[0], first_file(c::WT_CONFIG_FILES, c::WT_CONFIG_FILES_SIZE)),
+    Wt::WServer(argv[0], first_file(config::WT_CONFIG_FILES, config::WT_CONFIG_FILES_SIZE)),
     options_((setServerConfiguration(argc, argv), *this)), // options_ needs read conf
     pool_(ThechessSession::new_connection(options_), options_.connections_in_pool()),
     notifier_(*this), tracker_(*this), pgn_(*this) {

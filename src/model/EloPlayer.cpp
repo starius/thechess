@@ -14,7 +14,6 @@
 #include "config.hpp"
 
 namespace thechess {
-namespace elo = config::elo;
 
 const float VICTORY = 1.0;
 const float FAIL = 0.0;
@@ -46,6 +45,7 @@ float EloPlayer::E(const EloPlayer* other) const {
 }
 
 float EloPlayer::K() const {
+    using namespace config; // elo
     return (elo_ >= elo::BIG) ? elo::BIG_K :
            (all_ < elo::BEGINNER_ALL) ? elo::BEGINNER_K : elo::OTHER_K;
 }

@@ -19,12 +19,12 @@
 #include "config.hpp"
 
 namespace thechess {
-using namespace config::competition; // min, max
 
 CompetitionParametersWidget::CompetitionParametersWidget(
     const CompetitionParameters* cp,
     bool allow_change_type, Wt::WContainerWidget* parent):
     GameParametersWidget(cp, parent) {
+    using namespace config::competition; // min, max
     IntervalWidget* interval;
     Wt::WContainerWidget* cell;
     section(tr("tc.competition.Parameters"));
@@ -181,6 +181,7 @@ void CompetitionParametersWidget::set_type_(CompetitionType t) {
 }
 
 CompetitionType CompetitionParametersWidget::get_type_() const {
+    using namespace config::competition; // defaults
     CompetitionType t = defaults::COMPETITION_TYPE;
     int index = type_->currentIndex();
     if (index == 0) {

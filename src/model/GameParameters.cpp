@@ -11,7 +11,6 @@
 #include "config.hpp"
 
 namespace thechess {
-using namespace config; // defaults, min
 
 GameParameters::GameParameters() {
 }
@@ -19,11 +18,11 @@ GameParameters::GameParameters() {
 GameParameters::GameParameters(bool):
     moves_(Moves()),
     moves_init_(0),
-    limit_std_(defaults::LIMIT_STD),
-    limit_private_init_(defaults::LIMIT_PRIVATE_INIT),
-    pause_limit_init_(defaults::PAUSE_LIMIT_INIT),
-    norating_(defaults::NORATING),
-    first_draw_(defaults::FIRST_DRAW) {
+    limit_std_(config::defaults::LIMIT_STD),
+    limit_private_init_(config::defaults::LIMIT_PRIVATE_INIT),
+    pause_limit_init_(config::defaults::PAUSE_LIMIT_INIT),
+    norating_(config::defaults::NORATING),
+    first_draw_(config::defaults::FIRST_DRAW) {
 }
 
 void GameParameters::set_game_parameters(const GameParameters* other) {
@@ -31,6 +30,7 @@ void GameParameters::set_game_parameters(const GameParameters* other) {
 }
 
 void GameParameters::set_no_draw() {
+    using namespace config; // min
     first_draw_ = NO_DRAW;
     limit_std_ = min::LIMIT_STD;
     limit_private_init_ = min::LIMIT_PRIVATE_INIT;
