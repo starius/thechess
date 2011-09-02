@@ -86,8 +86,8 @@ public:
     static char piece_char(Letter letter);
 
 private:
-    Color color_;
-    Letter piece_;
+    Color color_: 2;
+    Letter piece_: 3;
 };
 
 }
