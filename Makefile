@@ -49,8 +49,8 @@ endif
 endif
 
 sources = $(wildcard src/*.cpp) $(wildcard src/*/*.cpp)
-ifeq (,$(NOOBJECTS))
 headers = $(wildcard src/*.hpp) $(wildcard src/*/*.hpp)
+ifeq (,$(NOOBJECTS))
 objects = $(subst src/,$(BUILD)/,$(sources:.cpp=.o))
 makefiles = $(objects:.o=.d)
 tosource = src/$*.cpp
@@ -92,7 +92,7 @@ $(BUILD)/%.d: $$(tosource)
 	mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) $< -MM | sed 's,.\+\.o[ :]*,$(@:.d=.o) $@ : ,' > $@;
 
-$(EXE): $$(sources) $$(makefiles) $$(objects)
+$(EXE): $$(sources) $$(headers) $$(makefiles) $$(objects)
 ifeq (,$(NOOBJECTS))
 	$(LINK) $(LFLAGS) $(LIBS) $(objects) -o $@
 else
