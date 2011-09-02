@@ -66,7 +66,7 @@ void RegisterWidget::try_register_() {
                                  .where("username = ?")
                                  .bind(username_->text());
         if (check_username) {
-            username_error_->setText(tr("thechess.already_used"));
+            username_error_->setText(tr("tc.user.Already_used"));
         } else {
             User* u = new User(true);
             u->set_username(username_->text());
@@ -74,7 +74,7 @@ void RegisterWidget::try_register_() {
             UserPtr user = tApp->session().add(u);
             table_->hide();
             button_->hide();
-            new Wt::WText(tr("thechess.register_success"), this);
+            new Wt::WText(tr("tc.user.Register_success"), this);
             tApp->set_user(user);
         }
         t.commit();

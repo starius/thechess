@@ -271,6 +271,7 @@
     <message id='tc.time.seconds'>секунд</message>
     <message id='tc.time.weeks'>недель</message>
 
+    <message id='tc.user.Already_used'>Уже используется</message>
     <message id='tc.user.classification_a'>первый разряд</message>
     <message id='tc.user.classification_b'>второй разряд</message>
     <message id='tc.user.classification_c'>третий разряд</message>
@@ -296,6 +297,7 @@
     <message id='tc.user.Rating_changes'>Изменения рейтинга</message>
     <message id='tc.user.Rating_changes_and_me'>Изменения рейтинга (в сравнении с моим рейтингом)</message>
     <message id='tc.user.Register'>Зарегистрироваться</message>
+    <message id='tc.user.Register_success'>Регистрация прошла успешно</message>
     <message id='tc.user.Start_game'>Начать игру</message>
     <message id='tc.user.Username'>Имя пользователя</message>
     <message id='tc.user.Wrong_username_or_password'>Неправильное имя пользователя или пароль</message>

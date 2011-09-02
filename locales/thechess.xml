@@ -455,6 +455,7 @@ and need not be sorted.
     <message id='tc.time.seconds'>seconds</message>
     <message id='tc.time.weeks'>weeks</message>
 
+    <message id='tc.user.Already_used'>Already used</message>
     <message id='tc.user.classification_a'>class A</message>
     <message id='tc.user.classification_b'>class B</message>
     <message id='tc.user.classification_c'>class C</message>
@@ -480,6 +481,7 @@ and need not be sorted.
     <message id='tc.user.Rating_changes'>Rating changes</message>
     <message id='tc.user.Rating_changes_and_me'>Rating changes (compared to my ones)</message>
     <message id='tc.user.Register'>Register</message>
+    <message id='tc.user.Register_success'>Registration is successful</message>
     <message id='tc.user.Start_game'>Start a game</message>
     <message id='tc.user.Username'>Username</message>
     <message id='tc.user.Wrong_username_or_password'>Wrong username or password</message>

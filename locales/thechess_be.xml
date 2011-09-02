@@ -262,6 +262,7 @@
     <message id="tc.time.seconds">секунд</message>
     <message id="tc.time.weeks">тыдняў</message>
 
+    <message id='tc.user.Already_used'>Ужо выкарыстоўваецца</message>
     <message id="tc.user.classification_a">першы разрад</message>
     <message id="tc.user.classification_b">другі разрад</message>
     <message id="tc.user.classification_c">трэці разрад</message>
@@ -287,6 +288,7 @@
     <message id="tc.user.Rating_changes">Змяненні рэйтынгу</message>
     <message id="tc.user.Rating_changes_and_me">Змяненні рэйтынгу (у параўнанні з маім рэйтынгам)</message>
     <message id="tc.user.Register">Зарэгістравацца</message>
+    <message id='tc.user.Register_success'>Рэгістрацыя паспяховая</message>
     <message id="tc.user.Start_game">Пачаць гульню</message>
     <message id="tc.user.Username">Імя карыстальніка</message>
     <message id="tc.user.Wrong_username_or_password">Няправільнае імя карыстальніка ці пароль</message>

@@ -261,6 +261,7 @@
     <message id="tc.time.seconds">секунд</message>
     <message id="tc.time.weeks">тижнів</message>
 
+    <message id='tc.user.Already_used'>Вже використовується</message>
     <message id="tc.user.classification_a">перший розряд</message>
     <message id="tc.user.classification_b">другий розряд</message>
     <message id="tc.user.classification_c">третій розряд</message>
@@ -286,6 +287,7 @@
     <message id="tc.user.Rating_changes">Зміни рейтингу</message>
     <message id="tc.user.Rating_changes_and_me">Зміни рейтингу (в порівнянні з моїм рейтингом)</message>
     <message id="tc.user.Register">Зареєструватися</message>
+    <message id='tc.user.Register_success'>Реєстрація успішна</message>
     <message id="tc.user.Start_game">Розпочати гру</message>
     <message id="tc.user.Username">Ім'я користувача</message>
     <message id="tc.user.Wrong_username_or_password">Неправильне ім'я користувача або пароль</message>
