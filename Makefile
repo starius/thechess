@@ -20,6 +20,12 @@ DOCROOT = $(DOCROOT_PARENT)/files
 ifeq ($(BUILD), release)
 NOOBJECTS = TRUE
 endif
+ifeq ($(MAKECMDGOALS), doc)
+NOOBJECTS = TRUE
+endif
+ifeq ($(MAKECMDGOALS), style)
+NOOBJECTS = TRUE
+endif
 
 CXX = ccache g++
 LINK = g++
