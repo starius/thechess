@@ -75,6 +75,8 @@ build: $$(EXE)
 
 chess: $$(CHESS_OBJECTS)
 
+check: locales
+
 .PHONY: dep
 dep:
 	apt-get install spawn-fcgi `apt-cache depends witty| awk '{$$1 = ""; print $$0}'`
@@ -144,3 +146,10 @@ endif
 		<property name="tinyMCEBaseURL">tinymce/</property>\
 		</properties>@' -i $@
 
+.SECONDARY: wt.xml
+wt.xml:
+	wget -O $@ http://redmine.emweb.be/projects/wt/repository/revisions/master/raw/src/xml/wt.xml
+
+.PHONY: locales
+locales: wt.xml
+	./locales_test.py --wt=$<
