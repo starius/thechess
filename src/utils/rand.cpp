@@ -11,6 +11,8 @@
 
 #include <Wt/WRandom>
 
+#include "utils/rand.hpp"
+
 namespace thechess {
 
 const unsigned int UINT_MIN = 0;
