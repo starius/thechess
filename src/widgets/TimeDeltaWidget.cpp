@@ -12,7 +12,7 @@
 
 #include "widgets/TimeDeltaWidget.hpp"
 #include "widgets/MySpinBox.hpp"
-#include "time_intervals.hpp"
+#include "utils/time_intervals.hpp"
 
 namespace thechess {
 

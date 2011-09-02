@@ -34,7 +34,7 @@ namespace dbo = Wt::Dbo;
 #include "ThechessApplication.hpp"
 
 #include "config.hpp"
-#include "time_intervals.hpp"
+#include "utils/time_intervals.hpp"
 #include "widgets/RegisterWidget.hpp"
 #include "widgets/LoginWidget.hpp"
 #include "widgets/GameWidget.hpp"

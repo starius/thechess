@@ -8,7 +8,7 @@
  */
 
 #include "chess/Square.hpp"
-#include "utils.hpp"
+#include "utils/utils.hpp"
 
 namespace thechess {
 

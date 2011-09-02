@@ -16,7 +16,7 @@
 
 #include "ThechessServer.hpp"
 #include "ThechessApplication.hpp"
-#include "utils.hpp"
+#include "utils/utils.hpp"
 #include "config.hpp"
 
 namespace thechess {

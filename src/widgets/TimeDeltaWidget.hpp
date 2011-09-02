@@ -14,7 +14,7 @@
 #include <Wt/Dbo/ptr>
 namespace dbo = Wt::Dbo;
 
-#include "time_intervals.hpp"
+#include "utils/time_intervals.hpp"
 
 namespace Wt {
 class WContainerWidget;

@@ -14,7 +14,7 @@
 #include "model/Competition.hpp"
 #include "model/StagedCompetition.hpp"
 #include "config.hpp"
-#include "rand.hpp"
+#include "utils/rand.hpp"
 
 namespace thechess {
 

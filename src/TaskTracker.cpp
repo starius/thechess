@@ -19,13 +19,12 @@
 #include <Wt/Dbo/Exception>
 
 #include "TaskTracker.hpp"
-#include "time_intervals.hpp"
+#include "utils/time_intervals.hpp"
 #include "ThechessApplication.hpp"
 #include "ThechessSession.hpp"
 #include "ThechessServer.hpp"
 #include "model/Game.hpp"
 #include "model/User.hpp"
-#include "time_intervals.hpp"
 #include "config.hpp"
 
 namespace thechess {

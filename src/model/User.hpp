@@ -34,7 +34,7 @@ typedef std::vector<UserPtr> UsersVector;
 #include "model/EloPlayer.hpp"
 #include "model/CookieSession.hpp"
 #include "model/UserClassification.hpp"
-#include "time_intervals.hpp"
+#include "utils/time_intervals.hpp"
 
 namespace thechess {
 

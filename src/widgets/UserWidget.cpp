@@ -20,7 +20,7 @@
 #include "widgets/GameCreateWidget.hpp"
 #include "ThechessApplication.hpp"
 #include "model/Game.hpp"
-#include "time_intervals.hpp"
+#include "utils/time_intervals.hpp"
 
 namespace thechess {
 

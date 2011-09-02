@@ -7,7 +7,7 @@
  * See the LICENSE file for terms of use.
  */
 
-#include "time_intervals.hpp"
+#include "utils/time_intervals.hpp"
 
 namespace thechess {
 

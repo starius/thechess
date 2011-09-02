@@ -16,7 +16,7 @@
 #include "chess/Moves.hpp"
 #include "chess/HalfMove.hpp"
 #include "chess/Square.hpp"
-#include "utils.hpp"
+#include "utils/PlainTextWritter.hpp"
 
 namespace thechess {
 

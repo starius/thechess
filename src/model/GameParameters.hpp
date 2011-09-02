@@ -20,7 +20,7 @@ class GameParameters;
 
 #include "chess/Moves.hpp"
 #include "chess/Piece.hpp"
-#include "time_intervals.hpp"
+#include "utils/time_intervals.hpp"
 
 namespace thechess {
 

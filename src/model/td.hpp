@@ -12,7 +12,7 @@
 
 #include <Wt/Dbo/SqlTraits>
 
-#include "time_intervals.hpp"
+#include "utils/time_intervals.hpp"
 
 namespace Wt {
 namespace Dbo {

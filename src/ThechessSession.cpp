@@ -21,7 +21,7 @@
 #include "model/Competition.hpp"
 #include "model/CookieSession.hpp"
 #include "TaskTracker.hpp"
-#include "utils.hpp"
+#include "utils/utils.hpp"
 
 namespace dbo = Wt::Dbo;
 

@@ -14,7 +14,7 @@
 
 #include "model/Game.hpp"
 #include "model/EloPlayer.hpp"
-#include "rand.hpp"
+#include "utils/rand.hpp"
 #include "TaskTracker.hpp"
 #include "chess/Board.hpp"
 

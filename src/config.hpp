@@ -11,7 +11,7 @@
 #ifndef THECHESS_CONFIG_H_
 #define THECHESS_CONFIG_H_
 
-#include "time_intervals.hpp"
+#include "utils/time_intervals.hpp"
 #include "model/UserClassification.hpp"
 #include "model/CompetitionType.hpp"
 #include "ThechessOptions.hpp"
