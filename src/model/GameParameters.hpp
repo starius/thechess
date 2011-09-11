@@ -34,7 +34,7 @@ public:
         dbo::field(a, moves_.as_svuc(), "moves");
         dbo::field(a, moves_init_, "moves_init");
         dbo::field(a, limit_std_, "limit_std");
-        dbo::field(a, limit_private_init_, "limit_private_init_");
+        dbo::field(a, limit_private_init_, "limit_private_init");
         dbo::field(a, norating_, "norating");
         dbo::field(a, pause_limit_init_, "pause_limit_init");
         dbo::field(a, first_draw_, "first_draw");
