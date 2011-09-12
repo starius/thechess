@@ -61,7 +61,7 @@ public:
     }
 
     virtual int rowCount(const Wt::WModelIndex& /*parent*/) const {
-        return cached_moves_->human_size();
+        return cached_moves_->moves_number();
     }
 
     virtual int columnCount(const Wt::WModelIndex& /*parent*/) const {

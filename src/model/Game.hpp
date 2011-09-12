@@ -386,7 +386,7 @@ public:
     bool real_rating() const;
 
     /** Return the number of moves of the game */
-    int human_size() const {
+    int moves_number() const {
         return Moves::size_to_human(size());
     }
 

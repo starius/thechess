@@ -133,7 +133,7 @@ public:
     /** Return number of moves.
     \sa size()
     */
-    int human_size() const;
+    int moves_number() const;
 
     /** Return 0 for white half-move and 1 otherwise */
     static int order_int(int move_n);

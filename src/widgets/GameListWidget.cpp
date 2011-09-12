@@ -72,7 +72,7 @@ public:
             if (index.column() == STATE_COLUMN) {
                 return game->str_state();
             } else if (index.column() == MOVES_SIZE_COLUMN) {
-                return game->human_size();
+                return game->moves_number();
             } else if (index.column() == REAL_RATING_COLUMN) {
                 return game->real_rating();
             }

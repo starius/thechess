@@ -193,7 +193,7 @@ int Moves::n_from_human(int human_i, Piece::Color color) {
     return (human_i - 1) * 2 + ((color == Piece::WHITE) ? 0 : 1);
 }
 
-int Moves::human_size() const {
+int Moves::moves_number() const {
     return size_to_human(size());
 }
 
