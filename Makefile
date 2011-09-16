@@ -93,6 +93,7 @@ $(BUILD)/%.d: $$(tosource)
 	$(CXX) $(CXXFLAGS) $< -MM | sed 's,.\+\.o[ :]*,$(@:.d=.o) $@ : ,' > $@;
 
 $(EXE): $$(sources) $$(headers) $$(makefiles) $$(objects)
+	mkdir -p $(dir $@)
 ifeq (,$(NOOBJECTS))
 	$(LINK) $(LFLAGS) $(LIBS) $(objects) -o $@
 else
