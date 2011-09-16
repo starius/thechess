@@ -16,8 +16,7 @@
 namespace dbo = Wt::Dbo;
 
 #include "widgets/MyGamesList.hpp"
-#include "model/Game.hpp"
-#include "model/Object.hpp"
+#include "model/all.hpp"
 #include "ThechessApplication.hpp"
 
 namespace thechess {

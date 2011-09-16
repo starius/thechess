@@ -13,7 +13,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WCheckBox>
 
-#include "model/GameParameters.hpp"
+#include "model/all.hpp"
 #include "widgets/TableForm.hpp"
 
 namespace thechess {

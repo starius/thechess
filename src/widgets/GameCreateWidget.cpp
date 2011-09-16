@@ -18,7 +18,7 @@ namespace dbo = Wt::Dbo;
 #include "widgets/GameCreateWidget.hpp"
 #include "widgets/PleaseLoginWidget.hpp"
 #include "widgets/GameParametersWidget.hpp"
-#include "model/Game.hpp"
+#include "model/all.hpp"
 #include "ThechessApplication.hpp"
 #include "ThechessNotifier.hpp"
 

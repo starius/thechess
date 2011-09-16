@@ -12,7 +12,7 @@
 
 #include <Wt/WViewWidget>
 
-#include "model/Game.hpp"
+#include "model/all.hpp"
 
 namespace Wt {
 class WContainerWidget;

@@ -19,7 +19,7 @@
 #include "widgets/RatingChanges.hpp"
 #include "widgets/GameCreateWidget.hpp"
 #include "ThechessApplication.hpp"
-#include "model/Game.hpp"
+#include "model/all.hpp"
 #include "utils/time_intervals.hpp"
 
 namespace thechess {

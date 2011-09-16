@@ -12,7 +12,7 @@
 
 #include <Wt/WContainerWidget>
 
-#include "model/Competition.hpp"
+#include "model/all.hpp"
 
 namespace thechess {
 

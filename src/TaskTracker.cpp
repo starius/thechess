@@ -23,8 +23,7 @@
 #include "ThechessApplication.hpp"
 #include "ThechessSession.hpp"
 #include "ThechessServer.hpp"
-#include "model/Game.hpp"
-#include "model/User.hpp"
+#include "model/all.hpp"
 #include "config.hpp"
 
 namespace thechess {

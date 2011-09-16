@@ -16,8 +16,7 @@
 #include <Wt/WTextEdit>
 
 #include "widgets/GameParametersWidget.hpp"
-#include "model/CompetitionParameters.hpp"
-#include "model/Competition.hpp"
+#include "model/all.hpp"
 
 namespace thechess {
 

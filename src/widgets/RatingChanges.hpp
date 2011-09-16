@@ -12,7 +12,7 @@
 
 #include <Wt/WCompositeWidget>
 
-#include "model/User.hpp"
+#include "model/all.hpp"
 
 namespace Wt {
 class WContainerWidget;

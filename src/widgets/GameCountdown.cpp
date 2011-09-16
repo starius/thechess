@@ -22,8 +22,7 @@
 namespace dbo = Wt::Dbo;
 
 #include "chess/Piece.hpp"
-#include "model/Game.hpp"
-#include "model/User.hpp"
+#include "model/all.hpp"
 #include "ThechessApplication.hpp"
 #include "widgets/GameCountdown.hpp"
 

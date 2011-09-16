@@ -15,11 +15,7 @@
 #include <Wt/Dbo/backend/Postgres>
 
 #include "ThechessSession.hpp"
-#include "model/Object.hpp"
-#include "model/Game.hpp"
-#include "model/User.hpp"
-#include "model/Competition.hpp"
-#include "model/CookieSession.hpp"
+#include "model/all.hpp"
 #include "TaskTracker.hpp"
 #include "utils/utils.hpp"
 

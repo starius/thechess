@@ -12,7 +12,7 @@
 
 #include <Wt/WResource>
 
-#include "model/Game.hpp"
+#include "model/all.hpp"
 #include "ThechessSession.hpp"
 
 namespace thechess {

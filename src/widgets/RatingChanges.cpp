@@ -24,8 +24,7 @@ namespace dbo = Wt::Dbo;
 #include <Wt/WApplication>
 
 #include "widgets/RatingChanges.hpp"
-#include "model/Game.hpp"
-#include "model/User.hpp"
+#include "model/all.hpp"
 #include "ThechessApplication.hpp"
 
 namespace thechess {

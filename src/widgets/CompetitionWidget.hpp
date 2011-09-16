@@ -13,7 +13,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WTemplate>
 
-#include "model/Competition.hpp"
+#include "model/all.hpp"
 #include "ThechessApplication.hpp"
 
 namespace thechess {

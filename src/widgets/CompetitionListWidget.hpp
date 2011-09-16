@@ -17,7 +17,7 @@
 #include <Wt/Dbo/Query>
 namespace dbo = Wt::Dbo;
 
-#include "model/Competition.hpp"
+#include "model/all.hpp"
 
 namespace thechess {
 

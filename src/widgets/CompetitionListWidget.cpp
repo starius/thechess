@@ -19,8 +19,7 @@
 #include <Wt/WEnvironment>
 
 #include "widgets/CompetitionListWidget.hpp"
-#include "model/Competition.hpp"
-#include "model/User.hpp"
+#include "model/all.hpp"
 #include "ThechessApplication.hpp"
 
 namespace thechess {

@@ -14,7 +14,7 @@
 #include <Wt/Dbo/ptr>
 namespace dbo = Wt::Dbo;
 
-#include "model/User.hpp"
+#include "model/all.hpp"
 #include "chess/Piece.hpp"
 
 namespace Wt {

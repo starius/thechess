@@ -21,7 +21,7 @@ namespace dbo = Wt::Dbo;
 #include "chess/HalfMove.hpp"
 #include "chess/Moves.hpp"
 #include "chess/Square.hpp"
-#include "model/User.hpp"
+#include "model/all.hpp"
 #include "ThechessApplication.hpp"
 #include "utils/rand.hpp"
 

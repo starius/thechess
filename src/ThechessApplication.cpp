@@ -47,10 +47,7 @@ namespace dbo = Wt::Dbo;
 #include "widgets/MainMenu.hpp"
 #include "widgets/MyGamesList.hpp"
 #include "ThechessSession.hpp"
-#include "model/User.hpp"
-#include "model/CookieSession.hpp"
-#include "model/Game.hpp"
-#include "model/Object.hpp"
+#include "model/all.hpp"
 #include "TaskTracker.hpp"
 
 namespace thechess {
