@@ -11,7 +11,7 @@
 #include <algorithm>
 #include <boost/foreach.hpp>
 
-#include "model/Competition.hpp"
+#include "model/all.hpp"
 #include "model/StagedCompetition.hpp"
 #include "config.hpp"
 #include "utils/rand.hpp"

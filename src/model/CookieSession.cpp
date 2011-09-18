@@ -7,9 +7,7 @@
  * See the LICENSE file for terms of use.
  */
 
-#include <Wt/WApplication>
-
-#include "model/CookieSession.hpp"
+#include "model/all.hpp"
 
 namespace thechess {
 

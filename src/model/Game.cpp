@@ -12,8 +12,7 @@
 #include <map>
 #include <boost/foreach.hpp>
 
-#include "model/Game.hpp"
-#include "model/EloPlayer.hpp"
+#include "model/all.hpp"
 #include "utils/rand.hpp"
 #include "TaskTracker.hpp"
 #include "chess/Board.hpp"

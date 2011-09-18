@@ -11,9 +11,9 @@
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
-#include "utils/rand.hpp"
 #include "model/StagedCompetition.hpp"
-#include "model/Object.hpp"
+#include "model/all.hpp"
+#include "utils/rand.hpp"
 
 namespace thechess {
 

@@ -12,7 +12,7 @@
 
 #include <Wt/WRandom>
 
-#include "model/User.hpp"
+#include "model/all.hpp"
 #include "config.hpp"
 
 namespace thechess {
