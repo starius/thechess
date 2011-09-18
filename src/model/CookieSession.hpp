@@ -10,22 +10,8 @@
 #ifndef THECHESS_MODEL_COOKIESESSION_HPP_
 #define THECHESS_MODEL_COOKIESESSION_HPP_
 
-#include <string>
-
-#include <Wt/Dbo/Dbo>
-#include <Wt/Dbo/ptr>
-namespace dbo = Wt::Dbo;
-#include <Wt/WDateTime>
-#include <Wt/Dbo/WtSqlTraits>
-
-namespace thechess {
-class CookieSession;
-typedef dbo::ptr<CookieSession> CookieSessionPtr;
-typedef dbo::collection<CookieSessionPtr> CookieSessions;
-}
-
+#include "model/global.hpp"
 #include "config.hpp"
-#include "model/User.hpp"
 
 namespace thechess {
 
@@ -65,26 +51,6 @@ private:
     Wt::WDateTime used_;
 };
 
-}
-
-namespace Wt {
-namespace Dbo {
-
-template<>
-struct dbo_traits<thechess::CookieSession> :
-    public dbo_default_traits {
-    typedef std::string IdType;
-
-    static IdType invalidId() {
-        return std::string();
-    }
-
-    static const char* surrogateIdField() {
-        return 0;
-    }
-};
-
-}
 }
 
 #endif

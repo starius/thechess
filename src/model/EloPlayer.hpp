@@ -17,10 +17,6 @@ class EloPlayer;
 typedef std::vector<EloPlayer*> EloPlayers;
 }
 
-#include <Wt/Dbo/Dbo>
-#include <Wt/Dbo/ptr>
-namespace dbo = Wt::Dbo;
-
 namespace thechess {
 
 class EloPlayer {
@@ -60,20 +56,6 @@ private:
     void apply_result_(float q_sum, float S);
 };
 
-}
-
-namespace Wt {
-namespace Dbo {
-
-template<class Action>
-void field(Action& a, thechess::EloPlayer& p, const std::string& name) {
-    field(a, const_cast<int&>(p.elo()), name + "_elo");
-    field(a, const_cast<int&>(p.all()), name + "_all");
-    field(a, const_cast<int&>(p.wins()), name + "_wins");
-    field(a, const_cast<int&>(p.fails()), name + "_fails");
-}
-
-}
 }
 
 #endif

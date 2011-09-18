@@ -10,12 +10,9 @@
 #ifndef THECHESS_MODEL_STAGED_COMPETITION_HPP_
 #define THECHESS_MODEL_STAGED_COMPETITION_HPP_
 
-#include <vector>
 #include <map>
 
-#include "model/Competition.hpp"
-#include "model/User.hpp"
-#include "model/Game.hpp"
+#include "model/global.hpp"
 
 namespace thechess {
 

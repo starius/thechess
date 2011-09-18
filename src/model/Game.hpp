@@ -10,29 +10,8 @@
 #ifndef THECHESS_MODEL_GAME_H_
 #define THECHESS_MODEL_GAME_H_
 
-#include <string>
-#include <vector>
-
-#include <Wt/WObject>
-#include <Wt/WString>
-#include <Wt/Dbo/Dbo>
-#include <Wt/Dbo/ptr>
-namespace dbo = Wt::Dbo;
-#include <Wt/WDateTime>
-#include <Wt/Dbo/WtSqlTraits>
-
-namespace thechess {
-class Game;
-typedef dbo::ptr<Game> GamePtr;
-typedef dbo::collection<GamePtr> Games;
-typedef std::vector<GamePtr> GamesVector;
-}
-
+#include "model/global.hpp"
 #include "model/GameParameters.hpp"
-#include "model/User.hpp"
-#include "model/Competition.hpp"
-#include "model/td.hpp"
-#include "model/Object.hpp"
 
 namespace thechess {
 

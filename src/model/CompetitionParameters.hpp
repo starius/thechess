@@ -18,10 +18,10 @@ namespace thechess {
 class CompetitionParameters;
 }
 
+#include "model/global.hpp"
 #include "model/GameParameters.hpp"
 #include "model/UserClassification.hpp"
 #include "model/CompetitionType.hpp"
-#include "model/td.hpp"
 
 namespace thechess {
 

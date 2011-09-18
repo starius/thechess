@@ -10,28 +10,10 @@
 #ifndef THECHESS_MODEL_COMPETITION_HPP_
 #define THECHESS_MODEL_COMPETITION_HPP_
 
-#include <string>
 #include <map>
-#include <vector>
 
-#include <Wt/Dbo/Dbo>
-#include <Wt/Dbo/ptr>
-namespace dbo = Wt::Dbo;
-#include <Wt/WDateTime>
-#include <Wt/Dbo/WtSqlTraits>
-
-namespace thechess {
-class Competition;
-typedef dbo::ptr<Competition> CompetitionPtr;
-typedef dbo::collection<CompetitionPtr> Competitions;
-typedef std::vector<CompetitionPtr> CompetitionsVector;
-}
-
+#include "model/global.hpp"
 #include "model/CompetitionParameters.hpp"
-#include "model/User.hpp"
-#include "model/Game.hpp"
-#include "model/td.hpp"
-#include "model/Object.hpp"
 
 namespace thechess {
 

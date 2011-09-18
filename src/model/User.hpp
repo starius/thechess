@@ -10,31 +10,10 @@
 #ifndef THECHESS_MODEL_USER_H_
 #define THECHESS_MODEL_USER_H_
 
-#include <vector>
-
-#include <Wt/Dbo/Dbo>
-#include <Wt/Dbo/ptr>
-#include <Wt/WString>
-#include <Wt/WDateTime>
-#include <Wt/Dbo/WtSqlTraits>
-#include <Wt/Dbo/collection>
 #include <Wt/Dbo/Query>
-#include <Wt/Dbo/Session>
-namespace dbo = Wt::Dbo;
 
-namespace thechess {
-class User;
-typedef dbo::ptr<User> UserPtr;
-typedef dbo::collection<UserPtr> Users;
-typedef std::vector<UserPtr> UsersVector;
-}
-
-#include "model/Game.hpp"
-#include "model/Competition.hpp"
-#include "model/EloPlayer.hpp"
-#include "model/CookieSession.hpp"
+#include "model/global.hpp"
 #include "model/UserClassification.hpp"
-#include "utils/time_intervals.hpp"
 
 namespace thechess {
 
