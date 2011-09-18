@@ -37,7 +37,7 @@ public:
         dbo::field(a, last_enter_, "last_enter");
         dbo::field(a, online_time_, "online_time");
         dbo::field(a, classification_, "classification");
-        dbo::field(a, classification_confirmer_, "classification_confirmer");
+        dbo::belongsTo(a, classification_confirmer_, "classification_confirmer");
         dbo::hasMany(a, classification_confirmed_, dbo::ManyToOne, "classification_confirmer");
         dbo::hasMany(a, white_games_, dbo::ManyToOne, "white");
         dbo::hasMany(a, black_games_, dbo::ManyToOne, "black");
