@@ -31,7 +31,7 @@ public:
         CONFIRMED = 10, /**< is to be started when both users are online */
         ACTIVE = 20, /**< is running, clock is ticking */
         PAUSE = 30, /**< is paused until predefined time, clock is also paused */
-#ifndef DOSQUAREGEN_ONLY
+#ifndef DOXYGEN_ONLY
         MIN_ENDED = 50,
 #endif
         DRAW_STALEMATE = 50, /**< ended with stalemate */
@@ -46,7 +46,7 @@ public:
         NO_DRAW_STALEMATE = 65 /**< ended with stalemate, black wins */
     };
 
-#ifndef DOSQUAREGEN_ONLY
+#ifndef DOXYGEN_ONLY
     Game();
 #endif
 
@@ -56,7 +56,7 @@ public:
     /** Create new game to be added to database. */
     Game(bool);
 
-#ifndef DOSQUAREGEN_ONLY
+#ifndef DOXYGEN_ONLY
     template<class Action>
     void persist(Action& a) {
         GameParameters::persist(a);
