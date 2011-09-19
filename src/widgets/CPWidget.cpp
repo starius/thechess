@@ -20,10 +20,10 @@
 
 namespace thechess {
 
-CompetitionParametersWidget::CompetitionParametersWidget(
-    const CompetitionParameters* cp,
+CPWidget::CPWidget(
+    const CP* cp,
     bool allow_change_type, Wt::WContainerWidget* parent):
-    GameParametersWidget(cp, parent) {
+    GPWidget(cp, parent) {
     using namespace config::competition; // min, max
     IntervalWidget* interval;
     Wt::WContainerWidget* cell;
@@ -37,12 +37,12 @@ CompetitionParametersWidget::CompetitionParametersWidget(
     if (allow_change_type) {
         if (wApp->environment().ajax()) {
             type_->activated().connect(this,
-                                       &CompetitionParametersWidget::type_handler_);
+                                       &CPWidget::type_handler_);
         } else {
             Wt::WPushButton* refresh =
                 new Wt::WPushButton(tr("tc.common.Refresh"), cell);
             refresh->clicked().connect(this,
-                                       &CompetitionParametersWidget::type_handler_);
+                                       &CPWidget::type_handler_);
         }
     } else {
         type_->disable();
@@ -106,8 +106,8 @@ CompetitionParametersWidget::CompetitionParametersWidget(
     type_handler_();
 }
 
-void CompetitionParametersWidget::apply_parameters(CompetitionParameters* cp) {
-    GameParametersWidget::apply_parameters(cp);
+void CPWidget::apply_parameters(CP* cp) {
+    GPWidget::apply_parameters(cp);
     CompetitionType t = get_type_();
     cp->set_type(t);
     cp->set_min_rating(min_rating_->value());
@@ -146,7 +146,7 @@ void CompetitionParametersWidget::apply_parameters(CompetitionParameters* cp) {
     }
 }
 
-void CompetitionParametersWidget::type_handler_() {
+void CPWidget::type_handler_() {
     CompetitionType t = get_type_();
     hide(users_);
     hide(recruiting_time_);
@@ -170,7 +170,7 @@ void CompetitionParametersWidget::type_handler_() {
     }
 }
 
-void CompetitionParametersWidget::set_type_(CompetitionType t) {
+void CPWidget::set_type_(CompetitionType t) {
     if (t == CLASSICAL) {
         type_->setCurrentIndex(0);
     } else if (t == STAGED) {
@@ -180,7 +180,7 @@ void CompetitionParametersWidget::set_type_(CompetitionType t) {
     }
 }
 
-CompetitionType CompetitionParametersWidget::get_type_() const {
+CompetitionType CPWidget::get_type_() const {
     using namespace config::competition; // defaults
     CompetitionType t = defaults::COMPETITION_TYPE;
     int index = type_->currentIndex();
@@ -194,9 +194,9 @@ CompetitionType CompetitionParametersWidget::get_type_() const {
     return t;
 }
 
-CompetitionParametersWidget2::CompetitionParametersWidget2(const Competition* c,
-        bool allow_change_type, Wt::WContainerWidget* parent):
-    CompetitionParametersWidget(c, allow_change_type, parent) {
+CPWidget2::CPWidget2(const Competition* c,
+                     bool allow_change_type, Wt::WContainerWidget* parent):
+    CPWidget(c, allow_change_type, parent) {
     name_ = new Wt::WLineEdit(c->name());
     name_->setMaxLength(config::competition::MAX_NAME);
     item(tr("tc.competition.Name"), "", name_, name_);
@@ -204,8 +204,8 @@ CompetitionParametersWidget2::CompetitionParametersWidget2(const Competition* c,
     item(tr("tc.competition.Description"), "", description_, description_);
 }
 
-void CompetitionParametersWidget2::apply_parameters(Competition* c) {
-    CompetitionParametersWidget::apply_parameters(c);
+void CPWidget2::apply_parameters(Competition* c) {
+    CPWidget::apply_parameters(c);
     std::wstring name = name_->text().value();
     if (name.length() > config::competition::MAX_NAME) {
         name.resize(config::competition::MAX_NAME);

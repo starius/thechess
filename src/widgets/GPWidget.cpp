@@ -20,8 +20,8 @@
 
 namespace thechess {
 
-GameParametersWidget::GameParametersWidget(const GameParameters* gp,
-        Wt::WContainerWidget* parent) :
+GPWidget::GPWidget(const GP* gp,
+                   Wt::WContainerWidget* parent) :
     TableForm(parent) {
     using namespace config; // max, min
     Wt::WContainerWidget* cell;
@@ -50,7 +50,7 @@ GameParametersWidget::GameParametersWidget(const GameParameters* gp,
     item(tr("tc.game.first_draw"), "", first_draw_, first_draw_);
 }
 
-void GameParametersWidget::apply_parameters(GameParameters* gp) {
+void GPWidget::apply_parameters(GP* gp) {
     gp->set_init_moves(moves_widget_->moves());
     gp->set_limit_std(limit_std_->value());
     gp->set_limit_private_init(limit_private_init_->value());

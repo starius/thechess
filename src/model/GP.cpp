@@ -12,10 +12,10 @@
 
 namespace thechess {
 
-GameParameters::GameParameters() {
+GP::GP() {
 }
 
-GameParameters::GameParameters(bool):
+GP::GP(bool):
     moves_(Moves()),
     moves_init_(0),
     limit_std_(config::defaults::LIMIT_STD),
@@ -25,11 +25,11 @@ GameParameters::GameParameters(bool):
     first_draw_(config::defaults::FIRST_DRAW) {
 }
 
-void GameParameters::set_game_parameters(const GameParameters* other) {
+void GP::set_gp(const GP* other) {
     *this = *other;
 }
 
-void GameParameters::set_no_draw() {
+void GP::set_no_draw() {
     using namespace config; // min
     first_draw_ = NO_DRAW;
     limit_std_ = min::LIMIT_STD;

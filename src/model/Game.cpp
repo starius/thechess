@@ -23,7 +23,7 @@ Game::Game() {
 }
 
 Game::Game(bool):
-    GameParameters(true),
+    GP(true),
     state_(PROPOSED),
     colors_random_(false),
     created_(now()),

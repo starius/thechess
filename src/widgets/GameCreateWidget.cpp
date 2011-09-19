@@ -49,8 +49,8 @@ GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :
 }
 
 void GameCreateWidget::print_() {
-    GameParameters gp(true);
-    gpw_ = new GameParametersWidget(&gp, this);
+    GP gp(true);
+    gpw_ = new GPWidget(&gp, this);
     color_ = new Wt::WComboBox();
     color_->addItem(tr("tc.game.random"));
     color_->addItem(tr("tc.game.white"));

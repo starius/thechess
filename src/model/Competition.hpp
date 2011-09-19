@@ -19,7 +19,7 @@ namespace thechess {
 
 typedef std::map<UserPtr, std::map<UserPtr, GamesVector> > GamesTable;
 
-class Competition : public CompetitionParameters, public dbo::Dbo<Competition> {
+class Competition : public CP, public dbo::Dbo<Competition> {
 public:
     typedef CompetitionType Type;
 
@@ -41,7 +41,7 @@ public:
 
     template<class Action>
     void persist(Action& a) {
-        CompetitionParameters::persist(a);
+        CP::persist(a);
         dbo::field(a, state_, "state");
         dbo::field(a, name_, "name");
         dbo::field(a, description_, "description");

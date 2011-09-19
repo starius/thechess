@@ -22,11 +22,11 @@ class MySpinBox;
 class TimeDeltaWidget;
 class MovesWidget;
 
-class GameParametersWidget : public TableForm {
+class GPWidget : public TableForm {
 public:
-    GameParametersWidget(const GameParameters* gp,
-                         Wt::WContainerWidget* parent = 0);
-    void apply_parameters(GameParameters* gp);
+    GPWidget(const GP* gp,
+             Wt::WContainerWidget* parent = 0);
+    void apply_parameters(GP* gp);
 
 private:
     MovesWidget* moves_widget_;

@@ -24,7 +24,7 @@ GamePtr game = session.add(new Game(true));
 
 */
 
-class Game : public GameParameters, public dbo::Dbo<Game> {
+class Game : public GP, public dbo::Dbo<Game> {
 public:
     enum State {
         PROPOSED = 0, /**< was proposed by user or planned by competition */
@@ -59,7 +59,7 @@ public:
 #ifndef DOXYGEN_ONLY
     template<class Action>
     void persist(Action& a) {
-        GameParameters::persist(a);
+        GP::persist(a);
         dbo::field(a, state_, "state");
         dbo::belongsTo(a, white_, "white");
         dbo::belongsTo(a, black_, "black");

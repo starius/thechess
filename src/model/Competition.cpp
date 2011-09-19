@@ -22,7 +22,7 @@ Competition::Competition() {
 }
 
 Competition::Competition(bool):
-    CompetitionParameters(true),
+    CP(true),
     state_(RECRUITING),
     created_(now()) {
 }
@@ -341,7 +341,7 @@ GamePtr Competition::create_game_(UserPtr white, UserPtr black, int stage, bool 
     bool random = no_draw;
     game.modify()->make_competition_game(white, black,
                                          session()->load<Competition>(id()), stage, random);
-    game.modify()->set_game_parameters(this);
+    game.modify()->set_gp(this);
     if (no_draw) {
         game.modify()->set_no_draw();
     }

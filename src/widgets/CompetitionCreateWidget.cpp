@@ -30,7 +30,7 @@ CompetitionCreateWidget::CompetitionCreateWidget(Wt::WContainerWidget* p):
     } else if (Competition::can_create_competition(tApp->user())) {
         new Wt::WText(tr("tc.competition.Create_welcome"), this);
         Competition* c = new Competition(true);
-        cpw_ = new CompetitionParametersWidget2(c, /*allow_change_type*/ true, this);
+        cpw_ = new CPWidget2(c, /*allow_change_type*/ true, this);
         delete c;
         new Wt::WBreak(this);
         ok_ = new Wt::WPushButton(tr("tc.common.Create"), this);
@@ -49,7 +49,7 @@ CompetitionCreateWidget::CompetitionCreateWidget(CompetitionPtr c,
         new PleaseLoginWidget(this);
     } else if (c->can_change_parameters(tApp->user())) {
         new Wt::WText(tr("tc.competition.Change_welcome").arg(int(c.id())), this);
-        cpw_ = new CompetitionParametersWidget2(&(*c), /*allow_change_type*/ true, this);
+        cpw_ = new CPWidget2(&(*c), /*allow_change_type*/ true, this);
         new Wt::WBreak(this);
         ok_ = new Wt::WPushButton(tr("tc.common.Save"), this);
         ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler_);

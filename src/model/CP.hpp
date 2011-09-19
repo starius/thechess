@@ -15,7 +15,7 @@
 namespace dbo = Wt::Dbo;
 
 namespace thechess {
-class CompetitionParameters;
+class CP;
 }
 
 #include "model/global.hpp"
@@ -25,16 +25,16 @@ class CompetitionParameters;
 
 namespace thechess {
 
-class CompetitionParameters : public GameParameters {
+class CP : public GP {
 public:
     typedef CompetitionType Type;
 
-    CompetitionParameters();
-    CompetitionParameters(bool);
+    CP();
+    CP(bool);
 
     template<class Action>
     void persist(Action& a) {
-        GameParameters::persist(a);
+        GP::persist(a);
         dbo::field(a, type_, "type");
         dbo::field(a, min_rating_, "min_rating");
         dbo::field(a, max_rating_, "max_rating");

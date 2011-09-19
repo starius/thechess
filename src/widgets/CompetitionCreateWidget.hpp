@@ -16,7 +16,7 @@
 
 namespace thechess {
 
-class CompetitionParametersWidget2;
+class CPWidget2;
 
 class CompetitionCreateWidget : public Wt::WContainerWidget {
 public:
@@ -25,7 +25,7 @@ public:
     Wt::EventSignal<Wt::WMouseEvent>& saved();
 
 private:
-    CompetitionParametersWidget2* cpw_;
+    CPWidget2* cpw_;
     CompetitionPtr c_;
     Wt::WPushButton* ok_;
 

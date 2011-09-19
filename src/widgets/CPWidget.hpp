@@ -26,12 +26,12 @@ class TimeDeltaWidget;
 class ClassificationWidget;
 class IntervalWidget;
 
-class CompetitionParametersWidget : public GameParametersWidget {
+class CPWidget : public GPWidget {
 public:
-    CompetitionParametersWidget(const CompetitionParameters* cp,
-                                bool allow_change_type = true, Wt::WContainerWidget* parent = 0);
+    CPWidget(const CP* cp,
+             bool allow_change_type = true, Wt::WContainerWidget* parent = 0);
 
-    void apply_parameters(CompetitionParameters* cp);
+    void apply_parameters(CP* cp);
 
 private:
     Wt::WComboBox* type_;
@@ -61,10 +61,10 @@ private:
     void set_type_(CompetitionType t);
 };
 
-class CompetitionParametersWidget2 : public CompetitionParametersWidget {
+class CPWidget2 : public CPWidget {
 public:
-    CompetitionParametersWidget2(const Competition* c,
-                                 bool allow_change_type = true, Wt::WContainerWidget* parent = 0);
+    CPWidget2(const Competition* c,
+              bool allow_change_type = true, Wt::WContainerWidget* parent = 0);
 
     void apply_parameters(Competition* c);
 

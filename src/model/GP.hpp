@@ -15,7 +15,7 @@
 namespace dbo = Wt::Dbo;
 
 namespace thechess {
-class GameParameters;
+class GP;
 }
 
 #include "model/global.hpp"
@@ -25,10 +25,10 @@ class GameParameters;
 
 namespace thechess {
 
-class GameParameters {
+class GP {
 public:
-    GameParameters();
-    GameParameters(bool);
+    GP();
+    GP(bool);
 
     template<class Action>
     void persist(Action& a) {
@@ -89,7 +89,7 @@ public:
         first_draw_ = first_draw;
     }
 
-    void set_game_parameters(const GameParameters* other);
+    void set_gp(const GP* other);
     void set_no_draw();
 
 protected:

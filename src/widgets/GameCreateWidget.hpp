@@ -23,7 +23,7 @@ class WComboBox;
 
 namespace thechess {
 
-class GameParametersWidget;
+class GPWidget;
 
 class GameCreateWidget : public Wt::WContainerWidget {
 public:
@@ -31,7 +31,7 @@ public:
     GameCreateWidget(Wt::WContainerWidget* p = 0);
 
 private:
-    GameParametersWidget* gpw_;
+    GPWidget* gpw_;
     bool with_user_;
     UserPtr user_;
     Wt::WComboBox* color_;
