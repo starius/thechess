@@ -19,7 +19,7 @@ class CompetitionParameters;
 }
 
 #include "model/global.hpp"
-#include "model/GameParameters.hpp"
+#include "model/GP.hpp"
 #include "model/UserClassification.hpp"
 #include "model/CompetitionType.hpp"
 

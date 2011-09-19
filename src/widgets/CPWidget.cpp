@@ -11,7 +11,7 @@
 #include <Wt/WEnvironment>
 #include <Wt/WApplication>
 
-#include "widgets/CompetitionParametersWidget.hpp"
+#include "widgets/CPWidget.hpp"
 #include "widgets/TimeDeltaWidget.hpp"
 #include "widgets/ClassificationWidget.hpp"
 #include "widgets/MySpinBox.hpp"

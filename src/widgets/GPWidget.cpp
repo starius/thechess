@@ -12,7 +12,7 @@
 #include <Wt/WPushButton>
 #include <Wt/WTable>
 
-#include "widgets/GameParametersWidget.hpp"
+#include "widgets/GPWidget.hpp"
 #include "widgets/MySpinBox.hpp"
 #include "widgets/MovesWidget.hpp"
 #include "widgets/TimeDeltaWidget.hpp"

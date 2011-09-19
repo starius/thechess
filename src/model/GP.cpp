@@ -7,7 +7,7 @@
  * See the LICENSE file for terms of use.
  */
 
-#include "model/GameParameters.hpp"
+#include "model/GP.hpp"
 #include "config.hpp"
 
 namespace thechess {

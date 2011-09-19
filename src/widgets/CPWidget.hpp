@@ -15,7 +15,7 @@
 #include <Wt/WCheckBox>
 #include <Wt/WTextEdit>
 
-#include "widgets/GameParametersWidget.hpp"
+#include "widgets/GPWidget.hpp"
 #include "model/all.hpp"
 
 namespace thechess {
