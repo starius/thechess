@@ -10,31 +10,23 @@
 #ifndef THECHESS_MODEL_COMPETITION_PARAMETERS_HPP_
 #define THECHESS_MODEL_COMPETITION_PARAMETERS_HPP_
 
-#include <Wt/Dbo/Dbo>
-#include <Wt/Dbo/ptr>
-namespace dbo = Wt::Dbo;
-
-namespace thechess {
-class CP;
-}
-
 #include "model/global.hpp"
-#include "model/GP.hpp"
 #include "model/UserClassification.hpp"
 #include "model/CompetitionType.hpp"
 
 namespace thechess {
 
-class CP : public GP {
+class CP : public dbo::Dbo<GP> {
 public:
     typedef CompetitionType Type;
 
     CP();
-    CP(bool);
+    CP(const GPPtr& gp);
 
     template<class Action>
     void persist(Action& a) {
-        GP::persist(a);
+        dbo::belongsTo(a, gp_, "gp");
+        dbo::hasMany(a, competitions_, dbo::ManyToOne, "cp");
         dbo::field(a, type_, "type");
         dbo::field(a, min_rating_, "min_rating");
         dbo::field(a, max_rating_, "max_rating");
@@ -57,6 +49,10 @@ public:
     }
     void set_type(Type v) {
         type_ = v;
+    }
+
+    const GPPtr& gp() const {
+        return gp_;
     }
 
     int min_rating() const {
@@ -152,6 +148,8 @@ public:
     }
 
 private:
+    GPPtr gp_;
+    Competitions competitions_;
     Type type_;
 
     int min_rating_;

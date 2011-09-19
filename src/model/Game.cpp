@@ -22,14 +22,15 @@ namespace thechess {
 Game::Game() {
 }
 
-Game::Game(bool):
-    GP(true),
+Game::Game(const GPPtr& gp):
+    gp_(gp),
     state_(PROPOSED),
     colors_random_(false),
     created_(now()),
     competition_stage_(-1),
     pause_proposed_td_(TD_NULL),
     mistake_move_(-1) {
+    moves_ = gp_->moves();
     rating_after_[Piece::WHITE] = -1;
     rating_after_[Piece::BLACK] = -1;
     competition_confirmer_[Piece::WHITE] = false;
@@ -128,13 +129,13 @@ UserPtr Game::other_user(const UserPtr user) const {
 
 void Game::check(Objects& objects) {
     if (state() == PROPOSED && competition() && competition()->type() == STAGED &&
-            now() - created_ > competition()->relax_time()) {
+            now() - created_ > competition()->cp()->relax_time()) {
         confirm_();
     }
     if (state() == CONFIRMED && white()->online() && black()->online()) {
         start_();
     } else if (state() == CONFIRMED && competition()) {
-        if (now() - confirmed_ > competition()->force_start_delay()) {
+        if (now() - confirmed_ > competition()->cp()->force_start_delay()) {
             start_();
         }
     } else if (state() == PAUSE && now() > pause_until()) {
@@ -151,7 +152,7 @@ void Game::check(Objects& objects) {
 Td Game::limit_private(Piece::Color color) const {
     Td result;
     if (state() < Game::ACTIVE) {
-        result = limit_private_init();
+        result = gp_->limit_private_init();
     } else if (color != Piece::COLOR_NULL) {
         result = limit_private_[color];
     } else {
@@ -181,7 +182,7 @@ Td Game::spent_time(UserPtr user) const {
 }
 
 Td Game::total_limit(UserPtr user) const {
-    return limit_private(user) + limit_std();
+    return limit_private(user) + gp_->limit_std();
 }
 
 Td Game::total_limit_now(UserPtr user) const {
@@ -194,19 +195,19 @@ Td Game::limit_private_now(UserPtr user) const {
 }
 
 Td Game::limit_std_now(UserPtr user) const {
-    return std::max(TD_NULL, limit_std() - spent_time(user));
+    return std::max(TD_NULL, gp_->limit_std() - spent_time(user));
 }
 
 Wt::WDateTime Game::next_check() const {
     Wt::WDateTime result;
     if (state() == ACTIVE) {
-        result = lastmove() + limit_std() +
+        result = lastmove() + gp_->limit_std() +
                  std::min(limit_private(Piece::WHITE),
                           limit_private(Piece::BLACK));
     } else if (state() == PROPOSED && competition() && competition()->type() == STAGED) {
-        result = created_ + competition()->relax_time();
+        result = created_ + competition()->cp()->relax_time();
     } else if (state() == CONFIRMED && competition()) {
-        result = confirmed_ + competition()->force_start_delay();
+        result = confirmed_ + competition()->cp()->force_start_delay();
     } else if (state() == PAUSE) {
         result = pause_until();
     }
@@ -312,9 +313,9 @@ void Game::confirm_() {
 
 void Game::start_() {
     state_ = ACTIVE;
-    limit_private_[Piece::WHITE] = limit_private_init();
-    limit_private_[Piece::BLACK] = limit_private_init();
-    pause_limit_ = pause_limit_init();
+    limit_private_[Piece::WHITE] = gp_->limit_private_init();
+    limit_private_[Piece::BLACK] = gp_->limit_private_init();
+    pause_limit_ = gp_->pause_limit_init();
     pause_proposer_.reset();
     mistake_proposer_.reset();
     started_ = now();
@@ -381,7 +382,7 @@ void Game::add_move(const HalfMove& half_move,
                     const Board& board_after) {
     if (state() == ACTIVE) {
         draw_discard(order_user());
-        Td penalty = spent_time() - limit_std();
+        Td penalty = spent_time() - gp_->limit_std();
         if (penalty > TD_NULL) {
             limit_private_[order_color()] -= penalty;
         }
@@ -393,7 +394,7 @@ void Game::add_move(const HalfMove& half_move,
             finish_(MATE, order_user_now);
         }
         if (s == Board::STALEMATE) {
-            if (first_draw() != NO_DRAW) {
+            if (gp_->first_draw() != NO_DRAW) {
                 finish_(DRAW_STALEMATE);
             } else {
                 finish_(NO_DRAW_STALEMATE, black());
@@ -460,7 +461,7 @@ bool Game::can_mistake_propose(const UserPtr user) const {
 
 bool Game::can_mistake_propose(const UserPtr user, int mistake_move) const {
     return can_mistake_propose(user) &&
-           mistake_move >= moves_init() && mistake_move < moves().size();
+           mistake_move >= init_moves().size() && mistake_move < moves().size();
 }
 
 void Game::mistake_propose(const UserPtr user, int mistake_move) {
@@ -561,15 +562,15 @@ UserPtr Game::order_user() const {
 }
 
 int Game::size_without_init() const {
-    return size() - moves_init() ;
+    return size() - init_moves().size() ;
 }
 
 bool Game::meet_first_draw() const {
-    return size_without_init() >= first_draw() && first_draw() != NO_DRAW;
+    return size_without_init() >= gp_->first_draw() && gp_->first_draw() != NO_DRAW;
 }
 
 bool Game::real_rating() const {
-    return !norating() && meet_first_draw();
+    return !gp_->norating() && meet_first_draw();
 }
 
 void Game::finish_(State state, UserPtr winner) {
@@ -635,7 +636,7 @@ void Game::pgn_init_moves_(std::ostream& out) const {
     out << "[SetUp \"" << "1" << "\"]" << std::endl;
     int halfmove_clock = 0;
     Moves::const_iterator i = moves_.begin();
-    Moves::const_iterator e = moves_.iter(moves_init());
+    Moves::const_iterator e = moves_.iter(init_moves().size());
     for (; i < e; ++i) {
         HalfMove half_move = *i;
         const Board& board = i.board();
@@ -646,7 +647,7 @@ void Game::pgn_init_moves_(std::ostream& out) const {
         }
     }
     ++i;
-    int fullmove_number = Moves::size_to_human(moves_init() + 1);
+    int fullmove_number = Moves::size_to_human(init_moves().size() + 1);
     out << "[FEN \"";
     const Board& board = i.board();
     board.fen(out, halfmove_clock, fullmove_number);
@@ -655,8 +656,8 @@ void Game::pgn_init_moves_(std::ostream& out) const {
 
 void Game::pgn_additional_(std::ostream& out) const {
     out << "[PlyCount \"" << size() << "\"]" << std::endl;
-    long t1 = limit_private_init().total_seconds();
-    long t2 = limit_std().total_seconds();
+    long t1 = gp_->limit_private_init().total_seconds();
+    long t2 = gp_->limit_std().total_seconds();
     out << "[TimeControl \"" << t1 << '/' << t2 << "\"]" << std::endl;
     if (started_.isValid()) {
         out << "[UTCTime \"" << started_.toString("HH:mm:ss") << "\"]" << std::endl;
@@ -667,7 +668,7 @@ void Game::pgn_additional_(std::ostream& out) const {
         out << "[WhiteElo \"" << rating_after(Piece::WHITE) << "\"]" << std::endl;
         out << "[BlackElo \"" << rating_after(Piece::BLACK) << "\"]" << std::endl;
     }
-    if (moves_init()) {
+    if (init_moves().size()) {
         pgn_init_moves_(out);
     }
 }

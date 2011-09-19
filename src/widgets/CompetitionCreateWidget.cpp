@@ -29,9 +29,13 @@ CompetitionCreateWidget::CompetitionCreateWidget(Wt::WContainerWidget* p):
         new PleaseLoginWidget(this);
     } else if (Competition::can_create_competition(tApp->user())) {
         new Wt::WText(tr("tc.competition.Create_welcome"), this);
-        Competition* c = new Competition(true);
+        GP* gp = new GP(true);
+        CP* cp = new CP(gp);
+        Competition* c = new Competition(cp);
         cpw_ = new CPWidget2(c, /*allow_change_type*/ true, this);
         delete c;
+        delete cp;
+        delete gp;
         new Wt::WBreak(this);
         ok_ = new Wt::WPushButton(tr("tc.common.Create"), this);
         ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler_);
@@ -65,7 +69,18 @@ Wt::EventSignal<Wt::WMouseEvent>& CompetitionCreateWidget::saved() {
 
 void CompetitionCreateWidget::button_handler_() {
     dbo::Transaction t(tApp->session());
-    CompetitionPtr comp = c_ ? c_ : tApp->session().add(new Competition(true));
+    GPPtr gp;
+    CPPtr cp;
+    CompetitionPtr comp;
+    if (c_) {
+        comp = c_;
+        cp = comp->cp();
+        gp = cp->gp();
+    } else {
+        gp = tApp->session().add(new GP(true));
+        cp = tApp->session().add(new CP(gp));
+        comp = tApp->session().add(new Competition(cp));
+    }
     cpw_->apply_parameters(comp.modify());
     comp.modify()->create_competition(tApp->user());
     t.commit();

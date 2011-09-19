@@ -16,15 +16,9 @@
 namespace thechess {
 
 /** \brief Dbo-model that represents one game beetween two users.
-
-How to add new game to database:
-\code
-GamePtr game = session.add(new Game(true));
-\endcode
-
 */
 
-class Game : public GP, public dbo::Dbo<Game> {
+class Game : public dbo::Dbo<Game> {
 public:
     enum State {
         PROPOSED = 0, /**< was proposed by user or planned by competition */
@@ -53,13 +47,16 @@ public:
     /** \name Creation of game */
     /* @{ */
 
-    /** Create new game to be added to database. */
-    Game(bool);
+    /** Create new game to be added to database.
+    \param gp Game parametrs to be used while game creation
+    */
+    Game(const GPPtr& gp);
 
 #ifndef DOXYGEN_ONLY
     template<class Action>
     void persist(Action& a) {
-        GP::persist(a);
+        dbo::belongsTo(a, gp_, "gp");
+        dbo::field(a, moves_.as_svuc(), "moves");
         dbo::field(a, state_, "state");
         dbo::belongsTo(a, white_, "white");
         dbo::belongsTo(a, black_, "black");
@@ -350,9 +347,24 @@ public:
     /** \name Information about game */
     /* @{ */
 
+    /** Get game parameters */
+    const GPPtr& gp() const {
+        return gp_;
+    }
+
+    /** Get moves */
+    const Moves& moves() const {
+        return moves_;
+    }
+
     /** Return the number of half-moves of the game */
     int size() const {
         return moves_.size();
+    }
+
+    /** Get init moves */
+    const Moves& init_moves() const {
+        return gp_->moves();
     }
 
     /** Return the number of non-predetermined half-moves */
@@ -534,7 +546,10 @@ public:
     static const char* state2str_id(State state);
 
 private:
+    GPPtr gp_;
     State state_;
+
+    Moves moves_;
 
     UserPtr white_;
     UserPtr black_;

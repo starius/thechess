@@ -21,8 +21,8 @@ namespace thechess {
 Competition::Competition() {
 }
 
-Competition::Competition(bool):
-    CP(true),
+Competition::Competition(const CPPtr& cp):
+    cp_(cp),
     state_(RECRUITING),
     created_(now()) {
 }
@@ -48,7 +48,7 @@ void Competition::check(Objects& objects) {
     if (state_ == RECRUITING) {
         if (can_start_()) {
             start_(objects);
-        } else if (now() - created_ > max_recruiting_time()) {
+        } else if (now() - created_ > cp_->max_recruiting_time()) {
             cancel_();
         }
     }
@@ -61,10 +61,10 @@ Wt::WDateTime Competition::next_check() const {
     Wt::WDateTime result;
     if (state_ == RECRUITING) {
         if (type() == CLASSICAL || type() == STAGED) {
-            if (now() < created_ + min_recruiting_time()) {
-                result = created_ + min_recruiting_time();
+            if (now() < created_ + cp_->min_recruiting_time()) {
+                result = created_ + cp_->min_recruiting_time();
             } else {
-                result = created_ + max_recruiting_time();
+                result = created_ + cp_->max_recruiting_time();
             }
         }
     }
@@ -181,11 +181,11 @@ GamesTable Competition::games_table() const {
 bool Competition::can_join(UserPtr user) const {
     return state_ == RECRUITING &&
            user && !is_member(user) &&
-           user->games_stat().elo() >= min_rating() &&
-           user->games_stat().elo() <= max_rating() &&
-           user->classification() >= min_classification() &&
-           user->classification() <= max_classification() &&
-           static_cast<int>(members_.size()) < max_users();
+           user->games_stat().elo() >= cp_->min_rating() &&
+           user->games_stat().elo() <= cp_->max_rating() &&
+           user->classification() >= cp_->min_classification() &&
+           user->classification() <= cp_->max_classification() &&
+           static_cast<int>(members_.size()) < cp_->max_users();
 }
 
 void Competition::join(UserPtr user) {
@@ -241,8 +241,8 @@ bool Competition::can_start_() const {
     bool result = false;
     if (state_ == RECRUITING) {
         if (type() == CLASSICAL || type() == STAGED) {
-            if (static_cast<int>(members_.size()) >= min_users() &&
-                    now() - created_ >= min_recruiting_time()) {
+            if (static_cast<int>(members_.size()) >= cp_->min_users() &&
+                    now() - created_ >= cp_->min_recruiting_time()) {
                 result = true;
             }
         }
@@ -261,7 +261,7 @@ void Competition::start_(Objects& objects) {
 void Competition::create_games_classical_(Objects& objects) {
     UsersVector members(members_.begin(), members_.end());
     std::random_shuffle(members.begin(), members.end(), rand_for_shuffle);
-    int white_games_per_user = std::max(1, int((members.size() - 1) * games_factor()));
+    int white_games_per_user = std::max(1, int((members.size() - 1) * cp_->games_factor()));
     std::map<UserPtr, int> black_games;
     std::map<UserPtr, std::map<UserPtr, int> > N; // number of all games between them
     BOOST_FOREACH (UserPtr white, members) {
@@ -318,8 +318,8 @@ void Competition::process_classical_(Objects& objects) {
     }
     std::random_shuffle(proposed.begin(), proposed.end(), rand_for_shuffle);
     BOOST_FOREACH (GamePtr g, proposed) {
-        if (used[g->white()] < max_simultaneous_games() &&
-                used[g->black()] < max_simultaneous_games()) {
+        if (used[g->white()] < cp_->max_simultaneous_games() &&
+                used[g->black()] < cp_->max_simultaneous_games()) {
             g.modify()->confirm_by_competition();
             objects.push_back(Object(GAME, g.id()));
             used[g->white()] += 1;
@@ -337,13 +337,12 @@ void Competition::finish_(const UsersVector& winners, Objects&) {
 }
 
 GamePtr Competition::create_game_(UserPtr white, UserPtr black, int stage, bool no_draw) {
-    GamePtr game = session()->add(new Game(true));
+    GamePtr game = session()->add(new Game(cp_->gp()));
     bool random = no_draw;
     game.modify()->make_competition_game(white, black,
                                          session()->load<Competition>(id()), stage, random);
-    game.modify()->set_gp(this);
     if (no_draw) {
-        game.modify()->set_no_draw();
+        //game.modify()->set_no_draw(); FIXME
     }
     return game;
 }

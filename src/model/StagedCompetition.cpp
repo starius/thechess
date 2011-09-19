@@ -153,7 +153,8 @@ void StagedCompetition::create_games_(Competition* competition, Objects& objects
         UserPair pair = stage_and_pair.second;
         if (!winners_[pair] && Competition::all_ended(games_[pair])) {
             bool no_draw = static_cast<int>(games_[pair].size()) ==
-                           competition->min_substages() + stage * competition->increment_substages();
+                           competition->cp()->min_substages() + stage *
+                           competition->cp()->increment_substages();
             int n = no_draw ? 1 : 2;
             for (int i = 0; i < n; i++) {
                 UserPtr white = i ? pair.first() : pair.second();

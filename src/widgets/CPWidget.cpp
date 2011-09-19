@@ -23,7 +23,7 @@ namespace thechess {
 CPWidget::CPWidget(
     const CP* cp,
     bool allow_change_type, Wt::WContainerWidget* parent):
-    GPWidget(cp, parent) {
+    GPWidget(&(*(cp->gp())), parent) { // FIXME
     using namespace config::competition; // min, max
     IntervalWidget* interval;
     Wt::WContainerWidget* cell;
@@ -107,7 +107,7 @@ CPWidget::CPWidget(
 }
 
 void CPWidget::apply_parameters(CP* cp) {
-    GPWidget::apply_parameters(cp);
+    GPWidget::apply_parameters(cp->gp().modify());
     CompetitionType t = get_type_();
     cp->set_type(t);
     cp->set_min_rating(min_rating_->value());
@@ -196,7 +196,7 @@ CompetitionType CPWidget::get_type_() const {
 
 CPWidget2::CPWidget2(const Competition* c,
                      bool allow_change_type, Wt::WContainerWidget* parent):
-    CPWidget(c, allow_change_type, parent) {
+    CPWidget(&(*(c->cp())), allow_change_type, parent) { //FIXME
     name_ = new Wt::WLineEdit(c->name());
     name_->setMaxLength(config::competition::MAX_NAME);
     item(tr("tc.competition.Name"), "", name_, name_);
@@ -205,7 +205,7 @@ CPWidget2::CPWidget2(const Competition* c,
 }
 
 void CPWidget2::apply_parameters(Competition* c) {
-    CPWidget::apply_parameters(c);
+    CPWidget::apply_parameters(c->cp().modify());
     std::wstring name = name_->text().value();
     if (name.length() > config::competition::MAX_NAME) {
         name.resize(config::competition::MAX_NAME);

@@ -57,25 +57,25 @@ class CompetitionTerms : public Wt::WContainerWidget {
 public:
     CompetitionTerms(CompetitionPtr c) {
         kw("tc.competition.Rating", tr("tc.common.interval")
-           .arg(c->min_rating()).arg(c->max_rating()));
+           .arg(c->cp()->min_rating()).arg(c->cp()->max_rating()));
         kw("tc.competition.Members_classification", tr("tc.common.interval")
-           .arg(classification2str(c->min_classification()))
-           .arg(classification2str(c->max_classification())));
-        kw("tc.competition.Force_start_delay", td2str(c->force_start_delay()));
+           .arg(classification2str(c->cp()->min_classification()))
+           .arg(classification2str(c->cp()->max_classification())));
+        kw("tc.competition.Force_start_delay", td2str(c->cp()->force_start_delay()));
         if (c->type() == CLASSICAL || c->type() == STAGED) {
             kw("tc.competition.Users", tr("tc.common.interval")
-               .arg(c->min_users()).arg(c->max_users()));
+               .arg(c->cp()->min_users()).arg(c->cp()->max_users()));
             kw("tc.competition.Recruiting_time", tr("tc.common.interval")
-               .arg(td2str(c->min_recruiting_time())).arg(td2str(c->max_recruiting_time())));
+               .arg(td2str(c->cp()->min_recruiting_time())).arg(td2str(c->cp()->max_recruiting_time())));
         }
         if (c->type() == CLASSICAL) {
-            kw("tc.competition.Max_simultaneous_games", c->max_simultaneous_games());
-            kw("tc.competition.Games_factor", c->games_factor());
+            kw("tc.competition.Max_simultaneous_games", c->cp()->max_simultaneous_games());
+            kw("tc.competition.Games_factor", c->cp()->games_factor());
         }
         if (c->type() == STAGED) {
-            kw("tc.competition.Relax_time", td2str(c->relax_time()));
-            kw("tc.competition.Min_substages", c->min_substages());
-            kw("tc.competition.Increment_substages", c->increment_substages());
+            kw("tc.competition.Relax_time", td2str(c->cp()->relax_time()));
+            kw("tc.competition.Min_substages", c->cp()->min_substages());
+            kw("tc.competition.Increment_substages", c->cp()->increment_substages());
         }
     }
 

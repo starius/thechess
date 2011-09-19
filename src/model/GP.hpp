@@ -10,30 +10,22 @@
 #ifndef THECHESS_MODEL_GAMAPARAMATERS_HPP_
 #define THECHESS_MODEL_GAMAPARAMATERS_HPP_
 
-#include <Wt/Dbo/Dbo>
-#include <Wt/Dbo/ptr>
-namespace dbo = Wt::Dbo;
-
-namespace thechess {
-class GP;
-}
-
 #include "model/global.hpp"
 #include "chess/Moves.hpp"
 #include "chess/Piece.hpp"
-#include "utils/time_intervals.hpp"
 
 namespace thechess {
 
-class GP {
+class GP : public dbo::Dbo<GP> {
 public:
     GP();
     GP(bool);
 
     template<class Action>
     void persist(Action& a) {
+        dbo::hasMany(a, games_, dbo::ManyToOne, "gp");
+        dbo::hasMany(a, cps_, dbo::ManyToOne, "cp");
         dbo::field(a, moves_.as_svuc(), "moves");
-        dbo::field(a, moves_init_, "moves_init");
         dbo::field(a, limit_std_, "limit_std");
         dbo::field(a, limit_private_init_, "limit_private_init");
         dbo::field(a, norating_, "norating");
@@ -45,13 +37,8 @@ public:
         return moves_;
     }
 
-    void set_init_moves(const Moves& moves) {
+    void set_moves(const Moves& moves) {
         moves_ = moves;
-        moves_init_ = moves_.size();
-    }
-
-    int moves_init() const {
-        return moves_init_;
     }
 
     const Td& limit_std() const {
@@ -92,11 +79,11 @@ public:
     void set_gp(const GP* other);
     void set_no_draw();
 
-protected:
-    Moves moves_;
-
 private:
-    int moves_init_;
+    Games games_;
+    CPs cps_;
+
+    Moves moves_;
 
     Td limit_std_;
     Td limit_private_init_;

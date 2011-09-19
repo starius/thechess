@@ -7,7 +7,7 @@
  * See the LICENSE file for terms of use.
  */
 
-#include "model/GP.hpp"
+#include "model/all.hpp"
 #include "config.hpp"
 
 namespace thechess {
@@ -17,7 +17,6 @@ GP::GP() {
 
 GP::GP(bool):
     moves_(Moves()),
-    moves_init_(0),
     limit_std_(config::defaults::LIMIT_STD),
     limit_private_init_(config::defaults::LIMIT_PRIVATE_INIT),
     pause_limit_init_(config::defaults::PAUSE_LIMIT_INIT),

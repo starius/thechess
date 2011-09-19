@@ -7,7 +7,7 @@
  * See the LICENSE file for terms of use.
  */
 
-#include "model/CP.hpp"
+#include "model/all.hpp"
 #include "config.hpp"
 
 namespace thechess {
@@ -16,8 +16,8 @@ namespace ccd = config::competition::defaults;
 CP::CP() {
 }
 
-CP::CP(bool):
-    GP(true),
+CP::CP(const GPPtr& gp):
+    gp_(gp),
     type_(STAGED),
     min_rating_(ccd::MIN_RATING),
     max_rating_(ccd::MAX_RATING),
@@ -36,7 +36,7 @@ CP::CP(bool):
     relax_time_(ccd::RELAX_TIME),
     min_substages_(ccd::MIN_SUBSTAGES),
     increment_substages_(ccd::INCREMENT_SUBSTAGES) {
-    set_norating(ccd::NORATING);
+    //set_norating(ccd::NORATING); FIXME
 }
 
 }

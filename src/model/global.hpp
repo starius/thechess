@@ -38,36 +38,48 @@ namespace thechess {
 
 class User;
 class CookieSession;
+class GP;
 class Game;
+class CP;
 class Competition;
 
 #ifndef DOXYGEN_ONLY
 typedef dbo::ptr<User> UserPtr;
 typedef dbo::ptr<CookieSession> CookieSessionPtr;
+typedef dbo::ptr<GP> GPPtr;
 typedef dbo::ptr<Game> GamePtr;
+typedef dbo::ptr<CP> CPPtr;
 typedef dbo::ptr<Competition> CompetitionPtr;
 #else
 typedef User* UserPtr;
 typedef CookieSession* CookieSessionPtr;
+typedef GP* GPPtr;
 typedef Game* GamePtr;
+typedef CP* GPPtr;
 typedef Competition* CompetitionPtr;
 #endif
 
 #ifndef DOXYGEN_ONLY
 typedef dbo::collection<UserPtr> Users;
 typedef dbo::collection<CookieSessionPtr> CookieSessions;
+typedef dbo::collection<GPPtr> GPs;
 typedef dbo::collection<GamePtr> Games;
+typedef dbo::collection<CPPtr> CPs;
 typedef dbo::collection<CompetitionPtr> Competitions;
 #else
 typedef User* Users;
 typedef CookieSession* CookieSessions;
+typedef GP* GPs;
 typedef Game* Games;
+typedef CP* CPs;
 typedef Competition* Competitions;
 #endif
 
 typedef std::vector<UserPtr> UsersVector;
 typedef std::vector<CookieSessionPtr> CookieSessionsVector;
+typedef std::vector<GPPtr> GPsVector;
 typedef std::vector<GamePtr> GamesVector;
+typedef std::vector<CPPtr> CPsVector;
 typedef std::vector<CompetitionPtr> CompetitionsVector;
 
 }

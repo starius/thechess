@@ -74,12 +74,12 @@ protected:
             bool_(game_->real_rating(), "tc.game.real_rating_true",
                   "tc.game.real_rating_false", result);
         } else {
-            bool_(game_->norating(), "tc.game.norating_true",
+            bool_(game_->gp()->norating(), "tc.game.norating_true",
                   "tc.game.norating_false", result);
         }
         if (!game_->is_ended()) {
             item_(Wt::WString::trn("tc.game.First_draw",
-                                   game_->first_draw() / 2).arg(game_->first_draw() / 2), result);
+                                   game_->gp()->first_draw() / 2).arg(game_->gp()->first_draw() / 2), result);
         }
         CompetitionPtr c = game_->competition();
         if (c) {
@@ -91,12 +91,12 @@ protected:
             a->setRefInternalPath(str(boost::format("/competition/%i/") % c.id()));
         }
         if (game_->state() == Game::CONFIRMED && c) {
-            time_(game_->confirmed() + c->force_start_delay(),
+            time_(game_->confirmed() + c->cp()->force_start_delay(),
                   "tc.game.force_start", result);
         }
         if (game_->state() == Game::PROPOSED && c &&
                 c->type() == STAGED) {
-            time_(game_->created() + c->relax_time(),
+            time_(game_->created() + c->cp()->relax_time(),
                   "tc.game.force_confirm", result);
         }
         t.commit();

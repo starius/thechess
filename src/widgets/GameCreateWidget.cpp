@@ -63,8 +63,9 @@ void GameCreateWidget::print_() {
 
 void GameCreateWidget::button_handler_() {
     dbo::Transaction t(tApp->session());
-    GamePtr game = tApp->session().add(new Game(true));
-    gpw_->apply_parameters(game.modify());
+    GPPtr gp = tApp->session().add(new GP(true));
+    GamePtr game = tApp->session().add(new Game(gp));
+    gpw_->apply_parameters(gp.modify());
     Piece::Color color = selected_color_();
     if (with_user_) {
         game.modify()->propose_game(tApp->user(), user_, color);

@@ -51,7 +51,7 @@ GPWidget::GPWidget(const GP* gp,
 }
 
 void GPWidget::apply_parameters(GP* gp) {
-    gp->set_init_moves(moves_widget_->moves());
+    gp->set_moves(moves_widget_->moves());
     gp->set_limit_std(limit_std_->value());
     gp->set_limit_private_init(limit_private_init_->value());
     gp->set_norating(norating_->checkState() == Wt::Checked);

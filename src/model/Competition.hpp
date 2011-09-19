@@ -19,7 +19,7 @@ namespace thechess {
 
 typedef std::map<UserPtr, std::map<UserPtr, GamesVector> > GamesTable;
 
-class Competition : public CP, public dbo::Dbo<Competition> {
+class Competition : public dbo::Dbo<Competition> {
 public:
     typedef CompetitionType Type;
 
@@ -31,7 +31,7 @@ public:
     };
 
     Competition();
-    Competition(bool);
+    Competition(const CPPtr& cp);
 
     static Wt::WString type2str(Type type);
     static bool all_ended(const GamesVector& games);
@@ -41,7 +41,7 @@ public:
 
     template<class Action>
     void persist(Action& a) {
-        CP::persist(a);
+        dbo::belongsTo(a, cp_, "cp");
         dbo::field(a, state_, "state");
         dbo::field(a, name_, "name");
         dbo::field(a, description_, "description");
@@ -53,6 +53,14 @@ public:
         dbo::field(a, started_, "started");
         dbo::field(a, ended_, "ended");
         dbo::hasMany(a, winners_, dbo::ManyToMany, "winners_competition");
+    }
+
+    const CPPtr& cp() const {
+        return cp_;
+    }
+
+    Type type() const {
+        return cp_->type();
     }
 
     State state() const {
@@ -135,6 +143,7 @@ public:
 
 private:
     // common attributes
+    CPPtr cp_;
     State state_;
 
     Wt::WString name_;
