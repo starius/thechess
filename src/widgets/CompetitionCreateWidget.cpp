@@ -29,13 +29,10 @@ CompetitionCreateWidget::CompetitionCreateWidget(Wt::WContainerWidget* p):
         new PleaseLoginWidget(this);
     } else if (Competition::can_create_competition(tApp->user())) {
         new Wt::WText(tr("tc.competition.Create_welcome"), this);
-        GP* gp = new GP(true);
-        CP* cp = new CP(gp);
-        Competition* c = new Competition(cp);
-        cpw_ = new CPWidget2(c, /*allow_change_type*/ true, this);
-        delete c;
-        delete cp;
-        delete gp;
+        GPPtr gp = new GP(true);
+        CPPtr cp = new CP(gp);
+        CompetitionPtr c = new Competition(cp);
+        cpw_ = new CPWidget2(&(*(c)), /*allow_change_type*/ true, this);
         new Wt::WBreak(this);
         ok_ = new Wt::WPushButton(tr("tc.common.Create"), this);
         ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler_);
