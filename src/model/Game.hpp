@@ -11,7 +11,6 @@
 #define THECHESS_MODEL_GAME_H_
 
 #include "model/global.hpp"
-#include "model/GP.hpp"
 
 namespace thechess {
 

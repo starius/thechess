@@ -13,7 +13,6 @@
 #include <map>
 
 #include "model/global.hpp"
-#include "model/CP.hpp"
 
 namespace thechess {
 
