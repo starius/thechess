@@ -43,6 +43,7 @@ public:
 
     CompetitionListModel(Wt::WObject* parent = 0) :
         CLP::BaseQM(parent) {
+        set_query();
         addColumn("C.id", tr("tc.common.number"));
         addColumn("C.name", tr("tc.competition.Name"));
         addColumn("CP.type", tr("tc.competition.Type"));
@@ -76,6 +77,38 @@ public:
     static Wt::WString tr(const char* key) {
         return Wt::WString::tr(key);
     }
+
+    void set_query(bool only_my = false) {
+        ThechessOptions::DatabaseType t = tApp->server().options().database_type();
+        std::stringstream sql;
+        sql << "select C, ";
+        if (t == ThechessOptions::POSTGRES) {
+            sql << "array_to_string(array_agg(distinct W.username), ', '), ";
+        } else if (t == ThechessOptions::SQLITE3) {
+            sql << "group_concat(distinct W.username), ";
+        }
+        sql << "count(distinct M.thechess_user_id), ";
+        sql << "CP.type ";
+        if (only_my)
+            sql << "from members_competitions I left join thechess_competition C "
+                "on C.id=I.thechess_competition_id ";
+        else {
+            sql << "from thechess_competition C ";
+        }
+        sql << "left join winners_competition WC on WC.thechess_competition_id=C.id ";
+        sql << "left join thechess_user W on WC.thechess_user_id=W.id ";
+        sql << "left join members_competitions M on M.thechess_competition_id=C.id ";
+        if (only_my) {
+            sql << "where I.thechess_user_id = ? ";
+        }
+        sql << "left join thechess_cp CP on C.cp_id=CP.id ";
+        CLP::Q q = tApp->session().query<CLP::Result>(sql.str());
+        q.groupBy("C");
+        if (only_my) {
+            q.bind(tApp->user().id());
+        }
+        setQuery(q, /* keep_columns */ true);
+    }
 };
 
 class CompetitionListView : public Wt::WTableView {
@@ -106,35 +139,7 @@ CompetitionListWidget::CompetitionListWidget(Wt::WContainerWidget* p):
 
 void CompetitionListWidget::apply_() {
     bool only_my = only_my_->isChecked() && tApp->user();
-    ThechessOptions::DatabaseType t = tApp->server().options().database_type();
-    std::stringstream sql;
-    sql << "select C, ";
-    if (t == ThechessOptions::POSTGRES) {
-        sql << "array_to_string(array_agg(distinct W.username), ', '), ";
-    } else if (t == ThechessOptions::SQLITE3) {
-        sql << "group_concat(distinct W.username), ";
-    }
-    sql << "count(distinct M.thechess_user_id), ";
-    sql << "CP.type ";
-    if (only_my)
-        sql << "from members_competitions I left join thechess_competition C "
-            "on C.id=I.thechess_competition_id ";
-    else {
-        sql << "from thechess_competition C ";
-    }
-    sql << "left join winners_competition WC on WC.thechess_competition_id=C.id ";
-    sql << "left join thechess_user W on WC.thechess_user_id=W.id ";
-    sql << "left join members_competitions M on M.thechess_competition_id=C.id ";
-    if (only_my) {
-        sql << "where I.thechess_user_id = ? ";
-    }
-    sql << "left join thechess_cp CP on C.cp_id=CP.id ";
-    CLP::Q q = tApp->session().query<CLP::Result>(sql.str());
-    q.groupBy("C");
-    if (only_my) {
-        q.bind(tApp->user().id());
-    }
-    model_->setQuery(q, /* keep_columns */ true);
+    model_->set_query(only_my);
 }
 
 void CompetitionListWidget::manager_() {
