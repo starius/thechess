@@ -48,7 +48,7 @@ public:
             n = -2;
         } else {
             Piece::Color color = (index.column() == 1) ? Piece::WHITE : Piece::BLACK;
-            n = Moves::n_from_human(index.row() + 1, color);
+            n = Moves::half_move_index(index.row() + 1, color);
             if (n >= cached_moves_->size()) {
                 n = -2;
             }
@@ -57,7 +57,7 @@ public:
     }
 
     Wt::WModelIndex n2index(const int n) const {
-        return index(Moves::n_to_human(n) - 1, Moves::order_int(n) + 1);
+        return index(Moves::move_number(n) - 1, Moves::order_int(n) + 1);
     }
 
     virtual int rowCount(const Wt::WModelIndex& /*parent*/) const {
@@ -122,8 +122,8 @@ public:
     }
 
     void move_changed(int move_i) {
-        int first = Moves::n_to_human(move_i) - 1;
-        int last = Moves::n_to_human(max_show_move_) - 1;
+        int first = Moves::move_number(move_i) - 1;
+        int last = Moves::move_number(max_show_move_) - 1;
         if (move_i <= max_show_move_) {
             beginRemoveRows(Wt::WModelIndex(), first, last);
             endRemoveRows();

@@ -649,7 +649,7 @@ void Game::pgn_init_moves_(std::ostream& out) const {
         }
     }
     ++i;
-    int fullmove_number = Moves::size_to_human(init_moves().size() + 1);
+    int fullmove_number = Moves::moves_number(init_moves().size() + 1);
     out << "[FEN \"";
     const Board& board = i.board();
     board.fen(out, halfmove_clock, fullmove_number);

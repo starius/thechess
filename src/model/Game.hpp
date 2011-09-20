@@ -372,7 +372,7 @@ public:
 
     /** Return the number of moves of the game */
     int moves_number() const {
-        return Moves::size_to_human(size());
+        return Moves::moves_number(size());
     }
 
     /** Return if the game is ended, ie is a win, draw or cancelled */

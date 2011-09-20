@@ -310,7 +310,7 @@ private:
             new Wt::WBreak(manager_);
             new Wt::WText(tr("tc.game.Mistake_proposal")
                           .arg(game_->mistake_proposer()->username())
-                          .arg(Moves::n_to_human(game_->mistake_move()))
+                          .arg(Moves::move_number(game_->mistake_move()))
                           .arg(tr(Moves::order(game_->mistake_move()) == Piece::WHITE ?
                                   "tc.game.of_white" : "tc.game.of_black")),
                           manager_);

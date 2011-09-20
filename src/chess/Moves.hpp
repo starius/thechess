@@ -122,13 +122,13 @@ public:
     int size() const;
 
     /** Convert index of half-move to number of move */
-    static int n_to_human(int move_n);
+    static int move_number(int move_n);
 
     /** Convert number of half-moves to number of moves */
-    static int size_to_human(int size);
+    static int moves_number(int size);
 
     /** Convert number of move and active color to index of half-move */
-    static int n_from_human(int human_i, Piece::Color color);
+    static int half_move_index(int move_number, Piece::Color color);
 
     /** Return number of moves.
     \sa size()

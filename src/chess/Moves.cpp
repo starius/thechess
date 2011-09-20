@@ -162,7 +162,7 @@ void Moves::pgn(std::ostream& out, const std::string& result, bool /*reduced*/) 
         const Board& board_after = after.board();
         std::string move_str = half_move.san(board, board_after);
         if (order(i.n()) == Piece::WHITE) {
-            move_str = str(boost::format("%i. ") % n_to_human(i.n())) + move_str;
+            move_str = str(boost::format("%i. ") % move_number(i.n())) + move_str;
         }
         ptw.write_word(move_str);
     }
@@ -181,20 +181,20 @@ void Moves::foreach(void* func(HalfMove half_move, const Board& board),
     }
 }
 
-int Moves::n_to_human(int move_n) {
+int Moves::move_number(int move_n) {
     return (move_n + 2) / 2;
 }
 
-int Moves::size_to_human(int size) {
-    return n_to_human(size - 1);
+int Moves::moves_number(int size) {
+    return move_number(size - 1);
 }
 
-int Moves::n_from_human(int human_i, Piece::Color color) {
-    return (human_i - 1) * 2 + ((color == Piece::WHITE) ? 0 : 1);
+int Moves::half_move_index(int moves_number, Piece::Color color) {
+    return (moves_number - 1) * 2 + ((color == Piece::WHITE) ? 0 : 1);
 }
 
 int Moves::moves_number() const {
-    return size_to_human(size());
+    return moves_number(size());
 }
 
 int Moves::order_int(int move_n) {
