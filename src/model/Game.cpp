@@ -25,17 +25,15 @@ Game::Game() {
 Game::Game(const GPPtr& gp):
     gp_(gp),
     state_(PROPOSED),
+    moves_(gp_->moves()),
+    competition_confirmer_(false),
     colors_random_(false),
     created_(now()),
     competition_stage_(-1),
     pause_proposed_td_(TD_NULL),
-    mistake_move_(-1) {
-    moves_ = gp_->moves();
-    rating_after_[Piece::WHITE] = -1;
-    rating_after_[Piece::BLACK] = -1;
-    competition_confirmer_[Piece::WHITE] = false;
-    competition_confirmer_[Piece::BLACK] = false;
-}
+    mistake_move_(-1),
+    rating_after_(-1)
+{ }
 
 bool Game::is_ended() const {
     return is_draw() || is_win() || state() == CANCELLED;

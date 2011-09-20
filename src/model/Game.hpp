@@ -62,16 +62,14 @@ public:
         dbo::belongsTo(a, black_, "black");
         dbo::belongsTo(a, winner_, "winner_game");
         dbo::belongsTo(a, init_, "init_game");
-        dbo::field(a, competition_confirmer_[Piece::WHITE], "competition_confirmer_white");
-        dbo::field(a, competition_confirmer_[Piece::BLACK], "competition_confirmer_black");
+        dbo::field(a, competition_confirmer_, "competition_confirmer");
         dbo::field(a, colors_random_, "colors_random");
         dbo::field(a, created_, "created");
         dbo::field(a, confirmed_, "confirmed");
         dbo::field(a, started_, "started");
         dbo::field(a, lastmove_, "lastmove");
         dbo::field(a, ended_, "ended");
-        dbo::field(a, limit_private_[Piece::WHITE], "limit_private_white");
-        dbo::field(a, limit_private_[Piece::BLACK], "limit_private_black");
+        dbo::field(a, limit_private_, "limit_private");
         dbo::belongsTo(a, competition_, "competition");
         dbo::field(a, competition_stage_, "competition_stage");
         dbo::field(a, pause_until_, "pause_until");
@@ -81,8 +79,7 @@ public:
         dbo::field(a, mistake_move_, "mistake_move");
         dbo::field(a, mistake_proposer_, "mistake_proposer");
         dbo::field(a, draw_proposer_, "draw_proposer");
-        dbo::field(a, rating_after_[Piece::WHITE], "rating_after_white");
-        dbo::field(a, rating_after_[Piece::BLACK], "rating_after_black");
+        dbo::field(a, rating_after_, "rating_after");
         dbo::field(a, comment_, "comment");
     }
 #endif
@@ -556,7 +553,7 @@ private:
     UserPtr winner_;
 
     UserPtr init_;
-    bool competition_confirmer_[2]; // used with competition games only
+    WhiteBlack<bool> competition_confirmer_; // used with competition games only
     bool colors_random_;
 
     Wt::WDateTime created_;
@@ -565,7 +562,7 @@ private:
     Wt::WDateTime lastmove_;
     Wt::WDateTime ended_;
 
-    Td limit_private_[2];
+    WhiteBlack<Td> limit_private_;
 
     CompetitionPtr competition_;
     int competition_stage_;
@@ -580,7 +577,7 @@ private:
 
     UserPtr draw_proposer_;
 
-    int rating_after_[2];
+    WhiteBlack<int> rating_after_;
 
     Wt::WString comment_;
 

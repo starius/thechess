@@ -147,6 +147,63 @@ void field(Action& a, thechess::Moves& moves, const std::string& name) {
 
 /* @} */
 
+/** \name Field for WhiteBlack */
+/* @{ */
+
+namespace thechess {
+
+/** Template struct for paired values for Game model.
+This struct stores a pair of values: for white and for black.
+*/
+template<typename T>
+struct WhiteBlack {
+    /** Default constructor */
+    WhiteBlack()
+    { }
+
+    /** Initialize both values with one argument */
+    WhiteBlack(const T& common):
+        white(common), black(common)
+    { }
+
+    /** Initialize values with two arguments */
+    WhiteBlack(const T& w, const T& b):
+        white(w), black(b)
+    { }
+
+    /** Get value corresponding to the color */
+    const T& operator[](Piece::Color color) const {
+        return color == Piece::WHITE ? white : black;
+    }
+
+    /** Get value corresponding to the color */
+    T& operator[](Piece::Color color) {
+        return color == Piece::WHITE ? white : black;
+    }
+
+    /** Value corresponding to white color */
+    T white;
+
+    /** Value corresponding to black color */
+    T black;
+};
+
+}
+
+namespace Wt {
+namespace Dbo {
+
+template<class Action, typename T>
+void field(Action& a, thechess::WhiteBlack<T>& wb, const std::string& name) {
+    field(a, wb.white, name + "_white");
+    field(a, wb.black, name + "_black");
+}
+
+}
+}
+
+/* @} */
+
 /** \name Id field for CookieSession */
 /* @{ */
 
