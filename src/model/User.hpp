@@ -91,6 +91,9 @@ public:
         return games_stat_;
     }
 
+    /** Return string representation of user classification */
+    static Wt::WString classification2str(Classification c);
+
 private:
     Wt::WString username_;
     std::string password_; // UTF8

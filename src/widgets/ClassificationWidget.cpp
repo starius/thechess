@@ -8,7 +8,7 @@
  */
 
 #include "widgets/ClassificationWidget.hpp"
-#include "model/UserClassification.hpp"
+#include "model/all.hpp"
 
 namespace thechess {
 
@@ -18,7 +18,7 @@ ClassificationWidget::ClassificationWidget(Classification min,
     for (int i = 0; i < CLASSIFICATIONS_SIZE; i++) {
         Classification classification = classifications[i];
         if (min <= classification && classification <= max) {
-            addItem(classification2str(classification));
+            addItem(User::classification2str(classification));
             if (classification == value) {
                 setCurrentIndex(i);
             }

@@ -59,8 +59,8 @@ public:
         kw("tc.competition.Rating", tr("tc.common.interval")
            .arg(c->cp()->min_rating()).arg(c->cp()->max_rating()));
         kw("tc.competition.Members_classification", tr("tc.common.interval")
-           .arg(classification2str(c->cp()->min_classification()))
-           .arg(classification2str(c->cp()->max_classification())));
+           .arg(User::classification2str(c->cp()->min_classification()))
+           .arg(User::classification2str(c->cp()->max_classification())));
         kw("tc.competition.Force_start_delay", td2str(c->cp()->force_start_delay()));
         if (c->type() == CLASSICAL || c->type() == STAGED) {
             kw("tc.competition.Users", tr("tc.common.interval")

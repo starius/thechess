@@ -10,8 +10,6 @@
 #ifndef THECHESS_MODEL_USER_CLASSIFICATION_HPP_
 #define THECHESS_MODEL_USER_CLASSIFICATION_HPP_
 
-#include <Wt/WString>
-
 namespace thechess {
 
 enum Classification {
@@ -32,8 +30,6 @@ enum Classification {
     CLASSIFICATION_J = 5,
     NO_CLASSIFICATION = 0
 };
-
-Wt::WString classification2str(Classification c);
 
 const Classification classifications[] = {
     SUPER_GRANDMASTER, GRANDMASTER, INTERNATIONAL_MASTER,
