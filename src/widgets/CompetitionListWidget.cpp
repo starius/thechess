@@ -25,7 +25,7 @@
 namespace thechess {
 
 namespace CLP {
-typedef boost::tuple<CompetitionPtr, Wt::WString, int> Result;
+typedef boost::tuple<CompetitionPtr, Wt::WString, int, int> Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 }
@@ -45,7 +45,7 @@ public:
         CLP::BaseQM(parent) {
         addColumn("C.id", tr("tc.common.number"));
         addColumn("C.name", tr("tc.competition.Name"));
-        addColumn("C.type", tr("tc.competition.Type"));
+        addColumn("CP.type", tr("tc.competition.Type"));
         addColumn("C.state", tr("tc.competition.State"));
         addColumn("C.id", tr("tc.competition.Winners"));
         addColumn("C.id", tr("tc.competition.members_number"));
@@ -114,7 +114,8 @@ void CompetitionListWidget::apply_() {
     } else if (t == ThechessOptions::SQLITE3) {
         sql << "group_concat(distinct W.username), ";
     }
-    sql << "count(distinct M.thechess_user_id) ";
+    sql << "count(distinct M.thechess_user_id), ";
+    sql << "CP.type ";
     if (only_my)
         sql << "from members_competitions I left join thechess_competition C "
             "on C.id=I.thechess_competition_id ";
@@ -125,8 +126,9 @@ void CompetitionListWidget::apply_() {
     sql << "left join thechess_user W on WC.thechess_user_id=W.id ";
     sql << "left join members_competitions M on M.thechess_competition_id=C.id ";
     if (only_my) {
-        sql << "where I.thechess_user_id = ?";
+        sql << "where I.thechess_user_id = ? ";
     }
+    sql << "left join thechess_cp CP on C.cp_id=CP.id ";
     CLP::Q q = tApp->session().query<CLP::Result>(sql.str());
     q.groupBy("C");
     if (only_my) {
