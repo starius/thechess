@@ -30,7 +30,7 @@ namespace dbo = Wt::Dbo;
 namespace thechess {
 
 namespace GLP {
-typedef boost::tuple<GamePtr, Wt::WString, Wt::WString, Wt::WString> Result;
+typedef boost::tuple<GamePtr, bool, Wt::WString, Wt::WString, Wt::WString> Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 
@@ -58,7 +58,7 @@ public:
         addColumn("G.state", tr("tc.game.State")); // dummy
         addColumn("Wi.username", tr("tc.common.winner"));
         addColumn("G.started", tr("tc.game.started"));
-        addColumn("G.norating", tr("tc.game.real_rating")); // dummy
+        addColumn("GP.norating", tr("tc.game.real_rating")); // dummy
         addColumn("G.id", tr("tc.game.moves_size")); // dummy
         addColumn("G.comment", tr("tc.game.comment"));
     }
@@ -121,8 +121,9 @@ public:
 
     static GLP::Q all_games() {
         return tApp->session()
-               .query<GLP::Result>("select G, Wh.username, B.username, Wi.username "
+               .query<GLP::Result>("select G, GP.norating, Wh.username, B.username, Wi.username "
                                    "from thechess_game G "
+                                   "left join thechess_gp GP on G.gp_id=GP.id "
                                    "left join thechess_user Wh on G.white_id=Wh.id "
                                    "left join thechess_user B on G.black_id=B.id "
                                    "left join thechess_user Wi on G.winner_game_id=Wi.id ");
