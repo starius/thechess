@@ -56,7 +56,7 @@ public:
     template<class Action>
     void persist(Action& a) {
         dbo::belongsTo(a, gp_, "gp");
-        dbo::field(a, moves_.as_svuc(), "moves");
+        dbo::field(a, moves_, "game");
         dbo::field(a, state_, "state");
         dbo::belongsTo(a, white_, "white");
         dbo::belongsTo(a, black_, "black");

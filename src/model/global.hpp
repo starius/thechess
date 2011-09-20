@@ -23,6 +23,7 @@
 #include "utils/time_intervals.hpp"
 #include "model/EloPlayer.hpp"
 #include "model/Object.hpp"
+#include "chess/Moves.hpp"
 
 namespace dbo = Wt::Dbo;
 
@@ -123,6 +124,22 @@ void field(Action& a, thechess::EloPlayer& p, const std::string& name) {
     field(a, const_cast<int&>(p.all()), name + "_all");
     field(a, const_cast<int&>(p.wins()), name + "_wins");
     field(a, const_cast<int&>(p.fails()), name + "_fails");
+}
+
+}
+}
+
+/* @} */
+
+/** \name Field for Moves */
+/* @{ */
+
+namespace Wt {
+namespace Dbo {
+
+template<class Action>
+void field(Action& a, thechess::Moves& moves, const std::string& name) {
+    field(a, moves.as_svuc(), name + "_moves");
 }
 
 }
