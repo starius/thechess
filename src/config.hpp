@@ -46,7 +46,7 @@ const int FIRST_DRAW = 10 * 2;
 
 const double PAUSE_FACTOR = 0.5;
 
-const ThechessOptions::DatabaseType DATABASE_TYPE = ThechessOptions::SQLITE3;
+const Options::DatabaseType DATABASE_TYPE = Options::SQLITE3;
 const char* const DATABASE_VALUE = "~/thechess.db";
 const int CONNECTIONS_IN_POOL = 10;
 

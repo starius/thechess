@@ -24,11 +24,11 @@ namespace thechess {
 
 class TaskTracker;
 
-class ThechessSession : public dbo::Session {
+class Session : public dbo::Session {
 public:
-    ThechessSession(dbo::FixedSqlConnectionPool& pool);
+    Session(dbo::FixedSqlConnectionPool& pool);
     void reconsider(TaskTracker& tracker);
-    static dbo::SqlConnection* new_connection(const ThechessOptions& options);
+    static dbo::SqlConnection* new_connection(const Options& options);
 };
 
 }

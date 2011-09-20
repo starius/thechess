@@ -14,11 +14,11 @@
 
 namespace thechess {
 
-ThechessNotifier::ThechessNotifier(ThechessServer& server):
+Notifier::Notifier(Server& server):
     server_(server) {
 }
 
-void ThechessNotifier::start_listenning(const Object& object) {
+void Notifier::start_listenning(const Object& object) {
     mutex_.lock();
     if (object2ids_.find(object) == object2ids_.end()) {
         object2ids_[object] = new IdSet();
@@ -28,7 +28,7 @@ void ThechessNotifier::start_listenning(const Object& object) {
     mutex_.unlock();
 }
 
-void ThechessNotifier::stop_listenning(const Object& object) {
+void Notifier::stop_listenning(const Object& object) {
     mutex_.lock();
     if (object2ids_.find(object) == object2ids_.end()) {
         object2ids_[object] = new IdSet();
@@ -42,7 +42,7 @@ void ThechessNotifier::stop_listenning(const Object& object) {
     mutex_.unlock();
 }
 
-void ThechessNotifier::emit(const Object& object, const std::string& this_app) {
+void Notifier::emit(const Object& object, const std::string& this_app) {
     if (object.type != NOEVENT) {
         mutex_.lock();
         O2I::iterator it = object2ids_.find(object);
@@ -51,7 +51,7 @@ void ThechessNotifier::emit(const Object& object, const std::string& this_app) {
             BOOST_FOREACH (const std::string& id, *id_set) {
                 if (id != this_app) {
                     server_.post(id, boost::bind(
-                                     &ThechessApplication::thechess_notify, object));
+                                     &Application::thechess_notify, object));
                 }
             }
         }
@@ -59,7 +59,7 @@ void ThechessNotifier::emit(const Object& object, const std::string& this_app) {
     }
 }
 
-void ThechessNotifier::app_emit(const Object& object) {
+void Notifier::app_emit(const Object& object) {
     if (object.type != NOEVENT) {
         tApp->server().notifier().emit(object, tApp->sessionId());
         tApp->thechess_notify(object);

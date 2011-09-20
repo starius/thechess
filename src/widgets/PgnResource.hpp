@@ -16,12 +16,12 @@
 #include "Session.hpp"
 
 namespace thechess {
-class ThechessServer;
+class Server;
 
 class PgnResource : public Wt::WResource {
 public:
-    PgnResource(const GamePtr& game, ThechessServer& server, Wt::WObject* p = 0);
-    PgnResource(ThechessServer& server, Wt::WObject* p = 0);
+    PgnResource(const GamePtr& game, Server& server, Wt::WObject* p = 0);
+    PgnResource(Server& server, Wt::WObject* p = 0);
     ~PgnResource();
 
     virtual void handleRequest(const Wt::Http::Request& request,
@@ -29,7 +29,7 @@ public:
 
 private:
     GamePtr game_;
-    ThechessSession session_;
+    Session session_;
 };
 
 }

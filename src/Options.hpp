@@ -16,13 +16,13 @@
 
 namespace thechess {
 
-class ThechessOptions {
+class Options {
 public:
     enum DatabaseType {
         POSTGRES,
         SQLITE3
     };
-    ThechessOptions(const Wt::WServer& server);
+    Options(const Wt::WServer& server);
 
     DatabaseType database_type() const;
     const std::string& database_value() const;

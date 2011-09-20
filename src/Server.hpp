@@ -23,18 +23,18 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 
-class ThechessServer : public Wt::WServer {
+class Server : public Wt::WServer {
 public:
-    ThechessServer(int argc, char** argv);
-    const ThechessOptions& options() const;
+    Server(int argc, char** argv);
+    const Options& options() const;
     dbo::FixedSqlConnectionPool& pool();
-    ThechessNotifier& notifier();
+    Notifier& notifier();
     TaskTracker& tracker();
 
 private:
-    ThechessOptions options_;
+    Options options_;
     dbo::FixedSqlConnectionPool pool_;
-    ThechessNotifier notifier_;
+    Notifier notifier_;
     TaskTracker tracker_;
     PgnResource pgn_;
 };

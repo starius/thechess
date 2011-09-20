@@ -21,34 +21,34 @@
 
 namespace thechess {
 
-Wt::WApplication* createApplication(ThechessServer* server, const Wt::WEnvironment& env) {
-    return new thechess::ThechessApplication(env, *server);
+Wt::WApplication* createApplication(Server* server, const Wt::WEnvironment& env) {
+    return new thechess::Application(env, *server);
 }
 
-ThechessServer::ThechessServer(int argc, char** argv):
+Server::Server(int argc, char** argv):
     Wt::WServer(argv[0], first_file(config::WT_CONFIG_FILES, config::WT_CONFIG_FILES_SIZE)),
     options_((setServerConfiguration(argc, argv), *this)), // options_ needs read conf
-    pool_(ThechessSession::new_connection(options_), options_.connections_in_pool()),
+    pool_(Session::new_connection(options_), options_.connections_in_pool()),
     notifier_(*this), tracker_(*this), pgn_(*this) {
     addResource(&pgn_, "/pgn/");
     addEntryPoint(Wt::Application, boost::bind(createApplication, this, _1), "", "/favicon.ico");
-    ThechessSession session(pool_);
+    Session session(pool_);
     session.reconsider(tracker_);
 }
 
-const ThechessOptions& ThechessServer::options() const {
+const Options& Server::options() const {
     return options_;
 }
 
-dbo::FixedSqlConnectionPool& ThechessServer::pool() {
+dbo::FixedSqlConnectionPool& Server::pool() {
     return pool_;
 }
 
-ThechessNotifier& ThechessServer::notifier() {
+Notifier& Server::notifier() {
     return notifier_;
 }
 
-TaskTracker& ThechessServer::tracker() {
+TaskTracker& Server::tracker() {
     return tracker_;
 }
 

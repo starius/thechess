@@ -73,9 +73,9 @@ void GameCreateWidget::button_handler_() {
         game.modify()->propose_challenge(tApp->user(), color);
     }
     t.commit();
-    ThechessNotifier::app_emit(Object(USER, tApp->user().id()));
+    Notifier::app_emit(Object(USER, tApp->user().id()));
     if (with_user_) {
-        ThechessNotifier::app_emit(Object(USER, user_.id()));
+        Notifier::app_emit(Object(USER, user_.id()));
     }
     tApp->view(game);
 }

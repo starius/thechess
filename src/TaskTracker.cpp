@@ -28,7 +28,7 @@
 
 namespace thechess {
 
-TaskTracker::TaskTracker(ThechessServer& server):
+TaskTracker::TaskTracker(Server& server):
     server_(server), session_(server.pool()), timer_(io_),
     dummy_timer_(io_, config::tracker::DUMMY_TIMER_EXPIRY_TIME) {
     dummy_timer_.async_wait(boost::bind(&TaskTracker::check_, this, _1));

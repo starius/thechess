@@ -23,7 +23,7 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 
-ThechessSession::ThechessSession(dbo::FixedSqlConnectionPool& pool) {
+Session::Session(dbo::FixedSqlConnectionPool& pool) {
     setConnectionPool(pool);
     mapClass<User>("thechess_user");
     mapClass<GP>("thechess_gp");
@@ -33,7 +33,7 @@ ThechessSession::ThechessSession(dbo::FixedSqlConnectionPool& pool) {
     mapClass<Competition>("thechess_competition");
 }
 
-void ThechessSession::reconsider(TaskTracker& tracker) {
+void Session::reconsider(TaskTracker& tracker) {
     try {
         dbo::Transaction t(*this);
         createTables();
@@ -69,17 +69,17 @@ void ThechessSession::reconsider(TaskTracker& tracker) {
     t2.commit();
 }
 
-dbo::SqlConnection* ThechessSession::new_connection(const ThechessOptions& options) {
+dbo::SqlConnection* Session::new_connection(const Options& options) {
     dbo::SqlConnection* connection;
-    if (options.database_type() == ThechessOptions::POSTGRES) {
+    if (options.database_type() == Options::POSTGRES) {
         connection = new dbo::backend::Postgres(options.database_value());
-    } else if (options.database_type() == ThechessOptions::SQLITE3) {
+    } else if (options.database_type() == Options::SQLITE3) {
         std::string path = expand_path(options.database_value());
         connection = new dbo::backend::Sqlite3(path);
         connection->executeSql("PRAGMA synchronous = normal");
         connection->executeSql("PRAGMA journal_mode = wal");
     } else {
-        throw std::logic_error("ThechessSession::new_connection(): unknown database type");
+        throw std::logic_error("Session::new_connection(): unknown database type");
     }
 #ifdef RUN_TESTS
     connection->setProperty("show-queries", "true");

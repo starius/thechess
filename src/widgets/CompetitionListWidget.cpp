@@ -79,12 +79,12 @@ public:
     }
 
     void set_query(bool only_my = false) {
-        ThechessOptions::DatabaseType t = tApp->server().options().database_type();
+        Options::DatabaseType t = tApp->server().options().database_type();
         std::stringstream sql;
         sql << "select C, ";
-        if (t == ThechessOptions::POSTGRES) {
+        if (t == Options::POSTGRES) {
             sql << "array_to_string(array_agg(distinct W.username), ', '), ";
-        } else if (t == ThechessOptions::SQLITE3) {
+        } else if (t == Options::SQLITE3) {
             sql << "group_concat(distinct W.username), ";
         }
         sql << "count(distinct M.thechess_user_id), ";

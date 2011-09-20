@@ -22,11 +22,11 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 
-class ThechessServer;
+class Server;
 
 class TaskTracker {
 public:
-    TaskTracker(ThechessServer& server);
+    TaskTracker(Server& server);
     ~TaskTracker();
     void add_or_update_task(const Object& object);
 
@@ -38,8 +38,8 @@ private:
 
     W2T w2t;
     T2I t2i;
-    ThechessServer& server_;
-    ThechessSession session_;
+    Server& server_;
+    Session session_;
     boost::mutex mutex_;
     boost::asio::io_service io_;
     boost::asio::deadline_timer timer_;

@@ -207,7 +207,7 @@ private:
         bool game_ended = game_->is_ended();
         t.commit();
         Object object(GAME, game_.id());
-        ThechessNotifier::app_emit(object);
+        Notifier::app_emit(object);
         if (game_ended) {
             tApp->server().tracker().add_or_update_task(object);
         }
@@ -362,12 +362,12 @@ private:
         Game::State state_after = game_->state();
         t.commit();
         Object object(GAME, game_.id());
-        ThechessNotifier::app_emit(object);
+        Notifier::app_emit(object);
         if (state_after != state_before) {
             tApp->server().tracker().add_or_update_task(object);
         }
         if (method == &Game::join) {
-            ThechessNotifier::app_emit(Object(USER, tApp->user().id()));
+            Notifier::app_emit(Object(USER, tApp->user().id()));
         }
     }
 
@@ -385,7 +385,7 @@ private:
         ->pause_propose(tApp->user(), pause_duration->value());
         t.commit();
         Object object(GAME, game_.id());
-        ThechessNotifier::app_emit(object);
+        Notifier::app_emit(object);
     }
 
     void mistake_propose_() {
@@ -395,7 +395,7 @@ private:
         ->mistake_propose(tApp->user(), moves_widget_->current_move());
         t.commit();
         Object object(GAME, game_.id());
-        ThechessNotifier::app_emit(object);
+        Notifier::app_emit(object);
     }
 
     void show_analysis_() {
@@ -430,7 +430,7 @@ private:
         game_.modify()->set_comment(tApp->user(), text);
         t.commit();
         Object object(GAME, game_.id());
-        ThechessNotifier::app_emit(object);
+        Notifier::app_emit(object);
     }
 
     void print_comment_() {

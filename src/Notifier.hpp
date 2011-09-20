@@ -18,14 +18,14 @@
 
 namespace thechess {
 
-class ThechessServer;
+class Server;
 
-class ThechessNotifier {
+class Notifier {
 public:
-    ThechessNotifier(ThechessServer& server);
+    Notifier(Server& server);
 
-    void start_listenning(const Object& object); // by ThechessApplication
-    void stop_listenning(const Object& object); // by ThechessApplication
+    void start_listenning(const Object& object); // by Application
+    void stop_listenning(const Object& object); // by Application
 
     // after successful transaction.commit()
     void emit(const Object& object,
@@ -33,7 +33,7 @@ public:
     static void app_emit(const Object& object); // from WApplication
 
 private:
-    ThechessServer& server_;
+    Server& server_;
     typedef std::set<std::string> IdSet;
     typedef std::map<Object, IdSet*> O2I;
     O2I object2ids_;

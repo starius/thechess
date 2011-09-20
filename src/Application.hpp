@@ -37,11 +37,11 @@ namespace dbo = Wt::Dbo;
 #include "Session.hpp"
 #include "widgets/MainMenu.hpp"
 
-#define tApp ((ThechessApplication*)wApp)
+#define tApp ((Application*)wApp)
 
 namespace thechess {
 
-class ThechessSession;
+class Session;
 
 class Notifiable {
 public:
@@ -57,15 +57,15 @@ private:
     void add_to_application_();
 };
 
-class ThechessApplication : public Wt::WApplication {
+class Application : public Wt::WApplication {
 public:
-    ThechessApplication(const Wt::WEnvironment& env, ThechessServer& server);
-    virtual ~ThechessApplication();
+    Application(const Wt::WEnvironment& env, Server& server);
+    virtual ~Application();
 
-    ThechessSession& session() {
+    Session& session() {
         return session_;
     }
-    ThechessServer& server() {
+    Server& server() {
         return server_;
     }
 
@@ -89,8 +89,8 @@ protected:
     virtual void notify(const Wt::WEvent& e);
 
 private:
-    ThechessServer& server_;
-    ThechessSession session_;
+    Server& server_;
+    Session session_;
     UserPtr user_;
     Wt::WBorderLayout* layout_;
     typedef std::multimap<Object, Notifiable*> O2N;
@@ -149,8 +149,8 @@ private:
     friend class Notifiable;
 };
 
-template<> void ThechessApplication::list_view<Game>();
-template<> void ThechessApplication::list_view<Competition>();
+template<> void Application::list_view<Game>();
+template<> void Application::list_view<Competition>();
 
 }
 

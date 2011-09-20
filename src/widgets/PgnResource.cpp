@@ -19,12 +19,12 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 
-PgnResource::PgnResource(const GamePtr& game, ThechessServer& server, Wt::WObject* p):
+PgnResource::PgnResource(const GamePtr& game, Server& server, Wt::WObject* p):
     Wt::WResource(p), game_(game), session_(server.pool()) {
     suggestFileName(boost::lexical_cast<std::string>(game_.id()) + ".pgn");
 }
 
-PgnResource::PgnResource(ThechessServer& server, Wt::WObject* p):
+PgnResource::PgnResource(Server& server, Wt::WObject* p):
     Wt::WResource(p), session_(server.pool()) {
     suggestFileName("none.pgn"); // FIXME http://redmine.webtoolkit.eu/issues/920
 }

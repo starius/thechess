@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
 #ifdef RUN_TESTS
     thechess::run_tests();
 #endif
-    ThechessServer server(argc, argv);
+    Server server(argc, argv);
     if (server.start()) {
         Wt::WServer::waitForShutdown();
         server.stop();

@@ -52,7 +52,7 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 
-ThechessApplication::ThechessApplication(const Wt::WEnvironment& env, ThechessServer& server) :
+Application::Application(const Wt::WEnvironment& env, Server& server) :
     Wt::WApplication(env), server_(server), session_(server.pool()),
     active_(true), notifying_object_(0) {
     enableUpdates(true);
@@ -60,7 +60,7 @@ ThechessApplication::ThechessApplication(const Wt::WEnvironment& env, ThechessSe
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/thechess");
     internalPathChanged().connect(this,
-                                  &ThechessApplication::onPathChange_);
+                                  &Application::onPathChange_);
     setCssTheme("polished");
     Wt::WContainerWidget* root1 = new Wt::WContainerWidget(root());
     layout_ = new Wt::WBorderLayout();
@@ -79,7 +79,7 @@ ThechessApplication::ThechessApplication(const Wt::WEnvironment& env, ThechessSe
     }
 }
 
-ThechessApplication::~ThechessApplication() {
+Application::~Application() {
     std::set<Object> objects;
     for (O2N::iterator it = notifiables_.begin(); it != notifiables_.end(); ++it) {
         objects.insert(it->first);
@@ -101,7 +101,7 @@ ThechessApplication::~ThechessApplication() {
     }
 }
 
-void ThechessApplication::cookie_session_read_() {
+void Application::cookie_session_read_() {
     try {
         dbo::Transaction t(session());
         UserPtr u;
@@ -121,7 +121,7 @@ void ThechessApplication::cookie_session_read_() {
     }
 }
 
-void ThechessApplication::cookie_session_write_() {
+void Application::cookie_session_write_() {
     dbo::Transaction t(session());
     std::string cookie_id;
     CookieSessionPtr cookie_session;
@@ -143,17 +143,17 @@ void ThechessApplication::cookie_session_write_() {
     t.commit();
 }
 
-void ThechessApplication::add_my_games_() {
+void Application::add_my_games_() {
     layout_->addWidget(new MyGamesList(user()), Wt::WBorderLayout::East);
 }
 
-void ThechessApplication::remove_my_games_() {
+void Application::remove_my_games_() {
     Wt::WWidget* my_games_list = layout_->widgetAt(Wt::WBorderLayout::East);
     layout_->removeWidget(my_games_list);
     delete my_games_list;
 }
 
-void ThechessApplication::after_user_change_() {
+void Application::after_user_change_() {
     std::string path = internalPathNextPart("/");
     if (user() && (path == "login" || path == "register")) {
         view(user());
@@ -164,7 +164,7 @@ void ThechessApplication::after_user_change_() {
     }
 }
 
-void ThechessApplication::set_user(const UserPtr& user) {
+void Application::set_user(const UserPtr& user) {
     dbo::Transaction t(session());
     user_.reread();
     if (user_) {
@@ -191,7 +191,7 @@ void ThechessApplication::set_user(const UserPtr& user) {
     add_my_games_();
 }
 
-void ThechessApplication::logout() {
+void Application::logout() {
     dbo::Transaction t(session());
     user_.reread();
     if (user_) {
@@ -204,7 +204,7 @@ void ThechessApplication::logout() {
     t.commit();
 }
 
-void ThechessApplication::notify(const Wt::WEvent& e) {
+void Application::notify(const Wt::WEvent& e) {
     try {
         Wt::WApplication::notify(e);
     } catch (dbo::StaleObjectException e) {
@@ -221,18 +221,18 @@ void ThechessApplication::notify(const Wt::WEvent& e) {
     }
 }
 
-Wt::WContainerWidget* ThechessApplication::mainpanel_() {
+Wt::WContainerWidget* Application::mainpanel_() {
     return (Wt::WContainerWidget*)
            (layout_->widgetAt(Wt::WBorderLayout::Center));
 }
 
-void ThechessApplication::set_mainpanel_(Wt::WWidget* widget) {
+void Application::set_mainpanel_(Wt::WWidget* widget) {
     Wt::WContainerWidget* mp = mainpanel_();
     mp->clear();
     mp->addWidget(widget);
 }
 
-void ThechessApplication::onPathChange_() {
+void Application::onPathChange_() {
     std::cout << internalPath() << std::endl;
     std::string section = internalPathNextPart("/");
     if (section == "register") {
@@ -260,27 +260,27 @@ void ThechessApplication::onPathChange_() {
     }
 }
 
-void ThechessApplication::view(const UserPtr& user) {
+void Application::view(const UserPtr& user) {
     show_<UserWidget>(user, str(boost::format("/user/%i/") % user.id()));
 }
 
-void ThechessApplication::view(const GamePtr& game) {
+void Application::view(const GamePtr& game) {
     show_<GameWidget>(game, str(boost::format("/game/%i/") % game.id()));
 }
 
-void ThechessApplication::view(const CompetitionPtr& competition) {
+void Application::view(const CompetitionPtr& competition) {
     show_<CompetitionWidget>(competition, str(boost::format("/competition/%i/") % competition.id()));
 }
 
-template<> void ThechessApplication::list_view<Game>() {
+template<> void Application::list_view<Game>() {
     show_<GameListWidget>("/game/");
 }
 
-template<> void ThechessApplication::list_view<Competition>() {
+template<> void Application::list_view<Competition>() {
     show_<CompetitionListWidget>("/competition/");
 }
 
-void ThechessApplication::thechess_notify(Object object) {
+void Application::thechess_notify(Object object) {
     try {
         dbo::Transaction t(tApp->session());
         object.reread(tApp->session());
@@ -307,7 +307,7 @@ void ThechessApplication::thechess_notify(Object object) {
     }
 }
 
-void ThechessApplication::add_notifiable_(Notifiable* notifiable,
+void Application::add_notifiable_(Notifiable* notifiable,
         const Object& object) {
     if (notifiables_.find(object) == notifiables_.end()) {
         // first Notifiable for the object is being created
@@ -316,7 +316,7 @@ void ThechessApplication::add_notifiable_(Notifiable* notifiable,
     notifiables_.insert(O2N::value_type(object, notifiable));
 }
 
-void ThechessApplication::remove_notifiable_(Notifiable* notifiable,
+void Application::remove_notifiable_(Notifiable* notifiable,
         const Object& object) {
     O2N::iterator to_delete;
     std::pair<O2N::iterator, O2N::iterator> range =
@@ -340,7 +340,7 @@ void ThechessApplication::remove_notifiable_(Notifiable* notifiable,
 Notifiable::Notifiable(const Object& object):
     object_(object) {
     if (tApp->active_) {
-        // do not call after ~ThechessApplication
+        // do not call after ~Application
         tApp->add_notifiable_(this, object_);
     }
 }
@@ -348,14 +348,14 @@ Notifiable::Notifiable(const Object& object):
 Notifiable::Notifiable(ObjectType ot, int id):
     object_(ot, id) {
     if (tApp->active_) {
-        // do not call after ~ThechessApplication
+        // do not call after ~Application
         tApp->add_notifiable_(this, object_);
     }
 }
 
 Notifiable::~Notifiable() {
     if (tApp->active_) {
-        // do not call after ~ThechessApplication
+        // do not call after ~Application
         tApp->remove_notifiable_(this, object_);
     }
 }
