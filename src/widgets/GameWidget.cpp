@@ -103,7 +103,7 @@ protected:
     }
 
 private:
-    const GamePtr& game_;
+    GamePtr game_;
 
     void item_(const Wt::WString& text, Wt::WContainerWidget* r) {
         Wt::WContainerWidget* li = new Wt::WContainerWidget(r);
