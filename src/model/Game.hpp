@@ -360,9 +360,7 @@ public:
     }
 
     /** Get init moves */
-    const Moves& init_moves() const {
-        return gp_->moves();
-    }
+    const Moves& init_moves() const;
 
     /** Return the number of non-predetermined half-moves */
     int size_without_init() const;

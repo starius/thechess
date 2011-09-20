@@ -128,6 +128,10 @@ UsersVector Competition::winners_of_games(const GamesVector& games) {
     return winners;
 }
 
+CompetitionType Competition::type() const {
+    return cp_->type();
+}
+
 bool Competition::is_member(const UserPtr& user) const {
     return user && members_.find().where("id = ?").bind(user.id()).resultList().size() == 1;
 }

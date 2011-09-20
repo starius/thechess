@@ -59,9 +59,7 @@ public:
         return cp_;
     }
 
-    Type type() const {
-        return cp_->type();
-    }
+    Type type() const;
 
     State state() const {
         return state_;

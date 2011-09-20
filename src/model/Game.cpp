@@ -559,6 +559,10 @@ UserPtr Game::order_user() const {
     return result;
 }
 
+const Moves& Game::init_moves() const {
+    return gp_->moves();
+}
+
 int Game::size_without_init() const {
     return size() - init_moves().size() ;
 }
