@@ -40,7 +40,7 @@ Wt::WString Competition::type2str(Type type) {
     return Wt::WString::tr("tc.competition.Type");
 }
 
-void Competition::create_competition(UserPtr user) {
+void Competition::create_competition(const UserPtr& user) {
     init_ = user;
 }
 
@@ -88,7 +88,7 @@ const char* Competition::state2str(State state) {
 }
 
 bool Competition::all_ended(const GamesVector& games) {
-    BOOST_FOREACH (GamePtr g, games) {
+    BOOST_FOREACH (const GamePtr& g, games) {
         if (!g->is_ended()) {
             return false;
         }
@@ -98,7 +98,7 @@ bool Competition::all_ended(const GamesVector& games) {
 
 void Competition::wins_number(const GamesVector& games,
                               std::map<UserPtr, float>& wins) {
-    BOOST_FOREACH (GamePtr g, games) {
+    BOOST_FOREACH (const GamePtr& g, games) {
         if (g->is_draw()) {
             wins[g->white()] += 0.5;
             wins[g->black()] += 0.5;
@@ -115,7 +115,7 @@ UsersVector Competition::winners_of_games(const GamesVector& games) {
     UsersVector winners;
     float max_wins = -1;
     BOOST_FOREACH (User2float::value_type& user2float, wins) {
-        UserPtr u = user2float.first;
+        const UserPtr& u = user2float.first;
         float w = user2float.second;
         if (max_wins < 0 || w - max_wins > 0.1) {
             max_wins = w;
@@ -128,11 +128,11 @@ UsersVector Competition::winners_of_games(const GamesVector& games) {
     return winners;
 }
 
-bool Competition::is_member(UserPtr user) const {
+bool Competition::is_member(const UserPtr& user) const {
     return user && members_.find().where("id = ?").bind(user.id()).resultList().size() == 1;
 }
 
-bool Competition::is_winner(UserPtr user) const {
+bool Competition::is_winner(const UserPtr& user) const {
     return user && winners_.find().where("id = ?").bind(user.id()).resultList().size() == 1;
 }
 
@@ -148,21 +148,21 @@ UsersVector Competition::winners_vector() const {
     return UsersVector(winners_.begin(), winners_.end());
 }
 
-Games Competition::games_with(UserPtr user) const {
+Games Competition::games_with(const UserPtr& user) const {
     return games_.find().where("white_id = ? or black_id = ?")
            .bind(user.id()).bind(user.id());
 }
 
-GamesVector Competition::games_with(UserPtr user,
+GamesVector Competition::games_with(const UserPtr& user,
                                     GamesTable& gt) const {
     GamesVector result;
     BOOST_FOREACH (GamesTable::value_type& i, gt) {
-        BOOST_FOREACH (GamePtr game, i.second[user]) {
+        BOOST_FOREACH (const GamePtr& game, i.second[user]) {
             result.push_back(game);
         }
     }
     BOOST_FOREACH (GamesTable::mapped_type::value_type& i, gt[user]) {
-        BOOST_FOREACH (GamePtr game, i.second) {
+        BOOST_FOREACH (const GamePtr& game, i.second) {
             result.push_back(game);
         }
     }
@@ -172,13 +172,13 @@ GamesVector Competition::games_with(UserPtr user,
 GamesTable Competition::games_table() const {
     BOOST_ASSERT(type() == CLASSICAL || type() == TEAM);
     GamesTable result;
-    BOOST_FOREACH (GamePtr game, games_vector()) {
+    BOOST_FOREACH (const GamePtr& game, games_vector()) {
         result[game->white()][game->black()].push_back(game);
     }
     return result;
 }
 
-bool Competition::can_join(UserPtr user) const {
+bool Competition::can_join(const UserPtr& user) const {
     return state_ == RECRUITING &&
            user && !is_member(user) &&
            user->games_stat().elo() >= cp_->min_rating() &&
@@ -188,46 +188,46 @@ bool Competition::can_join(UserPtr user) const {
            static_cast<int>(members_.size()) < cp_->max_users();
 }
 
-void Competition::join(UserPtr user) {
+void Competition::join(const UserPtr& user) {
     if (can_join(user)) {
         members_.insert(user);
     }
 }
 
-bool Competition::can_leave(UserPtr user) const {
+bool Competition::can_leave(const UserPtr& user) const {
     return state_ == RECRUITING &&
            is_member(user);
 }
 
-void Competition::leave(UserPtr user) {
+void Competition::leave(const UserPtr& user) {
     if (can_leave(user)) {
         members_.erase(user);
     }
 }
 
-bool Competition::can_kick(UserPtr kicker, UserPtr kicked) const {
+bool Competition::can_kick(const UserPtr& kicker, const UserPtr& kicked) const {
     return state_ == RECRUITING &&
            is_member(kicked) &&
            kicker == init_;
 }
 
-void Competition::kick(UserPtr kicker, UserPtr kicked) {
+void Competition::kick(const UserPtr& kicker, const UserPtr& kicked) {
     if (can_kick(kicker, kicked)) {
         members_.erase(kicked);
     }
 }
 
-bool Competition::can_change_parameters(UserPtr user) const {
+bool Competition::can_change_parameters(const UserPtr& user) const {
     return state_ == RECRUITING && user &&
            (user == init_ || user->rights() >= User::MODERATOR);
 }
 
-bool Competition::can_cancel(UserPtr user) const {
+bool Competition::can_cancel(const UserPtr& user) const {
     return state_ == RECRUITING &&
            user == init_;
 }
 
-void Competition::cancel(UserPtr user) {
+void Competition::cancel(const UserPtr& user) {
     if (can_cancel(user)) {
         cancel_();
     }
@@ -264,11 +264,11 @@ void Competition::create_games_classical_(Objects& objects) {
     int white_games_per_user = std::max(1, int((members.size() - 1) * cp_->games_factor()));
     std::map<UserPtr, int> black_games;
     std::map<UserPtr, std::map<UserPtr, int> > N; // number of all games between them
-    BOOST_FOREACH (UserPtr white, members) {
+    BOOST_FOREACH (const UserPtr& white, members) {
         std::map<UserPtr, int>& N_white = N[white];
         for (int i = 0; i < white_games_per_user; i++) {
             UserPtr black;
-            BOOST_FOREACH (UserPtr user, members) {
+            BOOST_FOREACH (const UserPtr& user, members) {
                 if (user != white && black_games[user] != white_games_per_user)
                     if (!black || N_white[user] < N_white[black]) {
                         black = user;
@@ -307,7 +307,7 @@ void Competition::process_classical_(Objects& objects) {
     BOOST_ASSERT(type() == CLASSICAL);
     std::map<UserPtr, int> used;
     GamesVector proposed;
-    BOOST_FOREACH (GamePtr g, games_vector()) {
+    BOOST_FOREACH (const GamePtr& g, games_vector()) {
         if (g->state() == Game::ACTIVE || g->state() == Game::CONFIRMED) {
             used[g->white()] += 1;
             used[g->black()] += 1;
@@ -317,7 +317,7 @@ void Competition::process_classical_(Objects& objects) {
         }
     }
     std::random_shuffle(proposed.begin(), proposed.end(), rand_for_shuffle);
-    BOOST_FOREACH (GamePtr g, proposed) {
+    BOOST_FOREACH (const GamePtr& g, proposed) {
         if (used[g->white()] < cp_->max_simultaneous_games() &&
                 used[g->black()] < cp_->max_simultaneous_games()) {
             g.modify()->confirm_by_competition();
@@ -329,14 +329,14 @@ void Competition::process_classical_(Objects& objects) {
 }
 
 void Competition::finish_(const UsersVector& winners, Objects&) {
-    BOOST_FOREACH (UserPtr u, winners) {
+    BOOST_FOREACH (const UserPtr& u, winners) {
         winners_.insert(u);
     }
     state_ = ENDED;
     ended_ = now();
 }
 
-GamePtr Competition::create_game_(UserPtr white, UserPtr black, int stage, bool no_draw) {
+GamePtr Competition::create_game_(const UserPtr& white, const UserPtr& black, int stage, bool no_draw) {
     GamePtr game = session()->add(new Game(cp_->gp()));
     bool random = no_draw;
     game.modify()->make_competition_game(white, black,

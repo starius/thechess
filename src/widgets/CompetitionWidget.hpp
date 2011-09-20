@@ -20,7 +20,7 @@ namespace thechess {
 
 class CompetitionWidget : public Wt::WTemplate, public Notifiable {
 public:
-    CompetitionWidget(CompetitionPtr competition,
+    CompetitionWidget(const CompetitionPtr& competition,
                       Wt::WContainerWidget* p = 0);
 
     virtual void notify();

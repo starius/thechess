@@ -164,7 +164,7 @@ void ThechessApplication::after_user_change_() {
     }
 }
 
-void ThechessApplication::set_user(UserPtr user) {
+void ThechessApplication::set_user(const UserPtr& user) {
     dbo::Transaction t(session());
     user_.reread();
     if (user_) {
@@ -260,15 +260,15 @@ void ThechessApplication::onPathChange_() {
     }
 }
 
-void ThechessApplication::view(UserPtr user) {
+void ThechessApplication::view(const UserPtr& user) {
     show_<UserWidget>(user, str(boost::format("/user/%i/") % user.id()));
 }
 
-void ThechessApplication::view(GamePtr game) {
+void ThechessApplication::view(const GamePtr& game) {
     show_<GameWidget>(game, str(boost::format("/game/%i/") % game.id()));
 }
 
-void ThechessApplication::view(CompetitionPtr competition) {
+void ThechessApplication::view(const CompetitionPtr& competition) {
     show_<CompetitionWidget>(competition, str(boost::format("/competition/%i/") % competition.id()));
 }
 

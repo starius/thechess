@@ -20,7 +20,7 @@ class ThechessServer;
 
 class PgnResource : public Wt::WResource {
 public:
-    PgnResource(GamePtr game, ThechessServer& server, Wt::WObject* p = 0);
+    PgnResource(const GamePtr& game, ThechessServer& server, Wt::WObject* p = 0);
     PgnResource(ThechessServer& server, Wt::WObject* p = 0);
     ~PgnResource();
 

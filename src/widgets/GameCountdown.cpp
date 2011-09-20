@@ -55,12 +55,12 @@ public:
 
 class GameCountdownImpl : public Wt::WContainerWidget {
 public:
-    GameCountdownImpl(GamePtr game, Wt::WContainerWidget* parent = 0) :
+    GameCountdownImpl(const GamePtr& game, Wt::WContainerWidget* parent = 0) :
         Wt::WContainerWidget(parent), game_(game) {
         dbo::Transaction t(tApp->session());
         UserPtr user1;
         UserPtr user2;
-        UserPtr me = tApp->user();
+        const UserPtr& me = tApp->user();
         if (game_->is_member(me)) {
             user1 = me;
             user2 = game_->other_user(me);
@@ -83,7 +83,7 @@ public:
 private:
     GamePtr game_;
 
-    void single_countdown_(UserPtr user) {
+    void single_countdown_(const UserPtr& user) {
         const Wt::WString& name = user->username();
         bool active = game_->state() == Game::ACTIVE
                       && user == game_->order_user();
@@ -95,7 +95,7 @@ private:
 
 };
 
-GameCountdown::GameCountdown(GamePtr game,
+GameCountdown::GameCountdown(const GamePtr& game,
                              Wt::WContainerWidget* parent) :
     Wt::WViewWidget(parent), game_(game) {
     wApp->require("js/jquery.countdown.pack.js");

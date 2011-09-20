@@ -101,7 +101,7 @@ Wt::WString Game::str_state() const {
     return Wt::WString::tr(state2str_id(state()));
 }
 
-Piece::Color Game::color_of(const UserPtr user) const {
+Piece::Color Game::color_of(const UserPtr& user) const {
     Piece::Color color = Piece::COLOR_NULL;
     if (user) {
         if (user == white()) {
@@ -114,7 +114,7 @@ Piece::Color Game::color_of(const UserPtr user) const {
     return color;
 }
 
-bool Game::is_member(const UserPtr user) const {
+bool Game::is_member(const UserPtr& user) const {
     return user && (user == white() || user == black() || user == init());
 }
 
@@ -123,7 +123,7 @@ UserPtr Game::user_of(Piece::Color color) const {
            white() : ((color == Piece::BLACK) ? black() : UserPtr());
 }
 
-UserPtr Game::other_user(const UserPtr user) const {
+UserPtr Game::other_user(const UserPtr& user) const {
     return user_of(Piece::other_color(color_of(user)));
 }
 
@@ -141,7 +141,7 @@ void Game::check(Objects& objects) {
     } else if (state() == PAUSE && now() > pause_until()) {
         stop_pause_();
     } else if (state() == ACTIVE && total_limit_now(order_user()) < TD_NULL) {
-        UserPtr winner = user_of(Piece::other_color(order_color()));
+        const UserPtr& winner = user_of(Piece::other_color(order_color()));
         finish_(TIMEOUT, winner);
     }
     if (is_ended() && competition()) {
@@ -161,7 +161,7 @@ Td Game::limit_private(Piece::Color color) const {
     return result;
 }
 
-Td Game::limit_private(UserPtr user) const {
+Td Game::limit_private(const UserPtr& user) const {
     return limit_private(color_of(user));
 }
 
@@ -177,24 +177,24 @@ Td Game::spent_time() const {
     }
 }
 
-Td Game::spent_time(UserPtr user) const {
+Td Game::spent_time(const UserPtr& user) const {
     return (user == order_user()) ? spent_time() : TD_NULL;
 }
 
-Td Game::total_limit(UserPtr user) const {
+Td Game::total_limit(const UserPtr& user) const {
     return limit_private(user) + gp_->limit_std();
 }
 
-Td Game::total_limit_now(UserPtr user) const {
+Td Game::total_limit_now(const UserPtr& user) const {
     return total_limit(user) - spent_time(user);
 }
 
-Td Game::limit_private_now(UserPtr user) const {
+Td Game::limit_private_now(const UserPtr& user) const {
     return std::max(TD_NULL,
                     std::min(limit_private(user), total_limit_now(user)));
 }
 
-Td Game::limit_std_now(UserPtr user) const {
+Td Game::limit_std_now(const UserPtr& user) const {
     return std::max(TD_NULL, gp_->limit_std() - spent_time(user));
 }
 
@@ -214,7 +214,7 @@ Wt::WDateTime Game::next_check() const {
     return result;
 }
 
-void Game::propose_game(UserPtr init, UserPtr u, Piece::Color c) {
+void Game::propose_game(const UserPtr& init, const UserPtr& u, Piece::Color c) {
     init_ = init;
     if (c == Piece::COLOR_NULL) {
         set_random_(init, u);
@@ -224,7 +224,7 @@ void Game::propose_game(UserPtr init, UserPtr u, Piece::Color c) {
     }
 }
 
-void Game::propose_challenge(UserPtr init, Piece::Color c) {
+void Game::propose_challenge(const UserPtr& init, Piece::Color c) {
     init_ = init;
     if (c != Piece::COLOR_NULL) {
         set_of_color_(init, c);
@@ -233,8 +233,8 @@ void Game::propose_challenge(UserPtr init, Piece::Color c) {
     }
 }
 
-void Game::make_competition_game(UserPtr white, UserPtr black,
-                                 CompetitionPtr competition, int competition_stage, bool random) {
+void Game::make_competition_game(const UserPtr& white, const UserPtr& black,
+                                 const CompetitionPtr& competition, int competition_stage, bool random) {
     if (random) {
         set_random_(white, black);
     } else {
@@ -245,7 +245,7 @@ void Game::make_competition_game(UserPtr white, UserPtr black,
     competition_stage_ = competition_stage;
 }
 
-void Game::set_random_(UserPtr user1, UserPtr user2) {
+void Game::set_random_(const UserPtr& user1, const UserPtr& user2) {
     colors_random_ = true;
     if (rr(2) == 0) {
         white_ = user1;
@@ -256,7 +256,7 @@ void Game::set_random_(UserPtr user1, UserPtr user2) {
     }
 }
 
-void Game::set_of_color_(UserPtr user, Piece::Color color) {
+void Game::set_of_color_(const UserPtr& user, Piece::Color color) {
     if (color == Piece::WHITE) {
         set_white_(user);
     }
@@ -273,11 +273,11 @@ bool Game::is_creation() const {
     return state() == PROPOSED && white() && black() && init();
 }
 
-bool Game::can_join(UserPtr user) const {
+bool Game::can_join(const UserPtr& user) const {
     return user && !is_member(user) && is_challenge();
 }
 
-void Game::join(UserPtr user) {
+void Game::join(const UserPtr& user) {
     if (can_join(user)) {
         if (white()) {
             black_ = user;
@@ -290,11 +290,11 @@ void Game::join(UserPtr user) {
     }
 }
 
-bool Game::can_confirm(UserPtr user) const {
+bool Game::can_confirm(const UserPtr& user) const {
     return user && is_member(user) && is_creation();
 }
 
-void Game::confirm(UserPtr user) {
+void Game::confirm(const UserPtr& user) {
     if (can_confirm(user)) {
         confirm_();
     }
@@ -329,21 +329,21 @@ void Game::stop_pause_() {
     pause_until_ = Wt::WDateTime();
 }
 
-bool Game::can_cancel(UserPtr user) const {
+bool Game::can_cancel(const UserPtr& user) const {
     return is_member(user) && user != init() && is_creation();
 }
 
-void Game::cancel(UserPtr user) {
+void Game::cancel(const UserPtr& user) {
     if (can_cancel(user)) {
         finish_(CANCELLED);
     }
 }
 
-bool Game::has_competition_confirmed(UserPtr user) const {
+bool Game::has_competition_confirmed(const UserPtr& user) const {
     return is_member(user) && competition_confirmer_[color_of(user)];
 }
 
-bool Game::can_competition_confirm(UserPtr user) const {
+bool Game::can_competition_confirm(const UserPtr& user) const {
     return is_member(user) &&
            competition() &&
            !init() &&
@@ -351,7 +351,7 @@ bool Game::can_competition_confirm(UserPtr user) const {
            !has_competition_confirmed(user);
 }
 
-void Game::competition_confirm(UserPtr user) {
+void Game::competition_confirm(const UserPtr& user) {
     if (can_competition_confirm(user)) {
         competition_confirmer_[color_of(user)] = true;
         if (has_competition_confirmed(other_user(user))) {
@@ -360,7 +360,7 @@ void Game::competition_confirm(UserPtr user) {
     }
 }
 
-bool Game::can_competition_discard(UserPtr user) const {
+bool Game::can_competition_discard(const UserPtr& user) const {
     return is_member(user) &&
            competition() &&
            !init() &&
@@ -368,13 +368,13 @@ bool Game::can_competition_discard(UserPtr user) const {
            has_competition_confirmed(user);
 }
 
-void Game::competition_discard(UserPtr user) {
+void Game::competition_discard(const UserPtr& user) {
     if (can_competition_discard(user)) {
         competition_confirmer_[color_of(user)] = false;
     }
 }
 
-bool Game::can_move(UserPtr user) const {
+bool Game::can_move(const UserPtr& user) const {
     return state() == ACTIVE && !winner() && user == order_user();
 }
 
@@ -403,18 +403,18 @@ void Game::add_move(const HalfMove& half_move,
     }
 }
 
-bool Game::can_pause_propose(const UserPtr user) const {
+bool Game::can_pause_propose(const UserPtr& user) const {
     return state() == ACTIVE &&
            !is_pause_proposed() &&
            pause_limit() > TD_NULL &&
            is_member(user);
 }
 
-bool Game::can_pause_propose(const UserPtr user, const Td& td) const {
+bool Game::can_pause_propose(const UserPtr& user, const Td& td) const {
     return can_pause_propose(user) && pause_limit() >= td && td > TD_NULL;
 }
 
-void Game::pause_propose(const UserPtr user, const Td& td) {
+void Game::pause_propose(const UserPtr& user, const Td& td) {
     if (can_pause_propose(user, td)) {
         pause_proposed_td_ = td;
         pause_proposer_ = user;
@@ -429,11 +429,11 @@ Wt::WDateTime Game::pause_started() const {
     return pause_until() - pause_proposed_td();
 }
 
-bool Game::can_pause_agree(const UserPtr user) const {
+bool Game::can_pause_agree(const UserPtr& user) const {
     return can_pause_discard(user) && pause_proposer() == other_user(user);
 }
 
-void Game::pause_agree(const UserPtr user) {
+void Game::pause_agree(const UserPtr& user) {
     if (can_pause_agree(user)) {
         pause_proposer_.reset();
         state_ = PAUSE;
@@ -441,30 +441,30 @@ void Game::pause_agree(const UserPtr user) {
     }
 }
 
-bool Game::can_pause_discard(const UserPtr user) const {
+bool Game::can_pause_discard(const UserPtr& user) const {
     return state() == ACTIVE && is_pause_proposed() && is_member(user);
 }
 
-void Game::pause_discard(const UserPtr user) {
+void Game::pause_discard(const UserPtr& user) {
     if (can_pause_discard(user)) {
         pause_proposer_.reset();
         pause_proposed_td_ = TD_NULL;
     }
 }
 
-bool Game::can_mistake_propose(const UserPtr user) const {
+bool Game::can_mistake_propose(const UserPtr& user) const {
     return state() == ACTIVE &&
            size_without_init() > 0 &&
            !is_mistake_proposed() &&
            is_member(user);
 }
 
-bool Game::can_mistake_propose(const UserPtr user, int mistake_move) const {
+bool Game::can_mistake_propose(const UserPtr& user, int mistake_move) const {
     return can_mistake_propose(user) &&
            mistake_move >= init_moves().size() && mistake_move < moves().size();
 }
 
-void Game::mistake_propose(const UserPtr user, int mistake_move) {
+void Game::mistake_propose(const UserPtr& user, int mistake_move) {
     if (can_mistake_propose(user, mistake_move)) {
         mistake_move_ = mistake_move;
         mistake_proposer_ = user;
@@ -475,12 +475,12 @@ bool Game::is_mistake_proposed() const {
     return mistake_proposer() && mistake_move() != -1;
 }
 
-bool Game::can_mistake_agree(const UserPtr user) const {
+bool Game::can_mistake_agree(const UserPtr& user) const {
     return can_mistake_discard(user) &&
            mistake_proposer() == other_user(user);
 }
 
-void Game::mistake_agree(const UserPtr user) {
+void Game::mistake_agree(const UserPtr& user) {
     if (can_mistake_agree(user)) {
         Wt::WDateTime cached_now = now();
         Td spent = cached_now - lastmove_;
@@ -498,49 +498,49 @@ void Game::mistake_agree(const UserPtr user) {
     }
 }
 
-bool Game::can_mistake_discard(const UserPtr user) const {
+bool Game::can_mistake_discard(const UserPtr& user) const {
     return state() == ACTIVE && is_mistake_proposed() && is_member(user);
 }
 
-void Game::mistake_discard(const UserPtr user) {
+void Game::mistake_discard(const UserPtr& user) {
     if (can_mistake_discard(user)) {
         mistake_proposer_.reset();
         mistake_move_ = -1;
     }
 }
 
-bool Game::can_draw_propose(const UserPtr user) const {
+bool Game::can_draw_propose(const UserPtr& user) const {
     return state() == ACTIVE &&
            meet_first_draw() &&
            !is_draw_proposed() &&
            is_member(user);
 }
 
-void Game::draw_propose(const UserPtr user) {
+void Game::draw_propose(const UserPtr& user) {
     if (can_draw_propose(user)) {
         draw_proposer_ = user;
     }
 }
 
-bool Game::can_draw_agree(const UserPtr user) const {
+bool Game::can_draw_agree(const UserPtr& user) const {
     return can_draw_discard(user) && meet_first_draw();
 }
 
-void Game::draw_agree(const UserPtr user) {
+void Game::draw_agree(const UserPtr& user) {
     if (can_draw_agree(user)) {
         draw_proposer_.reset();
         finish_(DRAW_AGREED);
     }
 }
 
-bool Game::can_draw_discard(const UserPtr user) const {
+bool Game::can_draw_discard(const UserPtr& user) const {
     return state() == ACTIVE &&
            is_draw_proposed() &&
            is_member(user) &&
            draw_proposer() == other_user(user);
 }
 
-void Game::draw_discard(const UserPtr user) {
+void Game::draw_discard(const UserPtr& user) {
     if (can_draw_discard(user)) {
         draw_proposer_.reset();
     }
@@ -573,7 +573,7 @@ bool Game::real_rating() const {
     return !gp_->norating() && meet_first_draw();
 }
 
-void Game::finish_(State state, UserPtr winner) {
+void Game::finish_(State state, const UserPtr& winner) {
     state_ = state;
     if (winner) {
         winner_ = winner;
@@ -609,11 +609,11 @@ int Game::rating_after(Piece::Color color) const {
     return (color == Piece::COLOR_NULL) ? -1 : rating_after_[color];
 }
 
-bool Game::can_comment(const UserPtr user) const {
+bool Game::can_comment(const UserPtr& user) const {
     return is_member(user);
 }
 
-void Game::set_comment(const UserPtr user, const Wt::WString& t) {
+void Game::set_comment(const UserPtr& user, const Wt::WString& t) {
     if (can_comment(user)) {
         comment_ = t;
     }

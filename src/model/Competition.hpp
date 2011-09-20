@@ -67,7 +67,7 @@ public:
         return state_;
     }
     static const char* state2str(State state);
-    UserPtr init() const {
+    const UserPtr& init() const {
         return init_;
     }
 
@@ -94,8 +94,8 @@ public:
         description_ = v;
     }
 
-    bool is_member(UserPtr user) const;
-    bool is_winner(UserPtr user) const;
+    bool is_member(const UserPtr& user) const;
+    bool is_winner(const UserPtr& user) const;
 
     const Users& members() const {
         return members_;
@@ -112,32 +112,32 @@ public:
     UsersVector winners_vector() const;
 
     GamesTable games_table() const;
-    Games games_with(UserPtr user) const;
-    GamesVector games_with(UserPtr user, GamesTable& gt) const;
+    Games games_with(const UserPtr& user) const;
+    GamesVector games_with(const UserPtr& user, GamesTable& gt) const;
 
     // auto-manage
     void check(Objects& objects);
     Wt::WDateTime next_check() const;
 
     // methods of recruiting state
-    static bool can_create_competition(UserPtr /*user*/) {
+    static bool can_create_competition(const UserPtr& /*user*/) {
         return true;
     }
-    void create_competition(UserPtr user);
+    void create_competition(const UserPtr& user);
 
-    bool can_join(UserPtr user) const;
-    void join(UserPtr user);
+    bool can_join(const UserPtr& user) const;
+    void join(const UserPtr& user);
 
-    bool can_leave(UserPtr user) const;
-    void leave(UserPtr user);
+    bool can_leave(const UserPtr& user) const;
+    void leave(const UserPtr& user);
 
-    bool can_kick(UserPtr kicker, UserPtr kicked) const;
-    void kick(UserPtr kicker, UserPtr kicked);
+    bool can_kick(const UserPtr& kicker, const UserPtr& kicked) const;
+    void kick(const UserPtr& kicker, const UserPtr& kicked);
 
-    bool can_change_parameters(UserPtr user) const;
+    bool can_change_parameters(const UserPtr& user) const;
 
-    bool can_cancel(UserPtr user) const;
-    void cancel(UserPtr user);
+    bool can_cancel(const UserPtr& user) const;
+    void cancel(const UserPtr& user);
 
     // methods of active stage
 
@@ -173,7 +173,7 @@ private:
 
     void finish_(const UsersVector& winners, Objects& objects);
 
-    GamePtr create_game_(UserPtr white, UserPtr black, int stage = -1,
+    GamePtr create_game_(const UserPtr& white, const UserPtr& black, int stage = -1,
                          bool no_draw = false);
 
     friend class StagedCompetition;

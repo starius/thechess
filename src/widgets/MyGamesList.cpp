@@ -132,7 +132,7 @@ private:
         UserPtr user = tApp->session().load<User>(user_id_);
         Games games_collection = user->games().where("state < ?").bind(Game::MIN_ENDED);
         GamesVector games_vector(games_collection.begin(), games_collection.end());
-        BOOST_FOREACH (GamePtr game, games_vector) {
+        BOOST_FOREACH (const GamePtr& game, games_vector) {
             games.insert(game.id());
             if (anchors_.find(game.id()) == anchors_.end()) {
                 MyGameAnchor* a = new MyGameAnchor(game, this);
@@ -214,7 +214,7 @@ void MyGameAnchor::notify() {
     list_->anchor_notify_handler_(this);
 }
 
-MyGamesList::MyGamesList(UserPtr user, Wt::WContainerWidget* p):
+MyGamesList::MyGamesList(const UserPtr& user, Wt::WContainerWidget* p):
     Wt::WCompositeWidget(p) {
     setImplementation(new MyGamesListImp(user));
 }

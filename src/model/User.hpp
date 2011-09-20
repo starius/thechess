@@ -74,15 +74,15 @@ public:
     }
     dbo::Query<GamePtr> games() const;
 
-    bool can_set_classification(UserPtr user) const;
-    void set_classification(UserPtr user, Classification classification);
+    bool can_set_classification(const UserPtr& user) const;
+    void set_classification(const UserPtr& user, Classification classification);
     Classification classification() const;
     Wt::WString classification_str() const;
 
-    bool can_confirm_classification(UserPtr user) const;
-    void confirm_classification(UserPtr user);
+    bool can_confirm_classification(const UserPtr& user) const;
+    void confirm_classification(const UserPtr& user);
     bool classification_confirmed() const;
-    UserPtr classification_confirmer() const;
+    const UserPtr& classification_confirmer() const;
 
     const EloPlayer& games_stat() const {
         return games_stat_;

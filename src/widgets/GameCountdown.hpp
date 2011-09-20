@@ -22,7 +22,7 @@ namespace thechess {
 
 class GameCountdown : public Wt::WViewWidget {
 public:
-    GameCountdown(GamePtr game, Wt::WContainerWidget* parent = 0);
+    GameCountdown(const GamePtr& game, Wt::WContainerWidget* parent = 0);
 private:
     GamePtr game_;
 

@@ -26,7 +26,7 @@ namespace thechess {
 
 class UserWidgetImpl : public Wt::WContainerWidget {
 public:
-    UserWidgetImpl(UserPtr user) :
+    UserWidgetImpl(const UserPtr& user) :
         Wt::WContainerWidget(), user_(user) {
         dbo::Transaction t(tApp->session());
         new Wt::WText(user_->username(), this);
@@ -80,7 +80,7 @@ private:
     }
 };
 
-UserWidget::UserWidget(UserPtr user, Wt::WContainerWidget* parent) :
+UserWidget::UserWidget(const UserPtr& user, Wt::WContainerWidget* parent) :
     WCompositeWidget(parent) {
     impl_ = new UserWidgetImpl(user);
     setImplementation(impl_);

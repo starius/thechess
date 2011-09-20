@@ -66,7 +66,7 @@ public:
     boost::any data(const Wt::WModelIndex& index,
                     int role = Wt::DisplayRole) const {
         dbo::Transaction t(tApp->session());
-        GamePtr game = resultRow(index.row()).get<GLP::GAME_IN_TUPLE>();
+        const GamePtr& game = resultRow(index.row()).get<GLP::GAME_IN_TUPLE>();
         if (role == Wt::DisplayRole) {
             if (index.column() == STATE_COLUMN) {
                 return game->str_state();

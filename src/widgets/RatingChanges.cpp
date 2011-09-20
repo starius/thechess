@@ -43,7 +43,7 @@ public:
     static const int RATING_AFTER_COLUMN = 2;
     static const int COLUMNS = 3;
 
-    RatingModel(UserPtr user, Wt::WObject* parent = 0) :
+    RatingModel(const UserPtr& user, Wt::WObject* parent = 0) :
         RP::BaseQM(parent), user_(user) {
         dbo::Transaction t(tApp->session());
         RP::Q query = tApp->session().find<Game>();
@@ -61,11 +61,11 @@ public:
     boost::any data(const Wt::WModelIndex& index,
                     int role = Wt::DisplayRole) const {
         if (index.column() == ENDED_COLUMN && role == Wt::DisplayRole) {
-            GamePtr game = resultRow(index.row());
+            const GamePtr& game = resultRow(index.row());
             return Wt::WDate(game->ended().date());
         }
         if (index.column() == RATING_AFTER_COLUMN && role == Wt::DisplayRole) {
-            GamePtr game = resultRow(index.row());
+            const GamePtr& game = resultRow(index.row());
             return game->rating_after(game->color_of(user_));
         } else {
             return RP::BaseQM::data(index, role);
@@ -89,7 +89,7 @@ public:
         models_.clear();
     }
 
-    void add_user(UserPtr user) {
+    void add_user(const UserPtr& user) {
         RatingModel* model = new RatingModel(user, this);
         models_.push_back(model);
         column_count_ += RatingModel::COLUMNS;
@@ -124,7 +124,7 @@ private:
 
 class RatingChangesImpl : public Wt::WContainerWidget {
 public:
-    RatingChangesImpl(UserPtr user = UserPtr()):
+    RatingChangesImpl(const UserPtr& user = UserPtr()):
         Wt::WContainerWidget(), number_of_users_(0) {
         model_ = new MultiRatingModel(this);
         chart_ = new Wt::Chart::WCartesianChart(Wt::Chart::ScatterPlot, this);
@@ -140,7 +140,7 @@ public:
         }
     }
 
-    void add_user(UserPtr user) {
+    void add_user(const UserPtr& user) {
         int shift = number_of_users_ * RatingModel::COLUMNS;
         int rating_after_column = RatingModel::RATING_AFTER_COLUMN + shift;
         int ended_column = RatingModel::ENDED_COLUMN + shift;
@@ -158,13 +158,13 @@ private:
     Wt::Chart::WCartesianChart* chart_;
 };
 
-RatingChanges::RatingChanges(UserPtr user, Wt::WContainerWidget* parent):
+RatingChanges::RatingChanges(const UserPtr& user, Wt::WContainerWidget* parent):
     Wt::WCompositeWidget(parent) {
     impl_ = new RatingChangesImpl(user);
     setImplementation(impl_);
 }
 
-void RatingChanges::add_user(UserPtr user) {
+void RatingChanges::add_user(const UserPtr& user) {
     impl_->add_user(user);
 }
 

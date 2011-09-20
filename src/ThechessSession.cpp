@@ -59,11 +59,11 @@ void ThechessSession::reconsider(TaskTracker& tracker) {
     t.commit();
     dbo::Transaction t2(*this);
     Games games = find<Game>().where("state < ?").bind(Game::MIN_ENDED);
-    BOOST_FOREACH (GamePtr game, games) {
+    BOOST_FOREACH (const GamePtr& game, games) {
         tracker.add_or_update_task(Object(GAME, game.id()));
     }
     Competitions cs = find<Competition>().where("state < ?").bind(Competition::ENDED);
-    BOOST_FOREACH (CompetitionPtr c, cs) {
+    BOOST_FOREACH (const CompetitionPtr& c, cs) {
         tracker.add_or_update_task(Object(COMPETITION, c.id()));
     }
     t2.commit();

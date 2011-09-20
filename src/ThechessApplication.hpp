@@ -69,16 +69,16 @@ public:
         return server_;
     }
 
-    UserPtr user() const {
+    const UserPtr& user() const {
         return user_;
     }
     void after_user_change_();
-    void set_user(UserPtr user);
+    void set_user(const UserPtr& user);
     void logout();
 
-    void view(UserPtr user);
-    void view(GamePtr game);
-    void view(CompetitionPtr competition);
+    void view(const UserPtr& user);
+    void view(const GamePtr& game);
+    void view(const CompetitionPtr& competition);
 
     template<typename M> void list_view() {
     }

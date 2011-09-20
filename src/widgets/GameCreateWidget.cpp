@@ -24,7 +24,7 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 
-GameCreateWidget::GameCreateWidget(UserPtr user,
+GameCreateWidget::GameCreateWidget(const UserPtr& user,
                                    Wt::WContainerWidget* p) :
     Wt::WContainerWidget(p), with_user_(true), user_(user) {
     dbo::Transaction t(tApp->session());

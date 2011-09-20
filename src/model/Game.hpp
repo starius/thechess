@@ -92,14 +92,14 @@ public:
     \param u user to who game is proposed
     \param c color of creator, or none color to set random colors
     */
-    void propose_game(UserPtr init, UserPtr u,
+    void propose_game(const UserPtr& init, const UserPtr& u,
                       Piece::Color c);
 
     /** Turn this game into challenge by one user.
     \param init the creator of game
     \param c color of creator, none color meens random color
     */
-    void propose_challenge(UserPtr init, Piece::Color c);
+    void propose_challenge(const UserPtr& init, Piece::Color c);
 
     /** Turn this game into competition game.
     \param white the user playing white pieces
@@ -108,8 +108,8 @@ public:
     \param competition_stage stage of competition or \c -1 if not defined
     \param random if colors of pieces will be randomized
     */
-    void make_competition_game(UserPtr white, UserPtr black,
-                               CompetitionPtr competition, int competition_stage = -1, bool random = false);
+    void make_competition_game(const UserPtr& white, const UserPtr& black,
+                               const CompetitionPtr& competition, int competition_stage = -1, bool random = false);
 
     /* @} */
 
@@ -148,32 +148,32 @@ public:
     /** Return if the user can join the game.
     Non-anonymous user can join to challenge made by other user.
     */
-    bool can_join(UserPtr user) const;
+    bool can_join(const UserPtr& user) const;
 
     /** Try to join the user.
     On success the game changes its state to \ref CONFIRMED
     */
-    void join(UserPtr user);
+    void join(const UserPtr& user);
 
     /** Return if user can confirm the game.
     Non-init member of creation can confirm it
     */
-    bool can_confirm(UserPtr user) const;
+    bool can_confirm(const UserPtr& user) const;
 
     /** The user tries to confirm the game.
     On success the game changes its state to \ref CONFIRMED
     */
-    void confirm(UserPtr user);
+    void confirm(const UserPtr& user);
 
     /** Return if user can cancel the game.
     Non-init member of creation can confirm it
     */
-    bool can_cancel(UserPtr user) const;
+    bool can_cancel(const UserPtr& user) const;
 
     /** The user tries to cancel the game.
     On success the game changes its state to \ref CANCELLED
     */
-    void cancel(UserPtr user);
+    void cancel(const UserPtr& user);
 
     /* @} */
 
@@ -181,19 +181,19 @@ public:
     /* @{ */
 
     /** Return if user can propose a pause */
-    bool can_pause_propose(const UserPtr user) const;
+    bool can_pause_propose(const UserPtr& user) const;
 
     /** Return if user can propose the pause for specified time */
-    bool can_pause_propose(const UserPtr user, const Td& td) const;
+    bool can_pause_propose(const UserPtr& user, const Td& td) const;
 
     /** The user tries to propose the pause */
-    void pause_propose(const UserPtr user, const Td& td);
+    void pause_propose(const UserPtr& user, const Td& td);
 
     /** Return if the pause has been proposed */
     bool is_pause_proposed() const;
 
     /** Return the user proposed the pause */
-    const UserPtr pause_proposer() const {
+    const UserPtr& pause_proposer() const {
         return pause_proposer_;
     }
 
@@ -216,16 +216,16 @@ public:
     Wt::WDateTime pause_started() const;
 
     /** Return if the user can agree with proposed pause */
-    bool can_pause_agree(const UserPtr user) const;
+    bool can_pause_agree(const UserPtr& user) const;
 
     /** The user tries to agree with proposed pause */
-    void pause_agree(const UserPtr user);
+    void pause_agree(const UserPtr& user);
 
     /** Return if the user can discard proposed pause */
-    bool can_pause_discard(const UserPtr user) const;
+    bool can_pause_discard(const UserPtr& user) const;
 
     /** The user tries to discard proposed pause */
-    void pause_discard(const UserPtr user);
+    void pause_discard(const UserPtr& user);
 
     /* @} */
 
@@ -233,19 +233,19 @@ public:
     /* @{ */
 
     /** Return if the user can propose to rollback mistake */
-    bool can_mistake_propose(const UserPtr user) const;
+    bool can_mistake_propose(const UserPtr& user) const;
 
     /** Return if the user can propose to rollback mistake at given half_move */
-    bool can_mistake_propose(const UserPtr user, int mistake_move) const;
+    bool can_mistake_propose(const UserPtr& user, int mistake_move) const;
 
     /** The user tries to propose to rollback mistake */
-    void mistake_propose(const UserPtr user, int mistake_move);
+    void mistake_propose(const UserPtr& user, int mistake_move);
 
     /** Return if the mistake is proposed to be rollbacked */
     bool is_mistake_proposed() const;
 
     /** Return the user proposed to rollback the mistake */
-    const UserPtr mistake_proposer() const {
+    const UserPtr& mistake_proposer() const {
         return mistake_proposer_;
     }
 
@@ -255,16 +255,16 @@ public:
     }
 
     /** Return if the user can agree to rollback the mistake */
-    bool can_mistake_agree(const UserPtr user) const;
+    bool can_mistake_agree(const UserPtr& user) const;
 
     /** The user tries to agree to rollback mistake */
-    void mistake_agree(const UserPtr user);
+    void mistake_agree(const UserPtr& user);
 
     /** Return if the user can discard rollback the mistake */
-    bool can_mistake_discard(const UserPtr user) const;
+    bool can_mistake_discard(const UserPtr& user) const;
 
     /** The user tries to discard rollback mistake */
-    void mistake_discard(const UserPtr user);
+    void mistake_discard(const UserPtr& user);
 
     /* @} */
 
@@ -272,13 +272,13 @@ public:
     /* @{ */
 
     /** Return if the user can propose a draw by agreement */
-    bool can_draw_propose(const UserPtr user) const;
+    bool can_draw_propose(const UserPtr& user) const;
 
     /** The user tries to propose a draw by agreement */
-    void draw_propose(const UserPtr user);
+    void draw_propose(const UserPtr& user);
 
     /** Return the user proposed draw by agreement */
-    const UserPtr draw_proposer() const {
+    const UserPtr& draw_proposer() const {
         return draw_proposer_;
     }
 
@@ -288,16 +288,16 @@ public:
     }
 
     /** Return if the user can agree with the draw by agreement */
-    bool can_draw_agree(const UserPtr user) const;
+    bool can_draw_agree(const UserPtr& user) const;
 
     /** The user tries to agree with draw by agreement */
-    void draw_agree(const UserPtr user);
+    void draw_agree(const UserPtr& user);
 
     /** Return if the user can discard the draw by agreement */
-    bool can_draw_discard(const UserPtr user) const;
+    bool can_draw_discard(const UserPtr& user) const;
 
     /** The user tries to discard the draw by agreement */
-    void draw_discard(const UserPtr user);
+    void draw_discard(const UserPtr& user);
 
     /* @} */
 
@@ -311,36 +311,36 @@ public:
     UserPtr order_user() const;
 
     /** Return the user created the game */
-    UserPtr init() const {
+    const UserPtr& init() const {
         return init_;
     }
 
     /** Return the user playing white pieces */
-    UserPtr white() const {
+    const UserPtr& white() const {
         return white_;
     }
 
     /** Return the user playing black pieces */
-    UserPtr black() const {
+    const UserPtr& black() const {
         return black_;
     }
 
     /** Return the winner */
-    UserPtr winner() const {
+    const UserPtr& winner() const {
         return winner_;
     }
 
     /** Return the pieces color of given user */
-    Piece::Color color_of(const UserPtr user) const;
+    Piece::Color color_of(const UserPtr& user) const;
 
     /** Return if the user is member of the game (black, white or init) */
-    bool is_member(const UserPtr user) const;
+    bool is_member(const UserPtr& user) const;
 
     /** Return the user playing pieces of given color */
     UserPtr user_of(Piece::Color color) const;
 
     /** Return another member of the game */
-    UserPtr other_user(const UserPtr user) const;
+    UserPtr other_user(const UserPtr& user) const;
 
     /* @} */
 
@@ -412,7 +412,7 @@ public:
     /* @{ */
 
     /** Return if given user can add a half_move to this game */
-    bool can_move(UserPtr user) const;
+    bool can_move(const UserPtr& user) const;
 
     /** Add half_move to game.
     Method was added to avoid additional checking of half_move (optimization).
@@ -430,7 +430,7 @@ public:
     Td limit_private(Piece::Color color) const;
 
     /** Return private time limit of given user */
-    Td limit_private(UserPtr user) const;
+    Td limit_private(const UserPtr& user) const;
 
     /** Return private time limit of active user */
     Td limit_private() const {
@@ -468,19 +468,19 @@ public:
     Td spent_time() const;
 
     /** Return td that would be subtracted from limit of the given user */
-    Td spent_time(UserPtr user) const;
+    Td spent_time(const UserPtr& user) const;
 
     /** Return sum of limits of given user */
-    Td total_limit(UserPtr user) const;
+    Td total_limit(const UserPtr& user) const;
 
     /** Return sum of limits of given user taking spent time into account */
-    Td total_limit_now(UserPtr user) const;
+    Td total_limit_now(const UserPtr& user) const;
 
     /** Return private time limit taking spent time into account */
-    Td limit_private_now(UserPtr user) const;
+    Td limit_private_now(const UserPtr& user) const;
 
     /** Return standard time limit taking spent time into account */
-    Td limit_std_now(UserPtr user) const;
+    Td limit_std_now(const UserPtr& user) const;
 
     /* @} */
 
@@ -493,10 +493,10 @@ public:
     }
 
     /** Return if the user can change the comment of the game */
-    bool can_comment(const UserPtr user) const;
+    bool can_comment(const UserPtr& user) const;
 
     /** The user tries to set the comment */
-    void set_comment(const UserPtr user, const Wt::WString& t);
+    void set_comment(const UserPtr& user, const Wt::WString& t);
 
     /* @} */
 
@@ -504,7 +504,7 @@ public:
     /* @{ */
 
     /** Return the competition to which the game is attributed */
-    CompetitionPtr competition() const {
+    const CompetitionPtr& competition() const {
         return competition_;
     }
 
@@ -514,19 +514,19 @@ public:
     }
 
     /** Return if user has confimed the competition game */
-    bool has_competition_confirmed(UserPtr user) const;
+    bool has_competition_confirmed(const UserPtr& user) const;
 
     /** Return if user can confime the competition game */
-    bool can_competition_confirm(UserPtr user) const;
+    bool can_competition_confirm(const UserPtr& user) const;
 
     /** The user tries to confirm the game */
-    void competition_confirm(UserPtr user);
+    void competition_confirm(const UserPtr& user);
 
     /** Return if user can discard previously confimed competition game */
-    bool can_competition_discard(UserPtr user) const;
+    bool can_competition_discard(const UserPtr& user) const;
 
     /** The user tries to discard previously confirmed competition game */
-    void competition_discard(UserPtr user);
+    void competition_discard(const UserPtr& user);
 
     /** Method should be called only from competition processing code.
     On success the game changes its state to \ref CONFIRMED
@@ -584,19 +584,19 @@ private:
 
     Wt::WString comment_;
 
-    void set_white_(UserPtr user) {
+    void set_white_(const UserPtr& user) {
         white_ = user;
     }
-    void set_black_(UserPtr user) {
+    void set_black_(const UserPtr& user) {
         black_ = user;
     }
-    void set_of_color_(UserPtr user, Piece::Color color);
-    void set_random_(UserPtr user1, UserPtr user2);
+    void set_of_color_(const UserPtr& user, Piece::Color color);
+    void set_random_(const UserPtr& user1, const UserPtr& user2);
 
     void confirm_();
     void start_();
     void stop_pause_();
-    void finish_(State state, UserPtr winner = UserPtr());
+    void finish_(State state, const UserPtr& winner = UserPtr());
     void elo_change_();
 
     void push_move_(HalfMove half_move);

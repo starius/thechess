@@ -42,7 +42,7 @@ CompetitionCreateWidget::CompetitionCreateWidget(Wt::WContainerWidget* p):
     t.commit();
 }
 
-CompetitionCreateWidget::CompetitionCreateWidget(CompetitionPtr c,
+CompetitionCreateWidget::CompetitionCreateWidget(const CompetitionPtr& c,
         Wt::WContainerWidget* p):
     Wt::WContainerWidget(p), c_(c) {
     dbo::Transaction t(tApp->session());

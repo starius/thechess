@@ -31,10 +31,10 @@ public:
         return cookie_id_;
     }
 
-    UserPtr user() const {
+    const UserPtr& user() const {
         return user_;
     }
-    void set_user(UserPtr user) {
+    void set_user(const UserPtr& user) {
         user_ = user;
     }
 

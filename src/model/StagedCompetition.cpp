@@ -20,7 +20,7 @@ namespace thechess {
 UserPair::UserPair() {
 }
 
-UserPair::UserPair(UserPtr first, UserPtr second) {
+UserPair::UserPair(const UserPtr& first, const UserPtr& second) {
     BOOST_ASSERT(first != second);
     if (first < second) {
         first_ = first;
@@ -61,7 +61,7 @@ void StagedCompetition::process(Competition* competition, Objects& objects) {
 }
 
 void StagedCompetition::read_games_() {
-    BOOST_FOREACH (GamePtr game, competition_->games_vector()) {
+    BOOST_FOREACH (const GamePtr& game, competition_->games_vector()) {
         UserPair pair(game->white(), game->black());
         int stage = game->competition_stage();
         if (games_.find(pair) == games_.end()) {
@@ -72,7 +72,7 @@ void StagedCompetition::read_games_() {
 }
 
 void StagedCompetition::read_paires_() {
-    BOOST_FOREACH (UserPtr user, competition_->members_vector()) {
+    BOOST_FOREACH (const UserPtr& user, competition_->members_vector()) {
         states_[user] = UNPAIRED;
         stages_[user] = 1; // if he was paired in 0 stage, it will be overwritten
     }
@@ -93,7 +93,7 @@ void StagedCompetition::read_pair_(int stage, const UserPair& pair) {
         if (winners.size() == 1) {
             states_[pair.first()] = LOSER;
             states_[pair.second()] = LOSER;
-            UserPtr winner = winners[0];
+            const UserPtr& winner = winners[0];
             winners_[pair] = winner;
             states_[winner] = UNPAIRED;
             stages_[winner] = stage + 1;
@@ -113,8 +113,8 @@ void StagedCompetition::start_competition_() {
     int max_pow2 = pow(2, floor(log2(members_size))) + 0.5;
     int pairs = members_size - max_pow2 || members_size / 2;
     for (int i = 0; i < pairs; i++) {
-        UserPtr first = members[2 * i];
-        UserPtr second = members[2 * i + 1];
+        const UserPtr& first = members[2 * i];
+        const UserPtr& second = members[2 * i + 1];
         states_[first] = PAIRED;
         states_[second] = PAIRED;
         stages_[first] = 0;
@@ -157,8 +157,8 @@ void StagedCompetition::create_games_(Competition* competition, Objects& objects
                            competition->cp()->increment_substages();
             int n = no_draw ? 1 : 2;
             for (int i = 0; i < n; i++) {
-                UserPtr white = i ? pair.first() : pair.second();
-                UserPtr black = i ? pair.second() : pair.first();
+                const UserPtr& white = i ? pair.first() : pair.second();
+                const UserPtr& black = i ? pair.second() : pair.first();
                 GamePtr game = competition->create_game_(white, black, stage, no_draw);
                 games_[pair].push_back(game);
                 objects.push_back(Object(GAME, game.id()));

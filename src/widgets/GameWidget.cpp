@@ -81,7 +81,7 @@ protected:
             item_(Wt::WString::trn("tc.game.First_draw",
                                    game_->gp()->first_draw() / 2).arg(game_->gp()->first_draw() / 2), result);
         }
-        CompetitionPtr c = game_->competition();
+        const CompetitionPtr& c = game_->competition();
         if (c) {
             Wt::WContainerWidget* li = new Wt::WContainerWidget(result);
             Wt::WAnchor* a = new Wt::WAnchor(li);
@@ -122,7 +122,7 @@ private:
         }
     }
 
-    void user_(UserPtr user, const char* tr_id, Wt::WContainerWidget* r) {
+    void user_(const UserPtr& user, const char* tr_id, Wt::WContainerWidget* r) {
         if (user) {
             kw_(user->username(), tr_id, r);
         }
@@ -136,7 +136,7 @@ private:
 
 class GameWidgetImpl : public Wt::WContainerWidget, public Notifiable {
 public:
-    GameWidgetImpl(GamePtr game) :
+    GameWidgetImpl(const GamePtr& game) :
         Wt::WContainerWidget(),
         Notifiable(Object(GAME, game.id())),
         game_(game) {
@@ -352,7 +352,7 @@ private:
         game_status_->update();
     }
 
-    typedef void (Game::*GameMember)(UserPtr);
+    typedef void (Game::*GameMember)(const UserPtr&);
     template <GameMember method>
     void action_() {
         dbo::Transaction t(tApp->session());
@@ -452,7 +452,7 @@ private:
 
 };
 
-GameWidget::GameWidget(GamePtr game, Wt::WContainerWidget* parent) :
+GameWidget::GameWidget(const GamePtr& game, Wt::WContainerWidget* parent) :
     WCompositeWidget(parent) {
     impl_ = new GameWidgetImpl(game);
     setImplementation(impl_);

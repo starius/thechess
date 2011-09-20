@@ -57,7 +57,7 @@ public:
     boost::any data(const Wt::WModelIndex& index,
                     int role = Wt::DisplayRole) const {
         dbo::Transaction t(tApp->session());
-        CompetitionPtr o = resultRow(index.row()).get<0>();
+        const CompetitionPtr& o = resultRow(index.row()).get<0>();
         if (role == Wt::DisplayRole) {
             if (index.column() == TYPE_COLUMN) {
                 return Competition::type2str(o->type());

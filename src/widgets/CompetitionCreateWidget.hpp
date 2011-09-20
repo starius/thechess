@@ -21,7 +21,7 @@ class CPWidget2;
 class CompetitionCreateWidget : public Wt::WContainerWidget {
 public:
     CompetitionCreateWidget(Wt::WContainerWidget* p = 0);
-    CompetitionCreateWidget(CompetitionPtr c, Wt::WContainerWidget* p = 0);
+    CompetitionCreateWidget(const CompetitionPtr& c, Wt::WContainerWidget* p = 0);
     Wt::EventSignal<Wt::WMouseEvent>& saved();
 
 private:

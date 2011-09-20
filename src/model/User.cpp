@@ -60,11 +60,11 @@ void User::logout() {
     }
 }
 
-bool User::can_set_classification(UserPtr user) const {
+bool User::can_set_classification(const UserPtr& user) const {
     return user && user.id() == id();
 }
 
-void User::set_classification(UserPtr user, Classification classification) {
+void User::set_classification(const UserPtr& user, Classification classification) {
     if (can_set_classification(user)) {
         classification_ = classification;
         classification_confirmer_.reset();
@@ -79,11 +79,11 @@ Wt::WString User::classification_str() const {
     return classification2str(classification());
 }
 
-bool User::can_confirm_classification(UserPtr user) const {
+bool User::can_confirm_classification(const UserPtr& user) const {
     return user && user->rights() >= MODERATOR;
 }
 
-void User::confirm_classification(UserPtr user) {
+void User::confirm_classification(const UserPtr& user) {
     if (can_confirm_classification(user)) {
         classification_confirmer_ = user;
     }
@@ -93,7 +93,7 @@ bool User::classification_confirmed() const {
     return classification_confirmer_;
 }
 
-UserPtr User::classification_confirmer() const {
+const UserPtr& User::classification_confirmer() const {
     return classification_confirmer_;
 }
 

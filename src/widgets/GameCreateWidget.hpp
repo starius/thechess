@@ -27,7 +27,7 @@ class GPWidget;
 
 class GameCreateWidget : public Wt::WContainerWidget {
 public:
-    GameCreateWidget(UserPtr user, Wt::WContainerWidget* p = 0);
+    GameCreateWidget(const UserPtr& user, Wt::WContainerWidget* p = 0);
     GameCreateWidget(Wt::WContainerWidget* p = 0);
 
 private:

@@ -19,7 +19,7 @@ namespace thechess {
 class UserPair {
 public:
     UserPair();
-    UserPair(UserPtr first, UserPtr second);
+    UserPair(const UserPtr& first, const UserPtr& second);
 
     bool operator<(const UserPair& other) const;
     bool operator==(const UserPair& other) const;
@@ -27,10 +27,10 @@ public:
     operator bool() const {
         return first_ && second_;
     }
-    UserPtr first() const {
+    const UserPtr& first() const {
         return first_;
     }
-    UserPtr second() const {
+    const UserPtr& second() const {
         return second_;
     }
 
@@ -69,7 +69,7 @@ public:
     const Winners& winners() const {
         return winners_;
     }
-    UserPtr winner() const {
+    const UserPtr& winner() const {
         return winner_;
     }
 

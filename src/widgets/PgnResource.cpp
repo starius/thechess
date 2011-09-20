@@ -19,7 +19,7 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 
-PgnResource::PgnResource(GamePtr game, ThechessServer& server, Wt::WObject* p):
+PgnResource::PgnResource(const GamePtr& game, ThechessServer& server, Wt::WObject* p):
     Wt::WResource(p), game_(game), session_(server.pool()) {
     suggestFileName(boost::lexical_cast<std::string>(game_.id()) + ".pgn");
 }

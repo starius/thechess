@@ -24,7 +24,7 @@ class MyGamesListImpl;
 
 class MyGamesList : public Wt::WCompositeWidget {
 public:
-    MyGamesList(UserPtr user, Wt::WContainerWidget* p = 0);
+    MyGamesList(const UserPtr& user, Wt::WContainerWidget* p = 0);
 };
 
 }
