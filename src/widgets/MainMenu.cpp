@@ -13,7 +13,7 @@
 #include <Wt/WBreak>
 #include <Wt/WAnchor>
 
-#include "ThechessApplication.hpp"
+#include "Application.hpp"
 #include "widgets/MainMenu.hpp"
 
 namespace thechess {

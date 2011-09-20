@@ -9,7 +9,7 @@
 
 #include <Wt/WServer>
 
-#include "ThechessServer.hpp"
+#include "Server.hpp"
 #include "tests.hpp"
 
 namespace thechess {

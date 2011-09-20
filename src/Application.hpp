@@ -27,14 +27,14 @@ class WWidget;
 #include <Wt/Dbo/ptr>
 namespace dbo = Wt::Dbo;
 
-#include "ThechessNotifier.hpp"
+#include "Notifier.hpp"
 #include "model/Object.hpp"
 #include "model/User.hpp"
 #include "model/Game.hpp"
 #include "model/Competition.hpp"
 #include "model/Object.hpp"
-#include "ThechessServer.hpp"
-#include "ThechessSession.hpp"
+#include "Server.hpp"
+#include "Session.hpp"
 #include "widgets/MainMenu.hpp"
 
 #define tApp ((ThechessApplication*)wApp)

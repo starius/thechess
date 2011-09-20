@@ -14,8 +14,8 @@
 #include <Wt/WEnvironment>
 #include <Wt/WApplication>
 
-#include "ThechessServer.hpp"
-#include "ThechessApplication.hpp"
+#include "Server.hpp"
+#include "Application.hpp"
 #include "utils/utils.hpp"
 #include "config.hpp"
 

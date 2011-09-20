@@ -12,7 +12,7 @@
 #include <set>
 #include <boost/assert.hpp>
 
-#include "ThechessOptions.hpp"
+#include "Options.hpp"
 #include "config.hpp"
 
 namespace thechess {

@@ -17,7 +17,7 @@
 #include <Wt/Dbo/ptr>
 namespace dbo = Wt::Dbo;
 
-#include "ThechessApplication.hpp"
+#include "Application.hpp"
 #include "widgets/RegisterWidget.hpp"
 #include "config.hpp"
 #include "model/all.hpp"

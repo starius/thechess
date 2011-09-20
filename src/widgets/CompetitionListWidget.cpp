@@ -20,7 +20,7 @@
 
 #include "widgets/CompetitionListWidget.hpp"
 #include "model/all.hpp"
-#include "ThechessApplication.hpp"
+#include "Application.hpp"
 
 namespace thechess {
 

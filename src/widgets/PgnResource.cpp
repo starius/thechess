@@ -15,7 +15,7 @@ namespace dbo = Wt::Dbo;
 #include <Wt/Http/Response>
 
 #include "widgets/PgnResource.hpp"
-#include "ThechessServer.hpp"
+#include "Server.hpp"
 
 namespace thechess {
 

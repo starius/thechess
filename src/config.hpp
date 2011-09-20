@@ -13,7 +13,7 @@
 
 #include "utils/time_intervals.hpp"
 #include "model/global.hpp"
-#include "ThechessOptions.hpp"
+#include "Options.hpp"
 
 namespace thechess {
 namespace config {

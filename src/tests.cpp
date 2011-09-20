@@ -22,7 +22,7 @@ namespace dbo = Wt::Dbo;
 #include "chess/Moves.hpp"
 #include "chess/Square.hpp"
 #include "model/all.hpp"
-#include "ThechessApplication.hpp"
+#include "Application.hpp"
 #include "utils/rand.hpp"
 
 namespace thechess {

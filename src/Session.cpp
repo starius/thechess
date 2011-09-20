@@ -14,7 +14,7 @@
 #include <Wt/Dbo/backend/Sqlite3>
 #include <Wt/Dbo/backend/Postgres>
 
-#include "ThechessSession.hpp"
+#include "Session.hpp"
 #include "model/all.hpp"
 #include "TaskTracker.hpp"
 #include "utils/utils.hpp"

@@ -9,8 +9,8 @@
 
 #include <boost/foreach.hpp>
 
-#include "ThechessNotifier.hpp"
-#include "ThechessApplication.hpp"
+#include "Notifier.hpp"
+#include "Application.hpp"
 
 namespace thechess {
 

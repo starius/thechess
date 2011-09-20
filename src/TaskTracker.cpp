@@ -20,9 +20,9 @@
 
 #include "TaskTracker.hpp"
 #include "utils/time_intervals.hpp"
-#include "ThechessApplication.hpp"
-#include "ThechessSession.hpp"
-#include "ThechessServer.hpp"
+#include "Application.hpp"
+#include "Session.hpp"
+#include "Server.hpp"
 #include "model/all.hpp"
 #include "config.hpp"
 

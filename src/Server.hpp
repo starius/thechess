@@ -13,9 +13,9 @@
 #include <Wt/WServer>
 #include <Wt/Dbo/FixedSqlConnectionPool>
 
-#include "ThechessOptions.hpp"
-#include "ThechessSession.hpp"
-#include "ThechessNotifier.hpp"
+#include "Options.hpp"
+#include "Session.hpp"
+#include "Notifier.hpp"
 #include "TaskTracker.hpp"
 #include "widgets/PgnResource.hpp"
 

@@ -16,7 +16,7 @@
 #include <Wt/WDateTime>
 
 #include "model/Object.hpp"
-#include "ThechessSession.hpp"
+#include "Session.hpp"
 
 namespace dbo = Wt::Dbo;
 

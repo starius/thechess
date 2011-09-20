@@ -13,7 +13,7 @@
 #include <Wt/WResource>
 
 #include "model/all.hpp"
-#include "ThechessSession.hpp"
+#include "Session.hpp"
 
 namespace thechess {
 class ThechessServer;

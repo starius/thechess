@@ -14,7 +14,7 @@
 #include <Wt/WTemplate>
 
 #include "model/all.hpp"
-#include "ThechessApplication.hpp"
+#include "Application.hpp"
 
 namespace thechess {
 

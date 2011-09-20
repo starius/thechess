@@ -16,7 +16,7 @@
 #include <Wt/Dbo/SqlConnection>
 #include <Wt/Dbo/FixedSqlConnectionPool>
 
-#include "ThechessOptions.hpp"
+#include "Options.hpp"
 
 namespace dbo = Wt::Dbo;
 

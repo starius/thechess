@@ -19,8 +19,8 @@ namespace dbo = Wt::Dbo;
 #include "widgets/PleaseLoginWidget.hpp"
 #include "widgets/GPWidget.hpp"
 #include "model/all.hpp"
-#include "ThechessApplication.hpp"
-#include "ThechessNotifier.hpp"
+#include "Application.hpp"
+#include "Notifier.hpp"
 
 namespace thechess {
 

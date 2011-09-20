@@ -31,7 +31,7 @@ namespace dbo = Wt::Dbo;
 #include <Wt/Dbo/Exception>
 #include <Wt/WLogger>
 
-#include "ThechessApplication.hpp"
+#include "Application.hpp"
 
 #include "config.hpp"
 #include "utils/time_intervals.hpp"
@@ -46,7 +46,7 @@ namespace dbo = Wt::Dbo;
 #include "widgets/UserWidget.hpp"
 #include "widgets/MainMenu.hpp"
 #include "widgets/MyGamesList.hpp"
-#include "ThechessSession.hpp"
+#include "Session.hpp"
 #include "model/all.hpp"
 #include "TaskTracker.hpp"
 

@@ -18,7 +18,7 @@
 #include "widgets/UserWidget.hpp"
 #include "widgets/RatingChanges.hpp"
 #include "widgets/GameCreateWidget.hpp"
-#include "ThechessApplication.hpp"
+#include "Application.hpp"
 #include "model/all.hpp"
 #include "utils/time_intervals.hpp"
 

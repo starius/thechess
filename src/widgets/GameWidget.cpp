@@ -29,7 +29,7 @@ namespace dbo = Wt::Dbo;
 #include "widgets/MovesWidget.hpp"
 #include "widgets/PleaseLoginWidget.hpp"
 #include "model/all.hpp"
-#include "ThechessApplication.hpp"
+#include "Application.hpp"
 #include "config.hpp"
 #include "chess/Moves.hpp"
 #include "chess/Piece.hpp"
