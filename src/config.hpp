@@ -13,7 +13,7 @@
 
 #include "utils/time_intervals.hpp"
 #include "model/UserClassification.hpp"
-#include "model/CompetitionType.hpp"
+#include "model/global.hpp"
 #include "ThechessOptions.hpp"
 
 namespace thechess {

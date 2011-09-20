@@ -12,7 +12,6 @@
 
 #include "model/global.hpp"
 #include "model/UserClassification.hpp"
-#include "model/CompetitionType.hpp"
 
 namespace thechess {
 

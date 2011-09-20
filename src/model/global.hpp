@@ -229,5 +229,22 @@ struct dbo_traits<thechess::CookieSession> :
 
 /* @} */
 
+/** \name Type of Competition and CP */
+/* @{ */
+
+namespace thechess {
+
+enum CompetitionType {
+    CLASSICAL = 10,
+    STAGED = 20,
+    TEAM = 30
+};
+const CompetitionType COMPETITION_TYPES[] = {CLASSICAL, STAGED, TEAM};
+const int COMPETITION_TYPES_SIZE = 3;
+
+}
+
+/* @} */
+
 #endif
 
