@@ -13,7 +13,6 @@
 #include <Wt/Dbo/Query>
 
 #include "model/global.hpp"
-#include "model/UserClassification.hpp"
 
 namespace thechess {
 

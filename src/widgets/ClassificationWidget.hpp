@@ -12,7 +12,7 @@
 
 #include <Wt/WComboBox>
 
-#include "model/UserClassification.hpp"
+#include "model/global.hpp"
 
 namespace thechess {
 
