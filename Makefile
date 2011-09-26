@@ -60,7 +60,7 @@ endif
 CHESS_OBJECTS = $(filter $(BUILD)/chess/%,$(objects))
 
 ifeq ($(MODE), http)
-RUN_COMMAND = WT_CONFIG_XML=$(WT_CONFIG) $(EXE_PATH) --http-address=$(ADDRESS) --http-port=$(PORT) \
+RUN_COMMAND = WT_CONFIG_XML=$(WT_CONFIG) $(DEBUGGER) $(EXE_PATH) --http-address=$(ADDRESS) --http-port=$(PORT) \
 			  --docroot="$(DOCROOT)/;/resources,/img,/js,/css,/tinymce,/favicon.ico" -p $(PID_FILE)
 else
 RUN_COMMAND = WT_CONFIG_XML=$(WT_CONFIG) spawn-fcgi -n -f $(EXE_PATH) -P $(PID_FILE)
