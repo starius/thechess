@@ -19,23 +19,65 @@ typedef std::vector<EloPlayer*> EloPlayers;
 
 namespace thechess {
 
+/** Games statictics.
+Number of played, won and failed games, and Elo rating are tracked.
+
+\section Elo rating calculation
+\f[ E_A = \frac{1}{1+10^\frac{R_B - R_A}{400}} \f]
+\f[ R'_A = R_A + K \cdot (S_A - E_A) \f]
+Where:
+ - \f$ E_A \f$ -- mean of A's rating increment.
+ - \f$ R_A, R_B \f$ -- rating of player A, rating of player B.
+ - \f$ R'_A \f$ -- new rating of A.
+
+\f[
+    K = \left\{
+    \begin{array}{l l}
+    10, & R > 2400 \\
+    15, & all < 30 \\
+    25
+    \end{array} \right.
+\f]
+\f[
+    S_A = \left\{
+    \begin{array}{l l}
+    1, & win \\
+    0.5, & draw \\
+    0, & fail \\
+    \end{array} \right.
+\f]
+*/
 class EloPlayer {
 public:
+
+#ifndef DOXYGEN_ONLY
     EloPlayer();
+#endif
+
+    /** Constructor */
     EloPlayer(bool);
 
+    /** Get Elo rating */
     const int& elo() const {
         return elo_;
     }
+
+    /** Get the number of all played games */
     const int& all() const {
         return all_;
     }
+
+    /** Get the number of wins */
     const int& wins() const {
         return wins_;
     }
+
+    /** Get the number of fails */
     const int& fails() const {
         return fails_;
     }
+
+    /** Get the number of draws */
     int draws() const;
 
     float K() const;
