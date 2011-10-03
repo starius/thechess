@@ -22,7 +22,7 @@ namespace thechess {
 
 GPWidget::GPWidget(const GP* gp,
                    Wt::WContainerWidget* parent) :
-    TableForm(parent) {
+    Wt::TableForm(parent) {
     using namespace config; // max, min
     Wt::WContainerWidget* cell;
     section(tr("tc.game.Parameters"));

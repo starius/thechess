@@ -48,8 +48,12 @@ LFLAGS += -flto
 endif
 endif
 
-sources = $(wildcard src/*.cpp) $(wildcard src/*/*.cpp)
-headers = $(wildcard src/*.hpp) $(wildcard src/*/*.hpp)
+
+downloaded_sources = src/utils/TableForm.cpp
+downloaded_headers = src/utils/TableForm.hpp
+downloaded = $(downloaded_sources) $(downloaded_headers) files/css/table_form.css
+sources = $(sort $(wildcard src/*.cpp) $(wildcard src/*/*.cpp) $(downloaded_sources))
+headers = $(sort $(wildcard src/*.hpp) $(wildcard src/*/*.hpp) $(downloaded_headers))
 ifeq (,$(NOOBJECTS))
 objects = $(subst src/,$(BUILD)/,$(sources:.cpp=.o))
 makefiles = $(objects:.o=.d)
@@ -92,7 +96,7 @@ $(BUILD)/%.d: $$(tosource)
 	mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) $< -MM | sed 's,.\+\.o[ :]*,$(@:.d=.o) $@ : ,' > $@;
 
-$(EXE): $$(sources) $$(headers) $$(makefiles) $$(objects)
+$(EXE): $$(sources) $$(headers) $$(makefiles) $$(objects) $$(downloaded)
 	mkdir -p $(dir $@)
 ifeq (,$(NOOBJECTS))
 	$(LINK) $(LFLAGS) $(LIBS) $(objects) -o $@
@@ -105,7 +109,7 @@ ifeq ($(BUILD), release)
 	upx -9 $@
 endif
 
-$(BUILD)/%.o: $$(precompiled)
+$(BUILD)/%.o: $$(precompiled) $$(downloaded)
 	$(CXX) -c $(CXXFLAGS) $(tosource) -o $@
 
 .SECONDARY: $$(precompiled)
@@ -154,3 +158,10 @@ wt.xml:
 .PHONY: locales
 locales: wt.xml
 	./locales_test.py --wt=$<
+
+src/utils/TableForm.%:
+	wget -O $@ https://bitbucket.org/starius/wt-classes/raw/tip/src/TableForm.$*
+
+files/css/table_form.css:
+	wget -O $@ https://bitbucket.org/starius/wt-classes/raw/tip/css/table_form.css
+

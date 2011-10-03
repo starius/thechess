@@ -19,3 +19,6 @@ doc/
 
 wt.xml
 
+utils/TableForm.*
+files/css/table_form.css
+

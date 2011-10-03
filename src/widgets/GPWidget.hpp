@@ -14,7 +14,7 @@
 #include <Wt/WCheckBox>
 
 #include "model/all.hpp"
-#include "widgets/TableForm.hpp"
+#include "utils/TableForm.hpp"
 
 namespace thechess {
 
@@ -22,7 +22,7 @@ class MySpinBox;
 class TimeDeltaWidget;
 class MovesWidget;
 
-class GPWidget : public TableForm {
+class GPWidget : public Wt::TableForm {
 public:
     GPWidget(const GP* gp,
              Wt::WContainerWidget* parent = 0);
