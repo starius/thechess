@@ -21,4 +21,6 @@ wt.xml
 
 utils/TableForm.*
 files/css/table_form.css
+jquery-countdown/countdown2
+jquery.countdown.pack.js
 

@@ -51,7 +51,7 @@ endif
 
 downloaded_sources = src/utils/TableForm.cpp
 downloaded_headers = src/utils/TableForm.hpp
-downloaded = $(downloaded_sources) $(downloaded_headers) files/css/table_form.css
+downloaded = $(downloaded_sources) $(downloaded_headers) files/css/table_form.css files/js/jquery.countdown.pack.js
 sources = $(sort $(wildcard src/*.cpp) $(wildcard src/*/*.cpp) $(downloaded_sources))
 headers = $(sort $(wildcard src/*.hpp) $(wildcard src/*/*.hpp) $(downloaded_headers))
 ifeq (,$(NOOBJECTS))
@@ -167,4 +167,8 @@ src/utils/TableForm.%:
 
 files/css/table_form.css:
 	wget -O $@ https://bitbucket.org/starius/wt-classes/raw/tip/css/table_form.css
+
+files/js/jquery.countdown.pack.js:
+	$(MAKE) -C jquery-countdown
+	cp -a jquery-countdown/countdown2/$(@F) $@
 

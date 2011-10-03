@@ -1,1 +1,0 @@
-/usr/share/javascript/jquery/countdown2/jquery.countdown.min.js
