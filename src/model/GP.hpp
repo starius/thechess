@@ -89,7 +89,7 @@ public:
     }
 
     /** Set pause limit */
-    void set_pause_limit_init(const Td& pause_limit_init) {
+    void set_pause_limit(const Td& pause_limit_init) {
         pause_limit_init_ = pause_limit_init;
     }
 
