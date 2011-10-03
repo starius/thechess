@@ -14,9 +14,10 @@
 
 namespace thechess {
 
-/** \brief Dbo-model that represents one game beetween two users.
-*/
+/** Dbo-model that represents one game beetween two users.
 
+\ingroup model
+*/
 class Game : public dbo::Dbo<Game> {
 public:
     enum State {

@@ -16,17 +16,28 @@
 
 namespace thechess {
 
+/** User model.
+Each user registered on site is represented with instance of this model.
+
+\ingroup model
+*/
 class User : public dbo::Dbo<User> {
 public:
+    /** Rights */
     enum Rights {
         ADMIN = 5,
         MODERATOR = 2,
         REGULAR_USER = 0
     };
 
+#ifndef DOXYGEN_ONLY
     User();
+#endif
+
+    /** Create instance to be added to database */
     User(bool);
 
+#ifndef DOXYGEN_ONLY
     template<class Action>
     void persist(Action& a) {
         dbo::field(a, username_, "username");
@@ -48,44 +59,85 @@ public:
         dbo::hasMany(a, won_competitions_, dbo::ManyToMany, "winners_competition");
         dbo::field(a, games_stat_, "games_stat");
     }
+#endif
 
+    /** Set password.
+    Password is stored in salted encrypted form.
+    */
     void set_password(const std::string& password);
+
+    /** Return if the password is equal to the password of user */
     bool test_password(const std::string& password) const;
+
+    /** Get user name */
     const Wt::WString& username() const {
         return username_;
     }
+
+    /** Set user name */
     void set_username(Wt::WString username) {
         username_ = username;
     }
+
+    /** Get rights */
     Rights rights() const {
         return rights_;
     }
+
+    /** Set rights */
     void set_rights(Rights rights) {
         rights_ = rights;
     }
+
+    /** Run this when user is logging in */
     void login();
+
+    /** Run this when user is logging out */
     void logout();
+
+    /** Return if the user is online */
     bool online() const {
         return sessions_ != 0;
     }
+
+    /** Get total time spent online */
     const Td& online_time() const {
         return online_time_;
     }
+
+    /** Return query of all games in which the user took part */
     dbo::Query<GamePtr> games() const;
 
+    /** Return if a user can set classification of this user */
     bool can_set_classification(const UserPtr& user) const;
+
+    /** Try to set classification by a user */
     void set_classification(const UserPtr& user, Classification classification);
+
+    /** Get classification */
     Classification classification() const;
+
+    /** Return string representation of classification */
     Wt::WString classification_str() const;
 
+    /** Return if a user can confirm classification of this user */
     bool can_confirm_classification(const UserPtr& user) const;
+
+    /** Try to confirm classification by a user */
     void confirm_classification(const UserPtr& user);
+
+    /** Get if the classification is confirmed */
     bool classification_confirmed() const;
+
+    /** Get user confirmed classification */
     const UserPtr& classification_confirmer() const;
 
+    /** Get games statistics */
     const EloPlayer& games_stat() const {
         return games_stat_;
     }
+
+    /** Access games statistics */
     EloPlayer& games_stat() {
         return games_stat_;
     }

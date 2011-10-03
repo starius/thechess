@@ -22,6 +22,7 @@ namespace thechess {
 struct Object;
 typedef std::vector<Object> Objects;
 
+/** Model type */
 enum ObjectType {
     NOEVENT,
     GAME,
@@ -29,21 +30,34 @@ enum ObjectType {
     COMPETITION
 }; // change Object::reread() after changing this
 
+/** Struct referencing any instance of any changable model.
+
+\ingroup model
+*/
 struct Object {
+    /** Constructor */
     Object(ObjectType ot, int i);
 
+    /** Model type */
     ObjectType type;
+
+    /** Database id of instance */
     int id;
 
+    /** Comparison operator */
     bool operator<(const Object& b) const {
         return id < b.id || (id == b.id && type < b.type);
     }
 
+    /** Comparison operator */
     bool operator==(const Object& b) const {
         return id == b.id && type == b.type;
     }
 
+    /** Reread to the session */
     void reread(dbo::Session& session) const;
+
+    /** Trigger processing methods */
     Wt::WDateTime process(Objects& objects, dbo::Session& session) const;
 };
 
