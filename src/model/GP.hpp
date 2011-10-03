@@ -16,11 +16,20 @@
 
 namespace thechess {
 
+/** Game Parameters.
+This models stores abstract game parameters, which could be used
+by multiple games and \ref CP "competition parameters".
+*/
 class GP : public dbo::Dbo<GP> {
 public:
+#ifndef DOXYGEN_ONLY
     GP();
+#endif
+
+    /** Create instance to be added to database */
     GP(bool);
 
+#ifndef DOXYGEN_ONLY
     template<class Action>
     void persist(Action& a) {
         dbo::hasMany(a, games_, dbo::ManyToOne, "gp");
@@ -32,51 +41,72 @@ public:
         dbo::field(a, pause_limit_init_, "pause_limit_init");
         dbo::field(a, first_draw_, "first_draw");
     }
+#endif
 
+    /** Get init moves */
     const Moves& moves() const {
         return moves_;
     }
 
+    /** Set init moves */
     void set_moves(const Moves& moves) {
         moves_ = moves;
     }
 
+    /** Get renewable time limit */
     const Td& limit_std() const {
         return limit_std_;
     }
+
+    /** Set renewable time limit */
     void set_limit_std(const Td& limit_std) {
         limit_std_ = limit_std;
     }
 
+    /** Get exhaustible time limit */
     const Td& limit_private_init() const {
         return limit_private_init_;
     }
+
+    /** Set exhaustible time limit */
     void set_limit_private_init(const Td& limit_private_init) {
         limit_private_init_ = limit_private_init;
     }
 
+    /** Get if games produced by this game parameters could affect rating */
     bool norating() const {
         return norating_;
     }
+
+    /** Set if games produced by this game parameters could affect rating */
     void set_norating(bool norating) {
         norating_ = norating;
     }
 
+    /** Get pause limit */
     const Td& pause_limit_init() const {
         return pause_limit_init_;
     }
+
+    /** Set pause limit */
     void set_pause_limit_init(const Td& pause_limit_init) {
         pause_limit_init_ = pause_limit_init;
     }
 
+    /** Get first half-move allowed to be draw or surrender */
     int first_draw() const {
         return first_draw_;
     }
+
+    /** Set first half-move allowed to be draw or surrender */
     void set_first_draw(int first_draw) {
         first_draw_ = first_draw;
     }
 
+    /** Copy all settings from other game parameters */
     void set_gp(const GP* other);
+
+    /** Set min time limits and forbid game being finished with draw */
     void set_no_draw();
 
 private:
