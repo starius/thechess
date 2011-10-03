@@ -159,6 +159,9 @@ wt.xml:
 locales: wt.xml
 	./locales_test.py --wt=$<
 
+.PHONY: download
+download: $$(downloaded)
+
 src/utils/TableForm.%:
 	wget -O $@ https://bitbucket.org/starius/wt-classes/raw/tip/src/TableForm.$*
 
