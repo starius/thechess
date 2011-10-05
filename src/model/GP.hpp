@@ -19,6 +19,8 @@ namespace thechess {
 /** Game Parameters.
 This model stores abstract game parameters, which could be used
 by multiple games and \ref CP "competition parameters".
+
+\ingroup model
 */
 class GP : public dbo::Dbo<GP> {
 public:
