@@ -51,7 +51,8 @@ endif
 
 downloaded_sources = src/utils/TableForm.cpp
 downloaded_headers = src/utils/TableForm.hpp
-downloaded = $(downloaded_sources) $(downloaded_headers) files/css/table_form.css files/js/jquery.countdown.pack.js
+downloaded = $(downloaded_sources) $(downloaded_headers) files/css/table_form.css \
+	files/js/jquery.countdown.pack.js locales-test.py
 sources = $(sort $(wildcard src/*.cpp) $(wildcard src/*/*.cpp) $(downloaded_sources))
 headers = $(sort $(wildcard src/*.hpp) $(wildcard src/*/*.hpp) $(downloaded_headers))
 ifeq (,$(NOOBJECTS))
@@ -156,8 +157,8 @@ wt.xml:
 	wget -O $@ http://redmine.emweb.be/projects/wt/repository/revisions/master/raw/src/xml/wt.xml
 
 .PHONY: locales
-locales: wt.xml
-	./locales_test.py --wt=$<
+locales: wt.xml locales-test.py
+	./locales-test.py --wt=$< --prefix=tc --sections common competition game time user
 
 .PHONY: download
 download: $$(downloaded)
@@ -171,4 +172,8 @@ files/css/table_form.css:
 files/js/jquery.countdown.pack.js:
 	$(MAKE) -C jquery-countdown
 	cp -a jquery-countdown/countdown2/$(@F) $@
+
+locales-test.py:
+	wget -O $@ https://bitbucket.org/starius/wt-classes/raw/tip/$@
+	chmod +x $@
 

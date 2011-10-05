@@ -21,6 +21,7 @@ wt.xml
 
 utils/TableForm.*
 files/css/table_form.css
+locales-test.py
 jquery-countdown/countdown2
 jquery.countdown.pack.js
 
