@@ -52,7 +52,7 @@ endif
 downloaded_sources = src/utils/TableForm.cpp
 downloaded_headers = src/utils/TableForm.hpp
 downloaded = $(downloaded_sources) $(downloaded_headers) files/css/table_form.css \
-	files/js/jquery.countdown.pack.js locales-test.py
+	files/js/jquery.countdown.pack.js locales-test.py wt.xml
 sources = $(sort $(wildcard src/*.cpp) $(wildcard src/*/*.cpp) $(downloaded_sources))
 headers = $(sort $(wildcard src/*.hpp) $(wildcard src/*/*.hpp) $(downloaded_headers))
 ifeq (,$(NOOBJECTS))

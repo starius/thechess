@@ -17,11 +17,11 @@ doc/
 
 *.png
 
-wt.xml
 
 utils/TableForm.*
 files/css/table_form.css
 locales-test.py
+wt.xml
 jquery-countdown/countdown2
 jquery.countdown.pack.js
 
