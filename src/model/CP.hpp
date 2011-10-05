@@ -14,7 +14,7 @@
 
 namespace thechess {
 
-class CP : public dbo::Dbo<GP> {
+class CP : public dbo::Dbo<CP> {
 public:
     typedef CompetitionType Type;
 
