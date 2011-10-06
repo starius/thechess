@@ -277,7 +277,7 @@ enum Classification {
 };
 
 /** Array of all Classification members */
-const Classification classifications[] = {
+const Classification CLASSIFICATIONS[] = {
     SUPER_GRANDMASTER, GRANDMASTER, INTERNATIONAL_MASTER,
     NATIONAL_MASTER, EXPERT, CLASSIFICATION_A, CLASSIFICATION_B,
     CLASSIFICATION_C, CLASSIFICATION_D, CLASSIFICATION_E, CLASSIFICATION_F,
@@ -285,7 +285,7 @@ const Classification classifications[] = {
     NO_CLASSIFICATION
 };
 
-/** Length of classifications */
+/** Length of CLASSIFICATIONS */
 const int CLASSIFICATIONS_SIZE = 16;
 
 }

@@ -16,7 +16,7 @@ ClassificationWidget::ClassificationWidget(Classification min,
         Classification value, Classification max, Wt::WContainerWidget* parent):
     Wt::WComboBox(parent), first_i_(-1) {
     for (int i = 0; i < CLASSIFICATIONS_SIZE; i++) {
-        Classification classification = classifications[i];
+        Classification classification = CLASSIFICATIONS[i];
         if (min <= classification && classification <= max) {
             addItem(User::classification2str(classification));
             if (classification == value) {
@@ -30,7 +30,7 @@ ClassificationWidget::ClassificationWidget(Classification min,
 }
 
 Classification ClassificationWidget::value() const {
-    return classifications[currentIndex() + first_i_];
+    return CLASSIFICATIONS[currentIndex() + first_i_];
 }
 
 }
