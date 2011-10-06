@@ -23,13 +23,15 @@ namespace thechess {
 Number of played, won and failed games, and Elo rating are tracked.
 
 \section Elo rating calculation
-\f[ E_A = \frac{1}{1+10^\frac{R_B - R_A}{400}} \f]
+\f[ E_A = \frac{1}{1+10^\frac{R_B - R_A}{400}} = \frac{Q_A}{Q_A + Q_B} \f]
 \f[ R'_A = R_A + K \cdot (S_A - E_A) \f]
 Where:
  - \f$ E_A \f$ -- mean of A's rating increment.
  - \f$ R_A, R_B \f$ -- rating of player A, rating of player B.
  - \f$ R'_A \f$ -- new rating of A.
 
+\f[ Q_A = 10^{R_A/400} \f]
+\f[ Q_B = 10^{R_B/400} \f]
 \f[
     K = \left\{
     \begin{array}{l l}
@@ -46,6 +48,10 @@ Where:
     0, & fail \\
     \end{array} \right.
 \f]
+
+This scheme was extended for multiple player games
+(e.g. \ref TEAM "team competitions").
+In this case \f$E_A = \frac{Q_A}{Q_A + Q_B + Q_C + \dots} \f$.
 */
 class EloPlayer {
 public:
@@ -80,13 +86,32 @@ public:
     /** Get the number of draws */
     int draws() const;
 
+    /** Get value of K */
     float K() const;
+
+    /** Get value of Q */
     float Q() const;
+
+    /** Get E of this player in game with other player */
     float E(const EloPlayer* other) const;
+
+    /** Get E of this player in game with multiple players.
+    \param q_sum Sum of Q of all members (including this player)
+    */
     float E(float q_sum) const;
 
+    /** Apply this method to change stats if this player wins other player */
     void win(EloPlayer* loser);
+
+    /** Apply this method to change stats if this player plays draw with other player */
     void draw(EloPlayer* other);
+
+    /** Apply this method to change stats after multiple players competition.
+    \param winners List of winners.
+    \param losers List of losers.
+    \note If multiple user competition ended with draw,
+        all members are considered winners.
+    */
     static void multiple(const EloPlayers& winners, const EloPlayers& losers);
 
 private:
