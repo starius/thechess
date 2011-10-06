@@ -108,7 +108,10 @@ public:
     /** Copy all settings from other game parameters */
     void set_gp(const GP* other);
 
-    /** Set min time limits and forbid game being finished with draw */
+    /** Set min time limits and forbid game being finished with draw.
+    All types of draw become impossible except stalemate.
+    In case of stalemate games is ended with NO_DRAW_STALEMATE, black wins.
+    */
     void set_no_draw();
 
 private:
