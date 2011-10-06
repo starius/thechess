@@ -234,12 +234,17 @@ struct dbo_traits<thechess::CookieSession> :
 
 namespace thechess {
 
+/** Competition type */
 enum CompetitionType {
-    CLASSICAL = 10,
-    STAGED = 20,
-    TEAM = 30
+    CLASSICAL = 10, /**< Classical competition */
+    STAGED = 20, /**< Staged competition */
+    TEAM = 30 /**< Team competition */
 };
+
+/** Array of all CompetitionType members */
 const CompetitionType COMPETITION_TYPES[] = {CLASSICAL, STAGED, TEAM};
+
+/** Length of COMPETITION_TYPES */
 const int COMPETITION_TYPES_SIZE = 3;
 
 }
@@ -251,25 +256,27 @@ const int COMPETITION_TYPES_SIZE = 3;
 
 namespace thechess {
 
+/** Classification of player */
 enum Classification {
-    SUPER_GRANDMASTER = 110,
-    GRANDMASTER = 100,
-    INTERNATIONAL_MASTER = 90,
-    NATIONAL_MASTER = 80,
-    EXPERT = 70,
-    CLASSIFICATION_A = 50,
-    CLASSIFICATION_B = 45,
-    CLASSIFICATION_C = 40,
-    CLASSIFICATION_D = 35,
-    CLASSIFICATION_E = 30,
-    CLASSIFICATION_F = 25,
-    CLASSIFICATION_G = 20,
-    CLASSIFICATION_H = 15,
-    CLASSIFICATION_I = 10,
-    CLASSIFICATION_J = 5,
-    NO_CLASSIFICATION = 0
+    SUPER_GRANDMASTER = 110, /**< Super grandmaster */
+    GRANDMASTER = 100, /**< Grandmaster */
+    INTERNATIONAL_MASTER = 90, /**< International master */
+    NATIONAL_MASTER = 80, /**< National master */
+    EXPERT = 70, /** Expert (master) */
+    CLASSIFICATION_A = 50, /** A (I) */
+    CLASSIFICATION_B = 45, /** B (II) */
+    CLASSIFICATION_C = 40, /** C (III) */
+    CLASSIFICATION_D = 35, /** D (IV) */
+    CLASSIFICATION_E = 30, /** E (V, newbie) */
+    CLASSIFICATION_F = 25, /** F (newbie) */
+    CLASSIFICATION_G = 20, /** G (newbie) */
+    CLASSIFICATION_H = 15, /** H (newbie) */
+    CLASSIFICATION_I = 10, /** I (newbie) */
+    CLASSIFICATION_J = 5, /** FJ(newbie) */
+    NO_CLASSIFICATION = 0 /** Player without assigned classification */
 };
 
+/** Array of all Classification members */
 const Classification classifications[] = {
     SUPER_GRANDMASTER, GRANDMASTER, INTERNATIONAL_MASTER,
     NATIONAL_MASTER, EXPERT, CLASSIFICATION_A, CLASSIFICATION_B,
@@ -277,6 +284,8 @@ const Classification classifications[] = {
     CLASSIFICATION_G, CLASSIFICATION_H, CLASSIFICATION_I, CLASSIFICATION_J,
     NO_CLASSIFICATION
 };
+
+/** Length of classifications */
 const int CLASSIFICATIONS_SIZE = 16;
 
 }
