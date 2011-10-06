@@ -57,7 +57,7 @@ struct Object {
     /** Reread to the session */
     void reread(dbo::Session& session) const;
 
-    /** Trigger processing methods */
+    /** Trigger processing methods, return datetime of next trigger */
     Wt::WDateTime process(Objects& objects, dbo::Session& session) const;
 };
 
