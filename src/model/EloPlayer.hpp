@@ -52,6 +52,8 @@ Where:
 This scheme was extended for multiple player games
 (e.g. \ref TEAM "team competitions").
 In this case \f$E_A = \frac{Q_A}{Q_A + Q_B + Q_C + \dots} \f$.
+
+\ingroup model
 */
 class EloPlayer {
 public:
