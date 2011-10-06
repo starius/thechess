@@ -56,7 +56,7 @@ typedef User* UserPtr;
 typedef CookieSession* CookieSessionPtr;
 typedef GP* GPPtr;
 typedef Game* GamePtr;
-typedef CP* GPPtr;
+typedef CP* CPPtr;
 typedef Competition* CompetitionPtr;
 #endif
 
