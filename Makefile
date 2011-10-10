@@ -76,10 +76,13 @@ RUN_COMMAND += -s $(SOCKET)
 endif
 endif
 
+.PHONY: build
 build: $$(EXE)
 
+.PHONY: chess
 chess: $$(CHESS_OBJECTS)
 
+.PHONY: check
 check: locales
 
 .PHONY: dep
@@ -118,6 +121,7 @@ $(BUILD)/%.o: $$(precompiled) $$(downloaded)
 $(BUILD)/%.hpp.gch:
 	$(CXX) $(CXXFLAGS) $(toheader) -o $@
 
+.PHONY: run
 run: $(EXE) $$(WT_CONFIG)
 	$(RUN_COMMAND)
 
