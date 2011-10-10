@@ -309,7 +309,7 @@ void Application::thechess_notify(Object object) {
 }
 
 void Application::add_notifiable_(Notifiable* notifiable,
-        const Object& object) {
+                                  const Object& object) {
     if (notifiables_.find(object) == notifiables_.end()) {
         // first Notifiable for the object is being created
         server_.notifier().start_listenning(object);
@@ -318,7 +318,7 @@ void Application::add_notifiable_(Notifiable* notifiable,
 }
 
 void Application::remove_notifiable_(Notifiable* notifiable,
-        const Object& object) {
+                                     const Object& object) {
     O2N::iterator to_delete;
     std::pair<O2N::iterator, O2N::iterator> range =
         notifiables_.equal_range(object);
