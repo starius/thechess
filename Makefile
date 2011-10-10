@@ -94,7 +94,9 @@ build-dep:
 	apt-get install g++ ccache upx inkscape doxygen texlive graphviz \
 		libwt-dev libwtdbo-dev libwtdbopostgres-dev libwtdbosqlite-dev libwtfcgi-dev libwthttp-dev
 
+ifeq (,$(filter-out target- target-build target-run, target-$(MAKECMDGOALS)))
 include $(makefiles)
+endif
 
 $(BUILD)/%.d: $$(tosource)
 	mkdir -p $(dir $@)
