@@ -94,10 +94,8 @@ public:
     /** Return string representation of the competition state */
     static const char* state2str(State state);
 
-    /** Get competition creator */
-    const UserPtr& init() const {
-        return init_;
-    }
+    /** \name Dates */
+    /* @{ */
 
     /** Get datetime when competition was created */
     const Wt::WDateTime& created() const {
@@ -113,6 +111,11 @@ public:
     const Wt::WDateTime& ended() const {
         return ended_;
     }
+
+    /* @} */
+
+    /** \name Name and description */
+    /* @{ */
 
     /** Get competition name */
     const Wt::WString& name() const {
@@ -132,6 +135,16 @@ public:
     /** Set competition description */
     void set_description(const Wt::WString& v) {
         description_ = v;
+    }
+
+    /* @} */
+
+    /** \name Getters for users and games */
+    /* @{ */
+
+    /** Get competition creator */
+    const UserPtr& init() const {
+        return init_;
     }
 
     /** Return if the user if a member of the competition */
@@ -175,31 +188,69 @@ public:
     */
     GamesVector games_with(const UserPtr& user, GamesTable& gt) const;
 
-    // auto-manage
+    /* @} */
+
+    /** \name Checking */
+    /* @{ */
+
+    /** Run self-checks for planned action.
+    \param objects collection to expand with other modified dbo \ref Object.
+
+    Possible changes caused by this method:
+     - RECRUITING into ACTIVE, if min_users() and min_recruiting_time() are met
+     - RECRUITING into CANCELLED, if time > max_recruiting_time()
+     - ACTIVE into ENDED
+    */
     void check(Objects& objects);
+
+    /** Return the datetime of next expected check */
     Wt::WDateTime next_check() const;
 
-    // methods of recruiting state
+    /* @} */
+
+    /** \name Methods of recruiting state */
+    /* @{ */
+
+    /** Return if the user can create competition.
+    \todo Currently all users can create competition.
+    */
     static bool can_create_competition(const UserPtr& /*user*/) {
         return true;
     }
+
+    /** Set the user as competition creator.
+    \note You should check user wuth can_create_competition by yourself
+    */
     void create_competition(const UserPtr& user);
 
+    /** Return if the user can join */
     bool can_join(const UserPtr& user) const;
+
+    /** Try to join the user */
     void join(const UserPtr& user);
 
+    /** Return if the user can leave */
     bool can_leave(const UserPtr& user) const;
+
+    /** Try to leave the user */
     void leave(const UserPtr& user);
 
+    /** Return if kicker user can kick kicked user */
     bool can_kick(const UserPtr& kicker, const UserPtr& kicked) const;
+
+    /** Try to kick kicked user by kicker user */
     void kick(const UserPtr& kicker, const UserPtr& kicked);
 
+    /** Return if the user can change parameters */
     bool can_change_parameters(const UserPtr& user) const;
 
+    /** Return if the user can cancel the competitions */
     bool can_cancel(const UserPtr& user) const;
+
+    /** Try to cancel the competition by the user */
     void cancel(const UserPtr& user);
 
-    // methods of active stage
+    /* @} */
 
 private:
     // common attributes
