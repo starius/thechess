@@ -12,7 +12,7 @@
 
 #include <map>
 
-#include "model/global.hpp"
+#include "model/all.hpp"
 
 namespace thechess {
 
