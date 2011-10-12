@@ -16,7 +16,7 @@
 
 namespace thechess {
 
-/** Game Parameters.
+/** Parameters of a game.
 This model stores abstract game parameters, which could be used
 by multiple games and \ref CP "competition parameters".
 

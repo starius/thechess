@@ -16,7 +16,7 @@
 
 namespace thechess {
 
-/** User model.
+/** Model of a user.
 Each user registered on site is represented with instance of this model.
 
 \ingroup model
