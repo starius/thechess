@@ -7,7 +7,9 @@
  * See the LICENSE file for terms of use.
  */
 
+#ifndef _XOPEN_SOURCE
 #define _XOPEN_SOURCE
+#endif
 #include <unistd.h>
 
 #include <Wt/WRandom>
