@@ -128,7 +128,7 @@ run: $(EXE) $$(WT_CONFIG)
 	$(RUN_COMMAND)
 
 .PHONY: doc
-doc:
+doc: $$(downloaded)
 	doxygen
 
 .PHONY: style
