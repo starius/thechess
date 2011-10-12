@@ -20,6 +20,9 @@ namespace thechess {
 
 class Server;
 
+/** Part of server, passing thechess notifications to Notifiable objects.
+\ingroup server
+*/
 class Notifier {
 public:
     Notifier(Server& server);

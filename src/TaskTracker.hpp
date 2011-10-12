@@ -24,6 +24,10 @@ namespace thechess {
 
 class Server;
 
+/** Part of server, scheduling checks of database objects.
+\ingroup server
+\ingroup model
+*/
 class TaskTracker {
 public:
     TaskTracker(Server& server);

@@ -24,6 +24,10 @@ namespace thechess {
 
 class TaskTracker;
 
+/** Descendant of dbo::Session
+\ingroup server
+\ingroup model
+*/
 class Session : public dbo::Session {
 public:
     Session(dbo::FixedSqlConnectionPool& pool);

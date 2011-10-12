@@ -43,6 +43,11 @@ namespace thechess {
 
 class Session;
 
+/** Base class for a widget, notifiable by thechess notifications.
+\sa Application::thechess_notify
+\sa Notifier
+\ingroup server
+*/
 class Notifiable {
 public:
     Notifiable(const Object& object);
@@ -57,6 +62,9 @@ private:
     void add_to_application_();
 };
 
+/** Descendant of Wt::WApplication.
+\ingroup server
+*/
 class Application : public Wt::WApplication {
 public:
     Application(const Wt::WEnvironment& env, Server& server);

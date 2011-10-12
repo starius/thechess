@@ -23,6 +23,13 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 
+/** \defgroup server Server and applications
+Core of thechess server.
+*/
+
+/** Descendant of Wt::WServer.
+\ingroup server
+*/
 class Server : public Wt::WServer {
 public:
     Server(int argc, char** argv);

@@ -16,6 +16,9 @@
 
 namespace thechess {
 
+/** Settings of thechess program.
+\ingroup server
+*/
 class Options {
 public:
     enum DatabaseType {
