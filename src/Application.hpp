@@ -28,11 +28,11 @@ class WWidget;
 namespace dbo = Wt::Dbo;
 
 #include "Notifier.hpp"
-#include "model/Object.hpp"
+#include "model/object.hpp"
 #include "model/User.hpp"
 #include "model/Game.hpp"
 #include "model/Competition.hpp"
-#include "model/Object.hpp"
+#include "model/object.hpp"
 #include "Server.hpp"
 #include "Session.hpp"
 #include "widgets/MainMenu.hpp"

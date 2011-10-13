@@ -28,7 +28,7 @@ namespace dbo = Wt::Dbo;
 #include "widgets/PleaseLoginWidget.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
-#include "model/StagedCompetition.hpp"
+#include "model/staged_competition.hpp"
 
 namespace thechess {
 

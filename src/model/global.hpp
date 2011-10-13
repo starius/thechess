@@ -21,8 +21,8 @@
 #include <Wt/Dbo/ptr>
 
 #include "utils/time_intervals.hpp"
-#include "model/EloPlayer.hpp"
-#include "model/Object.hpp"
+#include "model/elo_player.hpp"
+#include "model/object.hpp"
 #include "chess/Moves.hpp"
 
 namespace dbo = Wt::Dbo;

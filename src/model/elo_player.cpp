@@ -10,7 +10,7 @@
 #include <cmath>
 #include <boost/foreach.hpp>
 
-#include "model/EloPlayer.hpp"
+#include "model/elo_player.hpp"
 #include "config.hpp"
 
 namespace thechess {
