@@ -27,12 +27,8 @@ class WWidget;
 #include <Wt/Dbo/ptr>
 namespace dbo = Wt::Dbo;
 
+#include "model/all.hpp"
 #include "Notifier.hpp"
-#include "model/object.hpp"
-#include "model/User.hpp"
-#include "model/Game.hpp"
-#include "model/Competition.hpp"
-#include "model/object.hpp"
 #include "Server.hpp"
 #include "Session.hpp"
 #include "widgets/MainMenu.hpp"

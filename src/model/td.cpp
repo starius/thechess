@@ -11,7 +11,7 @@
 #include <Wt/Dbo/SqlStatement>
 #include <Wt/Dbo/WtSqlTraits>
 
-#include "model/global.hpp"
+#include "model/all.hpp"
 
 namespace Wt {
 namespace Dbo {

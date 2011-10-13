@@ -14,7 +14,7 @@
 #include <set>
 #include <boost/thread/mutex.hpp>
 
-#include "model/object.hpp"
+#include "model/global.hpp"
 
 namespace thechess {
 

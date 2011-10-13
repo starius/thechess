@@ -11,7 +11,6 @@
 
 #include <Wt/Dbo/Transaction>
 
-#include "model/object.hpp"
 #include "model/all.hpp"
 #include "config.hpp"
 

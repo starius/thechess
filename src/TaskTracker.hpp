@@ -15,7 +15,7 @@
 
 #include <Wt/WDateTime>
 
-#include "model/object.hpp"
+#include "model/all.hpp"
 #include "Session.hpp"
 
 namespace dbo = Wt::Dbo;
