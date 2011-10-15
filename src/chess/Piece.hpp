@@ -41,7 +41,7 @@ public:
         KNIGHT = 3, /**< Knight */
         PAWN   = 4, /**< Pawn */
         QUEEN  = 5, /**< Queen */
-        ROCK   = 6  /**< Rock */
+        ROOK   = 6  /**< Rook */
     };
 
     /** The number of Letter members */

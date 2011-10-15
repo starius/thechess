@@ -90,13 +90,13 @@ public:
     */
     Piece::Color order() const;
 
-    /** Return availability of castling involving the rock.
+    /** Return availability of castling involving the rook.
     The castling may be impossible even if this method returns true,
     since it takes into account only permanent impossibility of castling
-    caused by move involving the king or the rock.
+    caused by move involving the king or the rook.
     \sa test_move
     */
-    bool castling(Square rock_square) const;
+    bool castling(Square rook_square) const;
 
     /** Return if the previous half-move was long pawn half-move */
     bool long_pawn() const;
@@ -187,7 +187,7 @@ private:
     void order(Piece::Color c);
     void change_order();
     void castling_reset();
-    void castling_off(Square rock_square);
+    void castling_off(Square rook_square);
     void long_pawn(bool value, int file = 0);
 
     void simple_move(const HalfMove half_move);

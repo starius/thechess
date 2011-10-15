@@ -70,7 +70,7 @@ private:
 
     void print_color_(Piece::Color color) {
         print_piece_(color, Piece::QUEEN);
-        print_piece_(color, Piece::ROCK);
+        print_piece_(color, Piece::ROOK);
         print_piece_(color, Piece::KNIGHT);
         print_piece_(color, Piece::BISHOP);
         print_piece_(color, Piece::PAWN);
@@ -357,7 +357,7 @@ private:
 
     void print_select_(HalfMove half_move) {
         static Piece::Letter cc[] =
-        { Piece::QUEEN, Piece::ROCK, Piece::BISHOP, Piece::KNIGHT };
+        { Piece::QUEEN, Piece::ROOK, Piece::BISHOP, Piece::KNIGHT };
         BOOST_FOREACH (Piece::Letter c, cc) {
             Piece cm = Piece(board_.order(), c);
             std::string path = BoardWidget::image(cm, big_);
