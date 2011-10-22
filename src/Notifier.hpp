@@ -25,14 +25,28 @@ class Server;
 */
 class Notifier {
 public:
+    /** Constructor */
     Notifier(Server& server);
 
+    /** This method is called when constructing Notifiable */
     void start_listenning(const Object& object); // by Application
+
+    /** This method is called when destructing Notifiable */
     void stop_listenning(const Object& object); // by Application
 
-    // after successful transaction.commit()
+    /** Notify all \ref Notifiable "notibiables" listening to object updates.
+    This method should be runned only by TaskTracker.
+    \attention Call this method after successful transaction commiting.
+    \todo hide this_app argument
+    */
     void emit(const Object& object,
-              const std::string& this_app = ""); // not from WApplication
+              const std::string& this_app = "");
+
+    /** \copybrief emit
+    This method should be runned only from Application
+    (i.e., when Application::instance() is determined).
+    \attention Call this method after successful transaction commiting.
+    */
     static void app_emit(const Object& object); // from WApplication
 
 private:
