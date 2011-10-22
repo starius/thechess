@@ -12,10 +12,6 @@
 #include <iostream>
 #include <boost/assert.hpp>
 
-#include <Wt/Dbo/Transaction>
-#include <Wt/Dbo/ptr>
-namespace dbo = Wt::Dbo;
-
 #include "tests.hpp"
 #include "chess/Board.hpp"
 #include "chess/HalfMove.hpp"
