@@ -338,6 +338,10 @@ void Application::remove_notifiable_(Notifiable* notifiable,
     }
 }
 
+Application* Application::instance() {
+    return static_cast<Application*>(Wt::WApplication::instance());
+}
+
 Notifiable::Notifiable(const Object& object):
     object_(object) {
     if (tApp->active_) {

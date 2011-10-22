@@ -33,7 +33,8 @@ namespace dbo = Wt::Dbo;
 #include "Session.hpp"
 #include "widgets/MainMenu.hpp"
 
-#define tApp ((Application*)wApp)
+/** Macro for Application::instance(), same as wApp */
+#define tApp thechess::Application::instance()
 
 namespace thechess {
 
@@ -88,6 +89,12 @@ public:
     }
 
     static void thechess_notify(Object object);
+
+    /** Get active Application.
+    Same as WApplication::instance().
+    There is macro for this method: tApp.
+    */
+    static Application* instance();
 
 protected:
     virtual void notify(const Wt::WEvent& e);
