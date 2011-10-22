@@ -18,8 +18,6 @@
 #include "model/all.hpp"
 #include "Session.hpp"
 
-namespace dbo = Wt::Dbo;
-
 namespace thechess {
 
 class Server;

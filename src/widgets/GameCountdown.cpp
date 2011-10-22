@@ -19,7 +19,6 @@
 #include <Wt/WString>
 #include <Wt/WDateTime>
 #include <Wt/Dbo/Transaction>
-namespace dbo = Wt::Dbo;
 
 #include "chess/Piece.hpp"
 #include "model/all.hpp"

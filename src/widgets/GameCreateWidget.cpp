@@ -13,7 +13,6 @@
 #include <Wt/WBreak>
 #include <Wt/WPushButton>
 #include <Wt/Dbo/Transaction>
-namespace dbo = Wt::Dbo;
 
 #include "widgets/GameCreateWidget.hpp"
 #include "widgets/PleaseLoginWidget.hpp"

@@ -19,8 +19,6 @@
 #include "TaskTracker.hpp"
 #include "utils/utils.hpp"
 
-namespace dbo = Wt::Dbo;
-
 namespace thechess {
 
 Session::Session(dbo::FixedSqlConnectionPool& pool) {

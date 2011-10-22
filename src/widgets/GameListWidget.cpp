@@ -17,7 +17,7 @@
 #include <Wt/Dbo/QueryModel>
 #include <Wt/Dbo/ptr_tuple>
 #include <Wt/Dbo/ptr>
-namespace dbo = Wt::Dbo;
+
 #include <Wt/WCheckBox>
 #include <Wt/WPushButton>
 #include <Wt/WString>

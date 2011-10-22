@@ -15,7 +15,6 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WCheckBox>
 #include <Wt/Dbo/Query>
-namespace dbo = Wt::Dbo;
 
 #include "model/all.hpp"
 

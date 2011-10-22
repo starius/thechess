@@ -13,7 +13,6 @@
 #include <Wt/WAnchor>
 #include <Wt/WContainerWidget>
 #include <Wt/Dbo/Transaction>
-namespace dbo = Wt::Dbo;
 
 #include "widgets/MyGamesList.hpp"
 #include "model/all.hpp"

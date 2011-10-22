@@ -12,7 +12,7 @@
 
 #include <Wt/WCompositeWidget>
 #include <Wt/Dbo/ptr>
-namespace dbo = Wt::Dbo;
+
 #include "model/all.hpp"
 
 namespace Wt {

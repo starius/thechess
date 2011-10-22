@@ -21,7 +21,6 @@
 #include <Wt/WDialog>
 #include <Wt/WBreak>
 #include <Wt/Dbo/Transaction>
-namespace dbo = Wt::Dbo;
 
 #include "widgets/GameCountdown.hpp"
 #include "widgets/GameWidget.hpp"

@@ -25,7 +25,6 @@ class WWidget;
 #include <Wt/WApplication>
 #include <Wt/WSignal>
 #include <Wt/Dbo/ptr>
-namespace dbo = Wt::Dbo;
 
 #include "model/all.hpp"
 #include "Notifier.hpp"

@@ -12,7 +12,6 @@
 
 #include <Wt/WContainerWidget>
 #include <Wt/Dbo/ptr>
-namespace dbo = Wt::Dbo;
 
 #include "model/all.hpp"
 #include "chess/Piece.hpp"

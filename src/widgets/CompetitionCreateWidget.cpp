@@ -11,7 +11,6 @@
 #include <Wt/WBreak>
 #include <Wt/WPushButton>
 #include <Wt/Dbo/Transaction>
-namespace dbo = Wt::Dbo;
 
 #include "widgets/CompetitionCreateWidget.hpp"
 #include "widgets/PleaseLoginWidget.hpp"

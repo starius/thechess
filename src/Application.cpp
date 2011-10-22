@@ -23,7 +23,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/Dbo/ptr>
 #include <Wt/Dbo/Transaction>
-namespace dbo = Wt::Dbo;
+
 #include <Wt/WWidget>
 #include <Wt/WImage>
 #include <Wt/WBorderLayout>

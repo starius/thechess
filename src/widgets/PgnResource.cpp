@@ -10,7 +10,7 @@
 #include <boost/assert.hpp>
 
 #include <Wt/Dbo/Transaction>
-namespace dbo = Wt::Dbo;
+
 #include <Wt/Http/Request>
 #include <Wt/Http/Response>
 

@@ -16,7 +16,7 @@
 #include <Wt/Dbo/Transaction>
 #include <Wt/Dbo/Query>
 #include <Wt/Dbo/QueryModel>
-namespace dbo = Wt::Dbo;
+
 #include <Wt/Chart/WCartesianChart>
 #include <Wt/Chart/WDataSeries>
 #include <Wt/WDate>

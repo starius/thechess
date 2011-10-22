@@ -15,7 +15,6 @@
 #include <Wt/WRegExpValidator>
 #include <Wt/Dbo/Transaction>
 #include <Wt/Dbo/ptr>
-namespace dbo = Wt::Dbo;
 
 #include "Application.hpp"
 #include "widgets/RegisterWidget.hpp"

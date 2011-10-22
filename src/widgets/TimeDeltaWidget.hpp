@@ -12,7 +12,6 @@
 
 #include <Wt/WCompositeWidget>
 #include <Wt/Dbo/ptr>
-namespace dbo = Wt::Dbo;
 
 #include "utils/time_intervals.hpp"
 
