@@ -17,6 +17,10 @@ namespace thechess {
 /** \mainpage TheChess
 
 TheChess, chess game web application written in C++ and based on Wt
+<br>
+
+Conventions:
+ - "indexes" are 0-based, "numbers" are 1-based
 
 */
 
