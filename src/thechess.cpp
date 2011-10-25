@@ -24,6 +24,10 @@ Conventions:
 
 */
 
+/** \namespace thechess
+The namespace for thechess
+*/
+
 }
 
 using namespace thechess;
