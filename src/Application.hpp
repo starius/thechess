@@ -46,10 +46,21 @@ class Session;
 */
 class Notifiable {
 public:
+    /** Constructor.
+    \param object Object to listen to
+    */
     Notifiable(const Object& object);
+
+    /** Constructor */
     Notifiable(ObjectType ot, int id);
 
+    /** Destructor */
     virtual ~Notifiable();
+
+    /** Notify.
+    Implement this method for descendants:
+    run updates caused by modification of object.
+    */
     virtual void notify() = 0; // under Transaction
 
 private:
