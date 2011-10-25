@@ -17,18 +17,29 @@
 namespace thechess {
 
 /** Settings of thechess program.
+The configuration is read from wt_config.xml (Runtime Properties section).
+
 \ingroup server
 */
 class Options {
 public:
+
+    /** Wt::Dbo backend type */
     enum DatabaseType {
-        POSTGRES,
-        SQLITE3
+        POSTGRES, /**< Postgres */
+        SQLITE3   /**< Sqlite3 */
     };
+
+    /** Constructor */
     Options(const Wt::WServer& server);
 
+    /** Get Wt::Dbo backend type */
     DatabaseType database_type() const;
+
+    /** Get Wt::Dbo backend configuration */
     const std::string& database_value() const;
+
+    /** Get The number of database connections in a pool */
     int connections_in_pool() const;
 
 private:
