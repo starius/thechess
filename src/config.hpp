@@ -130,12 +130,24 @@ const Td PAUSE_LIMIT_INIT = WEEK;
 const int FIRST_DRAW = 5000 * 2;
 }
 
+/** The namespace for competition constants */
 namespace competition {
+
+/** The namespace for min allowed values of parameters */
 namespace min {
+
+/** Min value of max rating of member */
 const int MAX_RATING = 900;
+
+/** Min value of min rating of member */
 const int MIN_RATING = 100;
+
+/** Min value of max classification of member */
 const Classification MAX_CLASSIFICATION = CLASSIFICATION_F;
+
+/** Min value of min classification of member */
 const Classification MIN_CLASSIFICATION = NO_CLASSIFICATION;
+
 const Td FORCE_START_DELAY = MINUTE;
 const Td MIN_RECRUITING_TIME = MINUTE;
 const Td MAX_RECRUITING_TIME = 2 * HOUR;
