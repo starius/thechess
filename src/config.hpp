@@ -16,50 +16,117 @@
 #include "Options.hpp"
 
 namespace thechess {
+
+/** The namespace for configuration constants */
 namespace config {
 
+/** Files to search for Wt config */
 const char* const WT_CONFIG_FILES[] = {
     "wt_config.xml",
     "~/.thechess.wt_config.xml",
     "/etc/thechess/wt_config.xml",
     "/etc/wt/wt_config.xml"
 };
+
+/** Size of WT_CONFIG_FILES_SIZE */
 const int WT_CONFIG_FILES_SIZE = 4;
 
+/** Regular expression of allowed user names */
 const char* const USERNAME_REGEX = "[a-zA-Z][a-zA-Z0-9._-]{2,29}";
+
+/** Regular expression of allowed passwords */
 const char* const PASSWORD_REGEX = "[a-zA-Z0-9._%+-@]{3,30}";
 
+/** The namespace for min allowed values of parameters */
 namespace min {
+
+/** Min renewable leeway */
 const Td LIMIT_STD = TD_NULL;
+
+/** Min non-renewable leeway */
 const Td LIMIT_PRIVATE_INIT = 5 * MINUTE;
+
+/** Min pause leeway */
 const Td PAUSE_LIMIT_INIT = TD_NULL;
 
+/** Min move number for draw */
 const int FIRST_DRAW = 2;
 }
 
+/** The namespace for default values of parameters.
+Values of constants from this namespace should be between values from
+config::min and config::max.
+*/
 namespace defaults {
+
+/** Default renewable leeway.
+\sa GP::limit_std()
+*/
 const Td LIMIT_STD = 2 * MINUTE;
+
+/** Default non-renewable leeway.
+\sa GP::limit_private_init()
+*/
 const Td LIMIT_PRIVATE_INIT = 2 * HOUR;
+
+/** Default pause leeway.
+\sa GP::pause_limit_init()
+*/
 const Td PAUSE_LIMIT_INIT = DAY;
 
+/** Default move number for draw.
+\sa GP::first_draw()
+*/
 const int FIRST_DRAW = 10 * 2;
 
+/** Default value of pause time input.
+The actual value is a product of remaining pause leeway and this value.
+\sa GameWidget
+*/
 const double PAUSE_FACTOR = 0.5;
 
+/** Default Wt::Dbo backend.
+\sa Options::database_type()
+*/
 const Options::DatabaseType DATABASE_TYPE = Options::SQLITE3;
+
+/** Default value of Wt::Dbo backend configuration.
+ - For Sqlite3, path to database
+ - for Postgres, "user = user password = password dbname = dbname"
+
+\sa Options::database_value()
+*/
 const char* const DATABASE_VALUE = "~/thechess.db";
+
+/** The number of database connections in a pool.
+\sa Options::connections_in_pool()
+*/
 const int CONNECTIONS_IN_POOL = 10;
 
+/** Default value of norating.
+\sa GP::norating()
+*/
 const bool NORATING = false;
 }
 
+/** The namespace for max allowed values of parameters */
 namespace max {
+
+/** Max number of predetermined half-moves.
+\todo rename to HALFMOVES_INIT
+*/
 const int MOVES_INIT = 20 * 2;
 
+/** Max renewable leeway */
 const Td LIMIT_STD = WEEK;
+
+/** Max non-renewable leeway */
 const Td LIMIT_PRIVATE_INIT = 4 * WEEK;
+
+/** Max pause leeway */
 const Td PAUSE_LIMIT_INIT = WEEK;
 
+/** Max move number for draw */
 const int FIRST_DRAW = 5000 * 2;
 }
 
