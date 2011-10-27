@@ -77,7 +77,7 @@ public:
             }
             int n = index2n(index);
             if (n == -2) {
-                return std::string("");
+                return boost::any();
             }
             HalfMove half_move = cached_moves_->half_move(n);
             const Board& board = cached_moves_->board(n);
@@ -110,7 +110,7 @@ public:
                                "</tr></table>") % img % text % shah);
             }
         }
-        return std::string("");
+        return boost::any();
     }
 
     virtual Wt::WFlags<Wt::ItemFlag> flags(const Wt::WModelIndex& index) const {
