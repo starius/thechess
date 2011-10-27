@@ -99,10 +99,10 @@ public:
         sql << "left join winners_competition WC on WC.thechess_competition_id=C.id ";
         sql << "left join thechess_user W on WC.thechess_user_id=W.id ";
         sql << "left join members_competitions M on M.thechess_competition_id=C.id ";
+        sql << "left join thechess_cp CP on C.cp_id=CP.id ";
         if (only_my) {
             sql << "where I.thechess_user_id = ? ";
         }
-        sql << "left join thechess_cp CP on C.cp_id=CP.id ";
         CLP::Q q = tApp->session().query<CLP::Result>(sql.str());
         q.groupBy("C");
         if (only_my) {
