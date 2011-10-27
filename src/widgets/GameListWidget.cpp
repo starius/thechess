@@ -75,10 +75,11 @@ public:
             } else if (index.column() == REAL_RATING_COLUMN) {
                 return game->real_rating();
             }
-        } else if (role == Wt::InternalPathRole) {
+        } else if (role == Wt::LinkRole) {
             UserPtr user;
             if (index.column() == N_COLUMN) {
-                return str(boost::format("/game/%i/") % game.id());
+                return Wt::WLink(Wt::WLink::InternalPath,
+                                 str(boost::format("/game/%i/") % game.id()));
             } else if (index.column() == WHITE_COLUMN) {
                 user = game->white();
             } else if (index.column() == BLACK_COLUMN) {
@@ -87,7 +88,8 @@ public:
                 user = game->winner();
             }
             if (user.id() > 0) { // FIXME http://redmine.webtoolkit.eu/issues/909
-                return str(boost::format("/user/%i/") % user.id());
+                return Wt::WLink(Wt::WLink::InternalPath,
+                                 str(boost::format("/user/%i/") % user.id()));
             }
         }
         t.commit();

@@ -68,8 +68,9 @@ public:
             } else if (index.column() == MEMBERS_COLUMN) {
                 return resultRow(index.row()).get<2>();
             }
-        } else if (role == Wt::InternalPathRole && index.column() == N_COLUMN) {
-            return str(boost::format("/competition/%i/") % o.id());
+        } else if (role == Wt::LinkRole && index.column() == N_COLUMN) {
+            return Wt::WLink(Wt::WLink::InternalPath,
+                             str(boost::format("/competition/%i/") % o.id()));
         }
         return CLP::BaseQM::data(index, role);
     }
