@@ -87,7 +87,7 @@ public:
             } else if (index.column() == WINNER_COLUMN) {
                 user = game->winner();
             }
-            if (user.id() > 0) { // FIXME http://redmine.webtoolkit.eu/issues/909
+            if (user) {
                 return Wt::WLink(Wt::WLink::InternalPath,
                                  str(boost::format("/user/%i/") % user.id()));
             }
