@@ -26,7 +26,6 @@ PgnResource::PgnResource(const GamePtr& game, Server& server, Wt::WObject* p):
 
 PgnResource::PgnResource(Server& server, Wt::WObject* p):
     Wt::WResource(p), session_(server.pool()) {
-    suggestFileName("none.pgn"); // FIXME http://redmine.webtoolkit.eu/issues/920
 }
 
 PgnResource::~PgnResource() {
