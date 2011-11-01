@@ -83,7 +83,7 @@ build: $$(EXE)
 chess: $$(CHESS_OBJECTS)
 
 .PHONY: check
-check: locales
+check: locales run-tests
 
 .PHONY: dep
 dep:
@@ -94,7 +94,7 @@ build-dep:
 	apt-get install g++ ccache upx inkscape doxygen texlive graphviz \
 		libwt-dev libwtdbo-dev libwtdbopostgres-dev libwtdbosqlite-dev libwtfcgi-dev libwthttp-dev
 
-ifeq (,$(filter-out target- target-build target-run, target-$(MAKECMDGOALS)))
+ifeq (,$(filter-out target- target-build target-run target-check, target-$(MAKECMDGOALS)))
 include $(makefiles)
 endif
 
@@ -165,6 +165,10 @@ wt.xml:
 .PHONY: locales
 locales: wt.xml locales-test.py
 	./locales-test.py --wt=$< --prefix=tc --sections common competition game time user
+
+.PHONY: run-tests
+run-tests: $(EXE) $$(WT_CONFIG)
+	$(EXE_PATH) --run-tests
 
 .PHONY: download
 download: $$(downloaded)
