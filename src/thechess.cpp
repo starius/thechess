@@ -33,9 +33,11 @@ The namespace for thechess
 using namespace thechess;
 
 int main(int argc, char** argv) {
-#ifdef RUN_TESTS
-    thechess::run_tests();
-#endif
+    if (argc >= 2 && std::string(argv[1]) == "--run-tests") {
+        // FIXME
+        thechess::run_tests();
+        exit(0);
+    }
     Server server(argc, argv);
     if (server.start()) {
         Wt::WServer::waitForShutdown();
