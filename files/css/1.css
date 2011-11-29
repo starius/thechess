@@ -24,18 +24,6 @@ table.thechess_board
     vertical-align: middle;
 }
 
-table.thechess_tableform
-{
-    border-Collapse: separate;
-    border-spacing: 7px;
-}
-
-td.thechess_tableform_name
-{
-    text-align: right !important;
-    vertical-align: middle;
-}
-
 body
 {
     font: 14px 'Arial', Tahoma, Arial;
