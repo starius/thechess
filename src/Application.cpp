@@ -57,7 +57,6 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     active_(true), notifying_object_(0) {
     enableUpdates(true);
     useStyleSheet("css/1.css");
-    useStyleSheet("css/table_form.css");
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/thechess");
     internalPathChanged().connect(this,

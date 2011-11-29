@@ -33,6 +33,7 @@ LIBS += -lcrypt -lpthread
 LIBS += -lboost_signals -lboost_regex -lboost_system -lboost_thread
 LIBS += -lwt -lwtdbo -lwtdbosqlite3 -lwtdbopostgres
 LIBS += -lwt$(MODE)
+LIBS += -lwtclasses
 CXXFLAGS += -pipe -Wall -W
 CXXFLAGS += -I$(BUILD) -Isrc
 ifeq ($(BUILD), debug)
@@ -48,13 +49,9 @@ LFLAGS += -flto
 endif
 endif
 
-
-downloaded_sources = src/utils/TableForm.cpp
-downloaded_headers = src/utils/TableForm.hpp
-downloaded = $(downloaded_sources) $(downloaded_headers) files/css/table_form.css \
-	files/js/jquery.countdown.pack.js locales-test.py wt.xml
-sources = $(sort $(wildcard src/*.cpp) $(wildcard src/*/*.cpp) $(downloaded_sources))
-headers = $(sort $(wildcard src/*.hpp) $(wildcard src/*/*.hpp) $(downloaded_headers))
+downloaded = files/js/jquery.countdown.pack.js wt.xml
+sources = $(sort $(wildcard src/*.cpp) $(wildcard src/*/*.cpp))
+headers = $(sort $(wildcard src/*.hpp) $(wildcard src/*/*.hpp))
 ifeq (,$(NOOBJECTS))
 objects = $(subst src/,$(BUILD)/,$(sources:.cpp=.o))
 makefiles = $(objects:.o=.d)
@@ -163,8 +160,8 @@ wt.xml:
 	wget -O $@ http://redmine.emweb.be/projects/wt/repository/revisions/master/raw/src/xml/wt.xml
 
 .PHONY: locales
-locales: wt.xml locales-test.py
-	./locales-test.py --wt=$< --prefix=tc --sections common competition game time user
+locales: wt.xml
+	locales-test --wt=$< --prefix=tc --sections common competition game time user
 
 .PHONY: run-tests
 run-tests: $(EXE) $$(WT_CONFIG)
@@ -173,17 +170,7 @@ run-tests: $(EXE) $$(WT_CONFIG)
 .PHONY: download
 download: $$(downloaded)
 
-src/utils/TableForm.%:
-	wget -O $@ https://bitbucket.org/starius/wt-classes/raw/tip/src/TableForm.$*
-
-files/css/table_form.css:
-	wget -O $@ https://bitbucket.org/starius/wt-classes/raw/tip/css/table_form.css
-
 files/js/jquery.countdown.pack.js:
 	$(MAKE) -C jquery-countdown
 	cp -a jquery-countdown/countdown2/$(@F) $@
-
-locales-test.py:
-	wget -O $@ https://bitbucket.org/starius/wt-classes/raw/tip/$@
-	chmod +x $@
 
