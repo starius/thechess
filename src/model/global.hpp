@@ -272,7 +272,7 @@ enum Classification {
     CLASSIFICATION_G = 20, /**< G (newbie) */
     CLASSIFICATION_H = 15, /**< H (newbie) */
     CLASSIFICATION_I = 10, /**< I (newbie) */
-    CLASSIFICATION_J = 5, /**< FJ(newbie) */
+    CLASSIFICATION_J = 5, /**< J (newbie) */
     NO_CLASSIFICATION = 0 /**< Player without assigned classification */
 };
 
