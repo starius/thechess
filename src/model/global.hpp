@@ -262,18 +262,18 @@ enum Classification {
     GRANDMASTER = 100, /**< Grandmaster */
     INTERNATIONAL_MASTER = 90, /**< International master */
     NATIONAL_MASTER = 80, /**< National master */
-    EXPERT = 70, /** Expert (master) */
-    CLASSIFICATION_A = 50, /** A (I) */
-    CLASSIFICATION_B = 45, /** B (II) */
-    CLASSIFICATION_C = 40, /** C (III) */
-    CLASSIFICATION_D = 35, /** D (IV) */
-    CLASSIFICATION_E = 30, /** E (V, newbie) */
-    CLASSIFICATION_F = 25, /** F (newbie) */
-    CLASSIFICATION_G = 20, /** G (newbie) */
-    CLASSIFICATION_H = 15, /** H (newbie) */
-    CLASSIFICATION_I = 10, /** I (newbie) */
-    CLASSIFICATION_J = 5, /** FJ(newbie) */
-    NO_CLASSIFICATION = 0 /** Player without assigned classification */
+    EXPERT = 70, /**< Expert (master) */
+    CLASSIFICATION_A = 50, /**< A (I) */
+    CLASSIFICATION_B = 45, /**< B (II) */
+    CLASSIFICATION_C = 40, /**< C (III) */
+    CLASSIFICATION_D = 35, /**< D (IV) */
+    CLASSIFICATION_E = 30, /**< E (V, newbie) */
+    CLASSIFICATION_F = 25, /**< F (newbie) */
+    CLASSIFICATION_G = 20, /**< G (newbie) */
+    CLASSIFICATION_H = 15, /**< H (newbie) */
+    CLASSIFICATION_I = 10, /**< I (newbie) */
+    CLASSIFICATION_J = 5, /**< FJ(newbie) */
+    NO_CLASSIFICATION = 0 /**< Player without assigned classification */
 };
 
 /** Array of all Classification members */
