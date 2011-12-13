@@ -170,7 +170,9 @@ run-tests: $(EXE) $$(WT_CONFIG)
 .PHONY: download
 download: $$(downloaded)
 
+.SECONDARY: files/js/jquery.countdown.pack.js
 files/js/jquery.countdown.pack.js:
-	$(MAKE) -C jquery-countdown
-	cp -a jquery-countdown/countdown2/$(@F) $@
+	wget http://keith-wood.name/zip/jquery.countdown.package-1.5.11.zip -O c.zip
+	unzip -o c.zip $(@F) -d $(@D)
+	rm c.zip
 
