@@ -409,9 +409,7 @@ private:
         const Moves& moves = game_->moves();
         new MovesWidget(moves, big, active, max_moves,
                         append_only, bottom, analysis->contents());
-        Wt::WPushButton* close = new Wt::WPushButton(tr("tc.common.X_close"));
-        analysis->titleBar()->insertWidget(0, close);
-        close->clicked().connect(analysis, &Wt::WDialog::accept);
+        analysis->setClosable(true);
         analysis->finished()
         .connect(this, &GameWidgetImpl::close_analysis_);
         analysis->setModal(false);
