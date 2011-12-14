@@ -1,3 +1,4 @@
+name = thechess
 
 BUILD = debug
 MODE = http
@@ -6,15 +7,15 @@ ADDRESS = 127.0.0.1
 
 .SECONDEXPANSION:
 
-EXE_FILE = thechess-$(MODE).wt
+EXE_FILE = $(name)-$(MODE).wt
 EXE = ./$(BUILD)/$(EXE_FILE)
 WT_CONFIG = $(BUILD)/wt_config_$(MODE).xml
 EXE_PATH = $(EXE)
 APPROOT = .
 DOCROOT_PARENT = .
 FCGI_RUN_DIR = $(BUILD)/run
-PID_FILE = $(BUILD)/thechess-$(MODE).pid
-SOCKET = $(BUILD)/thechess-$(MODE).socket
+PID_FILE = $(BUILD)/$(name)-$(MODE).pid
+SOCKET = $(BUILD)/$(name)-$(MODE).socket
 DOCROOT = $(DOCROOT_PARENT)/files
 
 ifeq ($(BUILD), release)
