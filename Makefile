@@ -1,3 +1,5 @@
+include InstallDirs.inc
+
 name = thechess
 
 BUILD = debug
