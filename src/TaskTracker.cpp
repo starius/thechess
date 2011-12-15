@@ -39,6 +39,7 @@ TaskTracker::TaskTracker(Server& server):
 TaskTracker::~TaskTracker() {
     timer_.cancel();
     dummy_timer_.cancel();
+    io_.stop();
 }
 
 void TaskTracker::io_run_() {
