@@ -1,0 +1,18 @@
+thechess, chess game web application written in C++ and based on Wt
+------------------------------------------
+
+Compile thechess application:
+$ make BUILD=release
+
+Install:
+# ./install.sh
+FIXME
+
+Dependencies:
+ * witty library (>=3.2.0)
+ * wt-classes library (https://bitbucket.org/starius/wt-classes/)
+FIXME
+
+------------------------------------------
+Boris Nagaev <bnagaev@gmail.com>
+

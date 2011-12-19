@@ -1,4 +1,5 @@
 2011-12-19:
     * started Changelog
     * allow to use with openssl
+    * add VERSION, README and INSTALL files
 
