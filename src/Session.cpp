@@ -19,7 +19,8 @@
 
 namespace thechess {
 
-Session::Session(dbo::FixedSqlConnectionPool& pool) {
+Session::Session(dbo::FixedSqlConnectionPool& pool):
+    user_database_(*this) {
     setConnectionPool(pool);
     mapClass<User>("thechess_user");
     mapClass<GP>("thechess_gp");
@@ -27,6 +28,9 @@ Session::Session(dbo::FixedSqlConnectionPool& pool) {
     mapClass<CookieSession>("thechess_cookie_session");
     mapClass<CP>("thechess_cp");
     mapClass<Competition>("thechess_competition");
+    mapClass<AuthInfo>("auth_info");
+    mapClass<AuthInfo::AuthIdentityType>("auth_identity");
+    mapClass<AuthInfo::AuthTokenType>("auth_token");
 }
 
 void Session::reconsider(TaskTracker& tracker) {

@@ -17,6 +17,9 @@
 #include <Wt/Dbo/WtSqlTraits>
 #include <Wt/Dbo/collection>
 #include <Wt/Dbo/ptr>
+#include <Wt/WLogger> // FIXME otherwise Wt::log were not defined
+#include <Wt/Auth/Dbo/AuthInfo>
+#include <Wt/Auth/Dbo/UserDatabase>
 
 #include "utils/time_intervals.hpp"
 #include "model/elo_player.hpp"
@@ -285,6 +288,21 @@ const Classification CLASSIFICATIONS[] = {
 
 /** Length of CLASSIFICATIONS */
 const int CLASSIFICATIONS_SIZE = 16;
+
+}
+
+/* @} */
+
+/** \name Auth */
+/* @{ */
+
+namespace thechess {
+
+/** Link beetween the authentication information class and User class */
+typedef Wt::Auth::Dbo::AuthInfo<User> AuthInfo;
+
+/** Authentication user database */
+typedef Wt::Auth::Dbo::UserDatabase<AuthInfo> UserDatabase;
 
 }
 

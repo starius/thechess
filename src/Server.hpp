@@ -10,6 +10,8 @@
 
 #include <Wt/WServer>
 #include <Wt/Dbo/FixedSqlConnectionPool>
+#include <Wt/Auth/AuthService>
+#include <Wt/Auth/PasswordService>
 
 #include "Options.hpp"
 #include "Session.hpp"
@@ -36,12 +38,24 @@ public:
     Notifier& notifier();
     TaskTracker& tracker();
 
+    const Wt::Auth::AuthService& auth_service() const {
+        return auth_service_;
+    }
+
+    const Wt::Auth::PasswordService& password_service() const {
+        return password_service_;
+    }
+
 private:
     Options options_;
     dbo::FixedSqlConnectionPool pool_;
     Notifier notifier_;
     TaskTracker tracker_;
     PgnResource pgn_;
+    Wt::Auth::AuthService auth_service_;
+    Wt::Auth::PasswordService password_service_;
+
+    void auth_init();
 };
 
 }

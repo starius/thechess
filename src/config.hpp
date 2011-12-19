@@ -220,6 +220,9 @@ const Td UNKNOWN_ERROR_DELAY = 2 * SECOND;
 
 const int COOKIE_SESSION_AGE = (5 * 365 * DAY).total_seconds();
 
+/** Authentication token cookie name */
+const char* const COOKIE_NAME = "thechessauth";
+
 }
 }
 

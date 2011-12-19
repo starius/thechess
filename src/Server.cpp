@@ -11,6 +11,8 @@
 
 #include <Wt/WEnvironment>
 #include <Wt/WApplication>
+#include <Wt/Auth/PasswordVerifier>
+#include <Wt/Auth/HashFunction>
 
 #include "Server.hpp"
 #include "Application.hpp"
@@ -27,11 +29,13 @@ Server::Server(int argc, char** argv):
     Wt::WServer(argv[0], first_file(config::WT_CONFIG_FILES, config::WT_CONFIG_FILES_SIZE)),
     options_((setServerConfiguration(argc, argv), *this)), // options_ needs read conf
     pool_(Session::new_connection(options_), options_.connections_in_pool()),
-    notifier_(*this), tracker_(*this), pgn_(*this) {
+    notifier_(*this), tracker_(*this), pgn_(*this),
+    password_service_(auth_service_) {
     addResource(&pgn_, "/pgn/");
     addEntryPoint(Wt::Application, boost::bind(createApplication, this, _1), "", "/favicon.ico");
     Session session(pool_);
     session.reconsider(tracker_);
+    auth_init();
 }
 
 const Options& Server::options() const {
@@ -48,6 +52,15 @@ Notifier& Server::notifier() {
 
 TaskTracker& Server::tracker() {
     return tracker_;
+}
+
+void Server::auth_init() {
+    auth_service_.setAuthTokensEnabled(true, config::COOKIE_NAME);
+    auth_service_.setEmailVerificationEnabled(true);
+    password_service_.setAttemptThrottlingEnabled(true);
+    Wt::Auth::PasswordVerifier* verifier = new Wt::Auth::PasswordVerifier();
+    verifier->addHashFunction(new Wt::Auth::BCryptHashFunction(7));
+    password_service_.setVerifier(verifier);
 }
 
 }
