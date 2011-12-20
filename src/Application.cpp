@@ -69,12 +69,6 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
                        Wt::WBorderLayout::Center);
     MainMenu* main_menu = new MainMenu();
     layout_->addWidget(main_menu, Wt::WBorderLayout::West);
-    try {
-        cookie_session_read_();
-        onPathChange_();
-    } catch (std::exception& e) {
-        log("warning") << e.what();
-    }
 }
 
 Application::~Application() {
@@ -97,48 +91,6 @@ Application::~Application() {
     } catch (std::exception& e) {
         log("warning") << e.what();
     }
-}
-
-void Application::cookie_session_read_() {
-    try {
-        dbo::Transaction t(session());
-        UserPtr u;
-        std::string cookie_id = environment().getCookie("cookie_session");
-        CookieSessionPtr cookie_session =
-            session().load<CookieSession>(cookie_id);
-        if (cookie_session->user()) {
-            u = cookie_session->user();
-        }
-        cookie_session.modify()->use();
-        t.commit();
-        if (u) {
-            set_user(cookie_session->user());
-        }
-    } catch (std::exception& e) {
-        log("warning") << e.what();
-    }
-}
-
-void Application::cookie_session_write_() {
-    dbo::Transaction t(session());
-    std::string cookie_id;
-    CookieSessionPtr cookie_session;
-    try {
-        cookie_id = environment().getCookie("cookie_session");
-    } catch (std::runtime_error e) {
-        cookie_id = sessionId();
-    }
-    try {
-        cookie_session = session().load<CookieSession>(cookie_id);
-    } catch (dbo::ObjectNotFoundException e) {
-        cookie_session =
-            session().add(new CookieSession(cookie_id));
-    }
-    setCookie("cookie_session", cookie_id, config::COOKIE_SESSION_AGE,
-              "", makeAbsoluteUrl(""));
-    cookie_session.modify()->set_user(user());
-    cookie_session.modify()->use();
-    t.commit();
 }
 
 void Application::add_my_games_() {
@@ -183,7 +135,6 @@ void Application::set_user(const UserPtr& user) {
     BOOST_FOREACH (GamePtr game, games_vector) {
         server_.tracker().add_or_update_task(Object(GAME, game.id()));
     }
-    cookie_session_write_();
     after_user_change_();
     t.commit();
     add_my_games_();
@@ -197,7 +148,6 @@ void Application::logout() {
         user_.reset();
         remove_my_games_();
     }
-    cookie_session_write_();
     after_user_change_();
     t.commit();
 }

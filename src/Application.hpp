@@ -123,9 +123,6 @@ private:
     void remove_notifiable_(Notifiable* notifiable,
                             const Object& object);
 
-    void cookie_session_read_();
-    void cookie_session_write_();
-
     void add_my_games_();
     void remove_my_games_();
 

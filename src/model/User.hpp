@@ -151,8 +151,6 @@ private:
     Wt::WDateTime last_enter_;
     Td online_time_;
 
-    CookieSessions cookie_sessions_;
-
     Games white_games_;
     Games black_games_;
     Games won_games_;

@@ -25,7 +25,6 @@ Session::Session(dbo::FixedSqlConnectionPool& pool):
     mapClass<User>("thechess_user");
     mapClass<GP>("thechess_gp");
     mapClass<Game>("thechess_game");
-    mapClass<CookieSession>("thechess_cookie_session");
     mapClass<CP>("thechess_cp");
     mapClass<Competition>("thechess_competition");
     mapClass<AuthInfo>("auth_info");

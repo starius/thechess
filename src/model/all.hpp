@@ -14,7 +14,6 @@
 #include "model/Game.hpp"
 #include "model/CP.hpp"
 #include "model/Competition.hpp"
-#include "model/CookieSession.hpp"
 #include "model/object.hpp"
 #include "model/elo_player.hpp"
 #include "model/staged_competition.hpp"
