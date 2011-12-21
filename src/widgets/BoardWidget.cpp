@@ -411,6 +411,7 @@ private:
             if (wApp->environment().ajax())
                 doJavaScript(
                     // FIXME https://bitbucket.org/starius/thechess/issue/34
+                    "$(" + draggable_->jsRef() + ").hide();"
                     "$(" + draggable_->jsRef() + ").css('z-index', 10);"
                     "$(" + jsRef() + ").mouseleave(function(e) {"
                     "$(" + draggable_->jsRef() + ").hide();"
