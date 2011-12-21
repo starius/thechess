@@ -9,8 +9,6 @@
 -->
 
 <!--
-Convention on l9n files
-
 Message id should be like "tc.SECTION.ID"
 
 * SECTION:
@@ -19,18 +17,11 @@ Message id should be like "tc.SECTION.ID"
  * game
  * time
  * user
-* first letter of Id should be of the same case, as value
-* words inside id should be separated with _, regardless of case-style
-* messages should be grouped by section (groups are separated by empty line)
-* messages should be ordered by id inside a group (case is ingnored)
-* multi-line messages should be moved to the end of group and also be ordered
-* ids of template messages should have suffix "_template"
-* max length of line: 120
-* messages should not start or end with space
-* no tabs are allowed
 
 Messages for board and Wt's translations are in the beginning
 and need not be sorted.
+
+See locales-test manpage for more information.
 -->
 
     <message id='Wt.WDateTime.null'>-</message>
