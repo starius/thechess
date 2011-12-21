@@ -57,6 +57,8 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     useStyleSheet("css/1.css");
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/thechess");
+    messageResourceBundle().use(Wt::WApplication::appRoot() +
+                                "locales/wtclasses/wtclasses");
     internalPathChanged().connect(this,
                                   &Application::onPathChange_);
     setCssTheme("polished");

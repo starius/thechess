@@ -1,5 +1,7 @@
 2011-12-21:
     * get rid of CookieSession
+    * use TimeDuration, IntervalWidget, TimeDurationWidget and
+      ConstrainedSpinBox from wt-classes
 
 2011-12-19:
     * started Changelog

@@ -10,14 +10,13 @@
 
 #include <Wt/WContainerWidget>
 #include <Wt/WCheckBox>
+#include <Wt/Wc/global.hpp>
 #include <Wt/Wc/TableForm.hpp>
 
 #include "model/all.hpp"
 
 namespace thechess {
 
-class MySpinBox;
-class TimeDeltaWidget;
 class MovesWidget;
 
 class GPWidget : public Wt::Wc::TableForm {
@@ -29,13 +28,13 @@ public:
 private:
     MovesWidget* moves_widget_;
 
-    TimeDeltaWidget* limit_std_;
-    TimeDeltaWidget* limit_private_init_;
+    Wt::Wc::TimeDurationWidget* limit_std_;
+    Wt::Wc::TimeDurationWidget* limit_private_init_;
 
     Wt::WCheckBox* norating_;
 
-    TimeDeltaWidget* pause_limit_init_;
-    MySpinBox* first_draw_;
+    Wt::Wc::TimeDurationWidget* pause_limit_init_;
+    Wt::Wc::ConstrainedSpinBox* first_draw_;
 };
 
 }

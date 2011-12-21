@@ -8,12 +8,12 @@
 #include <Wt/WPushButton>
 #include <Wt/WEnvironment>
 #include <Wt/WApplication>
+#include <Wt/Wc/ConstrainedSpinBox.hpp>
+#include <Wt/Wc/TimeDurationWidget.hpp>
+#include <Wt/Wc/IntervalWidget.hpp>
 
 #include "widgets/CPWidget.hpp"
-#include "widgets/TimeDeltaWidget.hpp"
 #include "widgets/ClassificationWidget.hpp"
-#include "widgets/MySpinBox.hpp"
-#include "widgets/IntervalWidget.hpp"
 #include "config.hpp"
 
 namespace thechess {
@@ -23,7 +23,7 @@ CPWidget::CPWidget(
     bool allow_change_type, Wt::WContainerWidget* parent):
     GPWidget(&(*(cp->gp())), parent) { // FIXME
     using namespace config::competition; // min, max
-    IntervalWidget* interval;
+    Wt::Wc::IntervalWidget* interval;
     Wt::WContainerWidget* cell;
     section(tr("tc.competition.Parameters"));
     type_ = new Wt::WComboBox();
@@ -45,58 +45,59 @@ CPWidget::CPWidget(
     } else {
         type_->disable();
     }
-    min_rating_ = new MySpinBox();
+    min_rating_ = new Wt::Wc::ConstrainedSpinBox();
     min_rating_->setRange(min::MIN_RATING, max::MIN_RATING);
     min_rating_->setValue(cp->min_rating());
-    max_rating_ = new MySpinBox();
+    max_rating_ = new Wt::Wc::ConstrainedSpinBox();
     max_rating_->setRange(min::MAX_RATING, max::MAX_RATING);
     max_rating_->setValue(cp->max_rating());
-    interval = new IntervalWidget(min_rating_, max_rating_);
+    interval = new Wt::Wc::IntervalWidget(min_rating_, max_rating_);
     item(tr("tc.competition.Rating"), "", min_rating_, interval);
     min_classification_ = new ClassificationWidget(min::MIN_CLASSIFICATION,
             cp->min_classification(), max::MIN_CLASSIFICATION);
     max_classification_ = new ClassificationWidget(min::MAX_CLASSIFICATION,
             cp->max_classification(), max::MAX_CLASSIFICATION);
-    interval = new IntervalWidget(min_classification_, max_classification_);
+    interval = new Wt::Wc::IntervalWidget(min_classification_, max_classification_);
     item(tr("tc.competition.Members_classification"), "", min_classification_, interval);
-    force_start_delay_ = new TimeDeltaWidget(min::FORCE_START_DELAY,
+    force_start_delay_ = new Wt::Wc::TimeDurationWidget(min::FORCE_START_DELAY,
             cp->force_start_delay(), max::FORCE_START_DELAY);
     item(tr("tc.competition.Force_start_delay"), "",
          force_start_delay_->form_widget(), force_start_delay_);
-    min_users_ = new MySpinBox();
+    min_users_ = new Wt::Wc::ConstrainedSpinBox();
     min_users_->setRange(min::MIN_USERS, max::MIN_USERS);
     min_users_->setValue(cp->min_users());
-    max_users_ = new MySpinBox();
+    max_users_ = new Wt::Wc::ConstrainedSpinBox();
     max_users_->setRange(min::MAX_USERS, max::MAX_USERS);
     max_users_->setValue(cp->max_users());
-    users_ = new IntervalWidget(min_users_, max_users_);
+    users_ = new Wt::Wc::IntervalWidget(min_users_, max_users_);
     item(tr("tc.competition.Users"), "", min_users_, users_);
-    min_recruiting_time_ = new TimeDeltaWidget(min::MIN_RECRUITING_TIME,
+    min_recruiting_time_ = new Wt::Wc::TimeDurationWidget(min::MIN_RECRUITING_TIME,
             cp->min_recruiting_time(), max::MIN_RECRUITING_TIME);
-    max_recruiting_time_ = new TimeDeltaWidget(min::MAX_RECRUITING_TIME,
+    max_recruiting_time_ = new Wt::Wc::TimeDurationWidget(min::MAX_RECRUITING_TIME,
             cp->max_recruiting_time(), max::MAX_RECRUITING_TIME);
-    recruiting_time_ = new IntervalWidget(min_recruiting_time_, max_recruiting_time_);
+    recruiting_time_ = new Wt::Wc::IntervalWidget(min_recruiting_time_,
+            max_recruiting_time_);
     item(tr("tc.competition.Recruiting_time"), "",
          min_recruiting_time_->form_widget(), recruiting_time_);
-    max_simultaneous_games_ = new MySpinBox();
+    max_simultaneous_games_ = new Wt::Wc::ConstrainedSpinBox();
     max_simultaneous_games_->setRange(min::MAX_SIMULTANEOUS_GAMES, max::MAX_SIMULTANEOUS_GAMES);
     max_simultaneous_games_->setValue(cp->max_simultaneous_games());
     item(tr("tc.competition.Max_simultaneous_games"), "",
          max_simultaneous_games_, max_simultaneous_games_);
-    games_factor_ = new MyDoubleSpinBox();
+    games_factor_ = new Wt::Wc::ConstrainedDoubleSpinBox();
     games_factor_->setRange(min::GAMES_FACTOR, max::GAMES_FACTOR);
     games_factor_->setValue(cp->games_factor());
     item(tr("tc.competition.Games_factor"), "", games_factor_, games_factor_);
-    relax_time_ = new TimeDeltaWidget(min::RELAX_TIME,
-                                      cp->relax_time(), max::RELAX_TIME);
+    relax_time_ = new Wt::Wc::TimeDurationWidget(min::RELAX_TIME,
+            cp->relax_time(), max::RELAX_TIME);
     item(tr("tc.competition.Relax_time"), "",
          relax_time_->form_widget(), relax_time_);
-    min_substages_ = new MySpinBox();
+    min_substages_ = new Wt::Wc::ConstrainedSpinBox();
     min_substages_->setRange(min::MIN_SUBSTAGES, max::MIN_SUBSTAGES);
     min_substages_->setValue(cp->min_substages());
     item(tr("tc.competition.Min_substages"), "",
          min_substages_, min_substages_);
-    increment_substages_ = new MySpinBox();
+    increment_substages_ = new Wt::Wc::ConstrainedSpinBox();
     increment_substages_->setRange(min::INCREMENT_SUBSTAGES, max::INCREMENT_SUBSTAGES);
     increment_substages_->setValue(cp->increment_substages());
     item(tr("tc.competition.Increment_substages"), "",
@@ -108,25 +109,25 @@ void CPWidget::apply_parameters(CP* cp) {
     GPWidget::apply_parameters(cp->gp().modify());
     CompetitionType t = get_type_();
     cp->set_type(t);
-    cp->set_min_rating(min_rating_->value());
-    cp->set_max_rating(max_rating_->value());
+    cp->set_min_rating(min_rating_->corrected_value());
+    cp->set_max_rating(max_rating_->corrected_value());
     cp->set_min_classification(min_classification_->value());
     cp->set_max_classification(max_classification_->value());
-    cp->set_force_start_delay(force_start_delay_->value());
+    cp->set_force_start_delay(force_start_delay_->corrected_value());
     if (t == CLASSICAL || t == STAGED) {
-        cp->set_min_users(min_users_->value());
-        cp->set_max_users(max_users_->value());
-        cp->set_min_recruiting_time(min_recruiting_time_->value());
-        cp->set_max_recruiting_time(max_recruiting_time_->value());
+        cp->set_min_users(min_users_->corrected_value());
+        cp->set_max_users(max_users_->corrected_value());
+        cp->set_min_recruiting_time(min_recruiting_time_->corrected_value());
+        cp->set_max_recruiting_time(max_recruiting_time_->corrected_value());
     }
     if (t == CLASSICAL) {
-        cp->set_max_simultaneous_games(max_simultaneous_games_->value());
-        cp->set_games_factor(games_factor_->value());
+        cp->set_max_simultaneous_games(max_simultaneous_games_->corrected_value());
+        cp->set_games_factor(games_factor_->corrected_value());
     }
     if (t == STAGED) {
-        cp->set_relax_time(relax_time_->value());
-        cp->set_min_substages(min_substages_->value());
-        cp->set_increment_substages(increment_substages_->value());
+        cp->set_relax_time(relax_time_->corrected_value());
+        cp->set_min_substages(min_substages_->corrected_value());
+        cp->set_increment_substages(increment_substages_->corrected_value());
     }
     if (cp->min_rating() > cp->max_rating()) {
         cp->set_max_rating(cp->min_rating());

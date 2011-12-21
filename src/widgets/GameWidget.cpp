@@ -19,10 +19,10 @@
 #include <Wt/WDialog>
 #include <Wt/WBreak>
 #include <Wt/Dbo/Transaction>
+#include <Wt/Wc/TimeDurationWidget.hpp>
 
 #include "widgets/GameCountdown.hpp"
 #include "widgets/GameWidget.hpp"
-#include "widgets/TimeDeltaWidget.hpp"
 #include "widgets/MovesWidget.hpp"
 #include "widgets/PleaseLoginWidget.hpp"
 #include "model/all.hpp"
@@ -292,8 +292,8 @@ private:
             new Wt::WBreak(manager_);
             Td max = game_->pause_limit();
             Td d = config::defaults::PAUSE_FACTOR * max;
-            TimeDeltaWidget* pause_duration =
-                new TimeDeltaWidget(TD_NULL, d, max, manager_);
+            Wt::Wc::TimeDurationWidget* pause_duration =
+                new Wt::Wc::TimeDurationWidget(TD_NULL, d, max, manager_);
             Wt::WPushButton* b;
             b = new Wt::WPushButton(tr("tc.game.Pause_propose"),
                                     manager_);
@@ -375,11 +375,11 @@ private:
         b->clicked().connect(this, &GameWidgetImpl::action_<method>);
     }
 
-    void pause_propose_(TimeDeltaWidget* pause_duration) {
+    void pause_propose_(Wt::Wc::TimeDurationWidget* pause_duration) {
         dbo::Transaction t(tApp->session());
         game_.reread();
         game_.modify()
-        ->pause_propose(tApp->user(), pause_duration->value());
+        ->pause_propose(tApp->user(), pause_duration->corrected_value());
         t.commit();
         Object object(GAME, game_.id());
         Notifier::app_emit(object);
