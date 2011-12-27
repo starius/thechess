@@ -286,7 +286,6 @@ See locales-test manpage for more information.
     <message id='tc.common.Create'>Create</message>
     <message id='tc.common.Discard'>Discard</message>
     <message id='tc.common.interval'>from {1} to {2}</message>
-    <message id='tc.common.interval_template'>from ${min} to ${max}</message>
     <message id='tc.common.Join'>Join</message>
     <message id='tc.common.kw'>{1}: {2}</message>
     <message id='tc.common.kw_template'>${1}: ${2}</message>
@@ -436,12 +435,6 @@ See locales-test manpage for more information.
         Wrong move? Select it and press Rollback -
         game would be rolled back before selected move
     </message>
-
-    <message id='tc.time.days'>days</message>
-    <message id='tc.time.hours'>hours</message>
-    <message id='tc.time.minutes'>minutes</message>
-    <message id='tc.time.seconds'>seconds</message>
-    <message id='tc.time.weeks'>weeks</message>
 
     <message id='tc.user.Already_used'>Already used</message>
     <message id='tc.user.classification_a'>class A</message>

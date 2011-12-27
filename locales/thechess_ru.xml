@@ -111,7 +111,6 @@
     <message id='tc.common.Create'>Создать</message>
     <message id='tc.common.Discard'>Отказаться</message>
     <message id='tc.common.interval'>от {1} до {2}</message>
-    <message id='tc.common.interval_template'>от ${min} до ${max}</message>
     <message id='tc.common.Join'>Присоединиться</message>
     <message id='tc.common.number'>№</message>
     <message id='tc.common.Only_my'>Только мои</message>
@@ -262,12 +261,6 @@
         Неверный ход? Выделите его и нажмите Откатить -
         будет восстановлена позиция, предшествующая выделенному ходу
     </message>
-
-    <message id='tc.time.days'>суток</message>
-    <message id='tc.time.hours'>часов</message>
-    <message id='tc.time.minutes'>минут</message>
-    <message id='tc.time.seconds'>секунд</message>
-    <message id='tc.time.weeks'>недель</message>
 
     <message id='tc.user.Already_used'>Уже используется</message>
     <message id='tc.user.classification_a'>первый разряд</message>

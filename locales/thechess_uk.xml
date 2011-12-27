@@ -104,7 +104,6 @@
     <message id="tc.common.Create">Створити</message>
     <message id="tc.common.Discard">Відмовитись</message>
     <message id="tc.common.interval">від {1} до {2}</message>
-    <message id="tc.common.interval_template">від ${min} до ${max}</message>
     <message id="tc.common.Join">Приєднатися</message>
     <message id="tc.common.number">№</message>
     <message id="tc.common.Only_my">Тільки мої</message>
@@ -254,12 +253,6 @@
         Невірний хід? Виділіть його та натисніть Відкотити -
         буде відновлено позицію, що передує виділеному ходу
     </message>
-
-    <message id="tc.time.days">діб</message>
-    <message id="tc.time.hours">годин</message>
-    <message id="tc.time.minutes">хвилин</message>
-    <message id="tc.time.seconds">секунд</message>
-    <message id="tc.time.weeks">тижнів</message>
 
     <message id='tc.user.Already_used'>Вже використовується</message>
     <message id="tc.user.classification_a">перший розряд</message>

@@ -104,7 +104,6 @@
     <message id="tc.common.Create">Стварыць</message>
     <message id="tc.common.Discard">Адмовіцца</message>
     <message id="tc.common.interval">ад {1} да {2}</message>
-    <message id="tc.common.interval_template">ад ${min} да ${max}</message>
     <message id="tc.common.Join">Далучыцца</message>
     <message id="tc.common.number">№</message>
     <message id="tc.common.Only_my">Толькі мае</message>
@@ -255,12 +254,6 @@
         Памылковы ход? Вылучыце яго і націсніце Адкаціць -
         будзе адноўлена пазіцыя, папярэдняя вылучанаму ходу
     </message>
-
-    <message id="tc.time.days">сутак</message>
-    <message id="tc.time.hours">гадзін</message>
-    <message id="tc.time.minutes">хвілін</message>
-    <message id="tc.time.seconds">секунд</message>
-    <message id="tc.time.weeks">тыдняў</message>
 
     <message id='tc.user.Already_used'>Ужо выкарыстоўваецца</message>
     <message id="tc.user.classification_a">першы разрад</message>
