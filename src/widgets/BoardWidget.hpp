@@ -13,6 +13,7 @@
 #ifndef THECHESS_WIDGETS_BOARDWIDGET_H_
 #define THECHESS_WIDGETS_BOARDWIDGET_H_
 
+#include <Wt/WGlobal>
 #include <Wt/WCompositeWidget>
 #include <Wt/WImage>
 
@@ -20,10 +21,6 @@
 #include "chess/Square.hpp"
 #include "chess/HalfMove.hpp"
 #include "chess/Piece.hpp"
-
-namespace Wt {
-class WContainerWidget;
-}
 
 namespace thechess {
 

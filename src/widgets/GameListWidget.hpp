@@ -8,11 +8,8 @@
 #ifndef THECHESS_WIDGETS_GAMELISTWIDGET_HPP_
 #define THECHESS_WIDGETS_GAMELISTWIDGET_HPP_
 
+#include <Wt/WGlobal>
 #include <Wt/WCompositeWidget>
-
-namespace Wt {
-class WContainerWidget;
-}
 
 namespace thechess {
 

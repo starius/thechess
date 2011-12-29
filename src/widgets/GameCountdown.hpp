@@ -8,13 +8,10 @@
 #ifndef THECHESS_WIDGETS_GAMECOUNTDOWN_HPP_
 #define THECHESS_WIDGETS_GAMECOUNTDOWN_HPP_
 
+#include <Wt/WGlobal>
 #include <Wt/WViewWidget>
 
 #include "model/all.hpp"
-
-namespace Wt {
-class WContainerWidget;
-}
 
 namespace thechess {
 

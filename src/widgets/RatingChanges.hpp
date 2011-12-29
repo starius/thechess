@@ -8,13 +8,10 @@
 #ifndef THECHESS_WIDGETS_RATING_CHANGES_HPP_
 #define THECHESS_WIDGETS_RATING_CHANGES_HPP_
 
+#include <Wt/WGlobal>
 #include <Wt/WCompositeWidget>
 
 #include "model/all.hpp"
-
-namespace Wt {
-class WContainerWidget;
-}
 
 namespace thechess {
 

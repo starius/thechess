@@ -8,13 +8,8 @@
 #ifndef THECHESS_WIDGETS_REGISTERWIDGET_H_
 #define THECHESS_WIDGETS_REGISTERWIDGET_H_
 
+#include <Wt/WGlobal>
 #include <Wt/WContainerWidget>
-
-namespace Wt {
-class WPushButton;
-class WLineEdit;
-class WTable;
-}
 
 namespace thechess {
 

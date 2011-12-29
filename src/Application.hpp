@@ -12,14 +12,7 @@
 #include <map>
 #include <set>
 
-namespace Wt {
-class WEnvironment;
-class WApplication;
-class WContainerWidget;
-class WImage;
-class WBorderLayout;
-class WWidget;
-}
+#include <Wt/WGlobal>
 #include <Wt/WApplication>
 #include <Wt/WSignal>
 #include <Wt/Dbo/ptr>

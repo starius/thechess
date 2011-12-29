@@ -8,15 +8,12 @@
 #ifndef THECHESS_WIDGETS_GAMECREATEWIDGET_HPP_
 #define THECHESS_WIDGETS_GAMECREATEWIDGET_HPP_
 
+#include <Wt/WGlobal>
 #include <Wt/WContainerWidget>
 #include <Wt/Dbo/ptr>
 
 #include "model/all.hpp"
 #include "chess/Piece.hpp"
-
-namespace Wt {
-class WComboBox;
-};
 
 namespace thechess {
 

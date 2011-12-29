@@ -8,14 +8,11 @@
 #ifndef THECHESS_WIDGETS_USEREWIDGET_HPP_
 #define THECHESS_WIDGETS_USEREWIDGET_HPP_
 
+#include <Wt/WGlobal>
 #include <Wt/WCompositeWidget>
 #include <Wt/Dbo/ptr>
 
 #include "model/all.hpp"
-
-namespace Wt {
-class WContainerWidget;
-}
 
 namespace thechess {
 
