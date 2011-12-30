@@ -74,7 +74,8 @@ void GameCreateWidget::button_handler_() {
     if (with_user_) {
         Notifier::app_emit(Object(USER, user_.id()));
     }
-    tApp->view(game);
+    tApp->path().game_view()->set_integer_value(game.id());
+    tApp->path().game_view()->open(/* change path */ true);
 }
 
 Piece::Color GameCreateWidget::selected_color_() const {

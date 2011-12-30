@@ -78,7 +78,8 @@ void CompetitionCreateWidget::button_handler_() {
     cpw_->apply_parameters(comp.modify());
     comp.modify()->create_competition(tApp->user());
     t.commit();
-    tApp->view(comp);
+    tApp->path().competition_view()->set_integer_value(comp.id());
+    tApp->path().competition_view()->open(/* change path */ true);
     tApp->server().tracker().add_or_update_task(Object(COMPETITION, comp.id()));
 }
 
