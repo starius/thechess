@@ -13,34 +13,35 @@
 
 #include "Application.hpp"
 #include "widgets/MainMenu.hpp"
+#include "Path.hpp"
 
 namespace thechess {
 
 class MainMenuImpl : public Wt::WContainerWidget {
 public:
-    MainMenuImpl():
+    MainMenuImpl(Path* path):
         Wt::WContainerWidget() {
-        button_("tc.user.Register", "/register/");
-        button_("tc.game.Challenge", "/game/challenge/");
-        button_("tc.competition.New", "/competition/new/");
-        button_("tc.game.List", "/game/");
-        button_("tc.competition.List", "/competition/");
-        button_("tc.user.Login", "/login/");
-        button_("tc.user.Logout", "/logout/");
+        button_("tc.user.Register", path->register_form());
+        button_("tc.game.Challenge", path->game_new());
+        button_("tc.competition.New", path->competition_new());
+        button_("tc.game.List", path->game_list());
+        button_("tc.competition.List", path->competition_list());
+        button_("tc.user.Login", path->login_form());
+        // FIXME logout
     }
 
 private:
-    void button_(const char* title_id, const std::string path) {
+    void button_(const char* title_id, Wt::Wc::url::Node* node) {
         Wt::WAnchor* button = new Wt::WAnchor(this);
         button->setText(tr(title_id));
-        button->setRefInternalPath(path);
+        button->setRefInternalPath(node->full_path());
         new Wt::WBreak(this);
     }
 };
 
-MainMenu::MainMenu(Wt::WContainerWidget* parent) :
+MainMenu::MainMenu(Path* path, Wt::WContainerWidget* parent) :
     Wt::WCompositeWidget(parent) {
-    impl_ = new MainMenuImpl();
+    impl_ = new MainMenuImpl(path);
     setImplementation(impl_);
 }
 

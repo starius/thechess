@@ -14,10 +14,14 @@
 namespace thechess {
 
 class MainMenuImpl;
+class Path;
 
+/** Main menu with references */
 class MainMenu : public Wt::WCompositeWidget {
 public:
-    MainMenu(Wt::WContainerWidget* parent = 0);
+    /** Constructor */
+    MainMenu(Path* path, Wt::WContainerWidget* parent = 0);
+
 private:
     MainMenuImpl* impl_;
 };
