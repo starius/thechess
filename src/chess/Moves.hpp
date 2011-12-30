@@ -18,7 +18,6 @@ class Moves;
 #include "chess/HalfMove.hpp"
 #include "chess/Square.hpp"
 #include "chess/Board.hpp"
-#include "tests.hpp"
 
 /** \defgroup chess Chess container library
 Classes for dealing with chess data such as chess board and move history.

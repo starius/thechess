@@ -15,7 +15,6 @@ class Board;
 #include <string>
 #include <ostream>
 
-#include "tests.hpp"
 #include "chess/HalfMove.hpp"
 #include "chess/Square.hpp"
 #include "chess/Piece.hpp"
