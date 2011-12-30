@@ -131,7 +131,7 @@ private:
     }
 };
 
-class GameWidgetImpl : public Wt::WContainerWidget, public Notifiable {
+class GameWidget::GameWidgetImpl : public Wt::WContainerWidget, public Notifiable {
 public:
     GameWidgetImpl(const GamePtr& game) :
         Wt::WContainerWidget(),

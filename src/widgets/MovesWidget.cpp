@@ -139,7 +139,7 @@ private:
     int max_show_move_;
 };
 
-class MovesWidgetImpl : public Wt::WContainerWidget {
+class MovesWidget::MovesWidgetImpl : public Wt::WContainerWidget {
 public:
     MovesWidgetImpl(const Moves& moves,
                     bool big, bool active, int max_moves,

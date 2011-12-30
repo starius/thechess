@@ -13,7 +13,6 @@
 
 namespace thechess {
 
-class MainMenuImpl;
 class Path;
 
 /** Main menu with references */
@@ -23,6 +22,8 @@ public:
     MainMenu(Path* path, Wt::WContainerWidget* parent = 0);
 
 private:
+    class MainMenuImpl;
+
     MainMenuImpl* impl_;
 };
 

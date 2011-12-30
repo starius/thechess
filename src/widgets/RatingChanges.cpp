@@ -120,7 +120,7 @@ private:
     int row_count_;
 };
 
-class RatingChangesImpl : public Wt::WContainerWidget {
+class RatingChanges::RatingChangesImpl : public Wt::WContainerWidget {
 public:
     RatingChangesImpl(const UserPtr& user = UserPtr()):
         Wt::WContainerWidget(), number_of_users_(0) {

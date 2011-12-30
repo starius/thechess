@@ -22,7 +22,7 @@
 
 namespace thechess {
 
-class UserWidgetImpl : public Wt::WContainerWidget {
+class UserWidget::UserWidgetImpl : public Wt::WContainerWidget {
 public:
     UserWidgetImpl(const UserPtr& user) :
         Wt::WContainerWidget(), user_(user) {

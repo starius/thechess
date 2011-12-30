@@ -13,12 +13,12 @@
 
 namespace thechess {
 
-class GameListWidgetImpl;
-
 class GameListWidget : public Wt::WCompositeWidget {
 public:
     GameListWidget(Wt::WContainerWidget* parent = 0);
 private:
+    class GameListWidgetImpl;
+
     GameListWidgetImpl* impl_;
 };
 

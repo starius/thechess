@@ -15,8 +15,6 @@
 
 namespace thechess {
 
-class MyGamesListImpl;
-
 class MyGamesList : public Wt::WCompositeWidget {
 public:
     MyGamesList(const UserPtr& user, Wt::WContainerWidget* p = 0);

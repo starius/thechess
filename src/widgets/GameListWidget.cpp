@@ -99,7 +99,7 @@ public:
     }
 };
 
-class GameListWidgetImpl : public Wt::WContainerWidget {
+class GameListWidget::GameListWidgetImpl : public Wt::WContainerWidget {
 public:
     GameListWidgetImpl() :
         Wt::WContainerWidget() {

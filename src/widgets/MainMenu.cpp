@@ -15,7 +15,7 @@
 
 namespace thechess {
 
-class MainMenuImpl : public Wt::WContainerWidget {
+class MainMenu::MainMenuImpl : public Wt::WContainerWidget {
 public:
     MainMenuImpl(Path* path):
         Wt::WContainerWidget() {

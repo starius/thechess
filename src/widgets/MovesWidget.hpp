@@ -21,8 +21,6 @@
 
 namespace thechess {
 
-class MovesWidgetImpl;
-
 class MovesWidget : public Wt::WCompositeWidget {
 public:
     MovesWidget(const Moves& moves, bool big = false,
@@ -41,6 +39,8 @@ public:
     void set_active(bool active);
 
 private:
+    class MovesWidgetImpl;
+
     MovesWidgetImpl* impl_;
 };
 

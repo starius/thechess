@@ -16,12 +16,12 @@
 
 namespace thechess {
 
-class GameWidgetImpl;
-
 class GameWidget : public Wt::WCompositeWidget {
 public:
     GameWidget(const GamePtr& game, Wt::WContainerWidget* parent = 0);
 private:
+    class GameWidgetImpl;
+
     GameWidgetImpl* impl_;
 };
 
