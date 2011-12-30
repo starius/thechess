@@ -12,11 +12,9 @@
 #include <set>
 #include <boost/thread/mutex.hpp>
 
-#include "model/global.hpp"
+#include "thechess-global.hpp"
 
 namespace thechess {
-
-class Server;
 
 /** Part of server, passing thechess notifications to Notifiable objects.
 \ingroup server

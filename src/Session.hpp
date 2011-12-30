@@ -15,14 +15,12 @@
 #include <Wt/Dbo/FixedSqlConnectionPool>
 #include <Wt/Auth/Login>
 
-#include "model/global.hpp"
+#include "thechess-global.hpp"
 #include "Options.hpp"
 
 namespace dbo = Wt::Dbo;
 
 namespace thechess {
-
-class TaskTracker;
 
 /** Descendant of dbo::Session
 \ingroup server

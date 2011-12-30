@@ -11,9 +11,9 @@
 #include <Wt/WGlobal>
 #include <Wt/WCompositeWidget>
 
-namespace thechess {
+#include "thechess-global.hpp"
 
-class Path;
+namespace thechess {
 
 /** Main menu with references */
 class MainMenu : public Wt::WCompositeWidget {

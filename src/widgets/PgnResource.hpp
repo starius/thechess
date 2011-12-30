@@ -11,10 +11,10 @@
 #include <Wt/WResource>
 
 #include "model/all.hpp"
+#include "thechess-global.hpp"
 #include "Session.hpp"
 
 namespace thechess {
-class Server;
 
 class PgnResource : public Wt::WResource {
 public:

@@ -11,9 +11,9 @@
 #include <Wt/WGlobal>
 #include <Wt/Wc/Url.hpp>
 
-namespace thechess {
+#include "widgets/global.hpp"
 
-class MainWidget;
+namespace thechess {
 
 namespace url = Wt::Wc::url;
 

@@ -11,11 +11,10 @@
 #include <Wt/WGlobal>
 #include <Wt/WContainerWidget>
 
+#include "thechess-global.hpp"
 #include "model/all.hpp"
 
 namespace thechess {
-
-class Path;
 
 /** Main Application widget */
 class MainWidget : public Wt::WContainerWidget {

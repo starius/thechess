@@ -14,11 +14,10 @@
 #include <Wt/WDateTime>
 
 #include "model/all.hpp"
+#include "thechess-global.hpp"
 #include "Session.hpp"
 
 namespace thechess {
-
-class Server;
 
 /** Part of server, scheduling checks of database objects.
 \ingroup server
