@@ -32,18 +32,6 @@
 #include "Application.hpp"
 
 #include "config.hpp"
-#include "utils/time_intervals.hpp"
-#include "widgets/RegisterWidget.hpp"
-#include "widgets/LoginWidget.hpp"
-#include "widgets/GameWidget.hpp"
-#include "widgets/GameCreateWidget.hpp"
-#include "widgets/CompetitionWidget.hpp"
-#include "widgets/CompetitionCreateWidget.hpp"
-#include "widgets/GameListWidget.hpp"
-#include "widgets/CompetitionListWidget.hpp"
-#include "widgets/UserWidget.hpp"
-#include "widgets/MainMenu.hpp"
-#include "widgets/MyGamesList.hpp"
 #include "Session.hpp"
 #include "model/all.hpp"
 #include "TaskTracker.hpp"
@@ -52,25 +40,18 @@ namespace thechess {
 
 Application::Application(const Wt::WEnvironment& env, Server& server) :
     Wt::WApplication(env), server_(server), session_(server.pool()),
+    path_(),
     active_(true), notifying_object_(0) {
+    main_widget_ = new MainWidget(root());
+    main_widget_->show_menu(&path_);
+    path_.connect_main_widget(main_widget_);
     enableUpdates(true);
     useStyleSheet("css/1.css");
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/thechess");
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/wtclasses/wtclasses");
-    internalPathChanged().connect(this,
-                                  &Application::onPathChange_);
     setCssTheme("polished");
-    Wt::WContainerWidget* root1 = new Wt::WContainerWidget(root());
-    layout_ = new Wt::WBorderLayout();
-    root1->setLayout(layout_, Wt::AlignTop | Wt::AlignJustify);
-    layout_->addWidget(new Wt::WImage("img/top.gif"),
-                       Wt::WBorderLayout::North);
-    layout_->addWidget(new Wt::WContainerWidget(),
-                       Wt::WBorderLayout::Center);
-    MainMenu* main_menu = new MainMenu();
-    layout_->addWidget(main_menu, Wt::WBorderLayout::West);
 }
 
 Application::~Application() {
@@ -95,33 +76,11 @@ Application::~Application() {
     }
 }
 
-void Application::add_my_games_() {
-    layout_->addWidget(new MyGamesList(user()), Wt::WBorderLayout::East);
-}
-
-void Application::remove_my_games_() {
-    Wt::WWidget* my_games_list = layout_->widgetAt(Wt::WBorderLayout::East);
-    layout_->removeWidget(my_games_list);
-    delete my_games_list;
-}
-
-void Application::after_user_change_() {
-    std::string path = internalPathNextPart("/");
-    if (user() && (path == "login" || path == "register")) {
-        view(user());
-    } else if (path == "logout") {
-        setInternalPath("/", true);
-    } else {
-        onPathChange_();
-    }
-}
-
 void Application::set_user(const UserPtr& user) {
     dbo::Transaction t(session());
     user_.reread();
     if (user_) {
         user_.modify()->logout();
-        remove_my_games_();
     }
     user_ = user;
     user_.reread();
@@ -137,9 +96,7 @@ void Application::set_user(const UserPtr& user) {
     BOOST_FOREACH (GamePtr game, games_vector) {
         server_.tracker().add_or_update_task(Object(GAME, game.id()));
     }
-    after_user_change_();
     t.commit();
-    add_my_games_();
 }
 
 void Application::logout() {
@@ -148,9 +105,7 @@ void Application::logout() {
     if (user_) {
         user_.modify()->logout();
         user_.reset();
-        remove_my_games_();
     }
-    after_user_change_();
     t.commit();
 }
 
@@ -169,65 +124,6 @@ void Application::notify(const Wt::WEvent& e) {
         log("fatal") << e.what();
         quit();
     }
-}
-
-Wt::WContainerWidget* Application::mainpanel_() {
-    return (Wt::WContainerWidget*)
-           (layout_->widgetAt(Wt::WBorderLayout::Center));
-}
-
-void Application::set_mainpanel_(Wt::WWidget* widget) {
-    Wt::WContainerWidget* mp = mainpanel_();
-    mp->clear();
-    mp->addWidget(widget);
-}
-
-void Application::onPathChange_() {
-    std::cout << internalPath() << std::endl;
-    std::string section = internalPathNextPart("/");
-    if (section == "register") {
-        set_mainpanel_(new RegisterWidget());
-    } else if (section == "logout") {
-        logout();
-    } else if (section == "login") {
-        set_mainpanel_(new LoginWidget());
-    } else if (section == "user") {
-        object_view_<User>("/user/");
-    } else if (section == "game") {
-        if (internalPathNextPart("/game/") == "challenge") {
-            set_mainpanel_(new GameCreateWidget());
-        } else {
-            object_view_<Game>("/game/");
-        }
-    } else if (section == "competition") {
-        if (internalPathNextPart("/competition/") == "new") {
-            set_mainpanel_(new CompetitionCreateWidget());
-        } else {
-            object_view_<Competition>("/competition/");
-        }
-    } else {
-        set_mainpanel_(new Wt::WContainerWidget()); // FIXME index page
-    }
-}
-
-void Application::view(const UserPtr& user) {
-    show_<UserWidget>(user, str(boost::format("/user/%i/") % user.id()));
-}
-
-void Application::view(const GamePtr& game) {
-    show_<GameWidget>(game, str(boost::format("/game/%i/") % game.id()));
-}
-
-void Application::view(const CompetitionPtr& competition) {
-    show_<CompetitionWidget>(competition, str(boost::format("/competition/%i/") % competition.id()));
-}
-
-template<> void Application::list_view<Game>() {
-    show_<GameListWidget>("/game/");
-}
-
-template<> void Application::list_view<Competition>() {
-    show_<CompetitionListWidget>("/competition/");
 }
 
 void Application::thechess_notify(Object object) {

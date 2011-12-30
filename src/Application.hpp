@@ -21,7 +21,8 @@
 #include "Notifier.hpp"
 #include "Server.hpp"
 #include "Session.hpp"
-#include "widgets/MainMenu.hpp"
+#include "Path.hpp"
+#include "widgets/MainWidget.hpp"
 
 /** Macro for Application::instance(), same as wApp */
 #define tApp thechess::Application::instance()
@@ -71,6 +72,11 @@ public:
     Session& session() {
         return session_;
     }
+
+    Path& path() {
+        return path_;
+    }
+
     Server& server() {
         return server_;
     }
@@ -81,13 +87,6 @@ public:
     void after_user_change_();
     void set_user(const UserPtr& user);
     void logout();
-
-    void view(const UserPtr& user);
-    void view(const GamePtr& game);
-    void view(const CompetitionPtr& competition);
-
-    template<typename M> void list_view() {
-    }
 
     static void thechess_notify(Object object);
 
@@ -103,8 +102,9 @@ protected:
 private:
     Server& server_;
     Session session_;
+    MainWidget* main_widget_;
+    Path path_;
     UserPtr user_;
-    Wt::WBorderLayout* layout_;
     typedef std::multimap<Object, Notifiable*> O2N;
     O2N notifiables_;
     bool active_;
@@ -119,47 +119,9 @@ private:
     void add_my_games_();
     void remove_my_games_();
 
-    void onPathChange_();
-    Wt::WContainerWidget* mainpanel_();
-    void set_mainpanel_(Wt::WWidget* widget);
-
-    template<typename W>
-    void show_(std::string path) {
-        setInternalPath(path);
-        set_mainpanel_(new W());
-    }
-
-    template<typename W, typename I>
-    void show_(I item, std::string path) {
-        setInternalPath(path);
-        set_mainpanel_(new W(item));
-    }
-
-    template<typename M>
-    void object_view_(const char* path) {
-        std::string id_str = internalPathNextPart(path);
-        if (id_str.empty()) {
-            list_view<M>();
-        } else {
-            int id = atoi(id_str.c_str());
-            if (id) {
-                dbo::Transaction t(tApp->session());
-                dbo::ptr<M> o = tApp->session().find<M>()
-                                .where("id = ?").bind(id);
-                if (o) {
-                    view(o);
-                }
-                t.commit();
-            }
-        }
-    }
-
     friend class MainMenuImpl;
     friend class Notifiable;
 };
-
-template<> void Application::list_view<Game>();
-template<> void Application::list_view<Competition>();
 
 }
 
