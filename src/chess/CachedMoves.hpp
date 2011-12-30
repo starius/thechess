@@ -10,12 +10,9 @@
 
 #include <vector>
 
+#include "chess/global.hpp"
 #include "chess/Moves.hpp"
 #include "chess/Board.hpp"
-
-namespace thechess {
-class CachedMoves;
-}
 
 namespace thechess {
 

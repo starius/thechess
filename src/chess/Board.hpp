@@ -8,13 +8,10 @@
 #ifndef THECHESS_BOARD_H_
 #define THECHESS_BOARD_H_
 
-namespace thechess {
-class Board;
-}
-
 #include <string>
 #include <ostream>
 
+#include "chess/global.hpp"
 #include "chess/HalfMove.hpp"
 #include "chess/Square.hpp"
 #include "chess/Piece.hpp"

@@ -12,6 +12,8 @@
 
 #include <Wt/WString>
 
+#include "chess/global.hpp"
+
 namespace thechess {
 
 /** Piece.

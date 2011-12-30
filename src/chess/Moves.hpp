@@ -8,13 +8,10 @@
 #ifndef THECHESS_MOVES_H_
 #define THECHESS_MOVES_H_
 
-namespace thechess {
-class Moves;
-}
-
 #include <vector>
 #include <iterator>
 
+#include "chess/global.hpp"
 #include "chess/HalfMove.hpp"
 #include "chess/Square.hpp"
 #include "chess/Board.hpp"

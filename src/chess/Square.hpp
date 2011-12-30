@@ -10,6 +10,8 @@
 
 #include <string>
 
+#include "chess/global.hpp"
+
 namespace thechess {
 
 /** Square representation.
