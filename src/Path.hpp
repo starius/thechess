@@ -13,6 +13,8 @@
 
 namespace thechess {
 
+class MainWidget;
+
 namespace url = Wt::Wc::url;
 
 /** Url processing.
@@ -22,6 +24,9 @@ class Path : public Wt::Wc::url::Parser {
 public:
     /** Constructor */
     Path(Wt::WObject* parent = 0);
+
+    /** Connect opened() signals to slots of main widget */
+    void connect_main_widget(MainWidget* main_widget);
 
     /** Login form */
     url::PredefinedNode* login_form() const {
@@ -74,6 +79,7 @@ public:
     }
 
 private:
+    MainWidget* main_widget_;
     url::PredefinedNode* login_form_;
     url::PredefinedNode* register_form_;
     url::PredefinedNode* user_list_;
@@ -84,6 +90,10 @@ private:
     url::PredefinedNode* competition_list_;
     url::IntegerNode* competition_view_;
     url::PredefinedNode* competition_new_;
+
+    void open_user();
+    void open_game();
+    void open_competition();
 };
 
 }
