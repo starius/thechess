@@ -7,11 +7,9 @@
 
 #include <string>
 
-#include <Wt/WApplication>
 #include <Wt/WBreak>
 #include <Wt/WAnchor>
 
-#include "Application.hpp"
 #include "widgets/MainMenu.hpp"
 #include "Path.hpp"
 
