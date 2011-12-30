@@ -5,7 +5,6 @@
  * See the LICENSE file for terms of use.
  */
 
-//
 #ifndef THECHESS_MOVE_H_
 #define THECHESS_MOVE_H_
 

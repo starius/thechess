@@ -5,7 +5,6 @@
  * See the LICENSE file for terms of use.
  */
 
-//
 #ifndef THECHESS_SQUARE_H_
 #define THECHESS_SQUARE_H_
 
