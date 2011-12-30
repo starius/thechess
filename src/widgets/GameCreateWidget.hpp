@@ -13,11 +13,10 @@
 #include <Wt/Dbo/ptr>
 
 #include "model/all.hpp"
+#include "widgets/global.hpp"
 #include "chess/Piece.hpp"
 
 namespace thechess {
-
-class GPWidget;
 
 class GameCreateWidget : public Wt::WContainerWidget {
 public:

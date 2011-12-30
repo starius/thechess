@@ -15,11 +15,10 @@
 #include <Wt/Wc/global.hpp>
 
 #include "widgets/GPWidget.hpp"
+#include "widgets/global.hpp"
 #include "model/all.hpp"
 
 namespace thechess {
-
-class ClassificationWidget;
 
 class CPWidget : public GPWidget {
 public:

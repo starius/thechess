@@ -13,11 +13,10 @@
 #include <Wt/Wc/global.hpp>
 #include <Wt/Wc/TableForm.hpp>
 
+#include "widgets/global.hpp"
 #include "model/all.hpp"
 
 namespace thechess {
-
-class MovesWidget;
 
 class GPWidget : public Wt::Wc::TableForm {
 public:

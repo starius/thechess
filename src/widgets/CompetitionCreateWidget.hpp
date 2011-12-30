@@ -10,11 +10,10 @@
 
 #include <Wt/WContainerWidget>
 
+#include "widgets/global.hpp"
 #include "model/all.hpp"
 
 namespace thechess {
-
-class CPWidget2;
 
 class CompetitionCreateWidget : public Wt::WContainerWidget {
 public:
