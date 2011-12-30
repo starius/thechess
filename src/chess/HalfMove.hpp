@@ -13,9 +13,9 @@ namespace thechess {
 class HalfMove;
 }
 
-#include "Square.hpp"
-#include "Piece.hpp"
-#include "Board.hpp"
+#include "chess/Square.hpp"
+#include "chess/Piece.hpp"
+#include "chess/Board.hpp"
 
 namespace thechess {
 

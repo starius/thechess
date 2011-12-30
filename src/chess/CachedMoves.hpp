@@ -8,9 +8,10 @@
 #ifndef THECHESS_CACHED_MOVES_H_
 #define THECHESS_CACHED_MOVES_H_
 
+#include <vector>
+
 #include "chess/Moves.hpp"
 #include "chess/Board.hpp"
-#include <vector>
 
 namespace thechess {
 class CachedMoves;

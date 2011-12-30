@@ -16,9 +16,9 @@ class Board;
 #include <ostream>
 
 #include "tests.hpp"
-#include "HalfMove.hpp"
-#include "Square.hpp"
-#include "Piece.hpp"
+#include "chess/HalfMove.hpp"
+#include "chess/Square.hpp"
+#include "chess/Piece.hpp"
 
 namespace thechess {
 

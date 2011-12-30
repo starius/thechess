@@ -15,9 +15,9 @@ class Moves;
 #include <vector>
 #include <iterator>
 
-#include "HalfMove.hpp"
-#include "Square.hpp"
-#include "Board.hpp"
+#include "chess/HalfMove.hpp"
+#include "chess/Square.hpp"
+#include "chess/Board.hpp"
 #include "tests.hpp"
 
 /** \defgroup chess Chess container library
