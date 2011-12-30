@@ -14,8 +14,6 @@
 
 #include <Wt/WGlobal>
 #include <Wt/WApplication>
-#include <Wt/WSignal>
-#include <Wt/Dbo/ptr>
 
 #include "model/all.hpp"
 #include "Notifier.hpp"
@@ -28,8 +26,6 @@
 #define tApp thechess::Application::instance()
 
 namespace thechess {
-
-class Session;
 
 /** Base class for a widget, notifiable by thechess notifications.
 \sa Application::thechess_notify

@@ -14,23 +14,10 @@
 #include <boost/assert.hpp>
 
 #include <Wt/WEnvironment>
-#include <Wt/WApplication>
-#include <Wt/WSignal>
-#include <Wt/WText>
-#include <Wt/WString>
-#include <Wt/WContainerWidget>
-#include <Wt/Dbo/ptr>
-#include <Wt/Dbo/Transaction>
-
-#include <Wt/WWidget>
-#include <Wt/WImage>
-#include <Wt/WBorderLayout>
-#include <Wt/WHBoxLayout>
 #include <Wt/Dbo/Exception>
 #include <Wt/WLogger>
 
 #include "Application.hpp"
-
 #include "config.hpp"
 #include "Session.hpp"
 #include "model/all.hpp"
