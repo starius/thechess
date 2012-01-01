@@ -80,7 +80,6 @@ public:
     const UserPtr& user() const {
         return user_;
     }
-    void after_user_change_();
     void set_user(const UserPtr& user);
     void logout();
 
@@ -112,10 +111,6 @@ private:
     void remove_notifiable_(Notifiable* notifiable,
                             const Object& object);
 
-    void add_my_games_();
-    void remove_my_games_();
-
-    friend class MainMenuImpl;
     friend class Notifiable;
 };
 
