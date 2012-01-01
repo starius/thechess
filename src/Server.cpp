@@ -29,7 +29,7 @@ Server::Server(int argc, char** argv):
     Wt::WServer(argv[0], first_file(config::WT_CONFIG_FILES, config::WT_CONFIG_FILES_SIZE)),
     options_((setServerConfiguration(argc, argv), *this)), // options_ needs read conf
     pool_(Session::new_connection(options_), options_.connections_in_pool()),
-    notifier_(*this), tracker_(*this), pgn_(*this),
+    notifier_(this), tracker_(*this), pgn_(*this),
     password_service_(auth_service_) {
     addResource(&pgn_, "/pgn/");
     addEntryPoint(Wt::Application, boost::bind(createApplication, this, _1), "", "/favicon.ico");

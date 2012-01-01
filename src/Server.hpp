@@ -13,9 +13,9 @@
 #include <Wt/Auth/AuthService>
 #include <Wt/Auth/PasswordService>
 
+#include "notify.hpp"
 #include "Options.hpp"
 #include "Session.hpp"
-#include "Notifier.hpp"
 #include "TaskTracker.hpp"
 #include "widgets/PgnResource.hpp"
 

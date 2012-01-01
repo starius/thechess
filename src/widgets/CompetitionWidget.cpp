@@ -25,6 +25,7 @@
 #include "widgets/PleaseLoginWidget.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
+#include "notify.hpp"
 
 namespace thechess {
 
@@ -359,13 +360,14 @@ private:
 CompetitionWidget::CompetitionWidget(const CompetitionPtr& competition,
                                      Wt::WContainerWidget* p):
     Wt::WTemplate(tr("tc.competition.widget_template"), p),
-    Notifiable(Object(COMPETITION, competition.id())),
+    Notifiable(Object(COMPETITION, competition.id()), NOTIFIER),
     c(competition) {
     reprint_();
 }
 
 void CompetitionWidget::reprint_() {
     dbo::Transaction t(tApp->session());
+    c.reread();
     bindInt("id", c.id());
     bindString("type", Competition::type2str(c->type()));
     bindString("name", c->name(), Wt::PlainText);

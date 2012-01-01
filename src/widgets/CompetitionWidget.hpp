@@ -12,7 +12,7 @@
 #include <Wt/WTemplate>
 
 #include "model/all.hpp"
-#include "Application.hpp"
+#include "notify.hpp"
 
 namespace thechess {
 

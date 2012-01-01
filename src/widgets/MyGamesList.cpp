@@ -15,6 +15,7 @@
 #include "widgets/MyGamesList.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
+#include "notify.hpp"
 
 namespace thechess {
 
@@ -27,7 +28,7 @@ class MyGamesListImp;
 class MyGameAnchor : public Wt::WAnchor, public Notifiable {
 public:
     MyGameAnchor(const GamePtr& game, MyGamesListImp* list):
-        Notifiable(Object(GAME, game.id())),
+        Notifiable(Object(GAME, game.id()), NOTIFIER),
         game_id_(game.id()), list_(list) {
         setText(boost::lexical_cast<std::string>(game_id_));
         setRefInternalPath(str(boost::format("/game/%i/") % game_id_));
@@ -104,7 +105,7 @@ typedef std::map<int, MyGameAnchor*> Anchors;
 class MyGamesListImp : public Wt::WContainerWidget, public Notifiable {
 public:
     MyGamesListImp(const UserPtr& user):
-        Notifiable(Object(USER, user.id())),
+        Notifiable(Object(USER, user.id()), NOTIFIER),
         user_id_(user.id()),
         last_clicked_(0) {
         for (int i = 0; i < ORDER_OF_STATES_SIZE; i++) {
@@ -126,7 +127,7 @@ private:
     void update_games_list_() {
         dbo::Transaction t(tApp->session());
         std::set<int> games;
-        UserPtr user = tApp->session().load<User>(user_id_);
+        UserPtr user = tApp->session().load<User>(user_id_, /* reread */ true);
         Games games_collection = user->games().where("state < ?").bind(Game::MIN_ENDED);
         GamesVector games_vector(games_collection.begin(), games_collection.end());
         BOOST_FOREACH (const GamePtr& game, games_vector) {

@@ -15,8 +15,6 @@
 namespace thechess {
 
 class Application;
-class Notifiable;
-class Notifier;
 class Options;
 class Path;
 class Server;

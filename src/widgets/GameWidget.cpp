@@ -30,6 +30,7 @@
 #include "config.hpp"
 #include "chess/Moves.hpp"
 #include "chess/Piece.hpp"
+#include "notify.hpp"
 
 namespace thechess {
 
@@ -135,7 +136,7 @@ class GameWidget::GameWidgetImpl : public Wt::WContainerWidget, public Notifiabl
 public:
     GameWidgetImpl(const GamePtr& game) :
         Wt::WContainerWidget(),
-        Notifiable(Object(GAME, game.id())),
+        Notifiable(Object(GAME, game.id()), NOTIFIER),
         game_(game) {
         dbo::Transaction t(tApp->session());
         new Wt::WText(tr("tc.game.Header")
@@ -163,6 +164,8 @@ public:
     }
 
     virtual void notify() {
+        dbo::Transaction t(tApp->session());
+        game_.reread();
         moves_widget_->set_active(game_->can_move(tApp->user()));
         countdown_print_();
         if (game_->colors_random() && game_->size_without_init() == 0) {
@@ -182,6 +185,7 @@ public:
         }
         status_and_manager_();
         print_comment_();
+        t.commit();
     }
 
 private:
@@ -204,7 +208,7 @@ private:
         bool game_ended = game_->is_ended();
         t.commit();
         Object object(GAME, game_.id());
-        Notifier::app_emit(object);
+        tApp->server().notifier().emit(object);
         if (game_ended) {
             tApp->server().tracker().add_or_update_task(object);
         }
@@ -359,12 +363,12 @@ private:
         Game::State state_after = game_->state();
         t.commit();
         Object object(GAME, game_.id());
-        Notifier::app_emit(object);
+        tApp->server().notifier().emit(object);
         if (state_after != state_before) {
             tApp->server().tracker().add_or_update_task(object);
         }
         if (method == &Game::join) {
-            Notifier::app_emit(Object(USER, tApp->user().id()));
+            tApp->server().notifier().emit(Object(USER, tApp->user().id()));
         }
     }
 
@@ -382,7 +386,7 @@ private:
         ->pause_propose(tApp->user(), pause_duration->corrected_value());
         t.commit();
         Object object(GAME, game_.id());
-        Notifier::app_emit(object);
+        tApp->server().notifier().emit(object);
     }
 
     void mistake_propose_() {
@@ -392,7 +396,7 @@ private:
         ->mistake_propose(tApp->user(), moves_widget_->current_move());
         t.commit();
         Object object(GAME, game_.id());
-        Notifier::app_emit(object);
+        tApp->server().notifier().emit(object);
     }
 
     void show_analysis_() {
@@ -425,7 +429,7 @@ private:
         game_.modify()->set_comment(tApp->user(), text);
         t.commit();
         Object object(GAME, game_.id());
-        Notifier::app_emit(object);
+        tApp->server().notifier().emit(object);
     }
 
     void print_comment_() {

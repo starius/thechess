@@ -16,7 +16,6 @@
 #include <Wt/WApplication>
 
 #include "model/all.hpp"
-#include "Notifier.hpp"
 #include "Server.hpp"
 #include "Session.hpp"
 #include "Path.hpp"
@@ -26,36 +25,6 @@
 #define tApp thechess::Application::instance()
 
 namespace thechess {
-
-/** Base class for a widget, notifiable by thechess notifications.
-\sa Application::thechess_notify
-\sa Notifier
-\ingroup server
-*/
-class Notifiable {
-public:
-    /** Constructor.
-    \param object Object to listen to
-    */
-    Notifiable(const Object& object);
-
-    /** Constructor */
-    Notifiable(ObjectType ot, int id);
-
-    /** Destructor */
-    virtual ~Notifiable();
-
-    /** Notify.
-    Implement this method for descendants:
-    run updates caused by modification of object.
-    */
-    virtual void notify() = 0; // under Transaction
-
-private:
-    const Object object_;
-
-    void add_to_application_();
-};
 
 /** Descendant of Wt::WApplication.
 \ingroup server
@@ -83,8 +52,6 @@ public:
     void set_user(const UserPtr& user);
     void logout();
 
-    static void thechess_notify(Object object);
-
     /** Get active Application.
     Same as WApplication::instance().
     There is macro for this method: tApp.
@@ -100,18 +67,6 @@ private:
     MainWidget* main_widget_;
     Path path_;
     UserPtr user_;
-    typedef std::multimap<Object, Notifiable*> O2N;
-    O2N notifiables_;
-    bool active_;
-    std::set<Notifiable*> waiting_notifiables_;
-    const Object* notifying_object_;
-
-    void add_notifiable_(Notifiable* notifiable,
-                         const Object& object);
-    void remove_notifiable_(Notifiable* notifiable,
-                            const Object& object);
-
-    friend class Notifiable;
 };
 
 }
