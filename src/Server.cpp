@@ -12,6 +12,7 @@
 #include <Wt/WEnvironment>
 #include <Wt/WApplication>
 #include <Wt/Auth/PasswordVerifier>
+#include <Wt/Auth/PasswordStrengthValidator>
 #include <Wt/Auth/HashFunction>
 
 #include "Server.hpp"
@@ -59,6 +60,7 @@ void Server::auth_init() {
     auth_service_.setAuthTokensEnabled(true, config::COOKIE_NAME);
     auth_service_.setEmailVerificationEnabled(true);
     password_service_.setAttemptThrottlingEnabled(true);
+    password_service_.setStrengthValidator(new PasswordStrengthValidator());
     PasswordVerifier* verifier = new PasswordVerifier();
     verifier->addHashFunction(new BCryptHashFunction(7));
     password_service_.setVerifier(verifier);
