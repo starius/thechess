@@ -100,3 +100,19 @@ a.thechess-proposed {
     overflow-x: hidden !important;
 }
 
+.Wt-auth-login * {
+    width: auto !important;
+}
+
+.Wt-auth-login-table {
+    width: 100% !important;
+}
+
+.Wt-auth-login-table td {
+    padding: 5px !important;
+}
+
+.Wt-auth-login {
+    width: 100% !important;
+}
+

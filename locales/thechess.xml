@@ -25,6 +25,60 @@ See locales-test manpage for more information.
 -->
 
     <message id='Wt.WDateTime.null'>-</message>
+    <message id="Wt.Auth.template.login">
+        <div class="Wt-form Wt-auth-login">
+            <table class="Wt-auth-login-table">
+                <tr>
+                    ${<if:passwords>}
+                        <td>
+                            <label for="${id:user-name}">${user-name-label}
+                                ${user-name-info class="Wt-info"}
+                            </label>
+                        </td>
+                        <td>
+                            ${user-name}
+                        </td>
+                        <td>
+                            <label for="${id:password}">${tr:Wt.Auth.password}
+                                ${password-info class="Wt-info"}
+                            </label>
+                        </td>
+                        <td>
+                            ${password}
+                        </td>
+                        ${<if:remember-me>}
+                            <td>
+                                <label for="${id:remember-me}">
+                                    ${tr:Wt.Auth.remember-me}
+                                    <span class="Wt-info">
+                                        ${remember-me-info}
+                                    </span>
+                                </label>
+                            </td>
+                            <td>
+                                ${remember-me}
+                            </td>
+                        ${</if:remember-me>}
+                    ${</if:passwords>}
+                    ${<if:oauth>}
+                        <td class="Wt-col-right">
+                            <h3>Or use:</h3>
+                            ${icons}
+                        </td>
+                    ${</if:oauth>}
+                    <td class="Wt-buttons">
+                        ${login}
+                    </td>
+                    <td class="Wt-buttons">
+                        ${lost-password}
+                    </td>
+                    <td class="Wt-buttons">
+                        ${register}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </message>
 
     <message id='tc.game.board_white_template'>
         <table class="thechess_board">
