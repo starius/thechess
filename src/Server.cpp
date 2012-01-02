@@ -55,11 +55,12 @@ TaskTracker& Server::tracker() {
 }
 
 void Server::auth_init() {
+    using namespace Wt::Auth;
     auth_service_.setAuthTokensEnabled(true, config::COOKIE_NAME);
     auth_service_.setEmailVerificationEnabled(true);
     password_service_.setAttemptThrottlingEnabled(true);
-    Wt::Auth::PasswordVerifier* verifier = new Wt::Auth::PasswordVerifier();
-    verifier->addHashFunction(new Wt::Auth::BCryptHashFunction(7));
+    PasswordVerifier* verifier = new PasswordVerifier();
+    verifier->addHashFunction(new BCryptHashFunction(7));
     password_service_.setVerifier(verifier);
 }
 
