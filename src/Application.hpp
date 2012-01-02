@@ -67,6 +67,8 @@ private:
     MainWidget* main_widget_;
     Path path_;
     UserPtr user_;
+
+    void set_auth_widget();
 };
 
 }

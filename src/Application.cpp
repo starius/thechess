@@ -16,6 +16,7 @@
 #include <Wt/WEnvironment>
 #include <Wt/Dbo/Exception>
 #include <Wt/WLogger>
+#include <Wt/Auth/AuthWidget>
 
 #include "Application.hpp"
 #include "config.hpp"
@@ -30,6 +31,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     main_widget_ = new MainWidget(root());
     main_widget_->show_menu(&path_);
     path_.connect_main_widget(main_widget_);
+    set_auth_widget();
     enableUpdates(true);
     useStyleSheet("css/1.css");
     messageResourceBundle().use(Wt::WApplication::appRoot() +
@@ -104,6 +106,17 @@ void Application::notify(const Wt::WEvent& e) {
 
 Application* Application::instance() {
     return static_cast<Application*>(Wt::WApplication::instance());
+}
+
+void Application::set_auth_widget() {
+    using namespace Wt::Auth;
+    AuthWidget* w = new AuthWidget(server().auth_service(),
+                                   session().user_database(),
+                                   session().login());
+    w->setRegistrationEnabled(true);
+    w->addPasswordAuth(&server().password_service());
+    w->processEnvironment();
+    main_widget_->set_auth_widget(w);
 }
 
 }
