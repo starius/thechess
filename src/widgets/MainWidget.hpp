@@ -55,7 +55,20 @@ public:
     /** Create new competition */
     void competition_new();
 
+    /** Get authentication widget.
+    \attention Auth widget should be set (by Application).
+    */
+    Wt::Auth::AuthWidget* auth_widget() {
+        return auth_widget_;
+    }
+
+    /** Set authentication widget */
+    void set_auth_widget(Wt::Auth::AuthWidget* widget);
+
 private:
+    Wt::WContainerWidget* auth_widget_container_;
+    Wt::Auth::AuthWidget* auth_widget_;
+
     Wt::WBorderLayout* l();
 
     Wt::WContainerWidget* contents();
