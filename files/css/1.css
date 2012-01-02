@@ -5,63 +5,53 @@
  * See the LICENSE file for terms of use.
  */
 
-.thechess_board td img
-{
+.thechess_board td img {
     display: block;
 }
 
-table.thechess_board
-{
+table.thechess_board {
     border-Collapse: separate !important;
     border-spacing: 2px !important;
 }
 
-.thechess_board td
-{
+.thechess_board td {
     text-align: center !important;
     vertical-align: middle;
 }
 
-body
-{
+body {
     font: 14px 'Arial', Tahoma, Arial;
     cursor: default;
 }
 
-a
-{
+a {
     font: 14px 'Arial', Tahoma, Arial;
     color: blue;
     text-decoration: none;
     cursor: pointer;
 }
 
-a:hover
-{
+a:hover {
     color: black;
     font-family: 'Arial' , Tahoma, Arial;
     text-decoration: underline;
 }
 
-td
-{
+td {
     font: 14px 'Arial', Tahoma, Arial;
 }
 
-.thechess-table-border td
-{
+.thechess-table-border td {
     padding: 3px 5px;
     border: 1px solid gray;
     text-align: center;
 }
 
-.thechess-td-right
-{
+.thechess-td-right {
     text-align: right !important;
 }
 
-a.thechess-selected
-{
+a.thechess-selected {
     border-right-color: #000000;
     border-right-style: solid;
     border-right-width: 1px;
@@ -75,46 +65,38 @@ a.thechess-selected
     padding: 1px 5px;
 }
 
-a.thechess-deselected
-{
+a.thechess-deselected {
     border-left-color: #000000;
     border-left-style: solid;
     border-left-width: 1px;
     padding: 2px 5px;
 }
 
-a.thechess-excited
-{
+a.thechess-excited {
     font-weight: bolder;
     color: Firebrick;
 }
 
-a.thechess-unexcited
-{
+a.thechess-unexcited {
 }
 
-a.thechess-active
-{
+a.thechess-active {
     background-color: #90EE90;
 }
 
-a.thechess-pause
-{
+a.thechess-pause {
     background-color: #90EED4;
 }
 
-a.thechess-confirmed
-{
+a.thechess-confirmed {
     background-color: #EEE990;
 }
 
-a.thechess-proposed
-{
+a.thechess-proposed {
     background-color: white;
 }
 
-.Wt-tableview .Wt-plaintable td
-{
+.Wt-tableview .Wt-plaintable td {
     overflow-x: hidden !important;
 }
 
