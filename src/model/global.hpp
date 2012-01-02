@@ -28,7 +28,7 @@
 
 namespace dbo = Wt::Dbo;
 
-/** \file model/global.hpp Declarations of all models
+/** \file model/global.hpp Declarations of all models.
 This file should be included by hpp files of models
 \ingroup model
 */
