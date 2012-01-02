@@ -10,7 +10,10 @@
     <debug>false</debug>
     <max-request-size>10000</max-request-size>
     <session-id-length>16</session-id-length>
-    <web-sockets>true</web-sockets>
+
+    <!-- FIXME http://redmine.emweb.be/issues/1115 -->
+    <web-sockets>false</web-sockets>
+
     <behind-reverse-proxy>false</behind-reverse-proxy>
     <progressive-bootstrap>false</progressive-bootstrap>
     <log-response-time>true</log-response-time>
