@@ -55,8 +55,12 @@ public:
         dbo::hasMany(a, virtual_allower_, dbo::ManyToOne, "virtual_allower");
         dbo::hasMany(a, won_competitions_, dbo::ManyToMany, "winners_competition");
         dbo::field(a, games_stat_, "games_stat");
+        dbo::hasMany(a, auth_infos_, dbo::ManyToOne, "user");
     }
 #endif
+
+    /** Return (first of) auth info */
+    AuthInfoPtr auth_info() const;
 
     /** Get user name */
     const Wt::WString& username() const {
@@ -156,6 +160,8 @@ private:
     Competitions won_competitions_;
 
     EloPlayer games_stat_;
+
+    AuthInfos auth_infos_;
 };
 
 }
