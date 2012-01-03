@@ -17,7 +17,8 @@
 
 namespace thechess {
 
-User::User(bool):
+User::User(const Wt::WString& username):
+    username_(username),
     rights_(REGULAR_USER),
     sessions_(0),
     classification_(NO_CLASSIFICATION),

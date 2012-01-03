@@ -106,8 +106,7 @@ UserPtr Session::auth_info_to_user(const AuthInfoPtr& auth_info) {
     Wt::WString username = auth_info->identity(Wt::Auth::Identity::LoginName);
     UserPtr user = auth_info->user();
     if (!user) {
-        user = add(new User(true));
-        user.modify()->set_username(username);
+        user = add(new User(username));
         auth_info.modify()->setUser(user);
     }
     return user;

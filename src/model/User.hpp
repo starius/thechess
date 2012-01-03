@@ -33,7 +33,7 @@ public:
 #endif
 
     /** Create instance to be added to database */
-    User(bool);
+    User(const Wt::WString& username);
 
 #ifndef DOXYGEN_ONLY
     template<class Action>
