@@ -82,6 +82,17 @@ dbo::SqlConnection* Session::new_connection(const Options& options) {
     return connection;
 }
 
+UserPtr Session::user() {
+    dbo::Transaction t(*this);
+    UserPtr user;
+    if (login_.loggedIn()) {
+        AuthInfoPtr auth_info = user_database_.find(login_.user());
+        user = auth_info_to_user(auth_info);
+    }
+    t.commit();
+    return user;
+}
+
 UserPtr Session::add_user(const Server& server, const Wt::WString& name,
                           const Wt::WString& password) {
     Wt::Auth::User user = user_database_.registerNew();

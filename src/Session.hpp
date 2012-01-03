@@ -42,6 +42,9 @@ public:
         return login_;
     }
 
+    /** Return user */
+    UserPtr user();
+
 private:
     UserDatabase user_database_;
     Wt::Auth::Login login_;
