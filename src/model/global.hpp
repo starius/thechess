@@ -270,6 +270,12 @@ namespace thechess {
 /** Link beetween the authentication information class and User class */
 typedef Wt::Auth::Dbo::AuthInfo<User> AuthInfo;
 
+/** Database pointer to AuthInfo */
+typedef dbo::ptr<AuthInfo> AuthInfoPtr;
+
+/** Collection of AuthInfo */
+typedef dbo::collection<AuthInfoPtr> AuthInfos;
+
 /** Authentication user database */
 typedef Wt::Auth::Dbo::UserDatabase<AuthInfo> UserDatabase;
 
