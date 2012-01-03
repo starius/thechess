@@ -18,8 +18,6 @@ using namespace Wt::Wc::url;
 
 Path::Path(Wt::WObject* parent):
     Parser(parent), main_widget_(0) {
-    login_form_ = new PredefinedNode("login", this);
-    register_form_ = new PredefinedNode("register", this);
     user_list_ = new PredefinedNode("user", this);
     user_view_ = new IntegerNode(user_list_);
     game_list_ = new PredefinedNode("game", this);
@@ -34,8 +32,6 @@ Path::Path(Wt::WObject* parent):
 void Path::connect_main_widget(MainWidget* mw) {
     main_widget_ = mw;
     // TODO user list
-    login_form_->opened().connect(mw, &MainWidget::login_form);
-    register_form_->opened().connect(mw, &MainWidget::register_form);
     user_view_->opened().connect(this, &Path::open_user);
     game_list_->opened().connect(mw, &MainWidget::game_list);
     game_view_->opened().connect(this, &Path::open_game);

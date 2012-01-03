@@ -13,8 +13,6 @@
 
 #include "widgets/MainWidget.hpp"
 #include "widgets/MainMenu.hpp"
-#include "widgets/LoginWidget.hpp"
-#include "widgets/RegisterWidget.hpp"
 #include "widgets/MyGamesList.hpp"
 #include "widgets/GameWidget.hpp"
 #include "widgets/GameCreateWidget.hpp"
@@ -43,14 +41,6 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
 
 void MainWidget::show_menu(Path* path) {
     l()->addWidget(new MainMenu(path), Wt::WBorderLayout::West);
-}
-
-void MainWidget::login_form() {
-    set_contents(new LoginWidget());
-}
-
-void MainWidget::register_form() {
-    set_contents(new RegisterWidget());
 }
 
 void MainWidget::user_view(const UserPtr& user) {

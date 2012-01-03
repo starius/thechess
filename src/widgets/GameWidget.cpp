@@ -24,7 +24,6 @@
 #include "widgets/GameCountdown.hpp"
 #include "widgets/GameWidget.hpp"
 #include "widgets/MovesWidget.hpp"
-#include "widgets/PleaseLoginWidget.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
 #include "config.hpp"
@@ -239,8 +238,6 @@ private:
                 print_mistake_buttons_();
                 print_draw_buttons_();
             }
-        } else {
-            new PleaseLoginWidget(manager_);
         }
         t.commit();
     }

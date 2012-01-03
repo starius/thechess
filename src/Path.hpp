@@ -28,16 +28,6 @@ public:
     /** Connect opened() signals to slots of main widget */
     void connect_main_widget(MainWidget* main_widget);
 
-    /** Login form */
-    url::PredefinedNode* login_form() const {
-        return login_form_;
-    }
-
-    /** Register form */
-    url::PredefinedNode* register_form() const {
-        return register_form_;
-    }
-
     /** List of users */
     url::PredefinedNode* user_list() const {
         return user_list_;
@@ -80,8 +70,6 @@ public:
 
 private:
     MainWidget* main_widget_;
-    url::PredefinedNode* login_form_;
-    url::PredefinedNode* register_form_;
     url::PredefinedNode* user_list_;
     url::IntegerNode* user_view_;
     url::PredefinedNode* game_list_;

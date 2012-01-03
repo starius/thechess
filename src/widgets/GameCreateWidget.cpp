@@ -13,7 +13,6 @@
 #include <Wt/Dbo/Transaction>
 
 #include "widgets/GameCreateWidget.hpp"
-#include "widgets/PleaseLoginWidget.hpp"
 #include "widgets/GPWidget.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
@@ -26,9 +25,7 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
     dbo::Transaction t(tApp->session());
     new Wt::WText(tr("tc.game.Competitor")
                   .arg(user->username()), this);
-    if (!tApp->user()) {
-        new PleaseLoginWidget(this);
-    } else {
+    if (tApp->user()) {
         print_();
     }
     t.commit();
@@ -37,9 +34,7 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
 GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :
     Wt::WContainerWidget(p), with_user_(false) {
     new Wt::WText(tr("tc.game.Challenge"), this);
-    if (!tApp->user()) {
-        new PleaseLoginWidget(this);
-    } else {
+    if (tApp->user()) {
         print_();
     }
 }

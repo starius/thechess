@@ -25,12 +25,6 @@ public:
     /** Show the menu with references */
     void show_menu(Path* path);
 
-    /** Login form */
-    void login_form();
-
-    /** Register form */
-    void register_form();
-
     /** List of users */
     void user_list();
 

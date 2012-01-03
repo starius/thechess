@@ -22,7 +22,6 @@
 
 #include "widgets/CompetitionWidget.hpp"
 #include "widgets/CompetitionCreateWidget.hpp"
-#include "widgets/PleaseLoginWidget.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
 #include "notify.hpp"
@@ -314,8 +313,6 @@ public:
                 change->clicked().connect(this,
                                           &CompetitionManager::show_change_widget_);
             }
-        } else {
-            new PleaseLoginWidget(this);
         }
     }
 

@@ -22,14 +22,11 @@ class GameCreateWidget;
 class GameListWidget;
 class GameWidget;
 class GPWidget;
-class LoginWidget;
 class MainMenu;
 class MainWidget;
 class MovesWidget;
 class MyGamesList;
-class PleaseLoginWidget;
 class RatingChanges;
-class RegisterWidget;
 class UserWidget;
 
 }
