@@ -11,8 +11,10 @@
 
 #include <Wt/Dbo/backend/Sqlite3>
 #include <Wt/Dbo/backend/Postgres>
+#include <Wt/Auth/Identity>
 
 #include "Session.hpp"
+#include "Server.hpp"
 #include "model/all.hpp"
 #include "TaskTracker.hpp"
 #include "utils/utils.hpp"
@@ -32,21 +34,15 @@ Session::Session(dbo::FixedSqlConnectionPool& pool):
     mapClass<AuthInfo::AuthTokenType>("auth_token");
 }
 
-void Session::reconsider(TaskTracker& tracker) {
+void Session::reconsider(Server& server) {
+    TaskTracker& tracker = server.tracker();
     try {
         dbo::Transaction t(*this);
         createTables();
         std::cerr << "Created database" << std::endl;
-        User* ADMIN = new User(true);
-        ADMIN->set_username("admin");
-        ADMIN->set_rights(User::ADMIN);
-        ADMIN->set_password("123");
-        add(ADMIN);
+        add_user(server, "admin", "123").modify()->set_rights(User::ADMIN);
         std::cerr << "and admin user (password 123)" << std::endl;
-        User* user = new User(true);
-        user->set_username("user");
-        user->set_password("123");
-        add(user);
+        add_user(server, "user", "123");
         std::cerr << "and user user (password 123)" << std::endl;
         t.commit();
     } catch (std::exception& e) {
@@ -84,6 +80,26 @@ dbo::SqlConnection* Session::new_connection(const Options& options) {
     connection->setProperty("show-queries", "true");
 #endif
     return connection;
+}
+
+UserPtr Session::add_user(const Server& server, const Wt::WString& name,
+                          const Wt::WString& password) {
+    Wt::Auth::User user = user_database_.registerNew();
+    user.addIdentity(Wt::Auth::Identity::LoginName, name);
+    server.password_service().updatePassword(user, password);
+    AuthInfoPtr auth_info = user_database_.find(user);
+    return auth_info_to_user(auth_info);
+}
+
+UserPtr Session::auth_info_to_user(const AuthInfoPtr& auth_info) {
+    Wt::WString username = auth_info->identity(Wt::Auth::Identity::LoginName);
+    UserPtr user = auth_info->user();
+    if (!user) {
+        user = add(new User(true));
+        user.modify()->set_username(username);
+        auth_info.modify()->setUser(user);
+    }
+    return user;
 }
 
 }

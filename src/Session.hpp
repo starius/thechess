@@ -29,7 +29,7 @@ namespace thechess {
 class Session : public dbo::Session {
 public:
     Session(dbo::FixedSqlConnectionPool& pool);
-    void reconsider(TaskTracker& tracker);
+    void reconsider(Server& server);
     static dbo::SqlConnection* new_connection(const Options& options);
 
     /** Access user database */
@@ -45,6 +45,11 @@ public:
 private:
     UserDatabase user_database_;
     Wt::Auth::Login login_;
+
+    UserPtr add_user(const Server& server, const Wt::WString& name,
+                     const Wt::WString& password);
+
+    UserPtr auth_info_to_user(const AuthInfoPtr& auth_info);
 };
 
 }
