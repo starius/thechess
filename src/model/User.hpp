@@ -39,7 +39,6 @@ public:
     template<class Action>
     void persist(Action& a) {
         dbo::field(a, username_, "username");
-        dbo::field(a, password_, "password");
         dbo::field(a, rights_, "rights");
         dbo::field(a, sessions_, "sessions");
         dbo::field(a, last_enter_, "last_enter");
@@ -58,14 +57,6 @@ public:
         dbo::field(a, games_stat_, "games_stat");
     }
 #endif
-
-    /** Set password.
-    Password is stored in salted encrypted form.
-    */
-    void set_password(const std::string& password);
-
-    /** Return if the password is equal to the password of user */
-    bool test_password(const std::string& password) const;
 
     /** Get user name */
     const Wt::WString& username() const {
@@ -145,7 +136,6 @@ public:
 
 private:
     Wt::WString username_;
-    std::string password_; // UTF8
     Rights rights_; // default constructor: 0
     int sessions_;
     Wt::WDateTime last_enter_;

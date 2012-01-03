@@ -27,17 +27,6 @@ User::User(bool):
 User::User() {
 }
 
-void User::set_password(const std::string& password) {
-    std::string salt = "$.$";
-    salt[1] = config::CRYPT_ID;
-    salt += Wt::WRandom::generateId(config::SALT_LENGTH);
-    password_ = crypt(password.c_str(), salt.c_str());
-}
-
-bool User::test_password(const std::string& password) const {
-    return crypt(password.c_str(), password_.c_str()) == password_;
-}
-
 dbo::Query<GamePtr> User::games() const {
     return session()->find<Game>().where("white_id = ? or black_id = ? or init_game_id = ?")
            .bind(id()).bind(id()).bind(id());
