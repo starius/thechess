@@ -34,9 +34,9 @@ Server::Server(int argc, char** argv):
     password_service_(auth_service_) {
     addResource(&pgn_, "/pgn/");
     addEntryPoint(Wt::Application, boost::bind(createApplication, this, _1), "", "/favicon.ico");
+    auth_init();
     Session session(pool_);
     session.reconsider(*this);
-    auth_init();
 }
 
 const Options& Server::options() const {
