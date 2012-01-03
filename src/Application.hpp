@@ -46,11 +46,8 @@ public:
         return server_;
     }
 
-    const UserPtr& user() const {
-        return user_;
-    }
-    void set_user(const UserPtr& user);
-    void logout();
+    /** Return user */
+    UserPtr user();
 
     /** Get active Application.
     Same as WApplication::instance().
@@ -66,9 +63,10 @@ private:
     Session session_;
     MainWidget* main_widget_;
     Path path_;
-    UserPtr user_;
+    UserPtr prev_user_;
 
     void set_auth_widget();
+    void login_handler();
 };
 
 }

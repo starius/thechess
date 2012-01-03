@@ -39,14 +39,16 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/wtclasses/wtclasses");
     setCssTheme("polished");
+    session().login().changed().connect(this, &Application::login_handler);
+    login_handler();
 }
 
 Application::~Application() {
     try {
         dbo::Transaction t(session());
-        user_.reread();
-        if (user_) {
-            user_.modify()->logout();
+        user().reread();
+        if (user()) {
+            user().modify()->logout();
         }
         t.commit();
     } catch (std::exception& e) {
@@ -54,37 +56,35 @@ Application::~Application() {
     }
 }
 
-void Application::set_user(const UserPtr& user) {
-    dbo::Transaction t(session());
-    user_.reread();
-    if (user_) {
-        user_.modify()->logout();
-    }
-    user_ = user;
-    user_.reread();
-    user_.modify()->login();
+UserPtr Application::user() {
+    return session().user();
+}
+
+void Application::login_handler() {
     GamesVector games_vector;
-    {
-        Games games = user_->games().where("state in (?,?,?)")
-                      .bind(Game::CONFIRMED)
-                      .bind(Game::ACTIVE)
-                      .bind(Game::PAUSE);
-        games_vector.assign(games.begin(), games.end());
+    dbo::Transaction t(session());
+    if (prev_user_ != user()) {
+        prev_user_.reread();
+        if (prev_user_) {
+            prev_user_.modify()->logout();
+        }
+        user().reread();
+        if (user()) {
+            user().modify()->login();
+            {
+                Games games = user()->games().where("state in (?,?,?)")
+                              .bind(Game::CONFIRMED)
+                              .bind(Game::ACTIVE)
+                              .bind(Game::PAUSE);
+                games_vector.assign(games.begin(), games.end());
+            }
+        }
+        prev_user_ = user();
     }
+    t.commit();
     BOOST_FOREACH (GamePtr game, games_vector) {
         server_.tracker().add_or_update_task(Object(GAME, game.id()));
     }
-    t.commit();
-}
-
-void Application::logout() {
-    dbo::Transaction t(session());
-    user_.reread();
-    if (user_) {
-        user_.modify()->logout();
-        user_.reset();
-    }
-    t.commit();
 }
 
 void Application::notify(const Wt::WEvent& e) {
