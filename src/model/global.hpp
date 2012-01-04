@@ -20,6 +20,7 @@
 #include <Wt/WLogger> // FIXME otherwise Wt::log were not defined
 #include <Wt/Auth/Dbo/AuthInfo>
 #include <Wt/Auth/Dbo/UserDatabase>
+#include <Wt/Wc/TimeDurationDbo.hpp>
 
 #include "utils/time_intervals.hpp"
 #include "model/elo_player.hpp"
@@ -78,31 +79,6 @@ typedef std::vector<GamePtr> GamesVector;
 typedef std::vector<CPPtr> CPsVector;
 typedef std::vector<CompetitionPtr> CompetitionsVector;
 
-}
-
-/* @} */
-
-/** \name Field for Td */
-/* @{ */
-
-namespace Wt {
-namespace Dbo {
-
-class SqlConnection;
-class SqlStatement;
-
-template<>
-struct sql_value_traits<thechess::Td, void> {
-    static const bool specialized = true;
-
-    static const char* type(SqlConnection* conn, int size);
-    static void bind(const thechess::Td& v, SqlStatement* statement,
-                     int column, int size);
-    static bool read(thechess::Td& v, SqlStatement* statement,
-                     int column, int size);
-};
-
-}
 }
 
 /* @} */
