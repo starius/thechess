@@ -12,7 +12,7 @@
 #ifndef THECHESS_NOTIFY_HPP_
 #define THECHESS_NOTIFY_HPP_
 
-#define tNot &tApp->server().notifier()
+#define tNot (&tApp->server().notifier())
 
 namespace thechess {
 
