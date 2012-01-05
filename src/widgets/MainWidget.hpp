@@ -25,6 +25,9 @@ public:
     /** Show the menu with references */
     void show_menu(Path* path);
 
+    /** Get main menu */
+    MainMenu* main_menu();
+
     /** List of users */
     void user_list();
 

@@ -43,6 +43,10 @@ void MainWidget::show_menu(Path* path) {
     l()->addWidget(new MainMenu(path), Wt::WBorderLayout::West);
 }
 
+MainMenu* MainWidget::main_menu() {
+    return downcast<MainMenu*>(l()->widgetAt(Wt::WBorderLayout::West));
+}
+
 void MainWidget::user_view(const UserPtr& user) {
     set_contents(new UserWidget(user));
 }
