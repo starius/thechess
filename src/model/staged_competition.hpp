@@ -75,7 +75,7 @@ public:
     /** Map User to stage */
     typedef std::map<UserPtr, int> Stages;
 
-    /** MultiMap User to UserPair */
+    /** MultiMap stage to UserPair */
     typedef std::multimap<int, UserPair> Paires;
 
     /** Map UserPair to GamesVector */
