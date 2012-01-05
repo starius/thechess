@@ -28,7 +28,7 @@ class MyGamesListImp;
 class MyGameAnchor : public Wt::WAnchor, public Notifiable {
 public:
     MyGameAnchor(const GamePtr& game, MyGamesListImp* list):
-        Notifiable(Object(GAME, game.id()), NOTIFIER),
+        Notifiable(Object(GAME, game.id()), tNot),
         game_id_(game.id()), list_(list) {
         setText(boost::lexical_cast<std::string>(game_id_));
         setRefInternalPath(str(boost::format("/game/%i/") % game_id_));
@@ -105,7 +105,7 @@ typedef std::map<int, MyGameAnchor*> Anchors;
 class MyGamesListImp : public Wt::WContainerWidget, public Notifiable {
 public:
     MyGamesListImp(const UserPtr& user):
-        Notifiable(Object(USER, user.id()), NOTIFIER),
+        Notifiable(Object(USER, user.id()), tNot),
         user_id_(user.id()),
         last_clicked_(0) {
         for (int i = 0; i < ORDER_OF_STATES_SIZE; i++) {

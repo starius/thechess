@@ -135,7 +135,7 @@ class GameWidget::GameWidgetImpl : public Wt::WContainerWidget, public Notifiabl
 public:
     GameWidgetImpl(const GamePtr& game) :
         Wt::WContainerWidget(),
-        Notifiable(Object(GAME, game.id()), NOTIFIER),
+        Notifiable(Object(GAME, game.id()), tNot),
         game_(game) {
         dbo::Transaction t(tApp->session());
         new Wt::WText(tr("tc.game.Header")

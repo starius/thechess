@@ -357,7 +357,7 @@ private:
 CompetitionWidget::CompetitionWidget(const CompetitionPtr& competition,
                                      Wt::WContainerWidget* p):
     Wt::WTemplate(tr("tc.competition.widget_template"), p),
-    Notifiable(Object(COMPETITION, competition.id()), NOTIFIER),
+    Notifiable(Object(COMPETITION, competition.id()), tNot),
     c(competition) {
     reprint_();
 }
