@@ -21,6 +21,9 @@ public:
     /** Constructor */
     MainMenu(Path* path, Wt::WContainerWidget* parent = 0);
 
+    /** Show or hide user-only items */
+    void show_user_items(bool show = true);
+
 private:
     class MainMenuImpl;
 
