@@ -130,6 +130,9 @@ public:
         return winner_;
     }
 
+    /** Output competition tree in DOT format (graphviz) */
+    void dot(std::ostream& out) const;
+
     /** Return competitions */
     Competitiors competitors() const;
 

@@ -57,6 +57,65 @@ void StagedCompetition::process(Competition* competition, Objects& objects) {
     create_games_(competition, objects);
 }
 
+void StagedCompetition::dot(std::ostream& out) const {
+    Competitiors comp = competitors();
+    out << "digraph compatition_" << competition_->id() << " {" << std::endl;
+    typedef std::map<UserPtr, UserPtr> U2U;
+    typedef std::map<int, U2U> Stage2Users;
+    Stage2Users s2u;
+    BOOST_FOREACH (const Paires::value_type& stage_and_pair, paires_) {
+        int stage = stage_and_pair.first;
+        const UserPair& pair = stage_and_pair.second;
+        UserPtr winner;
+        if (winners_.find(pair) != winners_.end()) {
+            winner = winners_.find(pair)->second;
+        }
+        s2u[stage][pair.first()] = winner;
+        s2u[stage][pair.second()] = winner;
+    }
+    BOOST_FOREACH (const Stages::value_type& user_and_stage, stages_) {
+        const UserPtr& user = user_and_stage.first;
+        int stage = user_and_stage.second;
+        if (stage == 1) {
+            s2u[stage - 1][user] = user;
+        }
+    }
+    BOOST_FOREACH (const Stage2Users::value_type& stage_and_u2u, s2u) {
+        int stage = stage_and_u2u.first;
+        int stage_number = stage + 1;
+        const U2U& u2u = stage_and_u2u.second;
+        out << "subgraph stage_" << stage_number << " {" << std::endl;
+        BOOST_FOREACH (const U2U::value_type& user_to_user, u2u) {
+            const UserPtr& from = user_to_user.first;
+            const UserPtr& to = user_to_user.second;
+            out << "user_" << from.id() << "_stage_" << stage_number;
+            out << "[label='" << from->username() << "']" << std::endl;
+            out << "user_" << from.id() << "_stage_" << stage_number << " -> ";
+            if (to) {
+                out << "user_" << to.id() << "_stage_" << (stage_number + 1);
+            } else {
+                UserPair pair(from, comp[stage][from]);
+                int id = pair.first().id();
+                out << "empty_" << id << "_stage_" << (stage_number + 1);
+            }
+            out << std::endl;
+        }
+        if (s2u.find(stage - 1) != s2u.end()) {
+            BOOST_FOREACH (const U2U::value_type& user_to_user, s2u[stage - 1]) {
+                const UserPtr& from = user_to_user.first;
+                const UserPtr& to = user_to_user.second;
+                if (!to) {
+                    UserPair pair(from, comp[stage][from]);
+                    int id = pair.first().id();
+                    out << "empty_" << id << "_stage_" << stage_number;
+                }
+            }
+        }
+        out << "}" << std::endl;
+    }
+    out << "}" << std::endl;
+}
+
 StagedCompetition::Competitiors StagedCompetition::competitors() const {
     Competitiors r;
     BOOST_FOREACH (const Paires::value_type& stage_and_pair, paires_) {
