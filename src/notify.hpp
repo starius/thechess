@@ -16,9 +16,16 @@
 
 namespace thechess {
 
+/** Notifier class */
 typedef Wt::Wc::notify::Server Notifier;
+
+/** Notifiable widget */
 typedef Wt::Wc::notify::Widget Notifiable;
+
+/** Event for notifications */
 typedef Wt::Wc::notify::Event Event;
+
+/** Shared pointer to Event */
 typedef Wt::Wc::notify::EventPtr EventPtr;
 
 }
