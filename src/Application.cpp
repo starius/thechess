@@ -23,6 +23,7 @@
 #include "Session.hpp"
 #include "model/all.hpp"
 #include "TaskTracker.hpp"
+#include "widgets/MainMenu.hpp"
 
 namespace thechess {
 
@@ -86,6 +87,7 @@ void Application::login_handler() {
     BOOST_FOREACH (GamePtr game, games_vector) {
         server_.tracker().add_or_update_task(Object(GAME, game.id()));
     }
+    main_widget_->main_menu()->show_user_items(session_.login().loggedIn());
 }
 
 void Application::notify(const Wt::WEvent& e) {
