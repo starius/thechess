@@ -50,7 +50,7 @@ public:
         style_by_state(game->state());
     }
 
-    virtual void notify();
+    virtual void notify(EventPtr);
 
     int game_id() const {
         return game_id_;
@@ -114,7 +114,7 @@ public:
         update_games_list_();
     }
 
-    virtual void notify() {
+    void notify(EventPtr) {
         update_games_list_();
     }
 
@@ -208,7 +208,7 @@ private:
     friend class MyGameAnchor;
 };
 
-void MyGameAnchor::notify() {
+void MyGameAnchor::notify(EventPtr) {
     list_->anchor_notify_handler_(this);
 }
 

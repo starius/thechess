@@ -21,7 +21,7 @@ public:
     CompetitionWidget(const CompetitionPtr& competition,
                       Wt::WContainerWidget* p = 0);
 
-    virtual void notify();
+    virtual void notify(EventPtr);
 
 private:
     CompetitionPtr c;

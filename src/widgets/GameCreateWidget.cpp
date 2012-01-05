@@ -64,9 +64,9 @@ void GameCreateWidget::button_handler_() {
         game.modify()->propose_challenge(tApp->user(), color);
     }
     t.commit();
-    tApp->server().notifier().emit(Object(USER, tApp->user().id()));
+    tApp->server().notifier().emit(new Object(USER, tApp->user().id()));
     if (with_user_) {
-        tApp->server().notifier().emit(Object(USER, user_.id()));
+        tApp->server().notifier().emit(new Object(USER, user_.id()));
     }
     tApp->path().game_view()->set_integer_value(game.id());
     tApp->path().game_view()->open(/* change path */ true);

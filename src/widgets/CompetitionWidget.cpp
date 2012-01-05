@@ -384,7 +384,7 @@ void CompetitionWidget::reprint_() {
     t.commit();
 }
 
-void CompetitionWidget::notify() {
+void CompetitionWidget::notify(EventPtr) {
     reprint_();
 }
 

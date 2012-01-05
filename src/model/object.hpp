@@ -12,6 +12,7 @@
 
 #include <Wt/Dbo/Session>
 #include <Wt/WDateTime>
+#include <Wt/Wc/Notify.hpp>
 
 namespace dbo = Wt::Dbo;
 
@@ -32,7 +33,7 @@ enum ObjectType {
 
 \ingroup model
 */
-struct Object {
+struct Object : public Wt::Wc::notify::Event {
     /** Constructor */
     Object(ObjectType ot, int i);
 
@@ -57,6 +58,8 @@ struct Object {
 
     /** Trigger processing methods, return datetime of next trigger */
     Wt::WDateTime process(Objects& objects, dbo::Session& session) const;
+
+    std::string key() const;
 };
 
 }

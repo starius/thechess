@@ -6,6 +6,7 @@
  */
 
 #include <boost/assert.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include <Wt/Dbo/Transaction>
 
@@ -51,6 +52,11 @@ Wt::WDateTime Object::process(Objects& objects, dbo::Session& session) const {
         result += config::tracker::DELAY;
     }
     return result;
+}
+
+std::string Object::key() const {
+    return boost::lexical_cast<std::string>(type) + "-" +
+           boost::lexical_cast<std::string>(id);
 }
 
 }

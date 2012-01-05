@@ -73,7 +73,7 @@ void TaskTracker::check_(const boost::system::error_code& error) {
                     Wt::WDateTime new_time = object.process(objects, session_);
                     t.commit();
                     std::cout << "TaskTracker::check_ commit" << std::endl;
-                    server_.notifier().emit(object);
+                    server_.notifier().emit(new Object(object));
                     if (new_time.isValid() && new_time > cached_now) {
                         t2i[object] = w2t.insert(std::make_pair(new_time, object));
                     } else {

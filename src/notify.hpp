@@ -8,7 +8,6 @@
 #include <Wt/Wc/Notify.hpp>
 
 #include "Application.hpp"
-#include "model/object.hpp"
 
 #ifndef THECHESS_NOTIFY_HPP_
 #define THECHESS_NOTIFY_HPP_
@@ -17,8 +16,10 @@
 
 namespace thechess {
 
-typedef Wt::Wc::notify::Server<Object> Notifier;
-typedef Wt::Wc::notify::Widget<Object> Notifiable;
+typedef Wt::Wc::notify::Server Notifier;
+typedef Wt::Wc::notify::Widget Notifiable;
+typedef Wt::Wc::notify::Event Event;
+typedef Wt::Wc::notify::EventPtr EventPtr;
 
 }
 
