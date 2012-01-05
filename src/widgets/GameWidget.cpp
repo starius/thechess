@@ -207,7 +207,7 @@ private:
         bool game_ended = game_->is_ended();
         t.commit();
         Object object(GAME, game_.id());
-        tApp->server().notifier().emit(new Object(GAME, game_.id()));
+        tNot->emit(new Object(GAME, game_.id()));
         if (game_ended) {
             tApp->server().tracker().add_or_update_task(object);
         }
@@ -359,13 +359,13 @@ private:
         (game_.modify()->*method)(tApp->user());
         Game::State state_after = game_->state();
         t.commit();
-        tApp->server().notifier().emit(new Object(GAME, game_.id()));
+        tNot->emit(new Object(GAME, game_.id()));
         if (state_after != state_before) {
             Object object(GAME, game_.id());
             tApp->server().tracker().add_or_update_task(object);
         }
         if (method == &Game::join) {
-            tApp->server().notifier().emit(new Object(USER, tApp->user().id()));
+            tNot->emit(new Object(USER, tApp->user().id()));
         }
     }
 
@@ -382,7 +382,7 @@ private:
         game_.modify()
         ->pause_propose(tApp->user(), pause_duration->corrected_value());
         t.commit();
-        tApp->server().notifier().emit(new Object(GAME, game_.id()));
+        tNot->emit(new Object(GAME, game_.id()));
     }
 
     void mistake_propose_() {
@@ -391,7 +391,7 @@ private:
         game_.modify()
         ->mistake_propose(tApp->user(), moves_widget_->current_move());
         t.commit();
-        tApp->server().notifier().emit(new Object(GAME, game_.id()));
+        tNot->emit(new Object(GAME, game_.id()));
     }
 
     void show_analysis_() {
@@ -423,7 +423,7 @@ private:
         game_.reread();
         game_.modify()->set_comment(tApp->user(), text);
         t.commit();
-        tApp->server().notifier().emit(new Object(GAME, game_.id()));
+        tNot->emit(new Object(GAME, game_.id()));
     }
 
     void print_comment_() {
