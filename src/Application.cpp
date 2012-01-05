@@ -41,6 +41,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     setCssTheme("polished");
     session().login().changed().connect(this, &Application::login_handler);
     login_handler();
+    path_.open(internalPath());
 }
 
 Application::~Application() {
