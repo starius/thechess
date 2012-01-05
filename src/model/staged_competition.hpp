@@ -61,6 +61,8 @@ but used to access staged competition-specific data of a competition
 and to process scheduling tasks.
 
 StagedCompetition doesn't reflect Competition's changes.
+
+Stage index is 0-based.
 */
 class StagedCompetition {
 public:
