@@ -57,6 +57,17 @@ void StagedCompetition::process(Competition* competition, Objects& objects) {
     create_games_(competition, objects);
 }
 
+StagedCompetition::Competitiors StagedCompetition::competitors() const {
+    Competitiors r;
+    BOOST_FOREACH (const Paires::value_type& stage_and_pair, paires_) {
+        int stage = stage_and_pair.first;
+        const UserPair& pair = stage_and_pair.second;
+        r[stage][pair.first()] = pair.second();
+        r[stage][pair.second()] = pair.first();
+    }
+    return r;
+}
+
 void StagedCompetition::read_games_() {
     BOOST_FOREACH (const GamePtr& game, competition_->games_vector()) {
         UserPair pair(game->white(), game->black());

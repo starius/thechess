@@ -86,6 +86,12 @@ public:
     /** Map UserPair to User (winner) */
     typedef std::map<UserPair, UserPtr> Winners;
 
+    /** Map user to user */
+    typedef std::map<UserPtr, UserPtr> U2U;
+
+    /** Competitor of the user in the stage */
+    typedef std::map<int, U2U> Competitiors;
+
     /** Constructor */
     StagedCompetition(const Competition* competition);
 
@@ -123,6 +129,9 @@ public:
     const UserPtr& winner() const {
         return winner_;
     }
+
+    /** Return competitions */
+    Competitiors competitors() const;
 
 private:
     const Competition* competition_;

@@ -197,8 +197,7 @@ const int GAMES_COLUMN = 2;
 class StagedView : public Wt::WTreeTable {
 public:
     StagedView(const CompetitionPtr& c):
-        c_(c), sc_(&*c) {
-        calculate_competitors_();
+        c_(c), sc_(&*c), competitors_(sc_.competitors()) {
         resize(650, 300);
         addColumn(tr("tc.competition.Stage"), 100);
         addColumn(tr("tc.competition.Games_list"), 300);
@@ -225,15 +224,6 @@ private:
     CompetitionPtr c_;
     StagedCompetition sc_;
     std::map<int, std::map<UserPtr, UserPtr> > competitors_;
-
-    void calculate_competitors_() {
-        BOOST_FOREACH (const StagedCompetition::Paires::value_type& stage_and_pair, sc_.paires()) {
-            int stage = stage_and_pair.first;
-            const UserPair& pair = stage_and_pair.second;
-            competitors_[stage][pair.first()] = pair.second();
-            competitors_[stage][pair.second()] = pair.first();
-        }
-    }
 
     void print_pair_(int stage, const UserPair& pair, Wt::WTreeTableNode* parent) {
         Wt::WString title;
