@@ -26,15 +26,20 @@ Wt::WApplication* createApplication(Server* server, const Wt::WEnvironment& env)
     return new thechess::Application(env, *server);
 }
 
+Session* session_creator(Server* server) {
+    return new Session(server->pool());
+}
+
 Server::Server(int argc, char** argv):
     Wt::WServer(argv[0], first_file(config::WT_CONFIG_FILES, config::WT_CONFIG_FILES_SIZE)),
     options_((setServerConfiguration(argc, argv), *this)), // options_ needs read conf
     pool_(Session::new_connection(options_), options_.connections_in_pool()),
-    notifier_(this), tracker_(*this), pgn_(*this),
+    notifier_(this), planning_(*this), pgn_(*this),
     password_service_(auth_service_) {
     addResource(&pgn_, "/pgn/");
     addEntryPoint(Wt::Application, boost::bind(createApplication, this, _1), "", "/favicon.ico");
     auth_init();
+    planning_.start();
     Session session(pool_);
     session.reconsider(*this);
 }
@@ -49,10 +54,6 @@ dbo::FixedSqlConnectionPool& Server::pool() {
 
 Notifier& Server::notifier() {
     return notifier_;
-}
-
-TaskTracker& Server::tracker() {
-    return tracker_;
 }
 
 void Server::auth_init() {

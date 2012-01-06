@@ -48,13 +48,13 @@ StagedCompetition::StagedCompetition(const Competition* competition):
     read_paires_();
 }
 
-void StagedCompetition::process(Competition* competition, Objects& objects) {
+void StagedCompetition::process(Competition* competition, Planning* planning) {
     BOOST_ASSERT(competition->id() == competition_->id());
     if (games_.empty() && competition->state() == Competition::ACTIVE) {
         start_competition_();
     }
     join_users_();
-    create_games_(competition, objects);
+    create_games_(competition, planning);
 }
 
 void StagedCompetition::dot(std::ostream& out) const {
@@ -214,7 +214,8 @@ void StagedCompetition::join_users_() {
     }
 }
 
-void StagedCompetition::create_games_(Competition* competition, Objects& objects) {
+void StagedCompetition::create_games_(Competition* competition,
+        Planning* planning) {
     BOOST_FOREACH (Paires::value_type& stage_and_pair, paires_) {
         int stage = stage_and_pair.first;
         UserPair pair = stage_and_pair.second;
@@ -228,10 +229,10 @@ void StagedCompetition::create_games_(Competition* competition, Objects& objects
                 const UserPtr& black = i ? pair.second() : pair.first();
                 GamePtr game = competition->create_game_(white, black, stage, no_draw);
                 games_[pair].push_back(game);
-                objects.push_back(Object(GAME, game.id()));
+                planning->add(new Object(GAME, game.id()), now());
             }
-            objects.push_back(Object(USER, pair.first().id()));
-            objects.push_back(Object(USER, pair.second().id()));
+            planning->add(new Object(USER, pair.first().id()), now());
+            planning->add(new Object(USER, pair.second().id()), now());
         }
     }
 }

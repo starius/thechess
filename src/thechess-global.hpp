@@ -19,7 +19,6 @@ class Options;
 class Path;
 class Server;
 class Session;
-class TaskTracker;
 
 }
 

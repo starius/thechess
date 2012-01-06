@@ -16,7 +16,7 @@
 #include "notify.hpp"
 #include "Options.hpp"
 #include "Session.hpp"
-#include "TaskTracker.hpp"
+#include "Planning.hpp"
 #include "widgets/PgnResource.hpp"
 
 namespace dbo = Wt::Dbo;
@@ -36,7 +36,10 @@ public:
     const Options& options() const;
     dbo::FixedSqlConnectionPool& pool();
     Notifier& notifier();
-    TaskTracker& tracker();
+
+    Planning& planning() {
+        return planning_;
+    }
 
     const Wt::Auth::AuthService& auth_service() const {
         return auth_service_;
@@ -50,7 +53,7 @@ private:
     Options options_;
     dbo::FixedSqlConnectionPool pool_;
     Notifier notifier_;
-    TaskTracker tracker_;
+    Planning planning_;
     PgnResource pgn_;
     Wt::Auth::AuthService auth_service_;
     Wt::Auth::PasswordService password_service_;

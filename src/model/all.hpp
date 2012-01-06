@@ -17,6 +17,8 @@
 #include "model/object.hpp"
 #include "model/elo_player.hpp"
 #include "model/staged_competition.hpp"
+#include "Session.hpp"
+#include "Planning.hpp"
 
 namespace thechess {
 

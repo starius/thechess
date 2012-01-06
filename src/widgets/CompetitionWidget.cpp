@@ -328,8 +328,7 @@ private:
         c_.reread();
         (c_.modify()->*method)(tApp->user());
         t.commit();
-        Object object(COMPETITION, c_.id());
-        tApp->server().tracker().add_or_update_task(object);
+        tApp->server().planning().add(new Object(COMPETITION, c_.id()), now());
     }
 
     template <CompetitionMethod method>

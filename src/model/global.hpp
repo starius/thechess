@@ -259,5 +259,17 @@ typedef Wt::Auth::Dbo::UserDatabase<AuthInfo> UserDatabase;
 
 /* @} */
 
+/** \name Auth */
+/* @{ */
+
+namespace thechess {
+
+/** Planning server */
+class Planning;
+
+}
+
+/* @} */
+
 #endif
 

@@ -207,10 +207,9 @@ private:
         }
         bool game_ended = game_->is_ended();
         t.commit();
-        Object object(GAME, game_.id());
         tNot->emit(new Object(GAME, game_.id()));
         if (game_ended) {
-            tApp->server().tracker().add_or_update_task(object);
+            tApp->server().planning().add(new Object(GAME, game_.id()), now());
         }
     }
 
@@ -362,8 +361,7 @@ private:
         t.commit();
         tNot->emit(new Object(GAME, game_.id()));
         if (state_after != state_before) {
-            Object object(GAME, game_.id());
-            tApp->server().tracker().add_or_update_task(object);
+            tApp->server().planning().add(new Object(GAME, game_.id()), now());
         }
         if (method == &Game::join) {
             tNot->emit(new Object(USER, tApp->user().id()));

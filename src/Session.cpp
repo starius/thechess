@@ -15,8 +15,8 @@
 
 #include "Session.hpp"
 #include "Server.hpp"
+#include "Planning.hpp"
 #include "model/all.hpp"
-#include "TaskTracker.hpp"
 #include "utils/utils.hpp"
 
 namespace thechess {
@@ -35,7 +35,7 @@ Session::Session(dbo::FixedSqlConnectionPool& pool):
 }
 
 void Session::reconsider(Server& server) {
-    TaskTracker& tracker = server.tracker();
+    Planning* planning = &server.planning();
     try {
         dbo::Transaction t(*this);
         createTables();
@@ -55,11 +55,11 @@ void Session::reconsider(Server& server) {
     dbo::Transaction t2(*this);
     Games games = find<Game>().where("state < ?").bind(Game::MIN_ENDED);
     BOOST_FOREACH (const GamePtr& game, games) {
-        tracker.add_or_update_task(Object(GAME, game.id()));
+        planning->add(new Object(GAME, game.id()), now());
     }
     Competitions cs = find<Competition>().where("state < ?").bind(Competition::ENDED);
     BOOST_FOREACH (const CompetitionPtr& c, cs) {
-        tracker.add_or_update_task(Object(COMPETITION, c.id()));
+        planning->add(new Object(COMPETITION, c.id()), now());
     }
     t2.commit();
 }

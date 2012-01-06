@@ -9,8 +9,12 @@
 #include <boost/lexical_cast.hpp>
 
 #include <Wt/Dbo/Transaction>
+#include <Wt/Wc/util.hpp>
 
 #include "model/all.hpp"
+#include "Session.hpp"
+#include "Planning.hpp"
+#include "Server.hpp"
 #include "config.hpp"
 
 namespace thechess {
@@ -19,39 +23,34 @@ Object::Object(ObjectType ot, int i) :
     type(ot), id(i) {
 }
 
-void Object::reread(dbo::Session& session) const {
-    dbo::Transaction t(session);
-    if (type == GAME) {
-        session.load<Game>(id).reread();
-    }
-    if (type == USER) {
-        session.load<User>(id).reread();
-    }
-    if (type == COMPETITION) {
-        session.load<Competition>(id).reread();
-    }
-    t.commit();
-}
-
-Wt::WDateTime Object::process(Objects& objects, dbo::Session& session) const {
-    Wt::WDateTime result;
-    if (type == GAME) {
-        GamePtr game = session.load<Game>(id);
-        game.reread();
-        game.modify()->check(objects);
-        result = game->next_check();
-    }
-    if (type == COMPETITION) {
-        CompetitionPtr c = session.load<Competition>(id);
-        c.reread();
-        c.modify()->check(objects);
-        result = c->next_check();
-    }
-    // FIXME: USER, COMPETITION
-    if (result.isValid()) {
-        result += config::tracker::DELAY;
-    }
-    return result;
+void Object::process(Wt::Wc::notify::TaskPtr task,
+                     Wt::Wc::notify::PlanningServer* server) const {
+    std::cerr << "Check object: " << key() << std::endl;
+    Planning* planning = downcast<Planning*>(server);
+    Session session(planning->server().pool());
+    try {
+        dbo::Transaction t(session);
+        Wt::WDateTime result;
+        if (type == GAME) {
+            GamePtr game = session.load<Game>(id, /* reread */ true);
+            game.modify()->check(task, planning);
+        }
+        if (type == COMPETITION) {
+            CompetitionPtr c = session.load<Competition>(id, /* reread */ true);
+            c.modify()->check(task, planning);
+        }
+        // FIXME: USER, COMPETITION
+        t.commit();
+    } catch (dbo::ObjectNotFoundException e) {
+        std::cerr << e.what() << std::endl;
+    } catch (dbo::StaleObjectException& e) {
+        std::cerr << e.what() << std::endl;
+        planning->add(task, now() + config::tracker::STALE_OBJECT_DELAY);
+    } catch (std::exception& e) { // database locked?
+        std::cerr << e.what() << std::endl;
+        planning->add(task, now() + config::tracker::UNKNOWN_ERROR_DELAY);
+    } catch (...)
+    { }
 }
 
 std::string Object::key() const {

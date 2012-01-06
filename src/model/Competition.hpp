@@ -199,7 +199,7 @@ public:
      - RECRUITING into CANCELLED, if time > max_recruiting_time()
      - ACTIVE into ENDED
     */
-    void check(Objects& objects);
+    void check(Wt::Wc::notify::TaskPtr task, Planning* planning);
 
     /** Return the datetime of next expected check */
     Wt::WDateTime next_check() const;
@@ -273,14 +273,14 @@ private:
     Users winners_;
 
     bool can_start_() const;
-    void start_(Objects& objects);
-    void create_games_classical_(Objects& objects);
+    void start_(Planning* planning);
+    void create_games_classical_(Planning* planning);
     void cancel_();
 
-    void process_(Objects& objects);
-    void process_classical_(Objects& objects);
+    void process_(Planning* planning);
+    void process_classical_(Planning* planning);
 
-    void finish_(const UsersVector& winners, Objects& objects);
+    void finish_(const UsersVector& winners, Planning* planning);
 
     GamePtr create_game_(const UserPtr& white, const UserPtr& black, int stage = -1,
                          bool no_draw = false);

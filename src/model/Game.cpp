@@ -12,7 +12,6 @@
 
 #include "model/all.hpp"
 #include "utils/rand.hpp"
-#include "TaskTracker.hpp"
 #include "chess/Board.hpp"
 
 namespace thechess {
@@ -123,7 +122,7 @@ UserPtr Game::other_user(const UserPtr& user) const {
     return user_of(Piece::other_color(color_of(user)));
 }
 
-void Game::check(Objects& objects) {
+void Game::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
     if (state() == PROPOSED && competition() && competition()->type() == STAGED &&
             now() - created_ > competition()->cp()->relax_time()) {
         confirm_();
@@ -141,8 +140,9 @@ void Game::check(Objects& objects) {
         finish_(TIMEOUT, winner);
     }
     if (is_ended() && competition()) {
-        objects.push_back(Object(COMPETITION, competition().id()));
+        planning->add(new Object(COMPETITION, competition().id()), now());
     }
+    planning->add(task, next_check());
 }
 
 Td Game::limit_private(Piece::Color color) const {

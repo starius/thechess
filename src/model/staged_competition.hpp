@@ -11,6 +11,7 @@
 #include <map>
 
 #include "model/all.hpp"
+#include "Planning.hpp"
 
 namespace thechess {
 
@@ -96,7 +97,7 @@ public:
     StagedCompetition(const Competition* competition);
 
     /** Process scheduling tasks */
-    void process(Competition* competition, Objects& objects);
+    void process(Competition* competition, Planning* planning);
 
     /** Get states */
     const States& states() const {
@@ -154,7 +155,7 @@ private:
 
     void start_competition_();
     void join_users_();
-    void create_games_(Competition* competition, Objects& objects);
+    void create_games_(Competition* competition, Planning* planning);
 };
 
 }

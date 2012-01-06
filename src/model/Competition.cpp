@@ -41,17 +41,18 @@ void Competition::create_competition(const UserPtr& user) {
     init_ = user;
 }
 
-void Competition::check(Objects& objects) {
+void Competition::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
     if (state_ == RECRUITING) {
         if (can_start_()) {
-            start_(objects);
+            start_(planning);
         } else if (now() - created_ > cp_->max_recruiting_time()) {
             cancel_();
         }
     }
     if (state_ == ACTIVE) {
-        process_(objects);
+        process_(planning);
     }
+    planning->add(task, next_check());
 }
 
 Wt::WDateTime Competition::next_check() const {
@@ -251,15 +252,15 @@ bool Competition::can_start_() const {
     return result;
 }
 
-void Competition::start_(Objects& objects) {
+void Competition::start_(Planning* planning) {
     if (type() == CLASSICAL) {
-        create_games_classical_(objects);
+        create_games_classical_(planning);
     }
     state_ = ACTIVE;
     started_ = now();
 }
 
-void Competition::create_games_classical_(Objects& objects) {
+void Competition::create_games_classical_(Planning* planning) {
     UsersVector members(members_.begin(), members_.end());
     std::random_shuffle(members.begin(), members.end(), rand_for_shuffle);
     int white_games_per_user = std::max(1, int((members.size() - 1) * cp_->games_factor()));
@@ -281,30 +282,30 @@ void Competition::create_games_classical_(Objects& objects) {
             N[black][white] += 1;
             create_game_(white, black);
         }
-        objects.push_back(Object(USER, white.id()));
+        planning->add(new Object(USER, white.id()), now());
     }
 }
 
-void Competition::process_(Objects& objects) {
+void Competition::process_(Planning* planning) {
     if (type() == CLASSICAL) {
-        process_classical_(objects);
+        process_classical_(planning);
         GamesVector g(games_vector());
         if (all_ended(g)) {
             UsersVector winners = winners_of_games(g);
-            finish_(winners, objects);
+            finish_(winners, planning);
         }
     } else if (type() == STAGED) {
         StagedCompetition sc(this);
-        sc.process(this, objects);
+        sc.process(this, planning);
         if (sc.winner()) {
             UsersVector winners;
             winners.push_back(sc.winner());
-            finish_(winners, objects);
+            finish_(winners, planning);
         }
     }
 }
 
-void Competition::process_classical_(Objects& objects) {
+void Competition::process_classical_(Planning* planning) {
     BOOST_ASSERT(type() == CLASSICAL);
     std::map<UserPtr, int> used;
     GamesVector proposed;
@@ -322,14 +323,14 @@ void Competition::process_classical_(Objects& objects) {
         if (used[g->white()] < cp_->max_simultaneous_games() &&
                 used[g->black()] < cp_->max_simultaneous_games()) {
             g.modify()->confirm_by_competition();
-            objects.push_back(Object(GAME, g.id()));
+            planning->add(new Object(GAME, g.id()), now());
             used[g->white()] += 1;
             used[g->black()] += 1;
         }
     }
 }
 
-void Competition::finish_(const UsersVector& winners, Objects&) {
+void Competition::finish_(const UsersVector& winners, Planning*) {
     BOOST_FOREACH (const UserPtr& u, winners) {
         winners_.insert(u);
     }

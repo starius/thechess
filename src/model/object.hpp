@@ -13,13 +13,11 @@
 #include <Wt/Dbo/Session>
 #include <Wt/WDateTime>
 #include <Wt/Wc/Notify.hpp>
+#include <Wt/Wc/Planning.hpp>
 
 namespace dbo = Wt::Dbo;
 
 namespace thechess {
-
-struct Object;
-typedef std::vector<Object> Objects;
 
 /** Model type */
 enum ObjectType {
@@ -27,13 +25,13 @@ enum ObjectType {
     GAME,
     USER,
     COMPETITION
-}; // change Object::reread() after changing this
+};
 
 /** Struct referencing any instance of any changable model.
 
 \ingroup model
 */
-struct Object : public Wt::Wc::notify::Event {
+struct Object : public Wt::Wc::notify::Task {
     /** Constructor */
     Object(ObjectType ot, int i);
 
@@ -53,11 +51,8 @@ struct Object : public Wt::Wc::notify::Event {
         return id == b.id && type == b.type;
     }
 
-    /** Reread to the session */
-    void reread(dbo::Session& session) const;
-
-    /** Trigger processing methods, return datetime of next trigger */
-    Wt::WDateTime process(Objects& objects, dbo::Session& session) const;
+    void process(Wt::Wc::notify::TaskPtr task,
+                 Wt::Wc::notify::PlanningServer* server) const;
 
     std::string key() const;
 };

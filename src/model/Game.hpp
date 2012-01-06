@@ -124,7 +124,7 @@ public:
     In the latter case, if the game is attributed to the competition,
     the competition is added to \p objects.
     */
-    void check(Objects& objects);
+    void check(Wt::Wc::notify::TaskPtr task, Planning* planning);
 
     /** Return the datetime of next expected check */
     Wt::WDateTime next_check() const;
