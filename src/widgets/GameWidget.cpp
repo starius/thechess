@@ -138,6 +138,7 @@ public:
         Notifiable(Object(GAME, game.id()), tNot),
         game_(game) {
         dbo::Transaction t(tApp->session());
+        game_.reread();
         new Wt::WText(tr("tc.game.Header")
                       .arg((int)game.id()), this);
         int max_moves = -1;
