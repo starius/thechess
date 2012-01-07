@@ -128,9 +128,8 @@ private:
     void update_games_list_() {
         dbo::Transaction t(tApp->session());
         user_.reread();
-        Games games_collection = user_->games().where("state < ?").bind(Game::MIN_ENDED);
-        GamesVector games_vector(games_collection.begin(), games_collection.end());
-        BOOST_FOREACH (const GamePtr& game, games_vector) {
+        Games games = user_->games().where("state < ?").bind(Game::MIN_ENDED);
+        BOOST_FOREACH (GamePtr game, games) {
             if (anchors_.find(game.id()) == anchors_.end()) {
                 MyGameAnchor* a = new MyGameAnchor(game, this);
                 a->clicked().connect(this, &MyGamesListImp::click_handler_);
