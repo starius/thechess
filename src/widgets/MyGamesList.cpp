@@ -33,17 +33,18 @@ public:
         setText(boost::lexical_cast<std::string>(game_id_));
         setRefInternalPath(str(boost::format("/game/%i/") % game_id_));
         setInline(false);
-        if (game->can_confirm(tApp->user())) {
+        UserPtr user = tApp->user();
+        if (game->can_confirm(user)) {
             excite();
-        } else if (game->can_competition_confirm(tApp->user())) {
+        } else if (game->can_competition_confirm(user)) {
             excite();
-        } else if (game->can_pause_agree(tApp->user())) {
+        } else if (game->can_pause_agree(user)) {
             excite();
-        } else if (game->can_mistake_agree(tApp->user())) {
+        } else if (game->can_mistake_agree(user)) {
             excite();
-        } else if (game->can_draw_agree(tApp->user())) {
+        } else if (game->can_draw_agree(user)) {
             excite();
-        } else if (game->can_move(tApp->user())) {
+        } else if (game->can_move(user)) {
             excite();
         }
         deselect();
