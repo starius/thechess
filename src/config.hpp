@@ -208,12 +208,9 @@ const float BEGINNER_K = 25;
 const float OTHER_K = 15;
 }
 
-const int SALT_LENGTH = 16;
-const char CRYPT_ID = '5'; // man 3 crypt
-
 namespace tracker {
+
 const Td DELAY = 0.01 * SECOND;
-const Td DUMMY_TIMER_EXPIRY_TIME = 100500 * DAY;
 const Td STALE_OBJECT_DELAY = SECOND;
 const Td UNKNOWN_ERROR_DELAY = 2 * SECOND;
 }
