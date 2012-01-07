@@ -131,7 +131,9 @@ const int FIRST_DRAW = 5000 * 2;
 
 }
 
-/** The namespace for competition constants */
+/** The namespace for competition constants.
+\see CP
+*/
 namespace competition {
 
 /** The namespace for min allowed values of parameters */
@@ -149,77 +151,191 @@ const Classification MAX_CLASSIFICATION = CLASSIFICATION_F;
 /** Min value of min classification of member */
 const Classification MIN_CLASSIFICATION = NO_CLASSIFICATION;
 
+/** Time after which confirmed games would be started automatically */
 const Td FORCE_START_DELAY = MINUTE;
+
+/** Min recruiting time competition to start */
 const Td MIN_RECRUITING_TIME = MINUTE;
+
+/** Time after which competition would be canceled in case not started */
 const Td MAX_RECRUITING_TIME = 2 * HOUR;
+
+/** Min number of members competition to start */
 const int MIN_USERS = 2;
+
+/** Max allowed number of members */
 const int MAX_USERS = 5;
+
+/** Max number of simultaneous games by user */
 const int MAX_SIMULTANEOUS_GAMES = 1;
+
+/** Factor of games number */
 const float GAMES_FACTOR = 0.01;
+
+/** Time after which created games would be confirmed automatically */
 const Td RELAX_TIME = MINUTE;
+
+/** Min number of substages played in case of draw before no-draw game */
 const int MIN_SUBSTAGES = 1;
+
+/** Increment of the number of substages per each substage */
 const int INCREMENT_SUBSTAGES = 0;
 
 }
 
+/** The namespace for default values of parameters */
 namespace defaults {
+
+/** Competition type, selected by default */
 const CompetitionType COMPETITION_TYPE = STAGED;
+
+/** Min value of max rating of member */
 const int MAX_RATING = 2000;
+
+/** Min value of min rating of member */
 const int MIN_RATING = 500;
+
+/** Min value of max classification of member */
 const Classification MAX_CLASSIFICATION = SUPER_GRANDMASTER;
+
+/** Min value of min classification of member */
 const Classification MIN_CLASSIFICATION = NO_CLASSIFICATION;
+
+/** Time after which confirmed games would be started automatically */
 const Td FORCE_START_DELAY = DAY;
+
+/** Min recruiting time competition to start */
 const Td MIN_RECRUITING_TIME = 3 * DAY;
+
+/** Time after which competition would be canceled in case not started */
 const Td MAX_RECRUITING_TIME = WEEK;
+
+/** Min number of members competition to start */
 const int MIN_USERS = 8;
+
+/** Max allowed number of members */
 const int MAX_USERS = 16;
+
+/** Max number of simultaneous games by user */
 const int MAX_SIMULTANEOUS_GAMES = 8;
+
+/** Factor of games number */
 const float GAMES_FACTOR = 1.0;
+
+/** Time after which created games would be confirmed automatically */
 const Td RELAX_TIME = DAY;
+
+/** Min number of substages played in case of draw before no-draw game */
 const int MIN_SUBSTAGES = 3;
+
+/** Increment of the number of substages per each substage */
 const int INCREMENT_SUBSTAGES = 1;
 
+/** Default value of norating.
+\sa GP::norating()
+*/
 const bool NORATING = true;
 
 }
 
+/** The namespace for max allowed values of parameters */
 namespace max {
+
+/** Min value of max rating of member */
 const int MAX_RATING = 3000;
+
+/** Min value of min rating of member */
 const int MIN_RATING = 1700;
+
+/** Min value of max classification of member */
 const Classification MAX_CLASSIFICATION = SUPER_GRANDMASTER;
+
+/** Min value of min classification of member */
 const Classification MIN_CLASSIFICATION = NATIONAL_MASTER;
+
+/** Time after which confirmed games would be started automatically */
 const Td FORCE_START_DELAY = WEEK;
+
+/** Min recruiting time competition to start */
 const Td MIN_RECRUITING_TIME = 4 * WEEK;
+
+/** Time after which competition would be canceled in case not started */
 const Td MAX_RECRUITING_TIME = 8 * WEEK;
+
+/** Min number of members competition to start */
 const int MIN_USERS = 50;
+
+/** Max allowed number of members */
 const int MAX_USERS = 100;
+
+/** Max number of simultaneous games by user */
 const int MAX_SIMULTANEOUS_GAMES = 50;
+
+/** Factor of games number */
 const float GAMES_FACTOR = 10.0;
+
+/** Time after which created games would be confirmed automatically */
 const Td RELAX_TIME = WEEK;
+
+/** Min number of substages played in case of draw before no-draw game */
 const int MIN_SUBSTAGES = 15;
+
+/** Increment of the number of substages per each substage */
 const int INCREMENT_SUBSTAGES = 3;
 
 }
 
+/** Max length of competition name */
 const unsigned int MAX_NAME = 50;
+
+/** Max length of competition description */
 const unsigned int MAX_DESCRIPTION = 1000;
 
 }
 
+/** The namespace for default values of Elo rating system parameters.
+\see EloPlayer
+*/
 namespace elo {
+
+/** Initial rating */
 const int INIT = 1200;
+
+/** If user rating is greater or equal to this value, K = BIG_K */
 const int BIG = 2400;
+
+/** If user rating is greater or equal to BIG, K = this value */
 const float BIG_K = 10;
+
+/** If user games number is greater or equal to this value, K = BEGINNER_K */
 const int BEGINNER_ALL = 30;
+
+/** If user games number is greater or equal to BEGINNER_ALL, K = this value */
 const float BEGINNER_K = 25;
+
+/** The value of K used otherwise */
 const float OTHER_K = 15;
 
 }
 
+/** The namespace for values of planning server parameters.
+\see Planning
+*/
 namespace tracker {
 
+/** Standard delay for all tasks.
+\see PlanningServer::set_delay()
+*/
 const Td DELAY = 0.01 * SECOND;
+
+/** Delay for task re-processing in case of stale object exception.
+\see Object::process()
+*/
 const Td STALE_OBJECT_DELAY = SECOND;
+
+/** Delay for task re-processing in case of unknown std::exception.
+\see Object::process()
+*/
 const Td UNKNOWN_ERROR_DELAY = 2 * SECOND;
 
 }
