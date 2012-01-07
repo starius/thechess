@@ -87,6 +87,7 @@ void Application::login_handler() {
         server_.planning().add(new Object(GAME, game.id()), now());
     }
     main_widget_->main_menu()->show_user_items(session_.login().loggedIn());
+    main_widget_->update_my_games();
 }
 
 void Application::notify(const Wt::WEvent& e) {

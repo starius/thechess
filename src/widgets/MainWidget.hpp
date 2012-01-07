@@ -28,6 +28,9 @@ public:
     /** Get main menu */
     MainMenu* main_menu();
 
+    /** Update list of user's games (East) */
+    void update_my_games();
+
     /** List of users */
     void user_list();
 

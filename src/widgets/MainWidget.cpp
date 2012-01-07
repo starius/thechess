@@ -36,7 +36,7 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
     top->elementAt(0, 1)->addWidget(auth_widget_container_);
     top->elementAt(0, 1)->setContentAlignment(Wt::AlignRight);
     l()->addWidget(new Wt::WContainerWidget(), Wt::WBorderLayout::Center);
-    // TODO MyGamesList
+    l()->addWidget(new Wt::WContainerWidget(), Wt::WBorderLayout::East);
 }
 
 void MainWidget::show_menu(Path* path) {
@@ -45,6 +45,15 @@ void MainWidget::show_menu(Path* path) {
 
 MainMenu* MainWidget::main_menu() {
     return downcast<MainMenu*>(l()->widgetAt(Wt::WBorderLayout::West));
+}
+
+void MainWidget::update_my_games() {
+    Wt::WWidget* east_widget = l()->widgetAt(Wt::WBorderLayout::East);
+    Wt::WContainerWidget* east = downcast<Wt::WContainerWidget*>(east_widget);
+    east->clear();
+    if (tApp->user()) {
+        east->addWidget(new MyGamesList(tApp->user()));
+    }
 }
 
 void MainWidget::user_view(const UserPtr& user) {
