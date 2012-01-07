@@ -12,7 +12,18 @@
 #include "model/global.hpp"
 #include "widgets/global.hpp"
 
+/** The namespace for thechess */
 namespace thechess {
+
+/** \mainpage TheChess
+
+TheChess, chess game web application written in C++ and based on Wt
+<br>
+
+Conventions:
+ - "indexes" are 0-based, "numbers" are 1-based
+
+*/
 
 class Application;
 class Options;

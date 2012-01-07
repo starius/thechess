@@ -10,24 +10,6 @@
 #include "Server.hpp"
 #include "tests.hpp"
 
-namespace thechess {
-
-/** \mainpage TheChess
-
-TheChess, chess game web application written in C++ and based on Wt
-<br>
-
-Conventions:
- - "indexes" are 0-based, "numbers" are 1-based
-
-*/
-
-/** \namespace thechess
-The namespace for thechess
-*/
-
-}
-
 using namespace thechess;
 
 int main(int argc, char** argv) {
