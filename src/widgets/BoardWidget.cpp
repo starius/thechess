@@ -29,6 +29,7 @@
 #include <Wt/WBreak>
 #include <Wt/WApplication>
 #include <Wt/WEnvironment>
+#include <Wt/Wc/util.hpp>
 
 #include "widgets/BoardWidget.hpp"
 #include "chess/HalfMove.hpp"
@@ -441,7 +442,7 @@ void DnDPiece::activate() {
 }
 
 void DnDPiece::dropEvent(Wt::WDropEvent dropEvent) {
-    DnDPiece* source = dynamic_cast<DnDPiece*>(dropEvent.source());
+    DnDPiece* source = downcast<DnDPiece*>(dropEvent.source());
     if (source->square_ != square_) {
         bwi_->try_move_(HalfMove(source->square_, square_));
     }

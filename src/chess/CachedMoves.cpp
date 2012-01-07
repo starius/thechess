@@ -5,6 +5,8 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <Wt/Wc/util.hpp>
+
 #include "chess/CachedMoves.hpp"
 
 namespace thechess {
@@ -50,11 +52,11 @@ CachedMoves::const_iterator& CachedMoves::const_iterator::operator --() {
 }
 
 HalfMove CachedMoves::const_iterator::operator*() const {
-    return static_cast<const CachedMoves*>(moves_)->half_move(n_);
+    return downcast<const CachedMoves*>(moves_)->half_move(n_);
 }
 
 const Board& CachedMoves::const_iterator::board() const {
-    return static_cast<const CachedMoves*>(moves_)->board(n_);
+    return downcast<const CachedMoves*>(moves_)->board(n_);
 }
 
 CachedMoves::const_iterator::const_iterator(const CachedMoves& moves, int from):

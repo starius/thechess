@@ -11,6 +11,7 @@
 #include <Wt/WAnchor>
 #include <Wt/WContainerWidget>
 #include <Wt/Dbo/Transaction>
+#include <Wt/Wc/util.hpp>
 
 #include "widgets/MyGamesList.hpp"
 #include "model/all.hpp"
@@ -189,7 +190,7 @@ private:
     }
 
     void click_handler() {
-        MyGameAnchor* target = dynamic_cast<MyGameAnchor*>(sender());
+        MyGameAnchor* target = downcast<MyGameAnchor*>(sender());
         if (last_clicked_) {
             Anchors::iterator it = anchors_.find(last_clicked_);
             if (it != anchors_.end()) {

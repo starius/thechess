@@ -19,6 +19,7 @@
 #include <Wt/WPushButton>
 #include <Wt/WBreak>
 #include <Wt/Dbo/Transaction>
+#include <Wt/Wc/util.hpp>
 
 #include "widgets/CompetitionWidget.hpp"
 #include "widgets/CompetitionCreateWidget.hpp"
@@ -315,7 +316,7 @@ private:
     bool is_editing_;
 
     void show_change_widget() {
-        dynamic_cast<Wt::WPushButton*>(sender())->hide();
+        downcast<Wt::WPushButton*>(sender())->hide();
         is_editing_ = true;
         CompetitionCreateWidget* ccw = new CompetitionCreateWidget(c_, this);
         ccw->saved().connect(this, &CompetitionManager::save_handler);
@@ -367,7 +368,7 @@ void CompetitionWidget::reprint() {
     bindWidget("terms", new CompetitionTerms(c));
     bindWidget("view", new CompetitionView(c));
     if (!resolveWidget("manager") ||
-            !dynamic_cast<CompetitionManager*>(resolveWidget("manager"))->is_editing()) {
+            !downcast<CompetitionManager*>(resolveWidget("manager"))->is_editing()) {
         bindWidget("manager", new CompetitionManager(c));
     }
     t.commit();

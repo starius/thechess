@@ -17,6 +17,7 @@
 #include <Wt/Dbo/Exception>
 #include <Wt/WLogger>
 #include <Wt/Auth/AuthWidget>
+#include <Wt/Wc/util.hpp>
 
 #include "Application.hpp"
 #include "config.hpp"
@@ -108,7 +109,7 @@ void Application::notify(const Wt::WEvent& e) {
 }
 
 Application* Application::instance() {
-    return static_cast<Application*>(Wt::WApplication::instance());
+    return downcast<Application*>(Wt::WApplication::instance());
 }
 
 void Application::set_auth_widget() {
