@@ -12,7 +12,10 @@
 
 namespace thechess {
 
+/** Expand path like a posix-shell */
 std::string expand_path(const std::string& path);
+
+/** Return first existing file */
 std::string first_file(const char* const files[], const int files_size);
 
 /** Convert \c char to \c std::string */

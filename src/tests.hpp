@@ -12,6 +12,7 @@
 
 namespace thechess {
 
+/** Run tests of application components */
 void run_tests();
 
 }

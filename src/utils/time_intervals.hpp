@@ -13,6 +13,8 @@
 namespace thechess {
 
 using namespace Wt::Wc::td;
+
+/** Time duration */
 typedef TimeDuration Td;
 
 }
