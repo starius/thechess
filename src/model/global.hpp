@@ -30,7 +30,11 @@
 namespace dbo = Wt::Dbo;
 
 /** \file model/global.hpp Declarations of all models.
-This file should be included by hpp files of models
+This file should be included by hpp files of models.
+
+For UserPtr, etc typedefs dbo templates are used,
+but for doxygen simple c++ types (pointers) are used.
+
 \ingroup model
 */
 
@@ -52,10 +56,19 @@ typedef dbo::ptr<Game> GamePtr;
 typedef dbo::ptr<CP> CPPtr;
 typedef dbo::ptr<Competition> CompetitionPtr;
 #else
+/** Dbo pointer to User */
 typedef User* UserPtr;
+
+/** Dbo pointer to GP */
 typedef GP* GPPtr;
+
+/** Dbo pointer to Game */
 typedef Game* GamePtr;
+
+/** Dbo pointer to CP */
 typedef CP* CPPtr;
+
+/** Dbo pointer to Competition */
 typedef Competition* CompetitionPtr;
 #endif
 
@@ -66,17 +79,35 @@ typedef dbo::collection<GamePtr> Games;
 typedef dbo::collection<CPPtr> CPs;
 typedef dbo::collection<CompetitionPtr> Competitions;
 #else
+/** User dbo collection */
 typedef User* Users;
+
+/** GP dbo collection */
 typedef GP* GPs;
+
+/** Game dbo collection */
 typedef Game* Games;
+
+/** CP dbo collection */
 typedef CP* CPs;
+
+/** Competition dbo collection */
 typedef Competition* Competitions;
 #endif
 
+/** User vector */
 typedef std::vector<UserPtr> UsersVector;
+
+/** GP vector */
 typedef std::vector<GPPtr> GPsVector;
+
+/** Game vector */
 typedef std::vector<GamePtr> GamesVector;
+
+/** CP vector */
 typedef std::vector<CPPtr> CPsVector;
+
+/** Competition vector */
 typedef std::vector<CompetitionPtr> CompetitionsVector;
 
 }
