@@ -32,19 +32,31 @@ Core of thechess server.
 */
 class Server : public Wt::WServer {
 public:
+    /** Constructor.
+    Arguments are passed to WServer::setServerConfiguration().
+    */
     Server(int argc, char** argv);
+
+    /** Get application options */
     const Options& options() const;
+
+    /** Get sql connection pool */
     dbo::FixedSqlConnectionPool& pool();
+
+    /** Get notification server */
     Notifier& notifier();
 
+    /** Get planning server */
     Planning& planning() {
         return planning_;
     }
 
+    /** Get authentication service */
     const Wt::Auth::AuthService& auth_service() const {
         return auth_service_;
     }
 
+    /** Get password service */
     const Wt::Auth::PasswordService& password_service() const {
         return password_service_;
     }

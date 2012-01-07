@@ -28,8 +28,13 @@ namespace thechess {
 */
 class Session : public dbo::Session {
 public:
+    /** Constructor */
     Session(dbo::FixedSqlConnectionPool& pool);
+
+    /** Create tables and initial objects, add objects to planning server */
     void reconsider(Server& server);
+
+    /** Create an instance of sql connection class, using application server */
     static dbo::SqlConnection* new_connection(const Options& options);
 
     /** Access user database */

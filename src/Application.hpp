@@ -31,17 +31,23 @@ namespace thechess {
 */
 class Application : public Wt::WApplication {
 public:
+    /** Constructor */
     Application(const Wt::WEnvironment& env, Server& server);
+
+    /** Destructor */
     virtual ~Application();
 
+    /** Get session (database-related objects) */
     Session& session() {
         return session_;
     }
 
+    /** Get path (url-related) */
     Path& path() {
         return path_;
     }
 
+    /** Get application server */
     Server& server() {
         return server_;
     }
@@ -56,6 +62,11 @@ public:
     static Application* instance();
 
 protected:
+    /** Notifies an event to the application.
+    This function catches all exeptions.
+    In case of dbo::StaleObjectException, all dbo objects are reread.
+    Eceptions of other types cause application to quit().
+    */
     virtual void notify(const Wt::WEvent& e);
 
 private:
