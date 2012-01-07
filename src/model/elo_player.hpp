@@ -36,8 +36,8 @@ Where:
 \f[
     K = \left\{
     \begin{array}{l l}
-    10, & R > 2400 \\
-    15, & all < 30 \\
+    10, & R \ge 2400 \\
+    15, & all \ge 30 \\
     25
     \end{array} \right.
 \f]
