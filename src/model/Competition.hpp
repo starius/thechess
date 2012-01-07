@@ -28,10 +28,10 @@ public:
 
     /** State of competition */
     enum State {
-        RECRUITING = 10, /** Recruiting, users are joining */
-        ACTIVE = 30, /** Active, game are played */
-        ENDED = 50, /** Ended, games are finished, winners are attributed */
-        CANCELLED = 70 /** Cancelled */
+        RECRUITING = 10, /**< Recruiting, users are joining */
+        ACTIVE = 30, /**< Active, game are played */
+        ENDED = 50, /**< Ended, games are finished, winners are attributed */
+        CANCELLED = 70 /**< Cancelled */
     };
 
 #ifndef DOXYGEN_ONLY
@@ -182,6 +182,7 @@ public:
     Games games_with(const UserPtr& user) const;
 
     /** Return vector of games of the competition played by the user.
+    \param user User.
     \param gt Table of games is used to avoid database requests.
     */
     GamesVector games_with(const UserPtr& user, GamesTable& gt) const;
@@ -192,8 +193,6 @@ public:
     /* @{ */
 
     /** Run self-checks for planned action.
-    \param objects collection to expand with other modified dbo \ref Object.
-
     Possible changes caused by this method:
      - RECRUITING into ACTIVE, if min_users() and min_recruiting_time() are met
      - RECRUITING into CANCELLED, if time > max_recruiting_time()

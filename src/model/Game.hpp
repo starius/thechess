@@ -18,6 +18,7 @@ namespace thechess {
 */
 class Game : public dbo::Dbo<Game> {
 public:
+    /** Game state */
     enum State {
         PROPOSED = 0, /**< was proposed by user or planned by competition */
         CONFIRMED = 10, /**< is to be started when both users are online */
@@ -112,17 +113,15 @@ public:
     /* @{ */
 
     /** Run self-checks for planned action.
-    \param objects collection to expand with other modified dbo \ref Object.
-
     Possible changes caused by this method:
-     - \ref PROPOSED into \ref CONFIRMED, if \ref relax_time is out
+     - \ref PROPOSED into \ref CONFIRMED, if \ref CP::relax_time() is out
      - \ref CONFIRMED into \ref ACTIVE, if both users are online
-     - \ref CONFIRMED into \ref ACTIVE, if \ref FORCE_START_DELAY is out
-     - \ref paused into \ref ACTIVE, if current time is after \ref pause_until
+     - \ref CONFIRMED into \ref ACTIVE, if \ref CP::force_start_delay() is out
+     - \ref PAUSE into \ref ACTIVE, if current time is after \ref pause_until
      - \ref ACTIVE into \ref TIMEOUT, if time is over
 
     In the latter case, if the game is attributed to the competition,
-    the competition is added to \p objects.
+    the competition is added to \p planning.
     */
     void check(Wt::Wc::notify::TaskPtr task, Planning* planning);
 
@@ -529,6 +528,7 @@ public:
     /* @} */
 
     /** Write PGN representation of game to stream.
+    \param out     output stream
     \param reduced whether reduced export PGN format is used
     \sa http://cfajohnson.com/chess/SAN/SAN_DOC/Standard
     \sa http://www.chessclub.com/help/PGN-spec

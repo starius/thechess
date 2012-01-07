@@ -51,9 +51,11 @@ struct Object : public Wt::Wc::notify::Task {
         return id == b.id && type == b.type;
     }
 
+    /** Run checks for planned task */
     void process(Wt::Wc::notify::TaskPtr task,
                  Wt::Wc::notify::PlanningServer* server) const;
 
+    /** Get event key */
     std::string key() const;
 };
 

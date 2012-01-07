@@ -127,6 +127,7 @@ private:
     int first_draw_;
 };
 
+/** This value of first_draw() indicates a game without draw possibility */
 const int NO_DRAW = -1;
 
 }

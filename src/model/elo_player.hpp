@@ -11,7 +11,10 @@
 #include <vector>
 
 namespace thechess {
+
 class EloPlayer;
+
+/** Vector of game statictics */
 typedef std::vector<EloPlayer*> EloPlayers;
 }
 
