@@ -132,11 +132,11 @@ CompetitionType Competition::type() const {
 }
 
 bool Competition::is_member(const UserPtr& user) const {
-    return user && members_.find().where("id = ?").bind(user.id()).resultList().size() == 1;
+    return user && members_.count(user);
 }
 
 bool Competition::is_winner(const UserPtr& user) const {
-    return user && winners_.find().where("id = ?").bind(user.id()).resultList().size() == 1;
+    return user && winners_.count(user);
 }
 
 UsersVector Competition::members_vector() const {
