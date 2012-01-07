@@ -5,8 +5,6 @@
  * See the LICENSE file for terms of use.
  */
 
-//
-
 #include <cstdlib>
 #include <string>
 #include <boost/foreach.hpp>

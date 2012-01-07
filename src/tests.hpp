@@ -5,8 +5,6 @@
  * See the LICENSE file for terms of use.
  */
 
-//
-
 #ifndef THECHESS_TESTS_H_
 #define THECHESS_TESTS_H_
 
