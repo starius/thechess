@@ -49,6 +49,7 @@ const Td PAUSE_LIMIT_INIT = TD_NULL;
 
 /** Min move number for draw */
 const int FIRST_DRAW = 2;
+
 }
 
 /** The namespace for default values of parameters.
@@ -105,6 +106,7 @@ const int CONNECTIONS_IN_POOL = 10;
 \sa GP::norating()
 */
 const bool NORATING = false;
+
 }
 
 /** The namespace for max allowed values of parameters */
@@ -126,6 +128,7 @@ const Td PAUSE_LIMIT_INIT = WEEK;
 
 /** Max move number for draw */
 const int FIRST_DRAW = 5000 * 2;
+
 }
 
 /** The namespace for competition constants */
@@ -156,6 +159,7 @@ const float GAMES_FACTOR = 0.01;
 const Td RELAX_TIME = MINUTE;
 const int MIN_SUBSTAGES = 1;
 const int INCREMENT_SUBSTAGES = 0;
+
 }
 
 namespace defaults {
@@ -176,6 +180,7 @@ const int MIN_SUBSTAGES = 3;
 const int INCREMENT_SUBSTAGES = 1;
 
 const bool NORATING = true;
+
 }
 
 namespace max {
@@ -193,10 +198,12 @@ const float GAMES_FACTOR = 10.0;
 const Td RELAX_TIME = WEEK;
 const int MIN_SUBSTAGES = 15;
 const int INCREMENT_SUBSTAGES = 3;
+
 }
 
 const unsigned int MAX_NAME = 50;
 const unsigned int MAX_DESCRIPTION = 1000;
+
 }
 
 namespace elo {
@@ -206,6 +213,7 @@ const float BIG_K = 10;
 const int BEGINNER_ALL = 30;
 const float BEGINNER_K = 25;
 const float OTHER_K = 15;
+
 }
 
 namespace tracker {
@@ -213,6 +221,7 @@ namespace tracker {
 const Td DELAY = 0.01 * SECOND;
 const Td STALE_OBJECT_DELAY = SECOND;
 const Td UNKNOWN_ERROR_DELAY = 2 * SECOND;
+
 }
 
 const int COOKIE_SESSION_AGE = (5 * 365 * DAY).total_seconds();
@@ -221,6 +230,7 @@ const int COOKIE_SESSION_AGE = (5 * 365 * DAY).total_seconds();
 const char* const COOKIE_NAME = "thechessauth";
 
 }
+
 }
 
 #endif
