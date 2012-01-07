@@ -15,10 +15,10 @@ CachedMoves::CachedMoves() :
 
 CachedMoves::CachedMoves(const Moves& moves) :
     Moves(moves), boards_(moves.size() + 1) {
-    boards_rebuild_();
+    boards_rebuild();
 }
 
-void CachedMoves::boards_rebuild_() {
+void CachedMoves::boards_rebuild() {
     for (Moves::const_iterator i = Moves::begin(); i <= Moves::end(); ++i) {
         boards_[i.n()] = i.board();
     }

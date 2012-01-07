@@ -130,27 +130,27 @@ public:
 
 CompetitionListWidget::CompetitionListWidget(Wt::WContainerWidget* p):
     Wt::WContainerWidget(p) {
-    manager_();
+    manager();
     model_ = new CompetitionListModel(this);
-    apply_();
+    apply();
     new CompetitionListView(model_, this);
 }
 
-void CompetitionListWidget::apply_() {
+void CompetitionListWidget::apply() {
     bool only_my = only_my_->isChecked() && tApp->user();
     model_->set_query(only_my);
 }
 
-void CompetitionListWidget::manager_() {
+void CompetitionListWidget::manager() {
     only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"), this);
-    only_my_->changed().connect(this, &CompetitionListWidget::apply_);
+    only_my_->changed().connect(this, &CompetitionListWidget::apply);
     if (!tApp->user()) {
         only_my_->setEnabled(false);
     }
     if (!tApp->environment().ajax()) {
         Wt::WPushButton* apply_button =
             new Wt::WPushButton(tr("tc.common.Apply"), this);
-        apply_button->clicked().connect(this, &CompetitionListWidget::apply_);
+        apply_button->clicked().connect(this, &CompetitionListWidget::apply);
     }
 }
 

@@ -63,35 +63,35 @@ Square::operator bool() const {
 }
 
 Square::File Square::file() const {
-    return (File)file_();
+    return (File)file_int();
 }
 
 Square::Rank Square::rank() const {
-    return (Rank)rank_();
+    return (Rank)rank_int();
 }
 
 void Square::file(Square::File v) {
-    file_((unsigned)v);
+    file((unsigned)v);
 }
 
 void Square::rank(Square::Rank v) {
-    rank_((unsigned)v);
+    rank((unsigned)v);
 }
 
-unsigned Square::file_() const {
+unsigned Square::file_int() const {
     return i_ / 8;
 }
 
-unsigned Square::rank_() const {
+unsigned Square::rank_int() const {
     return i_ % 8;
 }
 
-void Square::file_(unsigned v) {
-    i_ = v * 8 + rank_();
+void Square::file(unsigned v) {
+    i_ = v * 8 + rank_int();
 }
 
-void Square::rank_(unsigned v) {
-    i_ = file_() * 8 + v;
+void Square::rank(unsigned v) {
+    i_ = file_int() * 8 + v;
 }
 
 Square Square::begin() {

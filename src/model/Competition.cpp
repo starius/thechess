@@ -44,10 +44,10 @@ void Competition::create_competition(const UserPtr& user) {
 
 void Competition::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
     if (state_ == RECRUITING) {
-        if (can_start_()) {
-            start_(planning);
+        if (can_start()) {
+            start(planning);
         } else if (now() - created_ > cp_->max_recruiting_time()) {
-            cancel_();
+            cancel();
         }
     }
     if (state_ == ACTIVE) {
@@ -232,15 +232,15 @@ bool Competition::can_cancel(const UserPtr& user) const {
 
 void Competition::cancel(const UserPtr& user) {
     if (can_cancel(user)) {
-        cancel_();
+        cancel();
     }
 }
 
-void Competition::cancel_() {
+void Competition::cancel() {
     state_ = CANCELLED;
 }
 
-bool Competition::can_start_() const {
+bool Competition::can_start() const {
     bool result = false;
     if (state_ == RECRUITING) {
         if (type() == CLASSICAL || type() == STAGED) {
@@ -253,7 +253,7 @@ bool Competition::can_start_() const {
     return result;
 }
 
-void Competition::start_(Planning* planning) {
+void Competition::start(Planning* planning) {
     if (type() == CLASSICAL) {
         create_games_classical_(planning);
     }

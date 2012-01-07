@@ -112,11 +112,11 @@ public:
         for (int i = 0; i < ORDER_OF_STATES_SIZE; i++) {
             first_of_state_[i] = 0;
         }
-        update_games_list_();
+        update_games_list();
     }
 
     void notify(EventPtr) {
-        update_games_list_();
+        update_games_list();
     }
 
 private:
@@ -125,14 +125,14 @@ private:
     int last_clicked_;
     int first_of_state_[ORDER_OF_STATES_SIZE];
 
-    void update_games_list_() {
+    void update_games_list() {
         dbo::Transaction t(tApp->session());
         user_.reread();
         Games games = user_->games().where("state < ?").bind(Game::MIN_ENDED);
         BOOST_FOREACH (GamePtr game, games) {
             if (anchors_.find(game.id()) == anchors_.end()) {
                 MyGameAnchor* a = new MyGameAnchor(game, this);
-                a->clicked().connect(this, &MyGamesListImp::click_handler_);
+                a->clicked().connect(this, &MyGamesListImp::click_handler);
                 insert_anchor_(a, game->state());
                 anchors_[game.id()] = a;
             }
@@ -188,7 +188,7 @@ private:
         t.commit();
     }
 
-    void click_handler_() {
+    void click_handler() {
         MyGameAnchor* target = dynamic_cast<MyGameAnchor*>(sender());
         if (last_clicked_) {
             Anchors::iterator it = anchors_.find(last_clicked_);

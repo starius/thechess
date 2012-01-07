@@ -26,7 +26,7 @@ public:
 private:
     CompetitionPtr c;
 
-    void reprint_();
+    void reprint();
 };
 
 }

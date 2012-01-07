@@ -38,18 +38,18 @@ public:
             start_button_ = new Wt::WPushButton(
                 Wt::WString::tr("tc.user.Start_game"), this);
             start_button_->clicked()
-            .connect(this, &UserWidgetImpl::game_form_);
+            .connect(this, &UserWidgetImpl::game_form);
         }
         if (user->games_stat().all() > 0) {
             rating_button_ = new Wt::WPushButton(
                 Wt::WString::tr("tc.user.Rating_changes"), this);
             rating_button_->clicked()
-            .connect(this, &UserWidgetImpl::rating_changes_);
+            .connect(this, &UserWidgetImpl::rating_changes);
             if (tApp->user() && tApp->user() != user_) {
                 rating_and_me_button_ = new Wt::WPushButton(
                     Wt::WString::tr("tc.user.Rating_changes_and_me"), this);
                 rating_and_me_button_->clicked()
-                .connect(this, &UserWidgetImpl::rating_changes_and_me_);
+                .connect(this, &UserWidgetImpl::rating_changes_and_me);
             }
         }
         t.commit();
@@ -61,17 +61,17 @@ private:
     Wt::WPushButton* rating_button_;
     Wt::WPushButton* rating_and_me_button_;
 
-    void game_form_() {
+    void game_form() {
         start_button_->hide();
         new GameCreateWidget(user_, this);
     }
 
-    void rating_changes_() {
+    void rating_changes() {
         rating_button_->hide();
         new RatingChanges(user_, this);
     }
 
-    void rating_changes_and_me_() {
+    void rating_changes_and_me() {
         rating_and_me_button_->hide();
         RatingChanges* rc = new RatingChanges(user_, this);
         rc->add_user(tApp->user());

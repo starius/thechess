@@ -149,12 +149,12 @@ private:
     int winner_stage_;
     UserPtr winner_;
 
-    void read_games_();
-    void read_paires_();
+    void read_games();
+    void read_paires();
     void read_pair_(int stage, const UserPair& pair);
 
-    void start_competition_();
-    void join_users_();
+    void start_competition();
+    void join_users();
     void create_games_(Competition* competition, Planning* planning);
 };
 

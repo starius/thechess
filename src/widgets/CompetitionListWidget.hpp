@@ -29,8 +29,8 @@ private:
     CompetitionListModel* model_;
     Wt::WCheckBox* only_my_;
 
-    void apply_();
-    void manager_();
+    void apply();
+    void manager();
 };
 
 }

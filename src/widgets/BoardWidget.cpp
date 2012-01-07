@@ -117,7 +117,7 @@ public:
         Wt::WContainerWidget(), board_(board), bottom_(bottom),
         active_(active), activated_(false), big_(big), lastmove_show_(true),
         select_turn_into_flag_(false) {
-        correct_bottom_();
+        correct_bottom();
         board_template_ = new Wt::WTemplate(tr(xml_message()), this);
         THECHESS_SQUARE_FOREACH (square) {
             DnDPiece* img = new DnDPiece(square, this);
@@ -126,8 +126,8 @@ public:
                                  % (square.file() + 1) % (square.rank() + 1));
             board_template_->bindWidget(id, img);
         }
-        check_activate_();
-        board_build_();
+        check_activate();
+        board_build();
         select_turn_into_ = new Wt::WContainerWidget(this);
         turn_button_place_ = new Wt::WContainerWidget(this);
         Wt::WPushButton* turn_button =
@@ -150,8 +150,8 @@ public:
     }
 
     void set(const Board& board, HalfMove lastmove, bool active) {
-        modify_undo_();
-        color_noactive_undo_();
+        modify_undo();
+        color_noactive_undo();
         lastmove_ = lastmove;
         board_ = board;
         taken_pieces_->update();
@@ -161,17 +161,17 @@ public:
             shah_square_ = Square();
         }
         active_ = active;
-        check_activate_();
-        board_build_();
-        color_noactive_();
+        check_activate();
+        board_build();
+        color_noactive();
         if (active_) {
-            modify_();
+            modify();
         }
     }
 
     void bottom_set(Piece::Color bottom) {
         bottom_ = bottom;
-        correct_bottom_();
+        correct_bottom();
         board_template_->setTemplateText(tr(xml_message()));
     }
 
@@ -216,7 +216,7 @@ private:
         color_black_white_(image_at(square));
     }
 
-    void color_noactive_() {
+    void color_noactive() {
         if (lastmove_show_ && lastmove_) {
             image_at(lastmove_.from())->decorationStyle()
             .setBackgroundColor(Wt::yellow);
@@ -228,7 +228,7 @@ private:
         }
     }
 
-    void color_noactive_undo_() {
+    void color_noactive_undo() {
         if (lastmove_show_ && lastmove_) {
             color_black_white_(lastmove_.from());
             color_black_white_(lastmove_.to());
@@ -238,14 +238,14 @@ private:
         }
     }
 
-    void board_build_() {
+    void board_build() {
         THECHESS_SQUARE_FOREACH (square) {
             Wt::WImage* img = image_at(square);
             img->setImageRef(BoardWidget::image(board_.piece(square), big_));
         }
     }
 
-    void modify_from_() {
+    void modify_from() {
         THECHESS_SQUARE_FOREACH (square) {
             Wt::WImage* img = image_at(square);
             if (board_.can_move(square)) {
@@ -254,7 +254,7 @@ private:
         }
     }
 
-    void modify_from_undo_() {
+    void modify_from_undo() {
         THECHESS_SQUARE_FOREACH (square) {
             if (board_.color(square) == board_.order()) {
                 Wt::WImage* img = image_at(square);
@@ -263,7 +263,7 @@ private:
         }
     }
 
-    void modify_to_() {
+    void modify_to() {
         bool can_move = false;
         THECHESS_SQUARE_FOREACH (square) {
             if (board_.test_move(HalfMove(from_, square))) {
@@ -285,7 +285,7 @@ private:
         }
     }
 
-    void modify_to_undo_() {
+    void modify_to_undo() {
         THECHESS_SQUARE_FOREACH (square) {
             Wt::WImage* img = image_at(square);
             img->decorationStyle().setCursor(Wt::ArrowCursor);
@@ -293,24 +293,24 @@ private:
         }
     }
 
-    void modify_undo_() {
+    void modify_undo() {
         if (!from_) {
-            modify_from_undo_();
+            modify_from_undo();
         } else {
-            modify_to_undo_();
+            modify_to_undo();
         }
         if (select_turn_into_flag_) {
-            print_select_undo_();
+            print_select_undo();
         }
         from_ = Square();
     }
 
-    void modify_() {
-        color_noactive_();
+    void modify() {
+        color_noactive();
         if (!from_) {
-            modify_from_();
+            modify_from();
         } else {
-            modify_to_();
+            modify_to();
         }
     }
 
@@ -322,13 +322,13 @@ private:
             return;
         }
         if (square == from_) {
-            modify_undo_();
+            modify_undo();
             from_ = Square();
-            modify_();
+            modify();
         } else if (board_.color(square) == board_.order()) {
-            modify_undo_();
+            modify_undo();
             from_ = square;
-            modify_();
+            modify();
         } else if (from_) {
             try_move_(HalfMove(from_, square));
         }
@@ -341,15 +341,15 @@ private:
                 print_select_(half_move);
                 return;
             } else {
-                modify_undo_();
+                modify_undo();
                 lastmove_ = half_move;
                 from_ = Square();
                 move_.emit(half_move);
             }
         } else {
-            modify_undo_();
+            modify_undo();
             from_ = Square();
-            modify_();
+            modify();
         }
     }
 
@@ -366,7 +366,7 @@ private:
         }
     }
 
-    void print_select_undo_() {
+    void print_select_undo() {
         select_turn_into_->clear();
         select_turn_into_flag_ = false;
     }
@@ -375,7 +375,7 @@ private:
         if (!active_) {
             return;
         }
-        modify_undo_();
+        modify_undo();
         from_ = Square();
         half_move.turn_into(letter);
         lastmove_ = half_move;
@@ -398,13 +398,13 @@ private:
         return (Square::Rank)(bottom_ == Piece::BLACK ? (rank - 1) : (7 - (rank - 1)));
     }
 
-    void correct_bottom_() {
+    void correct_bottom() {
         if (bottom_ == Piece::COLOR_NULL) {
             bottom_ = Piece::WHITE;
         }
     }
 
-    void check_activate_() {
+    void check_activate() {
         if (!activated_ && active_) {
             activated_ = true;
             draggable_ = new Wt::WImage(this);

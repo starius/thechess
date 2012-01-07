@@ -152,19 +152,19 @@ public:
         setLayout(layout, Wt::AlignTop);
         layout->addWidget(board_widget_ =
                               new BoardWidget(big, this->active(), bottom));
-        check_activate_();
+        check_activate();
         Wt::WPushButton* goto_first =
             new Wt::WPushButton("<<", board_widget_->inner());
-        goto_first->clicked().connect(this, &MovesWidgetImpl::goto_first_);
+        goto_first->clicked().connect(this, &MovesWidgetImpl::goto_first);
         Wt::WPushButton* goto_prev =
             new Wt::WPushButton("<", board_widget_->inner());
-        goto_prev->clicked().connect(this, &MovesWidgetImpl::goto_prev_);
+        goto_prev->clicked().connect(this, &MovesWidgetImpl::goto_prev);
         Wt::WPushButton* goto_next =
             new Wt::WPushButton(">", board_widget_->inner());
-        goto_next->clicked().connect(this, &MovesWidgetImpl::goto_next_);
+        goto_next->clicked().connect(this, &MovesWidgetImpl::goto_next);
         Wt::WPushButton* goto_last =
             new Wt::WPushButton(">>", board_widget_->inner());
-        goto_last->clicked().connect(this, &MovesWidgetImpl::goto_last_);
+        goto_last->clicked().connect(this, &MovesWidgetImpl::goto_last);
         moves_model_ = new MovesModel(&cached_moves_, this);
         layout->addWidget(moves_table_view_ = new Wt::WTableView());
         moves_table_view_->setModel(moves_model_);
@@ -230,8 +230,8 @@ public:
 
     void set_active(bool active) {
         active_ = active;
-        check_activate_();
-        move_select_();
+        check_activate();
+        move_select();
     }
 
 private:
@@ -248,7 +248,7 @@ private:
     bool active_;
     bool activated_;
 
-    void check_activate_() {
+    void check_activate() {
         if (!activated_ && this->active()) {
             activated_ = true;
             board_widget_->half_move().connect(this, &MovesWidgetImpl::onmove_);
@@ -278,32 +278,32 @@ private:
         }
         if (n != -2) {
             current_move_ = n;
-            move_select_();
+            move_select();
         }
     }
 
     // -1 means start position
     void goto_move_(int n = -1) {
         current_move_ = n;
-        move_select_();
-        history_select_();
+        move_select();
+        history_select();
     }
 
-    void goto_first_() {
+    void goto_first() {
         goto_move_(-1);
     }
 
-    void goto_last_() {
+    void goto_last() {
         goto_move_(cached_moves_.size() - 1);
     }
 
-    void goto_prev_() {
+    void goto_prev() {
         if (current_move_ > -1) {
             goto_move_(current_move_ - 1);
         }
     }
 
-    void goto_next_() {
+    void goto_next() {
         if (current_move_ < cached_moves_.size() - 1) {
             goto_move_(current_move_ + 1);
         }
@@ -318,7 +318,7 @@ private:
                (!append_only_ || current_move_ == cached_moves_.size() - 1);
     }
 
-    void move_select_() {
+    void move_select() {
         const Board& board = cached_moves_.board(current_move_ + 1);
         HalfMove lastmove;
         if (current_move_ != -1) {
@@ -327,7 +327,7 @@ private:
         board_widget_->set(board, lastmove, active());
     }
 
-    void history_select_() {
+    void history_select() {
         //FIXME - wron row is shown
         Wt::WModelIndex index = moves_model_->n2index(current_move_);
         moves_table_view_->scrollTo(index); // ajax

@@ -75,7 +75,7 @@ private:
     /** Stores boards before current half-move */
     std::vector<Board> boards_;
 
-    void boards_rebuild_();
+    void boards_rebuild();
 };
 
 }

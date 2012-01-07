@@ -230,12 +230,12 @@ Moves::base_iterator::base_iterator(const Moves& moves, int from):
 { }
 
 HalfMove Moves::const_iterator::operator*() const {
-    sync_board_();
-    return half_move_();
+    sync_board();
+    return half_move();
 }
 
 const Board& Moves::const_iterator::board() const {
-    sync_board_();
+    sync_board();
     return board_;
 }
 
@@ -243,13 +243,13 @@ Moves::const_iterator::const_iterator(const Moves& moves, int from):
     base_iterator(moves, from), board_n_(0)
 { }
 
-void Moves::const_iterator::sync_board_() const {
+void Moves::const_iterator::sync_board() const {
     for (; board_n_ < n_; board_n_++) {
-        board_.make_move(half_move_());
+        board_.make_move(half_move());
     }
 }
 
-HalfMove Moves::const_iterator::half_move_() const {
+HalfMove Moves::const_iterator::half_move() const {
     return moves_->half_move(board_n_, board_);
 }
 

@@ -103,7 +103,7 @@ class GameListWidget::GameListWidgetImpl : public Wt::WContainerWidget {
 public:
     GameListWidgetImpl() :
         Wt::WContainerWidget() {
-        manager_();
+        manager();
         query_model_ = new GameListModel(query(), this);
         table_view_ = new Wt::WTableView(this);
         table_view_->setModel(query_model_);
@@ -147,20 +147,20 @@ private:
     Wt::WTableView* table_view_;
     Wt::WCheckBox* only_my_;
 
-    void manager_() {
+    void manager() {
         only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"), this);
-        only_my_->changed().connect(this, &GameListWidgetImpl::apply_);
+        only_my_->changed().connect(this, &GameListWidgetImpl::apply);
         if (!tApp->user()) {
             only_my_->setEnabled(false);
         }
         if (!tApp->environment().ajax()) {
             Wt::WPushButton* apply_button =
                 new Wt::WPushButton(tr("tc.common.Apply"), this);
-            apply_button->clicked().connect(this, &GameListWidgetImpl::apply_);
+            apply_button->clicked().connect(this, &GameListWidgetImpl::apply);
         }
     }
 
-    void apply_() {
+    void apply() {
         query_model_->setQuery(query(), /* keep_columns */ true);
     }
 

@@ -29,7 +29,7 @@ CompetitionCreateWidget::CompetitionCreateWidget(Wt::WContainerWidget* p):
         cpw_ = new CPWidget2(&(*(c)), /*allow_change_type*/ true, this);
         new Wt::WBreak(this);
         ok_ = new Wt::WPushButton(tr("tc.common.Create"), this);
-        ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler_);
+        ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler);
     } else {
         new Wt::WText(tr("tc.competition.Cant_create"), this);
     }
@@ -45,7 +45,7 @@ CompetitionCreateWidget::CompetitionCreateWidget(const CompetitionPtr& c,
         cpw_ = new CPWidget2(&(*c), /*allow_change_type*/ true, this);
         new Wt::WBreak(this);
         ok_ = new Wt::WPushButton(tr("tc.common.Save"), this);
-        ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler_);
+        ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler);
     } else {
         new Wt::WText(tr("tc.competition.Cant_change"), this);
     }
@@ -56,7 +56,7 @@ Wt::EventSignal<Wt::WMouseEvent>& CompetitionCreateWidget::saved() {
     return ok_->clicked();
 }
 
-void CompetitionCreateWidget::button_handler_() {
+void CompetitionCreateWidget::button_handler() {
     dbo::Transaction t(tApp->session());
     GPPtr gp;
     CPPtr cp;

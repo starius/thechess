@@ -152,14 +152,14 @@ public:
         moves_widget_->half_move()
         .connect(this, &GameWidgetImpl::move_handler_);
         countdown_container_ = new Wt::WContainerWidget(this);
-        manager_ = new Wt::WContainerWidget(this);
+        manager = new Wt::WContainerWidget(this);
         comment_container_ = new Wt::WContainerWidget(this);
-        print_comment_();
+        print_comment();
         game_status_ = new GameStatus(game_, this);
         new Wt::WAnchor(str(boost::format("/pgn/?game=%i") % game.id()),
                         tr("tc.game.Download_pgn"), this);
-        status_and_manager_();
-        countdown_print_();
+        status_and_manager();
+        countdown_print();
         t.commit();
     }
 
@@ -167,24 +167,24 @@ public:
         dbo::Transaction t(tApp->session());
         game_.reread();
         moves_widget_->set_active(game_->can_move(tApp->user()));
-        countdown_print_();
+        countdown_print();
         if (game_->colors_random() && game_->size_without_init() == 0) {
             moves_widget_->bottom_set(game_->color_of(tApp->user()));
         }
         if (game_->size() < moves_widget_->moves().size()) {
             moves_widget_->set_moves(game_->moves());
-            status_and_manager_();
+            status_and_manager();
         }
         if (game_->size() - moves_widget_->moves().size() == 1) {
             HalfMove last_move =
                 game_->moves().half_move(game_->size() - 1, moves_widget_->board());
             moves_widget_->add_move(last_move);
             if (game_->size_without_init() == 1) {
-                print_manager_(); // to show Rollback button
+                print_manager(); // to show Rollback button
             }
         }
-        status_and_manager_();
-        print_comment_();
+        status_and_manager();
+        print_comment();
         t.commit();
     }
 
@@ -192,7 +192,7 @@ private:
     GamePtr game_;
     MovesWidget* moves_widget_;
     GameStatus* game_status_;
-    Wt::WContainerWidget* manager_;
+    Wt::WContainerWidget* manager;
     Wt::WContainerWidget* countdown_container_;
     Wt::WContainerWidget* comment_container_;
 
@@ -213,55 +213,55 @@ private:
         }
     }
 
-    void status_and_manager_() {
+    void status_and_manager() {
         dbo::Transaction t(tApp->session());
-        print_status_();
-        print_manager_();
+        print_status();
+        print_manager();
         t.commit();
     }
 
-    void countdown_print_() {
+    void countdown_print() {
         countdown_container_->clear();
         new GameCountdown(game_, countdown_container_);
     }
 
-    void print_manager_() {
+    void print_manager() {
         dbo::Transaction t(tApp->session());
-        manager_->clear();
-        print_analysis_button_();
+        manager->clear();
+        print_analysis_button();
         if (tApp->user()) {
             if (game_->state() < Game::ACTIVE) {
-                print_before_active_buttons_();
+                print_before_active_buttons();
             }
             if (game_->state() == Game::ACTIVE || game_->state() == Game::PAUSE) {
-                print_pause_buttons_();
-                print_mistake_buttons_();
-                print_draw_buttons_();
+                print_pause_buttons();
+                print_mistake_buttons();
+                print_draw_buttons();
             }
         }
         t.commit();
     }
 
-    void print_analysis_button_() {
+    void print_analysis_button() {
         if (game_->state() >= Game::ACTIVE && game_->size()) {
             Wt::WPushButton* b =
-                new Wt::WPushButton(tr("tc.game.Analysis"), manager_);
-            b->clicked().connect(this, &GameWidgetImpl::show_analysis_);
+                new Wt::WPushButton(tr("tc.game.Analysis"), manager);
+            b->clicked().connect(this, &GameWidgetImpl::show_analysis);
         }
     }
 
-    void print_before_active_buttons_() {
+    void print_before_active_buttons() {
         if (game_->competition()) {
             if (game_->has_competition_confirmed(game_->other_user(tApp->user()))) {
                 new Wt::WText(tr("tc.game.Competition_other_proposed")
-                              .arg(game_->other_user(tApp->user())->username()), manager_);
-                new Wt::WBreak(manager_);
+                              .arg(game_->other_user(tApp->user())->username()), manager);
+                new Wt::WBreak(manager);
             }
             if (game_->can_competition_confirm(tApp->user())) {
-                new Wt::WText(tr("tc.game.Competition_confirm_welcome"), manager_);
+                new Wt::WText(tr("tc.game.Competition_confirm_welcome"), manager);
                 button_<&Game::competition_confirm>("tc.game.Competition_confirm");
             } else if (game_->can_competition_discard(tApp->user())) {
-                new Wt::WText(tr("tc.game.Competition_discard_welcome"), manager_);
+                new Wt::WText(tr("tc.game.Competition_discard_welcome"), manager);
                 button_<&Game::competition_discard>("tc.game.Competition_discard");
             }
         } else {
@@ -276,13 +276,13 @@ private:
         }
     }
 
-    void print_pause_buttons_() {
+    void print_pause_buttons() {
         if (game_->is_pause_proposed()) {
-            new Wt::WBreak(manager_);
+            new Wt::WBreak(manager);
             new Wt::WText(tr("tc.game.Pause_proposal")
                           .arg(game_->pause_proposer()->username())
                           .arg(td2str(game_->pause_proposed_td())),
-                          manager_);
+                          manager);
             if (game_->can_pause_agree(tApp->user())) {
                 button_<&Game::pause_agree>("tc.common.Agree");
             }
@@ -290,28 +290,28 @@ private:
                 button_<&Game::pause_discard>("tc.common.Discard");
             }
         } else if (game_->can_pause_propose(tApp->user())) {
-            new Wt::WBreak(manager_);
+            new Wt::WBreak(manager);
             Td max = game_->pause_limit();
             Td d = config::defaults::PAUSE_FACTOR * max;
             Wt::Wc::TimeDurationWidget* pause_duration =
-                new Wt::Wc::TimeDurationWidget(TD_NULL, d, max, manager_);
+                new Wt::Wc::TimeDurationWidget(TD_NULL, d, max, manager);
             Wt::WPushButton* b;
             b = new Wt::WPushButton(tr("tc.game.Pause_propose"),
-                                    manager_);
+                                    manager);
             b->clicked().connect(boost::bind(
                                      &GameWidgetImpl::pause_propose_, this, pause_duration));
         }
     }
 
-    void print_mistake_buttons_() {
+    void print_mistake_buttons() {
         if (game_->is_mistake_proposed()) {
-            new Wt::WBreak(manager_);
+            new Wt::WBreak(manager);
             new Wt::WText(tr("tc.game.Mistake_proposal")
                           .arg(game_->mistake_proposer()->username())
                           .arg(Moves::move_number(game_->mistake_move()))
                           .arg(tr(Moves::order(game_->mistake_move()) == Piece::WHITE ?
                                   "tc.game.of_white" : "tc.game.of_black")),
-                          manager_);
+                          manager);
             if (game_->can_mistake_agree(tApp->user())) {
                 button_<&Game::mistake_agree>("tc.common.Agree");
             }
@@ -319,21 +319,21 @@ private:
                 button_<&Game::mistake_discard>("tc.common.Discard");
             }
         } else if (game_->can_mistake_propose(tApp->user())) {
-            new Wt::WBreak(manager_);
-            new Wt::WText(tr("tc.game.Mistake_welcome"), manager_);
+            new Wt::WBreak(manager);
+            new Wt::WText(tr("tc.game.Mistake_welcome"), manager);
             Wt::WPushButton* b;
             b = new Wt::WPushButton(tr("tc.game.Mistake_propose"),
-                                    manager_);
-            b->clicked().connect(this, &GameWidgetImpl::mistake_propose_);
+                                    manager);
+            b->clicked().connect(this, &GameWidgetImpl::mistake_propose);
         }
     }
 
-    void print_draw_buttons_() {
+    void print_draw_buttons() {
         if (game_->is_draw_proposed()) {
-            new Wt::WBreak(manager_);
+            new Wt::WBreak(manager);
             new Wt::WText(tr("tc.game.Draw_proposal")
                           .arg(game_->draw_proposer()->username()),
-                          manager_);
+                          manager);
             if (game_->can_draw_agree(tApp->user())) {
                 button_<&Game::draw_agree>("tc.common.Agree");
             }
@@ -341,18 +341,18 @@ private:
                 button_<&Game::draw_discard>("tc.common.Discard");
             }
         } else if (game_->can_draw_propose(tApp->user())) {
-            new Wt::WBreak(manager_);
+            new Wt::WBreak(manager);
             button_<&Game::draw_propose>("tc.game.Draw_propose");
         }
     }
 
-    void print_status_() {
+    void print_status() {
         game_status_->update();
     }
 
     typedef void (Game::*GameMember)(const UserPtr&);
     template <GameMember method>
-    void action_() {
+    void action() {
         dbo::Transaction t(tApp->session());
         game_.reread();
         Game::State state_before = game_->state();
@@ -371,8 +371,8 @@ private:
     template <GameMember method>
     void button_(const char* title_id) {
         Wt::WPushButton* b;
-        b = new Wt::WPushButton(tr(title_id), manager_);
-        b->clicked().connect(this, &GameWidgetImpl::action_<method>);
+        b = new Wt::WPushButton(tr(title_id), manager);
+        b->clicked().connect(this, &GameWidgetImpl::action<method>);
     }
 
     void pause_propose_(Wt::Wc::TimeDurationWidget* pause_duration) {
@@ -384,7 +384,7 @@ private:
         tNot->emit(new Object(GAME, game_.id()));
     }
 
-    void mistake_propose_() {
+    void mistake_propose() {
         dbo::Transaction t(tApp->session());
         game_.reread();
         game_.modify()
@@ -393,7 +393,7 @@ private:
         tNot->emit(new Object(GAME, game_.id()));
     }
 
-    void show_analysis_() {
+    void show_analysis() {
         dbo::Transaction t(tApp->session());
         Wt::WDialog* analysis = new Wt::WDialog(
             tr("tc.game.Analysis_title").arg((int)game_.id()));
@@ -407,13 +407,13 @@ private:
                         append_only, bottom, analysis->contents());
         analysis->setClosable(true);
         analysis->finished()
-        .connect(this, &GameWidgetImpl::close_analysis_);
+        .connect(this, &GameWidgetImpl::close_analysis);
         analysis->setModal(false);
         analysis->show();
         t.commit();
     }
 
-    void close_analysis_() {
+    void close_analysis() {
         delete sender();
     }
 
@@ -425,7 +425,7 @@ private:
         tNot->emit(new Object(GAME, game_.id()));
     }
 
-    void print_comment_() {
+    void print_comment() {
         dbo::Transaction t(tApp->session());
         comment_container_->clear();
         new Wt::WText(tr("tc.game.comment"), comment_container_);

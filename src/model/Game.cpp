@@ -126,16 +126,16 @@ UserPtr Game::other_user(const UserPtr& user) const {
 void Game::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
     if (state() == PROPOSED && competition() && competition()->type() == STAGED &&
             now() - created_ > competition()->cp()->relax_time()) {
-        confirm_();
+        confirm();
     }
     if (state() == CONFIRMED && white()->online() && black()->online()) {
-        start_();
+        start();
     } else if (state() == CONFIRMED && competition()) {
         if (now() - confirmed_ > competition()->cp()->force_start_delay()) {
-            start_();
+            start();
         }
     } else if (state() == PAUSE && now() > pause_until()) {
-        stop_pause_();
+        stop_pause();
     } else if (state() == ACTIVE && total_limit_now(order_user()) < TD_NULL) {
         const UserPtr& winner = user_of(Piece::other_color(order_color()));
         finish_(TIMEOUT, winner);
@@ -283,7 +283,7 @@ void Game::join(const UserPtr& user) {
         } else {
             set_random_(init(), user);
         }
-        confirm_();
+        confirm();
     }
 }
 
@@ -293,22 +293,22 @@ bool Game::can_confirm(const UserPtr& user) const {
 
 void Game::confirm(const UserPtr& user) {
     if (can_confirm(user)) {
-        confirm_();
+        confirm();
     }
 }
 
 void Game::confirm_by_competition() {
     if (competition()) {
-        confirm_();
+        confirm();
     }
 }
 
-void Game::confirm_() {
+void Game::confirm() {
     confirmed_ = now();
     state_ = CONFIRMED;
 }
 
-void Game::start_() {
+void Game::start() {
     state_ = ACTIVE;
     limit_private_[Piece::WHITE] = gp_->limit_private_init();
     limit_private_[Piece::BLACK] = gp_->limit_private_init();
@@ -319,7 +319,7 @@ void Game::start_() {
     lastmove_ = now();
 }
 
-void Game::stop_pause_() {
+void Game::stop_pause() {
     state_ = ACTIVE;
     lastmove_ += pause_proposed_td_;
     pause_proposed_td_ = TD_NULL;
@@ -352,7 +352,7 @@ void Game::competition_confirm(const UserPtr& user) {
     if (can_competition_confirm(user)) {
         competition_confirmer_[color_of(user)] = true;
         if (has_competition_confirmed(other_user(user))) {
-            confirm_();
+            confirm();
         }
     }
 }
@@ -581,11 +581,11 @@ void Game::finish_(State state, const UserPtr& winner) {
     }
     ended_ = now();
     if (real_rating()) {
-        elo_change_();
+        elo_change();
     }
 }
 
-void Game::elo_change_() {
+void Game::elo_change() {
     white_.reread();
     black_.reread();
     if (is_win()) {
@@ -620,7 +620,7 @@ void Game::set_comment(const UserPtr& user, const Wt::WString& t) {
     }
 }
 
-const char* Game::pgn_termination_() const {
+const char* Game::pgn_termination() const {
     if (!is_ended()) {
         return "unterminated";
     } else if (state_ == TIMEOUT) {
@@ -663,7 +663,7 @@ void Game::pgn_additional_(std::ostream& out) const {
     if (started_.isValid()) {
         out << "[UTCTime \"" << started_.toString("HH:mm:ss") << "\"]" << std::endl;
     }
-    out << "[Termination \"" << pgn_termination_() << "\"]" << std::endl;
+    out << "[Termination \"" << pgn_termination() << "\"]" << std::endl;
     out << "[Mode \"" << "ICS" << "\"]" << std::endl;
     if (rating_after(Piece::WHITE) != -1) {
         out << "[WhiteElo \"" << rating_after(Piece::WHITE) << "\"]" << std::endl;

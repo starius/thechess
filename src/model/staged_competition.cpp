@@ -45,16 +45,16 @@ StagedCompetition::StagedCompetition(const Competition* competition):
     competition_(competition) {
     BOOST_ASSERT(competition->type() == STAGED);
     winner_stage_ = ceil(log2(double(competition->members().size()))) + 0.5;
-    read_games_();
-    read_paires_();
+    read_games();
+    read_paires();
 }
 
 void StagedCompetition::process(Competition* competition, Planning* planning) {
     BOOST_ASSERT(competition->id() == competition_->id());
     if (games_.empty() && competition->state() == Competition::ACTIVE) {
-        start_competition_();
+        start_competition();
     }
-    join_users_();
+    join_users();
     create_games_(competition, planning);
 }
 
@@ -128,7 +128,7 @@ StagedCompetition::Competitiors StagedCompetition::competitors() const {
     return r;
 }
 
-void StagedCompetition::read_games_() {
+void StagedCompetition::read_games() {
     BOOST_FOREACH (const GamePtr& game, competition_->games_vector()) {
         UserPair pair(game->white(), game->black());
         int stage = game->competition_stage();
@@ -139,7 +139,7 @@ void StagedCompetition::read_games_() {
     }
 }
 
-void StagedCompetition::read_paires_() {
+void StagedCompetition::read_paires() {
     BOOST_FOREACH (const UserPtr& user, competition_->members_vector()) {
         states_[user] = UNPAIRED;
         stages_[user] = 1; // if he was paired in 0 stage, it will be overwritten
@@ -174,7 +174,7 @@ void StagedCompetition::read_pair_(int stage, const UserPair& pair) {
     }
 }
 
-void StagedCompetition::start_competition_() {
+void StagedCompetition::start_competition() {
     UsersVector members = competition_->members_vector();
     std::random_shuffle(members.begin(), members.end(),
                         Wt::Wc::rand_for_shuffle);
@@ -192,7 +192,7 @@ void StagedCompetition::start_competition_() {
     }
 }
 
-void StagedCompetition::join_users_() {
+void StagedCompetition::join_users() {
     typedef std::map<int, UsersVector> Unpaired;
     Unpaired unpaired;
     BOOST_FOREACH (States::value_type& user_and_state, states_) {

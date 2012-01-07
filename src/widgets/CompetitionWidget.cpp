@@ -107,11 +107,11 @@ public:
         table_->setStyleClass("thechess-table-border");
         members = c->members_vector();
         score_column_ = members.size() + TOP_SHIFT;
-        headers_();
+        headers();
         scores_(c);
         fill_button_ = new Wt::WPushButton(this);
-        fill_button_->clicked().connect(this, &ClassicalView::change_fill_type_);
-        fill_table_();
+        fill_button_->clicked().connect(this, &ClassicalView::change_fill_type);
+        fill_table();
     }
 
 private:
@@ -122,7 +122,7 @@ private:
     bool show_wins_;
     Wt::WPushButton* fill_button_;
 
-    void headers_() {
+    void headers() {
         table_->elementAt(0, 0)->setColumnSpan(2);
         int i = 0;
         BOOST_FOREACH (const UserPtr& user, members) {
@@ -152,12 +152,12 @@ private:
         }
     }
 
-    void change_fill_type_() {
+    void change_fill_type() {
         show_wins_ = !show_wins_;
-        fill_table_();
+        fill_table();
     }
 
-    void fill_table_() {
+    void fill_table() {
         if (show_wins_) {
             fill_button_->setText(tr("tc.competition.Show_games"));
         } else {
@@ -215,7 +215,7 @@ public:
             const UserPtr& user = user_and_state.first;
             StagedCompetition::State state = user_and_state.second;
             if (state == StagedCompetition::UNPAIRED || state == StagedCompetition::WINNER) {
-                print_(sc_.stages().find(user)->second - 1, user, r);
+                print(sc_.stages().find(user)->second - 1, user, r);
             }
         }
     }
@@ -246,8 +246,8 @@ private:
         }
         n->setColumnWidget(GAMES_COLUMN, games);
         if (stage > 0) {
-            print_(stage - 1, pair.first(), n);
-            print_(stage - 1, pair.second(), n);
+            print(stage - 1, pair.first(), n);
+            print(stage - 1, pair.second(), n);
         }
     }
 
@@ -256,11 +256,11 @@ private:
         n->setColumnWidget(STAGE_COLUMN,
                            new Wt::WText(boost::lexical_cast<std::string>(stage + 1)));
         if (stage > 0) {
-            print_(stage - 1, user, n);
+            print(stage - 1, user, n);
         }
     }
 
-    void print_(int stage, const UserPtr& user, Wt::WTreeTableNode* parent) {
+    void print(int stage, const UserPtr& user, Wt::WTreeTableNode* parent) {
         const UserPtr& competitor = competitors_[stage][user];
         if (competitor) {
             print_pair_(stage, UserPair(user, competitor), parent);
@@ -301,7 +301,7 @@ public:
                 Wt::WPushButton* change =
                     new Wt::WPushButton(tr("tc.competition.Change"), this);
                 change->clicked().connect(this,
-                                          &CompetitionManager::show_change_widget_);
+                                          &CompetitionManager::show_change_widget);
             }
         }
     }
@@ -314,16 +314,16 @@ private:
     CompetitionPtr c_;
     bool is_editing_;
 
-    void show_change_widget_() {
+    void show_change_widget() {
         dynamic_cast<Wt::WPushButton*>(sender())->hide();
         is_editing_ = true;
         CompetitionCreateWidget* ccw = new CompetitionCreateWidget(c_, this);
-        ccw->saved().connect(this, &CompetitionManager::save_handler_);
+        ccw->saved().connect(this, &CompetitionManager::save_handler);
     }
 
     typedef void (Competition::*CompetitionMethod)(const UserPtr&);
     template <CompetitionMethod method>
-    void action_() {
+    void action() {
         dbo::Transaction t(tApp->session());
         c_.reread();
         (c_.modify()->*method)(tApp->user());
@@ -335,10 +335,10 @@ private:
     void button_(const char* title_id) {
         Wt::WPushButton* b;
         b = new Wt::WPushButton(tr(title_id), this);
-        b->clicked().connect(this, &CompetitionManager::action_<method>);
+        b->clicked().connect(this, &CompetitionManager::action<method>);
     }
 
-    void save_handler_() {
+    void save_handler() {
         is_editing_ = false;
     }
 };
@@ -348,10 +348,10 @@ CompetitionWidget::CompetitionWidget(const CompetitionPtr& competition,
     Wt::WTemplate(tr("tc.competition.widget_template"), p),
     Notifiable(Object(COMPETITION, competition.id()), tNot),
     c(competition) {
-    reprint_();
+    reprint();
 }
 
-void CompetitionWidget::reprint_() {
+void CompetitionWidget::reprint() {
     dbo::Transaction t(tApp->session());
     c.reread();
     bindInt("id", c.id());
@@ -374,7 +374,7 @@ void CompetitionWidget::reprint_() {
 }
 
 void CompetitionWidget::notify(EventPtr) {
-    reprint_();
+    reprint();
 }
 
 }

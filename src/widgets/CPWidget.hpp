@@ -50,8 +50,8 @@ private:
     Wt::Wc::ConstrainedSpinBox* min_substages_;
     Wt::Wc::ConstrainedSpinBox* increment_substages_;
 
-    void type_handler_();
-    CompetitionType get_type_() const;
+    void type_handler();
+    CompetitionType get_type() const;
     void set_type_(CompetitionType t);
 };
 

@@ -34,11 +34,11 @@ HalfMove::HalfMove() :
 }
 
 int HalfMove::dx() const {
-    return to().file_() - from().file_();
+    return to().file_int() - from().file_int();
 }
 
 int HalfMove::dy() const {
-    return to().rank_() - from().rank_();
+    return to().rank_int() - from().rank_int();
 }
 
 Square HalfMove::packed_to() const {

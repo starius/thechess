@@ -29,9 +29,9 @@ private:
     UserPtr user_;
     Wt::WComboBox* color_;
 
-    void print_();
-    void button_handler_();
-    Piece::Color selected_color_() const;
+    void print();
+    void button_handler();
+    Piece::Color selected_color() const;
 };
 
 }

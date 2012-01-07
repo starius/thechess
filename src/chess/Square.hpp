@@ -105,22 +105,22 @@ public:
     /** Return file as an integer.
     \todo Remove this method
     */
-    unsigned file_() const;
+    unsigned file_int() const;
 
     /** Return rank as an integer.
     \todo Remove this method
     */
-    unsigned rank_() const;
+    unsigned rank_int() const;
 
     /** Set the file using \c unsigned-represented file.
     \todo Rename this method to file().
     */
-    void file_(unsigned v);
+    void file(unsigned v);
 
     /** Set the rank using \c unsigned-represented rank.
     \todo Rename this method to rank().
     */
-    void rank_(unsigned v);
+    void rank(unsigned v);
 
     /** Get the first square for iteration by i() */
     static Square begin();

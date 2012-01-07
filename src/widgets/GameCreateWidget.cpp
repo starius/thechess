@@ -27,7 +27,7 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
     new Wt::WText(tr("tc.game.Competitor")
                   .arg(user->username()), this);
     if (tApp->user()) {
-        print_();
+        print();
     }
     t.commit();
 }
@@ -36,11 +36,11 @@ GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :
     Wt::WContainerWidget(p), with_user_(false) {
     new Wt::WText(tr("tc.game.Challenge"), this);
     if (tApp->user()) {
-        print_();
+        print();
     }
 }
 
-void GameCreateWidget::print_() {
+void GameCreateWidget::print() {
     GP gp(true);
     gpw_ = new GPWidget(&gp, this);
     color_ = new Wt::WComboBox();
@@ -50,15 +50,15 @@ void GameCreateWidget::print_() {
     gpw_->item(tr("tc.game.your_color"), "", color_, color_);
     new Wt::WBreak(this);
     Wt::WPushButton* ok_ = new Wt::WPushButton(tr("tc.common.Create"), this);
-    ok_->clicked().connect(this, &GameCreateWidget::button_handler_);
+    ok_->clicked().connect(this, &GameCreateWidget::button_handler);
 }
 
-void GameCreateWidget::button_handler_() {
+void GameCreateWidget::button_handler() {
     dbo::Transaction t(tApp->session());
     GPPtr gp = tApp->session().add(new GP(true));
     GamePtr game = tApp->session().add(new Game(gp));
     gpw_->apply_parameters(gp.modify());
-    Piece::Color color = selected_color_();
+    Piece::Color color = selected_color();
     if (with_user_) {
         game.modify()->propose_game(tApp->user(), user_, color);
     } else {
@@ -73,7 +73,7 @@ void GameCreateWidget::button_handler_() {
     tApp->path().game_view()->open(/* change path */ true);
 }
 
-Piece::Color GameCreateWidget::selected_color_() const {
+Piece::Color GameCreateWidget::selected_color() const {
     Piece::Color color = Piece::COLOR_NULL;
     if (color_->currentIndex() == 1) {
         color = Piece::WHITE;

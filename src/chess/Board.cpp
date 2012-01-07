@@ -180,7 +180,7 @@ void Board::make_move(const HalfMove half_move) {
             unset(Square(half_move.to().file(), half_move.from().rank()));
         }
         if (abs(half_move.dy()) == 2) {
-            long_pawn(true, half_move.to().file_());
+            long_pawn(true, half_move.to().file_int());
         }
     }
     if (active.letter() == Piece::KING && half_move.from().file() == Square::FILE_5) {
@@ -247,8 +247,8 @@ bool Board::simple_test_move(HalfMove half_move) const {
             }
             if ((active.color() == Piece::WHITE && dy == 2 && half_move.from().rank() == Square::RANK_2) ||
                     (active.color() == Piece::BLACK && dy == -2 && half_move.from().rank() == Square::RANK_7)) {
-                int my = (int)half_move.from().rank_() + dy / 2;
-                if (!isset(Square(half_move.from().file_(), my))) {
+                int my = (int)half_move.from().rank_int() + dy / 2;
+                if (!isset(Square(half_move.from().file_int(), my))) {
                     return true;
                 }
             }
@@ -291,7 +291,7 @@ bool Board::simple_test_move(HalfMove half_move) const {
             active.letter() == Piece::QUEEN) {
         int vx = sign(dx);
         int vy = sign(dy);
-        for (Square p = half_move.from(); p != half_move.to(); p.file_(p.file_() + vx), p.rank_(p.rank_() + vy)) {
+        for (Square p = half_move.from(); p != half_move.to(); p.file(p.file_int() + vx), p.rank(p.rank_int() + vy)) {
             if (p != half_move.from() && isset(p)) {
                 return false;
             }

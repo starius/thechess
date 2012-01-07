@@ -35,12 +35,12 @@ CPWidget::CPWidget(
     if (allow_change_type) {
         if (wApp->environment().ajax()) {
             type_->activated().connect(this,
-                                       &CPWidget::type_handler_);
+                                       &CPWidget::type_handler);
         } else {
             Wt::WPushButton* refresh =
                 new Wt::WPushButton(tr("tc.common.Refresh"), cell);
             refresh->clicked().connect(this,
-                                       &CPWidget::type_handler_);
+                                       &CPWidget::type_handler);
         }
     } else {
         type_->disable();
@@ -102,12 +102,12 @@ CPWidget::CPWidget(
     increment_substages_->setValue(cp->increment_substages());
     item(tr("tc.competition.Increment_substages"), "",
          increment_substages_, increment_substages_);
-    type_handler_();
+    type_handler();
 }
 
 void CPWidget::apply_parameters(CP* cp) {
     GPWidget::apply_parameters(cp->gp().modify());
-    CompetitionType t = get_type_();
+    CompetitionType t = get_type();
     cp->set_type(t);
     cp->set_min_rating(min_rating_->corrected_value());
     cp->set_max_rating(max_rating_->corrected_value());
@@ -145,8 +145,8 @@ void CPWidget::apply_parameters(CP* cp) {
     }
 }
 
-void CPWidget::type_handler_() {
-    CompetitionType t = get_type_();
+void CPWidget::type_handler() {
+    CompetitionType t = get_type();
     hide(users_);
     hide(recruiting_time_);
     hide(max_simultaneous_games_);
@@ -179,7 +179,7 @@ void CPWidget::set_type_(CompetitionType t) {
     }
 }
 
-CompetitionType CPWidget::get_type_() const {
+CompetitionType CPWidget::get_type() const {
     using namespace config::competition; // defaults
     CompetitionType t = defaults::COMPETITION_TYPE;
     int index = type_->currentIndex();

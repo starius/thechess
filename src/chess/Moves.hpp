@@ -229,10 +229,10 @@ public:
         const_iterator(const Moves& moves, int from = 0);
 
         /** Update board to position before n() */
-        void sync_board_() const;
+        void sync_board() const;
 
         /** Return half-move following board position */
-        HalfMove half_move_() const;
+        HalfMove half_move() const;
     };
 
     /** Return iterator referring to the first half-move */

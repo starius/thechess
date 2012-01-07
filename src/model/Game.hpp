@@ -586,16 +586,16 @@ private:
     void set_of_color_(const UserPtr& user, Piece::Color color);
     void set_random_(const UserPtr& user1, const UserPtr& user2);
 
-    void confirm_();
-    void start_();
-    void stop_pause_();
+    void confirm();
+    void start();
+    void stop_pause();
     void finish_(State state, const UserPtr& winner = UserPtr());
-    void elo_change_();
+    void elo_change();
 
     void push_move_(HalfMove half_move);
     void pop_moves_(int number);
 
-    const char* pgn_termination_() const;
+    const char* pgn_termination() const;
     void pgn_init_moves_(std::ostream& out) const;
     void pgn_additional_(std::ostream& out) const;
 };

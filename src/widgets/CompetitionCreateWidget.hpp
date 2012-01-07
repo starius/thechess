@@ -26,7 +26,7 @@ private:
     CompetitionPtr c_;
     Wt::WPushButton* ok_;
 
-    void button_handler_();
+    void button_handler();
 };
 
 }

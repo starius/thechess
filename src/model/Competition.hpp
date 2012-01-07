@@ -271,10 +271,10 @@ private:
 
     Users winners_;
 
-    bool can_start_() const;
-    void start_(Planning* planning);
+    bool can_start() const;
+    void start(Planning* planning);
     void create_games_classical_(Planning* planning);
-    void cancel_();
+    void cancel();
 
     void process_(Planning* planning);
     void process_classical_(Planning* planning);
