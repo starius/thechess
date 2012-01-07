@@ -224,7 +224,8 @@ const Td UNKNOWN_ERROR_DELAY = 2 * SECOND;
 
 }
 
-const int COOKIE_SESSION_AGE = (5 * 365 * DAY).total_seconds();
+/** Duration for an cookie-based authenticaton to remain valid */
+const Td COOKIE_AGE = 5 * 366 * DAY;
 
 /** Authentication token cookie name */
 const char* const COOKIE_NAME = "thechessauth";
