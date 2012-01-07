@@ -145,8 +145,9 @@ public:
     int check() const;
 
     /** Write (PGN) movetext to stream.
-    \param result the value of Result tag (see PGN description)
-    \param reduced use reduced export PGN format
+    \param out     Output stream.
+    \param result  The value of Result tag (see PGN description).
+    \param reduced Use reduced export PGN format.
     */
     void pgn(std::ostream& out, const std::string& result,
              bool reduced = false) const;
@@ -199,6 +200,7 @@ protected:
         /** Index of current half-move */
         int n_;
 
+        /** Constructor */
         base_iterator(const Moves& moves, int from = 0);
     };
 

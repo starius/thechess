@@ -53,6 +53,7 @@ public:
     void make_move(const HalfMove half_move);
 
     /** Return FEN notation of the board.
+    \param out      Output stream.
     \param halfmove This is the number of halfmoves since
         the last pawn advance or capture.
     \param fullmove The number of the full move.

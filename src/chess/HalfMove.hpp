@@ -112,6 +112,8 @@ public:
     operator bool() const;
 
     /** Return SAN (Standard Algebraic Notation) of the half-move.
+    \param board       board state, preceding the half-move.
+    \param board_after board state, subsequent to the half-move.
     \param skip_pieces if specified, all piece letters will be skipped.
         This is usefull when these letters are rendered as images.
     */
