@@ -11,10 +11,11 @@
 #include <algorithm>
 #include <boost/format.hpp>
 
+#include <Wt/Wc/PlainTextWritter.hpp>
+
 #include "chess/Moves.hpp"
 #include "chess/HalfMove.hpp"
 #include "chess/Square.hpp"
-#include "utils/PlainTextWritter.hpp"
 
 namespace thechess {
 
@@ -151,7 +152,7 @@ int Moves::check() const {
 }
 
 void Moves::pgn(std::ostream& out, const std::string& result, bool /*reduced*/) const {
-    PlainTextWritter ptw(out);
+    Wt::Wc::PlainTextWritter ptw(out);
     const_iterator after = begin();
     for (const_iterator i = begin(); i != end(); ++i) {
         const Board& board = i.board();
