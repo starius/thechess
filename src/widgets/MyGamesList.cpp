@@ -107,7 +107,7 @@ class MyGamesListImp : public Wt::WContainerWidget, public Notifiable {
 public:
     MyGamesListImp(const UserPtr& user):
         Notifiable(Object(USER, user.id()), tNot),
-        user_id_(user.id()),
+        user_(user),
         last_clicked_(0) {
         for (int i = 0; i < ORDER_OF_STATES_SIZE; i++) {
             first_of_state_[i] = 0;
@@ -120,7 +120,7 @@ public:
     }
 
 private:
-    int user_id_;
+    UserPtr user_;
     Anchors anchors_;
     int last_clicked_;
     int first_of_state_[ORDER_OF_STATES_SIZE];
@@ -128,8 +128,8 @@ private:
     void update_games_list_() {
         dbo::Transaction t(tApp->session());
         std::set<int> games;
-        UserPtr user = tApp->session().load<User>(user_id_, /* reread */ true);
-        Games games_collection = user->games().where("state < ?").bind(Game::MIN_ENDED);
+        user_.reread();
+        Games games_collection = user_->games().where("state < ?").bind(Game::MIN_ENDED);
         GamesVector games_vector(games_collection.begin(), games_collection.end());
         BOOST_FOREACH (const GamePtr& game, games_vector) {
             games.insert(game.id());
