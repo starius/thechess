@@ -102,24 +102,16 @@ public:
         i_ = v;
     }
 
-    /** Return file as an integer.
-    \todo Remove this method
-    */
+    /** Return file as an integer */
     unsigned file_int() const;
 
-    /** Return rank as an integer.
-    \todo Remove this method
-    */
+    /** Return rank as an integer */
     unsigned rank_int() const;
 
-    /** Set the file using \c unsigned-represented file.
-    \todo Rename this method to file().
-    */
+    /** Set the file using \c unsigned-represented file */
     void file(unsigned v);
 
-    /** Set the rank using \c unsigned-represented rank.
-    \todo Rename this method to rank().
-    */
+    /** Set the rank using \c unsigned-represented rank */
     void rank(unsigned v);
 
     /** Get the first square for iteration by i() */
