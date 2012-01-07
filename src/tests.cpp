@@ -10,6 +10,8 @@
 #include <iostream>
 #include <boost/assert.hpp>
 
+#include <Wt/Wc/rand.hpp>
+
 #include "tests.hpp"
 #include "chess/Board.hpp"
 #include "chess/HalfMove.hpp"
@@ -17,7 +19,6 @@
 #include "chess/Square.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
-#include "utils/rand.hpp"
 
 namespace thechess {
 
@@ -50,7 +51,7 @@ void run_tests() {
     const int n = 10000;
     int sum = 0;
     for (int i = 0; i < n; i++) {
-        sum += rr(2);
+        sum += Wt::Wc::rr(2);
     }
     int sigma = sqrt(n * 0.5 * 0.5);
     BOOST_ASSERT(abs(sum - n / 2) < 10 * sigma);

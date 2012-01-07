@@ -10,8 +10,9 @@
 #include <map>
 #include <boost/foreach.hpp>
 
+#include <Wt/Wc/rand.hpp>
+
 #include "model/all.hpp"
-#include "utils/rand.hpp"
 #include "chess/Board.hpp"
 
 namespace thechess {
@@ -243,7 +244,7 @@ void Game::make_competition_game(const UserPtr& white, const UserPtr& black,
 
 void Game::set_random_(const UserPtr& user1, const UserPtr& user2) {
     colors_random_ = true;
-    if (rr(2) == 0) {
+    if (Wt::Wc::rr(2) == 0) {
         white_ = user1;
         black_ = user2;
     } else {

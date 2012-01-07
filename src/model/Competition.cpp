@@ -9,9 +9,10 @@
 #include <algorithm>
 #include <boost/foreach.hpp>
 
+#include <Wt/Wc/rand.hpp>
+
 #include "model/all.hpp"
 #include "config.hpp"
-#include "utils/rand.hpp"
 
 namespace thechess {
 
@@ -262,7 +263,8 @@ void Competition::start_(Planning* planning) {
 
 void Competition::create_games_classical_(Planning* planning) {
     UsersVector members(members_.begin(), members_.end());
-    std::random_shuffle(members.begin(), members.end(), rand_for_shuffle);
+    std::random_shuffle(members.begin(), members.end(),
+                        Wt::Wc::rand_for_shuffle);
     int white_games_per_user = std::max(1, int((members.size() - 1) * cp_->games_factor()));
     std::map<UserPtr, int> black_games;
     std::map<UserPtr, std::map<UserPtr, int> > N; // number of all games between them
@@ -318,7 +320,8 @@ void Competition::process_classical_(Planning* planning) {
             proposed.push_back(g);
         }
     }
-    std::random_shuffle(proposed.begin(), proposed.end(), rand_for_shuffle);
+    std::random_shuffle(proposed.begin(), proposed.end(),
+                        Wt::Wc::rand_for_shuffle);
     BOOST_FOREACH (const GamePtr& g, proposed) {
         if (used[g->white()] < cp_->max_simultaneous_games() &&
                 used[g->black()] < cp_->max_simultaneous_games()) {
