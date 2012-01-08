@@ -92,7 +92,7 @@ void StagedCompetition::dot(std::ostream& out) const {
             const UserPtr& from = user_to_user.first;
             const UserPtr& to = user_to_user.second;
             out << "user_" << from.id() << "_stage_" << stage_number;
-            out << "[label='" << from->username() << "']" << std::endl;
+            out << "[label=\"" << from->username() << "\"]" << std::endl;
             out << "user_" << from.id() << "_stage_" << stage_number << " -> ";
             if (to) {
                 out << "user_" << to.id() << "_stage_" << (stage_number + 1);
