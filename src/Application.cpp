@@ -89,6 +89,7 @@ void Application::login_handler() {
     }
     main_widget_->main_menu()->show_user_items(session_.login().loggedIn());
     main_widget_->update_my_games();
+    path_.open(internalPath());
 }
 
 void Application::notify(const Wt::WEvent& e) {
