@@ -86,7 +86,8 @@ void StagedCompetition::dot(std::ostream& out) const {
         int stage = stage_and_u2u.first;
         int stage_number = stage + 1;
         const U2U& u2u = stage_and_u2u.second;
-        out << "subgraph stage_" << stage_number << " {" << std::endl;
+        out << "subgraph cluster_" << stage_number << " {" << std::endl;
+        out << "label = \"" << "Stage " << stage_number << "\"" << std::endl;
         BOOST_FOREACH (const U2U::value_type& user_to_user, u2u) {
             const UserPtr& from = user_to_user.first;
             const UserPtr& to = user_to_user.second;
