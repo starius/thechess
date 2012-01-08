@@ -61,6 +61,7 @@ void StagedCompetition::process(Competition* competition, Planning* planning) {
 void StagedCompetition::dot(std::ostream& out) const {
     Competitiors comp = competitors();
     out << "digraph compatition_" << competition_->id() << " {" << std::endl;
+    out << "rankdir=LR" << std::endl;
     typedef std::map<UserPtr, UserPtr> U2U;
     typedef std::map<int, U2U> Stage2Users;
     Stage2Users s2u;
