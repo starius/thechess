@@ -11,6 +11,8 @@ FIXME
 Dependencies:
  * witty library (>=3.2.0)
  * wt-classes library (https://bitbucket.org/starius/wt-classes/)
+ * dot command (graphviz lib)
+ * Boost library >= 1.44
 FIXME
 
 ------------------------------------------

@@ -34,6 +34,7 @@ CXX = ccache g++
 LINK = g++
 LIBS += -lcrypt -lpthread
 LIBS += -lboost_signals -lboost_regex -lboost_system -lboost_thread
+LIBS += -lboost_filesystem
 LIBS += -lwt -lwtdbo -lwtdbosqlite3 -lwtdbopostgres
 LIBS += -lwt$(MODE)
 LIBS += -lwtclasses
