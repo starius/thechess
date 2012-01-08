@@ -15,6 +15,7 @@
 #include <Wt/WTreeTable>
 #include <Wt/WTreeTableNode>
 #include <Wt/WAnchor>
+#include <Wt/WImage>
 #include <Wt/WCompositeWidget>
 #include <Wt/WPushButton>
 #include <Wt/WBreak>
@@ -22,6 +23,7 @@
 #include <Wt/Wc/util.hpp>
 
 #include "widgets/CompetitionWidget.hpp"
+#include "widgets/StagedCompetitionGraph.hpp"
 #include "widgets/CompetitionCreateWidget.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
@@ -197,8 +199,8 @@ const int GAMES_COLUMN = 2;
 
 class StagedView : public Wt::WTreeTable {
 public:
-    StagedView(const CompetitionPtr& c):
-        c_(c), sc_(&*c), competitors_(sc_.competitors()) {
+    StagedView(const StagedCompetition* s):
+        sc_(*s), competitors_(sc_.competitors()) {
         resize(650, 300);
         addColumn(tr("tc.competition.Stage"), 100);
         addColumn(tr("tc.competition.Games_list"), 300);
@@ -222,8 +224,7 @@ public:
     }
 
 private:
-    CompetitionPtr c_;
-    StagedCompetition sc_;
+    const StagedCompetition& sc_;
     std::map<int, std::map<UserPtr, UserPtr> > competitors_;
 
     void print_pair_(int stage, const UserPair& pair, Wt::WTreeTableNode* parent) {
@@ -271,6 +272,18 @@ private:
     }
 };
 
+class StagedWidget : public Wt::WContainerWidget {
+public:
+    StagedWidget(const CompetitionPtr& c):
+        sc_(c.get()) {
+        addWidget(new StagedView(&sc_));
+        addWidget(new Wt::WImage(new StagedCompetitionGraph(&sc_, this)));
+    }
+
+private:
+    StagedCompetition sc_;
+};
+
 class CompetitionView : public Wt::WCompositeWidget {
 public:
     CompetitionView(const CompetitionPtr& c) {
@@ -279,7 +292,7 @@ public:
                 setImplementation(new ClassicalView(c));
             }
             if (c->type() == STAGED) {
-                setImplementation(new StagedView(c));
+                setImplementation(new StagedWidget(c));
             }
         }
         if (!implementation()) {
