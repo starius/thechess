@@ -175,8 +175,7 @@ private:
         a->excite();
         dbo::Transaction t(tApp->session());
         int game_id = a->game_id();
-        GamePtr game = tApp->session().load<Game>(game_id);
-        game.reread();
+        GamePtr game = tApp->session().load<Game>(game_id, /* reread */ true);
         if (game->state() > Game::MIN_ENDED) {
             extract_anchor_(a);
             anchors_.erase(game_id);
