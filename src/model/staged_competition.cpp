@@ -5,6 +5,7 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <set>
 #include <algorithm>
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
@@ -58,63 +59,86 @@ void StagedCompetition::process(Competition* competition, Planning* planning) {
     create_games_(competition, planning);
 }
 
+typedef std::pair<UserPtr, bool> FU; // bool means user, not winner place
+typedef std::set<FU> FUS;
+typedef std::map<int, FUS> S2F;
+typedef std::map<UserPtr, FU> U2FU;
+typedef std::map<int, U2FU> S2U;
+
+void write_user(std::ostream& out, int stage_number, const FU& fu) {
+    if (fu.second) {
+        out << "user_";
+    } else {
+        out << "empty_";
+    }
+    out << fu.first.id();
+    out << "_stage_" << stage_number;
+}
+
+void write_user_label(std::ostream& out, const FU& fu) {
+    out << "[label=\"";
+    if (fu.second) {
+        out << fu.first->username();
+    } else {
+        out << "?";
+    }
+    out << "\"]";
+}
+
 void StagedCompetition::dot(std::ostream& out) const {
     Competitiors comp = competitors();
-    out << "digraph compatition_" << competition_->id() << " {" << std::endl;
-    out << "rankdir=LR" << std::endl;
-    typedef std::map<UserPtr, UserPtr> U2U;
-    typedef std::map<int, U2U> Stage2Users;
-    Stage2Users s2u;
+    S2F s2f;
+    S2U s2u;
     BOOST_FOREACH (const Paires::value_type& stage_and_pair, paires_) {
         int stage = stage_and_pair.first;
         const UserPair& pair = stage_and_pair.second;
-        UserPtr winner;
+        FU winner(pair.first(), false);
         if (winners_.find(pair) != winners_.end()) {
-            winner = winners_.find(pair)->second;
+            winner = std::make_pair(winners_.find(pair)->second, true);
         }
         s2u[stage][pair.first()] = winner;
         s2u[stage][pair.second()] = winner;
+        s2f[stage].insert(std::make_pair(pair.first(), true));
+        s2f[stage].insert(std::make_pair(pair.second(), true));
+        s2f[stage + 1].insert(winner);
     }
     BOOST_FOREACH (const Stages::value_type& user_and_stage, stages_) {
         const UserPtr& user = user_and_stage.first;
         int stage = user_and_stage.second;
         if (stage == 1) {
-            s2u[stage - 1][user] = user;
+            s2f[stage].insert(std::make_pair(user, true));
+            s2f[stage - 1].insert(std::make_pair(user, true));
+            s2u[stage - 1][user] = std::make_pair(user, true);
         }
     }
-    BOOST_FOREACH (const Stage2Users::value_type& stage_and_u2u, s2u) {
-        int stage = stage_and_u2u.first;
+    out << "digraph compatition_" << competition_->id() << " {" << std::endl;
+    out << "rankdir=LR" << std::endl;
+    BOOST_FOREACH (const S2F::value_type& stage_and_fus, s2f) {
+        int stage = stage_and_fus.first;
         int stage_number = stage + 1;
-        const U2U& u2u = stage_and_u2u.second;
+        const FUS& fus = stage_and_fus.second;
         out << "subgraph cluster_" << stage_number << " {" << std::endl;
         out << "label = \"" << "Stage " << stage_number << "\"" << std::endl;
-        BOOST_FOREACH (const U2U::value_type& user_to_user, u2u) {
-            const UserPtr& from = user_to_user.first;
-            const UserPtr& to = user_to_user.second;
-            out << "user_" << from.id() << "_stage_" << stage_number;
-            out << "[label=\"" << from->username() << "\"]" << std::endl;
-            out << "user_" << from.id() << "_stage_" << stage_number << " -> ";
-            if (to) {
-                out << "user_" << to.id() << "_stage_" << (stage_number + 1);
-            } else {
-                UserPair pair(from, comp[stage][from]);
-                int id = pair.first().id();
-                out << "empty_" << id << "_stage_" << (stage_number + 1);
-            }
+        BOOST_FOREACH (const FU& fu, fus) {
+            write_user(out, stage_number, fu);
+            write_user_label(out, fu);
             out << std::endl;
         }
-        if (s2u.find(stage - 1) != s2u.end()) {
-            BOOST_FOREACH (const U2U::value_type& user_to_user, s2u[stage - 1]) {
-                const UserPtr& from = user_to_user.first;
-                const UserPtr& to = user_to_user.second;
-                if (!to) {
-                    UserPair pair(from, comp[stage][from]);
-                    int id = pair.first().id();
-                    out << "empty_" << id << "_stage_" << stage_number;
-                }
-            }
-        }
         out << "}" << std::endl;
+    }
+    BOOST_FOREACH (const S2U::value_type& stage_and_u2u, s2u) {
+        int stage = stage_and_u2u.first;
+        int stage_number = stage + 1;
+        int next_stage_number = stage_number + 1;
+        const U2FU& u2u = stage_and_u2u.second;
+        BOOST_FOREACH (const U2FU::value_type& user_to_fu, u2u) {
+            FU from(user_to_fu.first, true);
+            const FU& to = user_to_fu.second;
+            write_user(out, stage_number, from);
+            out << " -> ";
+            write_user(out, next_stage_number, to);
+            out << std::endl;
+        }
     }
     out << "}" << std::endl;
 }
