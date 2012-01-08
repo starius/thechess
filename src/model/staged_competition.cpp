@@ -232,10 +232,10 @@ void StagedCompetition::create_games_(Competition* competition,
                 const UserPtr& black = i ? pair.second() : pair.first();
                 GamePtr game = competition->create_game_(white, black, stage, no_draw);
                 games_[pair].push_back(game);
-                planning->add(new Object(GAME, game.id()), now());
+                planning->add(new Object(GAME, game.id()), now(), false);
             }
-            planning->add(new Object(USER, pair.first().id()), now());
-            planning->add(new Object(USER, pair.second().id()), now());
+            planning->add(new Object(USER, pair.first().id()), now(), false);
+            planning->add(new Object(USER, pair.second().id()), now(), false);
         }
     }
 }

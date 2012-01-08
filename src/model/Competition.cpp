@@ -53,7 +53,7 @@ void Competition::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
     if (state_ == ACTIVE) {
         process_(planning);
     }
-    planning->add(task, next_check());
+    planning->add(task, next_check(), false);
 }
 
 Wt::WDateTime Competition::next_check() const {
@@ -284,7 +284,7 @@ void Competition::create_games_classical_(Planning* planning) {
             N[black][white] += 1;
             create_game_(white, black);
         }
-        planning->add(new Object(USER, white.id()), now());
+        planning->add(new Object(USER, white.id()), now(), false);
     }
 }
 
@@ -326,7 +326,7 @@ void Competition::process_classical_(Planning* planning) {
         if (used[g->white()] < cp_->max_simultaneous_games() &&
                 used[g->black()] < cp_->max_simultaneous_games()) {
             g.modify()->confirm_by_competition();
-            planning->add(new Object(GAME, g.id()), now());
+            planning->add(new Object(GAME, g.id()), now(), false);
             used[g->white()] += 1;
             used[g->black()] += 1;
         }

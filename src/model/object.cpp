@@ -45,10 +45,10 @@ void Object::process(Wt::Wc::notify::TaskPtr task,
         std::cerr << e.what() << std::endl;
     } catch (dbo::StaleObjectException& e) {
         std::cerr << e.what() << std::endl;
-        planning->add(task, now() + config::tracker::STALE_OBJECT_DELAY);
+        planning->add(task, now() + config::tracker::STALE_OBJECT_DELAY, false);
     } catch (std::exception& e) { // database locked?
         std::cerr << e.what() << std::endl;
-        planning->add(task, now() + config::tracker::UNKNOWN_ERROR_DELAY);
+        planning->add(task, now() + config::tracker::UNKNOWN_ERROR_DELAY, false);
     } catch (...)
     { }
 }

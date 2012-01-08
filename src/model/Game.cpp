@@ -141,9 +141,9 @@ void Game::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
         finish_(TIMEOUT, winner);
     }
     if (is_ended() && competition()) {
-        planning->add(new Object(COMPETITION, competition().id()), now());
+        planning->add(new Object(COMPETITION, competition().id()), now(), false);
     }
-    planning->add(task, next_check());
+    planning->add(task, next_check(), false);
 }
 
 Td Game::limit_private(Piece::Color color) const {
