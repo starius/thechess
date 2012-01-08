@@ -344,8 +344,7 @@ void Competition::finish_(const UsersVector& winners, Planning*) {
 GamePtr Competition::create_game_(const UserPtr& white, const UserPtr& black, int stage, bool no_draw) {
     GamePtr game = session()->add(new Game(cp_->gp()));
     bool random = no_draw;
-    game.modify()->make_competition_game(white, black,
-                                         session()->load<Competition>(id()), stage, random);
+    game.modify()->make_competition_game(white, black, self(), stage, random);
     if (no_draw) {
         //game.modify()->set_no_draw(); FIXME
     }
