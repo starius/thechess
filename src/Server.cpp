@@ -39,7 +39,6 @@ Server::Server(int argc, char** argv):
     addResource(&pgn_, "/pgn/");
     addEntryPoint(Wt::Application, boost::bind(createApplication, this, _1), "", "/favicon.ico");
     auth_init();
-    planning_.start();
     Session session(pool_);
     session.reconsider(*this);
 }

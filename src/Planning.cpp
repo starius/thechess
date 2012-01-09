@@ -12,13 +12,10 @@
 namespace thechess {
 
 Planning::Planning(Server& server):
+    Wt::Wc::notify::PlanningServer(&server.ioService()),
     server_(server) {
     set_delay(config::tracker::DELAY);
     set_notification_server(&server.notifier());
-}
-
-Planning::~Planning() {
-    this->boost::asio::io_service::stop();
 }
 
 }

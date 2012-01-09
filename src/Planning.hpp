@@ -24,11 +24,6 @@ public:
     /** Constructor */
     Planning(Server& server);
 
-    /** Destructor.
-    Kill all timers immediately.
-    */
-    ~Planning();
-
     /** Get server */
     Server& server() {
         return server_;

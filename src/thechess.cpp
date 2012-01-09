@@ -21,6 +21,7 @@ int main(int argc, char** argv) {
     Server server(argc, argv);
     if (server.start()) {
         Wt::WServer::waitForShutdown();
+        server.ioService().boost::asio::io_service::stop();
         server.stop();
     }
 }
