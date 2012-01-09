@@ -278,6 +278,7 @@ public:
         sc_(c.get()) {
         addWidget(new StagedView(&sc_));
         addWidget(new Wt::WImage(new StagedCompetitionGraph(&sc_, this)));
+        // FIXME parent of graph http://redmine.emweb.be/issues/1126
     }
 
 private:

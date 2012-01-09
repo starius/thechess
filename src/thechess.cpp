@@ -22,6 +22,7 @@ int main(int argc, char** argv) {
     if (server.start()) {
         Wt::WServer::waitForShutdown();
         server.ioService().boost::asio::io_service::stop();
+        // FIXME http://redmine.emweb.be/issues/1122
         server.stop();
     }
 }

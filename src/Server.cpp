@@ -62,6 +62,7 @@ void Server::auth_init() {
     // auth_service_.setAuthTokenValidity(total_minutes(config::COOKIE_AGE));
     auth_service_.setEmailVerificationEnabled(true);
     password_service_.setAttemptThrottlingEnabled(true);
+    // FIXME setStrengthValidator http://redmine.emweb.be/issues/1125
     password_service_.setStrengthValidator(new PasswordStrengthValidator());
     PasswordVerifier* verifier = new PasswordVerifier();
     verifier->addHashFunction(new BCryptHashFunction(7));
