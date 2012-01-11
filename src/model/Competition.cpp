@@ -21,9 +21,8 @@ Competition::Competition() {
 
 Competition::Competition(const CPPtr& cp):
     cp_(cp),
-    state_(RECRUITING),
-    created_(now()) {
-}
+    state_(RECRUITING)
+{ }
 
 Wt::WString Competition::type2str(Type type) {
     if (type == CLASSICAL) {
@@ -39,14 +38,14 @@ Wt::WString Competition::type2str(Type type) {
 }
 
 void Competition::create_competition(const UserPtr& user) {
-    init_ = user;
+    set_init(user);
 }
 
 void Competition::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
     if (state_ == RECRUITING) {
         if (can_start()) {
             start(planning);
-        } else if (now() - created_ > cp_->max_recruiting_time()) {
+        } else if (now() - created() > cp_->max_recruiting_time()) {
             cancel();
         }
     }
@@ -60,10 +59,10 @@ Wt::WDateTime Competition::next_check() const {
     Wt::WDateTime result;
     if (state_ == RECRUITING) {
         if (type() == CLASSICAL || type() == STAGED) {
-            if (now() < created_ + cp_->min_recruiting_time()) {
-                result = created_ + cp_->min_recruiting_time();
+            if (now() < created() + cp_->min_recruiting_time()) {
+                result = created() + cp_->min_recruiting_time();
             } else {
-                result = created_ + cp_->max_recruiting_time();
+                result = created() + cp_->max_recruiting_time();
             }
         }
     }
@@ -216,7 +215,7 @@ void Competition::leave(const UserPtr& user) {
 bool Competition::can_kick(const UserPtr& kicker, const UserPtr& kicked) const {
     return state_ == RECRUITING &&
            is_member(kicked) &&
-           kicker == init_;
+           kicker == init();
 }
 
 void Competition::kick(const UserPtr& kicker, const UserPtr& kicked) {
@@ -227,12 +226,12 @@ void Competition::kick(const UserPtr& kicker, const UserPtr& kicked) {
 
 bool Competition::can_change_parameters(const UserPtr& user) const {
     return state_ == RECRUITING && user &&
-           (user == init_ || user->rights() >= User::MODERATOR);
+           (user == init() || user->rights() >= User::MODERATOR);
 }
 
 bool Competition::can_cancel(const UserPtr& user) const {
     return state_ == RECRUITING &&
-           user == init_;
+           user == init();
 }
 
 void Competition::cancel(const UserPtr& user) {
@@ -250,7 +249,7 @@ bool Competition::can_start() const {
     if (state_ == RECRUITING) {
         if (type() == CLASSICAL || type() == STAGED) {
             if (static_cast<int>(members_.size()) >= cp_->min_users() &&
-                    now() - created_ >= cp_->min_recruiting_time()) {
+                    now() - created() >= cp_->min_recruiting_time()) {
                 result = true;
             }
         }

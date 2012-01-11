@@ -21,7 +21,7 @@ typedef std::map<UserPtr, std::map<UserPtr, GamesVector> > GamesTable;
 
 \ingroup model
 */
-class Competition : public dbo::Dbo<Competition> {
+class Competition : public dbo::Dbo<Competition>, public Record {
 public:
     /** Type of competition */
     typedef CompetitionType Type;
@@ -61,16 +61,13 @@ public:
 #ifndef DOXYGEN_ONLY
     template<class Action>
     void persist(Action& a) {
+        Record::persist(a);
         dbo::belongsTo(a, cp_, "cp");
         dbo::belongsTo(a, gp_, "gp");
         dbo::field(a, state_, "state");
-        dbo::field(a, name_, "name");
-        dbo::field(a, description_, "description");
         dbo::hasMany(a, members_, dbo::ManyToMany, "members_competitions");
-        dbo::belongsTo(a, init_, "init_competitions");
         dbo::belongsTo(a, virtual_allower_, "virtual_allower");
         dbo::hasMany(a, games_, dbo::ManyToOne, "competition");
-        dbo::field(a, created_, "created");
         dbo::field(a, started_, "started");
         dbo::field(a, ended_, "ended");
         dbo::hasMany(a, winners_, dbo::ManyToMany, "winners_competition");
@@ -107,11 +104,6 @@ public:
     /** \name Dates */
     /* @{ */
 
-    /** Get datetime when competition was created */
-    const Wt::WDateTime& created() const {
-        return created_;
-    }
-
     /** Get datetime when competition was started */
     const Wt::WDateTime& started() const {
         return started_;
@@ -124,38 +116,8 @@ public:
 
     /* @} */
 
-    /** \name Name and description */
-    /* @{ */
-
-    /** Get competition name */
-    const Wt::WString& name() const {
-        return name_;
-    }
-
-    /** Set competition name */
-    void set_name(const Wt::WString& v) {
-        name_ = v;
-    }
-
-    /** Get competition description */
-    const Wt::WString& description() const {
-        return description_;
-    }
-
-    /** Set competition description */
-    void set_description(const Wt::WString& v) {
-        description_ = v;
-    }
-
-    /* @} */
-
     /** \name Getters for users and games */
     /* @{ */
-
-    /** Get competition creator */
-    const UserPtr& init() const {
-        return init_;
-    }
 
     /** Return if the user if a member of the competition */
     bool is_member(const UserPtr& user) const;
@@ -267,18 +229,13 @@ private:
     GPPtr gp_;
     State state_;
 
-    Wt::WString name_;
-    Wt::WString description_;
-
     Users members_;
-    UserPtr init_;
 
     Users virtuals_;
     UserPtr virtual_allower_;
 
     Games games_;
 
-    Wt::WDateTime created_;
     Wt::WDateTime started_;
     Wt::WDateTime ended_;
 

@@ -51,7 +51,7 @@ public:
         dbo::hasMany(a, won_games_, dbo::ManyToOne, "winner_game");
         dbo::hasMany(a, init_games_, dbo::ManyToOne, "init_game");
         dbo::hasMany(a, competitions_, dbo::ManyToMany, "members_competitions");
-        dbo::hasMany(a, init_competitions_, dbo::ManyToOne, "init_competitions");
+        dbo::hasMany(a, init_competitions_, dbo::ManyToOne, "init");
         dbo::hasMany(a, virtual_allower_, dbo::ManyToOne, "virtual_allower");
         dbo::hasMany(a, won_competitions_, dbo::ManyToMany, "winners_competition");
         dbo::field(a, games_stat_, "games_stat");
