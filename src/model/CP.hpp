@@ -28,7 +28,9 @@ public:
     CP();
 #endif
 
-    /** Create instance to be added to database */
+    /** Create instance to be added to database.
+    \param gp Default game parameters for competitions.
+    */
     CP(const GPPtr& gp);
 
 #ifndef DOXYGEN_ONLY
@@ -64,7 +66,7 @@ public:
         type_ = v;
     }
 
-    /** Get game parameters */
+    /** Get game parameters (default for competitions) */
     const GPPtr& gp() const {
         return gp_;
     }

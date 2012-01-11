@@ -34,6 +34,7 @@ public:
     void persist(Action& a) {
         dbo::hasMany(a, games_, dbo::ManyToOne, "gp");
         dbo::hasMany(a, cps_, dbo::ManyToOne, "gp");
+        dbo::hasMany(a, competitions_, dbo::ManyToOne, "gp");
         dbo::field(a, moves_, "init");
         dbo::field(a, limit_std_, "limit_std");
         dbo::field(a, limit_private_init_, "limit_private_init");
@@ -115,6 +116,7 @@ public:
 private:
     Games games_;
     CPs cps_;
+    Competitions competitions_;
 
     Moves moves_;
 

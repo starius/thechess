@@ -127,6 +127,11 @@ UsersVector Competition::winners_of_games(const GamesVector& games) {
     return winners;
 }
 
+const GPPtr& Competition::gp() const {
+    const GPPtr& gp = gp_;
+    return gp ? gp_ : cp()->gp();
+}
+
 CompetitionType Competition::type() const {
     return cp_->type();
 }
@@ -342,7 +347,7 @@ void Competition::finish_(const UsersVector& winners, Planning*) {
 }
 
 GamePtr Competition::create_game_(const UserPtr& white, const UserPtr& black, int stage, bool no_draw) {
-    GamePtr game = session()->add(new Game(cp_->gp()));
+    GamePtr game = session()->add(new Game(gp()));
     bool random = no_draw;
     game.modify()->make_competition_game(white, black, self(), stage, random);
     if (no_draw) {

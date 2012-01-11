@@ -62,6 +62,7 @@ public:
     template<class Action>
     void persist(Action& a) {
         dbo::belongsTo(a, cp_, "cp");
+        dbo::belongsTo(a, gp_, "gp");
         dbo::field(a, state_, "state");
         dbo::field(a, name_, "name");
         dbo::field(a, description_, "description");
@@ -79,6 +80,17 @@ public:
     /** Get competition parameters */
     const CPPtr& cp() const {
         return cp_;
+    }
+
+    /** Get game parameters */
+    const GPPtr& gp() const;
+
+    /** Set game parameters.
+    By default, no game parametrs are set,
+    which means "use default game parameters of the competition parameters".
+    */
+    void set_gp(const GPPtr& gp) {
+        gp_ = gp;
     }
 
     /** Get type */
@@ -252,6 +264,7 @@ public:
 private:
     // common attributes
     CPPtr cp_;
+    GPPtr gp_;
     State state_;
 
     Wt::WString name_;
