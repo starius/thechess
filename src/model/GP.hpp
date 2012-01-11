@@ -32,6 +32,8 @@ public:
 #ifndef DOXYGEN_ONLY
     template<class Action>
     void persist(Action& a) {
+        dbo::belongsTo(a, parent_, "parent");
+        dbo::hasMany(a, children_, dbo::ManyToOne, "parent");
         dbo::hasMany(a, games_, dbo::ManyToOne, "gp");
         dbo::hasMany(a, cps_, dbo::ManyToOne, "gp");
         dbo::hasMany(a, competitions_, dbo::ManyToOne, "gp");
@@ -104,8 +106,13 @@ public:
         first_draw_ = first_draw;
     }
 
-    /** Copy all settings from other game parameters */
+    /** Copy all settings from other game parameters FIXME */
     void set_gp(const GP* other);
+
+    /** Get parent */
+    const GPPtr& parent() const {
+        return parent_;
+    }
 
     /** Set min time limits and forbid game being finished with draw.
     All types of draw become impossible except stalemate.
@@ -114,6 +121,9 @@ public:
     void set_no_draw();
 
 private:
+    GPPtr parent_;
+    GPs children_;
+
     Games games_;
     CPs cps_;
     Competitions competitions_;

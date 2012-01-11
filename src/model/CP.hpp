@@ -36,6 +36,8 @@ public:
 #ifndef DOXYGEN_ONLY
     template<class Action>
     void persist(Action& a) {
+        dbo::belongsTo(a, parent_, "parent");
+        dbo::hasMany(a, children_, dbo::ManyToOne, "parent");
         dbo::belongsTo(a, gp_, "gp");
         dbo::hasMany(a, competitions_, dbo::ManyToOne, "cp");
         dbo::field(a, type_, "type");
@@ -69,6 +71,11 @@ public:
     /** Get game parameters (default for competitions) */
     const GPPtr& gp() const {
         return gp_;
+    }
+
+    /** Get parent */
+    const CPPtr& parent() const {
+        return parent_;
     }
 
     /** \name Restrictions for users */
@@ -246,6 +253,9 @@ public:
     /* @} */
 
 private:
+    CPPtr parent_;
+    CPs children_;
+
     GPPtr gp_;
     Competitions competitions_;
     Type type_;
