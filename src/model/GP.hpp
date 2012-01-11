@@ -20,7 +20,7 @@ by multiple games and \ref CP "competition parameters".
 
 \ingroup model
 */
-class GP : public dbo::Dbo<GP> {
+class GP : public dbo::Dbo<GP>, public Record {
 public:
 #ifndef DOXYGEN_ONLY
     GP();

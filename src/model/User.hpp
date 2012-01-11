@@ -56,6 +56,8 @@ public:
         dbo::hasMany(a, won_competitions_, dbo::ManyToMany, "winners_competition");
         dbo::field(a, games_stat_, "games_stat");
         dbo::hasMany(a, auth_infos_, dbo::ManyToOne, "user");
+        dbo::hasMany(a, gps_, dbo::ManyToOne, "init");
+        dbo::hasMany(a, cps_, dbo::ManyToOne, "init");
     }
 #endif
 
@@ -162,6 +164,9 @@ private:
     EloPlayer games_stat_;
 
     AuthInfos auth_infos_;
+
+    GPs gps_;
+    CPs cps_;
 };
 
 }

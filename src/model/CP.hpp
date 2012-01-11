@@ -19,7 +19,7 @@ by multiple competitions.
 
 \ingroup model
 */
-class CP : public dbo::Dbo<CP> {
+class CP : public dbo::Dbo<CP>, public Record {
 public:
     /** Competition type */
     typedef CompetitionType Type;
