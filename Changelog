@@ -1,7 +1,35 @@
+2012-01-11:
+    * add a pointer from Competition to GP
+    * GP and CP: add parent pointer
+    * base class Record for CP, GP and Competition
+    * widgets: create subdirs (chess, game, user,...)
+
+2012-01-08:
+    * add dot (graphviz) generation to staged competitions
+    * doc all except widgets
+    * change coding style: private function names should not end with _
+
+2012-01-07:
+    * replace TaskTracker with Planning (wt-classes)
+    * use PlainTextWritter from wt-classes
+    * use rand functions from wt-classes
+    * fix MyGamesList
+
+2012-01-04:
+    * Wt::Auth seems fully intergrated
+
+2012-01-02:
+    * change code style of css file to java
+    * add AuthWidget
+
+2012-01-01:
+    * use Notifier from wt-classes
+
 2011-12-30:
     * use URL library from wt-classes
     * add MainWidget
     * add *global.hpp
+    * break MyGamesList
 
 2011-12-21:
     * get rid of CookieSession
