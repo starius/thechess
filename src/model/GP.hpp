@@ -33,7 +33,7 @@ public:
     template<class Action>
     void persist(Action& a) {
         dbo::hasMany(a, games_, dbo::ManyToOne, "gp");
-        dbo::hasMany(a, cps_, dbo::ManyToOne, "cp");
+        dbo::hasMany(a, cps_, dbo::ManyToOne, "gp");
         dbo::field(a, moves_, "init");
         dbo::field(a, limit_std_, "limit_std");
         dbo::field(a, limit_private_init_, "limit_private_init");
