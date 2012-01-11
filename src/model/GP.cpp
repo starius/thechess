@@ -22,10 +22,6 @@ GP::GP(bool):
     first_draw_(config::defaults::FIRST_DRAW) {
 }
 
-void GP::set_gp(const GP* other) {
-    *this = *other;
-}
-
 void GP::set_no_draw() {
     using namespace config; // min
     first_draw_ = NO_DRAW;

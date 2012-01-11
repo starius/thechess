@@ -106,9 +106,6 @@ public:
         first_draw_ = first_draw;
     }
 
-    /** Copy all settings from other game parameters FIXME */
-    void set_gp(const GP* other);
-
     /** Get parent */
     const GPPtr& parent() const {
         return parent_;
