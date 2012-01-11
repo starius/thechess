@@ -21,7 +21,7 @@ namespace thechess {
 CPWidget::CPWidget(
     const CP* cp,
     bool allow_change_type, Wt::WContainerWidget* parent):
-    GPWidget(&(*(cp->gp())), parent) { // FIXME
+    GPWidget(cp->gp().get(), parent) {
     using namespace config::competition; // min, max
     Wt::Wc::IntervalWidget* interval;
     Wt::WContainerWidget* cell;
@@ -195,7 +195,7 @@ CompetitionType CPWidget::get_type() const {
 
 CPWidget2::CPWidget2(const Competition* c,
                      bool allow_change_type, Wt::WContainerWidget* parent):
-    CPWidget(&(*(c->cp())), allow_change_type, parent) { //FIXME
+    CPWidget(c->cp().get(), allow_change_type, parent) {
     name_ = new Wt::WLineEdit(c->name());
     name_->setMaxLength(config::competition::MAX_NAME);
     item(tr("tc.competition.Name"), "", name_, name_);
