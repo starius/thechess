@@ -54,8 +54,10 @@ endif
 endif
 
 downloaded = files/js/jquery.countdown.pack.js wt.xml
-sources = $(sort $(wildcard src/*.cpp) $(wildcard src/*/*.cpp))
-headers = $(sort $(wildcard src/*.hpp) $(wildcard src/*/*.hpp))
+sources = $(sort $(wildcard src/*.cpp) $(wildcard src/*/*.cpp) \
+	$(wildcard src/*/*/*.cpp))
+headers = $(sort $(wildcard src/*.hpp) $(wildcard src/*/*.hpp) \
+	$(wildcard src/*/*/*.hpp))
 ifeq (,$(NOOBJECTS))
 objects = $(subst src/,$(BUILD)/,$(sources:.cpp=.o))
 makefiles = $(objects:.o=.d)
