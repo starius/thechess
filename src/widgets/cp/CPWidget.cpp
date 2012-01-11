@@ -12,8 +12,8 @@
 #include <Wt/Wc/TimeDurationWidget.hpp>
 #include <Wt/Wc/IntervalWidget.hpp>
 
-#include "widgets/CPWidget.hpp"
-#include "widgets/ClassificationWidget.hpp"
+#include "widgets/cp/CPWidget.hpp"
+#include "widgets/user/ClassificationWidget.hpp"
 #include "config.hpp"
 
 namespace thechess {

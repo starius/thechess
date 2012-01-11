@@ -13,9 +13,9 @@
 #include <Wt/WBreak>
 #include <Wt/WText>
 
-#include "widgets/UserWidget.hpp"
-#include "widgets/RatingChanges.hpp"
-#include "widgets/GameCreateWidget.hpp"
+#include "widgets/user/UserWidget.hpp"
+#include "widgets/user/RatingChanges.hpp"
+#include "widgets/game/GameCreateWidget.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
 #include "utils/time_intervals.hpp"

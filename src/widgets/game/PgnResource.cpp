@@ -12,7 +12,7 @@
 #include <Wt/Http/Request>
 #include <Wt/Http/Response>
 
-#include "widgets/PgnResource.hpp"
+#include "widgets/game/PgnResource.hpp"
 #include "Server.hpp"
 
 namespace thechess {

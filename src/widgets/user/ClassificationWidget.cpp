@@ -5,7 +5,7 @@
  * See the LICENSE file for terms of use.
  */
 
-#include "widgets/ClassificationWidget.hpp"
+#include "widgets/user/ClassificationWidget.hpp"
 #include "model/all.hpp"
 
 namespace thechess {

@@ -21,7 +21,7 @@
 #include <Wt/WEnvironment>
 #include <Wt/WApplication>
 
-#include "widgets/RatingChanges.hpp"
+#include "widgets/user/RatingChanges.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
 

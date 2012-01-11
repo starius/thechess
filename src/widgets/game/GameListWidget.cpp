@@ -21,7 +21,7 @@
 #include <Wt/WString>
 #include <Wt/WEnvironment>
 
-#include "widgets/GameListWidget.hpp"
+#include "widgets/game/GameListWidget.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
 

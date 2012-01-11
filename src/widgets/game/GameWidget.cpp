@@ -21,9 +21,9 @@
 #include <Wt/Dbo/Transaction>
 #include <Wt/Wc/TimeDurationWidget.hpp>
 
-#include "widgets/GameCountdown.hpp"
-#include "widgets/GameWidget.hpp"
-#include "widgets/MovesWidget.hpp"
+#include "widgets/game/GameCountdown.hpp"
+#include "widgets/game/GameWidget.hpp"
+#include "widgets/chess/MovesWidget.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
 #include "config.hpp"

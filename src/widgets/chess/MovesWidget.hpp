@@ -17,7 +17,7 @@
 #include "chess/Moves.hpp"
 #include "chess/Piece.hpp"
 #include "chess/CachedMoves.hpp"
-#include "widgets/BoardWidget.hpp"
+#include "widgets/chess/BoardWidget.hpp"
 
 namespace thechess {
 

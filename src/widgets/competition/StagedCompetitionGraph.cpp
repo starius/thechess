@@ -11,7 +11,7 @@
 #include <cstdio>
 #include <boost/filesystem.hpp>
 
-#include "widgets/StagedCompetitionGraph.hpp"
+#include "widgets/competition/StagedCompetitionGraph.hpp"
 
 namespace thechess {
 

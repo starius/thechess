@@ -13,14 +13,14 @@
 
 #include "widgets/MainWidget.hpp"
 #include "widgets/MainMenu.hpp"
-#include "widgets/MyGamesList.hpp"
-#include "widgets/GameWidget.hpp"
-#include "widgets/GameCreateWidget.hpp"
-#include "widgets/GameListWidget.hpp"
-#include "widgets/CompetitionWidget.hpp"
-#include "widgets/CompetitionCreateWidget.hpp"
-#include "widgets/CompetitionListWidget.hpp"
-#include "widgets/UserWidget.hpp"
+#include "widgets/game/MyGamesList.hpp"
+#include "widgets/game/GameWidget.hpp"
+#include "widgets/game/GameCreateWidget.hpp"
+#include "widgets/game/GameListWidget.hpp"
+#include "widgets/competition/CompetitionWidget.hpp"
+#include "widgets/competition/CompetitionCreateWidget.hpp"
+#include "widgets/competition/CompetitionListWidget.hpp"
+#include "widgets/user/UserWidget.hpp"
 
 namespace thechess {
 

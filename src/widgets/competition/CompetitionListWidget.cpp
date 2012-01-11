@@ -16,7 +16,7 @@
 #include <Wt/WPushButton>
 #include <Wt/WEnvironment>
 
-#include "widgets/CompetitionListWidget.hpp"
+#include "widgets/competition/CompetitionListWidget.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
 

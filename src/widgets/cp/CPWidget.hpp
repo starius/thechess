@@ -14,7 +14,7 @@
 #include <Wt/WTextEdit>
 #include <Wt/Wc/global.hpp>
 
-#include "widgets/GPWidget.hpp"
+#include "widgets/gp/GPWidget.hpp"
 #include "widgets/global.hpp"
 #include "model/all.hpp"
 

@@ -17,7 +17,7 @@
 #include "Options.hpp"
 #include "Session.hpp"
 #include "Planning.hpp"
-#include "widgets/PgnResource.hpp"
+#include "widgets/game/PgnResource.hpp"
 
 namespace dbo = Wt::Dbo;
 

@@ -10,8 +10,8 @@
 #include <Wt/WPushButton>
 #include <Wt/Dbo/Transaction>
 
-#include "widgets/CompetitionCreateWidget.hpp"
-#include "widgets/CPWidget.hpp"
+#include "widgets/competition/CompetitionCreateWidget.hpp"
+#include "widgets/cp/CPWidget.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
 #include "config.hpp"

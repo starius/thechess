@@ -13,7 +13,7 @@
 #include <Wt/Dbo/Transaction>
 #include <Wt/Wc/util.hpp>
 
-#include "widgets/MyGamesList.hpp"
+#include "widgets/game/MyGamesList.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
 #include "notify.hpp"

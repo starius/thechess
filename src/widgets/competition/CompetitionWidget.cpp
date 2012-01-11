@@ -22,9 +22,9 @@
 #include <Wt/Dbo/Transaction>
 #include <Wt/Wc/util.hpp>
 
-#include "widgets/CompetitionWidget.hpp"
-#include "widgets/StagedCompetitionGraph.hpp"
-#include "widgets/CompetitionCreateWidget.hpp"
+#include "widgets/competition/CompetitionWidget.hpp"
+#include "widgets/competition/StagedCompetitionGraph.hpp"
+#include "widgets/competition/CompetitionCreateWidget.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
 #include "notify.hpp"

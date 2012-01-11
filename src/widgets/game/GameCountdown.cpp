@@ -21,7 +21,7 @@
 #include "chess/Piece.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
-#include "widgets/GameCountdown.hpp"
+#include "widgets/game/GameCountdown.hpp"
 
 namespace thechess {
 

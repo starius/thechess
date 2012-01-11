@@ -12,8 +12,8 @@
 #include <Wt/Wc/ConstrainedSpinBox.hpp>
 #include <Wt/Wc/TimeDurationWidget.hpp>
 
-#include "widgets/GPWidget.hpp"
-#include "widgets/MovesWidget.hpp"
+#include "widgets/gp/GPWidget.hpp"
+#include "widgets/chess/MovesWidget.hpp"
 #include "config.hpp"
 
 namespace thechess {

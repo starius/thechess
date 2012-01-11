@@ -21,7 +21,7 @@
 #include <Wt/WString>
 #include <Wt/WTableView>
 
-#include "widgets/MovesWidget.hpp"
+#include "widgets/chess/MovesWidget.hpp"
 #include "chess/Piece.hpp"
 #include "chess/HalfMove.hpp"
 

@@ -12,8 +12,8 @@
 #include <Wt/WPushButton>
 #include <Wt/Dbo/Transaction>
 
-#include "widgets/GameCreateWidget.hpp"
-#include "widgets/GPWidget.hpp"
+#include "widgets/game/GameCreateWidget.hpp"
+#include "widgets/gp/GPWidget.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
 #include "notify.hpp"

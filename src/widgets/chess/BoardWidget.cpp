@@ -29,7 +29,7 @@
 #include <Wt/WEnvironment>
 #include <Wt/Wc/util.hpp>
 
-#include "widgets/BoardWidget.hpp"
+#include "widgets/chess/BoardWidget.hpp"
 #include "chess/HalfMove.hpp"
 #include "chess/Piece.hpp"
 
