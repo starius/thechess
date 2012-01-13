@@ -21,6 +21,7 @@ class GameCountdown;
 class GameCreateWidget;
 class GameListWidget;
 class GameWidget;
+class GPListWidget;
 class GPWidget;
 class MainMenu;
 class MainWidget;
