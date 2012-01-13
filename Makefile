@@ -165,9 +165,13 @@ endif
 wt.xml:
 	wget -O $@ http://redmine.emweb.be/projects/wt/repository/revisions/master/raw/src/xml/wt.xml
 
+.SECONDARY: auth.xml
+auth.xml:
+	wget -O $@ http://redmine.emweb.be/projects/wt/repository/revisions/master/raw/src/xml/auth.xml
+
 .PHONY: locales
-locales: wt.xml
-	locales-test --wt=$< --prefix=tc --sections common competition game time user
+locales: wt.xml auth.xml
+	locales-test --wt $^ --prefix=tc --sections common competition game time user
 
 .PHONY: run-tests
 run-tests: $(EXE) $$(WT_CONFIG)
