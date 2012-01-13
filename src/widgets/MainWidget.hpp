@@ -46,6 +46,9 @@ public:
     /** Create new game */
     void game_new();
 
+    /** List of game parameters */
+    void gp_list();
+
     /** List of competitions */
     void competition_list();
 

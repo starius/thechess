@@ -39,6 +39,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     game_list_->opened().connect(mw, &MainWidget::game_list);
     game_view_->opened().connect(this, &Path::open_game);
     game_new_->opened().connect(mw, &MainWidget::game_new);
+    gp_list_->opened().connect(mw, &MainWidget::gp_list);
     competition_list_->opened().connect(mw, &MainWidget::competition_list);
     competition_view_->opened().connect(this, &Path::open_competition);
     competition_new_->opened().connect(mw, &MainWidget::competition_new);

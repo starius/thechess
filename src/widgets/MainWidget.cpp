@@ -17,6 +17,7 @@
 #include "widgets/game/GameWidget.hpp"
 #include "widgets/game/GameCreateWidget.hpp"
 #include "widgets/game/GameListWidget.hpp"
+#include "widgets/gp/GPListWidget.hpp"
 #include "widgets/competition/CompetitionWidget.hpp"
 #include "widgets/competition/CompetitionCreateWidget.hpp"
 #include "widgets/competition/CompetitionListWidget.hpp"
@@ -74,6 +75,10 @@ void MainWidget::game_list() {
 
 void MainWidget::game_new() {
     set_contents(new GameCreateWidget());
+}
+
+void MainWidget::gp_list() {
+    set_contents(new GPListWidget());
 }
 
 void MainWidget::competition_view(const CompetitionPtr& competition) {
