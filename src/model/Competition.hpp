@@ -11,6 +11,7 @@
 #include <map>
 
 #include "model/global.hpp"
+#include "model/record.hpp"
 
 namespace thechess {
 

@@ -5,7 +5,7 @@
  * See the LICENSE file for terms of use.
  */
 
-#include "model/global.hpp"
+#include "model/all.hpp"
 #include "utils/time_intervals.hpp"
 
 namespace thechess {

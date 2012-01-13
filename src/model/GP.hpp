@@ -9,6 +9,7 @@
 #define THECHESS_MODEL_GAMAPARAMATERS_HPP_
 
 #include "model/global.hpp"
+#include "model/record.hpp"
 #include "chess/Moves.hpp"
 #include "chess/Piece.hpp"
 
