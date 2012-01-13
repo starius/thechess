@@ -46,7 +46,7 @@ private:
     void button_(const char* title_id, Wt::Wc::url::Node* node) {
         Wt::WAnchor* button = new Wt::WAnchor(this);
         button->setText(tr(title_id));
-        button->setRefInternalPath(node->full_path());
+        button->setLink(node->link());
         new Wt::WBreak(this);
     }
 };
