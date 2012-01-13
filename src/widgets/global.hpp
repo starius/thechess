@@ -28,6 +28,7 @@ class MainWidget;
 class MovesWidget;
 class MyGamesList;
 class RatingChanges;
+class StagedCompetitionGraph;
 class UserWidget;
 
 }
