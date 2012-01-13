@@ -23,6 +23,9 @@ Path::Path(Wt::WObject* parent):
     game_list_ = new PredefinedNode("game", this);
     game_view_ = new IntegerNode(game_list_);
     game_new_ = new PredefinedNode("new", game_list_);
+    gp_list_ = new PredefinedNode("parameters", game_list_);
+    gp_view_ = new IntegerNode(gp_list_);
+    gp_new_ = new PredefinedNode("new", gp_list_);
     competition_list_ = new PredefinedNode("competition", this);
     competition_view_ = new IntegerNode(competition_list_);
     competition_new_ = new PredefinedNode("new", competition_list_);

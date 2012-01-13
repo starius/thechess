@@ -53,6 +53,21 @@ public:
         return game_new_;
     }
 
+    /** List of GPs */
+    url::PredefinedNode* gp_list() const {
+        return gp_list_;
+    }
+
+    /** View the GP */
+    url::IntegerNode* gp_view() const {
+        return gp_view_;
+    }
+
+    /** Create new GP */
+    url::PredefinedNode* gp_new() const {
+        return gp_new_;
+    }
+
     /** List of competitions */
     url::PredefinedNode* competition_list() const {
         return competition_list_;
@@ -75,6 +90,9 @@ private:
     url::PredefinedNode* game_list_;
     url::IntegerNode* game_view_;
     url::PredefinedNode* game_new_;
+    url::PredefinedNode* gp_list_;
+    url::IntegerNode* gp_view_;
+    url::PredefinedNode* gp_new_;
     url::PredefinedNode* competition_list_;
     url::IntegerNode* competition_view_;
     url::PredefinedNode* competition_new_;
