@@ -183,6 +183,7 @@
     <message id="tc.game.Competitor">Суперник: {1}</message>
     <message id="tc.game.confirmed">підтверджена</message>
     <message id="tc.game.created">створена</message>
+    <message id='tc.game.Download_pgn'>Завантажити файл PGN</message>
     <message id="tc.game.Draw_proposal">Нічия запропонована, запропонував {1}</message>
     <message id="tc.game.Draw_propose">Запропонувати нічию</message>
     <message id="tc.game.ended">завершена</message>
