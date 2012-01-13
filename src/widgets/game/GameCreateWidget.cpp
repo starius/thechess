@@ -11,9 +11,10 @@
 #include <Wt/WBreak>
 #include <Wt/WPushButton>
 #include <Wt/Dbo/Transaction>
+#include <Wt/Wc/TableForm.hpp>
 
 #include "widgets/game/GameCreateWidget.hpp"
-#include "widgets/gp/GPWidget.hpp"
+#include "widgets/gp/GPSelector.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
 #include "notify.hpp"
@@ -41,13 +42,13 @@ GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :
 }
 
 void GameCreateWidget::print() {
-    GP gp(true);
-    gpw_ = new GPWidget(&gp, this);
+    selector_ = new GPSelector(this);
+    Wt::Wc::TableForm* form = new Wt::Wc::TableForm(this);
     color_ = new Wt::WComboBox();
     color_->addItem(tr("tc.game.random"));
     color_->addItem(tr("tc.game.white"));
     color_->addItem(tr("tc.game.black"));
-    gpw_->item(tr("tc.game.your_color"), "", color_, color_);
+    form->item(tr("tc.game.your_color"), "", color_, color_);
     new Wt::WBreak(this);
     Wt::WPushButton* ok_ = new Wt::WPushButton(tr("tc.common.Create"), this);
     ok_->clicked().connect(this, &GameCreateWidget::button_handler);
@@ -55,9 +56,11 @@ void GameCreateWidget::print() {
 
 void GameCreateWidget::button_handler() {
     dbo::Transaction t(tApp->session());
-    GPPtr gp = tApp->session().add(new GP(true));
+    GPPtr gp = selector_->gp();
+    if (!gp) {
+        return;
+    }
     GamePtr game = tApp->session().add(new Game(gp));
-    gpw_->apply_parameters(gp.modify());
     Piece::Color color = selected_color();
     if (with_user_) {
         game.modify()->propose_game(tApp->user(), user_, color);

@@ -24,7 +24,7 @@ public:
     GameCreateWidget(Wt::WContainerWidget* p = 0);
 
 private:
-    GPWidget* gpw_;
+    GPSelector* selector_;
     bool with_user_;
     UserPtr user_;
     Wt::WComboBox* color_;
