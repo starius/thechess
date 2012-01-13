@@ -344,7 +344,6 @@ See locales-test manpage for more information.
     <message id='tc.common.interval'>from {1} to {2}</message>
     <message id='tc.common.Join'>Join</message>
     <message id='tc.common.kw'>{1}: {2}</message>
-    <message id='tc.common.kw_template'>${1}: ${2}</message>
     <message id='tc.common.Name'>Name</message>
     <message id='tc.common.number'>#</message>
     <message id='tc.common.Only_my'>Only my</message>
@@ -490,7 +489,6 @@ See locales-test manpage for more information.
         game would be rolled back before selected move
     </message>
 
-    <message id='tc.user.Already_used'>Already used</message>
     <message id='tc.user.classification_a'>class A</message>
     <message id='tc.user.classification_b'>class B</message>
     <message id='tc.user.classification_c'>class C</message>
@@ -507,19 +505,11 @@ See locales-test manpage for more information.
     <message id='tc.user.classification_national_master'>national master</message>
     <message id='tc.user.classification_none'>without category</message>
     <message id='tc.user.classification_super_grandmaster'>super-grandmaster</message>
-    <message id='tc.user.Login'>Login</message>
-    <message id='tc.user.Logout'>Logout</message>
     <message id='tc.user.Online_time'>Spent online {1}</message>
-    <message id='tc.user.Password'>Password</message>
-    <message id='tc.user.Please_login'>Please, log in or register</message>
     <message id='tc.user.rating_after'>rating after</message>
     <message id='tc.user.Rating_changes'>Rating changes</message>
     <message id='tc.user.Rating_changes_and_me'>Rating changes (compared to my ones)</message>
-    <message id='tc.user.Register'>Register</message>
-    <message id='tc.user.Register_success'>Registration is successful</message>
     <message id='tc.user.Start_game'>Start a game</message>
-    <message id='tc.user.Username'>Username</message>
-    <message id='tc.user.Wrong_username_or_password'>Wrong username or password</message>
 
 </messages>
 

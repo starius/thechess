@@ -255,7 +255,6 @@
         будзе адноўлена пазіцыя, папярэдняя вылучанаму ходу
     </message>
 
-    <message id='tc.user.Already_used'>Ужо выкарыстоўваецца</message>
     <message id="tc.user.classification_a">першы разрад</message>
     <message id="tc.user.classification_b">другі разрад</message>
     <message id="tc.user.classification_c">трэці разрад</message>
@@ -272,19 +271,11 @@
     <message id="tc.user.classification_national_master">нацыянальны майстар</message>
     <message id="tc.user.classification_none">без разраду</message>
     <message id="tc.user.classification_super_grandmaster">супергросмайстар</message>
-    <message id="tc.user.Login">Увайсці</message>
-    <message id="tc.user.Logout">Выйсці</message>
     <message id="tc.user.Online_time">Час, праведзены на сайце: {1}</message>
-    <message id="tc.user.Password">Пароль</message>
-    <message id="tc.user.Please_login">Калі ласка, увайдзіце ці зарэгіструйцеся</message>
     <message id="tc.user.rating_after">рэйтынг пасля</message>
     <message id="tc.user.Rating_changes">Змяненні рэйтынгу</message>
     <message id="tc.user.Rating_changes_and_me">Змяненні рэйтынгу (у параўнанні з маім рэйтынгам)</message>
-    <message id="tc.user.Register">Зарэгістравацца</message>
-    <message id='tc.user.Register_success'>Рэгістрацыя паспяховая</message>
     <message id="tc.user.Start_game">Пачаць гульню</message>
-    <message id="tc.user.Username">Імя карыстальніка</message>
-    <message id="tc.user.Wrong_username_or_password">Няправільнае імя карыстальніка ці пароль</message>
 
 </messages>
 

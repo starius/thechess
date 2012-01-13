@@ -262,7 +262,6 @@
         будет восстановлена позиция, предшествующая выделенному ходу
     </message>
 
-    <message id='tc.user.Already_used'>Уже используется</message>
     <message id='tc.user.classification_a'>первый разряд</message>
     <message id='tc.user.classification_b'>второй разряд</message>
     <message id='tc.user.classification_c'>третий разряд</message>
@@ -279,19 +278,11 @@
     <message id='tc.user.classification_national_master'>национальный мастер</message>
     <message id='tc.user.classification_none'>без разряда</message>
     <message id='tc.user.classification_super_grandmaster'>супергроссмейстер</message>
-    <message id='tc.user.Login'>Войти</message>
-    <message id='tc.user.Logout'>Выйти</message>
     <message id='tc.user.Online_time'>Время, проведенное на сайте: {1}</message>
-    <message id='tc.user.Password'>Пароль</message>
-    <message id='tc.user.Please_login'>Пожалуйста, войдите или зарегистрируйтесь</message>
     <message id='tc.user.rating_after'>рейтинг после</message>
     <message id='tc.user.Rating_changes'>Изменения рейтинга</message>
     <message id='tc.user.Rating_changes_and_me'>Изменения рейтинга (в сравнении с моим рейтингом)</message>
-    <message id='tc.user.Register'>Зарегистрироваться</message>
-    <message id='tc.user.Register_success'>Регистрация прошла успешно</message>
     <message id='tc.user.Start_game'>Начать игру</message>
-    <message id='tc.user.Username'>Имя пользователя</message>
-    <message id='tc.user.Wrong_username_or_password'>Неправильное имя пользователя или пароль</message>
 
 </messages>
 

@@ -255,7 +255,6 @@
         буде відновлено позицію, що передує виділеному ходу
     </message>
 
-    <message id='tc.user.Already_used'>Вже використовується</message>
     <message id="tc.user.classification_a">перший розряд</message>
     <message id="tc.user.classification_b">другий розряд</message>
     <message id="tc.user.classification_c">третій розряд</message>
@@ -272,18 +271,10 @@
     <message id="tc.user.classification_national_master">національний майстер</message>
     <message id="tc.user.classification_none">без розряду</message>
     <message id="tc.user.classification_super_grandmaster">супергросмейстер</message>
-    <message id="tc.user.Login">Увійти</message>
-    <message id="tc.user.Logout">Вийти</message>
     <message id="tc.user.Online_time">Час, що проведено на сайті: {1}</message>
-    <message id="tc.user.Password">Пароль</message>
-    <message id="tc.user.Please_login">Будь ласка, увійдіть або зареєструйтесь</message>
     <message id="tc.user.rating_after">рейтинг після</message>
     <message id="tc.user.Rating_changes">Зміни рейтингу</message>
     <message id="tc.user.Rating_changes_and_me">Зміни рейтингу (в порівнянні з моїм рейтингом)</message>
-    <message id="tc.user.Register">Зареєструватися</message>
-    <message id='tc.user.Register_success'>Реєстрація успішна</message>
     <message id="tc.user.Start_game">Розпочати гру</message>
-    <message id="tc.user.Username">Ім'я користувача</message>
-    <message id="tc.user.Wrong_username_or_password">Неправильне ім'я користувача або пароль</message>
 
 </messages>
