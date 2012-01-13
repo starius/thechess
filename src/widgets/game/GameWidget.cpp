@@ -61,7 +61,7 @@ protected:
         kw_(tr(game_->colors_random() ? "tc.game.colors_random" :
                "tc.game.colors_not_random"), "tc.game.colors", result);
         user_(game_->winner(), "tc.common.winner", result);
-        time_(game_->created(), "tc.game.created", result);
+        time_(game_->created(), "tc.common.created", result);
         time_(game_->confirmed(), "tc.game.confirmed", result);
         time_(game_->started(), "tc.game.started", result);
         time_(game_->lastmove(), "tc.game.lastmove", result);

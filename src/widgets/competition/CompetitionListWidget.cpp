@@ -43,7 +43,7 @@ public:
         CLP::BaseQM(parent) {
         set_query();
         addColumn("C.id", tr("tc.common.number"));
-        addColumn("C.name", tr("tc.competition.Name"));
+        addColumn("C.name", tr("tc.common.Name"));
         addColumn("CP.type", tr("tc.competition.Type"));
         addColumn("C.state", tr("tc.competition.State"));
         addColumn("C.id", tr("tc.competition.Winners"));

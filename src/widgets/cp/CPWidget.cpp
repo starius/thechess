@@ -198,9 +198,9 @@ CPWidget2::CPWidget2(const Competition* c,
     CPWidget(c->cp().get(), allow_change_type, parent) {
     name_ = new Wt::WLineEdit(c->name());
     name_->setMaxLength(config::competition::MAX_NAME);
-    item(tr("tc.competition.Name"), "", name_, name_);
+    item(tr("tc.common.Name"), "", name_, name_);
     description_ = new Wt::WTextEdit(c->description());
-    item(tr("tc.competition.Description"), "", description_, description_);
+    item(tr("tc.common.Description"), "", description_, description_);
 }
 
 void CPWidget2::apply_parameters(Competition* c) {

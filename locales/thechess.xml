@@ -338,11 +338,14 @@ See locales-test manpage for more information.
     <message id='tc.common.Cancel'>Cancel</message>
     <message id='tc.common.Confirm'>Confirm</message>
     <message id='tc.common.Create'>Create</message>
+    <message id='tc.common.created'>created</message>
+    <message id='tc.common.Description'>Description</message>
     <message id='tc.common.Discard'>Discard</message>
     <message id='tc.common.interval'>from {1} to {2}</message>
     <message id='tc.common.Join'>Join</message>
     <message id='tc.common.kw'>{1}: {2}</message>
     <message id='tc.common.kw_template'>${1}: ${2}</message>
+    <message id='tc.common.Name'>Name</message>
     <message id='tc.common.number'>#</message>
     <message id='tc.common.Only_my'>Only my</message>
     <message id='tc.common.Refresh'>Refresh</message>
@@ -357,7 +360,6 @@ See locales-test manpage for more information.
     <message id='tc.competition.competition'>competition</message>
     <message id='tc.competition.Create_welcome'>Create new competition</message>
     <message id='tc.competition.dash'>&mdash;</message>
-    <message id='tc.competition.Description'>Description</message>
     <message id='tc.competition.Ended'>Ended</message>
     <message id='tc.competition.Force_start_delay'>Forced start of game</message>
     <message id='tc.competition.Games_factor'>Games factor</message>
@@ -368,7 +370,6 @@ See locales-test manpage for more information.
     <message id='tc.competition.Members_classification'>Classification of members</message>
     <message id='tc.competition.members_number'>members</message>
     <message id='tc.competition.Min_substages'>First stage substages</message>
-    <message id='tc.competition.Name'>Title</message>
     <message id='tc.competition.New'>Create new competition</message>
     <message id='tc.competition.Parameters'>Competition parameters</message>
     <message id='tc.competition.Rating'>Rating of members</message>
@@ -423,7 +424,6 @@ See locales-test manpage for more information.
     <message id='tc.game.Competitor'>Competitor: {1}</message>
     <message id='tc.game.confirmed'>confirmed</message>
     <message id='tc.game.countdown_template'>${name}: ${limit_private} + ${limit_std}</message>
-    <message id='tc.game.created'>created</message>
     <message id='tc.game.Download_pgn'>Download PGN file</message>
     <message id='tc.game.Draw_proposal'>Draw proposed, proposer: {1}</message>
     <message id='tc.game.Draw_propose'>Propose a draw</message>

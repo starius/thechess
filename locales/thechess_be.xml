@@ -102,9 +102,12 @@
     <message id="tc.common.Cancel">Адмяніць</message>
     <message id="tc.common.Confirm">Пацвердзіць</message>
     <message id="tc.common.Create">Стварыць</message>
+    <message id="tc.common.created">створана</message>
+    <message id="tc.common.Description">Апісанне</message>
     <message id="tc.common.Discard">Адмовіцца</message>
     <message id="tc.common.interval">ад {1} да {2}</message>
     <message id="tc.common.Join">Далучыцца</message>
+    <message id="tc.common.Name">Назва</message>
     <message id="tc.common.number">№</message>
     <message id="tc.common.Only_my">Толькі мае</message>
     <message id="tc.common.Refresh">Аднавіць</message>
@@ -118,7 +121,6 @@
     <message id="tc.competition.Change_welcome">Змяніць турнір № {1}</message>
     <message id="tc.competition.competition">турнір</message>
     <message id="tc.competition.Create_welcome">Стварыць новы турнір</message>
-    <message id="tc.competition.Description">Апісанне</message>
     <message id="tc.competition.Ended">Завершаны</message>
     <message id="tc.competition.Force_start_delay">Фарсіраваны старт партыі</message>
     <message id="tc.competition.Games_factor">Множнік партый</message>
@@ -129,7 +131,6 @@
     <message id="tc.competition.Members_classification">Разрад удзельнікаў</message>
     <message id="tc.competition.members_number">удзельнікі</message>
     <message id="tc.competition.Min_substages">Подраундов в первом раунде</message>
-    <message id="tc.competition.Name">Назва</message>
     <message id="tc.competition.New">Стварыць турнір</message>
     <message id="tc.competition.Parameters">Параметры турніру</message>
     <message id="tc.competition.Rating">Рэйтынг удзельнікаў</message>
@@ -182,7 +183,6 @@
     <message id="tc.game.Competition_other_proposed">{1} прапануе пацвердзіць гульню загадзя</message>
     <message id="tc.game.Competitor">Супернік: {1}</message>
     <message id="tc.game.confirmed">пацверджана</message>
-    <message id="tc.game.created">створана</message>
     <message id='tc.game.Download_pgn'>Спампаваць PGN файл</message>
     <message id="tc.game.Draw_proposal">Нічыя прапанавана, прапанаваў {1}</message>
     <message id="tc.game.Draw_propose">Прапанаваць нічыю</message>

@@ -102,9 +102,12 @@
     <message id="tc.common.Cancel">Скасувати</message>
     <message id="tc.common.Confirm">Підтвердити</message>
     <message id="tc.common.Create">Створити</message>
+    <message id="tc.common.created">створено</message>
+    <message id="tc.common.Description">Опис</message>
     <message id="tc.common.Discard">Відмовитись</message>
     <message id="tc.common.interval">від {1} до {2}</message>
     <message id="tc.common.Join">Приєднатися</message>
+    <message id="tc.common.Name">Назва</message>
     <message id="tc.common.number">№</message>
     <message id="tc.common.Only_my">Тільки мої</message>
     <message id="tc.common.Refresh">Поновити</message>
@@ -118,7 +121,6 @@
     <message id="tc.competition.Change_welcome">Змінити турнір № {1}</message>
     <message id="tc.competition.competition">турнір</message>
     <message id="tc.competition.Create_welcome">Створити новий турнір</message>
-    <message id="tc.competition.Description">Опис</message>
     <message id="tc.competition.Ended">Завершено</message>
     <message id="tc.competition.Force_start_delay">Форсований старт партії</message>
     <message id="tc.competition.Games_factor">Множник партій</message>
@@ -129,7 +131,6 @@
     <message id="tc.competition.Members_classification">Розряд учасників</message>
     <message id="tc.competition.members_number">учасники</message>
     <message id="tc.competition.Min_substages">Підраундів в першому раунді</message>
-    <message id="tc.competition.Name">Назва</message>
     <message id="tc.competition.New">Створити турнір</message>
     <message id="tc.competition.Parameters">Параметри турніру</message>
     <message id="tc.competition.Rating">Рейтинг учасників</message>
@@ -182,7 +183,6 @@
     <message id="tc.game.Competition_other_proposed">{1} пропонує підтвердити гру заздалегідь</message>
     <message id="tc.game.Competitor">Суперник: {1}</message>
     <message id="tc.game.confirmed">підтверджена</message>
-    <message id="tc.game.created">створена</message>
     <message id='tc.game.Download_pgn'>Завантажити файл PGN</message>
     <message id="tc.game.Draw_proposal">Нічия запропонована, запропонував {1}</message>
     <message id="tc.game.Draw_propose">Запропонувати нічию</message>
