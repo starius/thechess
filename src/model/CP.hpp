@@ -36,6 +36,7 @@ public:
 #ifndef DOXYGEN_ONLY
     template<class Action>
     void persist(Action& a) {
+        Record::persist(a);
         dbo::belongsTo(a, parent_, "parent");
         dbo::hasMany(a, children_, dbo::ManyToOne, "parent");
         dbo::belongsTo(a, gp_, "gp");

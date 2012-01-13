@@ -32,12 +32,13 @@ public:
 #ifndef DOXYGEN_ONLY
     template<class Action>
     void persist(Action& a) {
+        Record::persist(a);
         dbo::belongsTo(a, parent_, "parent");
         dbo::hasMany(a, children_, dbo::ManyToOne, "parent");
         dbo::hasMany(a, games_, dbo::ManyToOne, "gp");
         dbo::hasMany(a, cps_, dbo::ManyToOne, "gp");
         dbo::hasMany(a, competitions_, dbo::ManyToOne, "gp");
-        dbo::field(a, moves_, "init");
+        dbo::field(a, moves_, "moves");
         dbo::field(a, limit_std_, "limit_std");
         dbo::field(a, limit_private_init_, "limit_private_init");
         dbo::field(a, norating_, "norating");
