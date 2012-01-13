@@ -85,7 +85,7 @@ protected:
             Wt::WString text = tr("tc.competition.competition") + " ";
             text += c->name().empty() ? boost::lexical_cast<std::string>(c.id()) : c->name();
             a->setText(text);
-            a->setRefInternalPath(str(boost::format("/competition/%i/") % c.id()));
+            a->setLink(tApp->path().competition_view()->get_link(c.id()));
         }
         if (game_->state() == Game::CONFIRMED && c) {
             time_(game_->confirmed() + c->cp()->force_start_delay(),

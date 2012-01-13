@@ -76,8 +76,7 @@ public:
         } else if (role == Wt::LinkRole) {
             UserPtr user;
             if (index.column() == N_COLUMN) {
-                return Wt::WLink(Wt::WLink::InternalPath,
-                                 str(boost::format("/game/%i/") % game.id()));
+                return tApp->path().game_view()->get_link(game.id());
             } else if (index.column() == WHITE_COLUMN) {
                 user = game->white();
             } else if (index.column() == BLACK_COLUMN) {
@@ -86,8 +85,7 @@ public:
                 user = game->winner();
             }
             if (user) {
-                return Wt::WLink(Wt::WLink::InternalPath,
-                                 str(boost::format("/user/%i/") % user.id()));
+                return tApp->path().user_view()->get_link(user.id());
             }
         }
         t.commit();

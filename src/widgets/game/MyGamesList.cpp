@@ -32,7 +32,7 @@ public:
         Notifiable(Object(GAME, game.id()), tNot),
         game_id_(game.id()), list_(list) {
         setText(boost::lexical_cast<std::string>(game_id_));
-        setRefInternalPath(str(boost::format("/game/%i/") % game_id_));
+        setLink(tApp->path().game_view()->get_link(game_id_));
         setInline(false);
         UserPtr user = tApp->user();
         if (game->can_confirm(user)) {

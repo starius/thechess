@@ -67,8 +67,7 @@ public:
                 return resultRow(index.row()).get<2>();
             }
         } else if (role == Wt::LinkRole && index.column() == N_COLUMN) {
-            return Wt::WLink(Wt::WLink::InternalPath,
-                             str(boost::format("/competition/%i/") % o.id()));
+            return tApp->path().competition_view()->get_link(o.id());
         }
         return CLP::BaseQM::data(index, role);
     }
