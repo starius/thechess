@@ -338,6 +338,7 @@ See locales-test manpage for more information.
     <message id='tc.common.Cancel'>Cancel</message>
     <message id='tc.common.Confirm'>Confirm</message>
     <message id='tc.common.Create'>Create</message>
+    <message id='tc.common.Create_new'>Create new item</message>
     <message id='tc.common.created'>created</message>
     <message id='tc.common.Description'>Description</message>
     <message id='tc.common.Discard'>Discard</message>
@@ -350,7 +351,12 @@ See locales-test manpage for more information.
     <message id='tc.common.Refresh'>Refresh</message>
     <message id='tc.common.Reset'>Reset</message>
     <message id='tc.common.Save'>Save</message>
+    <message id='tc.common.Select_existing'>Select existing item</message>
     <message id='tc.common.winner'>winner</message>
+    <message id='tc.common.Select_or_create'>
+        Please, select existing item (by clicking on it)
+        or create your own.
+    </message>
 
     <message id='tc.competition.Cant_change'>You have no permission to change this competition</message>
     <message id='tc.competition.Cant_create'>You have no permission to create competition</message>

@@ -22,6 +22,7 @@ class GameCreateWidget;
 class GameListWidget;
 class GameWidget;
 class GPListWidget;
+class GPSelector;
 class GPWidget;
 class MainMenu;
 class MainWidget;
