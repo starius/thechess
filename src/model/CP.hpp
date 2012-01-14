@@ -80,6 +80,11 @@ public:
         return parent_;
     }
 
+    /** Set parent */
+    void set_parent(const CPPtr& parent) {
+        parent_ = parent;
+    }
+
     /** \name Restrictions for users */
     /* @{ */
 

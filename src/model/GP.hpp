@@ -113,6 +113,11 @@ public:
         return parent_;
     }
 
+    /** Set parent */
+    void set_parent(const GPPtr& parent) {
+        parent_ = parent;
+    }
+
     /** Set min time limits and forbid game being finished with draw.
     All types of draw become impossible except stalemate.
     In case of stalemate games is ended with NO_DRAW_STALEMATE, black wins.
