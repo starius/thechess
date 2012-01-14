@@ -196,25 +196,12 @@ CompetitionType CPWidget::get_type() const {
 CPWidget2::CPWidget2(const Competition* c,
                      bool allow_change_type, Wt::WContainerWidget* parent):
     CPWidget(c->cp().get(), allow_change_type, parent) {
-    name_ = new Wt::WLineEdit(c->name());
-    name_->setMaxLength(config::MAX_NAME);
-    item(tr("tc.common.Name"), "", name_, name_);
-    description_ = new Wt::WTextEdit(c->description());
-    item(tr("tc.common.Description"), "", description_, description_);
+    add_record_inputs(c, this);
 }
 
 void CPWidget2::apply_parameters(Competition* c) {
     CPWidget::apply_parameters(c->cp().modify());
-    std::wstring name = name_->text().value();
-    if (name.length() > config::MAX_NAME) {
-        name.resize(config::MAX_NAME);
-    }
-    c->set_name(name);
-    std::wstring description = description_->text().value();
-    if (description.length() > config::MAX_DESCRIPTION) {
-        description.resize(config::MAX_DESCRIPTION);
-    }
-    c->set_description(description);
+    write_record(c);
 }
 
 }
