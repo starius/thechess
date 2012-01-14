@@ -284,12 +284,6 @@ const int INCREMENT_SUBSTAGES = 3;
 
 }
 
-/** Max length of competition name */
-const unsigned int MAX_NAME = 50;
-
-/** Max length of competition description */
-const unsigned int MAX_DESCRIPTION = 1000;
-
 }
 
 /** The namespace for default values of Elo rating system parameters.
@@ -338,6 +332,12 @@ const Td STALE_OBJECT_DELAY = SECOND;
 const Td UNKNOWN_ERROR_DELAY = 2 * SECOND;
 
 }
+
+/** Max length of record name */
+const unsigned int MAX_NAME = 50;
+
+/** Max length of record description */
+const unsigned int MAX_DESCRIPTION = 1000;
 
 /** Duration for an cookie-based authenticaton to remain valid */
 const Td COOKIE_AGE = 5 * 366 * DAY;
