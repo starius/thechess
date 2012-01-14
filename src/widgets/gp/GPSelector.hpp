@@ -28,7 +28,10 @@ public:
 private:
     GPListWidget* list_;
     GPWidget* new_;
+    Wt::WContainerWidget* new_cont_;
     Wt::WTabWidget* tab_;
+
+    void tab_handler(int tab_index);
 };
 
 }

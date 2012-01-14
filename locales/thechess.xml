@@ -356,6 +356,8 @@ See locales-test manpage for more information.
     <message id='tc.common.Select_or_create'>
         Please, select existing item (by clicking on it)
         or create your own.
+        To create a derivative, first click on existing item
+        and then go to the second tab and change it.
     </message>
 
     <message id='tc.competition.Cant_change'>You have no permission to change this competition</message>
