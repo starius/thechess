@@ -37,6 +37,9 @@ public:
     /** View the user */
     void user_view(const UserPtr& user);
 
+    /** Create update-password dialog */
+    void update_password();
+
     /** List of games */
     void game_list();
 

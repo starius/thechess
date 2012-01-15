@@ -65,6 +65,12 @@ void MainWidget::user_list() {
     // TODO
 }
 
+void MainWidget::update_password() {
+    const Wt::Auth::User& user = auth_widget()->login().user();
+    auth_widget()->letUpdatePassword(user, /* promptPassword */ true);
+    // FIXME Freezes, memory leak
+}
+
 void MainWidget::game_view(const GamePtr& game) {
     set_contents(new GameWidget(game));
 }
