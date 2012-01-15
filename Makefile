@@ -55,9 +55,9 @@ endif
 
 downloaded = files/js/jquery.countdown.pack.js wt.xml
 sources = $(sort $(wildcard src/*.cpp) $(wildcard src/*/*.cpp) \
-	$(wildcard src/*/*/*.cpp))
+	$(wildcard src/*/*/*.cpp) src/widgets/cp/CPSelector.cpp)
 headers = $(sort $(wildcard src/*.hpp) $(wildcard src/*/*.hpp) \
-	$(wildcard src/*/*/*.hpp))
+	$(wildcard src/*/*/*.hpp) src/widgets/cp/CPSelector.hpp)
 ifeq (,$(NOOBJECTS))
 objects = $(subst src/,$(BUILD)/,$(sources:.cpp=.o))
 makefiles = $(objects:.o=.d)
@@ -185,4 +185,8 @@ files/js/jquery.countdown.pack.js:
 	wget http://keith-wood.name/zip/jquery.countdown.package-1.5.11.zip -O c.zip
 	unzip -o c.zip $(@F) -d $(@D)
 	rm c.zip
+
+src/widgets/cp/CPSelector.%: src/widgets/gp/GPSelector.%
+	sed  < $< > $@ -e 's/game p/competition p/g' \
+		-e 's/gp/cp/g' -e 's/GP/CP/g' -e 's/, new_cont_/, true, new_cont_/g'
 
