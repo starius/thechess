@@ -51,6 +51,10 @@ GPPtr GPSelector::gp() const {
     return result;
 }
 
+void GPSelector::set_gp(const GPPtr& gp) {
+    list_->set_gp(gp);
+}
+
 void GPSelector::tab_handler(int tab_index) {
     if (tab_index == GP_SELECTOR_NEW_TAB && list_->gp()) {
         new_cont_->clear();

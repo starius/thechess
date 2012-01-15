@@ -25,6 +25,9 @@ public:
     /** Get selected gp */
     GPPtr gp() const;
 
+    /** Select the gp */
+    void set_gp(const GPPtr& gp);
+
 private:
     GPListWidget* list_;
     GPWidget* new_;
