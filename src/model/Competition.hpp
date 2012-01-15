@@ -80,6 +80,11 @@ public:
         return cp_;
     }
 
+    /** Set competition parameters */
+    void set_cp(const CPPtr& cp) {
+        cp_ = cp;
+    }
+
     /** Get game parameters */
     const GPPtr& gp() const;
 
