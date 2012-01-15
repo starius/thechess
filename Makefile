@@ -187,6 +187,6 @@ files/js/jquery.countdown.pack.js:
 	rm c.zip
 
 src/widgets/cp/CPSelector.%: src/widgets/gp/GPSelector.%
-	sed  < $< > $@ -e 's/game p/competition p/g' \
+	sed  < $< > $@ -e 's/game/competition/g' \
 		-e 's/gp/cp/g' -e 's/GP/CP/g' -e 's/, new_cont_/, true, new_cont_/g'
 

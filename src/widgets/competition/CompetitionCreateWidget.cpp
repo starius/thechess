@@ -8,7 +8,6 @@
 #include <Wt/WText>
 #include <Wt/WBreak>
 #include <Wt/WPushButton>
-#include <Wt/WPanel>
 #include <Wt/Dbo/Transaction>
 #include <Wt/Wc/TableForm.hpp>
 
@@ -51,17 +50,9 @@ CompetitionCreateWidget::CompetitionCreateWidget(const CompetitionPtr& c,
 }
 
 void CompetitionCreateWidget::print() {
-    Wt::WPanel* cp_panel = new Wt::WPanel(this);
-    cp_panel->setTitle(tr("tc.competition.Select_cp"));
-    cp_panel->setCollapsible(true);
     cp_selector_ = new CPSelector(this);
-    cp_panel->setCentralWidget(cp_selector_);
-    Wt::WPanel* gp_panel = new Wt::WPanel(this);
-    gp_panel->setTitle(tr("tc.game.Select_gp"));
-    gp_panel->setCollapsible(true);
-    gp_panel->setCollapsed(true);
-    gp_selector_ = new GPSelector();
-    gp_panel->setCentralWidget(gp_selector_);
+    gp_selector_ = new GPSelector(this);
+    gp_selector_->setCollapsed(true);
     form_ = new Wt::Wc::TableForm(this);
     add_record_inputs(c_.get(), form_);
 }

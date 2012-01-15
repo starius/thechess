@@ -114,11 +114,7 @@ CPWidget::CPWidget(const CP* cp, bool allow_change_type,
     form_->item(tr("tc.competition.Increment_substages"), "",
                 increment_substages_, increment_substages_);
     add_record_inputs(cp, form_);
-    Wt::WPanel* gp_panel = new Wt::WPanel(this);
-    gp_panel->setTitle(tr("tc.game.Select_gp"));
-    gp_panel->setCollapsible(true);
-    gp_selector_ = new GPSelector();
-    gp_panel->setCentralWidget(gp_selector_);
+    gp_selector_ = new GPSelector(this);
     type_handler();
 }
 

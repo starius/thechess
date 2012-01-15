@@ -5,6 +5,7 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <Wt/WContainerWidget>
 #include <Wt/WTabWidget>
 #include <Wt/WText>
 
@@ -19,12 +20,16 @@ const int GP_SELECTOR_LIST_TAB = 0;
 const int GP_SELECTOR_NEW_TAB = 1;
 
 GPSelector::GPSelector(Wt::WContainerWidget* p):
-    Wt::WContainerWidget(p) {
-    new Wt::WText(tr("tc.common.Select_or_create"), this);
+    Wt::WPanel(p) {
+    setTitle(tr("tc.game.Select_gp"));
+    setCollapsible(true);
+    Wt::WContainerWidget* c = new Wt::WContainerWidget();
+    setCentralWidget(c);
+    new Wt::WText(tr("tc.common.Select_or_create"), c);
     list_ = new GPListWidget();
     new_cont_ = new Wt::WContainerWidget();
     new_ = new GPWidget(0, new_cont_);
-    tab_ = new Wt::WTabWidget(this);
+    tab_ = new Wt::WTabWidget(c);
     tab_->addTab(list_, tr("tc.common.Select_existing"));
     tab_->addTab(new_cont_, tr("tc.common.Create_new"));
     tab_->currentChanged().connect(this, &GPSelector::tab_handler);

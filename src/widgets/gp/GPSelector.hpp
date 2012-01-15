@@ -9,7 +9,7 @@
 #define THECHESS_WIDGETS_GP_SELECTOR_HPP_
 
 #include <Wt/WGlobal>
-#include <Wt/WContainerWidget>
+#include <Wt/WPanel>
 
 #include "model/all.hpp"
 #include "widgets/global.hpp"
@@ -17,7 +17,7 @@
 namespace thechess {
 
 /** Select existing game parameters or create new */
-class GPSelector : public Wt::WContainerWidget {
+class GPSelector : public Wt::WPanel {
 public:
     /** Constructor */
     GPSelector(Wt::WContainerWidget* p = 0);
