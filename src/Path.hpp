@@ -38,6 +38,11 @@ public:
         return user_view_;
     }
 
+    /** Update password */
+    url::PredefinedNode* update_password() const {
+        return update_password_;
+    }
+
     /** List of games */
     url::PredefinedNode* game_list() const {
         return game_list_;
@@ -102,6 +107,7 @@ private:
     MainWidget* main_widget_;
     url::PredefinedNode* user_list_;
     url::IntegerNode* user_view_;
+    url::PredefinedNode* update_password_;
     url::PredefinedNode* game_list_;
     url::IntegerNode* game_view_;
     url::PredefinedNode* game_new_;
