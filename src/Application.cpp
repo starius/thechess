@@ -120,7 +120,11 @@ void Application::set_auth_widget() {
                                    session().login());
     w->setRegistrationEnabled(true);
     w->addPasswordAuth(&server().password_service());
-    w->processEnvironment();
+    try {
+        w->processEnvironment();
+    } catch (std::exception& e) {
+        log("warning") << "AuthWidget.processEnvironment(): " << e.what();
+    }
     main_widget_->set_auth_widget(w);
 }
 
