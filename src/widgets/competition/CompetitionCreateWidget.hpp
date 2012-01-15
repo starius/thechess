@@ -9,23 +9,35 @@
 #define THECHESS_WIDGETS_COMPETITION_CREATE_WIDGET_HPP_
 
 #include <Wt/WContainerWidget>
+#include <Wt/Wc/global.hpp>
 
 #include "widgets/global.hpp"
+#include "widgets/RecordWidgetBase.hpp"
 #include "model/all.hpp"
 
 namespace thechess {
 
-class CompetitionCreateWidget : public Wt::WContainerWidget {
+/** Competition creation or modifying */
+class CompetitionCreateWidget : public Wt::WContainerWidget, RecordWidgetBase {
 public:
+    /** Constructor for creation of new competition */
     CompetitionCreateWidget(Wt::WContainerWidget* p = 0);
-    CompetitionCreateWidget(const CompetitionPtr& c, Wt::WContainerWidget* p = 0);
+
+    /** Constructor for modifying of the competition */
+    CompetitionCreateWidget(const CompetitionPtr& c,
+                            Wt::WContainerWidget* p = 0);
+
+    /** Signal emmited when a competition is saved */
     Wt::EventSignal<Wt::WMouseEvent>& saved();
 
 private:
-    CPWidget2* cpw_;
+    CPSelector* cp_selector_;
+    GPSelector* gp_selector_;
+    Wt::Wc::TableForm* form_;
     CompetitionPtr c_;
     Wt::WPushButton* ok_;
 
+    void print();
     void button_handler();
 };
 

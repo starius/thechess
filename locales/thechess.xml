@@ -387,6 +387,7 @@ See locales-test manpage for more information.
     <message id='tc.competition.Recruiting_time'>Recruiting time</message>
     <message id='tc.competition.Relax_time'>Relax time</message>
     <message id='tc.competition.Score'>Score</message>
+    <message id='tc.competition.Select_cp'>Select competition parameters</message>
     <message id='tc.competition.Show_games'>Show games</message>
     <message id='tc.competition.Show_wins'>Show numbers of victories</message>
     <message id='tc.competition.Stage'>Stage</message>

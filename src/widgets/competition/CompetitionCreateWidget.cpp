@@ -8,10 +8,13 @@
 #include <Wt/WText>
 #include <Wt/WBreak>
 #include <Wt/WPushButton>
+#include <Wt/WPanel>
 #include <Wt/Dbo/Transaction>
+#include <Wt/Wc/TableForm.hpp>
 
 #include "widgets/competition/CompetitionCreateWidget.hpp"
-#include "widgets/cp/CPWidget.hpp"
+#include "widgets/cp/CPSelector.hpp"
+#include "widgets/gp/GPSelector.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
 #include "config.hpp"
@@ -23,11 +26,7 @@ CompetitionCreateWidget::CompetitionCreateWidget(Wt::WContainerWidget* p):
     dbo::Transaction t(tApp->session());
     if (tApp->user() && Competition::can_create_competition(tApp->user())) {
         new Wt::WText(tr("tc.competition.Create_welcome"), this);
-        GPPtr gp = new GP(true);
-        CPPtr cp = new CP(gp);
-        CompetitionPtr c = new Competition(cp);
-        cpw_ = new CPWidget2(c.get(), /*allow_change_type*/ true, this);
-        new Wt::WBreak(this);
+        print();
         ok_ = new Wt::WPushButton(tr("tc.common.Create"), this);
         ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler);
     } else {
@@ -42,8 +41,7 @@ CompetitionCreateWidget::CompetitionCreateWidget(const CompetitionPtr& c,
     dbo::Transaction t(tApp->session());
     if (tApp->user() && c->can_change_parameters(tApp->user())) {
         new Wt::WText(tr("tc.competition.Change_welcome").arg(int(c.id())), this);
-        cpw_ = new CPWidget2(c.get(), /*allow_change_type*/ true, this);
-        new Wt::WBreak(this);
+        print();
         ok_ = new Wt::WPushButton(tr("tc.common.Save"), this);
         ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler);
     } else {
@@ -52,26 +50,41 @@ CompetitionCreateWidget::CompetitionCreateWidget(const CompetitionPtr& c,
     t.commit();
 }
 
+void CompetitionCreateWidget::print() {
+    Wt::WPanel* cp_panel = new Wt::WPanel(this);
+    cp_panel->setTitle(tr("tc.competition.Select_cp"));
+    cp_panel->setCollapsible(true);
+    cp_selector_ = new CPSelector(this);
+    cp_panel->setCentralWidget(cp_selector_);
+    Wt::WPanel* gp_panel = new Wt::WPanel(this);
+    gp_panel->setTitle(tr("tc.game.Select_gp"));
+    gp_panel->setCollapsible(true);
+    gp_panel->setCollapsed(true);
+    gp_selector_ = new GPSelector();
+    gp_panel->setCentralWidget(gp_selector_);
+    form_ = new Wt::Wc::TableForm(this);
+    add_record_inputs(c_.get(), form_);
+}
+
 Wt::EventSignal<Wt::WMouseEvent>& CompetitionCreateWidget::saved() {
     return ok_->clicked();
 }
 
 void CompetitionCreateWidget::button_handler() {
     dbo::Transaction t(tApp->session());
-    GPPtr gp;
-    CPPtr cp;
     CompetitionPtr comp;
+    if (!cp_selector_->cp()) {
+        return;
+    }
     if (c_) {
         comp = c_;
-        cp = comp->cp();
-        gp = cp->gp();
+        write_record(comp.modify(), /* init */ false);
     } else {
-        gp = tApp->session().add(new GP(true));
-        cp = tApp->session().add(new CP(gp));
-        comp = tApp->session().add(new Competition(cp));
+        comp = tApp->session().add(new Competition(true));
+        write_record(comp.modify(), /* init */ true);
     }
-    cpw_->apply_parameters(comp.modify());
-    comp.modify()->create_competition(tApp->user());
+    comp.modify()->set_gp(gp_selector_->gp());
+    comp.modify()->set_cp(cp_selector_->cp());
     t.commit();
     tApp->path().competition_view()->set_integer_value(comp.id());
     tApp->path().competition_view()->open(/* change path */ true);
