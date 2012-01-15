@@ -41,6 +41,9 @@ private:
         }
         button_("tc.game.List", path_->game_list());
         button_("tc.competition.List", path_->competition_list());
+        if (user_items_) {
+            button_("Wt.Auth.updatepassword", path_->update_password());
+        }
     }
 
     void button_(const char* title_id, Wt::Wc::url::Node* node) {
