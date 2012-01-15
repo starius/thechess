@@ -76,6 +76,27 @@ public:
         }
         setQuery(q, /* keep_columns */ true);
     }
+
+    Wt::WModelIndex result_to_index(const CPPtr& ptr) {
+        sort(N_COLUMN);
+        int result = -1;
+        if (ptr) {
+            try {
+                int row = ptr.id() - 1;
+                if (resultRow(row).id() == ptr.id()) {
+                    result = row;
+                } else {
+                    // shift
+                    row -= resultRow(row).id() - ptr.id();
+                    if (resultRow(row).id() == ptr.id()) {
+                        result = row;
+                    }
+                }
+            } catch (...)
+            { }
+        }
+        return result != -1 ? index(result, N_COLUMN) : Wt::WModelIndex();
+    }
 };
 
 class CPListView : public Wt::WTableView {
@@ -112,6 +133,14 @@ CPPtr CPListWidget::cp() const {
         result = model_->resultRow(selected_index.row());
     }
     return result;
+}
+
+void CPListWidget::set_cp(const CPPtr& cp) {
+    Wt::WModelIndex index = model_->result_to_index(cp);
+    if (index.isValid()) {
+        view_->select(index);
+        view_->scrollTo(index);
+    }
 }
 
 void CPListWidget::apply() {

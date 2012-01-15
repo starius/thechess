@@ -41,6 +41,9 @@ public:
     /** Get selected cp */
     CPPtr cp() const;
 
+    /** Set selected cp */
+    void set_cp(const CPPtr& cp);
+
 private:
     CPListModel* model_;
     CPListView* view_;
