@@ -373,9 +373,13 @@ See locales-test manpage for more information.
     <message id='tc.competition.Games_list'>Games list</message>
     <message id='tc.competition.Increment_substages'>Substages increment</message>
     <message id='tc.competition.List'>List of Competitions</message>
+    <message id='tc.competition.max_classification'>max classification</message>
+    <message id='tc.competition.max_rating'>max rating</message>
     <message id='tc.competition.Max_simultaneous_games'>Simultaneous games</message>
     <message id='tc.competition.Members_classification'>Classification of members</message>
     <message id='tc.competition.members_number'>members</message>
+    <message id='tc.competition.min_classification'>min classification</message>
+    <message id='tc.competition.min_rating'>min rating</message>
     <message id='tc.competition.Min_substages'>First stage substages</message>
     <message id='tc.competition.New'>Create new competition</message>
     <message id='tc.competition.Parameters'>Competition parameters</message>

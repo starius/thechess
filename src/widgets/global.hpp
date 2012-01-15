@@ -17,6 +17,7 @@ class CompetitionListWidget;
 class CompetitionWidget;
 class CPWidget;
 class CPWidget2;
+class CPListWidget;
 class GameCountdown;
 class GameCreateWidget;
 class GameListWidget;
