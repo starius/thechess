@@ -6,31 +6,42 @@
  */
 
 #include <Wt/WPushButton>
+#include <Wt/WComboBox>
+#include <Wt/WPanel>
 #include <Wt/WEnvironment>
 #include <Wt/WApplication>
+#include <Wt/Wc/TableForm.hpp>
 #include <Wt/Wc/ConstrainedSpinBox.hpp>
 #include <Wt/Wc/TimeDurationWidget.hpp>
 #include <Wt/Wc/IntervalWidget.hpp>
 
 #include "widgets/cp/CPWidget.hpp"
+#include "widgets/gp/GPSelector.hpp"
 #include "widgets/user/ClassificationWidget.hpp"
 #include "config.hpp"
 
 namespace thechess {
 
-CPWidget::CPWidget(
-    const CP* cp,
-    bool allow_change_type, Wt::WContainerWidget* parent):
-    GPWidget(cp->gp().get(), parent) {
+CPWidget::CPWidget(const CP* cp, bool allow_change_type,
+                   Wt::WContainerWidget* parent):
+    Wt::WContainerWidget(parent) {
     using namespace config::competition; // min, max
+    CP default_cp(true);
+    if (!cp) {
+        cp = &default_cp;
+    }
+    Wt::WPanel* cp_panel = new Wt::WPanel(this);
+    cp_panel->setTitle(tr("tc.competition.Parameters"));
+    cp_panel->setCollapsible(true);
+    form_ = new Wt::Wc::TableForm();
+    cp_panel->setCentralWidget(form_);
     Wt::Wc::IntervalWidget* interval;
     Wt::WContainerWidget* cell;
-    section(tr("tc.competition.Parameters"));
     type_ = new Wt::WComboBox();
     type_->addItem(Competition::type2str(CLASSICAL));
     type_->addItem(Competition::type2str(STAGED));
     type_->addItem(Competition::type2str(TEAM));
-    cell = item(tr("tc.competition.Type"), "", type_, type_);
+    cell = form_->item(tr("tc.competition.Type"), "", type_, type_);
     set_type_(cp->type());
     if (allow_change_type) {
         if (wApp->environment().ajax()) {
@@ -52,17 +63,17 @@ CPWidget::CPWidget(
     max_rating_->setRange(min::MAX_RATING, max::MAX_RATING);
     max_rating_->setValue(cp->max_rating());
     interval = new Wt::Wc::IntervalWidget(min_rating_, max_rating_);
-    item(tr("tc.competition.Rating"), "", min_rating_, interval);
+    form_->item(tr("tc.competition.Rating"), "", min_rating_, interval);
     min_classification_ = new ClassificationWidget(min::MIN_CLASSIFICATION,
             cp->min_classification(), max::MIN_CLASSIFICATION);
     max_classification_ = new ClassificationWidget(min::MAX_CLASSIFICATION,
             cp->max_classification(), max::MAX_CLASSIFICATION);
     interval = new Wt::Wc::IntervalWidget(min_classification_, max_classification_);
-    item(tr("tc.competition.Members_classification"), "", min_classification_, interval);
+    form_->item(tr("tc.competition.Members_classification"), "", min_classification_, interval);
     force_start_delay_ = new Wt::Wc::TimeDurationWidget(min::FORCE_START_DELAY,
             cp->force_start_delay(), max::FORCE_START_DELAY);
-    item(tr("tc.competition.Force_start_delay"), "",
-         force_start_delay_->form_widget(), force_start_delay_);
+    form_->item(tr("tc.competition.Force_start_delay"), "",
+                force_start_delay_->form_widget(), force_start_delay_);
     min_users_ = new Wt::Wc::ConstrainedSpinBox();
     min_users_->setRange(min::MIN_USERS, max::MIN_USERS);
     min_users_->setValue(cp->min_users());
@@ -70,43 +81,50 @@ CPWidget::CPWidget(
     max_users_->setRange(min::MAX_USERS, max::MAX_USERS);
     max_users_->setValue(cp->max_users());
     users_ = new Wt::Wc::IntervalWidget(min_users_, max_users_);
-    item(tr("tc.competition.Users"), "", min_users_, users_);
+    form_->item(tr("tc.competition.Users"), "", min_users_, users_);
     min_recruiting_time_ = new Wt::Wc::TimeDurationWidget(min::MIN_RECRUITING_TIME,
             cp->min_recruiting_time(), max::MIN_RECRUITING_TIME);
     max_recruiting_time_ = new Wt::Wc::TimeDurationWidget(min::MAX_RECRUITING_TIME,
             cp->max_recruiting_time(), max::MAX_RECRUITING_TIME);
     recruiting_time_ = new Wt::Wc::IntervalWidget(min_recruiting_time_,
             max_recruiting_time_);
-    item(tr("tc.competition.Recruiting_time"), "",
-         min_recruiting_time_->form_widget(), recruiting_time_);
+    form_->item(tr("tc.competition.Recruiting_time"), "",
+                min_recruiting_time_->form_widget(), recruiting_time_);
     max_simultaneous_games_ = new Wt::Wc::ConstrainedSpinBox();
     max_simultaneous_games_->setRange(min::MAX_SIMULTANEOUS_GAMES, max::MAX_SIMULTANEOUS_GAMES);
     max_simultaneous_games_->setValue(cp->max_simultaneous_games());
-    item(tr("tc.competition.Max_simultaneous_games"), "",
-         max_simultaneous_games_, max_simultaneous_games_);
+    form_->item(tr("tc.competition.Max_simultaneous_games"), "",
+                max_simultaneous_games_, max_simultaneous_games_);
     games_factor_ = new Wt::Wc::ConstrainedDoubleSpinBox();
     games_factor_->setRange(min::GAMES_FACTOR, max::GAMES_FACTOR);
     games_factor_->setValue(cp->games_factor());
-    item(tr("tc.competition.Games_factor"), "", games_factor_, games_factor_);
+    form_->item(tr("tc.competition.Games_factor"), "", games_factor_, games_factor_);
     relax_time_ = new Wt::Wc::TimeDurationWidget(min::RELAX_TIME,
             cp->relax_time(), max::RELAX_TIME);
-    item(tr("tc.competition.Relax_time"), "",
-         relax_time_->form_widget(), relax_time_);
+    form_->item(tr("tc.competition.Relax_time"), "",
+                relax_time_->form_widget(), relax_time_);
     min_substages_ = new Wt::Wc::ConstrainedSpinBox();
     min_substages_->setRange(min::MIN_SUBSTAGES, max::MIN_SUBSTAGES);
     min_substages_->setValue(cp->min_substages());
-    item(tr("tc.competition.Min_substages"), "",
-         min_substages_, min_substages_);
+    form_->item(tr("tc.competition.Min_substages"), "",
+                min_substages_, min_substages_);
     increment_substages_ = new Wt::Wc::ConstrainedSpinBox();
     increment_substages_->setRange(min::INCREMENT_SUBSTAGES, max::INCREMENT_SUBSTAGES);
     increment_substages_->setValue(cp->increment_substages());
-    item(tr("tc.competition.Increment_substages"), "",
-         increment_substages_, increment_substages_);
+    form_->item(tr("tc.competition.Increment_substages"), "",
+                increment_substages_, increment_substages_);
+    add_record_inputs(cp, form_);
+    Wt::WPanel* gp_panel = new Wt::WPanel(this);
+    gp_panel->setTitle(tr("tc.game.Select_gp"));
+    gp_panel->setCollapsible(true);
+    gp_selector_ = new GPSelector();
+    gp_panel->setCentralWidget(gp_selector_);
     type_handler();
 }
 
 void CPWidget::apply_parameters(CP* cp) {
-    GPWidget::apply_parameters(cp->gp().modify());
+    cp->set_gp(gp_selector_->gp());
+    write_record(cp);
     CompetitionType t = get_type();
     cp->set_type(t);
     cp->set_min_rating(min_rating_->corrected_value());
@@ -147,25 +165,25 @@ void CPWidget::apply_parameters(CP* cp) {
 
 void CPWidget::type_handler() {
     CompetitionType t = get_type();
-    hide(users_);
-    hide(recruiting_time_);
-    hide(max_simultaneous_games_);
-    hide(games_factor_);
-    hide(relax_time_);
-    hide(min_substages_);
-    hide(increment_substages_);
+    form_->hide(users_);
+    form_->hide(recruiting_time_);
+    form_->hide(max_simultaneous_games_);
+    form_->hide(games_factor_);
+    form_->hide(relax_time_);
+    form_->hide(min_substages_);
+    form_->hide(increment_substages_);
     if (t == CLASSICAL || t == STAGED) {
-        show(users_);
-        show(recruiting_time_);
+        form_->show(users_);
+        form_->show(recruiting_time_);
     }
     if (t == CLASSICAL) {
-        show(max_simultaneous_games_);
-        show(games_factor_);
+        form_->show(max_simultaneous_games_);
+        form_->show(games_factor_);
     }
     if (t == STAGED) {
-        show(relax_time_);
-        show(min_substages_);
-        show(increment_substages_);
+        form_->show(relax_time_);
+        form_->show(min_substages_);
+        form_->show(increment_substages_);
     }
 }
 
@@ -196,12 +214,12 @@ CompetitionType CPWidget::get_type() const {
 CPWidget2::CPWidget2(const Competition* c,
                      bool allow_change_type, Wt::WContainerWidget* parent):
     CPWidget(c->cp().get(), allow_change_type, parent) {
-    add_record_inputs(c, this);
+    // add_record_inputs(c, this); FIXME
 }
 
 void CPWidget2::apply_parameters(Competition* c) {
     CPWidget::apply_parameters(c->cp().modify());
-    write_record(c);
+    // write_record(c); FIXME
 }
 
 }

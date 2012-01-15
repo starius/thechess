@@ -8,27 +8,34 @@
 #ifndef THECHESS_WIDGETS_COMPETITION_PARAMETERS_WIDGET_HPP_
 #define THECHESS_WIDGETS_COMPETITION_PARAMETERS_WIDGET_HPP_
 
+#include <Wt/WGlobal>
 #include <Wt/WContainerWidget>
-#include <Wt/WComboBox>
-#include <Wt/WCheckBox>
-#include <Wt/WTextEdit>
 #include <Wt/Wc/global.hpp>
 
-#include "widgets/gp/GPWidget.hpp"
 #include "widgets/RecordWidgetBase.hpp"
 #include "widgets/global.hpp"
 #include "model/all.hpp"
 
 namespace thechess {
 
-class CPWidget : public GPWidget {
+/** Competition parameters editor/creator */
+class CPWidget : public Wt::WContainerWidget, RecordWidgetBase {
 public:
+    /** Constructor.
+    \param cp      Source of parameters (0 means the default parameters).
+    \param allow_change_type Whether the type of competition may be changed.
+    \param parent  Parent widget.
+    */
     CPWidget(const CP* cp,
              bool allow_change_type = true, Wt::WContainerWidget* parent = 0);
 
+    /** Apply parameters */
     void apply_parameters(CP* cp);
 
 private:
+    Wt::Wc::TableForm* form_;
+    GPSelector* gp_selector_;
+
     Wt::WComboBox* type_;
     Wt::Wc::ConstrainedSpinBox* min_rating_;
     Wt::Wc::ConstrainedSpinBox* max_rating_;
