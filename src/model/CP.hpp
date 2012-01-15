@@ -29,10 +29,8 @@ public:
     CP();
 #endif
 
-    /** Create instance to be added to database.
-    \param gp Default game parameters for competitions.
-    */
-    CP(const GPPtr& gp);
+    /** Create instance to be added to database */
+    CP(bool);
 
 #ifndef DOXYGEN_ONLY
     template<class Action>

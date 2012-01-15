@@ -14,8 +14,7 @@ namespace ccd = config::competition::defaults;
 CP::CP() {
 }
 
-CP::CP(const GPPtr& gp):
-    gp_(gp),
+CP::CP(bool):
     type_(STAGED),
     min_rating_(ccd::MIN_RATING),
     max_rating_(ccd::MAX_RATING),
