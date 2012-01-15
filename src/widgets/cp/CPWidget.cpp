@@ -211,16 +211,5 @@ CompetitionType CPWidget::get_type() const {
     return t;
 }
 
-CPWidget2::CPWidget2(const Competition* c,
-                     bool allow_change_type, Wt::WContainerWidget* parent):
-    CPWidget(c->cp().get(), allow_change_type, parent) {
-    // add_record_inputs(c, this); FIXME
-}
-
-void CPWidget2::apply_parameters(Competition* c) {
-    CPWidget::apply_parameters(c->cp().modify());
-    // write_record(c); FIXME
-}
-
 }
 

@@ -63,14 +63,6 @@ private:
     void set_type_(CompetitionType t);
 };
 
-class CPWidget2 : public CPWidget, RecordWidgetBase {
-public:
-    CPWidget2(const Competition* c,
-              bool allow_change_type = true, Wt::WContainerWidget* parent = 0);
-
-    void apply_parameters(Competition* c);
-};
-
 }
 
 #endif
