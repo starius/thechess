@@ -25,6 +25,7 @@ void RecordWidgetBase::add_record_inputs(const Record* record,
     }
     name = new Wt::WLineEdit(record->name());
     name->setMaxLength(config::MAX_NAME);
+    name->setTextSize(config::MAX_NAME);
     form->item(Wt::WString::tr("tc.common.Name"), "", name, name);
     description = new Wt::WTextEdit(record->description());
     form->item(Wt::WString::tr("tc.common.Description"), "",
