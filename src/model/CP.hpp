@@ -75,6 +75,11 @@ public:
         return gp_;
     }
 
+    /** Set game parameters (default for competitions) */
+    void set_gp(const GPPtr& gp) {
+        gp_ = gp;
+    }
+
     /** Get parent */
     const CPPtr& parent() const {
         return parent_;
