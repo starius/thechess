@@ -115,6 +115,7 @@ CPWidget::CPWidget(const CP* cp, bool allow_change_type,
                 increment_substages_, increment_substages_);
     add_record_inputs(cp, form_);
     gp_selector_ = new GPSelector(this);
+    gp_selector_->set_gp(cp->gp());
     type_handler();
 }
 
