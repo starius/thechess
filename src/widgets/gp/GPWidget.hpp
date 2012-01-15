@@ -14,12 +14,13 @@
 #include <Wt/Wc/TableForm.hpp>
 
 #include "widgets/global.hpp"
+#include "widgets/RecordWidgetBase.hpp"
 #include "model/all.hpp"
 
 namespace thechess {
 
 /** Game parameters editor/creator */
-class GPWidget : public Wt::Wc::TableForm {
+class GPWidget : public Wt::Wc::TableForm, RecordWidgetBase {
 public:
     /** Constructor.
     \param gp     Source of parameters (0 means the default parameters).

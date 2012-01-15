@@ -53,9 +53,11 @@ GPWidget::GPWidget(const GP* gp,
     first_draw_->setRange(min::FIRST_DRAW / 2, max::FIRST_DRAW / 2);
     first_draw_->setValue(gp->first_draw() / 2);
     item(tr("tc.game.first_draw"), "", first_draw_, first_draw_);
+    add_record_inputs(gp, this);
 }
 
 void GPWidget::apply_parameters(GP* gp) {
+    write_record(gp);
     gp->set_moves(moves_widget_->moves());
     gp->set_limit_std(limit_std_->corrected_value());
     gp->set_limit_private_init(limit_private_init_->corrected_value());
