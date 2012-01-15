@@ -41,6 +41,8 @@ CompetitionCreateWidget::CompetitionCreateWidget(const CompetitionPtr& c,
     if (tApp->user() && c->can_change_parameters(tApp->user())) {
         new Wt::WText(tr("tc.competition.Change_welcome").arg(int(c.id())), this);
         print();
+        gp_selector_->set_gp(c->gp());
+        cp_selector_->set_cp(c->cp());
         ok_ = new Wt::WPushButton(tr("tc.common.Save"), this);
         ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler);
     } else {
