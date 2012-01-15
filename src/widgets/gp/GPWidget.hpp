@@ -18,10 +18,17 @@
 
 namespace thechess {
 
+/** Game parameters editor/creator */
 class GPWidget : public Wt::Wc::TableForm {
 public:
+    /** Constructor.
+    \param gp     Source of parameters (0 means the default parameters).
+    \param parent Parent widget.
+    */
     GPWidget(const GP* gp,
              Wt::WContainerWidget* parent = 0);
+
+    /** Apply parameters */
     void apply_parameters(GP* gp);
 
 private:

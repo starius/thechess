@@ -22,6 +22,10 @@ GPWidget::GPWidget(const GP* gp,
                    Wt::WContainerWidget* parent) :
     Wt::Wc::TableForm(parent) {
     using namespace config; // max, min
+    GP default_gp(true);
+    if (!gp) {
+        gp = &default_gp;
+    }
     Wt::WContainerWidget* cell;
     section(tr("tc.game.Parameters"));
     cell = item(tr("tc.game.Start_position"), "", 0, 0, false);
