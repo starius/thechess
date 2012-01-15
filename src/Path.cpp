@@ -29,6 +29,9 @@ Path::Path(Wt::WObject* parent):
     competition_list_ = new PredefinedNode("competition", this);
     competition_view_ = new IntegerNode(competition_list_);
     competition_new_ = new PredefinedNode("new", competition_list_);
+    cp_list_ = new PredefinedNode("parameters", competition_list_);
+    cp_view_ = new IntegerNode(cp_list_);
+    cp_new_ = new PredefinedNode("new", cp_list_);
     tApp->internalPathChanged().connect(this, &Parser::open);
 }
 

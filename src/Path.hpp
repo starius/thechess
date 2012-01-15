@@ -83,6 +83,21 @@ public:
         return competition_new_;
     }
 
+    /** List of CPs */
+    url::PredefinedNode* cp_list() const {
+        return cp_list_;
+    }
+
+    /** View the CP */
+    url::IntegerNode* cp_view() const {
+        return cp_view_;
+    }
+
+    /** Create new CP */
+    url::PredefinedNode* cp_new() const {
+        return cp_new_;
+    }
+
 private:
     MainWidget* main_widget_;
     url::PredefinedNode* user_list_;
@@ -96,6 +111,9 @@ private:
     url::PredefinedNode* competition_list_;
     url::IntegerNode* competition_view_;
     url::PredefinedNode* competition_new_;
+    url::PredefinedNode* cp_list_;
+    url::IntegerNode* cp_view_;
+    url::PredefinedNode* cp_new_;
 
     void open_user();
     void open_game();
