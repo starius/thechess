@@ -41,6 +41,9 @@ public:
     /** Get selected gp */
     GPPtr gp() const;
 
+    /** Set selected gp */
+    void set_gp(const GPPtr& gp);
+
 private:
     GPListModel* model_;
     GPListView* view_;
