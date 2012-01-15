@@ -22,9 +22,8 @@ GPSelector::GPSelector(Wt::WContainerWidget* p):
     Wt::WContainerWidget(p) {
     new Wt::WText(tr("tc.common.Select_or_create"), this);
     list_ = new GPListWidget();
-    GP gp(true);
     new_cont_ = new Wt::WContainerWidget();
-    new_ = new GPWidget(&gp, new_cont_);
+    new_ = new GPWidget(0, new_cont_);
     tab_ = new Wt::WTabWidget(this);
     tab_->addTab(list_, tr("tc.common.Select_existing"));
     tab_->addTab(new_cont_, tr("tc.common.Create_new"));
