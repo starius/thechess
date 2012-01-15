@@ -40,7 +40,7 @@ public:
 #endif
 
     /** Create instance to be added to database */
-    Competition(const CPPtr& cp);
+    Competition(bool);
 
     /** Return string representation of the competition type */
     static Wt::WString type2str(Type type);

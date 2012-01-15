@@ -19,8 +19,7 @@ namespace thechess {
 Competition::Competition() {
 }
 
-Competition::Competition(const CPPtr& cp):
-    cp_(cp),
+Competition::Competition(bool):
     state_(RECRUITING)
 { }
 
