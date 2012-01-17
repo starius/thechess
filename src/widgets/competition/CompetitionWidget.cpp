@@ -28,6 +28,7 @@
 #include "Application.hpp"
 #include "model/all.hpp"
 #include "notify.hpp"
+#include "config.hpp"
 
 namespace thechess {
 
@@ -56,12 +57,16 @@ public:
 class CompetitionTerms : public Wt::WContainerWidget {
 public:
     CompetitionTerms(const CompetitionPtr& c) {
+        using namespace config::competition::defaults;
         CPPtr cp = c->cp();
         kw("tc.competition.Rating", tr("tc.common.interval")
            .arg(cp->min_rating()).arg(cp->max_rating()));
-        kw("tc.competition.Members_classification", tr("tc.common.interval")
-           .arg(User::classification2str(cp->min_classification()))
-           .arg(User::classification2str(cp->max_classification())));
+        if (cp->min_classification() != MIN_CLASSIFICATION ||
+                cp->max_classification() != MAX_CLASSIFICATION) {
+            kw("tc.competition.Members_classification", tr("tc.common.interval")
+               .arg(User::classification2str(cp->min_classification()))
+               .arg(User::classification2str(cp->max_classification())));
+        }
         kw("tc.competition.Force_start_delay", td2str(cp->force_start_delay()));
         if (c->type() == CLASSICAL || c->type() == STAGED) {
             kw("tc.competition.Users", tr("tc.common.interval")
