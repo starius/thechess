@@ -85,8 +85,18 @@ public:
         cp_ = cp;
     }
 
-    /** Get game parameters */
+    /** Get game parameters.
+    If self gp is defined, return self gp.
+    If self gp is null, returns cp()->gp().
+    */
     const GPPtr& gp() const;
+
+    /** Get self game parameters.
+    This may be a null pointer.
+    */
+    const GPPtr& self_gp() const {
+        return gp_;
+    }
 
     /** Set game parameters.
     By default, no game parametrs are set,
