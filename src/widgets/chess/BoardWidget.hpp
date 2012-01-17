@@ -26,19 +26,39 @@ namespace thechess {
 
 class BoardWidgetImpl;
 
+/** Chess board widget.
+This widget is used to show board state or to input one chess move from user.
+*/
 class BoardWidget : public Wt::WCompositeWidget {
 public:
+    /** Constructor.
+    \param big    Whether big images are used.
+    \param active Whether user could select a piece and perform a move
+        (and emit half_move()).
+    \param bottom Board side, showed at the bottom side.
+    \param board  The board state.
+    \param parent The parent.
+    */
     BoardWidget(bool big = false, bool active = false, Piece::Color bottom = Piece::WHITE,
                 const Board& board = Board(),
                 Wt::WContainerWidget* parent = 0);
 
+    /** Return URL to the piece image */
     static std::string image(Piece piece, bool big = false);
 
+    /** Set the color of board bottom side */
     void bottom_set(Piece::Color bottom);
+
+    /** Update board state, last half-move performed and activeness */
     void set(const Board& board, HalfMove lastmove, bool active);
 
+    /** Flip the board (bottom_set(opposite)) */
     void turn();
+
+    /** The signal emitted when the half-move is performed */
     Wt::Signal<HalfMove>& half_move();
+
+    /** Get container widget with a button "Flip" */
     Wt::WContainerWidget* inner();
 
 private:
