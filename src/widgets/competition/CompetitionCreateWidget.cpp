@@ -66,7 +66,8 @@ Wt::EventSignal<Wt::WMouseEvent>& CompetitionCreateWidget::saved() {
 void CompetitionCreateWidget::button_handler() {
     dbo::Transaction t(tApp->session());
     CompetitionPtr comp;
-    if (!cp_selector_->cp()) {
+    CPPtr cp = cp_selector_->cp();
+    if (!cp) {
         return;
     }
     if (c_) {
@@ -77,7 +78,7 @@ void CompetitionCreateWidget::button_handler() {
         write_record(comp.modify(), /* init */ true);
     }
     comp.modify()->set_gp(gp_selector_->gp());
-    comp.modify()->set_cp(cp_selector_->cp());
+    comp.modify()->set_cp(cp);
     t.commit();
     tApp->path().competition_view()->set_integer_value(comp.id());
     tApp->path().competition_view()->open(/* change path */ true);
