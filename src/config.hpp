@@ -322,14 +322,16 @@ namespace tracker {
 const Td DELAY = 0.01 * SECOND;
 
 /** Delay for task re-processing in case of stale object exception.
+The valus is selected each time from this range (min, max).
 \see Object::process()
 */
-const Td STALE_OBJECT_DELAY = SECOND;
+const std::pair<Td, Td> STALE_OBJECT_DELAY = std::make_pair(SECOND, 5 * SECOND);
 
 /** Delay for task re-processing in case of unknown std::exception.
+The valus is selected each time from this range (min, max).
 \see Object::process()
 */
-const Td UNKNOWN_ERROR_DELAY = 2 * SECOND;
+const std::pair<Td, Td> UNKNOWN_ERROR_DELAY = std::make_pair(2 * SECOND, 8 * SECOND);
 
 }
 

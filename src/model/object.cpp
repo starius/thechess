@@ -23,6 +23,10 @@ Object::Object(ObjectType ot, int i) :
     type(ot), id(i) {
 }
 
+Td rand_td(const std::pair<Td, Td>& range) {
+    return rand_range(range.first, range.second);
+}
+
 void Object::process(Wt::Wc::notify::TaskPtr task,
                      Wt::Wc::notify::PlanningServer* server) const {
     std::cerr << "Check object: " << key() << std::endl;
@@ -45,10 +49,12 @@ void Object::process(Wt::Wc::notify::TaskPtr task,
         std::cerr << e.what() << std::endl;
     } catch (dbo::StaleObjectException& e) {
         std::cerr << e.what() << std::endl;
-        planning->add(task, now() + config::tracker::STALE_OBJECT_DELAY, false);
+        Td delay = rand_td(config::tracker::STALE_OBJECT_DELAY);
+        planning->add(task, now() + delay, false);
     } catch (std::exception& e) { // database locked?
         std::cerr << e.what() << std::endl;
-        planning->add(task, now() + config::tracker::UNKNOWN_ERROR_DELAY, false);
+        Td delay = rand_td(config::tracker::UNKNOWN_ERROR_DELAY);
+        planning->add(task, now() + delay, false);
     } catch (...)
     { }
 }
