@@ -291,6 +291,10 @@ private:
     }
 
     void modify_to_undo() {
+        color_black_white_();
+    }
+
+    void color_black_white_() {
         THECHESS_SQUARE_FOREACH (square) {
             Wt::WImage* img = image_at(square);
             img->decorationStyle().setCursor(Wt::ArrowCursor);
