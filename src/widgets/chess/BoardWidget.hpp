@@ -57,6 +57,9 @@ public:
     /** Get container widget with a button "Flip" */
     Wt::WContainerWidget* inner();
 
+    /** Show or hide lastmove highlighting */
+    void show_lastmove(bool show = true);
+
 private:
     BoardWidgetImpl* impl_;
 };

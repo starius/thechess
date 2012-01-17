@@ -182,6 +182,12 @@ public:
         return turn_button_place_;
     }
 
+    void show_lastmove(bool show = true) {
+        lastmove_show_ = show;
+        color_noactive_undo();
+        modify();
+    }
+
 private:
     friend class DnDPiece;
 
@@ -480,6 +486,10 @@ Wt::Signal<HalfMove>& BoardWidget::half_move() {
 
 Wt::WContainerWidget* BoardWidget::inner() {
     return impl_->inner();
+}
+
+void BoardWidget::show_lastmove(bool show) {
+    impl_->show_lastmove(show);
 }
 
 }
