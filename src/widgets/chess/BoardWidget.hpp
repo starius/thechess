@@ -5,11 +5,6 @@
  * See the LICENSE file for terms of use.
  */
 
-// vim: set noet ts=2 sw=2:
-/* Board widget
- * Signal: half_move()
- */
-
 #ifndef THECHESS_WIDGETS_BOARDWIDGET_H_
 #define THECHESS_WIDGETS_BOARDWIDGET_H_
 
@@ -39,7 +34,8 @@ public:
     \param board  The board state.
     \param parent The parent.
     */
-    BoardWidget(bool big = false, bool active = false, Piece::Color bottom = Piece::WHITE,
+    BoardWidget(bool big = false, bool active = false,
+                Piece::Color bottom = Piece::WHITE,
                 const Board& board = Board(),
                 Wt::WContainerWidget* parent = 0);
 
