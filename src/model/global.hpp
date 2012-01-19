@@ -48,6 +48,7 @@ class GP;
 class Game;
 class CP;
 class Competition;
+class Comment;
 
 #ifndef DOXYGEN_ONLY
 typedef dbo::ptr<User> UserPtr;
@@ -55,6 +56,7 @@ typedef dbo::ptr<GP> GPPtr;
 typedef dbo::ptr<Game> GamePtr;
 typedef dbo::ptr<CP> CPPtr;
 typedef dbo::ptr<Competition> CompetitionPtr;
+typedef dbo::ptr<Comment> CommentPtr;
 #else
 /** Dbo pointer to User */
 typedef User* UserPtr;
@@ -70,6 +72,9 @@ typedef CP* CPPtr;
 
 /** Dbo pointer to Competition */
 typedef Competition* CompetitionPtr;
+
+/** Dbo pointer to Comment */
+typedef Comment* CommentPtr;
 #endif
 
 #ifndef DOXYGEN_ONLY
@@ -78,6 +83,7 @@ typedef dbo::collection<GPPtr> GPs;
 typedef dbo::collection<GamePtr> Games;
 typedef dbo::collection<CPPtr> CPs;
 typedef dbo::collection<CompetitionPtr> Competitions;
+typedef dbo::collection<CommentPtr> Comments;
 #else
 /** User dbo collection */
 typedef User* Users;
@@ -93,6 +99,9 @@ typedef CP* CPs;
 
 /** Competition dbo collection */
 typedef Competition* Competitions;
+
+/** Comment dbo collection */
+typedef Comment* Comments;
 #endif
 
 /** User vector */
@@ -109,6 +118,9 @@ typedef std::vector<CPPtr> CPsVector;
 
 /** Competition vector */
 typedef std::vector<CompetitionPtr> CompetitionsVector;
+
+/** Comment vector */
+typedef std::vector<CommentPtr> CommentsVector;
 
 }
 
