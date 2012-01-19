@@ -18,6 +18,7 @@
 #include <Wt/WGridLayout>
 #include <Wt/WImage>
 #include <Wt/WPushButton>
+#include <Wt/WCheckBox>
 #include <Wt/WSignal>
 #include <Wt/WTable>
 #include <Wt/WTemplate>
@@ -135,6 +136,12 @@ public:
             new Wt::WPushButton(tr("tc.game.Overturn_board"), turn_button_place_);
         turn_button->clicked().connect(this, &BoardWidgetImpl::turn);
         taken_pieces_ = new TakenPieces(board_, this);
+        lastmove_box_ = new Wt::WCheckBox(tr("tc.game.Highlight_lastmove"), this);
+        lastmove_box_->setChecked(config::SHOW_LASTMOVE);
+        lastmove_box_->changed().connect(
+            boost::bind(&BoardWidgetImpl::show_lastmove, this,
+                        boost::bind<bool>(&Wt::WAbstractToggleButton::isChecked,
+                                          lastmove_box_)));
     }
 
     const char* xml_message() {
@@ -188,6 +195,7 @@ public:
         color_noactive_undo();
         lastmove_show_ = show;
         modify();
+        lastmove_box_->setChecked(show);
     }
 
 private:
@@ -212,6 +220,7 @@ private:
     bool select_turn_into_flag_;
     DnDPiece* images_[64];
     Wt::WImage* draggable_;
+    Wt::WCheckBox* lastmove_box_;
 
     Wt::Signal<HalfMove> move_;
 

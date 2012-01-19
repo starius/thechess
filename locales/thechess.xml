@@ -444,6 +444,7 @@ See locales-test manpage for more information.
     <message id='tc.game.force_confirm'>forced confirmation</message>
     <message id='tc.game.force_start'>forced start</message>
     <message id='tc.game.Header'>Game # {1}</message>
+    <message id='tc.game.Highlight_lastmove'>Highlight lastmove</message>
     <message id='tc.game.init'>game initiator</message>
     <message id='tc.game.lastmove'>surrogate last move</message>
     <message id='tc.game.Leave'>Leave</message>
