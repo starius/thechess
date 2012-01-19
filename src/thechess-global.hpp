@@ -8,10 +8,6 @@
 #ifndef THECHESS_GLOBAL_HPP_
 #define THECHESS_GLOBAL_HPP_
 
-#include "chess/global.hpp"
-#include "model/global.hpp"
-#include "widgets/global.hpp"
-
 /** The namespace for thechess */
 namespace thechess {
 

@@ -13,6 +13,7 @@
 
 #include "thechess-global.hpp"
 #include "model/all.hpp"
+#include "widgets/global.hpp"
 
 namespace thechess {
 
