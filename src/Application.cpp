@@ -23,6 +23,7 @@
 #include "config.hpp"
 #include "Session.hpp"
 #include "model/all.hpp"
+#include "widgets/MainWidget.hpp"
 #include "widgets/MainMenu.hpp"
 
 namespace thechess {

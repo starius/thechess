@@ -19,7 +19,6 @@
 #include "Server.hpp"
 #include "Session.hpp"
 #include "Path.hpp"
-#include "widgets/MainWidget.hpp"
 
 /** Macro for Application::instance(), same as wApp */
 #define tApp thechess::Application::instance()
