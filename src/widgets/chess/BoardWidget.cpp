@@ -32,6 +32,7 @@
 #include "widgets/chess/BoardWidget.hpp"
 #include "chess/HalfMove.hpp"
 #include "chess/Piece.hpp"
+#include "config.hpp"
 
 namespace thechess {
 
@@ -114,7 +115,8 @@ public:
     BoardWidgetImpl(bool big, bool active, Piece::Color bottom,
                     const Board& board) :
         Wt::WContainerWidget(), board_(board), bottom_(bottom),
-        active_(active), activated_(false), big_(big), lastmove_show_(true),
+        active_(active), activated_(false), big_(big),
+        lastmove_show_(config::SHOW_LASTMOVE),
         select_turn_into_flag_(false) {
         correct_bottom();
         board_template_ = new Wt::WTemplate(tr(xml_message()), this);
