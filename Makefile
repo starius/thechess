@@ -41,7 +41,7 @@ LIBS += -lwtclasses
 CXXFLAGS += -pipe -Wall -W
 CXXFLAGS += -I$(BUILD) -Isrc
 ifeq ($(BUILD), debug)
-CXXFLAGS += -g -O0 -DDEBUG
+CXXFLAGS += -g -O0
 CXXFLAGS += -DRUN_TESTS
 LFLAGS += -O0
 else
