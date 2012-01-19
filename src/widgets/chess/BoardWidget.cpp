@@ -185,8 +185,8 @@ public:
     }
 
     void show_lastmove(bool show = true) {
-        lastmove_show_ = show;
         color_noactive_undo();
+        lastmove_show_ = show;
         modify();
     }
 
