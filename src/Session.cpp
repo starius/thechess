@@ -76,7 +76,7 @@ dbo::SqlConnection* Session::new_connection(const Options& options) {
     } else {
         throw std::logic_error("Session::new_connection(): unknown database type");
     }
-#ifdef RUN_TESTS
+#ifndef NDEBUG
     connection->setProperty("show-queries", "true");
 #endif
     return connection;
