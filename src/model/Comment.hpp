@@ -112,10 +112,12 @@ public:
         return parent_;
     }
 
-    /** Set the parent comment */
-    void set_parent(const CommentPtr& parent) {
-        parent_ = parent;
-    }
+    /** Set the parent comment.
+    \param set_index If the index should be also set (using set_index()).
+    \param set_root If the root should be also set.
+    */
+    void set_parent(const CommentPtr& parent, bool set_index = true,
+                    bool set_root = true);
 
     /** Get creation time */
     const Wt::WDateTime& created() const {

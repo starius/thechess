@@ -59,5 +59,16 @@ void Comment::set_text(const Wt::WString& text) {
     edited_ = now();
 }
 
+void Comment::set_parent(const CommentPtr& parent, bool set_index,
+                         bool set_root) {
+    parent_ = parent;
+    if (set_root) {
+        root_ = parent->root();
+    }
+    if (set_index) {
+        this->set_index();
+    }
+}
+
 }
 
