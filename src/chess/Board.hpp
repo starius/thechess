@@ -39,9 +39,9 @@ class Board {
 public:
     /** Result of testing if board is checkmate or stalemate */
     enum FinishState {
-        NOTHING = 0,
-        CHECKMATE = 1,
-        STALEMATE = 2
+        NOTHING = 0, /**< Neither checkmate, not stalemate */
+        CHECKMATE = 1, /**< Checkmate */
+        STALEMATE = 2 /**< Stalemate */
     };
 
     /** Construct a board with start position */
