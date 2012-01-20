@@ -80,6 +80,7 @@ public:
         dbo::field(a, draw_proposer_, "draw_proposer");
         dbo::field(a, rating_after_, "rating_after");
         dbo::field(a, comment_, "comment");
+        dbo::field(a, comment_base_, "comment_base");
     }
 #endif
 
@@ -490,6 +491,11 @@ public:
     /** The user tries to set the comment */
     void set_comment(const UserPtr& user, const Wt::WString& t);
 
+    /** Return comment base.
+    Lazy created.
+    */
+    const CommentPtr& comment_base();
+
     /* @} */
 
     /** \name Competition-related methods */
@@ -576,6 +582,7 @@ private:
     WhiteBlack<int> rating_after_;
 
     Wt::WString comment_;
+    CommentPtr comment_base_;
 
     void set_white_(const UserPtr& user) {
         white_ = user;

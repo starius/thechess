@@ -620,6 +620,16 @@ void Game::set_comment(const UserPtr& user, const Wt::WString& t) {
     }
 }
 
+const CommentPtr& Game::comment_base() {
+    if (!comment_base_) {
+        comment_base_ = session()->add(new Comment(true));
+        comment_base_.modify()->set_state(Comment::SURROGATE);
+        comment_base_.flush();
+        comment_base_.modify()->set_root(comment_base_);
+    }
+    return comment_base_;
+}
+
 const char* Game::pgn_termination() const {
     if (!is_ended()) {
         return "unterminated";
