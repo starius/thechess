@@ -41,6 +41,7 @@ void Session::reconsider(Server& server) {
         dbo::Transaction t(*this);
         createTables();
         std::cerr << "Created database" << std::endl;
+        execute("CREATE INDEX comment_index ON thechess_comment('index')");
         add_user(server, "admin", "123").modify()->set_rights(User::ADMIN);
         std::cerr << "and admin user (password 123)" << std::endl;
         add_user(server, "user", "123");
