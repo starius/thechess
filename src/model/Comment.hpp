@@ -49,6 +49,9 @@ public:
         index_ = index;
     }
 
+    /** Set auto value for sorting index using information about parents */
+    void set_index();
+
     /** Get if the comment can be commented (used as a parent) */
     bool commentable() const {
         return commentable_;
