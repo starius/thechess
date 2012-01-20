@@ -74,6 +74,18 @@ public:
         init_ = init;
     }
 
+    /** Get the root comment.
+    Root of root comment is the root itself (not null).
+    */
+    const CommentPtr& root() const {
+        return root_;
+    }
+
+    /** Set the root comment */
+    void set_root(const CommentPtr& root) {
+        root_ = root;
+    }
+
     /** Get the parent comment.
     If the parent is not set, this means the comment is a root.
     In this case its state may be SURROGATE.
@@ -104,6 +116,7 @@ public:
         dbo::field(a, state_, "state");
         dbo::field(a, text_, "text");
         dbo::belongsTo(a, init_, "init");
+        dbo::belongsTo(a, root_, "root");
         dbo::belongsTo(a, parent_, "parent");
         dbo::field(a, created_, "created");
         dbo::field(a, edited_, "edited");
@@ -114,6 +127,7 @@ private:
     State state_;
     Wt::WString text_;
     UserPtr init_;
+    CommentPtr root_;
     CommentPtr parent_;
     Wt::WDateTime created_;
     Wt::WDateTime edited_;
