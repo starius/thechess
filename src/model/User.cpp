@@ -33,7 +33,8 @@ AuthInfoPtr User::auth_info() const {
 }
 
 dbo::Query<GamePtr> User::games() const {
-    return session()->find<Game>().where("white_id = ? or black_id = ? or init_game_id = ?")
+    return session()->find<Game>()
+           .where("white_id = ? or black_id = ? or init_game_id = ?")
            .bind(id()).bind(id()).bind(id());
 }
 
@@ -58,7 +59,8 @@ bool User::can_set_classification(const UserPtr& user) const {
     return user && user.id() == id();
 }
 
-void User::set_classification(const UserPtr& user, Classification classification) {
+void User::set_classification(const UserPtr& user,
+                              Classification classification) {
     if (can_set_classification(user)) {
         classification_ = classification;
         classification_confirmer_.reset();

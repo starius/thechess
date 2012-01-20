@@ -23,7 +23,7 @@ public:
         PROPOSED = 0, /**< was proposed by user or planned by competition */
         CONFIRMED = 10, /**< is to be started when both users are online */
         ACTIVE = 20, /**< is running, clock is ticking */
-        PAUSE = 30, /**< is paused until predefined time, clock is also paused */
+        PAUSE = 30, /**< is paused until predefined time, clock is paused */
 #ifndef DOXYGEN_ONLY
         MIN_ENDED = 50,
 #endif
@@ -106,7 +106,8 @@ public:
     \param random if colors of pieces will be randomized
     */
     void make_competition_game(const UserPtr& white, const UserPtr& black,
-                               const CompetitionPtr& competition, int competition_stage = -1, bool random = false);
+                               const CompetitionPtr& competition,
+                               int competition_stage = -1, bool random = false);
 
     /* @} */
 

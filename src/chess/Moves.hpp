@@ -72,7 +72,8 @@ public:
     \param n index of half-move.
     \param board board position preceeding the half-move.
         This argument is nedded because of pawn promotions,
-        which are stored together with HalfMove::to() (see HalfMove::packed_to())
+        which are stored together with HalfMove::to()
+        (see HalfMove::packed_to())
     */
     HalfMove half_move(int n, const Board& board) const;
 

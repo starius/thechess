@@ -124,7 +124,8 @@ UserPtr Game::other_user(const UserPtr& user) const {
 }
 
 void Game::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
-    if (state() == PROPOSED && competition() && competition()->type() == STAGED &&
+    if (state() == PROPOSED &&
+            competition() && competition()->type() == STAGED &&
             now() - created_ > competition()->cp()->relax_time()) {
         confirm();
     }
@@ -141,7 +142,8 @@ void Game::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
         finish_(TIMEOUT, winner);
     }
     if (is_ended() && competition()) {
-        planning->add(new Object(COMPETITION, competition().id()), now(), false);
+        Object* c = new Object(COMPETITION, competition().id());
+        planning->add(c, now(), false);
     }
     planning->add(task, next_check(), false);
 }
@@ -201,7 +203,8 @@ Wt::WDateTime Game::next_check() const {
         result = lastmove() + gp_->limit_std() +
                  std::min(limit_private(Piece::WHITE),
                           limit_private(Piece::BLACK));
-    } else if (state() == PROPOSED && competition() && competition()->type() == STAGED) {
+    } else if (state() == PROPOSED &&
+               competition() && competition()->type() == STAGED) {
         result = created_ + competition()->cp()->relax_time();
     } else if (state() == CONFIRMED && competition()) {
         result = confirmed_ + competition()->cp()->force_start_delay();
@@ -231,7 +234,8 @@ void Game::propose_challenge(const UserPtr& init, Piece::Color c) {
 }
 
 void Game::make_competition_game(const UserPtr& white, const UserPtr& black,
-                                 const CompetitionPtr& competition, int competition_stage, bool random) {
+                                 const CompetitionPtr& competition,
+                                 int competition_stage, bool random) {
     if (random) {
         set_random_(white, black);
     } else {
@@ -567,7 +571,8 @@ int Game::size_without_init() const {
 }
 
 bool Game::meet_first_draw() const {
-    return size_without_init() >= gp_->first_draw() && gp_->first_draw() != NO_DRAW;
+    return size_without_init() >= gp_->first_draw() &&
+           gp_->first_draw() != NO_DRAW;
 }
 
 bool Game::real_rating() const {
@@ -589,7 +594,8 @@ void Game::elo_change() {
     white_.reread();
     black_.reread();
     if (is_win()) {
-        winner_.modify()->games_stat().win(&(other_user(winner_).modify()->games_stat()));
+        EloPlayer& other_stat = other_user(winner_).modify()->games_stat();
+        winner_.modify()->games_stat().win(&other_stat);
     }
     if (is_draw()) {
         white_.modify()->games_stat().draw(&(black_.modify()->games_stat()));
@@ -635,7 +641,8 @@ const char* Game::pgn_termination() const {
         return "unterminated";
     } else if (state_ == TIMEOUT) {
         return "time forfeit";
-    } else if (state_ == DRAW_50 || state_ == DRAW_3 || state_ == DRAW_2_KINGS) {
+    } else if (state_ == DRAW_50 || state_ == DRAW_3 ||
+               state_ == DRAW_2_KINGS) {
         return "adjudication";
     } else if (state_ == CANCELLED) {
         return "abandoned";    // ?? FIXME
@@ -651,7 +658,8 @@ void Game::pgn_init_moves_(std::ostream& out) const {
     for (; i < e; ++i) {
         HalfMove half_move = *i;
         const Board& board = i.board();
-        if (board.letter(half_move.from()) == Piece::PAWN || board.test_takes(half_move)) {
+        if (board.letter(half_move.from()) == Piece::PAWN ||
+                board.test_takes(half_move)) {
             halfmove_clock = 0;
         } else {
             halfmove_clock += 1;
@@ -671,13 +679,16 @@ void Game::pgn_additional_(std::ostream& out) const {
     long t2 = gp_->limit_std().total_seconds();
     out << "[TimeControl \"" << t1 << '/' << t2 << "\"]" << std::endl;
     if (started_.isValid()) {
-        out << "[UTCTime \"" << started_.toString("HH:mm:ss") << "\"]" << std::endl;
+        out << "[UTCTime \"" << started_.toString("HH:mm:ss") << "\"]";
+        out << std::endl;
     }
     out << "[Termination \"" << pgn_termination() << "\"]" << std::endl;
     out << "[Mode \"" << "ICS" << "\"]" << std::endl;
     if (rating_after(Piece::WHITE) != -1) {
-        out << "[WhiteElo \"" << rating_after(Piece::WHITE) << "\"]" << std::endl;
-        out << "[BlackElo \"" << rating_after(Piece::BLACK) << "\"]" << std::endl;
+        out << "[WhiteElo \"" << rating_after(Piece::WHITE) << "\"]";
+        out << std::endl;
+        out << "[BlackElo \"" << rating_after(Piece::BLACK) << "\"]";
+        out << std::endl;
     }
     if (init_moves().size()) {
         pgn_init_moves_(out);
@@ -688,12 +699,15 @@ void Game::pgn_additional_(std::ostream& out) const {
 void Game::pgn(std::ostream& out, bool reduced) const {
     Wt::WString event = competition_ ? competition_->name() : "?";
     Wt::WString site = "FIXME";
-    Wt::WString date = started_.isValid() ? started_.toString("yyyy.MM.dd") : "????.??.??";
+    Wt::WString date = started_.isValid() ? started_.toString("yyyy.MM.dd") :
+                       "????.??.??";
     int stage = competition_stage_ + 1;
-    Wt::WString round = competition_stage_ != -1 ? boost::lexical_cast<std::string>(stage) : "-";
+    Wt::WString round = competition_stage_ != -1 ?
+                        boost::lexical_cast<std::string>(stage) : "-";
     Wt::WString white = white_ ? white_->username() : "?";
     Wt::WString black = black_ ? black_->username() : "?";
-    std::string result = is_draw() ? "1/2-1/2" : !winner_ ? "*" : winner_ == white_ ? "1-0" : "0-1";
+    std::string result = is_draw() ? "1/2-1/2" : !winner_ ? "*" :
+                         winner_ == white_ ? "1-0" : "0-1";
     out << "[Event \"" << event << "\"]" << std::endl;
     out << "[Site \"" << site << "\"]" << std::endl;
     out << "[Date \"" << date << "\"]" << std::endl;

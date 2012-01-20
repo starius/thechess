@@ -16,8 +16,8 @@
 namespace thechess {
 
 /** Class representing a single half-move.
-A half-move consists of source and destination squares, and promoted piece letter
-for pawn promotion moves.
+A half-move consists of source and destination squares,
+and promoted piece letter for pawn promotion moves.
 
 The size of this class is 4 bytes.
 Inside Moves, it spends only 1.5 bytes per half-move.
@@ -26,7 +26,7 @@ Inside Moves, it spends only 1.5 bytes per half-move.
 */
 class HalfMove {
 public:
-    /** Construct a half-move using source, destination and promoted piece letter */
+    /** Construct a half-move using source, destination and promoted letter */
     HalfMove(Square from, Square to, Piece::Letter turn_into)
         : from_(from), to_(to), turn_into_(turn_into) {}
 
@@ -37,7 +37,8 @@ public:
 
     /** Construct a half-move using source, packed destination and board.
     This is used by Moves while reading.
-    In case of a pawn promotion packed_to is Square(to.file(), (Square::Rank)turn_into).
+    In case of a pawn promotion packed_to is
+    Square(to.file(), (Square::Rank)turn_into).
     Otherwise normal destination is used.
 
     This optimization let Moves spent only 1.5 bytes per half-move.
@@ -45,7 +46,8 @@ public:
     HalfMove(Square from, Square packed_to, const Board& board);
 
     /** Default constructor.
-    The result is \code HalfMove(Square(), Square(), Piece::LETTER_NULL) \endcode
+    The result is
+    \code HalfMove(Square(), Square(), Piece::LETTER_NULL) \endcode
     */
     HalfMove();
 
@@ -87,7 +89,8 @@ public:
 
     /** Return packed_to.
     This is used by Moves while writing.
-    In case of a pawn promotion packed_to is Square(to.file(), (Square::Rank)turn_into).
+    In case of a pawn promotion packed_to is
+    Square(to.file(), (Square::Rank)turn_into).
     Otherwise normal destination is returned.
 
     This optimization let Moves spent only 1.5 bytes per half-move.

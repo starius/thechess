@@ -59,7 +59,8 @@ void Session::reconsider(Server& server) {
     BOOST_FOREACH (const GamePtr& game, games) {
         planning->add(new Object(GAME, game.id()), now());
     }
-    Competitions cs = find<Competition>().where("state < ?").bind(Competition::ENDED);
+    Competitions cs = find<Competition>()
+                      .where("state < ?").bind(Competition::ENDED);
     BOOST_FOREACH (const CompetitionPtr& c, cs) {
         planning->add(new Object(COMPETITION, c.id()), now());
     }
@@ -76,7 +77,7 @@ dbo::SqlConnection* Session::new_connection(const Options& options) {
         connection->executeSql("PRAGMA synchronous = normal");
         connection->executeSql("PRAGMA journal_mode = wal");
     } else {
-        throw std::logic_error("Session::new_connection(): unknown database type");
+        throw std::logic_error("new_connection(): unknown database type");
     }
 #ifndef NDEBUG
     connection->setProperty("show-queries", "true");

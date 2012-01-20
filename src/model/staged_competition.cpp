@@ -30,8 +30,8 @@ UserPair::UserPair(const UserPtr& first, const UserPtr& second) {
     }
 }
 
-bool UserPair::operator<(const UserPair& other) const {
-    return first_ < other.first() || (first_ == other.first() && second_ < other.second());
+bool UserPair::operator<(const UserPair& o) const {
+    return first_ < o.first() || (first_ == o.first() && second_ < o.second());
 }
 
 bool UserPair::operator==(const UserPair& other) const {
@@ -168,7 +168,7 @@ void StagedCompetition::read_games() {
 void StagedCompetition::read_paires() {
     BOOST_FOREACH (const UserPtr& user, competition_->members_vector()) {
         states_[user] = UNPAIRED;
-        stages_[user] = 1; // if he was paired in 0 stage, it will be overwritten
+        stages_[user] = 1; // if he was paired in 0 stage, to be overwritten
     }
     BOOST_FOREACH (Paires::value_type& stage_and_pair, paires_) {
         int stage = stage_and_pair.first;
@@ -223,7 +223,8 @@ void StagedCompetition::join_users() {
     Unpaired unpaired;
     BOOST_FOREACH (States::value_type& user_and_state, states_) {
         if (user_and_state.second == UNPAIRED) {
-            unpaired[stages_[user_and_state.first]].push_back(user_and_state.first);
+            const UserPtr& user = user_and_state.first;
+            unpaired[stages_[user_and_state.first]].push_back(user);
         }
     }
     BOOST_FOREACH (Unpaired::value_type& stage_and_users, unpaired) {
@@ -256,7 +257,8 @@ void StagedCompetition::create_games_(Competition* competition,
             for (int i = 0; i < n; i++) {
                 const UserPtr& white = i ? pair.first() : pair.second();
                 const UserPtr& black = i ? pair.second() : pair.first();
-                GamePtr game = competition->create_game_(white, black, stage, no_draw);
+                GamePtr game = competition->create_game_(white, black,
+                               stage, no_draw);
                 games_[pair].push_back(game);
                 planning->add(new Object(GAME, game.id()), now(), false);
             }

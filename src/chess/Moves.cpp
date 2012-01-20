@@ -151,7 +151,8 @@ int Moves::check() const {
     return -1;
 }
 
-void Moves::pgn(std::ostream& out, const std::string& result, bool /*reduced*/) const {
+void Moves::pgn(std::ostream& out, const std::string& result,
+                bool /*reduced*/) const {
     Wt::Wc::PlainTextWritter ptw(out);
     const_iterator after = begin();
     for (const_iterator i = begin(); i != end(); ++i) {
@@ -161,7 +162,8 @@ void Moves::pgn(std::ostream& out, const std::string& result, bool /*reduced*/) 
         const Board& board_after = after.board();
         std::string move_str = half_move.san(board, board_after);
         if (order(i.n()) == Piece::WHITE) {
-            move_str = str(boost::format("%i. ") % move_number(i.n())) + move_str;
+            move_str = str(boost::format("%i. ") % move_number(i.n())) +
+                       move_str;
         }
         ptw.write_word(move_str);
     }

@@ -103,13 +103,13 @@ public:
     */
     float E(float q_sum) const;
 
-    /** Apply this method to change stats if this player wins other player */
+    /** Change stats if this player wins other player */
     void win(EloPlayer* loser);
 
-    /** Apply this method to change stats if this player plays draw with other player */
+    /** Change stats if this player plays draw with other player */
     void draw(EloPlayer* other);
 
-    /** Apply this method to change stats after multiple players competition.
+    /** Change stats after multiple players competition.
     \param winners List of winners.
     \param losers List of losers.
     \note If multiple user competition ended with draw,

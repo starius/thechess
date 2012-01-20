@@ -97,7 +97,8 @@ public:
     bool long_pawn() const;
 
     /** Return the file of previous long pawn half-move.
-    If previous half-move was not long pawn half-move, return \ref Square::FILE_A
+    If previous half-move was not long pawn half-move,
+    return \ref Square::FILE_A
     */
     Square::File long_pawn_file() const;
 

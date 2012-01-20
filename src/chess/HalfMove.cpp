@@ -18,11 +18,13 @@ HalfMove::HalfMove(Square from, Square to) :
 HalfMove::HalfMove(Square from, Square packed_to, const Board& board) :
     from_(from), to_(packed_to), turn_into_(Piece::LETTER_NULL) {
     if (board.letter(this->from()) == Piece::PAWN) {
-        if (board.order() == Piece::WHITE && this->from().rank() == Square::RANK_7) {
+        if (board.order() == Piece::WHITE &&
+                this->from().rank() == Square::RANK_7) {
             to_ = Square(packed_to.file(), Square::RANK_8);
             turn_into_ = (Piece::Letter)packed_to.rank();
         }
-        if (board.order() == Piece::BLACK && this->from().rank() == Square::RANK_2) {
+        if (board.order() == Piece::BLACK &&
+                this->from().rank() == Square::RANK_2) {
             to_ = Square(packed_to.file(), Square::RANK_1);
             turn_into_ = (Piece::Letter)packed_to.rank();
         }
@@ -42,11 +44,13 @@ int HalfMove::dy() const {
 }
 
 Square HalfMove::packed_to() const {
-    return turn_into_ == Piece::LETTER_NULL ? to() : Square(to().file(), (Square::Rank)turn_into_);
+    return turn_into_ == Piece::LETTER_NULL ? to() :
+           Square(to().file(), (Square::Rank)turn_into_);
 }
 
 bool HalfMove::could_turn_into(const Board& board) const {
-    return board.letter(from()) == Piece::PAWN && (to().rank() == Square::RANK_1 || to().rank() == Square::RANK_8);
+    return board.letter(from()) == Piece::PAWN &&
+           (to().rank() == Square::RANK_1 || to().rank() == Square::RANK_8);
 }
 
 std::string HalfMove::san_from_(const Board& board) const {
@@ -111,7 +115,9 @@ std::string HalfMove::san(const Board& board, const Board& board_after,
                 (result += '=') += Piece::piece_char(turn_into());
             }
             if (board_after.test_shah()) {
-                result += board_after.test_end() == Board::CHECKMATE ? '#' : '+';
+                // FIXME https://bitbucket.org/starius/thechess/issue/99
+                bool checkmate = board_after.test_end() == Board::CHECKMATE;
+                result += checkmate ? '#' : '+';
             }
         }
     }

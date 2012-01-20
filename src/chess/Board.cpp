@@ -71,7 +71,9 @@ void Board::unset(Square square) {
 }
 
 Piece::Color Board::color(Square square) const {
-    return isset(square) ? (q(square) & 0x08 ? (Piece::Color)1 : (Piece::Color)0) : Piece::COLOR_NULL; // 0000 1000
+    return isset(square) ?
+           (q(square) & 0x08 ? (Piece::Color)1 : (Piece::Color)0) : // 0000 1000
+               Piece::COLOR_NULL;
 }
 
 void Board::color(Square square, Piece::Color color) {
@@ -175,7 +177,8 @@ void Board::make_move(const HalfMove half_move) {
     long_pawn(false);
     Piece active = piece(half_move.from());
     if (active.letter() == Piece::PAWN) {
-        if (!isset(half_move.to()) && half_move.from().file() != half_move.to().file()) {
+        if (!isset(half_move.to()) &&
+                half_move.from().file() != half_move.to().file()) {
             // take on the aisle
             unset(Square(half_move.to().file(), half_move.from().rank()));
         }
@@ -183,7 +186,8 @@ void Board::make_move(const HalfMove half_move) {
             long_pawn(true, half_move.to().file_int());
         }
     }
-    if (active.letter() == Piece::KING && half_move.from().file() == Square::FILE_5) {
+    if (active.letter() == Piece::KING &&
+            half_move.from().file() == Square::FILE_5) {
         // potential castling -- move rook
         if (half_move.to().file() == Square::FILE_3) {
             simple_move(HalfMove(
@@ -229,24 +233,31 @@ bool Board::simple_test_move(HalfMove half_move) const {
     if (active.color() == color(half_move.to())) {
         return false;
     }
-    if (half_move.from().file() < Square::FILE_A || half_move.from().file() > Square::FILE_H ||
-            half_move.to().file() < Square::FILE_A || half_move.to().file() > Square::FILE_H ||
-            half_move.from().rank() < Square::RANK_1 || half_move.from().rank() > Square::RANK_8 ||
-            half_move.to().rank() < Square::RANK_1 || half_move.to().rank() > Square::RANK_8) {
+    if (half_move.from().file() < Square::FILE_A ||
+            half_move.from().file() > Square::FILE_H ||
+            half_move.to().file() < Square::FILE_A ||
+            half_move.to().file() > Square::FILE_H ||
+            half_move.from().rank() < Square::RANK_1 ||
+            half_move.from().rank() > Square::RANK_8 ||
+            half_move.to().rank() < Square::RANK_1 ||
+            half_move.to().rank() > Square::RANK_8) {
         return false;
     }
     if (half_move.from() == half_move.to()) {
         return false;
     }
     if (active.letter() == Piece::PAWN) {
-        if (!isset(half_move.to()) && half_move.from().file() == half_move.to().file()) {
+        if (!isset(half_move.to()) &&
+                half_move.from().file() == half_move.to().file()) {
             // not eat
             if ((active.color() == Piece::WHITE && dy == 1) ||
                     (active.color() == Piece::BLACK && dy == -1)) {
                 return true;
             }
-            if ((active.color() == Piece::WHITE && dy == 2 && half_move.from().rank() == Square::RANK_2) ||
-                    (active.color() == Piece::BLACK && dy == -2 && half_move.from().rank() == Square::RANK_7)) {
+            if ((active.color() == Piece::WHITE && dy == 2 &&
+                    half_move.from().rank() == Square::RANK_2) ||
+                    (active.color() == Piece::BLACK && dy == -2 &&
+                     half_move.from().rank() == Square::RANK_7)) {
                 int my = (int)half_move.from().rank_int() + dy / 2;
                 if (!isset(Square(half_move.from().file_int(), my))) {
                     return true;
@@ -283,7 +294,8 @@ bool Board::simple_test_move(HalfMove half_move) const {
     if (active.letter() == Piece::ROOK && (dx != 0 && dy != 0)) {
         return false;
     }
-    if (active.letter() == Piece::QUEEN && (dx != 0 && dy != 0) && abs(dx) != abs(dy)) {
+    if (active.letter() == Piece::QUEEN &&
+            (dx != 0 && dy != 0) && abs(dx) != abs(dy)) {
         return false;
     }
     if (active.letter() == Piece::BISHOP ||
@@ -291,7 +303,9 @@ bool Board::simple_test_move(HalfMove half_move) const {
             active.letter() == Piece::QUEEN) {
         int vx = sign(dx);
         int vy = sign(dy);
-        for (Square p = half_move.from(); p != half_move.to(); p.file(p.file_int() + vx), p.rank(p.rank_int() + vy)) {
+        for (Square p = half_move.from();
+                p != half_move.to();
+                p.file(p.file_int() + vx), p.rank(p.rank_int() + vy)) {
             if (p != half_move.from() && isset(p)) {
                 return false;
             }
@@ -330,15 +344,20 @@ bool Board::test_attack(HalfMove half_move) const {
     const_cast<Board*>(this)->unset(half_move.from());
     bool result = test_attack(half_move.to(), previous.color());
     const_cast<Board*>(this)->piece(half_move.from(), previous);
-    if (!result && previous.letter() == Piece::PAWN && abs(half_move.dy()) == 2) {
+    if (!result && previous.letter() == Piece::PAWN &&
+            abs(half_move.dy()) == 2) {
         // take on the aisle
         const_cast<Board*>(this)->simple_move(half_move);
-        Square middle(half_move.from().file(), (half_move.from().rank() + half_move.to().rank()) / 2);
+        Square middle(half_move.from().file(),
+                      (half_move.from().rank() + half_move.to().rank()) / 2);
         const_cast<Board*>(this)->change_order();
-        result |= test_move(HalfMove(Square(half_move.to().file() - 1, half_move.to().rank()), middle));
-        result |= test_move(HalfMove(Square(half_move.to().file() + 1, half_move.to().rank()), middle));
+        result |= test_move(HalfMove(Square(half_move.to().file() - 1,
+                                            half_move.to().rank()), middle));
+        result |= test_move(HalfMove(Square(half_move.to().file() + 1,
+                                            half_move.to().rank()), middle));
         const_cast<Board*>(this)->change_order();
-        const_cast<Board*>(this)->simple_move(HalfMove(half_move.to(), half_move.from()));
+        const_cast<Board*>(this)->simple_move(HalfMove(half_move.to(),
+                                              half_move.from()));
     }
     return result;
 }
@@ -367,16 +386,20 @@ bool Board::test_move(const HalfMove half_move) const {
     if (active.color() != order()) {
         return false;
     }
-    if (active.letter() == Piece::KING && half_move.from().file() == Square::FILE_5 &&
-            (half_move.to().file() == Square::FILE_3 || half_move.to().file() == Square::FILE_7)) {
+    if (active.letter() == Piece::KING &&
+            half_move.from().file() == Square::FILE_5 &&
+            (half_move.to().file() == Square::FILE_3 ||
+             half_move.to().file() == Square::FILE_7)) {
         // only castling
-        if (half_move.from().rank() != Square::RANK_1 && half_move.from().rank() != Square::RANK_8) {
+        if (half_move.from().rank() != Square::RANK_1 &&
+                half_move.from().rank() != Square::RANK_8) {
             return false;
         }
         if (half_move.from().rank() != half_move.to().rank()) {
             return false;
         }
-        Square::File rook_from_file = half_move.to().file() == Square::FILE_3 ? Square::FILE_1 : Square::FILE_8;
+        Square::File rook_from_file = half_move.to().file() == Square::FILE_3 ?
+                                      Square::FILE_1 : Square::FILE_8;
         Square rook_from = Square(rook_from_file, half_move.to().rank());
         if (!castling(rook_from)) {
             return false;
@@ -390,7 +413,8 @@ bool Board::test_move(const HalfMove half_move) const {
         if (isset(half_move.to())) {
             return false;
         }
-        Square::File rook_to_file = half_move.to().file() == Square::FILE_3 ? Square::FILE_4 : Square::FILE_6;
+        Square::File rook_to_file = half_move.to().file() == Square::FILE_3 ?
+                                    Square::FILE_4 : Square::FILE_6;
         Square rook_to = Square(rook_to_file, half_move.to().rank());
         if (isset(rook_to)) {
             return false;
@@ -403,10 +427,11 @@ bool Board::test_move(const HalfMove half_move) const {
         }
         castling_test = true;
     }
-    if (active.letter() == Piece::PAWN &&
-            abs(half_move.dx()) == 1 && abs(half_move.dy()) == 1 && !isset(half_move.to())) {
+    if (active.letter() == Piece::PAWN && abs(half_move.dx()) == 1 &&
+            abs(half_move.dy()) == 1 && !isset(half_move.to())) {
         // take on the aisle
-        Square eaten_pawn_square = Square(half_move.to().file(), half_move.from().rank());
+        Square eaten_pawn_square = Square(half_move.to().file(),
+                                          half_move.from().rank());
         if (letter(eaten_pawn_square) != Piece::PAWN) {
             return false;
         }
@@ -481,7 +506,8 @@ Square Board::find_king(Piece::Color c) const {
 
 bool Board::test_takes(const HalfMove half_move) const {
     return isset(half_move.to()) ||
-           (letter(half_move.from()) == Piece::PAWN && half_move.from().file() != half_move.to().file());
+           (letter(half_move.from()) == Piece::PAWN &&
+            half_move.from().file() != half_move.to().file());
 }
 
 bool Board::test_castling(const HalfMove half_move) const {
@@ -489,7 +515,9 @@ bool Board::test_castling(const HalfMove half_move) const {
 }
 
 void Board::fen_pieces(std::ostream& out) const {
-    for (Square::Rank rank = Square::RANK_8; rank >= Square::RANK_1; rank = (Square::Rank)((int)rank - 1)) {
+    for (Square::Rank rank = Square::RANK_8;
+            rank >= Square::RANK_1;
+            rank = (Square::Rank)((int)rank - 1)) {
         if (rank < Square::RANK_8) {
             out << '/';
         }
@@ -547,7 +575,8 @@ void Board::fen(std::ostream& out, int halfmove, int fullmove) const {
     fen_castling(out);
     out << ' ';
     if (long_pawn()) {
-        out << Square::file_char(long_pawn_file()) << (order() == Piece::WHITE ? '6' : '3');
+        out << Square::file_char(long_pawn_file()) <<
+            (order() == Piece::WHITE ? '6' : '3');
     } else {
         out << '-';
     }

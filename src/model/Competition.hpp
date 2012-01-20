@@ -267,8 +267,8 @@ private:
 
     void finish_(const UsersVector& winners, Planning* planning);
 
-    GamePtr create_game_(const UserPtr& white, const UserPtr& black, int stage = -1,
-                         bool no_draw = false);
+    GamePtr create_game_(const UserPtr& white, const UserPtr& black,
+                         int stage = -1, bool no_draw = false);
 
     friend class StagedCompetition;
 };

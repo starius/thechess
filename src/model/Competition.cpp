@@ -268,9 +268,10 @@ void Competition::create_games_classical_(Planning* planning) {
     UsersVector members(members_.begin(), members_.end());
     std::random_shuffle(members.begin(), members.end(),
                         Wt::Wc::rand_for_shuffle);
-    int white_games_per_user = std::max(1, int((members.size() - 1) * cp_->games_factor()));
+    int white_games_per_user_raw = (members.size() - 1) * cp_->games_factor();
+    int white_games_per_user = std::max(1, white_games_per_user_raw);
     std::map<UserPtr, int> black_games;
-    std::map<UserPtr, std::map<UserPtr, int> > N; // number of all games between them
+    std::map<UserPtr, std::map<UserPtr, int> > N; // games number between them
     BOOST_FOREACH (const UserPtr& white, members) {
         std::map<UserPtr, int>& N_white = N[white];
         for (int i = 0; i < white_games_per_user; i++) {
@@ -344,7 +345,8 @@ void Competition::finish_(const UsersVector& winners, Planning*) {
     ended_ = now();
 }
 
-GamePtr Competition::create_game_(const UserPtr& white, const UserPtr& black, int stage, bool no_draw) {
+GamePtr Competition::create_game_(const UserPtr& white, const UserPtr& black,
+                                  int stage, bool no_draw) {
     GamePtr game = session()->add(new Game(gp()));
     bool random = no_draw;
     game.modify()->make_competition_game(white, black, self(), stage, random);

@@ -331,7 +331,7 @@ const std::pair<Td, Td> STALE_OBJECT_DELAY = std::make_pair(SECOND, 5 * SECOND);
 The valus is selected each time from this range (min, max).
 \see Object::process()
 */
-const std::pair<Td, Td> UNKNOWN_ERROR_DELAY = std::make_pair(2 * SECOND, 8 * SECOND);
+const std::pair<Td, Td> UNKNOWN_ERROR_DELAY = std::make_pair(SECOND, MINUTE);
 
 }
 

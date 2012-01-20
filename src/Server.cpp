@@ -22,7 +22,8 @@
 
 namespace thechess {
 
-Wt::WApplication* createApplication(Server* server, const Wt::WEnvironment& env) {
+Wt::WApplication* createApplication(Server* server,
+                                    const Wt::WEnvironment& env) {
     return new thechess::Application(env, *server);
 }
 
@@ -31,13 +32,16 @@ Session* session_creator(Server* server) {
 }
 
 Server::Server(int argc, char** argv):
-    Wt::WServer(argv[0], first_file(config::WT_CONFIG_FILES, config::WT_CONFIG_FILES_SIZE)),
-    options_((setServerConfiguration(argc, argv), *this)), // options_ needs read conf
+    Wt::WServer(argv[0], first_file(config::WT_CONFIG_FILES,
+                                    config::WT_CONFIG_FILES_SIZE)),
+    // options_ needs read conf
+    options_((setServerConfiguration(argc, argv), *this)),
     pool_(Session::new_connection(options_), options_.connections_in_pool()),
     notifier_(this), planning_(*this), pgn_(*this),
     password_service_(auth_service_) {
     addResource(&pgn_, "/pgn/");
-    addEntryPoint(Wt::Application, boost::bind(createApplication, this, _1), "", "/favicon.ico");
+    addEntryPoint(Wt::Application, boost::bind(createApplication, this, _1),
+                  "", "/favicon.ico");
     auth_init();
     Session session(pool_);
     session.reconsider(*this);

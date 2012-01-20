@@ -176,12 +176,12 @@ public:
         min_recruiting_time_ = v;
     }
 
-    /** Get time after which competition would be canceled in case not started */
+    /** Get time after which competition would be canceled if not started */
     Td max_recruiting_time() const {
         return max_recruiting_time_;
     }
 
-    /** Set time after which competition would be canceled in case not started */
+    /** Set time after which competition would be canceled if not started */
     void set_max_recruiting_time(Td v) {
         max_recruiting_time_ = v;
     }
