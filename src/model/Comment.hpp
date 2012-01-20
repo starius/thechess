@@ -52,6 +52,15 @@ public:
     /** Set auto value for sorting index using information about parents */
     void set_index();
 
+    /** Get depth.
+    For root depth is 0, for its children -- 1 and so on.
+    This field is not significant, it could be recalculated
+    using parent() field.
+    */
+    int depth() const {
+        return depth_;
+    }
+
     /** Get if the comment can be commented (used as a parent) */
     bool commentable() const {
         return commentable_;
@@ -115,6 +124,7 @@ public:
     /** Set the parent comment.
     \param set_index If the index should be also set (using set_index()).
     \param set_root If the root should be also set.
+    This method also sets depth().
     */
     void set_parent(const CommentPtr& parent, bool set_index = true,
                     bool set_root = true);
@@ -143,6 +153,7 @@ public:
     template<class Action>
     void persist(Action& a) {
         dbo::field(a, index_, "index");
+        dbo::field(a, depth_, "depth");
         dbo::field(a, commentable_, "commentable");
         dbo::field(a, state_, "state");
         dbo::field(a, text_, "text");
@@ -157,6 +168,7 @@ public:
 
 private:
     double index_;
+    int depth_;
     bool commentable_;
     State state_;
     Wt::WString text_;

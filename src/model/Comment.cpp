@@ -19,6 +19,7 @@ Comment::Comment()
 
 Comment::Comment(bool):
     index_(0),
+    depth_(0),
     commentable_(true),
     state_(OK),
     created_(now()),
@@ -62,6 +63,7 @@ void Comment::set_text(const Wt::WString& text) {
 void Comment::set_parent(const CommentPtr& parent, bool set_index,
                          bool set_root) {
     parent_ = parent;
+    depth_ = parent->depth();
     if (set_root) {
         root_ = parent->root();
     }
