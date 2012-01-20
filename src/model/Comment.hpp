@@ -34,6 +34,21 @@ public:
     /** Create instance to be added to database */
     Comment(bool);
 
+    /** Get sorting index.
+    The order of indices of a branch should correspond
+    the order in the tree for viewing.
+    This field is not significant, it could be recalculated
+    using parent() field.
+    */
+    double index() const {
+        return index_;
+    }
+
+    /** Set sorting index */
+    void set_index(double index) {
+        index_ = index;
+    }
+
     /** Get if the comment can be commented (used as a parent) */
     bool commentable() const {
         return commentable_;
@@ -122,6 +137,7 @@ public:
     /** Wt::Dbo persist implementation */
     template<class Action>
     void persist(Action& a) {
+        dbo::field(a, index_, "index");
         dbo::field(a, commentable_, "commentable");
         dbo::field(a, state_, "state");
         dbo::field(a, text_, "text");
@@ -135,6 +151,7 @@ public:
     }
 
 private:
+    double index_;
     bool commentable_;
     State state_;
     Wt::WString text_;

@@ -13,6 +13,7 @@ Comment::Comment()
 { }
 
 Comment::Comment(bool):
+    index_(0),
     commentable_(true),
     state_(OK),
     created_(now()),
