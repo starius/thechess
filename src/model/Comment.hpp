@@ -109,6 +109,16 @@ public:
         return edited_;
     }
 
+    /** Get (direct) children */
+    const Comments& children() const {
+        return children_;
+    }
+
+    /** Get entire family of comments (nonempty for root instances) */
+    const Comments& family() const {
+        return family_;
+    }
+
     /** Wt::Dbo persist implementation */
     template<class Action>
     void persist(Action& a) {
@@ -120,6 +130,8 @@ public:
         dbo::belongsTo(a, parent_, "parent");
         dbo::field(a, created_, "created");
         dbo::field(a, edited_, "edited");
+        dbo::hasMany(a, children_, dbo::ManyToOne, "parent");
+        dbo::hasMany(a, family_, dbo::ManyToOne, "root");
     }
 
 private:
@@ -131,6 +143,9 @@ private:
     CommentPtr parent_;
     Wt::WDateTime created_;
     Wt::WDateTime edited_;
+
+    Comments children_;
+    Comments family_;
 };
 
 }
