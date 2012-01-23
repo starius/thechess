@@ -18,6 +18,7 @@
 #include <Wt/WLogger>
 #include <Wt/Auth/AuthWidget>
 #include <Wt/Wc/util.hpp>
+#include <Wt/Auth/AuthModel>
 
 #include "Application.hpp"
 #include "config.hpp"
@@ -116,11 +117,12 @@ Application* Application::instance() {
 
 void Application::set_auth_widget() {
     using namespace Wt::Auth;
-    AuthWidget* w = new AuthWidget(server().auth_service(),
-                                   session().user_database(),
-                                   session().login());
+    AuthModel* m = new AuthModel(server().auth_service(),
+                                 session().user_database());
+    m->addPasswordAuth(&server().password_service());
+    AuthWidget* w = new AuthWidget(session().login());
+    w->setModel(m);
     w->setRegistrationEnabled(true);
-    w->addPasswordAuth(&server().password_service());
     try {
         w->processEnvironment();
     } catch (std::exception& e) {
