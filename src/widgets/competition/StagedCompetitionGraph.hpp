@@ -14,8 +14,6 @@
 
 namespace thechess {
 
-// FIXME The file can not be downloaded
-// http://redmine.emweb.be/issues/1127
 /** Graphviz-generated graph for a staged competition */
 class StagedCompetitionGraph : public Wt::WFileResource {
 public:
