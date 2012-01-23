@@ -100,6 +100,13 @@ a.thechess-proposed {
     overflow-x: hidden !important;
 }
 
+/* hide annoying Loading...
+FIXME http://redmine.emweb.be/issues/1144
+*/
+.Wt-tableview .Wt-spacer {
+    background: transparent !important;
+}
+
 .Wt-auth-login * {
     width: auto !important;
 }
