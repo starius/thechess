@@ -292,7 +292,7 @@ void Game::join(const UserPtr& user) {
 }
 
 bool Game::can_confirm(const UserPtr& user) const {
-    return user && is_member(user) && is_creation();
+    return user && is_member(user) && user != init() && is_creation();
 }
 
 void Game::confirm(const UserPtr& user) {
