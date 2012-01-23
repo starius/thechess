@@ -72,10 +72,12 @@ public:
             kw("tc.competition.Users", tr("tc.common.interval")
                .arg(cp->min_users()).arg(cp->max_users()));
             kw("tc.competition.Recruiting_time", tr("tc.common.interval")
-               .arg(td2str(cp->min_recruiting_time())).arg(td2str(cp->max_recruiting_time())));
+               .arg(td2str(cp->min_recruiting_time()))
+               .arg(td2str(cp->max_recruiting_time())));
         }
         if (c->type() == CLASSICAL) {
-            kw("tc.competition.Max_simultaneous_games", cp->max_simultaneous_games());
+            kw("tc.competition.Max_simultaneous_games",
+               cp->max_simultaneous_games());
             kw("tc.competition.Games_factor", cp->games_factor());
         }
         if (c->type() == STAGED) {
@@ -97,7 +99,7 @@ void game_reference_(const GamePtr& game, Wt::WContainerWidget* c) {
         new Wt::WText(", ", c);
     }
     Wt::WAnchor* a = new Wt::WAnchor(c);
-    a->setText(boost::lexical_cast<std::string>(game.id()));
+    a->setText(TO_S(game.id()));
     a->setLink(tApp->path().game_view()->get_link(game.id()));
 }
 
@@ -135,7 +137,7 @@ private:
         table_->elementAt(0, 0)->setColumnSpan(2);
         int i = 0;
         BOOST_FOREACH (const UserPtr& user, members) {
-            std::string i_str = boost::lexical_cast<std::string>(i + 1);
+            std::string i_str = TO_S(i + 1);
             table_->elementAt(i + LEFT_SHIFT, NAME_COLUMN)
             ->setStyleClass("thechess-td-right");
             table_->elementAt(i + LEFT_SHIFT, NAME_COLUMN)
@@ -155,8 +157,9 @@ private:
         Competition::wins_number(c->games_vector(), wins);
         int i = 0;
         BOOST_FOREACH (const UserPtr& user, members) {
-            table_->elementAt(i + LEFT_SHIFT, score_column_)
-            ->addWidget(new Wt::WText(boost::lexical_cast<std::string>(wins[user])));
+            int col = i + LEFT_SHIFT;
+            Wt::WTableCell* c = table_->elementAt(col, score_column_);
+            c->addWidget(new Wt::WText(TO_S(wins[user])));
             i++;
         }
     }
@@ -177,7 +180,8 @@ private:
             const UserPtr& urow = members[row];
             for (int col = 0; col < members_size; ++col) {
                 const UserPtr& ucol = members[col];
-                Wt::WTableCell* cell = table_->elementAt(row + LEFT_SHIFT, col + TOP_SHIFT);
+                Wt::WTableCell* cell = table_->elementAt(row + LEFT_SHIFT,
+                                       col + TOP_SHIFT);
                 cell->clear();
                 if (row == col) {
                     new Wt::WText(tr("tc.competition.dash"), cell);
@@ -185,8 +189,8 @@ private:
                     std::map<UserPtr, float> wins;
                     Competition::wins_number(gt_[urow][ucol], wins);
                     Competition::wins_number(gt_[ucol][urow], wins);
-                    new Wt::WText(boost::lexical_cast<std::string>(wins[urow]) +
-                                  "/" + boost::lexical_cast<std::string>(wins[ucol]), cell);
+                    new Wt::WText(TO_S(wins[urow]) +
+                                  "/" + TO_S(wins[ucol]), cell);
                 } else {
                     BOOST_FOREACH (const GamePtr& game, gt_[ucol][urow]) {
                         game_reference_(game, cell);
@@ -210,20 +214,24 @@ public:
         resize(650, 300);
         addColumn(tr("tc.competition.Stage"), 100);
         addColumn(tr("tc.competition.Games_list"), 300);
-        Wt::WTreeTableNode* r = new Wt::WTreeTableNode(tr("tc.competition.Tree"));
+        Wt::WTreeTableNode* r;
+        r = new Wt::WTreeTableNode(tr("tc.competition.Tree"));
         r->expand();
         setTreeRoot(r, tr("tc.competition.Winner"));
-        BOOST_FOREACH (const StagedCompetition::Paires::value_type& stage_and_pair, sc_.paires()) {
+        typedef StagedCompetition::Paires::value_type SAP;
+        BOOST_FOREACH (const SAP& stage_and_pair, sc_.paires()) {
             int stage = stage_and_pair.first;
             const UserPair& pair = stage_and_pair.second;
             if (sc_.winners().find(pair) == sc_.winners().end()) {
                 print_pair_(stage, pair, r);
             }
         }
-        BOOST_FOREACH (const StagedCompetition::States::value_type& user_and_state, sc_.states()) {
+        typedef StagedCompetition::States::value_type UAS;
+        BOOST_FOREACH (const UAS& user_and_state, sc_.states()) {
             const UserPtr& user = user_and_state.first;
             StagedCompetition::State state = user_and_state.second;
-            if (state == StagedCompetition::UNPAIRED || state == StagedCompetition::WINNER) {
+            if (state == StagedCompetition::UNPAIRED ||
+                    state == StagedCompetition::WINNER) {
                 print(sc_.stages().find(user)->second - 1, user, r);
             }
         }
@@ -233,18 +241,21 @@ private:
     const StagedCompetition& sc_;
     std::map<int, std::map<UserPtr, UserPtr> > competitors_;
 
-    void print_pair_(int stage, const UserPair& pair, Wt::WTreeTableNode* parent) {
+    void print_pair_(int stage, const UserPair& pair,
+                     Wt::WTreeTableNode* parent) {
         Wt::WString title;
-        StagedCompetition::Winners::const_iterator winner = sc_.winners().find(pair);
+        typedef StagedCompetition::Winners::const_iterator It;
+        It winner = sc_.winners().find(pair);
         if (winner == sc_.winners().end() || stage == 0)
             title = tr("tc.competition.user_pair")
-                    .arg(pair.first()->username()).arg(pair.second()->username());
+                    .arg(pair.first()->username())
+                    .arg(pair.second()->username());
         else {
             title = winner->second->username();
         }
         Wt::WTreeTableNode* n = new Wt::WTreeTableNode(title, 0, parent);
         n->setColumnWidget(STAGE_COLUMN,
-                           new Wt::WText(boost::lexical_cast<std::string>(stage + 1)));
+                           new Wt::WText(TO_S(stage + 1)));
         Wt::WContainerWidget* games = new Wt::WContainerWidget();
         StagedCompetition::Games::const_iterator g = sc_.games().find(pair);
         if (g != sc_.games().end()) {
@@ -259,10 +270,12 @@ private:
         }
     }
 
-    void print_user_(int stage, const UserPtr& user, Wt::WTreeTableNode* parent) {
-        Wt::WTreeTableNode* n = new Wt::WTreeTableNode(user->username(), 0, parent);
+    void print_user_(int stage, const UserPtr& user,
+                     Wt::WTreeTableNode* parent) {
+        Wt::WTreeTableNode* n;
+        n = new Wt::WTreeTableNode(user->username(), 0, parent);
         n->setColumnWidget(STAGE_COLUMN,
-                           new Wt::WText(boost::lexical_cast<std::string>(stage + 1)));
+                           new Wt::WText(TO_S(stage + 1)));
         if (stage > 0) {
             print(stage - 1, user, n);
         }
@@ -321,8 +334,8 @@ public:
             if (c->can_change_parameters(tApp->user())) {
                 Wt::WPushButton* change =
                     new Wt::WPushButton(tr("tc.competition.Change"), this);
-                change->clicked().connect(this,
-                                          &CompetitionManager::show_change_widget);
+                change->clicked()
+                .connect(this, &CompetitionManager::show_change_widget);
             }
         }
     }
@@ -387,8 +400,8 @@ void CompetitionWidget::reprint() {
     bindWidget("winners", new CompetitionWinners(c));
     bindWidget("terms", new CompetitionTerms(c));
     bindWidget("view", new CompetitionView(c));
-    if (!resolveWidget("manager") ||
-            !downcast<CompetitionManager*>(resolveWidget("manager"))->is_editing()) {
+    Wt::WWidget* manager = resolveWidget("manager");
+    if (!manager || !downcast<CompetitionManager*>(manager)->is_editing()) {
         bindWidget("manager", new CompetitionManager(c));
     }
     t.commit();

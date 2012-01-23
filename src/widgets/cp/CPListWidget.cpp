@@ -40,8 +40,10 @@ public:
         addColumn("type", tr("tc.competition.Type"));
         addColumn("min_rating", tr("tc.competition.min_rating"));
         addColumn("max_rating", tr("tc.competition.max_rating"));
-        addColumn("min_classification", tr("tc.competition.min_classification"));
-        addColumn("max_classification", tr("tc.competition.max_classification"));
+        addColumn("min_classification",
+                  tr("tc.competition.min_classification"));
+        addColumn("max_classification",
+                  tr("tc.competition.max_classification"));
         addColumn("force_start_delay", tr("tc.game.force_start"));
     }
 

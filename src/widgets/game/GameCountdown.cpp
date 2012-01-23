@@ -25,6 +25,8 @@
 
 namespace thechess {
 
+const char* CS = "thechess_countdown_start('%s', %d/1000, '%s', %d/1000);";
+
 class SingleTimeout : public Wt::WTemplate {
 public:
     SingleTimeout(const Wt::WString& name, bool active,
@@ -39,8 +41,7 @@ public:
             new Wt::WText(td2str(limit_std_now));
         bindWidget("limit_std", limit_std_text);
         if (active) {
-            doJavaScript(str(boost::format(
-                                 "thechess_countdown_start('%s', %d/1000, '%s', %d/1000);")
+            doJavaScript(str(boost::format(CS)
                              % limit_private_text->id()
                              % limit_private_now.total_milliseconds()
                              % limit_std_text->id()

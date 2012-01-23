@@ -132,11 +132,12 @@ public:
         board_build();
         select_turn_into_ = new Wt::WContainerWidget(this);
         turn_button_place_ = new Wt::WContainerWidget(this);
-        Wt::WPushButton* turn_button =
-            new Wt::WPushButton(tr("tc.game.Overturn_board"), turn_button_place_);
+        Wt::WPushButton* turn_button = new Wt::WPushButton(turn_button_place_);
+        turn_button->setText(tr("tc.game.Overturn_board"));
         turn_button->clicked().connect(this, &BoardWidgetImpl::turn);
         taken_pieces_ = new TakenPieces(board_, this);
-        lastmove_box_ = new Wt::WCheckBox(tr("tc.game.Highlight_lastmove"), this);
+        lastmove_box_ = new Wt::WCheckBox(this);
+        lastmove_box_->setText(tr("tc.game.Highlight_lastmove"));
         lastmove_box_->setChecked(config::SHOW_LASTMOVE);
         lastmove_box_->changed().connect(
             boost::bind(&BoardWidgetImpl::show_lastmove, this,
@@ -240,7 +241,8 @@ private:
             .setBackgroundColor(Wt::yellow);
         }
         if (shah_square_) {
-            image_at(shah_square_)->decorationStyle().setBackgroundColor(Wt::red);
+            image_at(shah_square_)->decorationStyle()
+            .setBackgroundColor(Wt::red);
         }
     }
 
@@ -381,7 +383,8 @@ private:
             std::string path = BoardWidget::image(cm, big_);
             Wt::WImage* img = new Wt::WImage(path, select_turn_into_);
             img->clicked().connect(boost::bind(
-                                       &BoardWidgetImpl::select_onclick_, this, c, half_move));
+                                       &BoardWidgetImpl::select_onclick_,
+                                       this, c, half_move));
             img->decorationStyle().setCursor(Wt::PointingHandCursor);
         }
     }
@@ -411,11 +414,13 @@ private:
     }
 
     Square::File file(int file) {
-        return (Square::File)(bottom_ == Piece::WHITE ? (file - 1) : (7 - (file - 1)));
+        return (Square::File)
+               (bottom_ == Piece::WHITE ? (file - 1) : (7 - (file - 1)));
     }
 
     Square::Rank rank(int rank) {
-        return (Square::Rank)(bottom_ == Piece::BLACK ? (rank - 1) : (7 - (rank - 1)));
+        return (Square::Rank)(bottom_ == Piece::BLACK ?
+                              (rank - 1) : (7 - (rank - 1)));
     }
 
     void correct_bottom() {
@@ -450,13 +455,16 @@ void DnDPiece::activate() {
     setDraggable("letter", bwi_->draggable_);
     acceptDrops("letter");
     if (wApp->environment().ajax()) {
-        mouseWentDown().connect(boost::bind(&BoardWidgetImpl::onclick_, bwi_, square_));
+        mouseWentDown().connect(boost::bind(&BoardWidgetImpl::onclick_,
+                                            bwi_, square_));
+        std::string js_id = bwi_->draggable_->jsRef();
         mouseWentDown().connect(
             "function(sender, e) {"
-            "$(" + bwi_->draggable_->jsRef() + ").attr('src', $(sender).attr('src'));"
+            "$(" + js_id + ").attr('src', $(sender).attr('src'));"
             "}");
     } else {
-        clicked().connect(boost::bind(&BoardWidgetImpl::onclick_, bwi_, square_));
+        clicked().connect(boost::bind(&BoardWidgetImpl::onclick_,
+                                      bwi_, square_));
     }
 }
 

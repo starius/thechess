@@ -45,7 +45,8 @@ public:
         RP::BaseQM(parent), user_(user) {
         dbo::Transaction t(tApp->session());
         RP::Q query = tApp->session().find<Game>();
-        query.where("white_id = ? or black_id = ?").bind(user_.id()).bind(user_.id());
+        long long uid = user_.id(); // FIXME http://redmine.emweb.be/issues/1124
+        query.where("white_id = ? or black_id = ?").bind(uid).bind(uid);
         query.where("rating_after_white != -1");
         query.orderBy("ended");
         setQuery(query);
@@ -108,7 +109,8 @@ public:
         int column = index.column() % RatingModel::COLUMNS;
         if (index.row() < model->rowCount()) {
             return model->index(index.row(), column).data(role);
-        } else if (index.column() % RatingModel::COLUMNS == RatingModel::ENDED_COLUMN) {
+        } else if (index.column() % RatingModel::COLUMNS ==
+                   RatingModel::ENDED_COLUMN) {
             return Wt::WDate::currentServerDate();
         }
         return "";
@@ -143,7 +145,8 @@ public:
         int rating_after_column = RatingModel::RATING_AFTER_COLUMN + shift;
         int ended_column = RatingModel::ENDED_COLUMN + shift;
         model_->add_user(user);
-        Wt::Chart::WDataSeries series(rating_after_column, Wt::Chart::CurveSeries);
+        Wt::Chart::WDataSeries series(rating_after_column,
+                                      Wt::Chart::CurveSeries);
         chart_->addSeries(series);
         series.setXSeriesColumn(ended_column);
         series.setMarker(Wt::Chart::CircleMarker);

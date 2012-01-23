@@ -23,9 +23,10 @@ namespace thechess {
 
 class MovesWidget : public Wt::WCompositeWidget {
 public:
-    MovesWidget(const Moves& moves, bool big = false,
-                bool active = false, int max_moves = -1, bool append_only = false,
-                Piece::Color bottom = Piece::WHITE, Wt::WContainerWidget* parent = 0);
+    MovesWidget(const Moves& moves, bool big = false, bool active = false,
+                int max_moves = -1, bool append_only = false,
+                Piece::Color bottom = Piece::WHITE,
+                Wt::WContainerWidget* parent = 0);
 
     const Moves& moves() const;
     const Board& board() const;

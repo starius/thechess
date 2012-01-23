@@ -68,8 +68,10 @@ CPWidget::CPWidget(const CP* cp, bool allow_change_type,
             cp->min_classification(), max::MIN_CLASSIFICATION);
     max_classification_ = new ClassificationWidget(min::MAX_CLASSIFICATION,
             cp->max_classification(), max::MAX_CLASSIFICATION);
-    interval = new Wt::Wc::IntervalWidget(min_classification_, max_classification_);
-    form_->item(tr("tc.competition.Members_classification"), "", min_classification_, interval);
+    interval = new Wt::Wc::IntervalWidget(min_classification_,
+                                          max_classification_);
+    form_->item(tr("tc.competition.Members_classification"), "",
+                min_classification_, interval);
     force_start_delay_ = new Wt::Wc::TimeDurationWidget(min::FORCE_START_DELAY,
             cp->force_start_delay(), max::FORCE_START_DELAY);
     form_->item(tr("tc.competition.Force_start_delay"), "",
@@ -82,23 +84,27 @@ CPWidget::CPWidget(const CP* cp, bool allow_change_type,
     max_users_->setValue(cp->max_users());
     users_ = new Wt::Wc::IntervalWidget(min_users_, max_users_);
     form_->item(tr("tc.competition.Users"), "", min_users_, users_);
-    min_recruiting_time_ = new Wt::Wc::TimeDurationWidget(min::MIN_RECRUITING_TIME,
-            cp->min_recruiting_time(), max::MIN_RECRUITING_TIME);
-    max_recruiting_time_ = new Wt::Wc::TimeDurationWidget(min::MAX_RECRUITING_TIME,
-            cp->max_recruiting_time(), max::MAX_RECRUITING_TIME);
+    min_recruiting_time_ = new Wt::Wc::TimeDurationWidget(
+        min::MIN_RECRUITING_TIME,
+        cp->min_recruiting_time(), max::MIN_RECRUITING_TIME);
+    max_recruiting_time_ = new Wt::Wc::TimeDurationWidget(
+        min::MAX_RECRUITING_TIME,
+        cp->max_recruiting_time(), max::MAX_RECRUITING_TIME);
     recruiting_time_ = new Wt::Wc::IntervalWidget(min_recruiting_time_,
             max_recruiting_time_);
     form_->item(tr("tc.competition.Recruiting_time"), "",
                 min_recruiting_time_->form_widget(), recruiting_time_);
     max_simultaneous_games_ = new Wt::Wc::ConstrainedSpinBox();
-    max_simultaneous_games_->setRange(min::MAX_SIMULTANEOUS_GAMES, max::MAX_SIMULTANEOUS_GAMES);
+    max_simultaneous_games_->setRange(min::MAX_SIMULTANEOUS_GAMES,
+                                      max::MAX_SIMULTANEOUS_GAMES);
     max_simultaneous_games_->setValue(cp->max_simultaneous_games());
     form_->item(tr("tc.competition.Max_simultaneous_games"), "",
                 max_simultaneous_games_, max_simultaneous_games_);
     games_factor_ = new Wt::Wc::ConstrainedDoubleSpinBox();
     games_factor_->setRange(min::GAMES_FACTOR, max::GAMES_FACTOR);
     games_factor_->setValue(cp->games_factor());
-    form_->item(tr("tc.competition.Games_factor"), "", games_factor_, games_factor_);
+    form_->item(tr("tc.competition.Games_factor"), "",
+                games_factor_, games_factor_);
     relax_time_ = new Wt::Wc::TimeDurationWidget(min::RELAX_TIME,
             cp->relax_time(), max::RELAX_TIME);
     form_->item(tr("tc.competition.Relax_time"), "",
@@ -109,7 +115,8 @@ CPWidget::CPWidget(const CP* cp, bool allow_change_type,
     form_->item(tr("tc.competition.Min_substages"), "",
                 min_substages_, min_substages_);
     increment_substages_ = new Wt::Wc::ConstrainedSpinBox();
-    increment_substages_->setRange(min::INCREMENT_SUBSTAGES, max::INCREMENT_SUBSTAGES);
+    increment_substages_->setRange(min::INCREMENT_SUBSTAGES,
+                                   max::INCREMENT_SUBSTAGES);
     increment_substages_->setValue(cp->increment_substages());
     form_->item(tr("tc.competition.Increment_substages"), "",
                 increment_substages_, increment_substages_);
@@ -136,7 +143,8 @@ void CPWidget::apply_parameters(CP* cp) {
         cp->set_max_recruiting_time(max_recruiting_time_->corrected_value());
     }
     if (t == CLASSICAL) {
-        cp->set_max_simultaneous_games(max_simultaneous_games_->corrected_value());
+        int max_simultaneous_games = max_simultaneous_games_->corrected_value();
+        cp->set_max_simultaneous_games(max_simultaneous_games);
         cp->set_games_factor(games_factor_->corrected_value());
     }
     if (t == STAGED) {

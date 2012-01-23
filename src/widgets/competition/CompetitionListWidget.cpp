@@ -88,14 +88,17 @@ public:
         sql << "count(distinct M.thechess_user_id), ";
         sql << "CP.type ";
         if (only_my)
-            sql << "from members_competitions I left join thechess_competition C "
+            sql << "from members_competitions I "
+                "left join thechess_competition C "
                 "on C.id=I.thechess_competition_id ";
         else {
             sql << "from thechess_competition C ";
         }
-        sql << "left join winners_competition WC on WC.thechess_competition_id=C.id ";
+        sql << "left join winners_competition WC "
+            "on WC.thechess_competition_id=C.id ";
         sql << "left join thechess_user W on WC.thechess_user_id=W.id ";
-        sql << "left join members_competitions M on M.thechess_competition_id=C.id ";
+        sql << "left join members_competitions M "
+            "on M.thechess_competition_id=C.id ";
         sql << "left join thechess_cp CP on C.cp_id=CP.id ";
         if (only_my) {
             sql << "where I.thechess_user_id = ? ";
@@ -111,7 +114,8 @@ public:
 
 class CompetitionListView : public Wt::WTableView {
 public:
-    CompetitionListView(CompetitionListModel* model, Wt::WContainerWidget* p = 0):
+    CompetitionListView(CompetitionListModel* model,
+                        Wt::WContainerWidget* p = 0):
         Wt::WTableView(p) {
         setModel(model);
         resize(770, 450);

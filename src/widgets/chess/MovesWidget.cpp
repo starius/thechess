@@ -31,6 +31,8 @@ const int MOVES_COLUMN_WIDTH = 100;
 const int N_COLUMN_WIDTH = 20;
 const int MOVES_ROW_HEIGHT = 35;
 const int NAVIGATION_BAR_HEIGHT = 25; // set in wt.css
+const int JS_WIDTH = (MOVES_COLUMN_WIDTH + 20) * 2 + (N_COLUMN_WIDTH + 7) + 20;
+const int NOJS_WIDTH = 400;
 
 class MovesModel : public Wt::WAbstractTableModel {
 public:
@@ -45,7 +47,8 @@ public:
         if (index.column() == 0) {
             n = -2;
         } else {
-            Piece::Color color = (index.column() == 1) ? Piece::WHITE : Piece::BLACK;
+            Piece::Color color = (index.column() == 1) ?
+                                 Piece::WHITE : Piece::BLACK;
             n = Moves::half_move_index(index.row() + 1, color);
             if (n >= cached_moves_->size()) {
                 n = -2;
@@ -80,7 +83,8 @@ public:
             HalfMove half_move = cached_moves_->half_move(n);
             const Board& board = cached_moves_->board(n);
             const Board& board_after = cached_moves_->board(n + 1);
-            std::string text = half_move.san(board, board_after, /*skip_pieces*/ true);
+            std::string text = half_move.san(board, board_after,
+                                             /*skip_pieces*/ true);
             char shah = ' ';
             if (board_after.test_shah()) {
                 shah = board_after.test_end() == Board::CHECKMATE ? '#' : '+';
@@ -169,8 +173,7 @@ public:
         layout->addWidget(moves_table_view_ = new Wt::WTableView());
         moves_table_view_->setModel(moves_model_);
         int moves_per_page = big ? 20 : 10;
-        int width = wApp->environment().ajax() ?
-                    ((MOVES_COLUMN_WIDTH + 20) * 2 + (N_COLUMN_WIDTH + 7) + 20) : 400;
+        int width = wApp->environment().ajax() ? JS_WIDTH : NOJS_WIDTH;
         int height = moves_per_page * MOVES_ROW_HEIGHT;
         height += wApp->environment().ajax() ? 0 : NAVIGATION_BAR_HEIGHT;
         moves_table_view_->resize(width, height);
@@ -310,9 +313,6 @@ private:
     }
 
     bool active() const {
-        std::cout << "active " << (active_ &&
-                                   (max_moves_ == -1 || used_moves_ < max_moves_) &&
-                                   (!append_only_ || current_move_ == cached_moves_.size() - 1)) << std::endl;
         return active_ &&
                (max_moves_ == -1 || used_moves_ < max_moves_) &&
                (!append_only_ || current_move_ == cached_moves_.size() - 1);
