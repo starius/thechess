@@ -44,12 +44,12 @@ void Comment::set_index() {
         Query younger = family_desc;
         younger.where("'index' < ?").bind(max);
         CommentPtr prev = younger.resultList().front();
-        if (abs(prev->index() - index()) < COMMENT_GAP) {
+        if (abs(prev->index() - index()) > COMMENT_GAP) {
             index_ = (prev->index() + next->index()) / 2.0;
         }
     } else {
         CommentPtr last = family_desc.resultList().front();
-        if (abs(last->index() - index()) < COMMENT_GAP) {
+        if (abs(last->index() - index()) > COMMENT_GAP) {
             index_ = last->index() + COMMENT_STEP;
         }
     }
