@@ -83,6 +83,7 @@ void Application::login_handler() {
             }
         }
         prev_user_ = user();
+        path_.open(internalPath());
     }
     t.commit();
     BOOST_FOREACH (GamePtr game, games_vector) {
@@ -90,7 +91,6 @@ void Application::login_handler() {
     }
     main_widget_->main_menu()->show_user_items(session_.login().loggedIn());
     main_widget_->update_my_games();
-    path_.open(internalPath());
 }
 
 void Application::notify(const Wt::WEvent& e) {
