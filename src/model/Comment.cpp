@@ -26,6 +26,7 @@ Comment::Comment(bool):
     edited_(now())
 { }
 
+//FIXME *(collection.begin()) --> collection.front()
 void Comment::set_index() {
     typedef dbo::Query<CommentPtr> Query;
     const Query family_desc = root_->family().find().orderBy("show_index desc");
@@ -36,19 +37,19 @@ void Comment::set_index() {
         double min = parent_->index() + COMMENT_GAP;
         Comments older_uncles = uncles_asc.where("show_index > ?").bind(min);
         if (older_uncles.size()) {
-            next = older_uncles.front();
+            next = *older_uncles.begin();
         }
     }
     if (next) {
         double max = next->index() - COMMENT_GAP;
         Query younger = family_desc;
         younger.where("show_index < ?").bind(max);
-        CommentPtr prev = younger.resultList().front();
+        CommentPtr prev = *younger.resultList().begin();
         if (abs(prev->index() - index()) > COMMENT_GAP) {
             index_ = (prev->index() + next->index()) / 2.0;
         }
     } else {
-        CommentPtr last = family_desc.resultList().front();
+        CommentPtr last = *family_desc.resultList().begin();
         if (abs(last->index() - index()) > COMMENT_GAP) {
             index_ = last->index() + COMMENT_STEP;
         }
