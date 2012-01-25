@@ -152,7 +152,7 @@ public:
     /** Wt::Dbo persist implementation */
     template<class Action>
     void persist(Action& a) {
-        dbo::field(a, index_, "index");
+        dbo::field(a, index_, "show_index");
         dbo::field(a, depth_, "depth");
         dbo::field(a, commentable_, "commentable");
         dbo::field(a, state_, "state");

@@ -28,13 +28,13 @@ Comment::Comment(bool):
 
 void Comment::set_index() {
     typedef dbo::Query<CommentPtr> Query;
-    const Query family_desc = root_->family().find().orderBy("'index' desc");
+    const Query family_desc = root_->family().find().orderBy("show_index desc");
     CommentPtr next;
     if (parent_->parent()) {
         Comments uncles = parent_->parent()->children();
-        Query uncles_asc = uncles.find().orderBy("'index'");
+        Query uncles_asc = uncles.find().orderBy("show_index");
         double min = parent_->index() + COMMENT_GAP;
-        Comments older_uncles = uncles_asc.where("'index' > ?").bind(min);
+        Comments older_uncles = uncles_asc.where("show_index > ?").bind(min);
         if (older_uncles.size()) {
             next = older_uncles.front();
         }
@@ -42,7 +42,7 @@ void Comment::set_index() {
     if (next) {
         double max = next->index() - COMMENT_GAP;
         Query younger = family_desc;
-        younger.where("'index' < ?").bind(max);
+        younger.where("show_index < ?").bind(max);
         CommentPtr prev = younger.resultList().front();
         if (abs(prev->index() - index()) > COMMENT_GAP) {
             index_ = (prev->index() + next->index()) / 2.0;
