@@ -27,9 +27,13 @@ Comment::Comment(bool):
 { }
 
 //FIXME *(collection.begin()) --> collection.front()
+// FIXME 2 if Query family_desc = root_->family().find(), orderBy() fails
 void Comment::set_index() {
     typedef dbo::Query<CommentPtr> Query;
-    const Query family_desc = root_->family().find().orderBy("show_index desc");
+    Query family_desc = session()->find<Comment>();
+    family_desc.where("root_id = ?").bind(root_.id());
+    family_desc.where("id <> ?").bind(id()); // except me
+    family_desc.orderBy("show_index desc");
     CommentPtr next;
     if (parent_->parent()) {
         Comments uncles = parent_->parent()->children();
