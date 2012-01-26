@@ -61,6 +61,11 @@ public:
         return password_service_;
     }
 
+    /** Reads a configuration property.
+    The convenience method for readConfigurationProperty().
+    */
+    std::string config_prop(const std::string& name) const;
+
 private:
     Options options_;
     dbo::FixedSqlConnectionPool pool_;
