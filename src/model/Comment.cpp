@@ -68,7 +68,7 @@ void Comment::set_text(const Wt::WString& text) {
 void Comment::set_parent(const CommentPtr& parent, bool set_index,
                          bool set_root) {
     parent_ = parent;
-    depth_ = parent->depth();
+    depth_ = parent->depth() + 1;
     if (set_root) {
         root_ = parent->root();
     }
