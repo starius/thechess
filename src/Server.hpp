@@ -9,6 +9,7 @@
 #define THECHESS_SERVER_HPP_
 
 #include <Wt/WServer>
+#include <Wt/WFileResource>
 #include <Wt/Dbo/FixedSqlConnectionPool>
 #include <Wt/Auth/AuthService>
 #include <Wt/Auth/PasswordService>
@@ -72,6 +73,8 @@ private:
     Notifier notifier_;
     Planning planning_;
     PgnResource pgn_;
+    Wt::WFileResource swfstore_;
+    Wt::WFileResource storage_whitelist_; // 404 Not Found
     Wt::Auth::AuthService auth_service_;
     Wt::Auth::PasswordService password_service_;
 
