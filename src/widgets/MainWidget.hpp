@@ -10,6 +10,7 @@
 
 #include <Wt/WGlobal>
 #include <Wt/WContainerWidget>
+#include <Wt/Wc/global.hpp>
 
 #include "thechess-global.hpp"
 #include "model/all.hpp"
@@ -68,6 +69,9 @@ public:
     Wt::Auth::AuthWidget* auth_widget() {
         return auth_widget_;
     }
+
+    /** Get SWF store */
+    Wt::Wc::SWFStore* swf_store();
 
     /** Set authentication widget */
     void set_auth_widget(Wt::Auth::AuthWidget* widget);

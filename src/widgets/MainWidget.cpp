@@ -10,6 +10,7 @@
 #include <Wt/WTable>
 #include <Wt/Auth/AuthWidget>
 #include <Wt/Wc/util.hpp>
+#include <Wt/Wc/SWFStore.hpp>
 
 #include "widgets/MainWidget.hpp"
 #include "widgets/MainMenu.hpp"
@@ -38,6 +39,7 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
     top->elementAt(0, 1)->setContentAlignment(Wt::AlignRight);
     l()->addWidget(new Wt::WContainerWidget(), Wt::WBorderLayout::Center);
     l()->addWidget(new Wt::WContainerWidget(), Wt::WBorderLayout::East);
+    l()->addWidget(new Wt::Wc::SWFStore(), Wt::WBorderLayout::South);
 }
 
 void MainWidget::show_menu(Path* path) {
@@ -97,6 +99,10 @@ void MainWidget::competition_list() {
 
 void MainWidget::competition_new() {
     set_contents(new CompetitionCreateWidget());
+}
+
+Wt::Wc::SWFStore* MainWidget::swf_store() {
+    return downcast<Wt::Wc::SWFStore*>(l()->widgetAt(Wt::WBorderLayout::South));
 }
 
 void MainWidget::set_auth_widget(Wt::Auth::AuthWidget* widget) {
