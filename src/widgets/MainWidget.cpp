@@ -101,14 +101,14 @@ void MainWidget::competition_new() {
     set_contents(new CompetitionCreateWidget());
 }
 
-Wt::Wc::SWFStore* MainWidget::swf_store() {
-    return downcast<Wt::Wc::SWFStore*>(l()->widgetAt(Wt::WBorderLayout::South));
-}
-
 void MainWidget::set_auth_widget(Wt::Auth::AuthWidget* widget) {
     auth_widget_ = widget;
     auth_widget_container_->clear();
     auth_widget_container_->addWidget(auth_widget_);
+}
+
+Wt::Wc::SWFStore* MainWidget::swf_store() {
+    return downcast<Wt::Wc::SWFStore*>(l()->widgetAt(Wt::WBorderLayout::South));
 }
 
 Wt::WBorderLayout* MainWidget::l() {

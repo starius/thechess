@@ -70,11 +70,11 @@ public:
         return auth_widget_;
     }
 
-    /** Get SWF store */
-    Wt::Wc::SWFStore* swf_store();
-
     /** Set authentication widget */
     void set_auth_widget(Wt::Auth::AuthWidget* widget);
+
+    /** Get SWF store */
+    Wt::Wc::SWFStore* swf_store();
 
 private:
     Wt::WContainerWidget* auth_widget_container_;
