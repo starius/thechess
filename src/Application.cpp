@@ -150,6 +150,18 @@ void Application::gather_init() {
 
 void Application::gather_explorer(Wt::Wc::Gather::DataType type,
                                   const std::string& value) {
+    dbo::Transaction t(session());
+    if (user()) {
+        BDId bd_id(user(), type, value);
+        BDPtr bd;
+        try {
+            bd = session().load<BD>(bd_id);
+        } catch (...) {
+            bd = session().add(new BD(bd_id));
+        }
+        bd.modify()->use();
+    }
+    t.commit();
 }
 
 }
