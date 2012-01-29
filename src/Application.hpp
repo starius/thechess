@@ -14,6 +14,7 @@
 
 #include <Wt/WGlobal>
 #include <Wt/WApplication>
+#include <Wt/Wc/Gather.hpp>
 
 #include "model/all.hpp"
 #include "Server.hpp"
@@ -74,9 +75,13 @@ private:
     MainWidget* main_widget_;
     Path path_;
     UserPtr prev_user_;
+    Wt::Wc::Gather* gather_;
 
     void set_auth_widget();
     void login_handler();
+    void gather_init();
+    void gather_explorer(Wt::Wc::Gather::DataType type,
+                         const std::string& value);
 };
 
 }

@@ -18,6 +18,8 @@
 #include <Wt/WLogger>
 #include <Wt/Auth/AuthWidget>
 #include <Wt/Wc/util.hpp>
+#include <Wt/Wc/SWFStore.hpp>
+#include <Wt/Wc/Gather.hpp>
 
 #include "Application.hpp"
 #include "config.hpp"
@@ -29,7 +31,8 @@
 namespace thechess {
 
 Application::Application(const Wt::WEnvironment& env, Server& server) :
-    Wt::WApplication(env), server_(server), session_(server.pool()) {
+    Wt::WApplication(env), server_(server), session_(server.pool()),
+    gather_(0) {
     main_widget_ = new MainWidget(root());
     main_widget_->show_menu(&path_);
     path_.connect_main_widget(main_widget_);
@@ -42,6 +45,11 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
                                 "locales/wtclasses/wtclasses");
     setCssTheme("polished");
     session().login().changed().connect(this, &Application::login_handler);
+    if (config::GATHERING) {
+        server_.planning().schedule(10 * SECOND, Wt::Wc::bound_post(
+                                        boost::bind(&Application::gather_init,
+                                                this)));
+    }
     login_handler();
     path_.open(internalPath());
 }
@@ -80,6 +88,9 @@ void Application::login_handler() {
                               .bind(Game::ACTIVE)
                               .bind(Game::PAUSE);
                 games_vector.assign(games.begin(), games.end());
+            }
+            if (gather_) {
+                gather_->explore_all();
             }
         }
         prev_user_ = user();
@@ -127,6 +138,18 @@ void Application::set_auth_widget() {
         log("warning") << "AuthWidget.processEnvironment(): " << e.what();
     }
     main_widget_->set_auth_widget(w);
+}
+
+void Application::gather_init() {
+    main_widget_->set_swfstore(new Wt::Wc::SWFStore());
+    gather_ = new Wt::Wc::Gather(boost::bind(&Application::gather_explorer,
+                                 this, _1, _2), this);
+    gather_->set_swfstore(main_widget_->swf_store());
+    triggerUpdate();
+}
+
+void Application::gather_explorer(Wt::Wc::Gather::DataType type,
+                                  const std::string& value) {
 }
 
 }
