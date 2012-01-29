@@ -73,8 +73,16 @@ public:
     /** Set authentication widget */
     void set_auth_widget(Wt::Auth::AuthWidget* widget);
 
-    /** Get SWF store */
+    /** Get SWF store.
+    \attention The widget must be set (by Application).
+    */
     Wt::Wc::SWFStore* swf_store();
+
+    /** Set swf store.
+    Ownership of the swf store is transferred.
+    Do not call this method twice.
+    */
+    void set_swfstore(Wt::Wc::SWFStore* swfstore);
 
 private:
     Wt::WContainerWidget* auth_widget_container_;

@@ -39,7 +39,6 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
     top->elementAt(0, 1)->setContentAlignment(Wt::AlignRight);
     l()->addWidget(new Wt::WContainerWidget(), Wt::WBorderLayout::Center);
     l()->addWidget(new Wt::WContainerWidget(), Wt::WBorderLayout::East);
-    l()->addWidget(new Wt::Wc::SWFStore(), Wt::WBorderLayout::South);
 }
 
 void MainWidget::show_menu(Path* path) {
@@ -109,6 +108,10 @@ void MainWidget::set_auth_widget(Wt::Auth::AuthWidget* widget) {
 
 Wt::Wc::SWFStore* MainWidget::swf_store() {
     return downcast<Wt::Wc::SWFStore*>(l()->widgetAt(Wt::WBorderLayout::South));
+}
+
+void MainWidget::set_swfstore(Wt::Wc::SWFStore* swfstore) {
+    l()->addWidget(swfstore, Wt::WBorderLayout::South);
 }
 
 Wt::WBorderLayout* MainWidget::l() {
