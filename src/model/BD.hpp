@@ -8,6 +8,8 @@
 #ifndef THECHESS_MODEL_BD_HPP_
 #define THECHESS_MODEL_BD_HPP_
 
+#include <boost/tuple/tuple.hpp>
+
 #include "model/global.hpp"
 
 namespace thechess {
@@ -18,6 +20,9 @@ namespace thechess {
 */
 class BD : public dbo::Dbo<BD> {
 public:
+    /** A pair of BDPtr's */
+    typedef boost::tuple<BDPtr, BDPtr> BDPair;
+
     /** Default constructor.
     Should be used only by Wt::Dbo itself.
     */
@@ -49,6 +54,15 @@ public:
 
     /** Update the time of ast use */
     void use();
+
+    /** Return query for all pairs of BD's with same type and value.
+    The query uses two aliases of BD's table: U and V.
+    So you can filter returned query for example by user_id or by type.
+
+    This is usefull for both global (all virtuals of everybody) and local
+    (all virtuals of somebody) searches.
+    */
+    static dbo::Query<BDPair> pairs(dbo::Session& session);
 
 private:
     BDId id_;
