@@ -21,6 +21,7 @@
 #include <Wt/Auth/Dbo/AuthInfo>
 #include <Wt/Auth/Dbo/UserDatabase>
 #include <Wt/Wc/TimeDurationDbo.hpp>
+#include <Wt/Wc/Gather.hpp>
 
 #include "utils/time_intervals.hpp"
 #include "model/elo_player.hpp"
@@ -170,6 +171,80 @@ void field(Action& a, thechess::Moves& moves, const std::string& name) {
 }
 
 }
+}
+
+/* @} */
+
+/** \name Id field for BD */
+/* @{ */
+
+namespace thechess {
+
+/** Id field for BD */
+struct BDId {
+    /** User */
+    UserPtr user;
+
+    /** Type of data */
+    Wt::Wc::Gather::DataType type;
+
+    /** Value */
+    std::string value;
+
+    /** Default constructor */
+    BDId();
+
+    /** Constructor */
+    BDId(const UserPtr& u, Wt::Wc::Gather::DataType t, const std::string& v);
+
+    /** Comparison operator */
+    bool operator==(const BDId& other) const;
+
+    /** Comparison operator */
+    bool operator<(const BDId& other) const;
+};
+
+/** Output stream operator for BDId */
+std::ostream& operator<<(std::ostream& o, const BDId& id);
+
+}
+
+namespace Wt {
+namespace Dbo {
+
+/** Dbo field for BDId */
+template <class Action>
+void field(Action& action, thechess::BDId& id,
+           const std::string& name, int /* size */ = -1) {
+    field(action, id.user, name + "user");
+    field(action, id.type, name + "type");
+    field(action, id.value, name + "value", Wt::Wc::Gather::MAX_SIZE);
+}
+
+/** Dbo settings of BD model */
+template<>
+struct dbo_traits<thechess::BD> : public dbo_default_traits {
+    /** Type if id */
+    typedef thechess::BDId IdType;
+
+    /** Invalid id */
+    static IdType invalidId() {
+        return IdType();
+    }
+
+    /** Disables surrogate id field */
+    static const char* surrogateIdField() {
+        return 0;
+    }
+
+    /** Disables version field */
+    static const char* versionField() {
+        return 0;
+    }
+};
+
+}
+
 }
 
 /* @} */
