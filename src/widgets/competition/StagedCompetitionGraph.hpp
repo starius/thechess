@@ -8,26 +8,25 @@
 #ifndef THECHESS_WIDGETS_STAGED_COMPETITION_GRAPH_HPP_
 #define THECHESS_WIDGETS_STAGED_COMPETITION_GRAPH_HPP_
 
-#include <Wt/WFileResource>
+#include <Wt/Wc/FilterResource.hpp>
 
 #include "model/all.hpp"
 
 namespace thechess {
 
 /** Graphviz-generated graph for a staged competition */
-class StagedCompetitionGraph : public Wt::WFileResource {
+class StagedCompetitionGraph : public Wt::Wc::FilterResource {
 public:
     /** Constructor.
-    Create temporary image file using \c system().
-    Command \c dot must be available.
+    \note The pointer to StagedCompetition must be valid all the time.
     */
     StagedCompetitionGraph(const StagedCompetition* comp, Wt::WObject* p = 0);
 
-    /** Delete temrary file */
-    ~StagedCompetitionGraph();
+    /** Output competition tree in DOT format (graphviz) */
+    void write_input(std::ostream& out) const;
 
 private:
-    std::string png_file_;
+    const StagedCompetition* comp_;
 };
 
 }
