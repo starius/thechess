@@ -15,6 +15,7 @@
 #include "model/CP.hpp"
 #include "model/Competition.hpp"
 #include "model/Comment.hpp"
+#include "model/BD.hpp"
 #include "model/object.hpp"
 #include "model/elo_player.hpp"
 #include "model/staged_competition.hpp"
