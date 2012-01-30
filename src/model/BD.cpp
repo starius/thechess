@@ -56,8 +56,8 @@ dbo::Query<BD::BDPair> BD::pairs(dbo::Session& session) {
     return session.query<BDPair>(
                "select U, V "
                "from thechess_bd U "
-               "inner join thechess_bd V on U.type=V.type and U.value=V.value "
-               "where U.user_id<V.user_id");
+               "inner join thechess_bd V on U.type=V.type and U.value=V.value ")
+           .where("U.user_id<V.user_id");
 }
 
 }
