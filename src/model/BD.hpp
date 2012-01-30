@@ -61,6 +61,8 @@ public:
 
     This is usefull for both global (all virtuals of everybody) and local
     (all virtuals of somebody) searches.
+
+    \note To avoid redundancy, only rows where U.user_id<V.user_id are selected.
     */
     static dbo::Query<BDPair> pairs(dbo::Session& session);
 
