@@ -111,7 +111,7 @@ void StagedCompetition::dot(std::ostream& out) const {
             s2u[stage - 1][user] = std::make_pair(user, true);
         }
     }
-    out << "digraph compatition_" << competition_->id() << " {" << std::endl;
+    out << "digraph competition_" << competition_->id() << " {" << std::endl;
     out << "rankdir=LR" << std::endl;
     BOOST_FOREACH (const S2F::value_type& stage_and_fus, s2f) {
         int stage = stage_and_fus.first;
