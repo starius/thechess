@@ -1,3 +1,18 @@
+2012-01-29:
+    * use Gather system from wt-classes
+    * add model BD to store information, produced by Gather
+
+2012-01-20:
+    * add model Comment
+
+2012-01-19:
+    * BoardWidget: add the checkbox to toggle lastmove
+
+2012-01-13 - 2012-01-18:
+    * add GPListWidget and CPListWidget
+    * add GPSelector and CPSelector
+    * update CompetitionCreateWidget to current models
+
 2012-01-11:
     * add a pointer from Competition to GP
     * GP and CP: add parent pointer
