@@ -65,12 +65,6 @@ Notifier& Server::notifier() {
     return notifier_;
 }
 
-std::string Server::config_prop(const std::string& name) const {
-    std::string value;
-    readConfigurationProperty(name, value);
-    return value;
-}
-
 void Server::auth_init() {
     using namespace Wt::Auth;
     auth_service_.setAuthTokensEnabled(true, config::COOKIE_NAME);
