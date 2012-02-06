@@ -45,11 +45,6 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
                                 "locales/wtclasses/wtclasses");
     setCssTheme("polished");
     session().login().changed().connect(this, &Application::login_handler);
-    if (config::GATHERING) {
-        server_.planning().schedule(10 * SECOND, Wt::Wc::bound_post(
-                                        boost::bind(&Application::gather_init,
-                                                this)));
-    }
     login_handler();
     path_.open(internalPath());
 }
@@ -91,6 +86,12 @@ void Application::login_handler() {
             }
             if (gather_) {
                 gather_->explore_all();
+            }
+            if (config::GATHERING) {
+                boost::function<void()> f = Wt::Wc::bound_post(boost::bind(
+                                                &Application::gather_init,
+                                                this));
+                server_.planning().schedule(10 * SECOND, f);
             }
         }
         prev_user_ = user();
