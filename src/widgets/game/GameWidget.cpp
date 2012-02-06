@@ -155,7 +155,7 @@ public:
                                         append_only, bottom, this);
         moves_widget_->half_move()
         .connect(this, &GameWidgetImpl::move_handler_);
-        countdown_container_ = new Wt::WContainerWidget(this);
+        countdown_ = new GameCountdown(game_, this);
         manager = new Wt::WContainerWidget(this);
         comment_container_ = new Wt::WContainerWidget(this);
         print_comment();
@@ -198,7 +198,7 @@ private:
     MovesWidget* moves_widget_;
     GameStatus* game_status_;
     Wt::WContainerWidget* manager;
-    Wt::WContainerWidget* countdown_container_;
+    GameCountdown* countdown_;
     Wt::WContainerWidget* comment_container_;
 
     void move_handler_(const HalfMove& half_move) {
@@ -226,8 +226,7 @@ private:
     }
 
     void countdown_print() {
-        countdown_container_->clear();
-        new GameCountdown(game_, countdown_container_);
+        countdown_->reread();
     }
 
     void print_manager() {
