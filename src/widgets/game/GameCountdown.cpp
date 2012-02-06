@@ -35,13 +35,13 @@ public:
         using namespace Wt::Wc;
         bindString("name", name);
         Countdown* limit_private = new Countdown();
-        limit_private->set_until(limit_private_now);
         limit_private->pause();
+        limit_private->set_until(limit_private_now);
         bindWidget("limit_private", limit_private);
         Countdown* limit_std = new Countdown();
         limit_std->change("alwaysExpire", "true");
-        limit_std->set_until(limit_std_now);
         limit_std->pause();
+        limit_std->set_until(limit_std_now);
         bindWidget("limit_std", limit_std);
         if (active) {
             limit_std->resume();
