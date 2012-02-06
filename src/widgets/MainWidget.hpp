@@ -85,6 +85,7 @@ public:
     void set_swfstore(Wt::Wc::SWFStore* swfstore);
 
 private:
+    Wt::WContainerWidget* swfstore_container_;
     Wt::WContainerWidget* auth_widget_container_;
     Wt::Auth::AuthWidget* auth_widget_;
 

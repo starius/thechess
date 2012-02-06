@@ -28,6 +28,7 @@ namespace thechess {
 
 MainWidget::MainWidget(Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent),
+    swfstore_container_(0),
     auth_widget_container_(0),
     auth_widget_(0) {
     setLayout(new Wt::WBorderLayout(), Wt::AlignTop | Wt::AlignJustify);
@@ -39,6 +40,8 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
     top->elementAt(0, 1)->setContentAlignment(Wt::AlignRight);
     l()->addWidget(new Wt::WContainerWidget(), Wt::WBorderLayout::Center);
     l()->addWidget(new Wt::WContainerWidget(), Wt::WBorderLayout::East);
+    swfstore_container_ = new Wt::WContainerWidget();
+    l()->addWidget(swfstore_container_, Wt::WBorderLayout::South);
 }
 
 void MainWidget::show_menu(Path* path) {
@@ -107,11 +110,12 @@ void MainWidget::set_auth_widget(Wt::Auth::AuthWidget* widget) {
 }
 
 Wt::Wc::SWFStore* MainWidget::swf_store() {
-    return downcast<Wt::Wc::SWFStore*>(l()->widgetAt(Wt::WBorderLayout::South));
+    return downcast<Wt::Wc::SWFStore*>(swfstore_container_->widget(0));
 }
 
 void MainWidget::set_swfstore(Wt::Wc::SWFStore* swfstore) {
-    l()->addWidget(swfstore, Wt::WBorderLayout::South);
+    swfstore_container_->clear();
+    swfstore_container_->addWidget(swfstore);
 }
 
 Wt::WBorderLayout* MainWidget::l() {
