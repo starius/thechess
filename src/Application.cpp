@@ -141,11 +141,13 @@ void Application::set_auth_widget() {
 }
 
 void Application::gather_init() {
-    main_widget_->set_swfstore(new Wt::Wc::SWFStore());
-    gather_ = new Wt::Wc::Gather(boost::bind(&Application::gather_explorer,
-                                 this, _1, _2), this);
-    gather_->set_swfstore(main_widget_->swf_store());
-    triggerUpdate();
+    if (!gather_) {
+        main_widget_->set_swfstore(new Wt::Wc::SWFStore());
+        gather_ = new Wt::Wc::Gather(boost::bind(&Application::gather_explorer,
+                                     this, _1, _2), this);
+        gather_->set_swfstore(main_widget_->swf_store());
+        triggerUpdate();
+    }
 }
 
 void Application::gather_explorer(Wt::Wc::Gather::DataType type,
