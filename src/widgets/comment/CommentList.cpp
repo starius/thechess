@@ -35,7 +35,7 @@ public:
 CommentList::CommentList(const CommentPtr& root, Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent) {
     CommentModel* model = new CommentModel(root, this);
-    CommentView* view = new CommentView(model, this);
+    new CommentView(model, this);
 }
 
 }
