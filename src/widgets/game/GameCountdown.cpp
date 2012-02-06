@@ -17,6 +17,7 @@
 #include <Wt/WString>
 #include <Wt/WDateTime>
 #include <Wt/Dbo/Transaction>
+#include <Wt/Wc/Countdown.hpp>
 
 #include "chess/Piece.hpp"
 #include "model/all.hpp"
@@ -25,27 +26,26 @@
 
 namespace thechess {
 
-const char* CS = "thechess_countdown_start('%s', %d/1000, '%s', %d/1000);";
-
 class SingleTimeout : public Wt::WTemplate {
 public:
     SingleTimeout(const Wt::WString& name, bool active,
                   const Td& limit_private_now, const Td& limit_std_now,
                   Wt::WContainerWidget* parent = 0) :
         Wt::WTemplate(tr("tc.game.countdown_template"), parent) {
+        using namespace Wt::Wc;
         bindString("name", name);
-        Wt::WText* limit_private_text =
-            new Wt::WText(td2str(limit_private_now));
-        bindWidget("limit_private", limit_private_text);
-        Wt::WText* limit_std_text =
-            new Wt::WText(td2str(limit_std_now));
-        bindWidget("limit_std", limit_std_text);
+        Countdown* limit_private = new Countdown();
+        limit_private->set_until(limit_private_now);
+        limit_private->pause();
+        bindWidget("limit_private", limit_private);
+        Countdown* limit_std = new Countdown();
+        limit_std->change("alwaysExpire", "true");
+        limit_std->set_until(limit_std_now);
+        limit_std->pause();
+        bindWidget("limit_std", limit_std);
         if (active) {
-            doJavaScript(str(boost::format(CS)
-                             % limit_private_text->id()
-                             % limit_private_now.total_milliseconds()
-                             % limit_std_text->id()
-                             % limit_std_now.total_milliseconds()));
+            limit_std->resume();
+            limit_std->expired().connect(limit_private, &Countdown::resume);
         }
     }
 
@@ -95,10 +95,8 @@ private:
 
 GameCountdown::GameCountdown(const GamePtr& game,
                              Wt::WContainerWidget* parent) :
-    Wt::WViewWidget(parent), game_(game) {
-    wApp->require("js/jquery.countdown.pack.js");
-    wApp->require("js/countdown.js");
-}
+    Wt::WViewWidget(parent), game_(game)
+{ }
 
 Wt::WWidget* GameCountdown::renderView() {
     try {

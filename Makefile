@@ -52,7 +52,7 @@ LFLAGS += -flto
 endif
 endif
 
-downloaded = files/js/jquery.countdown.pack.js wt.xml
+downloaded = wt.xml
 sources = $(sort $(wildcard src/*.cpp) $(wildcard src/*/*.cpp) \
 	$(wildcard src/*/*/*.cpp) src/widgets/cp/CPSelector.cpp)
 headers = $(sort $(wildcard src/*.hpp) $(wildcard src/*/*.hpp) \
@@ -178,12 +178,6 @@ run-tests: $(EXE) $$(WT_CONFIG)
 
 .PHONY: download
 download: $$(downloaded)
-
-.SECONDARY: files/js/jquery.countdown.pack.js
-files/js/jquery.countdown.pack.js:
-	wget http://keith-wood.name/zip/jquery.countdown.package-1.5.11.zip -O c.zip
-	unzip -o c.zip $(@F) -d $(@D)
-	rm c.zip
 
 src/widgets/cp/CPSelector.%: src/widgets/gp/GPSelector.%
 	sed  < $< > $@ -e 's/game/competition/g' \
