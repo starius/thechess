@@ -45,7 +45,7 @@ public:
         bindWidget("limit_std", limit_std);
         if (active) {
             limit_std->resume();
-            limit_std->expired().connect(limit_private, &Countdown::resume);
+            limit_private->resume(limit_std_now);
         }
     }
 
