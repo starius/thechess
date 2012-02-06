@@ -9,19 +9,36 @@
 #define THECHESS_WIDGETS_GAMECOUNTDOWN_HPP_
 
 #include <Wt/WGlobal>
-#include <Wt/WViewWidget>
+#include <Wt/WContainerWidget>
 
 #include "model/all.hpp"
 
 namespace thechess {
 
-class GameCountdown : public Wt::WViewWidget {
+/** A widget displaying game countdowns */
+class GameCountdown : public Wt::WContainerWidget {
 public:
+    /** Constructor */
     GameCountdown(const GamePtr& game, Wt::WContainerWidget* parent = 0);
-private:
-    GamePtr game_;
 
-    virtual Wt::WWidget* renderView();
+    /** Update (or add) game countdowns.
+    Be sure to reread game before calling this.
+    */
+    void reread();
+
+    /** Get the game */
+    const GamePtr& game() const {
+        return game_;
+    }
+
+private:
+    class SingleTimeout;
+
+    GamePtr game_;
+    SingleTimeout* timeout1_;
+    SingleTimeout* timeout2_;
+
+    void single_countdown(SingleTimeout*& timeout, const UserPtr& user);
 };
 
 }
