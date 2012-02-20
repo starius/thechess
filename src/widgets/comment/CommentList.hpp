@@ -30,6 +30,9 @@ public:
 
 private:
     CommentType type_;
+    Wt::WFormWidget* edit_;
+
+    void add_comment(const CommentPtr& parent);
 };
 
 }

@@ -170,7 +170,8 @@ auth.xml:
 
 .PHONY: locales
 locales: wt.xml auth.xml
-	locales-test --wt $^ --prefix=tc --sections common competition game time user
+	locales-test --wt $^ --prefix=tc \
+		--sections comment common competition game time user
 
 .PHONY: run-tests
 run-tests: $(EXE) $$(WT_CONFIG)

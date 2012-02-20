@@ -5,8 +5,14 @@
  * See the LICENSE file for terms of use.
  */
 
-#include <Wt/WTableView>
+#include <boost/bind.hpp>
 
+#include <Wt/WTableView>
+#include <Wt/WPushButton>
+#include <Wt/WLineEdit>
+#include <Wt/WTextEdit>
+
+#include "Application.hpp"
 #include "widgets/comment/CommentList.hpp"
 #include "widgets/comment/CommentModel.hpp"
 
@@ -39,9 +45,27 @@ CommentList::CommentList(const CommentPtr& root, CommentType type,
     CommentView* view = new CommentView(model, this);
     if (type == CHAT) {
         view->setAlternatingRowColors(true);
+        Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
+        edit_ = line_edit;
     } else {
         view->setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
+        edit_ = new Wt::WTextEdit(this);
     }
+    Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
+    add->clicked().connect(boost::bind(&CommentList::add_comment, this, root));
+}
+
+void CommentList::add_comment(const CommentPtr& parent) {
+    dbo::Transaction t(tApp->session());
+    CommentPtr comment = tApp->session().add(new Comment(true));
+    comment.modify()->set_parent(parent);
+    comment.modify()->set_text(edit_->valueText());
+    comment.modify()->set_init(tApp->user());
+    if (type_ == CommentList::CHAT) {
+        comment.modify()->set_commentable(false);
+    }
+    CommentPtr root = parent->root();
+    t.commit();
 }
 
 }

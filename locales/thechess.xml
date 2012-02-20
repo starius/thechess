@@ -333,6 +333,8 @@ See locales-test manpage for more information.
         </table>
     </message>
 
+    <message id='tc.comment.Add'>Add comment</message>
+
     <message id='tc.common.Agree'>Agree</message>
     <message id='tc.common.Apply'>Apply</message>
     <message id='tc.common.Cancel'>Cancel</message>
