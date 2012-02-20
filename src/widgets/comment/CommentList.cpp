@@ -79,6 +79,9 @@ CommentModel* CommentList::comment_model() const {
 }
 
 void CommentList::add_comment(const CommentPtr& parent) {
+    if (edit_->valueText().empty()) {
+        return;
+    }
     dbo::Transaction t(tApp->session());
     CommentPtr comment = tApp->session().add(new Comment(true));
     comment.modify()->set_parent(parent);
