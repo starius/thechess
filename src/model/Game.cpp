@@ -626,6 +626,10 @@ void Game::set_comment(const UserPtr& user, const Wt::WString& t) {
     }
 }
 
+bool Game::has_comment_base() const {
+    return comment_base_;
+}
+
 const CommentPtr& Game::comment_base() {
     if (!comment_base_) {
         comment_base_ = session()->add(new Comment(true));

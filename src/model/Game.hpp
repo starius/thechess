@@ -492,6 +492,9 @@ public:
     /** The user tries to set the comment */
     void set_comment(const UserPtr& user, const Wt::WString& t);
 
+    /** Return if there is a comment base  */
+    bool has_comment_base() const;
+
     /** Return comment base.
     Lazy created.
     */
