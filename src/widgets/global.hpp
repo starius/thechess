@@ -12,6 +12,8 @@ namespace thechess {
 
 class BoardWidget;
 class ClassificationWidget;
+class CommentList;
+class CommentModel;
 class CompetitionCreateWidget;
 class CompetitionListWidget;
 class CompetitionWidget;
