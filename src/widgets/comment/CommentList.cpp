@@ -31,10 +31,14 @@ public:
         resize(770, 450);
         setColumnWidth(CommentModel::CONTENTS_COLUMN, COMMENT_WIDTH);
         setHeaderHeight(0);
-        if (model->rowCount()) {
-            int row = model->rowCount() - 1;
+        show_last();
+    }
+
+    void show_last() {
+        if (model()->rowCount()) {
+            int row = model()->rowCount() - 1;
             int column = CommentModel::CONTENTS_COLUMN;
-            scrollTo(model->index(row, column));
+            scrollTo(model()->index(row, column));
         }
     }
 
@@ -67,6 +71,7 @@ CommentList::CommentList(const CommentPtr& root, CommentType type,
 
 void CommentList::notify(EventPtr) {
     comment_model()->reload();
+    view_->show_last();
 }
 
 CommentModel* CommentList::comment_model() const {
