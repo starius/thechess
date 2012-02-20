@@ -25,6 +25,7 @@
 #include "widgets/game/GameCountdown.hpp"
 #include "widgets/game/GameWidget.hpp"
 #include "widgets/chess/MovesWidget.hpp"
+#include "widgets/comment/CommentList.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
 #include "config.hpp"
@@ -162,6 +163,7 @@ public:
         game_status_ = new GameStatus(game_, this);
         new Wt::WAnchor(str(boost::format("/pgn/?game=%i") % game.id()),
                         tr("tc.game.Download_pgn"), this);
+        print_comment_list();
         status_and_manager();
         countdown_print();
         t.commit();
@@ -451,6 +453,28 @@ private:
         t.commit();
     }
 
+    void print_comment_list() {
+        dbo::Transaction t(tApp->session());
+        if (game_->has_comment_base()) {
+            print_comment_list_impl();
+        } else {
+            new Wt::WBreak(this);
+            Wt::WPushButton* add = new Wt::WPushButton(this);
+            add->setText(tr("tc.comment.Add"));
+            add->clicked().connect(this,
+                                   &GameWidgetImpl::print_comment_list_impl);
+            add->clicked().connect(add, &Wt::WWidget::hide);
+            add->clicked().connect(add, &Wt::WWidget::disable);
+        }
+        t.commit();
+    }
+
+    void print_comment_list_impl() {
+        dbo::Transaction t(tApp->session());
+        CommentPtr comment_base = game_.modify()->comment_base();
+        new CommentList(comment_base, CommentList::CHAT, this);
+        t.commit();
+    }
 };
 
 GameWidget::GameWidget(const GamePtr& game, Wt::WContainerWidget* parent) :
