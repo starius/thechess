@@ -18,8 +18,18 @@ namespace thechess {
 /** Widget containing a list of comments */
 class CommentList : public Wt::WContainerWidget {
 public:
+    /** The type of commenting */
+    enum CommentType {
+        CHAT, /**< One line messages */
+        FORUM /**< Large texts */
+    };
+
     /** Constructor */
-    CommentList(const CommentPtr& root, Wt::WContainerWidget* parent = 0);
+    CommentList(const CommentPtr& root, CommentType type,
+                Wt::WContainerWidget* parent = 0);
+
+private:
+    CommentType type_;
 };
 
 }

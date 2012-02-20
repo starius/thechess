@@ -13,7 +13,7 @@
 namespace thechess {
 
 const int COMMENT_WIDTH = 700;
-const int COMMENT_HEIGHT = 200;
+const int COMMENT_ROW_HEIGHT_FORUM = 200;
 
 class CommentView : public Wt::WTableView {
 public:
@@ -22,7 +22,6 @@ public:
         setModel(model);
         resize(770, 450);
         setColumnWidth(CommentModel::CONTENTS_COLUMN, COMMENT_WIDTH);
-        setRowHeight(COMMENT_HEIGHT);
         setHeaderHeight(0);
         if (model->rowCount()) {
             int row = model->rowCount() - 1;
@@ -32,10 +31,17 @@ public:
     }
 };
 
-CommentList::CommentList(const CommentPtr& root, Wt::WContainerWidget* parent):
-    Wt::WContainerWidget(parent) {
+CommentList::CommentList(const CommentPtr& root, CommentType type,
+                         Wt::WContainerWidget* parent):
+    Wt::WContainerWidget(parent),
+    type_(type) {
     CommentModel* model = new CommentModel(root, this);
-    new CommentView(model, this);
+    CommentView* view = new CommentView(model, this);
+    if (type == CHAT) {
+        view->setAlternatingRowColors(true);
+    } else {
+        view->setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
+    }
 }
 
 }
