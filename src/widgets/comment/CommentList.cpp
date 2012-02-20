@@ -20,6 +20,7 @@ namespace thechess {
 
 const int COMMENT_WIDTH = 700;
 const int COMMENT_ROW_HEIGHT_FORUM = 200;
+const int COMMENT_CHAT_LENGTH = 80;
 
 class CommentView : public Wt::WTableView {
 public:
@@ -47,6 +48,7 @@ CommentList::CommentList(const CommentPtr& root, CommentType type,
         view->setAlternatingRowColors(true);
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
+        line_edit->setTextSize(COMMENT_CHAT_LENGTH);
     } else {
         view->setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
         edit_ = new Wt::WTextEdit(this);
