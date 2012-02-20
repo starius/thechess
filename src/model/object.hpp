@@ -24,6 +24,7 @@ enum ObjectType {
     NOEVENT,
     GAME,
     USER,
+    COMMENT,
     COMPETITION
 };
 
