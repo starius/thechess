@@ -7,6 +7,7 @@
 
 #include <boost/bind.hpp>
 
+#include <Wt/WEnvironment>
 #include <Wt/WTableView>
 #include <Wt/WPushButton>
 #include <Wt/WLineEdit>
@@ -94,6 +95,9 @@ void CommentList::add_comment(const CommentPtr& parent) {
     t.commit();
     edit_->setValueText("");
     tNot->emit(new Object(COMMENT, root.id()));
+    if (!wApp->environment().ajax()) {
+        comment_model()->reload();
+    }
 }
 
 }
