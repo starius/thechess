@@ -22,7 +22,7 @@ const int COMMENT_WIDTH = 700;
 const int COMMENT_ROW_HEIGHT_FORUM = 200;
 const int COMMENT_CHAT_LENGTH = 80;
 
-class CommentView : public Wt::WTableView {
+class CommentList::CommentView : public Wt::WTableView {
 public:
     CommentView(CommentModel* model, Wt::WContainerWidget* p = 0):
         Wt::WTableView(p) {
@@ -43,16 +43,16 @@ CommentList::CommentList(const CommentPtr& root, CommentType type,
     Wt::WContainerWidget(parent),
     type_(type) {
     CommentModel* model = new CommentModel(root, this);
-    CommentView* view = new CommentView(model, this);
+    view_ = new CommentView(model, this);
     if (type == CHAT) {
-        view->setAlternatingRowColors(true);
+        view_->setAlternatingRowColors(true);
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
         edit_->enterPressed().connect(boost::bind(&CommentList::add_comment,
                                       this, root));
         line_edit->setTextSize(COMMENT_CHAT_LENGTH);
     } else {
-        view->setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
+        view_->setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
         edit_ = new Wt::WTextEdit(this);
     }
     Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);

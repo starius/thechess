@@ -29,7 +29,10 @@ public:
                 Wt::WContainerWidget* parent = 0);
 
 private:
+    class CommentView;
+
     CommentType type_;
+    CommentView* view_;
     Wt::WFormWidget* edit_;
 
     void add_comment(const CommentPtr& parent);
