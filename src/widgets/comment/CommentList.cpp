@@ -48,6 +48,8 @@ CommentList::CommentList(const CommentPtr& root, CommentType type,
         view->setAlternatingRowColors(true);
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
+        edit_->enterPressed().connect(boost::bind(&CommentList::add_comment,
+                                      this, root));
         line_edit->setTextSize(COMMENT_CHAT_LENGTH);
     } else {
         view->setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
