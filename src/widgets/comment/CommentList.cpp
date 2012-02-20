@@ -79,6 +79,7 @@ void CommentList::add_comment(const CommentPtr& parent) {
     }
     CommentPtr root = parent->root();
     t.commit();
+    edit_->setValueText("");
 }
 
 }
