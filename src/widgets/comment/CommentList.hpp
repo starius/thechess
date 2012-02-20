@@ -13,11 +13,12 @@
 
 #include "model/all.hpp"
 #include "widgets/global.hpp"
+#include "notify.hpp"
 
 namespace thechess {
 
 /** Widget containing a list of comments */
-class CommentList : public Wt::WContainerWidget {
+class CommentList : public Wt::WContainerWidget, public Notifiable {
 public:
     /** The type of commenting */
     enum CommentType {
@@ -28,6 +29,9 @@ public:
     /** Constructor */
     CommentList(const CommentPtr& root, CommentType type,
                 Wt::WContainerWidget* parent = 0);
+
+    /** Update widget with new/changed comments */
+    virtual void notify(EventPtr);
 
 private:
     class CommentView;

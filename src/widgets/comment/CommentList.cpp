@@ -46,6 +46,7 @@ public:
 CommentList::CommentList(const CommentPtr& root, CommentType type,
                          Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent),
+    Notifiable(Object(COMMENT, root.id()), tNot),
     type_(type) {
     CommentModel* model = new CommentModel(root, this);
     view_ = new CommentView(model, this);
@@ -64,6 +65,10 @@ CommentList::CommentList(const CommentPtr& root, CommentType type,
     add->clicked().connect(boost::bind(&CommentList::add_comment, this, root));
 }
 
+void CommentList::notify(EventPtr) {
+    comment_model()->reload();
+}
+
 CommentModel* CommentList::comment_model() const {
     return view_->comment_model();
 }
@@ -80,6 +85,7 @@ void CommentList::add_comment(const CommentPtr& parent) {
     CommentPtr root = parent->root();
     t.commit();
     edit_->setValueText("");
+    tNot->emit(new Object(COMMENT, root.id()));
 }
 
 }
