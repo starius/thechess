@@ -28,6 +28,14 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
     return BaseQM::data(index, role);
 }
 
+Wt::WFlags<Wt::ItemFlag> CommentModel::flags(const Wt::WModelIndex& i) const {
+    Wt::WFlags<Wt::ItemFlag> f = BaseQM::flags(i);
+    if (i.column() == CONTENTS_COLUMN) {
+        f |= Wt::ItemIsXHTMLText;
+    }
+    return f;
+}
+
 Wt::WString CommentModel::contents(const CommentPtr& comment) {
     return comment->text(); // TODO
 }

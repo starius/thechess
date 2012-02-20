@@ -40,6 +40,9 @@ public:
     boost::any data(const Wt::WModelIndex& index,
                     int role = Wt::DisplayRole) const;
 
+    /** Flags of columns */
+    Wt::WFlags<Wt::ItemFlag> flags(const Wt::WModelIndex& i) const;
+
     /** Return html comment representation */
     static Wt::WString contents(const CommentPtr& comment);
 
