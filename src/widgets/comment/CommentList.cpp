@@ -32,7 +32,7 @@ public:
         resize(770, 450);
         setColumnWidth(CommentModel::CONTENTS_COLUMN, COMMENT_WIDTH);
         setHeaderHeight(0);
-        show_last();
+        show_last(); // FIXME has no effect in google chrome
     }
 
     void show_last() {
