@@ -12,6 +12,7 @@
 #include <Wt/WContainerWidget>
 
 #include "model/all.hpp"
+#include "widgets/global.hpp"
 
 namespace thechess {
 
@@ -34,6 +35,8 @@ private:
     CommentType type_;
     CommentView* view_;
     Wt::WFormWidget* edit_;
+
+    CommentModel* comment_model() const;
 
     void add_comment(const CommentPtr& parent);
 };

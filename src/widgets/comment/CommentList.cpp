@@ -11,6 +11,7 @@
 #include <Wt/WPushButton>
 #include <Wt/WLineEdit>
 #include <Wt/WTextEdit>
+#include <Wt/Wc/util.hpp>
 
 #include "Application.hpp"
 #include "widgets/comment/CommentList.hpp"
@@ -36,6 +37,10 @@ public:
             scrollTo(model->index(row, column));
         }
     }
+
+    CommentModel* comment_model() const {
+        return downcast<CommentModel*>(model());
+    }
 };
 
 CommentList::CommentList(const CommentPtr& root, CommentType type,
@@ -57,6 +62,10 @@ CommentList::CommentList(const CommentPtr& root, CommentType type,
     }
     Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
     add->clicked().connect(boost::bind(&CommentList::add_comment, this, root));
+}
+
+CommentModel* CommentList::comment_model() const {
+    return view_->comment_model();
 }
 
 void CommentList::add_comment(const CommentPtr& parent) {
