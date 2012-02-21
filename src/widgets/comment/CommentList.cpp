@@ -14,9 +14,9 @@
 #include <Wt/WTextEdit>
 #include <Wt/Wc/util.hpp>
 
-#include "Application.hpp"
 #include "widgets/comment/CommentList.hpp"
 #include "widgets/comment/CommentModel.hpp"
+#include "Application.hpp"
 
 namespace thechess {
 
