@@ -12,9 +12,6 @@
 
 #include <Wt/WContainerWidget>
 #include <Wt/WCheckBox>
-#include <Wt/Dbo/Query>
-
-#include "model/all.hpp"
 
 namespace thechess {
 
