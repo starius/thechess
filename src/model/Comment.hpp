@@ -8,7 +8,7 @@
 #ifndef THECHESS_MODEL_COMMENT_HPP_
 #define THECHESS_MODEL_COMMENT_HPP_
 
-#include "model/global.hpp"
+#include "model/model.hpp"
 
 namespace thechess {
 

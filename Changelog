@@ -1,3 +1,7 @@
+2012-01-21:
+    * move non-declarative code from model/global.hpp to model/model.hpp
+
+
 2012-01-29:
     * use Gather system from wt-classes
     * add model BD to store information, produced by Gather

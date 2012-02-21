@@ -10,7 +10,7 @@
 
 #include <Wt/Dbo/Query>
 
-#include "model/global.hpp"
+#include "model/model.hpp"
 
 namespace thechess {
 

@@ -9,6 +9,7 @@
 #define TC_MODEL_ALL_HPP_
 
 #include "model/global.hpp"
+#include "model/model.hpp"
 #include "model/User.hpp"
 #include "model/GP.hpp"
 #include "model/Game.hpp"

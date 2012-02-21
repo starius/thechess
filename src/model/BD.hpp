@@ -10,7 +10,7 @@
 
 #include <boost/tuple/tuple.hpp>
 
-#include "model/global.hpp"
+#include "model/model.hpp"
 
 namespace thechess {
 

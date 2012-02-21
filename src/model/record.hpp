@@ -8,7 +8,7 @@
 #ifndef THECHESS_MODEL_RECORD_HPP_
 #define THECHESS_MODEL_RECORD_HPP_
 
-#include "model/global.hpp"
+#include "model/model.hpp"
 
 namespace thechess {
 

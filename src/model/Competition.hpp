@@ -10,7 +10,7 @@
 
 #include <map>
 
-#include "model/global.hpp"
+#include "model/model.hpp"
 #include "model/record.hpp"
 
 namespace thechess {

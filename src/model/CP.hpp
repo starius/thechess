@@ -8,7 +8,7 @@
 #ifndef THECHESS_MODEL_COMPETITION_PARAMETERS_HPP_
 #define THECHESS_MODEL_COMPETITION_PARAMETERS_HPP_
 
-#include "model/global.hpp"
+#include "model/model.hpp"
 #include "model/record.hpp"
 
 namespace thechess {
