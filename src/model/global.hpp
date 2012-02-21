@@ -399,7 +399,7 @@ typedef Wt::Auth::Dbo::UserDatabase<AuthInfo> UserDatabase;
 
 /* @} */
 
-/** \name Auth */
+/** \name Planning server */
 /* @{ */
 
 namespace thechess {
