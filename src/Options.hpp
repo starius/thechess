@@ -12,6 +12,8 @@
 
 #include <Wt/WServer>
 
+#include "thechess-global.hpp"
+
 namespace thechess {
 
 /** Settings of thechess program.
@@ -21,13 +23,6 @@ The configuration is read from wt_config.xml (Runtime Properties section).
 */
 class Options {
 public:
-
-    /** Wt::Dbo backend type */
-    enum DatabaseType {
-        POSTGRES, /**< Postgres */
-        SQLITE3   /**< Sqlite3 */
-    };
-
     /** Constructor */
     Options(const Wt::WServer& server);
 

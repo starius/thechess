@@ -10,7 +10,7 @@
 
 #include "utils/time_intervals.hpp"
 #include "model/global.hpp"
-#include "Options.hpp"
+#include "thechess-global.hpp"
 
 namespace thechess {
 
@@ -86,7 +86,7 @@ const double PAUSE_FACTOR = 0.5;
 /** Default Wt::Dbo backend.
 \sa Options::database_type()
 */
-const Options::DatabaseType DATABASE_TYPE = Options::SQLITE3;
+const DatabaseType DATABASE_TYPE = SQLITE3;
 
 /** Default value of Wt::Dbo backend configuration.
  - For Sqlite3, path to database

@@ -34,7 +34,7 @@ Options::Options(const Wt::WServer& server):
     read_int_value("connections_in_pool", connections_in_pool_);
 }
 
-Options::DatabaseType Options::database_type() const {
+DatabaseType Options::database_type() const {
     return database_type_;
 }
 

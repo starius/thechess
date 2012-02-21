@@ -70,9 +70,9 @@ void Session::reconsider(Server& server) {
 
 dbo::SqlConnection* Session::new_connection(const Options& options) {
     dbo::SqlConnection* connection;
-    if (options.database_type() == Options::POSTGRES) {
+    if (options.database_type() == POSTGRES) {
         connection = new dbo::backend::Postgres(options.database_value());
-    } else if (options.database_type() == Options::SQLITE3) {
+    } else if (options.database_type() == SQLITE3) {
         std::string path = expand_path(options.database_value());
         connection = new dbo::backend::Sqlite3(path);
         connection->executeSql("PRAGMA synchronous = normal");

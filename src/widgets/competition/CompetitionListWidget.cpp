@@ -18,6 +18,7 @@
 
 #include "widgets/competition/CompetitionListWidget.hpp"
 #include "model/all.hpp"
+#include "thechess-global.hpp"
 #include "Application.hpp"
 
 namespace thechess {
@@ -77,12 +78,12 @@ public:
     }
 
     void set_query(bool only_my = false) {
-        Options::DatabaseType t = tApp->server().options().database_type();
+        DatabaseType t = tApp->server().options().database_type();
         std::stringstream sql;
         sql << "select C, ";
-        if (t == Options::POSTGRES) {
+        if (t == POSTGRES) {
             sql << "array_to_string(array_agg(distinct W.username), ', '), ";
-        } else if (t == Options::SQLITE3) {
+        } else if (t == SQLITE3) {
             sql << "group_concat(distinct W.username), ";
         }
         sql << "count(distinct M.thechess_user_id), ";

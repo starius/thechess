@@ -27,6 +27,12 @@ class Path;
 class Server;
 class Session;
 
+/** Wt::Dbo backend type */
+enum DatabaseType {
+    POSTGRES, /**< Postgres */
+    SQLITE3   /**< Sqlite3 */
+};
+
 }
 
 #endif
