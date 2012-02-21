@@ -218,13 +218,16 @@ typedef Wt::Auth::Dbo::UserDatabase<AuthInfo> UserDatabase;
 
 /* @} */
 
-/** \name Planning server */
+/** \name Models-related classes */
 /* @{ */
 
 namespace thechess {
 
-/** Planning server */
 class Planning;
+class StagedCompetition;
+class Record;
+class Object;
+class EloPlayer;
 
 }
 
