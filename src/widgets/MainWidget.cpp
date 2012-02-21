@@ -12,6 +12,7 @@
 #include <Wt/Wc/util.hpp>
 #include <Wt/Wc/SWFStore.hpp>
 
+#include "model/all.hpp"
 #include "widgets/MainWidget.hpp"
 #include "widgets/MainMenu.hpp"
 #include "widgets/game/MyGamesList.hpp"

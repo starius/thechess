@@ -11,7 +11,7 @@
 #include <Wt/WGlobal>
 #include <Wt/WContainerWidget>
 
-#include "model/all.hpp"
+#include "model/global.hpp"
 #include "widgets/global.hpp"
 #include "notify.hpp"
 

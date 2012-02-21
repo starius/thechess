@@ -6,6 +6,7 @@
  */
 
 #include "widgets/competition/StagedCompetitionGraph.hpp"
+#include "model/all.hpp"
 
 namespace thechess {
 

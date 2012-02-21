@@ -10,7 +10,7 @@
 
 #include <Wt/Wc/FilterResource.hpp>
 
-#include "model/all.hpp"
+#include "model/global.hpp"
 
 namespace thechess {
 

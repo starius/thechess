@@ -13,7 +13,7 @@
 #include <Wt/Wc/global.hpp>
 
 #include "thechess-global.hpp"
-#include "model/all.hpp"
+#include "model/global.hpp"
 #include "widgets/global.hpp"
 
 namespace thechess {

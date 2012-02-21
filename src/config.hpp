@@ -9,7 +9,7 @@
 #define THECHESS_CONFIG_H_
 
 #include "utils/time_intervals.hpp"
-#include "model/all.hpp"
+#include "model/global.hpp"
 #include "Options.hpp"
 
 namespace thechess {

@@ -16,6 +16,7 @@
 
 #include "widgets/comment/CommentList.hpp"
 #include "widgets/comment/CommentModel.hpp"
+#include "model/global.hpp"
 #include "Application.hpp"
 
 namespace thechess {
