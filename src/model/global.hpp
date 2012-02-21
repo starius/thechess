@@ -22,10 +22,10 @@
 #include <Wt/Auth/Dbo/UserDatabase>
 #include <Wt/Wc/TimeDurationDbo.hpp>
 #include <Wt/Wc/Gather.hpp>
+#include <Wt/Wc/Planning.hpp>
 
 #include "utils/time_intervals.hpp"
 #include "model/elo_player.hpp"
-#include "model/object.hpp"
 #include "chess/Moves.hpp"
 
 namespace dbo = Wt::Dbo;
@@ -364,6 +364,15 @@ const Classification CLASSIFICATIONS[] = {
 
 /** Length of CLASSIFICATIONS */
 const int CLASSIFICATIONS_SIZE = 16;
+
+/** Model type */
+enum ObjectType {
+    NOEVENT,
+    GAME,
+    USER,
+    COMMENT,
+    COMPETITION
+};
 
 }
 

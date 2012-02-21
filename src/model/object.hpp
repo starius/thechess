@@ -15,18 +15,11 @@
 #include <Wt/Wc/Notify.hpp>
 #include <Wt/Wc/Planning.hpp>
 
+#include "model/global.hpp"
+
 namespace dbo = Wt::Dbo;
 
 namespace thechess {
-
-/** Model type */
-enum ObjectType {
-    NOEVENT,
-    GAME,
-    USER,
-    COMMENT,
-    COMPETITION
-};
 
 /** Struct referencing any instance of any changable model.
 
