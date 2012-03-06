@@ -31,10 +31,12 @@ class MainMenu;
 class MainWidget;
 class MovesWidget;
 class MyGamesList;
+class PgnResource;
 class RatingChanges;
 class RecordWidgetBase;
 class StagedCompetitionGraph;
 class UserWidget;
+class VirtualsWidget;
 
 }
 
