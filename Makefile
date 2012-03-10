@@ -32,12 +32,13 @@ endif
 
 CXX = ccache g++
 LINK = g++
-LIBS += -lcrypt -lpthread
-LIBS += -lboost_signals -lboost_regex -lboost_system -lboost_thread
-LIBS += -lboost_filesystem
-LIBS += -lwt -lwtdbo -lwtdbosqlite3 -lwtdbopostgres
-LIBS += -lwt$(MODE)
 LIBS += -lwtclasses
+LIBS += -lwt$(MODE)
+LIBS += -lwtdbosqlite3 -lwtdbopostgres -lwtdbo
+LIBS += -lwt
+LIBS += -lboost_filesystem
+LIBS += -lboost_signals -lboost_regex -lboost_system -lboost_thread
+LIBS += -lcrypt -lpthread
 CXXFLAGS += -pipe -Wall -W
 CXXFLAGS += -I$(BUILD) -Isrc
 ifeq ($(BUILD), debug)
@@ -107,11 +108,11 @@ $(BUILD)/%.d: $$(tosource)
 $(EXE): $$(sources) $$(headers) $$(makefiles) $$(objects) $$(downloaded)
 	mkdir -p $(dir $@)
 ifeq (,$(NOOBJECTS))
-	$(LINK) $(LFLAGS) $(LIBS) $(objects) -o $@
+	$(LINK) $(LFLAGS) $(objects) $(LIBS) -o $@
 else
-	$(CXX) $(LFLAGS) $(LIBS) $(CXXFLAGS) \
+	$(CXX) $(LFLAGS) $(CXXFLAGS) \
 		$(addprefix -include ,$(filter-out $(firstword $(sources)),$(sources))) \
-		$(firstword $(sources)) -o $@
+		$(firstword $(sources)) $(LIBS) -o $@
 endif
 ifeq ($(BUILD), release)
 	upx -9 $@
