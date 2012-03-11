@@ -43,6 +43,8 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
                                 "locales/thechess");
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/wtclasses/wtclasses");
+    messageResourceBundle().use(Wt::WApplication::appRoot() +
+                                "locales/wt");
     setCssTheme("polished");
     session().login().changed().connect(this, &Application::login_handler);
     login_handler();
