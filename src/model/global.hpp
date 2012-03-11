@@ -229,6 +229,8 @@ class Record;
 class Object;
 class EloPlayer;
 
+template<typename T> struct WhiteBlack;
+
 }
 
 /* @} */
