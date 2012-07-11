@@ -6,6 +6,7 @@
  */
 
 #include <Wt/WServer>
+#include <Wt/WIOService>
 
 #include "Server.hpp"
 #include "tests.hpp"
