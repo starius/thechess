@@ -567,7 +567,7 @@ const Moves& Game::init_moves() const {
 }
 
 int Game::size_without_init() const {
-    return size() - init_moves().size() ;
+    return size() - init_moves().size();
 }
 
 bool Game::meet_first_draw() const {
