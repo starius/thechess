@@ -138,6 +138,7 @@ private:
     void open_user();
     void open_game();
     void open_competition();
+    void open_board();
 };
 
 }

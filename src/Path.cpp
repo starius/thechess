@@ -50,6 +50,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     competition_list_->opened().connect(mw, &MainWidget::competition_list);
     competition_view_->opened().connect(this, &Path::open_competition);
     competition_new_->opened().connect(mw, &MainWidget::competition_new);
+    board_->opened().connect(this, &Path::open_board);
 }
 
 void Path::open_user() {
@@ -83,6 +84,10 @@ void Path::open_competition() {
     } catch (dbo::ObjectNotFoundException)
     { }
     t.commit();
+}
+
+void Path::open_board() {
+    main_widget_->board_view(board_->string());
 }
 
 }
