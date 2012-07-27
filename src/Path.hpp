@@ -103,6 +103,18 @@ public:
         return cp_new_;
     }
 
+    /** Root of board URL's */
+    url::PredefinedNode* board_root() const {
+        return board_root_;
+    }
+
+    /** Board URL.
+    Parameter: Board::to_string()
+    */
+    url::StringNode* board() const {
+        return board_;
+    }
+
 private:
     MainWidget* main_widget_;
     url::PredefinedNode* user_list_;
@@ -120,6 +132,8 @@ private:
     url::PredefinedNode* cp_list_;
     url::IntegerNode* cp_view_;
     url::PredefinedNode* cp_new_;
+    url::PredefinedNode* board_root_;
+    url::StringNode* board_;
 
     void open_user();
     void open_game();
