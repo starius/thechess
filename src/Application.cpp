@@ -133,8 +133,8 @@ void Application::set_auth_widget() {
 #if WT_MINOR==0x0
     // Wt 3.2.0
     AuthWidget* w = new AuthWidget(server().auth_service(),
-                                  session().user_database(),
-                                  session().login());
+                                   session().user_database(),
+                                   session().login());
     w->addPasswordAuth(&server().password_service());
 #else
     AuthModel* m = new AuthModel(server().auth_service(),
