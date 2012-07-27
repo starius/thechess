@@ -23,6 +23,7 @@
 #include <Wt/WTable>
 #include <Wt/WTemplate>
 #include <Wt/WText>
+#include <Wt/WAnchor>
 #include <Wt/WWidget>
 #include <Wt/WViewWidget>
 #include <Wt/WBreak>
@@ -33,6 +34,8 @@
 #include "widgets/chess/BoardWidget.hpp"
 #include "chess/HalfMove.hpp"
 #include "chess/Piece.hpp"
+#include "Application.hpp"
+#include "Path.hpp"
 #include "config.hpp"
 
 namespace thechess {
@@ -132,6 +135,8 @@ public:
         board_build();
         select_turn_into_ = new Wt::WContainerWidget(this);
         turn_button_place_ = new Wt::WContainerWidget(this);
+        board_anchor_ = new Wt::WAnchor("", tr("tc.common.number"),
+                                        turn_button_place_);
         Wt::WPushButton* turn_button = new Wt::WPushButton(turn_button_place_);
         turn_button->setText(tr("tc.game.Overturn_board"));
         turn_button->clicked().connect(this, &BoardWidgetImpl::turn);
@@ -143,6 +148,7 @@ public:
             boost::bind(&BoardWidgetImpl::show_lastmove, this,
                         boost::bind<bool>(&Wt::WAbstractToggleButton::isChecked,
                                           lastmove_box_)));
+        update_board_anchor();
     }
 
     const char* xml_message() {
@@ -176,6 +182,7 @@ public:
         if (active_) {
             modify();
         }
+        update_board_anchor();
     }
 
     void bottom_set(Piece::Color bottom) {
@@ -222,6 +229,7 @@ private:
     DnDPiece* images_[64];
     Wt::WImage* draggable_;
     Wt::WCheckBox* lastmove_box_;
+    Wt::WAnchor* board_anchor_;
 
     Wt::Signal<HalfMove> move_;
 
@@ -261,6 +269,12 @@ private:
             Wt::WImage* img = image_at(square);
             img->setImageRef(BoardWidget::image(board_.piece(square), big_));
         }
+    }
+
+    void update_board_anchor() {
+        url::StringNode* board_node = tApp->path().board();
+        board_node->set_string(board_.to_string());
+        board_anchor_->setLink(board_node->link());
     }
 
     void modify_from() {
