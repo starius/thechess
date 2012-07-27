@@ -130,12 +130,20 @@ Application* Application::instance() {
 
 void Application::set_auth_widget() {
     using namespace Wt::Auth;
+#if WT_MINOR==0x0
+    // Wt 3.2.0
+    AuthWidget* w = new AuthWidget(server().auth_service(),
+                                  session().user_database(),
+                                  session().login());
+    w->addPasswordAuth(&server().password_service());
+#else
     AuthModel* m = new AuthModel(server().auth_service(),
                                  session().user_database(),
                                  this);
     m->addPasswordAuth(&server().password_service());
     AuthWidget* w = new AuthWidget(session().login());
     w->setModel(m);
+#endif
     w->setRegistrationEnabled(true);
     try {
         w->processEnvironment();
