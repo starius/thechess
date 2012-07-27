@@ -130,11 +130,13 @@ Application* Application::instance() {
 
 void Application::set_auth_widget() {
     using namespace Wt::Auth;
-    AuthWidget* w = new AuthWidget(server().auth_service(),
-                                   session().user_database(),
-                                   session().login());
+    AuthModel* m = new AuthModel(server().auth_service(),
+                                 session().user_database(),
+                                 this);
+    m->addPasswordAuth(&server().password_service());
+    AuthWidget* w = new AuthWidget(session().login());
+    w->setModel(m);
     w->setRegistrationEnabled(true);
-    w->addPasswordAuth(&server().password_service());
     try {
         w->processEnvironment();
     } catch (std::exception& e) {
