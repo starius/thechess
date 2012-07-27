@@ -35,8 +35,8 @@ Moves::byte Moves::q(int i) const {
 
 Square Moves::square_(int i) const {
     /*
-     0000 0000  0000 0000  0000 0000
-     0      1        2       3
+     0000 0000    0000 0000    0000 0000
+     0      1          2         3
     */
     int first = (i * 6) / 8;
     int mod_i = i % 4;
