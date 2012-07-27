@@ -47,6 +47,12 @@ public:
     /** Construct a board with start position */
     Board();
 
+    /** Construct a board from a string returned by to_string() */
+    Board(const std::string& data);
+
+    /** Return some string representation, usable in URL's */
+    std::string to_string() const;
+
     /** Apply the half-move to the board.
     The validness of half-move is not tested.
     */

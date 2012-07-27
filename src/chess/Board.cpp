@@ -11,10 +11,12 @@
 #include <cstring>
 #include <cstdlib>
 #include <cctype>
+#include <boost/algorithm/string/replace.hpp>
 
 #include "chess/Board.hpp"
 #include "chess/Square.hpp"
 #include "chess/Piece.hpp"
+#include "chess/base64.hpp"
 
 namespace thechess {
 
@@ -47,6 +49,28 @@ Board::Board() {
     order(Piece::WHITE);
     castling_reset();
     long_pawn(false);
+}
+
+Board::Board(const std::string& data) {
+    std::string data1(data);
+    boost::algorithm::replace_all(data1, "-", "+");
+    boost::algorithm::replace_all(data1, ".", "/");
+    data1 += "==";
+    std::string pieces = base64_decode(data1);
+    if (pieces.size() == sizeof(pieces_)) {
+        memcpy(pieces_, pieces.c_str(), sizeof(pieces_));
+    } else {
+        // TODO log error
+        *this = Board();
+    }
+}
+
+std::string Board::to_string() const {
+    std::string result =  base64_encode(pieces_, sizeof(pieces_));
+    boost::algorithm::replace_all(result, "+", "-");
+    boost::algorithm::replace_all(result, "/", ".");
+    boost::algorithm::replace_all(result, "=", "");
+    return result;
 }
 
 Board::byte Board::q(Square square) const {
