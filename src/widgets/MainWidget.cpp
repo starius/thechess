@@ -16,6 +16,7 @@
 #include "widgets/MainWidget.hpp"
 #include "widgets/MainMenu.hpp"
 #include "widgets/game/MyGamesList.hpp"
+#include "widgets/chess/BoardWidget.hpp"
 #include "widgets/game/GameWidget.hpp"
 #include "widgets/game/GameCreateWidget.hpp"
 #include "widgets/game/GameListWidget.hpp"
@@ -104,6 +105,12 @@ void MainWidget::competition_list() {
 
 void MainWidget::competition_new() {
     set_contents(new CompetitionCreateWidget());
+}
+
+void MainWidget::board_view(const std::string& data) {
+    set_contents(new BoardWidget(/* big */ false, /* active */ true,
+                                           /* bottom */ Piece::WHITE,
+                                           Board(data)));
 }
 
 void MainWidget::set_auth_widget(Wt::Auth::AuthWidget* widget) {

@@ -63,6 +63,9 @@ public:
     /** Create new competition */
     void competition_new();
 
+    /** View the board */
+    void board_view(const std::string& data);
+
     /** Get authentication widget.
     \attention Auth widget should be set (by Application).
     */
