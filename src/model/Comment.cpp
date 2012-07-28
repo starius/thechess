@@ -9,6 +9,8 @@
 
 #include "model/all.hpp"
 
+DBO_INSTANTIATE_TEMPLATES(thechess::Comment);
+
 namespace thechess {
 
 const double COMMENT_STEP = 1;

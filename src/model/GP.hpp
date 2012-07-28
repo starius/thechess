@@ -148,5 +148,7 @@ const int NO_DRAW = -1;
 
 }
 
+DBO_EXTERN_TEMPLATES(thechess::GP);
+
 #endif
 

@@ -14,6 +14,8 @@
 #include "model/all.hpp"
 #include "config.hpp"
 
+DBO_INSTANTIATE_TEMPLATES(thechess::Competition);
+
 namespace thechess {
 
 Competition::Competition() {

@@ -15,6 +15,8 @@
 #include "model/all.hpp"
 #include "chess/Board.hpp"
 
+DBO_INSTANTIATE_TEMPLATES(thechess::Game);
+
 namespace thechess {
 
 Game::Game() {

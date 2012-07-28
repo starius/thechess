@@ -208,5 +208,7 @@ private:
 
 }
 
+DBO_EXTERN_TEMPLATES(thechess::Comment);
+
 #endif
 

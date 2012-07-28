@@ -275,5 +275,7 @@ private:
 
 }
 
+DBO_EXTERN_TEMPLATES(thechess::Competition);
+
 #endif
 

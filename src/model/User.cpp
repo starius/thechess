@@ -15,6 +15,8 @@
 #include "model/all.hpp"
 #include "config.hpp"
 
+DBO_INSTANTIATE_TEMPLATES(thechess::User);
+
 namespace thechess {
 
 User::User(const Wt::WString& username):

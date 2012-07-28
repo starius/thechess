@@ -8,6 +8,8 @@
 #include "model/all.hpp"
 #include "config.hpp"
 
+DBO_INSTANTIATE_TEMPLATES(thechess::CP);
+
 namespace thechess {
 namespace ccd = config::competition::defaults;
 

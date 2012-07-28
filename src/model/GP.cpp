@@ -8,6 +8,8 @@
 #include "model/all.hpp"
 #include "config.hpp"
 
+DBO_INSTANTIATE_TEMPLATES(thechess::GP);
+
 namespace thechess {
 
 GP::GP() {

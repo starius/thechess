@@ -613,5 +613,7 @@ private:
 
 }
 
+DBO_EXTERN_TEMPLATES(thechess::Game);
+
 #endif
 

@@ -174,5 +174,7 @@ private:
 
 }
 
+DBO_EXTERN_TEMPLATES(thechess::User);
+
 #endif
 

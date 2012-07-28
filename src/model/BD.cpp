@@ -7,6 +7,8 @@
 
 #include "model/all.hpp"
 
+DBO_INSTANTIATE_TEMPLATES(thechess::BD);
+
 namespace thechess {
 
 BDId::BDId()
