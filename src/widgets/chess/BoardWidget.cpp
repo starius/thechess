@@ -135,8 +135,7 @@ public:
         board_build();
         select_turn_into_ = new Wt::WContainerWidget(this);
         turn_button_place_ = new Wt::WContainerWidget(this);
-        board_anchor_ = new Wt::WAnchor("", tr("tc.common.number"),
-                                        turn_button_place_);
+        board_anchor_ = new Wt::WAnchor("", "#", turn_button_place_);
         Wt::WPushButton* turn_button = new Wt::WPushButton(turn_button_place_);
         turn_button->setText(tr("tc.game.Overturn_board"));
         turn_button->clicked().connect(this, &BoardWidgetImpl::turn);
