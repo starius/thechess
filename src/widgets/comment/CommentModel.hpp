@@ -49,6 +49,11 @@ public:
     /** Return query for the MVC model */
     Query get_query() const;
 
+    /** Return root */
+    const CommentPtr& root() const {
+        return root_;
+    }
+
 private:
     CommentPtr root_;
 };

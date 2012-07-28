@@ -49,23 +49,25 @@ public:
     }
 };
 
-CommentList::CommentList(const CommentPtr& root, CommentType type,
-                         Wt::WContainerWidget* parent):
+CommentList::CommentList(const CommentPtr& root, Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent),
-    Notifiable(Object(COMMENT, root.id()), tNot),
-    type_(type) {
+    Notifiable(Object(COMMENT, root.id()), tNot) {
     CommentModel* model = new CommentModel(root, this);
     view_ = new CommentView(model, this);
-    if (type == CHAT) {
+    if (root->type() == Comment::CHAT_ROOT) {
         view_->setAlternatingRowColors(true);
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
         edit_->enterPressed().connect(boost::bind(&CommentList::add_comment,
                                       this, root));
         line_edit->setTextSize(COMMENT_CHAT_LENGTH);
-    } else {
+    } else if (root->type() == Comment::FORUM_POST_TEXT) {
         view_->setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
         edit_ = new Wt::WTextEdit(this);
+    } else if (root->type() == Comment::FORUM_TOPIC) {
+        // TODO
+    } else {
+        // log error
     }
     Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
     add->clicked().connect(boost::bind(&CommentList::add_comment, this, root));
@@ -89,10 +91,8 @@ void CommentList::add_comment(const CommentPtr& parent) {
     comment.modify()->set_parent(parent);
     comment.modify()->set_text(edit_->valueText());
     comment.modify()->set_init(tApp->user());
-    if (type_ == CommentList::CHAT) {
-        comment.modify()->set_commentable(false);
-    }
-    CommentPtr root = parent->root();
+    CommentPtr root = comment_model()->root();
+    comment.modify()->set_root(root);
     t.commit();
     edit_->setValueText("");
     tNot->emit(new Object(COMMENT, root.id()));

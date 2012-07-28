@@ -41,7 +41,7 @@ Wt::WString CommentModel::contents(const CommentPtr& comment) {
 }
 
 CommentModel::Query CommentModel::get_query() const {
-    return root_->family().find().where("state <> ?").bind(Comment::SURROGATE);
+    return root_->family().find();
 }
 
 }

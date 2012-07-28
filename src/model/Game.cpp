@@ -635,9 +635,8 @@ bool Game::has_comment_base() const {
 const CommentPtr& Game::comment_base() {
     if (!comment_base_) {
         comment_base_ = session()->add(new Comment(true));
-        comment_base_.modify()->set_state(Comment::SURROGATE);
+        comment_base_.modify()->set_type(Comment::CHAT_ROOT);
         comment_base_.flush();
-        comment_base_.modify()->set_root(comment_base_);
     }
     return comment_base_;
 }

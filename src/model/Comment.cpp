@@ -22,12 +22,37 @@ Comment::Comment()
 Comment::Comment(bool):
     index_(0),
     depth_(0),
-    commentable_(true),
-    type_(CHAT_ROOT),
+    type_(NO_TYPE),
     state_(OK),
     created_(now()),
     edited_(now())
 { }
+
+Comment::Type Comment::child_type(Comment::Type type) {
+    if (type == CHAT_ROOT) {
+        return CHAT_MESSAGE;
+    } else if (type == FORUM_TOPIC) {
+        return FORUM_POST;
+    } else if (type == FORUM_POST) {
+        return FORUM_POST_TEXT;
+    } else if (type == FORUM_POST_TEXT) {
+        return FORUM_COMMENT;
+    } else if (type == FORUM_POST_TEXT || type == FORUM_COMMENT) {
+        return FORUM_COMMENT;
+    }
+    return NO_TYPE;
+}
+
+Comment::Type Comment::root_type(Comment::Type type) {
+    if (type == CHAT_MESSAGE) {
+        return CHAT_ROOT;
+    } else if (type == FORUM_POST) {
+        return FORUM_TOPIC;
+    } else if (type == FORUM_COMMENT) {
+        return FORUM_POST_TEXT;
+    }
+    return NO_TYPE;
+}
 
 //FIXME *(collection.begin()) --> collection.front()
 // FIXME 2 if Query family_desc = root_->family().find(), orderBy() fails
@@ -51,14 +76,20 @@ void Comment::set_index() {
         double max = next->index() - COMMENT_GAP;
         Query younger = family_desc;
         younger.where("show_index < ?").bind(max);
-        CommentPtr prev = *younger.resultList().begin();
-        if (abs(prev->index() - index()) > COMMENT_GAP) {
-            index_ = (prev->index() + next->index()) / 2.0;
+        Comments younger_collection = younger.resultList();
+        if (younger_collection.size()) {
+            CommentPtr prev = *younger_collection.begin();
+            if (abs(prev->index() - index()) > COMMENT_GAP) {
+                index_ = (prev->index() + next->index()) / 2.0;
+            }
         }
     } else {
-        CommentPtr last = *family_desc.resultList().begin();
-        if (abs(last->index() - index()) > COMMENT_GAP) {
-            index_ = last->index() + COMMENT_STEP;
+        Comments family_desc_collection = family_desc.resultList();
+        if (family_desc_collection.size()) {
+            CommentPtr last = *family_desc_collection.begin();
+            if (abs(last->index() - index()) > COMMENT_GAP) {
+                index_ = last->index() + COMMENT_STEP;
+            }
         }
     }
 }
@@ -68,13 +99,9 @@ void Comment::set_text(const Wt::WString& text) {
     edited_ = now();
 }
 
-void Comment::set_parent(const CommentPtr& parent, bool set_index,
-                         bool set_root) {
+void Comment::set_parent(const CommentPtr& parent, bool set_index) {
     parent_ = parent;
     depth_ = parent->depth() + 1;
-    if (set_root) {
-        root_ = parent->root();
-    }
     if (set_index) {
         this->set_index();
     }

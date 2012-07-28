@@ -20,15 +20,8 @@ namespace thechess {
 /** Widget containing a list of comments */
 class CommentList : public Wt::WContainerWidget, public Notifiable {
 public:
-    /** The type of commenting */
-    enum CommentType {
-        CHAT, /**< One line messages */
-        FORUM /**< Large texts */
-    };
-
     /** Constructor */
-    CommentList(const CommentPtr& root, CommentType type,
-                Wt::WContainerWidget* parent = 0);
+    CommentList(const CommentPtr& root, Wt::WContainerWidget* parent = 0);
 
     /** Update widget with new/changed comments */
     virtual void notify(EventPtr);
@@ -36,7 +29,6 @@ public:
 private:
     class CommentView;
 
-    CommentType type_;
     CommentView* view_;
     Wt::WFormWidget* edit_;
 

@@ -13,8 +13,6 @@
 namespace thechess {
 
 /** Dbo model of comment and/or a base for commenting for other models.
-The comment may be \ref SURROGATE "surrogate" -- created
-to hold all comments of a game or other model.
 
 \ingroup model
 */
@@ -22,6 +20,7 @@ class Comment : public dbo::Dbo<Comment> {
 public:
     /** The type of comment */
     enum Type {
+        NO_TYPE = 0, /**< Invalid type. E.g., child_type(CHAT_MESSAGE) */
         CHAT_ROOT = 50, /**< Commentable by CHAT_MESSAGE; no author or text */
         CHAT_MESSAGE = 55, /**< Non-commentable; one line; root=CHAT_ROOT */
         FORUM_TOPIC = 60, /**< Commentable by FORUM_POST; one-line */
@@ -36,8 +35,7 @@ public:
     enum State {
         OK = 10, /**< Ok, message is shown (default value) */
         DELETED = 20, /**< Message is bad (hidden) */
-        DRAFT = 30, /**< Suspicious message (pre-moderation) */
-        SURROGATE = 40 /**< Created only to inherit from (no author or text) */
+        DRAFT = 30 /**< Suspicious message (pre-moderation) */
     };
 
     /** Constructor for Wt::Dbo internal usage */
@@ -45,6 +43,12 @@ public:
 
     /** Create instance to be added to database */
     Comment(bool);
+
+    /** Return type of children */
+    static Type child_type(Type type);
+
+    /** Return type of root */
+    static Type root_type(Type type);
 
     /** Get sorting index.
     The order of indices of a branch should correspond
@@ -71,16 +75,6 @@ public:
     */
     int depth() const {
         return depth_;
-    }
-
-    /** Get if the comment can be commented (used as a parent) */
-    bool commentable() const {
-        return commentable_;
-    }
-
-    /** Set if the comment can be commented (default value is true) */
-    void set_commentable(bool commentable) {
-        commentable_ = commentable;
     }
 
     /** Get type */
@@ -123,9 +117,7 @@ public:
         init_ = init;
     }
 
-    /** Get the root comment.
-    Root of root comment is the root itself (not null).
-    */
+    /** Get the root comment */
     const CommentPtr& root() const {
         return root_;
     }
@@ -135,21 +127,16 @@ public:
         root_ = root;
     }
 
-    /** Get the parent comment.
-    If the parent is not set, this means the comment is a root.
-    In this case its state may be SURROGATE.
-    */
+    /** Get the parent comment */
     const CommentPtr& parent() const {
         return parent_;
     }
 
     /** Set the parent comment.
     \param set_index If the index should be also set (using set_index()).
-    \param set_root If the root should be also set.
     This method also sets depth().
     */
-    void set_parent(const CommentPtr& parent, bool set_index = true,
-                    bool set_root = true);
+    void set_parent(const CommentPtr& parent, bool set_index = true);
 
     /** Get creation time */
     const Wt::WDateTime& created() const {
@@ -176,7 +163,6 @@ public:
     void persist(Action& a) {
         dbo::field(a, index_, "show_index");
         dbo::field(a, depth_, "depth");
-        dbo::field(a, commentable_, "commentable");
         dbo::field(a, type_, "type");
         dbo::field(a, state_, "state");
         dbo::field(a, text_, "text");
@@ -192,7 +178,6 @@ public:
 private:
     double index_;
     int depth_;
-    bool commentable_;
     Type type_;
     State state_;
     Wt::WString text_;
