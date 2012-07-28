@@ -1,28 +1,7 @@
 syntax: glob
 
-*.o
-*.wt
-
 *.swp
 
 *.orig
 *.org
-
-debug/
-build/
-release/
-doc/
-
-*.db
-
-*.png
-
-
-utils/TableForm.*
-files/css/table_form.css
-locales-test.py
-wt.xml
-auth.xml
-jquery-countdown/countdown2
-jquery.countdown.pack.js
 
