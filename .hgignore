@@ -19,7 +19,6 @@ doc/
 
 
 utils/TableForm.*
-*CPSelector*
 files/css/table_form.css
 locales-test.py
 wt.xml
