@@ -20,6 +20,18 @@ to hold all comments of a game or other model.
 */
 class Comment : public dbo::Dbo<Comment> {
 public:
+    /** The type of comment */
+    enum Type {
+        CHAT_ROOT = 50, /**< Commentable by CHAT_MESSAGE; no author or text */
+        CHAT_MESSAGE = 55, /**< Non-commentable; one line; root=CHAT_ROOT */
+        FORUM_TOPIC = 60, /**< Commentable by FORUM_POST; one-line */
+        FORUM_POST = 70, /**< Commentable by FORUM_POST_TEXT; one-line;
+                              root=FORUM_TOPIC */
+        FORUM_POST_TEXT = 71, /**< Commentable by FORUM_COMMENT; multi-line */
+        FORUM_COMMENT = 75 /**< Commentable by FORUM_COMMENT; multi-line;
+                                root=FORUM_POST_TEXT */
+    };
+
     /** The state of comment */
     enum State {
         OK = 10, /**< Ok, message is shown (default value) */
@@ -69,6 +81,16 @@ public:
     /** Set if the comment can be commented (default value is true) */
     void set_commentable(bool commentable) {
         commentable_ = commentable;
+    }
+
+    /** Get type */
+    Type type() const {
+        return type_;
+    }
+
+    /** Set type */
+    void set_type(Type type) {
+        type_ = type;
     }
 
     /** Get state */
@@ -155,6 +177,7 @@ public:
         dbo::field(a, index_, "show_index");
         dbo::field(a, depth_, "depth");
         dbo::field(a, commentable_, "commentable");
+        dbo::field(a, type_, "type");
         dbo::field(a, state_, "state");
         dbo::field(a, text_, "text");
         dbo::belongsTo(a, init_, "init");
@@ -170,6 +193,7 @@ private:
     double index_;
     int depth_;
     bool commentable_;
+    Type type_;
     State state_;
     Wt::WString text_;
     UserPtr init_;

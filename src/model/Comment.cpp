@@ -21,6 +21,7 @@ Comment::Comment(bool):
     index_(0),
     depth_(0),
     commentable_(true),
+    type_(CHAT_ROOT),
     state_(OK),
     created_(now()),
     edited_(now())
