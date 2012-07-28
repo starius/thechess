@@ -1,3 +1,19 @@
+2012-06-28:
+    * add field "type" to Comment
+    * add "extern template" to models to speed up compilation
+    * add raw versions of CPSelector.?pp (do not buuild it from GPSelector)
+    * add .gitignore -> .hgignore
+    * migrate to cmake
+
+2012-06-27:
+    * update Auth-related code to work in Wt 3.2.1
+    * add implementation of base64 by René Nyffenegger
+    * Board to_string() and construct from a string
+    * show board state at /board/<modified base64>
+
+2012-03-11:
+    * move Wt.* messages from thechess_*.xml to wt_*.xml
+
 2012-01-27:
     * rename README to README.rst (rest format)
 
