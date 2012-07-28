@@ -32,3 +32,8 @@ if(BUILD_DOC)
     subdirs(doc)
 endif()
 
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy
+    ${CMAKE_CURRENT_SOURCE_DIR}/thechess-run
+    ${CMAKE_CURRENT_BINARY_DIR}/thechess-run
+)
+
