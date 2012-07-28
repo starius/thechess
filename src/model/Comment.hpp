@@ -24,7 +24,7 @@ public:
     enum State {
         OK = 10, /**< Ok, message is shown (default value) */
         DELETED = 20, /**< Message is bad (hidden) */
-        MODERATED = 30, /**< Suspicious message */
+        DRAFT = 30, /**< Suspicious message (pre-moderation) */
         SURROGATE = 40 /**< Created only to inherit from (no author or text) */
     };
 
