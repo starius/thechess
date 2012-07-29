@@ -25,14 +25,13 @@ public:
     /** Competition type */
     typedef CompetitionType Type;
 
-#ifndef DOXYGEN_ONLY
+    /** Constructor for Wt::Dbo internal usage */
     CP();
-#endif
 
     /** Create instance to be added to database */
     CP(bool);
 
-#ifndef DOXYGEN_ONLY
+    /** Wt::Dbo persist implementation */
     template<class Action>
     void persist(Action& a) {
         Record::persist(a);
@@ -56,7 +55,6 @@ public:
         dbo::field(a, min_substages_, "min_substages");
         dbo::field(a, increment_substages_, "increment_substages");
     }
-#endif
 
     /** Get type */
     Type type() const {

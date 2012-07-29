@@ -59,9 +59,10 @@ In this case \f$E_A = \frac{Q_A}{Q_A + Q_B + Q_C + \dots} \f$.
 class EloPlayer {
 public:
 
-#ifndef DOXYGEN_ONLY
+    /** Default constructor.
+    Should be used only by Wt::Dbo itself.
+    */
     EloPlayer();
-#endif
 
     /** Constructor */
     EloPlayer(bool);

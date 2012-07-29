@@ -23,14 +23,13 @@ by multiple games and \ref CP "competition parameters".
 */
 class GP : public dbo::Dbo<GP>, public Record {
 public:
-#ifndef DOXYGEN_ONLY
+    /** Constructor for Wt::Dbo internal usage */
     GP();
-#endif
 
     /** Create instance to be added to database */
     GP(bool);
 
-#ifndef DOXYGEN_ONLY
+    /** Wt::Dbo persist implementation */
     template<class Action>
     void persist(Action& a) {
         Record::persist(a);
@@ -46,7 +45,6 @@ public:
         dbo::field(a, pause_limit_init_, "pause_limit_init");
         dbo::field(a, first_draw_, "first_draw");
     }
-#endif
 
     /** Get init moves */
     const Moves& moves() const {

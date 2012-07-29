@@ -35,9 +35,10 @@ public:
         CANCELLED = 70 /**< Cancelled */
     };
 
-#ifndef DOXYGEN_ONLY
+    /** Default constructor.
+    Should be used only by Wt::Dbo itself.
+    */
     Competition();
-#endif
 
     /** Create instance to be added to database */
     Competition(bool);
@@ -59,7 +60,7 @@ public:
     /** Return a vector of users obtained max number of wins */
     static UsersVector winners_of_games(const GamesVector& games);
 
-#ifndef DOXYGEN_ONLY
+    /** Wt::Dbo persist implementation */
     template<class Action>
     void persist(Action& a) {
         Record::persist(a);
@@ -73,7 +74,6 @@ public:
         dbo::field(a, ended_, "ended");
         dbo::hasMany(a, winners_, dbo::ManyToMany, "winners_competition");
     }
-#endif
 
     /** Get competition parameters */
     const CPPtr& cp() const {

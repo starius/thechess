@@ -39,9 +39,10 @@ public:
         NO_DRAW_STALEMATE = 65 /**< ended with stalemate, black wins */
     };
 
-#ifndef DOXYGEN_ONLY
+    /** Default constructor.
+    Should be used only by Wt::Dbo itself.
+    */
     Game();
-#endif
 
     /** \name Creation of game */
     /* @{ */
@@ -51,7 +52,7 @@ public:
     */
     Game(const GPPtr& gp);
 
-#ifndef DOXYGEN_ONLY
+    /** Wt::Dbo persist implementation */
     template<class Action>
     void persist(Action& a) {
         Record::persist(a);
@@ -80,7 +81,6 @@ public:
         dbo::field(a, rating_after_, "rating_after");
         dbo::field(a, comment_base_, "comment_base");
     }
-#endif
 
     /** Turn this game into game proposed by one user to another.
     \param init the creator of game

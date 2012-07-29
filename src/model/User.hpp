@@ -28,14 +28,15 @@ public:
         REGULAR_USER = 0
     };
 
-#ifndef DOXYGEN_ONLY
+    /** Default constructor.
+    Should be used only by Wt::Dbo itself.
+    */
     User();
-#endif
 
     /** Create instance to be added to database */
     User(const Wt::WString& username);
 
-#ifndef DOXYGEN_ONLY
+    /** Wt::Dbo persist implementation */
     template<class Action>
     void persist(Action& a) {
         dbo::field(a, username_, "username");
@@ -62,7 +63,6 @@ public:
         dbo::hasMany(a, gps_, dbo::ManyToOne, "init");
         dbo::hasMany(a, cps_, dbo::ManyToOne, "init");
     }
-#endif
 
     /** Return (first of) auth info */
     AuthInfoPtr auth_info() const;
