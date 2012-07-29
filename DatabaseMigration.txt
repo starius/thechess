@@ -1,0 +1,33 @@
+
+3.0.0 to 3.0.5
+==============
+
+Wt::Auth is now used instead of self-written code.
+Several new tables occured.
+
+Changes in existing tables:
+
+ * "members_competitions".
+   Changes order of fields "thechess_competition_id" and "thechess_user_id".
+ * "thechess_competition".
+   "init_competitions_id" renamed to "init_id".
+   Field "created" moved after "init_id".
+   Field "cp_id" moved after "created".
+   Field "gp_id" added after "cp_id".
+   Field "state" moved after "gp_id".
+ * "thechess_cp".
+   Fields "name", "description", "init_id", "created" and "parent_id"
+   added before "gp_id".
+ * "thechess_game".
+   Field "comment" renamed to "name" and moved after "version".
+   Field "description" added after "name".
+   Field "init_game_id" renamed to "init_id" and moved after "description".
+   Field "created" moved after "init_id".
+   Field "comment_base_id" added after "rating_after_black".
+ * "thechess_gp".
+   Field "init_moves" renamed to "moves_moves".
+   Fields "name", "description", "init_id", "created" and "parent_id"
+   added before "moves_moves".
+ * "thechess_user".
+   Field "password" was removed.
+
