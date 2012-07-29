@@ -28,7 +28,6 @@ Game::Game(const GPPtr& gp):
     moves_(gp_->moves()),
     competition_confirmer_(false),
     colors_random_(false),
-    created_(now()),
     competition_stage_(-1),
     pause_proposed_td_(TD_NULL),
     mistake_move_(-1),
@@ -128,7 +127,7 @@ UserPtr Game::other_user(const UserPtr& user) const {
 void Game::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
     if (state() == PROPOSED &&
             competition() && competition()->type() == STAGED &&
-            now() - created_ > competition()->cp()->relax_time()) {
+            now() - created() > competition()->cp()->relax_time()) {
         confirm();
     }
     if (state() == CONFIRMED && white()->online() && black()->online()) {
@@ -207,7 +206,7 @@ Wt::WDateTime Game::next_check() const {
                           limit_private(Piece::BLACK));
     } else if (state() == PROPOSED &&
                competition() && competition()->type() == STAGED) {
-        result = created_ + competition()->cp()->relax_time();
+        result = created() + competition()->cp()->relax_time();
     } else if (state() == CONFIRMED && competition()) {
         result = confirmed_ + competition()->cp()->force_start_delay();
     } else if (state() == PAUSE) {
@@ -217,7 +216,7 @@ Wt::WDateTime Game::next_check() const {
 }
 
 void Game::propose_game(const UserPtr& init, const UserPtr& u, Piece::Color c) {
-    init_ = init;
+    set_init(init);
     if (c == Piece::COLOR_NULL) {
         set_random_(init, u);
     } else {
@@ -227,7 +226,7 @@ void Game::propose_game(const UserPtr& init, const UserPtr& u, Piece::Color c) {
 }
 
 void Game::propose_challenge(const UserPtr& init, Piece::Color c) {
-    init_ = init;
+    set_init(init);
     if (c != Piece::COLOR_NULL) {
         set_of_color_(init, c);
     } else {
@@ -618,13 +617,17 @@ int Game::rating_after(Piece::Color color) const {
     return (color == Piece::COLOR_NULL) ? -1 : rating_after_[color];
 }
 
+const Wt::WString& Game::comment() const {
+    return name();
+}
+
 bool Game::can_comment(const UserPtr& user) const {
     return is_member(user);
 }
 
 void Game::set_comment(const UserPtr& user, const Wt::WString& t) {
     if (can_comment(user)) {
-        comment_ = t;
+        set_name(t);
     }
 }
 

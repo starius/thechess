@@ -16,7 +16,7 @@ namespace thechess {
 
 \ingroup model
 */
-class Game : public dbo::Dbo<Game> {
+class Game : public dbo::Dbo<Game>, public Record {
 public:
     /** Game state */
     enum State {
@@ -54,16 +54,15 @@ public:
 #ifndef DOXYGEN_ONLY
     template<class Action>
     void persist(Action& a) {
+        Record::persist(a);
         dbo::belongsTo(a, gp_, "gp");
         dbo::field(a, moves_, "game");
         dbo::field(a, state_, "state");
         dbo::belongsTo(a, white_, "white");
         dbo::belongsTo(a, black_, "black");
         dbo::belongsTo(a, winner_, "winner_game");
-        dbo::belongsTo(a, init_, "init_game");
         dbo::field(a, competition_confirmer_, "competition_confirmer");
         dbo::field(a, colors_random_, "colors_random");
-        dbo::field(a, created_, "created");
         dbo::field(a, confirmed_, "confirmed");
         dbo::field(a, started_, "started");
         dbo::field(a, lastmove_, "lastmove");
@@ -79,7 +78,6 @@ public:
         dbo::field(a, mistake_proposer_, "mistake_proposer");
         dbo::field(a, draw_proposer_, "draw_proposer");
         dbo::field(a, rating_after_, "rating_after");
-        dbo::field(a, comment_, "comment");
         dbo::field(a, comment_base_, "comment_base");
     }
 #endif
@@ -306,11 +304,6 @@ public:
     /** Return the active user */
     UserPtr order_user() const;
 
-    /** Return the user created the game */
-    const UserPtr& init() const {
-        return init_;
-    }
-
     /** Return the user playing white pieces */
     const UserPtr& white() const {
         return white_;
@@ -431,11 +424,6 @@ public:
         return limit_private(order_color());
     }
 
-    /** Return datetime when game was created */
-    const Wt::WDateTime& created() const {
-        return created_;
-    }
-
     /** Return datetime when game was confirmed */
     const Wt::WDateTime& confirmed() const {
         return confirmed_;
@@ -482,9 +470,7 @@ public:
     /* @{ */
 
     /** Return text of comment of this game by members of game */
-    const Wt::WString& comment() const {
-        return comment_;
-    }
+    const Wt::WString& comment() const;
 
     /** Return if the user can change the comment of the game */
     bool can_comment(const UserPtr& user) const;
@@ -558,11 +544,9 @@ private:
     UserPtr black_;
     UserPtr winner_;
 
-    UserPtr init_;
     WhiteBlack<bool> competition_confirmer_; // used with competition games only
     bool colors_random_;
 
-    Wt::WDateTime created_;
     Wt::WDateTime confirmed_;
     Wt::WDateTime started_;
     Wt::WDateTime lastmove_;
@@ -585,7 +569,6 @@ private:
 
     WhiteBlack<int> rating_after_;
 
-    Wt::WString comment_;
     CommentPtr comment_base_;
 
     void set_white_(const UserPtr& user) {

@@ -59,7 +59,7 @@ public:
         addColumn("G.started", tr("tc.game.started"));
         addColumn("GP.norating", tr("tc.game.real_rating")); // dummy
         addColumn("G.id", tr("tc.game.moves_size")); // dummy
-        addColumn("G.comment", tr("tc.game.comment"));
+        addColumn("G.name", tr("tc.game.comment"));
     }
 
     boost::any data(const Wt::WModelIndex& index,
@@ -134,7 +134,7 @@ public:
         GLP::Q q = all_games();
         if (only_my_->isChecked() && tApp->user()) {
             int id = tApp->user()->id();
-            q.where("G.white_id = ? or G.black_id = ? or G.init_game_id = ?")
+            q.where("G.white_id = ? or G.black_id = ? or G.init_id = ?")
             .bind(id).bind(id).bind(id);
         }
         q.orderBy("G.id");

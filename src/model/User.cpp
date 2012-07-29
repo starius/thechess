@@ -36,7 +36,7 @@ AuthInfoPtr User::auth_info() const {
 
 dbo::Query<GamePtr> User::games() const {
     return session()->find<Game>()
-           .where("white_id = ? or black_id = ? or init_game_id = ?")
+           .where("white_id = ? or black_id = ? or init_id = ?")
            .bind(id()).bind(id()).bind(id());
 }
 
