@@ -8,6 +8,7 @@
 #include <Wt/WBorderLayout>
 #include <Wt/WImage>
 #include <Wt/WTable>
+#include <Wt/WText>
 #include <Wt/Auth/AuthWidget>
 #include <Wt/Wc/util.hpp>
 #include <Wt/Wc/SWFStore.hpp>
@@ -36,7 +37,7 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
     setLayout(new Wt::WBorderLayout(), Wt::AlignTop | Wt::AlignJustify);
     Wt::WTable* top = new Wt::WTable();
     l()->addWidget(top, Wt::WBorderLayout::North);
-    top->elementAt(0, 0)->addWidget(new Wt::WImage("img/top.gif"));
+    top->elementAt(0, 0)->addWidget(new Wt::WText(tr("tc.common.Logo")));
     auth_widget_container_ = new Wt::WContainerWidget();
     top->elementAt(0, 1)->addWidget(auth_widget_container_);
     top->elementAt(0, 1)->setContentAlignment(Wt::AlignRight);

@@ -355,6 +355,9 @@ See locales-test manpage for more information.
     <message id='tc.common.Save'>Save</message>
     <message id='tc.common.Select_existing'>Select existing item</message>
     <message id='tc.common.winner'>winner</message>
+    <message id='tc.common.Logo'>
+        <font style='font-size: 50px; color:#2A7D4F;'>TheChess</font>
+    </message>
     <message id='tc.common.Select_or_create'>
         Please, select existing item (by clicking on it)
         or create your own.
