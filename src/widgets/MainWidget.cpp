@@ -137,6 +137,7 @@ Wt::Wc::SWFStore* MainWidget::swf_store() {
 }
 
 void MainWidget::set_swfstore(Wt::Wc::SWFStore* swfstore) {
+    swfstore->setMaximumSize(1, 1);
     bottom()->clear();
     bottom()->addWidget(swfstore);
 }
