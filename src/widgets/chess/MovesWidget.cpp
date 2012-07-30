@@ -153,7 +153,7 @@ public:
         used_moves_(0), append_only_(append_only),
         active_(active), activated_(false) {
         Wt::WHBoxLayout* layout = new Wt::WHBoxLayout();
-        setLayout(layout, Wt::AlignTop);
+        setLayout(layout);
         layout->addWidget(board_widget_ =
                               new BoardWidget(big, this->active(), bottom));
         check_activate();
@@ -187,6 +187,7 @@ public:
         moves_table_view_->setSelectionMode(Wt::SingleSelection);
         moves_table_view_->clicked().connect(this, &MovesWidgetImpl::onselect_);
         goto_move_(current_move_); // last half_move
+        layout->addStretch(1);
     }
 
     const Moves& moves() const {

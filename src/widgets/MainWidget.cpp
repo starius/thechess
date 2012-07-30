@@ -42,7 +42,7 @@ const int GAME_LIST_IN_MIDDLE = 2;
 
 MainWidget::MainWidget(Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent) {
-    setLayout(new Wt::WVBoxLayout(), Wt::AlignTop | Wt::AlignJustify);
+    setLayout(new Wt::WVBoxLayout());
     Wt::WHBoxLayout* top_layout = new Wt::WHBoxLayout();
     l()->addLayout(top_layout);
     top_layout->addWidget(new Wt::WText(tr("tc.common.Logo")));
