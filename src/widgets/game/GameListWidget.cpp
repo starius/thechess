@@ -10,6 +10,8 @@
 
 #include <Wt/WContainerWidget>
 #include <Wt/WTableView>
+#include <Wt/WVBoxLayout>
+#include <Wt/WHBoxLayout>
 #include <Wt/Dbo/Transaction>
 #include <Wt/Dbo/Query>
 #include <Wt/Dbo/QueryModel>
@@ -102,11 +104,14 @@ class GameListWidget::GameListWidgetImpl : public Wt::WContainerWidget {
 public:
     GameListWidgetImpl() :
         Wt::WContainerWidget() {
-        manager();
+        Wt::WVBoxLayout* layout = new Wt::WVBoxLayout();
+        setLayout(layout);
+        Wt::WHBoxLayout* manager_layout = new Wt::WHBoxLayout();
+        layout->addLayout(manager_layout);
+        manager(manager_layout);
         query_model_ = new GameListModel(query(), this);
-        table_view_ = new Wt::WTableView(this);
+        table_view_ = new Wt::WTableView();
         table_view_->setModel(query_model_);
-        table_view_->resize(770, 450);
         table_view_->setColumnWidth(GameListModel::N_COLUMN, 65);
         table_view_->setColumnWidth(GameListModel::WHITE_COLUMN, 75);
         table_view_->setColumnWidth(GameListModel::BLACK_COLUMN, 75);
@@ -116,6 +121,7 @@ public:
         table_view_->setColumnWidth(GameListModel::REAL_RATING_COLUMN, 40);
         table_view_->setColumnWidth(GameListModel::MOVES_SIZE_COLUMN, 40);
         table_view_->setColumnWidth(GameListModel::COMMENT_COLUMN, 120);
+        layout->addWidget(table_view_);
     }
 
     static GLP::Q all_games() {
@@ -147,16 +153,18 @@ private:
     Wt::WTableView* table_view_;
     Wt::WCheckBox* only_my_;
 
-    void manager() {
-        only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"), this);
+    void manager(Wt::WHBoxLayout* layout) {
+        only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"));
         only_my_->changed().connect(this, &GameListWidgetImpl::apply);
+        layout->addWidget(only_my_);
         if (!tApp->user()) {
             only_my_->setEnabled(false);
         }
         if (!tApp->environment().ajax()) {
             Wt::WPushButton* apply_button =
-                new Wt::WPushButton(tr("tc.common.Apply"), this);
+                new Wt::WPushButton(tr("tc.common.Apply"));
             apply_button->clicked().connect(this, &GameListWidgetImpl::apply);
+            layout->addWidget(apply_button);
         }
     }
 
