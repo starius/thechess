@@ -6,8 +6,9 @@
  */
 
 #include <Wt/WBorderLayout>
+#include <Wt/WVBoxLayout>
+#include <Wt/WHBoxLayout>
 #include <Wt/WImage>
-#include <Wt/WTable>
 #include <Wt/WText>
 #include <Wt/Auth/AuthWidget>
 #include <Wt/Wc/util.hpp>
@@ -29,38 +30,46 @@
 
 namespace thechess {
 
+const int TOP_IN_L = 0;
+const int MIDDLE_IN_L = 1;
+const int BOTTOM_IN_L = 2;
+
+const int AUTH_IN_TOP = 1;
+
+const int MENU_IN_MIDDLE = 0;
+const int CONTENTS_IN_MIDDLE = 1;
+const int GAME_LIST_IN_MIDDLE = 2;
+
 MainWidget::MainWidget(Wt::WContainerWidget* parent):
-    Wt::WContainerWidget(parent),
-    swfstore_container_(0),
-    auth_widget_container_(0),
-    auth_widget_(0) {
-    setLayout(new Wt::WBorderLayout(), Wt::AlignTop | Wt::AlignJustify);
-    Wt::WTable* top = new Wt::WTable();
-    l()->addWidget(top, Wt::WBorderLayout::North);
-    top->elementAt(0, 0)->addWidget(new Wt::WText(tr("tc.common.Logo")));
-    auth_widget_container_ = new Wt::WContainerWidget();
-    top->elementAt(0, 1)->addWidget(auth_widget_container_);
-    top->elementAt(0, 1)->setContentAlignment(Wt::AlignRight);
-    l()->addWidget(new Wt::WContainerWidget(), Wt::WBorderLayout::Center);
-    l()->addWidget(new Wt::WContainerWidget(), Wt::WBorderLayout::East);
-    swfstore_container_ = new Wt::WContainerWidget();
-    l()->addWidget(swfstore_container_, Wt::WBorderLayout::South);
+    Wt::WContainerWidget(parent) {
+    setLayout(new Wt::WVBoxLayout(), Wt::AlignTop | Wt::AlignJustify);
+    Wt::WHBoxLayout* top_layout = new Wt::WHBoxLayout();
+    l()->addLayout(top_layout);
+    top_layout->addWidget(new Wt::WText(tr("tc.common.Logo")));
+    top_layout->addLayout(new Wt::WVBoxLayout()); // auth
+    top_layout->setStretchFactor(auth(), 1);
+    Wt::WHBoxLayout* middle_layout = new Wt::WHBoxLayout();
+    l()->addLayout(middle_layout);
+    l()->setStretchFactor(middle_layout, 1);
+    middle_layout->addLayout(new Wt::WVBoxLayout()); // menu
+    middle_layout->addLayout(new Wt::WVBoxLayout()); // contents
+    middle_layout->addLayout(new Wt::WVBoxLayout()); // my games
+    middle_layout->setStretchFactor(contents(), 1);
+    l()->addLayout(new Wt::WHBoxLayout()); // bottom
 }
 
 void MainWidget::show_menu(Path* path) {
-    l()->addWidget(new MainMenu(path), Wt::WBorderLayout::West);
+    menu()->addWidget(new MainMenu(path));
 }
 
 MainMenu* MainWidget::main_menu() {
-    return downcast<MainMenu*>(l()->widgetAt(Wt::WBorderLayout::West));
+    return downcast<MainMenu*>(menu()->itemAt(0)->widget());
 }
 
 void MainWidget::update_my_games() {
-    Wt::WWidget* east_widget = l()->widgetAt(Wt::WBorderLayout::East);
-    Wt::WContainerWidget* east = downcast<Wt::WContainerWidget*>(east_widget);
-    east->clear();
+    my_games()->clear();
     if (tApp->user()) {
-        east->addWidget(new MyGamesList(tApp->user()));
+        my_games()->addWidget(new MyGamesList(tApp->user()));
     }
 }
 
@@ -114,28 +123,54 @@ void MainWidget::board_view(const std::string& data) {
                                            Board(data)));
 }
 
+Wt::Auth::AuthWidget* MainWidget::auth_widget() {
+    return downcast<Wt::Auth::AuthWidget*>(auth()->itemAt(0)->widget());
+}
+
 void MainWidget::set_auth_widget(Wt::Auth::AuthWidget* widget) {
-    auth_widget_ = widget;
-    auth_widget_container_->clear();
-    auth_widget_container_->addWidget(auth_widget_);
+    auth()->clear();
+    auth()->addWidget(widget);
 }
 
 Wt::Wc::SWFStore* MainWidget::swf_store() {
-    return downcast<Wt::Wc::SWFStore*>(swfstore_container_->widget(0));
+    return downcast<Wt::Wc::SWFStore*>(bottom()->itemAt(0)->widget());
 }
 
 void MainWidget::set_swfstore(Wt::Wc::SWFStore* swfstore) {
-    swfstore_container_->clear();
-    swfstore_container_->addWidget(swfstore);
+    bottom()->clear();
+    bottom()->addWidget(swfstore);
 }
 
-Wt::WBorderLayout* MainWidget::l() {
-    return downcast<Wt::WBorderLayout*>(layout());
+Wt::WVBoxLayout* MainWidget::l() {
+    return downcast<Wt::WVBoxLayout*>(layout());
 }
 
-Wt::WContainerWidget* MainWidget::contents() {
-    WWidget* widget = l()->widgetAt(Wt::WBorderLayout::Center);
-    return downcast<Wt::WContainerWidget*>(widget);
+Wt::WHBoxLayout* MainWidget::top() {
+    return downcast<Wt::WHBoxLayout*>(l()->itemAt(TOP_IN_L));
+}
+
+Wt::WHBoxLayout* MainWidget::middle() {
+    return downcast<Wt::WHBoxLayout*>(l()->itemAt(MIDDLE_IN_L));
+}
+
+Wt::WHBoxLayout* MainWidget::bottom() {
+    return downcast<Wt::WHBoxLayout*>(l()->itemAt(BOTTOM_IN_L));
+}
+
+Wt::WVBoxLayout* MainWidget::auth() {
+    return downcast<Wt::WVBoxLayout*>(top()->itemAt(AUTH_IN_TOP));
+}
+
+Wt::WVBoxLayout* MainWidget::menu() {
+    return downcast<Wt::WVBoxLayout*>(middle()->itemAt(MENU_IN_MIDDLE));
+}
+
+Wt::WVBoxLayout* MainWidget::contents() {
+    return downcast<Wt::WVBoxLayout*>(middle()->itemAt(CONTENTS_IN_MIDDLE));
+}
+
+Wt::WVBoxLayout* MainWidget::my_games() {
+    return downcast<Wt::WVBoxLayout*>(middle()->itemAt(GAME_LIST_IN_MIDDLE));
 }
 
 void MainWidget::set_contents(WWidget* widget) {

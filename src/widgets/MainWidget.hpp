@@ -16,6 +16,10 @@
 #include "model/global.hpp"
 #include "widgets/global.hpp"
 
+namespace Wt {
+class WHBoxLayout; // FIXME fixed in Wt 3.2.1
+}
+
 namespace thechess {
 
 /** Main Application widget */
@@ -69,9 +73,7 @@ public:
     /** Get authentication widget.
     \attention Auth widget should be set (by Application).
     */
-    Wt::Auth::AuthWidget* auth_widget() {
-        return auth_widget_;
-    }
+    Wt::Auth::AuthWidget* auth_widget();
 
     /** Set authentication widget */
     void set_auth_widget(Wt::Auth::AuthWidget* widget);
@@ -88,13 +90,17 @@ public:
     void set_swfstore(Wt::Wc::SWFStore* swfstore);
 
 private:
-    Wt::WContainerWidget* swfstore_container_;
-    Wt::WContainerWidget* auth_widget_container_;
-    Wt::Auth::AuthWidget* auth_widget_;
+    Wt::WVBoxLayout* l();
 
-    Wt::WBorderLayout* l();
+    Wt::WHBoxLayout* top();
+    Wt::WHBoxLayout* middle();
+    Wt::WHBoxLayout* bottom();
 
-    Wt::WContainerWidget* contents();
+    Wt::WVBoxLayout* auth();
+
+    Wt::WVBoxLayout* menu();
+    Wt::WVBoxLayout* contents();
+    Wt::WVBoxLayout* my_games();
 
     void set_contents(WWidget* widget);
 };
