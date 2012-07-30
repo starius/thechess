@@ -166,6 +166,7 @@ private:
             apply_button->clicked().connect(this, &GameListWidgetImpl::apply);
             layout->addWidget(apply_button);
         }
+        layout->addStretch(1);
     }
 
     void apply() {
