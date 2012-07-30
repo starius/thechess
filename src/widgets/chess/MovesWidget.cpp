@@ -330,7 +330,8 @@ private:
     void history_select() {
         //FIXME - wron row is shown
         Wt::WModelIndex index = moves_model_->n2index(current_move_);
-        moves_table_view_->scrollTo(index); // ajax
+        // FIXME http://redmine.emweb.be/issues/1380
+        // moves_table_view_->scrollTo(index);
         if (current_move_ > -1) {
             moves_table_view_
             ->select(moves_model_->n2index(current_move_));
