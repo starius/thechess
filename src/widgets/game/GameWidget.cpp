@@ -179,7 +179,6 @@ public:
         }
         if (game_->size() < moves_widget_->moves().size()) {
             moves_widget_->set_moves(game_->moves());
-            status_and_manager();
         }
         if (game_->size() - moves_widget_->moves().size() == 1) {
             int index = game_->size() - 1;
