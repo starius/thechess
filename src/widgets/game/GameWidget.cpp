@@ -22,6 +22,7 @@
 #include <Wt/Wc/TimeDurationWidget.hpp>
 #include <Wt/Wc/util.hpp>
 
+#include "widgets/Header.hpp"
 #include "widgets/game/GameCountdown.hpp"
 #include "widgets/game/GameWidget.hpp"
 #include "widgets/chess/MovesWidget.hpp"
@@ -144,8 +145,7 @@ public:
         game_(game) {
         dbo::Transaction t(tApp->session());
         game_.reread();
-        new Wt::WText(tr("tc.game.Header")
-                      .arg((int)game.id()), this);
+        new Header(tr("tc.game.Header").arg((int)game.id()), this);
         int max_moves = -1;
         bool active = game_->can_move(tApp->user());
         bool big = false; // FIXME
