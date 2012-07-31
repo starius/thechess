@@ -141,7 +141,7 @@ void CPListWidget::set_cp(const CPPtr& cp) {
     Wt::WModelIndex index = model_->result_to_index(cp);
     if (index.isValid()) {
         view_->select(index);
-        view_->scrollTo(index);
+        //view_->scrollTo(index); FIXME http://redmine.emweb.be/issues/1380
     }
 }
 

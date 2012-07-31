@@ -135,7 +135,7 @@ void GPListWidget::set_gp(const GPPtr& gp) {
     Wt::WModelIndex index = model_->result_to_index(gp);
     if (index.isValid()) {
         view_->select(index);
-        view_->scrollTo(index);
+        //view_->scrollTo(index); // FIXME http://redmine.emweb.be/issues/1380
     }
 }
 

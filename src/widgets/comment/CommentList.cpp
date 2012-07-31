@@ -40,7 +40,8 @@ public:
         if (model()->rowCount()) {
             int row = model()->rowCount() - 1;
             int column = CommentModel::CONTENTS_COLUMN;
-            scrollTo(model()->index(row, column));
+            // FIXME http://redmine.emweb.be/issues/1380
+            // scrollTo(model()->index(row, column));
         }
     }
 
