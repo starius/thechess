@@ -12,6 +12,8 @@
 #include <Wt/WObject>
 #include <Wt/WAnchor>
 #include <Wt/WContainerWidget>
+#include <Wt/WVBoxLayout>
+#include <Wt/WHBoxLayout>
 #include <Wt/WViewWidget>
 #include <Wt/WText>
 #include <Wt/WPushButton>
@@ -143,9 +145,10 @@ public:
         Wt::WContainerWidget(),
         Notifiable(Object(GAME, game.id()), tNot),
         game_(game) {
+        Wt::WVBoxLayout* layout = new Wt::WVBoxLayout(this);
         dbo::Transaction t(tApp->session());
         game_.reread();
-        new Header(tr("tc.game.Header").arg((int)game.id()), this);
+        layout->addWidget(new Header(tr("tc.game.Header").arg((int)game.id())));
         int max_moves = -1;
         bool active = game_->can_move(tApp->user());
         bool big = false; // FIXME
@@ -153,16 +156,22 @@ public:
         Piece::Color bottom = game_->color_of(tApp->user());
         const Moves& moves = game_->moves();
         moves_widget_ = new MovesWidget(moves, big, active, max_moves,
-                                        append_only, bottom, this);
+                                        append_only, bottom);
+        layout->addWidget(moves_widget_);
         moves_widget_->half_move()
         .connect(this, &GameWidgetImpl::move_handler_);
-        countdown_ = new GameCountdown(game_, this);
-        manager_ = new Wt::WContainerWidget(this);
-        comment_container_ = new Wt::WContainerWidget(this);
+        countdown_ = new GameCountdown(game_);
+        layout->addWidget(countdown_);
+        manager_ = new Wt::WContainerWidget();
+        layout->addWidget(manager_);
+        comment_container_ = new Wt::WContainerWidget();
+        layout->addWidget(comment_container_);
         print_comment();
-        game_status_ = new GameStatus(game_, this);
-        new Wt::WAnchor(str(boost::format("/pgn/?game=%i") % game.id()),
-                        tr("tc.game.Download_pgn"), this);
+        game_status_ = new GameStatus(game_);
+        layout->addWidget(game_status_);
+        layout->addWidget(new Wt::WAnchor(str(boost::format("/pgn/?game=%i")
+                                              % game.id()),
+                                          tr("tc.game.Download_pgn")));
         print_comment_list();
         status_and_manager();
         countdown_print();
@@ -202,6 +211,10 @@ private:
     GameCountdown* countdown_;
     Wt::WContainerWidget* comment_container_;
 
+    Wt::WVBoxLayout* l() {
+        return downcast<Wt::WVBoxLayout*>(layout());
+    }
+
     void move_handler_(const HalfMove& half_move) {
         dbo::Transaction t(tApp->session());
         game_.reread();
@@ -233,126 +246,144 @@ private:
     void print_manager() {
         dbo::Transaction t(tApp->session());
         manager_->clear();
-        print_analysis_button();
+        Wt::WVBoxLayout* layout = new Wt::WVBoxLayout(manager_);
+        Wt::WHBoxLayout* l = new Wt::WHBoxLayout();
+        layout->addLayout(l);
+        print_analysis_button(l);
+        l->addStretch(1);
         if (tApp->user()) {
             if (game_->state() < Game::ACTIVE) {
-                print_before_active_buttons();
+                Wt::WHBoxLayout* l = new Wt::WHBoxLayout();
+                layout->addLayout(l);
+                print_before_active_buttons(l);
+                l->addStretch(1);
             }
             if (game_->state() == Game::ACTIVE ||
                     game_->state() == Game::PAUSE) {
-                print_pause_buttons();
-                print_mistake_buttons();
-                print_draw_buttons();
+                Wt::WHBoxLayout* l = new Wt::WHBoxLayout();
+                layout->addLayout(l);
+                print_pause_buttons(l);
+                l->addStretch(1);
+                l = new Wt::WHBoxLayout();
+                layout->addLayout(l);
+                print_mistake_buttons(l);
+                l->addStretch(1);
+                l = new Wt::WHBoxLayout();
+                layout->addLayout(l);
+                print_draw_buttons(l);
+                l->addStretch(1);
             }
         }
         t.commit();
     }
 
-    void print_analysis_button() {
+    void print_analysis_button(Wt::WHBoxLayout* layout) {
         if (game_->state() >= Game::ACTIVE && game_->size()) {
-            Wt::WPushButton* b =
-                new Wt::WPushButton(tr("tc.game.Analysis"), manager_);
+            Wt::WPushButton* b = new Wt::WPushButton(tr("tc.game.Analysis"));
+            layout->addWidget(b);
             b->clicked().connect(this, &GameWidgetImpl::show_analysis);
         }
     }
 
-    void print_before_active_buttons() {
+    void print_before_active_buttons(Wt::WHBoxLayout* layout) {
         if (game_->competition()) {
             UserPtr competitor = game_->other_user(tApp->user());
             if (game_->has_competition_confirmed(competitor)) {
-                new Wt::WText(tr("tc.game.Competition_other_proposed")
-                              .arg(competitor->username()), manager_);
-                new Wt::WBreak(manager_);
+                layout->addWidget(new Wt::WText(
+                                      tr("tc.game.Competition_other_proposed")
+                                      .arg(competitor->username())));
             }
             if (game_->can_competition_confirm(tApp->user())) {
-                Wt::WText* t = new Wt::WText(manager_);
+                Wt::WText* t = new Wt::WText();
+                layout->addWidget(t);
                 t->setText(tr("tc.game.Competition_confirm_welcome"));
-                but<&Game::competition_confirm>("tc.game.Competition_confirm");
+                but<&Game::competition_confirm>("tc.game.Competition_confirm",
+                                                layout);
             } else if (game_->can_competition_discard(tApp->user())) {
-                Wt::WText* t = new Wt::WText(manager_);
+                Wt::WText* t = new Wt::WText();
+                layout->addWidget(t);
                 t->setText(tr("tc.game.Competition_discard_welcome"));
-                but<&Game::competition_discard>("tc.game.Competition_discard");
+                but<&Game::competition_discard>("tc.game.Competition_discard",
+                                                layout);
             }
         } else {
             if (game_->can_join(tApp->user())) {
-                but<&Game::join>("tc.common.Join");
+                but<&Game::join>("tc.common.Join", layout);
             } else if (game_->can_confirm(tApp->user())) {
-                but<&Game::confirm>("tc.common.Confirm");
+                but<&Game::confirm>("tc.common.Confirm", layout);
             }
             if (game_->can_cancel(tApp->user())) {
-                but<&Game::cancel>("tc.common.Cancel");
+                but<&Game::cancel>("tc.common.Cancel", layout);
             }
         }
     }
 
-    void print_pause_buttons() {
+    void print_pause_buttons(Wt::WHBoxLayout* layout) {
         if (game_->is_pause_proposed()) {
-            new Wt::WBreak(manager_);
-            new Wt::WText(tr("tc.game.Pause_proposal")
-                          .arg(game_->pause_proposer()->username())
-                          .arg(td2str(game_->pause_proposed_td())),
-                          manager_);
+            Wt::WText* t;
+            t = new Wt::WText(tr("tc.game.Pause_proposal")
+                              .arg(game_->pause_proposer()->username())
+                              .arg(td2str(game_->pause_proposed_td())));
+            layout->addWidget(t);
             if (game_->can_pause_agree(tApp->user())) {
-                but<&Game::pause_agree>("tc.common.Agree");
+                but<&Game::pause_agree>("tc.common.Agree", layout);
             }
             if (game_->can_pause_discard(tApp->user())) {
-                but<&Game::pause_discard>("tc.common.Discard");
+                but<&Game::pause_discard>("tc.common.Discard", layout);
             }
         } else if (game_->can_pause_propose(tApp->user())) {
-            new Wt::WBreak(manager_);
             Td max = game_->pause_limit();
             Td d = config::defaults::PAUSE_FACTOR * max;
             Wt::Wc::TimeDurationWidget* pause_duration =
-                new Wt::Wc::TimeDurationWidget(TD_NULL, d, max, manager_);
+                new Wt::Wc::TimeDurationWidget(TD_NULL, d, max);
+            layout->addWidget(pause_duration);
             Wt::WPushButton* b;
-            b = new Wt::WPushButton(tr("tc.game.Pause_propose"),
-                                    manager_);
+            b = new Wt::WPushButton(tr("tc.game.Pause_propose"));
+            layout->addWidget(b);
             b->clicked().connect(boost::bind(
                                      &GameWidgetImpl::pause_propose_,
                                      this, pause_duration));
         }
     }
 
-    void print_mistake_buttons() {
+    void print_mistake_buttons(Wt::WHBoxLayout* layout) {
         if (game_->is_mistake_proposed()) {
-            new Wt::WBreak(manager_);
             bool w = Moves::order(game_->mistake_move()) == Piece::WHITE;
-            new Wt::WText(tr("tc.game.Mistake_proposal")
-                          .arg(game_->mistake_proposer()->username())
-                          .arg(Moves::move_number(game_->mistake_move()))
-                          .arg(tr(w ? "tc.game.of_white" : "tc.game.of_black")),
-                          manager_);
+            Wt::WText* t;
+            t = new Wt::WText(tr("tc.game.Mistake_proposal")
+                              .arg(game_->mistake_proposer()->username())
+                              .arg(Moves::move_number(game_->mistake_move()))
+                              .arg(tr(w ? "tc.game.of_white" :
+                                      "tc.game.of_black")));
+            layout->addWidget(t);
             if (game_->can_mistake_agree(tApp->user())) {
-                but<&Game::mistake_agree>("tc.common.Agree");
+                but<&Game::mistake_agree>("tc.common.Agree", layout);
             }
             if (game_->can_mistake_discard(tApp->user())) {
-                but<&Game::mistake_discard>("tc.common.Discard");
+                but<&Game::mistake_discard>("tc.common.Discard", layout);
             }
         } else if (game_->can_mistake_propose(tApp->user())) {
-            new Wt::WBreak(manager_);
-            new Wt::WText(tr("tc.game.Mistake_welcome"), manager_);
+            layout->addWidget(new Wt::WText(tr("tc.game.Mistake_welcome")));
             Wt::WPushButton* b;
-            b = new Wt::WPushButton(tr("tc.game.Mistake_propose"),
-                                    manager_);
+            b = new Wt::WPushButton(tr("tc.game.Mistake_propose"));
+            layout->addWidget(b);
             b->clicked().connect(this, &GameWidgetImpl::mistake_propose);
         }
     }
 
-    void print_draw_buttons() {
+    void print_draw_buttons(Wt::WHBoxLayout* layout) {
         if (game_->is_draw_proposed()) {
-            new Wt::WBreak(manager_);
-            new Wt::WText(tr("tc.game.Draw_proposal")
-                          .arg(game_->draw_proposer()->username()),
-                          manager_);
+            Wt::WString name = game_->draw_proposer()->username();
+            layout->addWidget(new Wt::WText(tr("tc.game.Draw_proposal")
+                                            .arg(name)));
             if (game_->can_draw_agree(tApp->user())) {
-                but<&Game::draw_agree>("tc.common.Agree");
+                but<&Game::draw_agree>("tc.common.Agree", layout);
             }
             if (game_->can_draw_discard(tApp->user())) {
-                but<&Game::draw_discard>("tc.common.Discard");
+                but<&Game::draw_discard>("tc.common.Discard", layout);
             }
         } else if (game_->can_draw_propose(tApp->user())) {
-            new Wt::WBreak(manager_);
-            but<&Game::draw_propose>("tc.game.Draw_propose");
+            but<&Game::draw_propose>("tc.game.Draw_propose", layout);
         }
     }
 
@@ -379,9 +410,10 @@ private:
     }
 
     template <GameMember method>
-    void but(const char* title_id) {
+    void but(const char* title_id, Wt::WHBoxLayout* layout) {
         Wt::WPushButton* b;
-        b = new Wt::WPushButton(tr(title_id), manager_);
+        b = new Wt::WPushButton(tr(title_id));
+        layout->addWidget(b);
         b->clicked().connect(this, &GameWidgetImpl::action<method>);
     }
 
@@ -438,17 +470,19 @@ private:
     void print_comment() {
         dbo::Transaction t(tApp->session());
         comment_container_->clear();
-        new Wt::WText(tr("tc.game.comment"), comment_container_);
-        new Wt::WText(": ", comment_container_);
+        Wt::WHBoxLayout* l = new Wt::WHBoxLayout(comment_container_);
+        l->addWidget(new Wt::WText(tr("tc.game.comment")));
+        l->addWidget(new Wt::WText(": "));
         if (game_->can_comment(tApp->user())) {
-            Wt::WInPlaceEdit* comment =
-                new Wt::WInPlaceEdit(game_->comment(), comment_container_);
+            Wt::WInPlaceEdit* comment = new Wt::WInPlaceEdit(game_->comment());
+            l->addWidget(comment);
             comment->setEmptyText(tr("tc.game.comment_welcome"));
             comment->valueChanged().connect(this,
                                             &GameWidgetImpl::comment_handler_);
         } else {
-            new Wt::WText(game_->comment(), comment_container_);
+            l->addWidget(new Wt::WText(game_->comment()));
         }
+        l->addStretch(1);
         t.commit();
     }
 
@@ -457,8 +491,8 @@ private:
         if (game_->has_comment_base()) {
             print_comment_list_impl();
         } else {
-            new Wt::WBreak(this);
-            Wt::WPushButton* add = new Wt::WPushButton(this);
+            Wt::WPushButton* add = new Wt::WPushButton();
+            l()->addWidget(add);
             add->setText(tr("tc.comment.Add"));
             add->clicked().connect(this,
                                    &GameWidgetImpl::print_comment_list_impl);
@@ -471,7 +505,7 @@ private:
     void print_comment_list_impl() {
         dbo::Transaction t(tApp->session());
         CommentPtr comment_base = game_.modify()->comment_base();
-        new CommentList(comment_base, this);
+        l()->addWidget(new CommentList(comment_base));
         t.commit();
     }
 };
