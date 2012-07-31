@@ -157,7 +157,7 @@ public:
         moves_widget_->half_move()
         .connect(this, &GameWidgetImpl::move_handler_);
         countdown_ = new GameCountdown(game_, this);
-        manager = new Wt::WContainerWidget(this);
+        manager_ = new Wt::WContainerWidget(this);
         comment_container_ = new Wt::WContainerWidget(this);
         print_comment();
         game_status_ = new GameStatus(game_, this);
@@ -199,7 +199,7 @@ private:
     GamePtr game_;
     MovesWidget* moves_widget_;
     GameStatus* game_status_;
-    Wt::WContainerWidget* manager;
+    Wt::WContainerWidget* manager_;
     GameCountdown* countdown_;
     Wt::WContainerWidget* comment_container_;
 
@@ -233,7 +233,7 @@ private:
 
     void print_manager() {
         dbo::Transaction t(tApp->session());
-        manager->clear();
+        manager_->clear();
         print_analysis_button();
         if (tApp->user()) {
             if (game_->state() < Game::ACTIVE) {
@@ -252,7 +252,7 @@ private:
     void print_analysis_button() {
         if (game_->state() >= Game::ACTIVE && game_->size()) {
             Wt::WPushButton* b =
-                new Wt::WPushButton(tr("tc.game.Analysis"), manager);
+                new Wt::WPushButton(tr("tc.game.Analysis"), manager_);
             b->clicked().connect(this, &GameWidgetImpl::show_analysis);
         }
     }
@@ -262,15 +262,15 @@ private:
             UserPtr competitor = game_->other_user(tApp->user());
             if (game_->has_competition_confirmed(competitor)) {
                 new Wt::WText(tr("tc.game.Competition_other_proposed")
-                              .arg(competitor->username()), manager);
-                new Wt::WBreak(manager);
+                              .arg(competitor->username()), manager_);
+                new Wt::WBreak(manager_);
             }
             if (game_->can_competition_confirm(tApp->user())) {
-                Wt::WText* t = new Wt::WText(manager);
+                Wt::WText* t = new Wt::WText(manager_);
                 t->setText(tr("tc.game.Competition_confirm_welcome"));
                 but<&Game::competition_confirm>("tc.game.Competition_confirm");
             } else if (game_->can_competition_discard(tApp->user())) {
-                Wt::WText* t = new Wt::WText(manager);
+                Wt::WText* t = new Wt::WText(manager_);
                 t->setText(tr("tc.game.Competition_discard_welcome"));
                 but<&Game::competition_discard>("tc.game.Competition_discard");
             }
@@ -288,11 +288,11 @@ private:
 
     void print_pause_buttons() {
         if (game_->is_pause_proposed()) {
-            new Wt::WBreak(manager);
+            new Wt::WBreak(manager_);
             new Wt::WText(tr("tc.game.Pause_proposal")
                           .arg(game_->pause_proposer()->username())
                           .arg(td2str(game_->pause_proposed_td())),
-                          manager);
+                          manager_);
             if (game_->can_pause_agree(tApp->user())) {
                 but<&Game::pause_agree>("tc.common.Agree");
             }
@@ -300,14 +300,14 @@ private:
                 but<&Game::pause_discard>("tc.common.Discard");
             }
         } else if (game_->can_pause_propose(tApp->user())) {
-            new Wt::WBreak(manager);
+            new Wt::WBreak(manager_);
             Td max = game_->pause_limit();
             Td d = config::defaults::PAUSE_FACTOR * max;
             Wt::Wc::TimeDurationWidget* pause_duration =
-                new Wt::Wc::TimeDurationWidget(TD_NULL, d, max, manager);
+                new Wt::Wc::TimeDurationWidget(TD_NULL, d, max, manager_);
             Wt::WPushButton* b;
             b = new Wt::WPushButton(tr("tc.game.Pause_propose"),
-                                    manager);
+                                    manager_);
             b->clicked().connect(boost::bind(
                                      &GameWidgetImpl::pause_propose_,
                                      this, pause_duration));
@@ -316,13 +316,13 @@ private:
 
     void print_mistake_buttons() {
         if (game_->is_mistake_proposed()) {
-            new Wt::WBreak(manager);
+            new Wt::WBreak(manager_);
             bool w = Moves::order(game_->mistake_move()) == Piece::WHITE;
             new Wt::WText(tr("tc.game.Mistake_proposal")
                           .arg(game_->mistake_proposer()->username())
                           .arg(Moves::move_number(game_->mistake_move()))
                           .arg(tr(w ? "tc.game.of_white" : "tc.game.of_black")),
-                          manager);
+                          manager_);
             if (game_->can_mistake_agree(tApp->user())) {
                 but<&Game::mistake_agree>("tc.common.Agree");
             }
@@ -330,21 +330,21 @@ private:
                 but<&Game::mistake_discard>("tc.common.Discard");
             }
         } else if (game_->can_mistake_propose(tApp->user())) {
-            new Wt::WBreak(manager);
-            new Wt::WText(tr("tc.game.Mistake_welcome"), manager);
+            new Wt::WBreak(manager_);
+            new Wt::WText(tr("tc.game.Mistake_welcome"), manager_);
             Wt::WPushButton* b;
             b = new Wt::WPushButton(tr("tc.game.Mistake_propose"),
-                                    manager);
+                                    manager_);
             b->clicked().connect(this, &GameWidgetImpl::mistake_propose);
         }
     }
 
     void print_draw_buttons() {
         if (game_->is_draw_proposed()) {
-            new Wt::WBreak(manager);
+            new Wt::WBreak(manager_);
             new Wt::WText(tr("tc.game.Draw_proposal")
                           .arg(game_->draw_proposer()->username()),
-                          manager);
+                          manager_);
             if (game_->can_draw_agree(tApp->user())) {
                 but<&Game::draw_agree>("tc.common.Agree");
             }
@@ -352,7 +352,7 @@ private:
                 but<&Game::draw_discard>("tc.common.Discard");
             }
         } else if (game_->can_draw_propose(tApp->user())) {
-            new Wt::WBreak(manager);
+            new Wt::WBreak(manager_);
             but<&Game::draw_propose>("tc.game.Draw_propose");
         }
     }
@@ -382,7 +382,7 @@ private:
     template <GameMember method>
     void but(const char* title_id) {
         Wt::WPushButton* b;
-        b = new Wt::WPushButton(tr(title_id), manager);
+        b = new Wt::WPushButton(tr(title_id), manager_);
         b->clicked().connect(this, &GameWidgetImpl::action<method>);
     }
 
