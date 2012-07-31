@@ -100,6 +100,11 @@ a.thechess-proposed {
     overflow-x: hidden !important;
 }
 
+.thechess-header {
+    font: bold 19px 'Arial' , Tahoma, Arial;
+    color: #004080;
+}
+
 /* hide annoying Loading...
 FIXME http://redmine.emweb.be/issues/1144
 */
