@@ -13,6 +13,8 @@
 
 #include <Wt/WColor>
 #include <Wt/WContainerWidget>
+#include <Wt/WVBoxLayout>
+#include <Wt/WHBoxLayout>
 #include <Wt/WCssDecorationStyle>
 #include <Wt/WFlags>
 #include <Wt/WGridLayout>
@@ -62,26 +64,35 @@ public:
 
     TakenPiecesImpl(const Board& board):
         Wt::WContainerWidget(), taken_stat_(board) {
-        print_color_(Piece::WHITE);
-        new Wt::WBreak(this);
-        print_color_(Piece::BLACK);
+        Wt::WVBoxLayout* layout = new Wt::WVBoxLayout(this);
+        Wt::WHBoxLayout* l = new Wt::WHBoxLayout;
+        layout->addLayout(l);
+        print_color_(Piece::WHITE, l);
+        l->addStretch(1);
+        l = new Wt::WHBoxLayout;
+        layout->addLayout(l);
+        print_color_(Piece::BLACK, l);
+        l->addStretch(1);
+        layout->addStretch(1);
     }
 
 private:
     PieceStat taken_stat_;
 
-    void print_color_(Piece::Color color) {
-        print_piece_(color, Piece::QUEEN);
-        print_piece_(color, Piece::ROOK);
-        print_piece_(color, Piece::KNIGHT);
-        print_piece_(color, Piece::BISHOP);
-        print_piece_(color, Piece::PAWN);
+    void print_color_(Piece::Color color, Wt::WHBoxLayout* l) {
+        print_piece_(color, Piece::QUEEN, l);
+        print_piece_(color, Piece::ROOK, l);
+        print_piece_(color, Piece::KNIGHT, l);
+        print_piece_(color, Piece::BISHOP, l);
+        print_piece_(color, Piece::PAWN, l);
     }
 
-    void print_piece_(Piece::Color color, Piece::Letter letter) {
+    void print_piece_(Piece::Color color, Piece::Letter letter,
+                      Wt::WHBoxLayout* l) {
         int c = full_stat.stat[color][letter] - taken_stat_.stat[color][letter];
+        std::string path = BoardWidget::image(Piece(color, letter));
         for (int i = 0; i < c; i++) {
-            new Wt::WImage(BoardWidget::image(Piece(color, letter)), this);
+            l->addWidget(new Wt::WImage(path));
         }
     }
 };
