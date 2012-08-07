@@ -492,7 +492,11 @@ private:
             print_comment_list_impl();
         } else {
             Wt::WPushButton* add = new Wt::WPushButton();
-            l()->addWidget(add);
+            Wt::WHBoxLayout* lv = new Wt::WHBoxLayout;
+            l()->addLayout(lv);
+            lv->addWidget(add);
+            lv->addStretch(1);
+            l()->addStretch(1);
             add->setText(tr("tc.comment.Add"));
             add->clicked().connect(this,
                                    &GameWidgetImpl::print_comment_list_impl);
