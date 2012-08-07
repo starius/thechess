@@ -133,7 +133,9 @@ public:
         lastmove_show_(config::SHOW_LASTMOVE),
         select_turn_into_flag_(false) {
         correct_bottom();
-        board_template_ = new Wt::WTemplate(tr(xml_message()), this);
+        Wt::WVBoxLayout* layout = new Wt::WVBoxLayout(this);
+        board_template_ = new Wt::WTemplate(tr(xml_message()));
+        layout->addWidget(board_template_);
         THECHESS_SQUARE_FOREACH (square) {
             DnDPiece* img = new DnDPiece(square, this);
             image_at(square) = img;
@@ -143,14 +145,18 @@ public:
         }
         check_activate();
         board_build();
-        select_turn_into_ = new Wt::WContainerWidget(this);
-        turn_button_place_ = new Wt::WContainerWidget(this);
+        select_turn_into_ = new Wt::WContainerWidget();
+        layout->addWidget(select_turn_into_);
+        turn_button_place_ = new Wt::WContainerWidget();
+        layout->addWidget(turn_button_place_);
         board_anchor_ = new Wt::WAnchor("", "#", turn_button_place_);
         Wt::WPushButton* turn_button = new Wt::WPushButton(turn_button_place_);
         turn_button->setText(tr("tc.game.Overturn_board"));
         turn_button->clicked().connect(this, &BoardWidgetImpl::turn);
-        taken_pieces_ = new TakenPieces(board_, this);
-        lastmove_box_ = new Wt::WCheckBox(this);
+        taken_pieces_ = new TakenPieces(board_);
+        layout->addWidget(taken_pieces_);
+        lastmove_box_ = new Wt::WCheckBox();
+        layout->addWidget(lastmove_box_);
         lastmove_box_->setText(tr("tc.game.Highlight_lastmove"));
         lastmove_box_->setChecked(config::SHOW_LASTMOVE);
         lastmove_box_->changed().connect(
@@ -158,6 +164,7 @@ public:
                         boost::bind<bool>(&Wt::WAbstractToggleButton::isChecked,
                                           lastmove_box_)));
         update_board_anchor();
+        layout->addStretch(1);
     }
 
     const char* xml_message() {
