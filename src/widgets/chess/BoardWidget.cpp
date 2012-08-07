@@ -17,7 +17,6 @@
 #include <Wt/WHBoxLayout>
 #include <Wt/WCssDecorationStyle>
 #include <Wt/WFlags>
-#include <Wt/WGridLayout>
 #include <Wt/WImage>
 #include <Wt/WPushButton>
 #include <Wt/WCheckBox>
@@ -234,7 +233,6 @@ private:
     HalfMove lastmove_;
     Square shah_square_;
 
-    Wt::WGridLayout* layout_;
     Wt::WContainerWidget* select_turn_into_;
     Wt::WContainerWidget* turn_button_place_;
     TakenPieces* taken_pieces_;
