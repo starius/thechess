@@ -118,9 +118,11 @@ void MainWidget::competition_new() {
 }
 
 void MainWidget::board_view(const std::string& data) {
-    set_contents(new BoardWidget(/* big */ false, /* active */ true,
-                                           /* bottom */ Piece::WHITE,
-                                           Board(data)));
+    BoardWidget* b;
+    b = new BoardWidget(/* big */ false, /* active */ true,
+                                  /* bottom */ Piece::WHITE, Board(data));
+    b->show_lastmove_checkbox(false);
+    set_contents(b);
 }
 
 Wt::Auth::AuthWidget* MainWidget::auth_widget() {

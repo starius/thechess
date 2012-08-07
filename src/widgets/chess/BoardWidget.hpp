@@ -60,6 +60,11 @@ public:
     /** Show or hide lastmove highlighting */
     void show_lastmove(bool show = true);
 
+    /** Show or hide lastmove checkbox.
+    By default, the checkbox is shown.
+    */
+    void show_lastmove_checkbox(bool show = true);
+
 private:
     BoardWidgetImpl* impl_;
 };

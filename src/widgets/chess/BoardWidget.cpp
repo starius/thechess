@@ -205,6 +205,10 @@ public:
         lastmove_box_->setChecked(show);
     }
 
+    void show_lastmove_checkbox(bool show) {
+        lastmove_box_->setHidden(!show);
+    }
+
 private:
     friend class DnDPiece;
 
@@ -526,6 +530,10 @@ Wt::WContainerWidget* BoardWidget::inner() {
 
 void BoardWidget::show_lastmove(bool show) {
     impl_->show_lastmove(show);
+}
+
+void BoardWidget::show_lastmove_checkbox(bool show) {
+    impl_->show_lastmove_checkbox(show);
 }
 
 }
