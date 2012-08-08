@@ -44,6 +44,8 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
     top->elementAt(0, 0)->addWidget(new Wt::WText(tr("tc.common.Logo")));
     auth_place_ = top->elementAt(0, AUTH_IN_TOP);
     Wt::WTable* middle = new Wt::WTable(this);
+    middle->resize(Wt::WLength(100, Wt::WLength::Percentage),
+                   Wt::WLength::Auto);
     menu_place_ = middle->elementAt(0, MENU_IN_MIDDLE);
     contents_place_ = middle->elementAt(0, CONTENTS_IN_MIDDLE);
     mygames_place_ = middle->elementAt(0, GAME_LIST_IN_MIDDLE);
