@@ -12,11 +12,6 @@
 
 #include <Wt/WContainerWidget>
 #include <Wt/WCheckBox>
-#include <Wt/WGlobal>
-
-namespace Wt {
-class WHBoxLayout;
-}
 
 namespace thechess {
 
@@ -32,7 +27,7 @@ private:
     Wt::WCheckBox* only_my_;
 
     void apply();
-    void manager(Wt::WHBoxLayout* layout);
+    void manager();
 };
 
 }

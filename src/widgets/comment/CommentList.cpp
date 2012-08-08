@@ -8,8 +8,6 @@
 #include <boost/bind.hpp>
 
 #include <Wt/WEnvironment>
-#include <Wt/WVBoxLayout>
-#include <Wt/WHBoxLayout>
 #include <Wt/WTableView>
 #include <Wt/WPushButton>
 #include <Wt/WLineEdit>
@@ -32,6 +30,7 @@ public:
     CommentView(CommentModel* model, Wt::WContainerWidget* p = 0):
         Wt::WTableView(p) {
         setModel(model);
+        resize(770, 450);
         setColumnWidth(CommentModel::CONTENTS_COLUMN, COMMENT_WIDTH);
         setHeaderHeight(0);
         show_last(); // FIXME has no effect in google chrome
@@ -54,33 +53,24 @@ public:
 CommentList::CommentList(const CommentPtr& root, Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent),
     Notifiable(Object(COMMENT, root.id()), tNot) {
-    Wt::WVBoxLayout* layout = new Wt::WVBoxLayout(this);
     CommentModel* model = new CommentModel(root, this);
-    view_ = new CommentView(model);
-    layout->addWidget(view_);
-    layout->setStretchFactor(view_, 1);
-    Wt::WHBoxLayout* edit_layout = new Wt::WHBoxLayout();
-    layout->addLayout(edit_layout);
+    view_ = new CommentView(model, this);
     if (root->type() == Comment::CHAT_ROOT) {
         view_->setAlternatingRowColors(true);
-        Wt::WLineEdit* line_edit = new Wt::WLineEdit();
-        edit_layout->addWidget(line_edit);
-        edit_layout->setStretchFactor(line_edit, 1);
+        Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
         edit_->enterPressed().connect(boost::bind(&CommentList::add_comment,
                                       this, root));
         line_edit->setTextSize(COMMENT_CHAT_LENGTH);
     } else if (root->type() == Comment::FORUM_POST_TEXT) {
-        // view_->setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
-        // edit_ = new Wt::WTextEdit(this);
-        // TODO
+        view_->setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
+        edit_ = new Wt::WTextEdit(this);
     } else if (root->type() == Comment::FORUM_TOPIC) {
         // TODO
     } else {
         // log error
     }
-    Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"));
-    edit_layout->addWidget(add);
+    Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
     add->clicked().connect(boost::bind(&CommentList::add_comment, this, root));
 }
 

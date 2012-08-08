@@ -14,6 +14,7 @@
 #include <boost/assert.hpp>
 
 #include <Wt/WVBoxLayout>
+#include <Wt/WScrollArea>
 #include <Wt/WEnvironment>
 #include <Wt/Dbo/Exception>
 #include <Wt/WLogger>
@@ -34,9 +35,9 @@ namespace thechess {
 Application::Application(const Wt::WEnvironment& env, Server& server) :
     Wt::WApplication(env), server_(server), session_(server.pool()),
     gather_(0) {
+    Wt::WScrollArea* area = new Wt::WScrollArea(root());
     main_widget_ = new MainWidget();
-    Wt::WVBoxLayout* layout = new Wt::WVBoxLayout(root());
-    layout->addWidget(main_widget_);
+    area->setWidget(main_widget_);
     main_widget_->show_menu(&path_);
     path_.connect_main_widget(main_widget_);
     set_auth_widget();

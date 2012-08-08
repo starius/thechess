@@ -13,8 +13,6 @@
 
 #include <Wt/WColor>
 #include <Wt/WContainerWidget>
-#include <Wt/WVBoxLayout>
-#include <Wt/WHBoxLayout>
 #include <Wt/WCssDecorationStyle>
 #include <Wt/WFlags>
 #include <Wt/WImage>
@@ -63,35 +61,26 @@ public:
 
     TakenPiecesImpl(const Board& board):
         Wt::WContainerWidget(), taken_stat_(board) {
-        Wt::WVBoxLayout* layout = new Wt::WVBoxLayout(this);
-        Wt::WHBoxLayout* l = new Wt::WHBoxLayout;
-        layout->addLayout(l);
-        print_color_(Piece::WHITE, l);
-        l->addStretch(1);
-        l = new Wt::WHBoxLayout;
-        layout->addLayout(l);
-        print_color_(Piece::BLACK, l);
-        l->addStretch(1);
-        layout->addStretch(1);
+        print_color_(Piece::WHITE);
+        new Wt::WBreak(this);
+        print_color_(Piece::BLACK);
     }
 
 private:
     PieceStat taken_stat_;
 
-    void print_color_(Piece::Color color, Wt::WHBoxLayout* l) {
-        print_piece_(color, Piece::QUEEN, l);
-        print_piece_(color, Piece::ROOK, l);
-        print_piece_(color, Piece::KNIGHT, l);
-        print_piece_(color, Piece::BISHOP, l);
-        print_piece_(color, Piece::PAWN, l);
+    void print_color_(Piece::Color color) {
+        print_piece_(color, Piece::QUEEN);
+        print_piece_(color, Piece::ROOK);
+        print_piece_(color, Piece::KNIGHT);
+        print_piece_(color, Piece::BISHOP);
+        print_piece_(color, Piece::PAWN);
     }
 
-    void print_piece_(Piece::Color color, Piece::Letter letter,
-                      Wt::WHBoxLayout* l) {
+    void print_piece_(Piece::Color color, Piece::Letter letter) {
         int c = full_stat.stat[color][letter] - taken_stat_.stat[color][letter];
-        std::string path = BoardWidget::image(Piece(color, letter));
         for (int i = 0; i < c; i++) {
-            l->addWidget(new Wt::WImage(path));
+            new Wt::WImage(BoardWidget::image(Piece(color, letter)), this);
         }
     }
 };
@@ -133,10 +122,7 @@ public:
         lastmove_show_(config::SHOW_LASTMOVE),
         select_turn_into_flag_(false) {
         correct_bottom();
-        Wt::WVBoxLayout* layout = new Wt::WVBoxLayout(this);
-        board_template_ = new Wt::WTemplate(tr(xml_message()));
-        board_template_->setMinimumSize(300, 300); // TODO big
-        layout->addWidget(board_template_);
+        board_template_ = new Wt::WTemplate(tr(xml_message()), this);
         THECHESS_SQUARE_FOREACH (square) {
             DnDPiece* img = new DnDPiece(square, this);
             image_at(square) = img;
@@ -146,18 +132,14 @@ public:
         }
         check_activate();
         board_build();
-        select_turn_into_ = new Wt::WContainerWidget();
-        layout->addWidget(select_turn_into_);
-        turn_button_place_ = new Wt::WContainerWidget();
-        layout->addWidget(turn_button_place_);
+        select_turn_into_ = new Wt::WContainerWidget(this);
+        turn_button_place_ = new Wt::WContainerWidget(this);
         board_anchor_ = new Wt::WAnchor("", "#", turn_button_place_);
         Wt::WPushButton* turn_button = new Wt::WPushButton(turn_button_place_);
         turn_button->setText(tr("tc.game.Overturn_board"));
         turn_button->clicked().connect(this, &BoardWidgetImpl::turn);
-        taken_pieces_ = new TakenPieces(board_);
-        layout->addWidget(taken_pieces_);
-        lastmove_box_ = new Wt::WCheckBox();
-        layout->addWidget(lastmove_box_);
+        taken_pieces_ = new TakenPieces(board_, this);
+        lastmove_box_ = new Wt::WCheckBox(this);
         lastmove_box_->setText(tr("tc.game.Highlight_lastmove"));
         lastmove_box_->setChecked(config::SHOW_LASTMOVE);
         lastmove_box_->changed().connect(
@@ -165,7 +147,6 @@ public:
                         boost::bind<bool>(&Wt::WAbstractToggleButton::isChecked,
                                           lastmove_box_)));
         update_board_anchor();
-        layout->addStretch(1);
     }
 
     const char* xml_message() {
@@ -410,7 +391,6 @@ private:
     }
 
     void print_select_(HalfMove half_move) {
-        select_turn_into_->show();
         static Piece::Letter cc[] =
         { Piece::QUEEN, Piece::ROOK, Piece::BISHOP, Piece::KNIGHT };
         BOOST_FOREACH (Piece::Letter c, cc) {
@@ -426,7 +406,6 @@ private:
 
     void print_select_undo() {
         select_turn_into_->clear();
-        select_turn_into_->hide();
         select_turn_into_flag_ = false;
     }
 

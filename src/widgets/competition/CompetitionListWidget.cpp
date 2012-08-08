@@ -9,8 +9,6 @@
 #include <boost/foreach.hpp>
 
 #include <Wt/WTableView>
-#include <Wt/WVBoxLayout>
-#include <Wt/WHBoxLayout>
 #include <Wt/Dbo/Transaction>
 #include <Wt/Dbo/Query>
 #include <Wt/Dbo/QueryModel>
@@ -121,6 +119,7 @@ public:
                         Wt::WContainerWidget* p = 0):
         Wt::WTableView(p) {
         setModel(model);
+        resize(770, 450);
         setColumnWidth(CompetitionListModel::N_COLUMN, 40);
         setColumnWidth(CompetitionListModel::NAME_COLUMN, 170);
         setColumnWidth(CompetitionListModel::TYPE_COLUMN, 75);
@@ -135,15 +134,10 @@ public:
 
 CompetitionListWidget::CompetitionListWidget(Wt::WContainerWidget* p):
     Wt::WContainerWidget(p) {
-    Wt::WVBoxLayout* layout = new Wt::WVBoxLayout(this);
-    Wt::WHBoxLayout* manager_layout = new Wt::WHBoxLayout();
-    layout->addLayout(manager_layout);
-    manager(manager_layout);
+    manager();
     model_ = new CompetitionListModel(this);
     apply();
-    CompetitionListView* view = new CompetitionListView(model_);
-    layout->addWidget(view);
-    layout->setStretchFactor(view, 1);
+    new CompetitionListView(model_, this);
 }
 
 void CompetitionListWidget::apply() {
@@ -151,20 +145,17 @@ void CompetitionListWidget::apply() {
     model_->set_query(only_my);
 }
 
-void CompetitionListWidget::manager(Wt::WHBoxLayout* layout) {
-    only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"));
-    layout->addWidget(only_my_);
+void CompetitionListWidget::manager() {
+    only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"), this);
     only_my_->changed().connect(this, &CompetitionListWidget::apply);
     if (!tApp->user()) {
         only_my_->setEnabled(false);
     }
     if (!tApp->environment().ajax()) {
         Wt::WPushButton* apply_button =
-            new Wt::WPushButton(tr("tc.common.Apply"));
-        layout->addWidget(apply_button);
+            new Wt::WPushButton(tr("tc.common.Apply"), this);
         apply_button->clicked().connect(this, &CompetitionListWidget::apply);
     }
-    layout->addStretch(1);
 }
 
 }
