@@ -5,9 +5,7 @@
  * See the LICENSE file for terms of use.
  */
 
-#include <Wt/WBorderLayout>
-#include <Wt/WVBoxLayout>
-#include <Wt/WHBoxLayout>
+#include <Wt/WTable>
 #include <Wt/WImage>
 #include <Wt/WText>
 #include <Wt/Auth/AuthWidget>
@@ -42,34 +40,28 @@ const int GAME_LIST_IN_MIDDLE = 2;
 
 MainWidget::MainWidget(Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent) {
-    setLayout(new Wt::WVBoxLayout());
-    Wt::WHBoxLayout* top_layout = new Wt::WHBoxLayout();
-    l()->addLayout(top_layout);
-    top_layout->addWidget(new Wt::WText(tr("tc.common.Logo")));
-    top_layout->addLayout(new Wt::WVBoxLayout()); // auth
-    top_layout->setStretchFactor(auth(), 1);
-    Wt::WHBoxLayout* middle_layout = new Wt::WHBoxLayout();
-    l()->addLayout(middle_layout);
-    l()->setStretchFactor(middle_layout, 1);
-    middle_layout->addLayout(new Wt::WVBoxLayout()); // menu
-    middle_layout->addLayout(new Wt::WVBoxLayout()); // contents
-    middle_layout->addLayout(new Wt::WVBoxLayout()); // my games
-    middle_layout->setStretchFactor(contents(), 1);
-    l()->addLayout(new Wt::WHBoxLayout()); // bottom
+    Wt::WTable* top = new Wt::WTable(this);
+    top->elementAt(0, 0)->addWidget(new Wt::WText(tr("tc.common.Logo")));
+    auth_place_ = top->elementAt(0, AUTH_IN_TOP);
+    Wt::WTable* middle = new Wt::WTable(this);
+    menu_place_ = middle->elementAt(0, MENU_IN_MIDDLE);
+    contents_place_ = middle->elementAt(0, CONTENTS_IN_MIDDLE);
+    mygames_place_ = middle->elementAt(0, GAME_LIST_IN_MIDDLE);
+    bottom_place_ = new Wt::WContainerWidget(this);
 }
 
 void MainWidget::show_menu(Path* path) {
-    menu()->addWidget(new MainMenu(path));
+    menu_place_->addWidget(new MainMenu(path));
 }
 
 MainMenu* MainWidget::main_menu() {
-    return downcast<MainMenu*>(menu()->itemAt(0)->widget());
+    return downcast<MainMenu*>(menu_place_->widget(0));
 }
 
 void MainWidget::update_my_games() {
-    my_games()->clear();
+    mygames_place_->clear();
     if (tApp->user()) {
-        my_games()->addWidget(new MyGamesList(tApp->user()));
+        mygames_place_->addWidget(new MyGamesList(tApp->user()));
     }
 }
 
@@ -126,59 +118,27 @@ void MainWidget::board_view(const std::string& data) {
 }
 
 Wt::Auth::AuthWidget* MainWidget::auth_widget() {
-    return downcast<Wt::Auth::AuthWidget*>(auth()->itemAt(0)->widget());
+    return downcast<Wt::Auth::AuthWidget*>(auth_place_->widget(0));
 }
 
 void MainWidget::set_auth_widget(Wt::Auth::AuthWidget* widget) {
-    auth()->clear();
-    auth()->addWidget(widget);
+    auth_place_->clear();
+    auth_place_->addWidget(widget);
 }
 
 Wt::Wc::SWFStore* MainWidget::swf_store() {
-    return downcast<Wt::Wc::SWFStore*>(bottom()->itemAt(0)->widget());
+    return downcast<Wt::Wc::SWFStore*>(bottom_place_->widget(0));
 }
 
 void MainWidget::set_swfstore(Wt::Wc::SWFStore* swfstore) {
     swfstore->setMaximumSize(1, 1);
-    bottom()->clear();
-    bottom()->addWidget(swfstore);
-}
-
-Wt::WVBoxLayout* MainWidget::l() {
-    return downcast<Wt::WVBoxLayout*>(layout());
-}
-
-Wt::WHBoxLayout* MainWidget::top() {
-    return downcast<Wt::WHBoxLayout*>(l()->itemAt(TOP_IN_L));
-}
-
-Wt::WHBoxLayout* MainWidget::middle() {
-    return downcast<Wt::WHBoxLayout*>(l()->itemAt(MIDDLE_IN_L));
-}
-
-Wt::WHBoxLayout* MainWidget::bottom() {
-    return downcast<Wt::WHBoxLayout*>(l()->itemAt(BOTTOM_IN_L));
-}
-
-Wt::WVBoxLayout* MainWidget::auth() {
-    return downcast<Wt::WVBoxLayout*>(top()->itemAt(AUTH_IN_TOP));
-}
-
-Wt::WVBoxLayout* MainWidget::menu() {
-    return downcast<Wt::WVBoxLayout*>(middle()->itemAt(MENU_IN_MIDDLE));
-}
-
-Wt::WVBoxLayout* MainWidget::contents() {
-    return downcast<Wt::WVBoxLayout*>(middle()->itemAt(CONTENTS_IN_MIDDLE));
-}
-
-Wt::WVBoxLayout* MainWidget::my_games() {
-    return downcast<Wt::WVBoxLayout*>(middle()->itemAt(GAME_LIST_IN_MIDDLE));
+    bottom_place_->clear();
+    bottom_place_->addWidget(swfstore);
 }
 
 void MainWidget::set_contents(WWidget* widget) {
-    contents()->clear();
-    contents()->addWidget(widget);
+    contents_place_->clear();
+    contents_place_->addWidget(widget);
 }
 
 }

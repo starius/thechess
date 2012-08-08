@@ -16,10 +16,6 @@
 #include "model/global.hpp"
 #include "widgets/global.hpp"
 
-namespace Wt {
-class WHBoxLayout; // FIXME fixed in Wt 3.2.1
-}
-
 namespace thechess {
 
 /** Main Application widget */
@@ -90,17 +86,11 @@ public:
     void set_swfstore(Wt::Wc::SWFStore* swfstore);
 
 private:
-    Wt::WVBoxLayout* l();
-
-    Wt::WHBoxLayout* top();
-    Wt::WHBoxLayout* middle();
-    Wt::WHBoxLayout* bottom();
-
-    Wt::WVBoxLayout* auth();
-
-    Wt::WVBoxLayout* menu();
-    Wt::WVBoxLayout* contents();
-    Wt::WVBoxLayout* my_games();
+    Wt::WContainerWidget* auth_place_;
+    Wt::WContainerWidget* menu_place_;
+    Wt::WContainerWidget* contents_place_;
+    Wt::WContainerWidget* mygames_place_;
+    Wt::WContainerWidget* bottom_place_;
 
     void set_contents(WWidget* widget);
 };

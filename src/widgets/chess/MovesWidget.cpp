@@ -11,7 +11,7 @@
 
 #include <Wt/WAbstractTableModel>
 #include <Wt/WApplication>
-#include <Wt/WHBoxLayout>
+#include <Wt/WTable>
 #include <Wt/WEnvironment>
 #include <Wt/WCssDecorationStyle>
 #include <Wt/WImage>
@@ -152,10 +152,9 @@ public:
         current_move_(moves.size() - 1), max_moves_(max_moves),
         used_moves_(0), append_only_(append_only),
         active_(active), activated_(false) {
-        Wt::WHBoxLayout* layout = new Wt::WHBoxLayout();
-        setLayout(layout);
-        layout->addWidget(board_widget_ =
-                              new BoardWidget(big, this->active(), bottom));
+        Wt::WTable* columns = new Wt::WTable(this);
+        board_widget_ = new BoardWidget(big, this->active(), bottom);
+        columns->elementAt(0, 0)->addWidget(board_widget_);
         check_activate();
         Wt::WPushButton* goto_first =
             new Wt::WPushButton("<<", board_widget_->inner());
@@ -170,7 +169,8 @@ public:
             new Wt::WPushButton(">>", board_widget_->inner());
         goto_last->clicked().connect(this, &MovesWidgetImpl::goto_last);
         moves_model_ = new MovesModel(&cached_moves_, this);
-        layout->addWidget(moves_table_view_ = new Wt::WTableView());
+        moves_table_view_ = new Wt::WTableView();
+        columns->elementAt(0, 1)->addWidget(moves_table_view_);
         moves_table_view_->setModel(moves_model_);
         int moves_per_page = big ? 20 : 10;
         int width = wApp->environment().ajax() ? JS_WIDTH : NOJS_WIDTH;
@@ -187,7 +187,6 @@ public:
         moves_table_view_->setSelectionMode(Wt::SingleSelection);
         moves_table_view_->clicked().connect(this, &MovesWidgetImpl::onselect_);
         goto_move_(current_move_); // last half_move
-        layout->addStretch(1);
     }
 
     const Moves& moves() const {
