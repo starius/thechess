@@ -410,6 +410,7 @@ private:
     }
 
     void print_select_(HalfMove half_move) {
+        select_turn_into_->show();
         static Piece::Letter cc[] =
         { Piece::QUEEN, Piece::ROOK, Piece::BISHOP, Piece::KNIGHT };
         BOOST_FOREACH (Piece::Letter c, cc) {
@@ -425,6 +426,7 @@ private:
 
     void print_select_undo() {
         select_turn_into_->clear();
+        select_turn_into_->hide();
         select_turn_into_flag_ = false;
     }
 
