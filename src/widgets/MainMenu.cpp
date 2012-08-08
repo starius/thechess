@@ -8,6 +8,7 @@
 #include <string>
 
 #include <Wt/WAnchor>
+#include <Wt/WText>
 
 #include "widgets/MainMenu.hpp"
 #include "Path.hpp"
@@ -35,12 +36,17 @@ private:
 
     void reprint() {
         clear();
+        add_section("tc.game.game");
+        add_button("tc.game.List", path_->game_list());
         if (user_items_) {
             add_button("tc.game.Challenge", path_->game_new());
+        }
+        add_section("tc.competition.competition");
+        add_button("tc.competition.List", path_->competition_list());
+        if (user_items_) {
             add_button("tc.competition.New", path_->competition_new());
         }
-        add_button("tc.game.List", path_->game_list());
-        add_button("tc.competition.List", path_->competition_list());
+        add_section("tc.user.user");
         if (user_items_) {
             add_button("Wt.Auth.updatepassword", path_->update_password());
         }
@@ -51,6 +57,12 @@ private:
         Wt::WAnchor* button = new Wt::WAnchor(c);
         button->setText(tr(title_id));
         button->setLink(node->link());
+    }
+
+    void add_section(const char* title_id) {
+        Wt::WContainerWidget* c = new Wt::WContainerWidget(this);
+        Wt::WText* text = new Wt::WText(tr(title_id), c);
+        text->setStyleClass("thechess-section");
     }
 };
 

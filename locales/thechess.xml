@@ -448,6 +448,7 @@ See locales-test manpage for more information.
     <message id='tc.game.first_draw'>move number for draw</message>
     <message id='tc.game.force_confirm'>forced confirmation</message>
     <message id='tc.game.force_start'>forced start</message>
+    <message id='tc.game.game'>game</message>
     <message id='tc.game.Header'>Game # {1}</message>
     <message id='tc.game.Highlight_lastmove'>Highlight lastmove</message>
     <message id='tc.game.init'>game initiator</message>
@@ -530,6 +531,7 @@ See locales-test manpage for more information.
     <message id='tc.user.Rating_changes'>Rating changes</message>
     <message id='tc.user.Rating_changes_and_me'>Rating changes (compared to my ones)</message>
     <message id='tc.user.Start_game'>Start a game</message>
+    <message id='tc.user.user'>user</message>
 
 </messages>
 

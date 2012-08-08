@@ -105,6 +105,11 @@ a.thechess-proposed {
     color: #004080;
 }
 
+.thechess-section {
+    font: bold 17px 'Arial' , Tahoma, Arial;
+    color: #B22222;
+}
+
 /* hide annoying Loading...
 FIXME http://redmine.emweb.be/issues/1144
 */
