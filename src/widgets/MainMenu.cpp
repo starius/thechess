@@ -7,7 +7,6 @@
 
 #include <string>
 
-#include <Wt/WBreak>
 #include <Wt/WAnchor>
 
 #include "widgets/MainMenu.hpp"
@@ -21,6 +20,7 @@ public:
         Wt::WContainerWidget(),
         user_items_(false),
         path_(path) {
+        setList(true);
         reprint();
     }
 
@@ -47,10 +47,10 @@ private:
     }
 
     void button_(const char* title_id, Wt::Wc::url::Node* node) {
-        Wt::WAnchor* button = new Wt::WAnchor(this);
+        Wt::WContainerWidget* c = new Wt::WContainerWidget(this);
+        Wt::WAnchor* button = new Wt::WAnchor(c);
         button->setText(tr(title_id));
         button->setLink(node->link());
-        new Wt::WBreak(this);
     }
 };
 
