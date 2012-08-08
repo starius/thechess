@@ -135,6 +135,7 @@ public:
         correct_bottom();
         Wt::WVBoxLayout* layout = new Wt::WVBoxLayout(this);
         board_template_ = new Wt::WTemplate(tr(xml_message()));
+        board_template_->setMinimumSize(300, 300); // TODO big
         layout->addWidget(board_template_);
         THECHESS_SQUARE_FOREACH (square) {
             DnDPiece* img = new DnDPiece(square, this);
