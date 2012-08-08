@@ -36,17 +36,17 @@ private:
     void reprint() {
         clear();
         if (user_items_) {
-            button_("tc.game.Challenge", path_->game_new());
-            button_("tc.competition.New", path_->competition_new());
+            add_button("tc.game.Challenge", path_->game_new());
+            add_button("tc.competition.New", path_->competition_new());
         }
-        button_("tc.game.List", path_->game_list());
-        button_("tc.competition.List", path_->competition_list());
+        add_button("tc.game.List", path_->game_list());
+        add_button("tc.competition.List", path_->competition_list());
         if (user_items_) {
-            button_("Wt.Auth.updatepassword", path_->update_password());
+            add_button("Wt.Auth.updatepassword", path_->update_password());
         }
     }
 
-    void button_(const char* title_id, Wt::Wc::url::Node* node) {
+    void add_button(const char* title_id, Wt::Wc::url::Node* node) {
         Wt::WContainerWidget* c = new Wt::WContainerWidget(this);
         Wt::WAnchor* button = new Wt::WAnchor(c);
         button->setText(tr(title_id));
