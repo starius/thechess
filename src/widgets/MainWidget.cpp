@@ -25,6 +25,7 @@
 #include "widgets/competition/CompetitionCreateWidget.hpp"
 #include "widgets/competition/CompetitionListWidget.hpp"
 #include "widgets/user/UserWidget.hpp"
+#include "widgets/user/SettingsWidget.hpp"
 
 namespace thechess {
 
@@ -71,6 +72,12 @@ void MainWidget::update_my_games() {
 
 void MainWidget::user_view(const UserPtr& user) {
     set_contents(new UserWidget(user));
+}
+
+void MainWidget::settings_page() {
+    if (tApp->user()) {
+        set_contents(new SettingsWidget());
+    }
 }
 
 void MainWidget::user_list() {
