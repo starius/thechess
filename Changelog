@@ -1,16 +1,16 @@
-2012-06-29:
+2012-07-29:
     * inherit Game from Record
     * update logo (gif img -> pure html)
     * add database migration howto
 
-2012-06-28:
+2012-07-28:
     * add field "type" to Comment
     * add "extern template" to models to speed up compilation
     * add raw versions of CPSelector.?pp (do not buuild it from GPSelector)
     * add .gitignore -> .hgignore
     * migrate to cmake
 
-2012-06-27:
+2012-07-27:
     * update Auth-related code to work in Wt 3.2.1
     * add implementation of base64 by René Nyffenegger
     * Board to_string() and construct from a string
