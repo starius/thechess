@@ -50,8 +50,8 @@ void GameCreateWidget::print() {
     color_->addItem(tr("tc.game.black"));
     form->item(tr("tc.game.your_color"), "", color_, color_);
     new Wt::WBreak(this);
-    Wt::WPushButton* ok_ = new Wt::WPushButton(tr("tc.common.Create"), this);
-    ok_->clicked().connect(this, &GameCreateWidget::button_handler);
+    Wt::WPushButton* ok = new Wt::WPushButton(tr("tc.common.Create"), this);
+    ok->clicked().connect(this, &GameCreateWidget::button_handler);
 }
 
 void GameCreateWidget::button_handler() {
