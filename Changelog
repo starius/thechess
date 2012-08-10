@@ -1,6 +1,7 @@
 2012-08-10:
     * add widget SettingsWidget at /user/settings/
     * remove /user/update-password and the item from MainMenu
+    * version 3.0.6. Cleanup and bugfix.
 
 2012-08-08:
     * remove all layouts. Replace them with WTable or WContainerWidget
