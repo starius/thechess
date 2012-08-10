@@ -17,6 +17,9 @@
 
 namespace thechess {
 
+const int DSCR_WIDTH = 525;
+const int DSCR_HEIGHT = 525;
+
 void RecordWidgetBase::add_record_inputs(const Record* record,
         Wt::Wc::TableForm* form) {
     Record r;
@@ -28,8 +31,10 @@ void RecordWidgetBase::add_record_inputs(const Record* record,
     name->setTextSize(config::MAX_NAME);
     form->item(Wt::WString::tr("tc.common.Name"), "", name, name);
     description = new Wt::WTextEdit(record->description());
+    description->resize(DSCR_WIDTH, DSCR_HEIGHT);
     form->item(Wt::WString::tr("tc.common.Description"), "",
                description, description);
+    description->parent()->resize(DSCR_WIDTH, DSCR_HEIGHT);
 }
 
 void RecordWidgetBase::write_record(Record* record, bool init) const {
