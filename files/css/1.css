@@ -110,6 +110,10 @@ a.thechess-proposed {
     color: #B22222;
 }
 
+.thechess-error {
+    color: red;
+}
+
 /* hide annoying Loading...
 FIXME http://redmine.emweb.be/issues/1144
 */

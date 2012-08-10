@@ -28,6 +28,7 @@ private:
     bool with_user_;
     UserPtr user_;
     Wt::WComboBox* color_;
+    Wt::WText* error_message_;
 
     void print();
     void button_handler();

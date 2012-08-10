@@ -52,14 +52,18 @@ void GameCreateWidget::print() {
     new Wt::WBreak(this);
     Wt::WPushButton* ok = new Wt::WPushButton(tr("tc.common.Create"), this);
     ok->clicked().connect(this, &GameCreateWidget::button_handler);
+    error_message_ = new Wt::WText(this);
+    error_message_->setStyleClass("thechess-error");
 }
 
 void GameCreateWidget::button_handler() {
     dbo::Transaction t(tApp->session());
     GPPtr gp = selector_->gp();
     if (!gp) {
+        error_message_->setText(tr("tc.common.no_params_error"));
         return;
     }
+    error_message_->setText("");
     GamePtr game = tApp->session().add(new Game(gp));
     Piece::Color color = selected_color();
     if (with_user_) {
