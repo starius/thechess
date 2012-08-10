@@ -1,7 +1,29 @@
+2012-08-10:
+    * add widget SettingsWidget at /user/settings/
+    * remove /user/update-password and the item from MainMenu
+
+2012-08-08:
+    * remove all layouts. Replace them with WTable or WContainerWidget
+    * use <li> list in MainMenu
+    * split MainMenu to several sections
+
+2012-08-07:
+    * hide checkbox "last move" in /board/XXX
+
+2012-07-30:
+    * add widget Header
+
+2012-07-30:
+    * do not scrollTo to avoid Wt's bug
+    * do not use deprecated setLayout(layout, alignment)
+    * resize SWFStore to 1x1
+
 2012-07-29:
     * inherit Game from Record
     * update logo (gif img -> pure html)
     * add database migration howto
+    * version 3.0.5
+    * remove old php files
 
 2012-07-28:
     * add field "type" to Comment
