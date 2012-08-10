@@ -43,6 +43,11 @@ public:
         return update_password_;
     }
 
+    /** Settings page */
+    url::PredefinedNode* settings_page() const {
+        return settings_page_;
+    }
+
     /** List of games */
     url::PredefinedNode* game_list() const {
         return game_list_;
@@ -119,6 +124,7 @@ private:
     MainWidget* main_widget_;
     url::PredefinedNode* user_list_;
     url::IntegerNode* user_view_;
+    url::PredefinedNode* settings_page_;
     url::PredefinedNode* update_password_;
     url::PredefinedNode* game_list_;
     url::IntegerNode* game_view_;

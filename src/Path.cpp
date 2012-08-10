@@ -20,6 +20,7 @@ Path::Path(Wt::WObject* parent):
     Parser(parent), main_widget_(0) {
     user_list_ = new PredefinedNode("user", this);
     user_view_ = new IntegerNode(user_list_);
+    settings_page_ = new PredefinedNode("settings", user_list_);
     update_password_ = new PredefinedNode("update-password", user_list_);
     game_list_ = new PredefinedNode("game", this);
     game_view_ = new IntegerNode(game_list_);
@@ -42,6 +43,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     main_widget_ = mw;
     // TODO user list
     user_view_->opened().connect(this, &Path::open_user);
+    settings_page_->opened().connect(mw, &MainWidget::settings_page);
     update_password_->opened().connect(mw, &MainWidget::update_password);
     game_list_->opened().connect(mw, &MainWidget::game_list);
     game_view_->opened().connect(this, &Path::open_game);
