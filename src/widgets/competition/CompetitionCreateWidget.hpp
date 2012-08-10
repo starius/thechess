@@ -36,6 +36,7 @@ private:
     Wt::Wc::TableForm* form_;
     CompetitionPtr c_;
     Wt::WPushButton* ok_;
+    Wt::WText* error_message_;
 
     void print();
     void button_handler();
