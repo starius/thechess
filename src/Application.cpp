@@ -68,6 +68,14 @@ UserPtr Application::user() {
     return session().user();
 }
 
+void Application::update_password() {
+    dbo::Transaction t(session());
+    if (user()) {
+        main_widget_->update_password();
+    }
+    t.commit();
+}
+
 void Application::login_handler() {
     GamesVector games_vector;
     dbo::Transaction t(session());

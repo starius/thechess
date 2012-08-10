@@ -55,6 +55,9 @@ public:
     /** Return user */
     UserPtr user();
 
+    /** Show Update Password dialog */
+    void update_password();
+
     /** Get active Application.
     Same as WApplication::instance().
     There is macro for this method: tApp.
