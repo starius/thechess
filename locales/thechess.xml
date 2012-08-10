@@ -530,6 +530,7 @@ See locales-test manpage for more information.
     <message id='tc.user.rating_after'>rating after</message>
     <message id='tc.user.Rating_changes'>Rating changes</message>
     <message id='tc.user.Rating_changes_and_me'>Rating changes (compared to my ones)</message>
+    <message id='tc.user.Settings'>Settings</message>
     <message id='tc.user.Start_game'>Start a game</message>
     <message id='tc.user.user'>user</message>
 

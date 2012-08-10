@@ -35,6 +35,7 @@ class MyGamesList;
 class PgnResource;
 class RatingChanges;
 class RecordWidgetBase;
+class SettingsWidget;
 class StagedCompetitionGraph;
 class UserWidget;
 class VirtualsWidget;
