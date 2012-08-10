@@ -48,6 +48,8 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
                    Wt::WLength::Auto);
     menu_place_ = middle->elementAt(0, MENU_IN_MIDDLE);
     contents_place_ = middle->elementAt(0, CONTENTS_IN_MIDDLE);
+    contents_place_->resize(Wt::WLength(80, Wt::WLength::Percentage),
+                            Wt::WLength::Auto);
     mygames_place_ = middle->elementAt(0, GAME_LIST_IN_MIDDLE);
     bottom_place_ = new Wt::WContainerWidget(this);
 }
