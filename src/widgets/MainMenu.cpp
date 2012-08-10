@@ -49,6 +49,7 @@ private:
         add_section("tc.user.user");
         if (user_items_) {
             add_button("Wt.Auth.updatepassword", path_->update_password());
+            add_button("tc.user.settings", path_->settings_page());
         }
     }
 
