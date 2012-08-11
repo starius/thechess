@@ -425,6 +425,9 @@ See locales-test manpage for more information.
         <br /> <h2>Management</h2>${manager}
     </message>
 
+    <message id='tc.forum.forum'>forum</message>
+    <message id='tc.forum.topics'>topics</message>
+
     <message id='tc.game.Analysis'>Analysis</message>
     <message id='tc.game.Analysis_title'>Analysis of game # {1}</message>
     <message id='tc.game.black'>black</message>

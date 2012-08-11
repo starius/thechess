@@ -50,6 +50,8 @@ private:
             add_section("tc.user.user");
             add_button("tc.user.settings", path_->settings_page());
         }
+        add_section("tc.forum.forum");
+        add_button("tc.forum.topics", path_->topics());
     }
 
     void add_button(const char* title_id, Wt::Wc::url::Node* node) {

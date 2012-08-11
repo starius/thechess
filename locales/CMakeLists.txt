@@ -12,7 +12,7 @@ file(DOWNLOAD https://raw.github.com/kdeforche/wt/master/src/xml/auth.xml
 
 add_test(NAME locales-test
     COMMAND locales-test
-    --prefix=tc --sections comment common competition game time user
+    --prefix=tc --sections comment common competition forum game time user
     --sources ${thechess_sources} --locales ${thechess_locales}
     --wt ${CMAKE_CURRENT_BINARY_DIR}/wt.xml ${CMAKE_CURRENT_BINARY_DIR}/auth.xml
 )
