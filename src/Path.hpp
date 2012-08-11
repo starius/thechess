@@ -115,6 +115,11 @@ public:
         return board_;
     }
 
+    /** Forum topics */
+    url::PredefinedNode* topics() const {
+        return topics_;
+    }
+
 private:
     MainWidget* main_widget_;
     url::PredefinedNode* user_list_;
@@ -134,6 +139,7 @@ private:
     url::PredefinedNode* cp_new_;
     url::PredefinedNode* board_root_;
     url::StringNode* board_;
+    url::PredefinedNode* topics_;
 
     void open_user();
     void open_game();

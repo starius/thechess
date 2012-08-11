@@ -35,6 +35,7 @@ Path::Path(Wt::WObject* parent):
     cp_new_ = new PredefinedNode("new", cp_list_);
     board_root_ = new PredefinedNode("board", this);
     board_ = new StringNode(board_root_);
+    topics_ = new PredefinedNode("forum", this);
     tApp->internalPathChanged().connect(this, &Parser::open);
 }
 
@@ -51,6 +52,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     competition_view_->opened().connect(this, &Path::open_competition);
     competition_new_->opened().connect(mw, &MainWidget::competition_new);
     board_->opened().connect(this, &Path::open_board);
+    topics_->opened().connect(mw, &MainWidget::forum_topics);
 }
 
 void Path::open_user() {
