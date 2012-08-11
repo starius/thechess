@@ -35,12 +35,11 @@ Path::Path(Wt::WObject* parent):
     cp_new_ = new PredefinedNode("new", cp_list_);
     board_root_ = new PredefinedNode("board", this);
     board_ = new StringNode(board_root_);
-    topics_ = new PredefinedNode("forum", this);
-    PredefinedNode* topic = new PredefinedNode("topic", topics_);
-    topic_posts_ = new IntegerNode(topic);
-    PredefinedNode* post = new PredefinedNode("post", topics_);
-    all_posts_ = new PredefinedNode("all", post);
-    post_ = new IntegerNode(post);
+    PredefinedNode* forum = new PredefinedNode("forum", this);
+    topics_ = new PredefinedNode("topic", forum);
+    topic_posts_ = new IntegerNode(topics_);
+    all_posts_ = new PredefinedNode("post", forum);
+    post_ = new IntegerNode(all_posts_);
     tApp->internalPathChanged().connect(this, &Parser::open);
 }
 
