@@ -72,6 +72,15 @@ public:
     /** View forum topics */
     void forum_topics();
 
+    /** View posts of this topic */
+    void forum_topic_posts(const CommentPtr& topic);
+
+    /** View all posts */
+    void forum_all_posts();
+
+    /** View post */
+    void forum_post(const CommentPtr& post);
+
     /** Get authentication widget.
     \attention Auth widget should be set (by Application).
     */

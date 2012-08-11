@@ -120,6 +120,21 @@ public:
         return topics_;
     }
 
+    /** List of posts of the topic */
+    url::IntegerNode* topic_posts() const {
+        return topic_posts_;
+    }
+
+    /** List of all posts */
+    url::PredefinedNode* all_posts() const {
+        return all_posts_;
+    }
+
+    /** Page of the post */
+    url::IntegerNode* post() const {
+        return post_;
+    }
+
 private:
     MainWidget* main_widget_;
     url::PredefinedNode* user_list_;
@@ -140,11 +155,16 @@ private:
     url::PredefinedNode* board_root_;
     url::StringNode* board_;
     url::PredefinedNode* topics_;
+    url::IntegerNode* topic_posts_;
+    url::PredefinedNode* all_posts_;
+    url::IntegerNode* post_;
 
     void open_user();
     void open_game();
     void open_competition();
     void open_board();
+    void forum_topic_posts();
+    void forum_post();
 };
 
 }

@@ -33,10 +33,9 @@ public:
         CONTENTS_COLUMN /**< Contents of the comment */
     };
 
-    /** Constructor.
-    If root is a null pointer, it means listing all forum topics.
-    */
-    CommentModel(const CommentPtr& root, Wt::WObject* parent = 0);
+    /** Constructor */
+    CommentModel(Comment::Type type, const CommentPtr& root = CommentPtr(),
+                 Wt::WObject* parent = 0);
 
     /** Return data at a specific model index */
     boost::any data(const Wt::WModelIndex& index,
@@ -56,7 +55,13 @@ public:
         return root_;
     }
 
+    /** Return type */
+    Comment::Type type() const {
+        return type_;
+    }
+
 private:
+    Comment::Type type_;
     CommentPtr root_;
 };
 

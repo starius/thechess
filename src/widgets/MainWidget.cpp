@@ -130,7 +130,19 @@ void MainWidget::board_view(const std::string& data) {
 }
 
 void MainWidget::forum_topics() {
-    set_contents(new CommentList(CommentPtr()));
+    set_contents(new CommentList(Comment::FORUM_TOPIC));
+}
+
+void MainWidget::forum_topic_posts(const CommentPtr& topic) {
+    set_contents(new CommentList(Comment::FORUM_POST, topic));
+}
+
+void MainWidget::forum_all_posts() {
+    set_contents(new CommentList(Comment::FORUM_POST));
+}
+
+void MainWidget::forum_post(const CommentPtr& post) {
+    set_contents(new CommentList(Comment::FORUM_COMMENT, post));
 }
 
 Wt::Auth::AuthWidget* MainWidget::auth_widget() {

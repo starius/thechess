@@ -25,6 +25,7 @@ const int COMMENT_WIDTH = 700;
 const int COMMENT_ROW_HEIGHT_FORUM = 200;
 const int COMMENT_CHAT_LENGTH = 80;
 const int TOPIC_LENGTH = 80;
+const int POST_LENGTH = 80;
 
 class CommentList::CommentView : public Wt::WTableView {
 public:
@@ -51,28 +52,31 @@ public:
     }
 };
 
-CommentList::CommentList(const CommentPtr& root, Wt::WContainerWidget* parent):
+CommentList::CommentList(Comment::Type type, const CommentPtr& root,
+                         Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent),
     Notifiable(Object(COMMENT, root.id()), tNot) {
-    CommentModel* model = new CommentModel(root, this);
+    CommentModel* model = new CommentModel(type, root, this);
     view_ = new CommentView(model, this);
-    if (!root) {
-        // Forum topics
+    if (type == Comment::FORUM_TOPIC) {
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
         line_edit->setTextSize(TOPIC_LENGTH);
-    } else if (root->type() == Comment::CHAT_ROOT) {
+    } else if (type == Comment::FORUM_POST) {
+        Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
+        edit_ = line_edit;
+        line_edit->setTextSize(POST_LENGTH);
+        post_text_ = new Wt::WTextEdit(this);
+    } else if (type == Comment::CHAT_MESSAGE) {
         view_->setAlternatingRowColors(true);
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
         edit_->enterPressed().connect(boost::bind(&CommentList::add_comment,
                                       this, root));
         line_edit->setTextSize(COMMENT_CHAT_LENGTH);
-    } else if (root->type() == Comment::FORUM_POST_TEXT) {
+    } else if (type == Comment::FORUM_COMMENT) {
         view_->setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
         edit_ = new Wt::WTextEdit(this);
-    } else if (root->type() == Comment::FORUM_TOPIC) {
-        // TODO
     } else {
         // log error
     }
@@ -99,14 +103,25 @@ void CommentList::add_comment(const CommentPtr& parent) {
         comment.modify()->set_parent(parent);
         comment.modify()->set_type(Comment::child_type(parent->type()));
     } else {
-        comment.modify()->set_type(Comment::FORUM_TOPIC);
+        comment.modify()->set_type(comment_model()->type());
     }
     comment.modify()->set_text(edit_->valueText());
     comment.modify()->set_init(tApp->user());
     CommentPtr root = comment_model()->root();
     comment.modify()->set_root(root);
+    if (comment_model()->type() == Comment::FORUM_POST) {
+        comment.flush();
+        CommentPtr post_text = tApp->session().add(new Comment(true));
+        post_text.modify()->set_type(Comment::FORUM_POST_TEXT);
+        post_text.modify()->set_parent(comment);
+        post_text.modify()->set_text(post_text_->valueText());
+        post_text.modify()->set_init(tApp->user());
+    }
     t.commit();
     edit_->setValueText("");
+    if (comment_model()->type() == Comment::FORUM_POST) {
+        post_text_->setValueText("");
+    }
     tNot->emit(new Object(COMMENT, root.id()));
     if (!wApp->environment().ajax()) {
         comment_model()->reload();

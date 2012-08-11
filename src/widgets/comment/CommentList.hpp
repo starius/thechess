@@ -20,10 +20,9 @@ namespace thechess {
 /** Widget containing a list of comments */
 class CommentList : public Wt::WContainerWidget, public Notifiable {
 public:
-    /** Constructor.
-    If root is a null pointer, it means listing all forum topics.
-    */
-    CommentList(const CommentPtr& root, Wt::WContainerWidget* parent = 0);
+    /** Constructor */
+    CommentList(Comment::Type type, const CommentPtr& root = CommentPtr(),
+                Wt::WContainerWidget* parent = 0);
 
     /** Update widget with new/changed comments */
     virtual void notify(EventPtr);
@@ -33,6 +32,7 @@ private:
 
     CommentView* view_;
     Wt::WFormWidget* edit_;
+    Wt::WTextEdit* post_text_;
 
     CommentModel* comment_model() const;
 

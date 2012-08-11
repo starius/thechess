@@ -52,6 +52,7 @@ private:
         }
         add_section("tc.forum.forum");
         add_button("tc.forum.topics", path_->topics());
+        add_button("tc.forum.all_posts", path_->all_posts());
     }
 
     void add_button(const char* title_id, Wt::Wc::url::Node* node) {

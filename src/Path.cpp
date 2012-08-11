@@ -36,6 +36,11 @@ Path::Path(Wt::WObject* parent):
     board_root_ = new PredefinedNode("board", this);
     board_ = new StringNode(board_root_);
     topics_ = new PredefinedNode("forum", this);
+    PredefinedNode* topic = new PredefinedNode("topic", topics_);
+    topic_posts_ = new IntegerNode(topic);
+    PredefinedNode* post = new PredefinedNode("post", topics_);
+    all_posts_ = new PredefinedNode("all", post);
+    post_ = new IntegerNode(post);
     tApp->internalPathChanged().connect(this, &Parser::open);
 }
 
@@ -53,6 +58,9 @@ void Path::connect_main_widget(MainWidget* mw) {
     competition_new_->opened().connect(mw, &MainWidget::competition_new);
     board_->opened().connect(this, &Path::open_board);
     topics_->opened().connect(mw, &MainWidget::forum_topics);
+    topic_posts_->opened().connect(this, &Path::forum_topic_posts);
+    all_posts_->opened().connect(mw, &MainWidget::forum_all_posts);
+    post_->opened().connect(this, &Path::forum_post);
 }
 
 void Path::open_user() {
@@ -90,6 +98,28 @@ void Path::open_competition() {
 
 void Path::open_board() {
     main_widget_->board_view(board_->string());
+}
+
+void Path::forum_topic_posts() {
+    BOOST_ASSERT(main_widget_);
+    long long id = topic_posts_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        main_widget_->forum_topic_posts(tApp->session().load<Comment>(id));
+    } catch (dbo::ObjectNotFoundException)
+    { }
+    t.commit();
+}
+
+void Path::forum_post() {
+    BOOST_ASSERT(main_widget_);
+    long long id = post_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        main_widget_->forum_post(tApp->session().load<Comment>(id));
+    } catch (dbo::ObjectNotFoundException)
+    { }
+    t.commit();
 }
 
 }

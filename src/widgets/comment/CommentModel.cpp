@@ -10,9 +10,10 @@
 
 namespace thechess {
 
-CommentModel::CommentModel(const CommentPtr& root, Wt::WObject* parent):
+CommentModel::CommentModel(Comment::Type type, const CommentPtr& root,
+                           Wt::WObject* parent):
     CommentModel::BaseQM(parent),
-    root_(root) {
+    type_(type), root_(root) {
     dbo::Transaction t(tApp->session());
     setQuery(get_query());
     addColumn("id", ""); // surrogate field
@@ -24,6 +25,13 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
     if (role == Wt::DisplayRole && index.column() == CONTENTS_COLUMN) {
         const CommentPtr& o = resultRow(index.row());
         return contents(o);
+    } else if (role == Wt::LinkRole && index.column() == CONTENTS_COLUMN) {
+        const CommentPtr& o = resultRow(index.row());
+        if (type() == Comment::FORUM_TOPIC) {
+            return tApp->path().topic_posts()->get_link(o.id());
+        } else if (type() == Comment::FORUM_POST) {
+            return tApp->path().post()->get_link(o.id());
+        }
     }
     return BaseQM::data(index, role);
 }
@@ -41,10 +49,11 @@ Wt::WString CommentModel::contents(const CommentPtr& comment) {
 }
 
 CommentModel::Query CommentModel::get_query() const {
-    return root_ ?
-           root_->family().find() :
-           tApp->session().find<Comment>()
-           .where("type = ?").bind(Comment::FORUM_TOPIC);
+    if (root_) {
+        return root_->family().find();
+    } else {
+        return tApp->session().find<Comment>().where("type = ?").bind(type_);
+    }
 }
 
 }
