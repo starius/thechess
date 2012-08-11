@@ -41,7 +41,10 @@ Wt::WString CommentModel::contents(const CommentPtr& comment) {
 }
 
 CommentModel::Query CommentModel::get_query() const {
-    return root_->family().find();
+    return root_ ?
+           root_->family().find() :
+           tApp->session().find<Comment>()
+           .where("type = ?").bind(Comment::FORUM_TOPIC);
 }
 
 }

@@ -24,6 +24,7 @@ namespace thechess {
 const int COMMENT_WIDTH = 700;
 const int COMMENT_ROW_HEIGHT_FORUM = 200;
 const int COMMENT_CHAT_LENGTH = 80;
+const int TOPIC_LENGTH = 80;
 
 class CommentList::CommentView : public Wt::WTableView {
 public:
@@ -55,7 +56,12 @@ CommentList::CommentList(const CommentPtr& root, Wt::WContainerWidget* parent):
     Notifiable(Object(COMMENT, root.id()), tNot) {
     CommentModel* model = new CommentModel(root, this);
     view_ = new CommentView(model, this);
-    if (root->type() == Comment::CHAT_ROOT) {
+    if (!root) {
+        // Forum topics
+        Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
+        edit_ = line_edit;
+        line_edit->setTextSize(TOPIC_LENGTH);
+    } else if (root->type() == Comment::CHAT_ROOT) {
         view_->setAlternatingRowColors(true);
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
@@ -89,7 +95,12 @@ void CommentList::add_comment(const CommentPtr& parent) {
     }
     dbo::Transaction t(tApp->session());
     CommentPtr comment = tApp->session().add(new Comment(true));
-    comment.modify()->set_parent(parent);
+    if (parent) {
+        comment.modify()->set_parent(parent);
+        comment.modify()->set_type(Comment::child_type(parent->type()));
+    } else {
+        comment.modify()->set_type(Comment::FORUM_TOPIC);
+    }
     comment.modify()->set_text(edit_->valueText());
     comment.modify()->set_init(tApp->user());
     CommentPtr root = comment_model()->root();
