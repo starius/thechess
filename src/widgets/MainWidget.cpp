@@ -26,6 +26,7 @@
 #include "widgets/competition/CompetitionListWidget.hpp"
 #include "widgets/user/UserWidget.hpp"
 #include "widgets/user/SettingsWidget.hpp"
+#include "widgets/comment/CommentList.hpp"
 
 namespace thechess {
 
@@ -126,6 +127,10 @@ void MainWidget::board_view(const std::string& data) {
                                   /* bottom */ Piece::WHITE, Board(data));
     b->show_lastmove_checkbox(false);
     set_contents(b);
+}
+
+void MainWidget::forum_topics() {
+    set_contents(new CommentList(CommentPtr()));
 }
 
 Wt::Auth::AuthWidget* MainWidget::auth_widget() {

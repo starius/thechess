@@ -69,6 +69,9 @@ public:
     /** View the board */
     void board_view(const std::string& data);
 
+    /** View forum topics */
+    void forum_topics();
+
     /** Get authentication widget.
     \attention Auth widget should be set (by Application).
     */
