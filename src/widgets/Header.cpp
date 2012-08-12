@@ -10,7 +10,7 @@
 namespace thechess {
 
 Header::Header(const Wt::WString& text, Wt::WContainerWidget* parent):
-    Wt::WText(text, parent) {
+    Wt::WText(text, Wt::PlainText, parent) {
     setStyleClass("thechess-header");
     setInline(false);
 }
