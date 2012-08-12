@@ -93,6 +93,7 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
         edit_ = line_edit;
         line_edit->setTextSize(POST_LENGTH);
         post_text_ = new Wt::WTextEdit(this);
+        Wt::Wc::fix_text_edit(post_text_);
     } else if (type == Comment::CHAT_MESSAGE) {
         view_->setAlternatingRowColors(true);
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
@@ -102,7 +103,9 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
         line_edit->setTextSize(COMMENT_CHAT_LENGTH);
     } else if (type == Comment::FORUM_COMMENT) {
         view_->setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
-        edit_ = new Wt::WTextEdit(this);
+        Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
+        edit_ = text_edit;
+        Wt::Wc::fix_text_edit(text_edit);
     } else {
         // log error
     }
