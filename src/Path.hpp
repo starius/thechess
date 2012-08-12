@@ -135,6 +135,11 @@ public:
         return post_;
     }
 
+    /** Page of the post */
+    url::IntegerNode* post_comment() const {
+        return post_comment_;
+    }
+
 private:
     MainWidget* main_widget_;
     url::PredefinedNode* user_list_;
@@ -158,6 +163,7 @@ private:
     url::IntegerNode* topic_posts_;
     url::PredefinedNode* all_posts_;
     url::IntegerNode* post_;
+    url::IntegerNode* post_comment_;
 
     void open_user();
     void open_game();
@@ -165,6 +171,7 @@ private:
     void open_board();
     void forum_topic_posts();
     void forum_post();
+    void forum_post_comment();
 };
 
 }
