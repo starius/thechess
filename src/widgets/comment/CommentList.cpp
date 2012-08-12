@@ -16,6 +16,7 @@
 
 #include "widgets/comment/CommentList.hpp"
 #include "widgets/comment/CommentModel.hpp"
+#include "widgets/Header.hpp"
 #include "model/global.hpp"
 #include "Application.hpp"
 
@@ -56,6 +57,31 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
                          Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent),
     Notifiable(Object(COMMENT, root.id()), tNot) {
+    dbo::Transaction t(tApp->session());
+    Wt::WString header;
+    if (type == Comment::FORUM_TOPIC) {
+        header = tr("tc.forum.topics");
+    } else if (type == Comment::FORUM_POST) {
+        if (root) {
+            header = tr("tc.forum.topic_posts").arg(root->text());
+        } else {
+            header = tr("tc.forum.all_posts");
+        }
+    } else if (type == Comment::FORUM_COMMENT) {
+        if (root) {
+            CommentPtr post_text = root;
+            CommentPtr post = root->parent();
+            header = tr("tc.forum.post_header")
+                     .arg(post.id()).arg(post->text());
+        }
+    }
+    if (!header.empty()) {
+        new Header(header, this);
+    }
+    if (type == Comment::FORUM_COMMENT && root) {
+        CommentPtr post_text = root;
+        new Wt::WText(post_text->text(), this);
+    }
     CommentModel* model = new CommentModel(type, root, this);
     view_ = new CommentView(model, this);
     if (type == Comment::FORUM_TOPIC) {
@@ -82,6 +108,7 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     }
     Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
     add->clicked().connect(boost::bind(&CommentList::add_comment, this, root));
+    t.commit();
 }
 
 void CommentList::notify(EventPtr) {

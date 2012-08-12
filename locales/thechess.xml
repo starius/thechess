@@ -427,6 +427,8 @@ See locales-test manpage for more information.
 
     <message id='tc.forum.all_posts'>all posts</message>
     <message id='tc.forum.forum'>forum</message>
+    <message id='tc.forum.post_header'>post {1}: {2}</message>
+    <message id='tc.forum.topic_posts'>posts of topic {1}</message>
     <message id='tc.forum.topics'>topics</message>
 
     <message id='tc.game.Analysis'>Analysis</message>
