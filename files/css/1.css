@@ -123,6 +123,7 @@ FIXME http://redmine.emweb.be/issues/1144
 
 .thechess-forum-comments .Wt-tv-c {
     line-height: 10px !important;
+    white-space: normal !important;
 }
 
 .Wt-auth-login * {
