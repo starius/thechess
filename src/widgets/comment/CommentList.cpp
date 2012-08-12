@@ -103,6 +103,7 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
         line_edit->setTextSize(COMMENT_CHAT_LENGTH);
     } else if (type == Comment::FORUM_COMMENT) {
         view_->setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
+        view_->addStyleClass("thechess-forum-comments");
         Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
         edit_ = text_edit;
         Wt::Wc::fix_text_edit(text_edit);
