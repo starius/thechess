@@ -142,7 +142,10 @@ void MainWidget::forum_all_posts() {
 }
 
 void MainWidget::forum_post(const CommentPtr& post) {
-    set_contents(new CommentList(Comment::FORUM_COMMENT, post));
+    if (post->children().size()) {
+        CommentPtr post_text = post->children().front();
+        set_contents(new CommentList(Comment::FORUM_COMMENT, post_text));
+    }
 }
 
 Wt::Auth::AuthWidget* MainWidget::auth_widget() {
