@@ -1,0 +1,26 @@
+/*
+ * thechess, chess game web application written in C++ and based on Wt
+ * Copyright (C) 2010 Boris Nagaev
+ *
+ * See the LICENSE file for terms of use.
+ */
+
+#include <Wt/Utils>
+
+#include "model/all.hpp"
+#include "Application.hpp"
+
+namespace thechess {
+
+Wt::WString forum_comment_text(const CommentPtr& comment) {
+    Wt::WString text = comment->text();
+    Wt::Utils::removeScript(text);
+    return Wt::WString::tr("tc.forum.comment_template")
+           .arg(comment->created().toString())
+           .arg(comment->init()->username())
+           .arg(tApp->path().post_comment()->get_full_path(comment.id()))
+           .arg(text);
+}
+
+}
+

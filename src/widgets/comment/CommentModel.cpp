@@ -5,9 +5,8 @@
  * See the LICENSE file for terms of use.
  */
 
-#include <Wt/Utils>
-
 #include "widgets/comment/CommentModel.hpp"
+#include "widgets/comment/forum_comment_text.hpp"
 #include "Application.hpp"
 
 namespace thechess {
@@ -49,13 +48,7 @@ Wt::WFlags<Wt::ItemFlag> CommentModel::flags(const Wt::WModelIndex& i) const {
 
 Wt::WString CommentModel::contents(const CommentPtr& comment) const {
     if (type() == Comment::FORUM_COMMENT) {
-        Wt::WString text = comment->text();
-        Wt::Utils::removeScript(text);
-        return Wt::WString::tr("tc.forum.comment_template")
-               .arg(comment->created().toString())
-               .arg(comment->init()->username())
-               .arg(tApp->path().post_comment()->get_full_path(comment.id()))
-               .arg(text);
+        return forum_comment_text(comment);
     } else {
         return comment->text(); // TODO
     }
