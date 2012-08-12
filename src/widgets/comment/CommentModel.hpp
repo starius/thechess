@@ -46,7 +46,7 @@ public:
     Wt::WFlags<Wt::ItemFlag> flags(const Wt::WModelIndex& i) const;
 
     /** Return html comment representation */
-    static Wt::WString contents(const CommentPtr& comment);
+    Wt::WString contents(const CommentPtr& comment) const;
 
     /** Return query for the MVC model */
     Query get_query() const;

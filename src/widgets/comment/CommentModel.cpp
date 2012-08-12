@@ -5,6 +5,8 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <Wt/Utils>
+
 #include "widgets/comment/CommentModel.hpp"
 #include "Application.hpp"
 
@@ -45,8 +47,18 @@ Wt::WFlags<Wt::ItemFlag> CommentModel::flags(const Wt::WModelIndex& i) const {
     return f;
 }
 
-Wt::WString CommentModel::contents(const CommentPtr& comment) {
-    return comment->text(); // TODO
+Wt::WString CommentModel::contents(const CommentPtr& comment) const {
+    if (type() == Comment::FORUM_COMMENT) {
+        Wt::WString text = comment->text();
+        Wt::Utils::removeScript(text);
+        return Wt::WString::tr("tc.forum.comment_template")
+               .arg(comment->created().toString())
+               .arg(comment->init()->username())
+               .arg(tApp->path().post_comment()->get_full_path(comment.id()))
+               .arg(text);
+    } else {
+        return comment->text(); // TODO
+    }
 }
 
 CommentModel::Query CommentModel::get_query() const {
