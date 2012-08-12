@@ -58,7 +58,7 @@ Wt::WString CommentModel::contents(const CommentPtr& comment) const {
 
 CommentModel::Query CommentModel::get_query() const {
     if (root_) {
-        return root_->family().find();
+        return root_->family().find().orderBy("show_index");
     } else {
         return tApp->session().find<Comment>().where("type = ?").bind(type_);
     }
