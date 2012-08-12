@@ -26,7 +26,7 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
     if (role == Wt::DisplayRole && index.column() == CONTENTS_COLUMN) {
         const CommentPtr& o = resultRow(index.row());
         return contents(o);
-    } else if (role == Wt::LinkRole && index.column() == CONTENTS_COLUMN) {
+    } else if (role == Wt::LinkRole && index.column() == ID_COL) {
         const CommentPtr& o = resultRow(index.row());
         if (type() == Comment::FORUM_TOPIC) {
             return tApp->path().topic_posts()->get_link(o.id());
