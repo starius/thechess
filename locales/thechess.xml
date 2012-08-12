@@ -523,6 +523,7 @@ See locales-test manpage for more information.
         game would be rolled back before selected move
     </message>
 
+    <message id='tc.user.Anonymous'>Anonymous</message>
     <message id='tc.user.classification_a'>class A</message>
     <message id='tc.user.classification_b'>class B</message>
     <message id='tc.user.classification_c'>class C</message>

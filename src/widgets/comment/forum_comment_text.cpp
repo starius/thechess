@@ -15,9 +15,12 @@ namespace thechess {
 Wt::WString forum_comment_text(const CommentPtr& comment) {
     Wt::WString text = comment->text();
     Wt::Utils::removeScript(text);
+    Wt::WString username = comment->init() ?
+                           comment->init()->username() :
+                           Wt::WString::tr("tc.user.Anonymous");
     return Wt::WString::tr("tc.forum.comment_template")
            .arg(comment->created().toString())
-           .arg(comment->init()->username())
+           .arg(username)
            .arg(tApp->path().post_comment()->get_full_path(comment.id()))
            .arg(text);
 }
