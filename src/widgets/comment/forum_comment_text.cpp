@@ -21,7 +21,6 @@ Wt::WString forum_comment_text(const CommentPtr& comment) {
     return Wt::WString::tr("tc.forum.comment_template")
            .arg(comment->created().toString())
            .arg(username)
-           .arg(tApp->path().post_comment()->get_full_path(comment.id()))
            .arg(text);
 }
 

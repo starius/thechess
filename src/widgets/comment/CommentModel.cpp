@@ -33,6 +33,8 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
             return tApp->path().topic_posts()->get_link(o.id());
         } else if (type() == Comment::FORUM_POST) {
             return tApp->path().post()->get_link(o.id());
+        } else if (type() == Comment::FORUM_COMMENT) {
+            return tApp->path().post_comment()->get_link(o.id());
         }
     }
     return BaseQM::data(index, role);
