@@ -91,6 +91,8 @@ void Comment::set_index() {
             if (abs(last->index() - index()) > COMMENT_GAP) {
                 index_ = last->index() + COMMENT_STEP;
             }
+        } else {
+            index_ = 1.0;
         }
     }
 }
