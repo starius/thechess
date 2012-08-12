@@ -27,6 +27,7 @@
 #include "widgets/user/UserWidget.hpp"
 #include "widgets/user/SettingsWidget.hpp"
 #include "widgets/comment/CommentList.hpp"
+#include "widgets/comment/CommentWidget.hpp"
 
 namespace thechess {
 
@@ -145,6 +146,13 @@ void MainWidget::forum_post(const CommentPtr& post) {
     if (post->children().size()) {
         CommentPtr post_text = post->children().front();
         set_contents(new CommentList(Comment::FORUM_COMMENT, post_text));
+    }
+}
+
+void MainWidget::forum_post_comment(const CommentPtr& comment) {
+    CommentPtr post_text = comment->root();
+    if (post_text->type() == Comment::FORUM_POST_TEXT) {
+        set_contents(new CommentWidget(comment));
     }
 }
 

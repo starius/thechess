@@ -81,6 +81,9 @@ public:
     /** View post */
     void forum_post(const CommentPtr& post);
 
+    /** View post comment */
+    void forum_post_comment(const CommentPtr& comment);
+
     /** Get authentication widget.
     \attention Auth widget should be set (by Application).
     */
