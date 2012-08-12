@@ -16,7 +16,8 @@ CommentModel::CommentModel(Comment::Type type, const CommentPtr& root,
     type_(type), root_(root) {
     dbo::Transaction t(tApp->session());
     setQuery(get_query());
-    addColumn("id", ""); // surrogate field
+    addColumn("id");
+    addColumn("id", ""); // contents
     t.commit();
 }
 

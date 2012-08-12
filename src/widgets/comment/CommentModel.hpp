@@ -30,6 +30,7 @@ public:
 
     /** Enum for column indices */
     enum Columns {
+        ID_COL, /**< ID (href) */
         CONTENTS_COLUMN /**< Contents of the comment */
     };
 

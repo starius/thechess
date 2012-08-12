@@ -22,6 +22,7 @@
 
 namespace thechess {
 
+const int ID_WIDTH = 40;
 const int COMMENT_WIDTH = 700;
 const int COMMENT_ROW_HEIGHT_FORUM = 200;
 const int COMMENT_CHAT_LENGTH = 80;
@@ -34,6 +35,7 @@ public:
         Wt::WTableView(p) {
         setModel(model);
         resize(770, 450);
+        setColumnWidth(CommentModel::ID_COL, ID_WIDTH);
         setColumnWidth(CommentModel::CONTENTS_COLUMN, COMMENT_WIDTH);
         setHeaderHeight(0);
         show_last(); // FIXME has no effect in google chrome
