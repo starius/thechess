@@ -64,14 +64,17 @@ void Comment::set_index() {
     family_desc.where("id <> ?").bind(id()); // except me
     family_desc.orderBy("show_index desc");
     CommentPtr next;
-    if (parent_->parent()) {
-        Comments uncles = parent_->parent()->children();
+    CommentPtr ancestor = parent_;
+    while (ancestor && ancestor->parent() && ancestor != r) {
+        Comments uncles = ancestor->parent()->children();
         Query uncles_asc = uncles.find().orderBy("show_index");
-        double min = parent_->index() + COMMENT_GAP;
+        double min = ancestor->index() + COMMENT_GAP;
         Comments older_uncles = uncles_asc.where("show_index > ?").bind(min);
         if (older_uncles.size()) {
             next = *older_uncles.begin();
+            break;
         }
+        ancestor = ancestor->parent();
     }
     if (next) {
         double max = next->index() - COMMENT_GAP;
