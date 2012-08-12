@@ -86,6 +86,9 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     }
     CommentModel* model = new CommentModel(type, root, this);
     view_ = new CommentView(model, this);
+    if (type == Comment::CHAT_MESSAGE) {
+        view_->setColumnHidden(CommentModel::ID_COL, true);
+    }
     if (type == Comment::FORUM_TOPIC) {
         view_->setAlternatingRowColors(true);
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
