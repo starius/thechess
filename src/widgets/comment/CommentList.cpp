@@ -85,10 +85,12 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     CommentModel* model = new CommentModel(type, root, this);
     view_ = new CommentView(model, this);
     if (type == Comment::FORUM_TOPIC) {
+        view_->setAlternatingRowColors(true);
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
         line_edit->setTextSize(TOPIC_LENGTH);
     } else if (type == Comment::FORUM_POST) {
+        view_->setAlternatingRowColors(true);
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
         line_edit->setTextSize(POST_LENGTH);
