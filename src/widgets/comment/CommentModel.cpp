@@ -48,9 +48,18 @@ Wt::WFlags<Wt::ItemFlag> CommentModel::flags(const Wt::WModelIndex& i) const {
     return f;
 }
 
+const char* const COMMENT_INDENT = "<table><tr><td width='{1}'>{2}</td>"
+                                   "<td>{3}</td></tr></table>";
+
 Wt::WString CommentModel::contents(const CommentPtr& comment) const {
     if (type() == Comment::FORUM_COMMENT) {
-        return forum_comment_text(comment);
+        int depth = comment->depth() - 2;
+        int width = depth * 10 + 1;
+        std::string spacer(depth, '-');
+        return Wt::WString(COMMENT_INDENT)
+               .arg(width)
+               .arg(spacer)
+               .arg(forum_comment_text(comment));
     } else {
         return comment->text(); // TODO
     }
