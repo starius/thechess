@@ -68,11 +68,9 @@ Notifier& Server::notifier() {
 void Server::auth_init() {
     using namespace Wt::Auth;
     auth_service_.setAuthTokensEnabled(true, config::COOKIE_NAME);
-    // FIXME http://redmine.emweb.be/issues/1123
-    // auth_service_.setAuthTokenValidity(config::COOKIE_AGE.total_minutes());
+    auth_service_.setAuthTokenValidity(config::COOKIE_AGE.total_minutes());
     auth_service_.setEmailVerificationEnabled(true);
     password_service_.setAttemptThrottlingEnabled(true);
-    // FIXME setStrengthValidator http://redmine.emweb.be/issues/1125
     password_service_.setStrengthValidator(new PasswordStrengthValidator());
     PasswordVerifier* verifier = new PasswordVerifier();
     verifier->addHashFunction(new BCryptHashFunction(7));
