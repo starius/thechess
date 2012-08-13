@@ -334,8 +334,10 @@ See locales-test manpage for more information.
     </message>
 
     <message id='tc.comment.Add'>Add message</message>
+    <message id='tc.comment.Approve'>Approve</message>
     <message id='tc.comment.deleted_message'>[Deleted]</message>
     <message id='tc.comment.draft_message'>[Draft]</message>
+    <message id='tc.comment.Remove'>Remove</message>
 
     <message id='tc.common.Agree'>Agree</message>
     <message id='tc.common.Apply'>Apply</message>

@@ -15,6 +15,7 @@
 
 #include "widgets/comment/CommentWidget.hpp"
 #include "widgets/comment/forum_comment_text.hpp"
+#include "widgets/comment/remover_buttons.hpp"
 #include "widgets/Header.hpp"
 #include "Application.hpp"
 
@@ -54,6 +55,7 @@ CommentWidget::CommentWidget(const CommentPtr& comment) {
         Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
         add->clicked().connect(boost::bind(add_comment, comment, edit));
     }
+    add_remover_buttons(comment, this);
     t.commit();
 }
 

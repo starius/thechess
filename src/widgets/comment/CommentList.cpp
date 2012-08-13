@@ -18,6 +18,7 @@
 
 #include "widgets/comment/CommentList.hpp"
 #include "widgets/comment/CommentModel.hpp"
+#include "widgets/comment/remover_buttons.hpp"
 #include "widgets/Header.hpp"
 #include "model/global.hpp"
 #include "Application.hpp"
@@ -158,6 +159,9 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
         Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
         add->clicked().connect(boost::bind(&CommentList::add_comment,
                                            this, root));
+    }
+    if (root && root->type() == Comment::FORUM_POST_TEXT) {
+        add_remover_buttons(root, this);
     }
     t.commit();
 }
