@@ -76,6 +76,12 @@ public:
     /** Return (first of) auth info */
     AuthInfoPtr auth_info() const;
 
+    /** Return if the user was removed */
+    bool removed() const;
+
+    /** Set user removed status */
+    void set_removed(bool removed = true);
+
     /** Get user name */
     const Wt::WString& username() const {
         return username_;

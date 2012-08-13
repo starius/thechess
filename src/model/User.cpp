@@ -30,6 +30,17 @@ AuthInfoPtr User::auth_info() const {
     return auth_infos_.front();
 }
 
+bool User::removed() const {
+    return auth_info()->status() == Wt::Auth::User::Disabled;
+}
+
+void User::set_removed(bool removed) {
+    Wt::Auth::User::Status status = removed ?
+                                    Wt::Auth::User::Disabled :
+                                    Wt::Auth::User::Normal;
+    auth_info().modify()->setStatus(status);
+}
+
 Wt::WString User::safe_username() const {
     return Wt::Utils::htmlEncode(username());
 }
