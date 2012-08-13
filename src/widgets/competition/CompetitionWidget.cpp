@@ -38,7 +38,9 @@ public:
         setList(true);
         BOOST_FOREACH (const UserPtr& user, c->members_vector()) {
             Wt::WContainerWidget* item = new Wt::WContainerWidget(this);
-            new Wt::WText(user->username(), item);
+            Wt::WAnchor* a = new Wt::WAnchor(item);
+            a->setText(user->username());
+            a->setLink(tApp->path().user_view()->get_link(user->id()));
         }
     }
 };
