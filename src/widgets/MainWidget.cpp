@@ -28,6 +28,7 @@
 #include "widgets/user/SettingsWidget.hpp"
 #include "widgets/comment/CommentList.hpp"
 #include "widgets/comment/CommentWidget.hpp"
+#include "widgets/comment/ChatCommentWidget.hpp"
 
 namespace thechess {
 
@@ -151,8 +152,14 @@ void MainWidget::forum_post(const CommentPtr& post) {
 
 void MainWidget::forum_post_comment(const CommentPtr& comment) {
     CommentPtr post_text = comment->root();
-    if (post_text && post_text->type() == Comment::FORUM_POST_TEXT) {
+    if (post_text->type() == Comment::FORUM_POST_TEXT) {
         set_contents(new CommentWidget(comment));
+    }
+}
+
+void MainWidget::chat_comment(const CommentPtr& comment) {
+    if (comment->type() == Comment::CHAT_MESSAGE) {
+        set_contents(new ChatCommentWidget(comment));
     }
 }
 

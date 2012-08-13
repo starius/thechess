@@ -135,9 +135,14 @@ public:
         return post_;
     }
 
-    /** Page of the post */
+    /** Page of the post comment */
     url::IntegerNode* post_comment() const {
         return post_comment_;
+    }
+
+    /** Page of comment  */
+    url::IntegerNode* chat_comment() const {
+        return chat_comment_;
     }
 
 private:
@@ -164,6 +169,7 @@ private:
     url::PredefinedNode* all_posts_;
     url::IntegerNode* post_;
     url::IntegerNode* post_comment_;
+    url::IntegerNode* chat_comment_;
 
     void open_user();
     void open_game();
@@ -172,6 +178,7 @@ private:
     void forum_topic_posts();
     void forum_post();
     void forum_post_comment();
+    void open_chat_comment();
 };
 
 }

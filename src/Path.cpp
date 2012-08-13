@@ -40,8 +40,10 @@ Path::Path(Wt::WObject* parent):
     topic_posts_ = new IntegerNode(topics_);
     all_posts_ = new PredefinedNode("post", forum);
     post_ = new IntegerNode(all_posts_);
-    PredefinedNode* comment = new PredefinedNode("comment", forum);
-    post_comment_ = new IntegerNode(comment);
+    PredefinedNode* forum_comment = new PredefinedNode("comment", forum);
+    post_comment_ = new IntegerNode(forum_comment);
+    PredefinedNode* comment = new PredefinedNode("comment", this);
+    chat_comment_ = new IntegerNode(comment);
     tApp->internalPathChanged().connect(this, &Parser::open);
 }
 
@@ -63,6 +65,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     all_posts_->opened().connect(mw, &MainWidget::forum_all_posts);
     post_->opened().connect(this, &Path::forum_post);
     post_comment_->opened().connect(this, &Path::forum_post_comment);
+    chat_comment_->opened().connect(this, &Path::open_chat_comment);
 }
 
 void Path::open_user() {
@@ -130,6 +133,17 @@ void Path::forum_post_comment() {
     dbo::Transaction t(tApp->session());
     try {
         main_widget_->forum_post_comment(tApp->session().load<Comment>(id));
+    } catch (dbo::ObjectNotFoundException)
+    { }
+    t.commit();
+}
+
+void Path::open_chat_comment() {
+    BOOST_ASSERT(main_widget_);
+    long long id = chat_comment_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        main_widget_->chat_comment(tApp->session().load<Comment>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
     t.commit();
