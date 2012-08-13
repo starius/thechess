@@ -140,8 +140,11 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     } else {
         // log error
     }
-    Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
-    add->clicked().connect(boost::bind(&CommentList::add_comment, this, root));
+    if (Comment::can_create(tApp->user(), comment_model()->type(), root)) {
+        Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
+        add->clicked().connect(boost::bind(&CommentList::add_comment,
+                                           this, root));
+    }
     t.commit();
 }
 
@@ -159,13 +162,12 @@ void CommentList::add_comment(const CommentPtr& parent) {
         return;
     }
     dbo::Transaction t(tApp->session());
-    CommentPtr comment = tApp->session().add(new Comment(true));
-    if (parent) {
-        comment.modify()->set_parent(parent);
-        comment.modify()->set_type(Comment::child_type(parent->type()));
-    } else {
-        comment.modify()->set_type(comment_model()->type());
+    if (!Comment::can_create(tApp->user(), comment_model()->type(), parent)) {
+        return;
     }
+    CommentPtr comment = tApp->session().add(new Comment(true));
+    comment.modify()->set_parent(parent);
+    comment.modify()->set_type(comment_model()->type());
     comment.modify()->set_text(edit_->valueText());
     comment.modify()->set_init(tApp->user());
     CommentPtr root = comment_model()->root();

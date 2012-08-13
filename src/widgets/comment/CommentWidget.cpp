@@ -22,6 +22,9 @@ namespace thechess {
 
 static void add_comment(const CommentPtr& comment, Wt::WTextEdit* edit) {
     dbo::Transaction t(tApp->session());
+    if (!Comment::can_create(tApp->user(), Comment::FORUM_COMMENT, comment)) {
+        return;
+    }
     CommentPtr c = tApp->session().add(new Comment(true));
     c.modify()->set_parent(comment);
     c.modify()->set_type(Comment::FORUM_COMMENT);
@@ -47,8 +50,10 @@ CommentWidget::CommentWidget(const CommentPtr& comment) {
     }
     Wt::WTextEdit* edit = new Wt::WTextEdit(this);
     Wt::Wc::fix_text_edit(edit);
-    Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
-    add->clicked().connect(boost::bind(add_comment, comment, edit));
+    if (Comment::can_create(tApp->user(), Comment::FORUM_COMMENT, comment)) {
+        Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
+        add->clicked().connect(boost::bind(add_comment, comment, edit));
+    }
     t.commit();
 }
 
