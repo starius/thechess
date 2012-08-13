@@ -54,6 +54,11 @@ Comment::Type Comment::root_type(Comment::Type type) {
     return NO_TYPE;
 }
 
+bool Comment::can_create(const UserPtr& user, Type type,
+                         const CommentPtr& parent) {
+    return true;
+}
+
 //FIXME *(collection.begin()) --> collection.front()
 // FIXME 2 if Query family_desc = root_->family().find(), orderBy() fails
 void Comment::set_index() {

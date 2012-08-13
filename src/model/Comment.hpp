@@ -50,6 +50,10 @@ public:
     /** Return type of root */
     static Type root_type(Type type);
 
+    /** Return if the user can write a comment of the type */
+    static bool can_create(const UserPtr& user, Type type,
+                           const CommentPtr& parent = CommentPtr());
+
     /** Get sorting index.
     The order of indices of a branch should correspond
     the order in the tree for viewing.
