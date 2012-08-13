@@ -16,6 +16,7 @@
 #include "widgets/user/UserWidget.hpp"
 #include "widgets/user/RatingChanges.hpp"
 #include "widgets/game/GameCreateWidget.hpp"
+#include "widgets/Header.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
 #include "utils/time_intervals.hpp"
@@ -27,7 +28,7 @@ public:
     UserWidgetImpl(const UserPtr& user) :
         Wt::WContainerWidget(), user_(user) {
         dbo::Transaction t(tApp->session());
-        new Wt::WText(user_->username(), this);
+        new Header(user_->username(), this);
         new Wt::WBreak(this);
         new Wt::WText(user_->classification_str(), this);
         new Wt::WBreak(this);
