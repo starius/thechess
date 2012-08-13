@@ -53,6 +53,15 @@ public:
                 .connect(this, &UserWidgetImpl::rating_changes_and_me);
             }
         }
+        if (tApp->user() && tApp->user()->can_remove(user)) {
+            Wt::WPushButton* b = new Wt::WPushButton(this);
+            b->clicked().connect(this, &UserWidgetImpl::inverse_removed);
+            if (user->removed()) {
+                b->setText(tr("tc.user.Undelete"));
+            } else {
+                b->setText(tr("tc.user.Delete"));
+            }
+        }
         t.commit();
     }
 
@@ -76,6 +85,15 @@ private:
         rating_and_me_button_->hide();
         RatingChanges* rc = new RatingChanges(user_, this);
         rc->add_user(tApp->user());
+    }
+
+    void inverse_removed() {
+        dbo::Transaction t(tApp->session());
+        if (tApp->user() && tApp->user()->can_remove(user_)) {
+            user_.modify()->set_removed(!user_->removed());
+        }
+        t.commit();
+        tApp->path().open(tApp->internalPath());
     }
 };
 

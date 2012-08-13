@@ -544,6 +544,7 @@ See locales-test manpage for more information.
     <message id='tc.user.classification_national_master'>national master</message>
     <message id='tc.user.classification_none'>without category</message>
     <message id='tc.user.classification_super_grandmaster'>super-grandmaster</message>
+    <message id='tc.user.Delete'>Delete</message>
     <message id='tc.user.Online_time'>Spent online {1}</message>
     <message id='tc.user.rating_after'>rating after</message>
     <message id='tc.user.Rating_changes'>Rating changes</message>
@@ -551,6 +552,7 @@ See locales-test manpage for more information.
     <message id='tc.user.settings'>settings</message>
     <message id='tc.user.Settings'>Settings</message>
     <message id='tc.user.Start_game'>Start a game</message>
+    <message id='tc.user.Undelete'>Undelete</message>
     <message id='tc.user.user'>user</message>
 
 </messages>
