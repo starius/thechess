@@ -40,13 +40,15 @@ CPPtr CPSelector::cp() const {
     if (tab_->currentIndex() == CP_SELECTOR_LIST_TAB) {
         result = list_->cp();
     } else if (tab_->currentIndex() == CP_SELECTOR_NEW_TAB) {
-        CP* new_cp = new CP(true);
-        new_->apply_parameters(new_cp);
-        new_cp->set_init(tApp->user());
+        CPPtr new_cp = new CP(true);
+        new_->apply_parameters(new_cp.modify());
+        new_cp.modify()->set_init(tApp->user());
         if (list_->cp()) {
-            new_cp->set_parent(list_->cp());
+            new_cp.modify()->set_parent(list_->cp());
         }
-        result = tApp->session().add(new_cp);
+        if (new_cp->gp()) {
+            result = tApp->session().add(new_cp);
+        }
     }
     return result;
 }
