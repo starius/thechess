@@ -138,10 +138,15 @@ public:
     */
     void set_parent(const CommentPtr& parent, bool set_index = true);
 
-    /** Get creation time */
+    /** Get creation time.
+    For FORUM_POST this means the time of last comment.
+    */
     const Wt::WDateTime& created() const {
         return created_;
     }
+
+    /** Update creation time of post when a comment it added */
+    void post_comment_added();
 
     /** Get last edition (including creation) time */
     const Wt::WDateTime& edited() const {

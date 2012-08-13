@@ -113,5 +113,11 @@ void Comment::set_parent(const CommentPtr& parent, bool set_index) {
     }
 }
 
+void Comment::post_comment_added() {
+    if (type() == FORUM_POST) {
+        created_ = now();
+    }
+}
+
 }
 

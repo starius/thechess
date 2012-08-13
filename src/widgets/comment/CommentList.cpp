@@ -155,6 +155,11 @@ void CommentList::add_comment(const CommentPtr& parent) {
         post_text.modify()->set_text(post_text_->valueText());
         post_text.modify()->set_init(tApp->user());
     }
+    if (comment_model()->type() == Comment::FORUM_COMMENT) {
+        // FORUM_POST's creation time is the time of last comment
+        CommentPtr post = root->parent();
+        post.modify()->post_comment_added();
+    }
     t.commit();
     edit_->setValueText("");
     if (comment_model()->type() == Comment::FORUM_POST) {
