@@ -6,6 +6,7 @@
  */
 
 #include <Wt/WRandom>
+#include <Wt/Utils>
 
 #include "model/all.hpp"
 #include "config.hpp"
@@ -27,6 +28,10 @@ User::User() {
 
 AuthInfoPtr User::auth_info() const {
     return auth_infos_.front();
+}
+
+Wt::WString User::safe_username() const {
+    return Wt::Utils::htmlEncode(username());
 }
 
 bool User::has_permission(Rights perm) const {

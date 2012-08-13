@@ -81,6 +81,9 @@ public:
         return username_;
     }
 
+    /** Get HTML-escaped user name */
+    Wt::WString safe_username() const;
+
     /** Set user name */
     void set_username(Wt::WString username) {
         username_ = username;
