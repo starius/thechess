@@ -92,7 +92,7 @@ Wt::WString User::classification_str() const {
 }
 
 bool User::can_confirm_classification(const UserPtr& user) const {
-    return user && user->rights() >= MODERATOR;
+    return user && user->has_permission(CLASSIFICATION_CONFIRMER);
 }
 
 void User::confirm_classification(const UserPtr& user) {
