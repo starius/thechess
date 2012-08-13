@@ -30,6 +30,9 @@ public:
         Wt::WContainerWidget(), user_(user) {
         dbo::Transaction t(tApp->session());
         new Header(user_->username(), this);
+        if (user_->removed()) {
+            new Wt::WText(tr("tc.user.Removed_message"), this);
+        }
         new Wt::WBreak(this);
         new Wt::WText(user_->classification_str(), this);
         new Wt::WBreak(this);
