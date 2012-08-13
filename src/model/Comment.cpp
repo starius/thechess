@@ -111,6 +111,9 @@ void Comment::set_text(const Wt::WString& text) {
 }
 
 void Comment::set_parent(const CommentPtr& parent, bool set_index) {
+    if (!parent) {
+        return;
+    }
     parent_ = parent;
     depth_ = parent->depth() + 1;
     if (set_index) {
