@@ -12,6 +12,7 @@
 
 #include "widgets/MainMenu.hpp"
 #include "Path.hpp"
+#include "Application.hpp"
 
 namespace thechess {
 
@@ -49,17 +50,23 @@ private:
         if (user_items_) {
             add_section("tc.user.user");
             add_button("tc.user.settings", path_->settings_page());
+            add_button("tc.user.my_page",
+                       path_->user_view()->get_link(tApp->user().id()));
         }
         add_section("tc.forum.forum");
         add_button("tc.forum.topics", path_->topics());
         add_button("tc.forum.all_posts", path_->all_posts());
     }
 
-    void add_button(const char* title_id, Wt::Wc::url::Node* node) {
+    void add_button(const char* title_id, const Wt::WLink& link) {
         Wt::WContainerWidget* c = new Wt::WContainerWidget(this);
         Wt::WAnchor* button = new Wt::WAnchor(c);
         button->setText(tr(title_id));
-        button->setLink(node->link());
+        button->setLink(link);
+    }
+
+    void add_button(const char* title_id, Wt::Wc::url::Node* node) {
+        add_button(title_id, node->link());
     }
 
     void add_section(const char* title_id) {
