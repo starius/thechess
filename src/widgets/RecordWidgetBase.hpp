@@ -17,6 +17,9 @@ namespace thechess {
 
 /** Input fields for Record */
 struct RecordWidgetBase {
+    /** Constructor */
+    RecordWidgetBase();
+
     /** Name */
     Wt::WLineEdit* name;
 

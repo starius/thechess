@@ -17,6 +17,10 @@
 
 namespace thechess {
 
+RecordWidgetBase::RecordWidgetBase():
+    name(0), description(0)
+{ }
+
 void RecordWidgetBase::add_record_inputs(const Record* record,
         Wt::Wc::TableForm* form) {
     Record r;
