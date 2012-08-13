@@ -15,6 +15,7 @@
 
 #include "widgets/game/GameCreateWidget.hpp"
 #include "widgets/gp/GPSelector.hpp"
+#include "widgets/Header.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
 #include "notify.hpp"
@@ -25,8 +26,8 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
                                    Wt::WContainerWidget* p) :
     Wt::WContainerWidget(p), with_user_(true), user_(user) {
     dbo::Transaction t(tApp->session());
-    new Wt::WText(tr("tc.game.Competitor")
-                  .arg(user->username()), this);
+    new Header(tr("tc.game.Competitor")
+               .arg(user->username()), this);
     if (tApp->user()) {
         print();
     }
@@ -35,7 +36,7 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
 
 GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :
     Wt::WContainerWidget(p), with_user_(false) {
-    new Wt::WText(tr("tc.game.Challenge"), this);
+    new Header(tr("tc.game.Challenge"), this);
     if (tApp->user()) {
         print();
     }

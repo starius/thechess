@@ -14,6 +14,7 @@
 #include "widgets/competition/CompetitionCreateWidget.hpp"
 #include "widgets/cp/CPSelector.hpp"
 #include "widgets/gp/GPSelector.hpp"
+#include "widgets/Header.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
 #include "config.hpp"
@@ -24,7 +25,7 @@ CompetitionCreateWidget::CompetitionCreateWidget(Wt::WContainerWidget* p):
     Wt::WContainerWidget(p) {
     dbo::Transaction t(tApp->session());
     if (tApp->user() && Competition::can_create_competition(tApp->user())) {
-        new Wt::WText(tr("tc.competition.Create_welcome"), this);
+        new Header(tr("tc.competition.Create_welcome"), this);
         print();
         ok_ = new Wt::WPushButton(tr("tc.common.Create"), this);
         ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler);
