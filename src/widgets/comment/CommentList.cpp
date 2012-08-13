@@ -12,6 +12,8 @@
 #include <Wt/WPushButton>
 #include <Wt/WLineEdit>
 #include <Wt/WTextEdit>
+#include <Wt/WText>
+#include <Wt/WAnchor>
 #include <Wt/Wc/util.hpp>
 
 #include "widgets/comment/CommentList.hpp"
@@ -114,6 +116,17 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     if (type == Comment::FORUM_COMMENT && root) {
         CommentPtr post_text = root;
         new Wt::WText(post_text->text(), this);
+        new Wt::WBreak(this);
+        new Wt::WText(post_text->created().toString(), this);
+        UserPtr user = post_text->init();
+        if (user) {
+            new Wt::WText(" ", this);
+            Wt::WAnchor* user_anchor = new Wt::WAnchor(this);
+            user_anchor->setLink(tApp->path().user_view()->get_link(user.id()));
+            user_anchor->setText(user->username());
+        }
+        new Wt::WBreak(this);
+        new Wt::WBreak(this);
     }
     CommentModel* model = new CommentModel(type, root, this);
     view_ = new CommentView(model, this);
