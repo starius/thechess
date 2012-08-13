@@ -151,7 +151,7 @@ void MainWidget::forum_post(const CommentPtr& post) {
 
 void MainWidget::forum_post_comment(const CommentPtr& comment) {
     CommentPtr post_text = comment->root();
-    if (post_text->type() == Comment::FORUM_POST_TEXT) {
+    if (post_text && post_text->type() == Comment::FORUM_POST_TEXT) {
         set_contents(new CommentWidget(comment));
     }
 }
