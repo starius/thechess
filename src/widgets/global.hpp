@@ -11,6 +11,7 @@
 namespace thechess {
 
 class BoardWidget;
+class ChatCommentWidget;
 class ClassificationWidget;
 class CommentList;
 class CommentModel;
