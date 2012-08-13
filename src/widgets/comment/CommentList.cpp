@@ -160,7 +160,8 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
         add->clicked().connect(boost::bind(&CommentList::add_comment,
                                            this, root));
     }
-    if (root && root->type() == Comment::FORUM_POST_TEXT) {
+    if (root && (root->type() == Comment::FORUM_POST_TEXT ||
+                 root->type() == Comment::FORUM_TOPIC)) {
         add_remover_buttons(root, this);
     }
     t.commit();
