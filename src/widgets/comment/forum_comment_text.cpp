@@ -14,7 +14,9 @@ namespace thechess {
 
 Wt::WString forum_comment_text(const CommentPtr& comment) {
     Wt::WString text = comment->text_or_removed(tApp->user());
-    Wt::Utils::removeScript(text);
+    if (!Wt::Utils::removeScript(text)) {
+        text = Wt::Utils::htmlEncode(text);
+    }
     Wt::WString username = comment->init() ?
                            comment->init()->username() :
                            Wt::WString::tr("tc.user.Anonymous");
