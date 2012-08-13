@@ -30,6 +30,9 @@ public:
         Wt::WContainerWidget(), user_(user) {
         dbo::Transaction t(tApp->session());
         new Header(user_->username(), this);
+        if (user_->online()) {
+            new Wt::WText(tr("tc.user.Online"), this);
+        }
         if (user_->removed()) {
             new Wt::WText(tr("tc.user.Removed_message"), this);
         }
