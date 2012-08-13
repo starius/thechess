@@ -8,6 +8,8 @@
 #ifndef THECHESS_MODEL_USER_H_
 #define THECHESS_MODEL_USER_H_
 
+#include <boost/utility/binary.hpp>
+
 #include <Wt/Dbo/Query>
 
 #include "model/model.hpp"
@@ -23,9 +25,12 @@ class User : public dbo::Dbo<User> {
 public:
     /** Rights */
     enum Rights {
-        ADMIN = 5,
-        MODERATOR = 2,
-        REGULAR_USER = 0
+        NONE = 0,
+        COMMENTS_REMOVER = BOOST_BINARY(00000001),
+        RIGHTS_CHANGER = BOOST_BINARY(1 00000000),
+        MODERATOR = COMMENTS_REMOVER,
+        ADMIN = MODERATOR | RIGHTS_CHANGER,
+        REGULAR_USER = NONE
     };
 
     /** Default constructor.
@@ -81,6 +86,12 @@ public:
     Rights rights() const {
         return rights_;
     }
+
+    /** Return if the user has the permission */
+    bool has_permission(Rights perm) const;
+
+    /** Set user's permission */
+    void set_permission(Rights perm, bool can = true);
 
     /** Set rights */
     void set_rights(Rights rights) {

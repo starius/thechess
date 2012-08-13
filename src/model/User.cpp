@@ -34,6 +34,20 @@ AuthInfoPtr User::auth_info() const {
     return auth_infos_.front();
 }
 
+bool User::has_permission(Rights perm) const {
+    return (rights() & perm) == perm;
+}
+
+void User::set_permission(Rights perm, bool can) {
+    Rights r = rights();
+    if (can) {
+        r = Rights(r | perm);
+    } else {
+        r = Rights(r & (~perm));
+    }
+    set_rights(r);
+}
+
 dbo::Query<GamePtr> User::games() const {
     return session()->find<Game>()
            .where("white_id = ? or black_id = ? or init_id = ?")
