@@ -39,7 +39,7 @@ public:
         BOOST_FOREACH (const UserPtr& user, c->members_vector()) {
             Wt::WContainerWidget* item = new Wt::WContainerWidget(this);
             Wt::WAnchor* a = new Wt::WAnchor(item);
-            a->setText(user->username());
+            a->setText(user->safe_username());
             a->setLink(tApp->path().user_view()->get_link(user->id()));
         }
     }
@@ -51,7 +51,7 @@ public:
         setList(true);
         BOOST_FOREACH (const UserPtr& user, c->winners_vector()) {
             Wt::WContainerWidget* item = new Wt::WContainerWidget(this);
-            new Wt::WText(user->username(), item);
+            new Wt::WText(user->safe_username(), item);
         }
     }
 };

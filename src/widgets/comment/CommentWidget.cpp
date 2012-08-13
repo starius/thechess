@@ -50,7 +50,7 @@ CommentWidget::CommentWidget(const CommentPtr& comment) {
     if (user) {
         Wt::WAnchor* user_anchor = new Wt::WAnchor(this);
         user_anchor->setLink(tApp->path().user_view()->get_link(user.id()));
-        user_anchor->setText(user->username());
+        user_anchor->setText(user->safe_username());
     }
     Wt::WTextEdit* edit = new Wt::WTextEdit(this);
     Wt::Wc::fix_text_edit(edit);

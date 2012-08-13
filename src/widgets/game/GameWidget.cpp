@@ -126,7 +126,7 @@ private:
     void user_(const UserPtr& user, const char* tr_id,
                Wt::WContainerWidget* r) {
         if (user) {
-            kw_(user->username(), tr_id, r);
+            kw_(user->safe_username(), tr_id, r);
         }
     }
 
@@ -261,7 +261,7 @@ private:
             UserPtr competitor = game_->other_user(tApp->user());
             if (game_->has_competition_confirmed(competitor)) {
                 new Wt::WText(tr("tc.game.Competition_other_proposed")
-                              .arg(competitor->username()), manager_);
+                              .arg(competitor->safe_username()), manager_);
                 new Wt::WBreak(manager_);
             }
             if (game_->can_competition_confirm(tApp->user())) {
@@ -289,7 +289,7 @@ private:
         if (game_->is_pause_proposed()) {
             new Wt::WBreak(manager_);
             new Wt::WText(tr("tc.game.Pause_proposal")
-                          .arg(game_->pause_proposer()->username())
+                          .arg(game_->pause_proposer()->safe_username())
                           .arg(td2str(game_->pause_proposed_td())),
                           manager_);
             if (game_->can_pause_agree(tApp->user())) {
@@ -318,7 +318,7 @@ private:
             new Wt::WBreak(manager_);
             bool w = Moves::order(game_->mistake_move()) == Piece::WHITE;
             new Wt::WText(tr("tc.game.Mistake_proposal")
-                          .arg(game_->mistake_proposer()->username())
+                          .arg(game_->mistake_proposer()->safe_username())
                           .arg(Moves::move_number(game_->mistake_move()))
                           .arg(tr(w ? "tc.game.of_white" : "tc.game.of_black")),
                           manager_);
@@ -342,7 +342,7 @@ private:
         if (game_->is_draw_proposed()) {
             new Wt::WBreak(manager_);
             new Wt::WText(tr("tc.game.Draw_proposal")
-                          .arg(game_->draw_proposer()->username()),
+                          .arg(game_->draw_proposer()->safe_username()),
                           manager_);
             if (game_->can_draw_agree(tApp->user())) {
                 but<&Game::draw_agree>("tc.common.Agree");

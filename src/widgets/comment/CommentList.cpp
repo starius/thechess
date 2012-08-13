@@ -125,7 +125,7 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
             new Wt::WText(" ", this);
             Wt::WAnchor* user_anchor = new Wt::WAnchor(this);
             user_anchor->setLink(tApp->path().user_view()->get_link(user.id()));
-            user_anchor->setText(user->username());
+            user_anchor->setText(user->safe_username());
         }
         new Wt::WBreak(this);
         new Wt::WBreak(this);

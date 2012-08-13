@@ -25,7 +25,7 @@ ChatCommentWidget::ChatCommentWidget(const CommentPtr& comment) {
     if (user) {
         Wt::WAnchor* user_anchor = new Wt::WAnchor(this);
         user_anchor->setLink(tApp->path().user_view()->get_link(user.id()));
-        user_anchor->setText(user->username());
+        user_anchor->setText(user->safe_username());
     }
     add_remover_buttons(comment, this);
     t.commit();

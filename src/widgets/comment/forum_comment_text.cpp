@@ -18,7 +18,7 @@ Wt::WString forum_comment_text(const CommentPtr& comment) {
         text = Wt::Utils::htmlEncode(text);
     }
     Wt::WString username = comment->init() ?
-                           comment->init()->username() :
+                           comment->init()->safe_username() :
                            Wt::WString::tr("tc.user.Anonymous");
     return Wt::WString::tr("tc.forum.comment_template")
            .arg(comment->created().toString())

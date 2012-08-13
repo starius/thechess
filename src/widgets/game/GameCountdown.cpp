@@ -23,7 +23,7 @@ public:
         Wt::WTemplate(tr("tc.game.countdown_template"), parent),
         user_(user) {
         dbo::Transaction t(tApp->session());
-        bindString("name", user_->username());
+        bindString("name", user_->safe_username());
         bindWidget("limit_private", new Wt::Wc::Countdown());
         bindWidget("limit_std", new Wt::Wc::Countdown());
         reread();
@@ -33,7 +33,7 @@ public:
     void update_user(const UserPtr& user) {
         if (user != user_) {
             user_ = user;
-            bindString("name", user_->username());
+            bindString("name", user_->safe_username());
         }
         reread();
     }
