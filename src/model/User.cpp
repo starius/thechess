@@ -41,6 +41,12 @@ void User::set_removed(bool removed) {
     auth_info().modify()->setStatus(status);
 }
 
+bool User::can_remove(const UserPtr& victim) const {
+    return has_permission(USER_REMOVER) && victim &&
+           !victim->has_permission(USER_REMOVER) &&
+           self() != victim;
+}
+
 Wt::WString User::safe_username() const {
     return Wt::Utils::htmlEncode(username());
 }

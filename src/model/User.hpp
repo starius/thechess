@@ -29,10 +29,12 @@ public:
         COMMENTS_REMOVER = BOOST_BINARY(00000001),
         CLASSIFICATION_CONFIRMER = BOOST_BINARY(00000010),
         COMPETITION_CHANGER = BOOST_BINARY(00000100),
+        USER_REMOVER = BOOST_BINARY(00001000),
         RIGHTS_CHANGER = BOOST_BINARY(01000000 00000000 00000000 00000000),
         MODERATOR = COMMENTS_REMOVER |
                     CLASSIFICATION_CONFIRMER |
-                    COMPETITION_CHANGER,
+                    COMPETITION_CHANGER |
+                    USER_REMOVER,
         ADMIN = MODERATOR | RIGHTS_CHANGER,
         REGULAR_USER = NONE
     };
@@ -81,6 +83,9 @@ public:
 
     /** Set user removed status */
     void set_removed(bool removed = true);
+
+    /** Return if this user can remove the victim */
+    bool can_remove(const UserPtr& victim) const;
 
     /** Get user name */
     const Wt::WString& username() const {
