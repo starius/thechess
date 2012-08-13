@@ -8,6 +8,7 @@
 #include <map>
 #include <set>
 #include <boost/foreach.hpp>
+#include <boost/algorithm/string/replace.hpp>
 
 #include <Wt/Wc/Gather.hpp>
 
@@ -43,7 +44,9 @@ void VirtualsWidget::write_input(std::ostream& out) const {
         out << "graph virtuals {" << std::endl;
         BOOST_FOREACH (UserPtr user, users) {
             out << user.id();
-            out << "[label=\"" << user->username() << "\"]" << std::endl;
+            std::string username = user->username().toUTF8();
+            boost::replace_all(username, "\"", "\\\"");
+            out << "[label=\"" << username << "\"]" << std::endl;
         }
         BOOST_FOREACH (Scores::value_type& pair_and_score, scores) {
             int score = pair_and_score.second;

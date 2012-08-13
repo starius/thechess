@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
+#include <boost/algorithm/string/replace.hpp>
 
 #include <Wt/Wc/rand.hpp>
 
@@ -78,7 +79,9 @@ void write_user(std::ostream& out, int stage_number, const FU& fu) {
 void write_user_label(std::ostream& out, const FU& fu) {
     out << "[label=\"";
     if (fu.second) {
-        out << fu.first->username();
+        std::string username = fu.first->username().toUTF8();
+        boost::replace_all(username, "\"", "\\\"");
+        out << username;
     } else {
         out << "?";
     }

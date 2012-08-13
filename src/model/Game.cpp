@@ -9,6 +9,7 @@
 #include <utility>
 #include <map>
 #include <boost/foreach.hpp>
+#include <boost/algorithm/string/replace.hpp>
 
 #include <Wt/Wc/rand.hpp>
 
@@ -712,8 +713,10 @@ void Game::pgn(std::ostream& out, bool reduced) const {
     int stage = competition_stage_ + 1;
     Wt::WString round = competition_stage_ != -1 ?
                         boost::lexical_cast<std::string>(stage) : "-";
-    Wt::WString white = white_ ? white_->username() : "?";
-    Wt::WString black = black_ ? black_->username() : "?";
+    std::string white = white_ ? white_->username().toUTF8() : "?";
+    std::string black = black_ ? black_->username().toUTF8() : "?";
+    boost::replace_all(white, "\"", "\\\"");
+    boost::replace_all(black, "\"", "\\\"");
     std::string result = is_draw() ? "1/2-1/2" : !winner_ ? "*" :
                          winner_ == white_ ? "1-0" : "0-1";
     out << "[Event \"" << event << "\"]" << std::endl;
