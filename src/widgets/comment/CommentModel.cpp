@@ -56,6 +56,13 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
         if (user) {
             return tApp->path().user_view()->get_link(user.id());
         }
+    } else if (role == Wt::LinkRole && index.column() == TIME_COL) {
+        const CommentPtr& o = resultRow(index.row());
+        UserPtr u = tApp->user();
+        if (o->type() == Comment::CHAT_MESSAGE && u &&
+                u->has_permission(User::COMMENTS_REMOVER)) {
+            return tApp->path().chat_comment()->get_link(o.id());
+        }
     }
     return BaseQM::data(index, role);
 }
