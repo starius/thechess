@@ -7,7 +7,6 @@
 
 #include <Wt/WPushButton>
 #include <Wt/WComboBox>
-#include <Wt/WPanel>
 #include <Wt/WEnvironment>
 #include <Wt/WApplication>
 #include <Wt/Wc/TableForm.hpp>
@@ -17,6 +16,7 @@
 
 #include "widgets/cp/CPWidget.hpp"
 #include "widgets/gp/GPSelector.hpp"
+#include "widgets/Header.hpp"
 #include "widgets/user/ClassificationWidget.hpp"
 #include "config.hpp"
 
@@ -30,11 +30,8 @@ CPWidget::CPWidget(const CP* cp, bool allow_change_type,
     if (!cp) {
         cp = &default_cp;
     }
-    Wt::WPanel* cp_panel = new Wt::WPanel(this);
-    cp_panel->setTitle(tr("tc.competition.Parameters"));
-    cp_panel->setCollapsible(true);
-    form_ = new Wt::Wc::TableForm();
-    cp_panel->setCentralWidget(form_);
+    new Header(tr("tc.competition.Parameters"), this);
+    form_ = new Wt::Wc::TableForm(this);
     Wt::Wc::IntervalWidget* interval;
     Wt::WContainerWidget* cell;
     type_ = new Wt::WComboBox();
