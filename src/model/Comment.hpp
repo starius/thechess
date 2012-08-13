@@ -106,6 +106,13 @@ public:
         return text_;
     }
 
+    /** Get text or text that a comment was deleted.
+    If viewer has permissions to view removed comments,
+    a removed comment will be shown, but with message,
+    that it was removed.
+    */
+    Wt::WString text_or_removed(const UserPtr& viewer) const;
+
     /** Set text.
     This method updates edited() value.
     */

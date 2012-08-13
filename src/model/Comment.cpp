@@ -105,6 +105,23 @@ void Comment::set_index() {
     }
 }
 
+Wt::WString Comment::text_or_removed(const UserPtr& viewer) const {
+    if (state() == OK) {
+        return text();
+    } else {
+        Wt::WString result;
+        if (state() == DELETED) {
+            result = Wt::WString::tr("tc.comment.deleted_message");
+        } else if (state() == DRAFT) {
+            result = Wt::WString::tr("tc.comment.draft_message");
+        }
+        if (viewer && viewer->has_permission(User::COMMENTS_REMOVER)) {
+            result += text();
+        }
+        return result;
+    }
+}
+
 void Comment::set_text(const Wt::WString& text) {
     text_ = text;
     edited_ = now();
