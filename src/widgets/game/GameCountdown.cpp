@@ -7,6 +7,7 @@
 
 #include <Wt/WTemplate>
 #include <Wt/WContainerWidget>
+#include <Wt/WAnchor>
 #include <Wt/Wc/Countdown.hpp>
 #include <Wt/Wc/util.hpp>
 
@@ -23,7 +24,7 @@ public:
         Wt::WTemplate(tr("tc.game.countdown_template"), parent),
         user_(user) {
         dbo::Transaction t(tApp->session());
-        bindString("name", user_->safe_username());
+        bindWidget("name", anchor());
         bindWidget("limit_private", new Wt::Wc::Countdown());
         bindWidget("limit_std", new Wt::Wc::Countdown());
         reread();
@@ -33,7 +34,7 @@ public:
     void update_user(const UserPtr& user) {
         if (user != user_) {
             user_ = user;
-            bindString("name", user_->safe_username());
+            bindWidget("name", anchor());
         }
         reread();
     }
@@ -68,6 +69,13 @@ private:
             limit_private()->resume(game()->limit_std_now(user_));
         }
         t.commit();
+    }
+
+    Wt::WAnchor* anchor() {
+        Wt::WAnchor* result = new Wt::WAnchor();
+        result->setText(user_->safe_username());
+        result->setLink(tApp->path().user_view()->get_link(user_.id()));
+        return result;
     }
 };
 
