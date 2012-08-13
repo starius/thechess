@@ -22,11 +22,12 @@
 
 namespace thechess {
 
+const int COMMENT_WIDTH = 770;
+const int COMMENT_HEIGHT = 450;
 const int ID_WIDTH = 40;
 const int CHAT_TIME_WIDTH = 35;
 const int POST_TIME_WIDTH = 80;
 const int INIT_WIDTH = 60;
-const int COMMENT_WIDTH = 560; // FIXME
 const int COMMENT_ROW_HEIGHT_FORUM = 200;
 const int COMMENT_CHAT_LENGTH = 80;
 const int TOPIC_LENGTH = 80;
@@ -37,10 +38,36 @@ public:
     CommentView(CommentModel* model, Wt::WContainerWidget* p = 0):
         Wt::WTableView(p) {
         setModel(model);
-        resize(770, 450);
+        Comment::Type type = model->type();
+        resize(COMMENT_WIDTH, COMMENT_HEIGHT);
         setColumnWidth(CommentModel::ID_COL, ID_WIDTH);
         setColumnWidth(CommentModel::INIT_COL, INIT_WIDTH);
-        setColumnWidth(CommentModel::CONTENTS_COLUMN, COMMENT_WIDTH);
+        int comment_width = COMMENT_WIDTH - 30;
+        if (type == Comment::FORUM_TOPIC) {
+            setAlternatingRowColors(true);
+            comment_width -= ID_WIDTH;
+            setColumnHidden(CommentModel::TIME_COL, true);
+            setColumnHidden(CommentModel::INIT_COL, true);
+        } else if (type == Comment::FORUM_POST) {
+            setAlternatingRowColors(true);
+            comment_width -= ID_WIDTH;
+            comment_width -= POST_TIME_WIDTH;
+            comment_width -= INIT_WIDTH;
+            setColumnWidth(CommentModel::TIME_COL, POST_TIME_WIDTH);
+        } else if (type == Comment::CHAT_MESSAGE) {
+            setAlternatingRowColors(true);
+            setColumnHidden(CommentModel::ID_COL, true);
+            comment_width -= CHAT_TIME_WIDTH;
+            comment_width -= INIT_WIDTH;
+            setColumnWidth(CommentModel::TIME_COL, CHAT_TIME_WIDTH);
+        } else if (type == Comment::FORUM_COMMENT) {
+            setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
+            addStyleClass("thechess-forum-comments");
+            comment_width -= ID_WIDTH;
+            setColumnHidden(CommentModel::TIME_COL, true);
+            setColumnHidden(CommentModel::INIT_COL, true);
+        }
+        setColumnWidth(CommentModel::CONTENTS_COLUMN, comment_width);
         setHeaderHeight(0);
         show_last(); // FIXME has no effect in google chrome
     }
@@ -90,38 +117,23 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     }
     CommentModel* model = new CommentModel(type, root, this);
     view_ = new CommentView(model, this);
-    if (type == Comment::CHAT_MESSAGE) {
-        // FIXME move this code to CommentView
-        view_->setColumnHidden(CommentModel::ID_COL, true);
-        view_->setColumnWidth(CommentModel::TIME_COL, CHAT_TIME_WIDTH);
-    } else if (type == Comment::FORUM_POST) {
-        view_->setColumnWidth(CommentModel::TIME_COL, POST_TIME_WIDTH);
-    } else {
-        view_->setColumnHidden(CommentModel::TIME_COL, true);
-        view_->setColumnHidden(CommentModel::INIT_COL, true);
-    }
     if (type == Comment::FORUM_TOPIC) {
-        view_->setAlternatingRowColors(true);
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
         line_edit->setTextSize(TOPIC_LENGTH);
     } else if (type == Comment::FORUM_POST) {
-        view_->setAlternatingRowColors(true);
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
         line_edit->setTextSize(POST_LENGTH);
         post_text_ = new Wt::WTextEdit(this);
         Wt::Wc::fix_text_edit(post_text_);
     } else if (type == Comment::CHAT_MESSAGE) {
-        view_->setAlternatingRowColors(true);
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
         edit_->enterPressed().connect(boost::bind(&CommentList::add_comment,
                                       this, root));
         line_edit->setTextSize(COMMENT_CHAT_LENGTH);
     } else if (type == Comment::FORUM_COMMENT) {
-        view_->setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
-        view_->addStyleClass("thechess-forum-comments");
         Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
         edit_ = text_edit;
         Wt::Wc::fix_text_edit(text_edit);
