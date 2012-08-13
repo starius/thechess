@@ -50,6 +50,12 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
         } else if (type() == Comment::FORUM_COMMENT) {
             return tApp->path().post_comment()->get_link(o.id());
         }
+    } else if (role == Wt::LinkRole && index.column() == INIT_COL) {
+        const CommentPtr& o = resultRow(index.row());
+        UserPtr user = o->init();
+        if (user) {
+            return tApp->path().user_view()->get_link(user.id());
+        }
     }
     return BaseQM::data(index, role);
 }

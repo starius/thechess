@@ -8,6 +8,7 @@
 #include <boost/bind.hpp>
 
 #include <Wt/WText>
+#include <Wt/WAnchor>
 #include <Wt/WTextEdit>
 #include <Wt/WPushButton>
 #include <Wt/Wc/util.hpp>
@@ -38,6 +39,12 @@ CommentWidget::CommentWidget(const CommentPtr& comment) {
     dbo::Transaction t(tApp->session());
     new Header(tr("tc.forum.Comment"), this);
     new Wt::WText(forum_comment_text(comment), this);
+    UserPtr user = comment->init();
+    if (user) {
+        Wt::WAnchor* user_anchor = new Wt::WAnchor(this);
+        user_anchor->setLink(tApp->path().user_view()->get_link(user.id()));
+        user_anchor->setText(user->username());
+    }
     Wt::WTextEdit* edit = new Wt::WTextEdit(this);
     Wt::Wc::fix_text_edit(edit);
     Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
