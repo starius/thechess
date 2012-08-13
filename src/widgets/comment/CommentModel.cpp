@@ -18,15 +18,29 @@ CommentModel::CommentModel(Comment::Type type, const CommentPtr& root,
     dbo::Transaction t(tApp->session());
     setQuery(get_query());
     addColumn("id");
+    addColumn("id"); // time
+    addColumn("id"); // user
     addColumn("id", ""); // contents
     t.commit();
 }
 
 boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
     dbo::Transaction t(tApp->session());
-    if (role == Wt::DisplayRole && index.column() == CONTENTS_COLUMN) {
+    if (role == Wt::DisplayRole) {
         const CommentPtr& o = resultRow(index.row());
-        return contents(o);
+        if (index.column() == CONTENTS_COLUMN) {
+            return contents(o);
+        } else if (index.column() == INIT_COL) {
+            return o->init() ?
+                   o->init()->username() :
+                   Wt::WString::tr("tc.user.Anonymous");
+        } else if (index.column() == TIME_COL) {
+            if (type() == Comment::CHAT_MESSAGE) {
+                return o->created().toString("HH:mm");
+            } else if (type() == Comment::FORUM_POST) {
+                return o->created().toString();
+            }
+        }
     } else if (role == Wt::LinkRole && index.column() == ID_COL) {
         const CommentPtr& o = resultRow(index.row());
         if (type() == Comment::FORUM_TOPIC) {

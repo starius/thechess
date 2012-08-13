@@ -31,6 +31,8 @@ public:
     /** Enum for column indices */
     enum Columns {
         ID_COL, /**< ID (href) */
+        TIME_COL, /** Time (creation or last comment) */
+        INIT_COL, /** User */
         CONTENTS_COLUMN /**< Contents of the comment */
     };
 

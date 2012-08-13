@@ -23,7 +23,10 @@
 namespace thechess {
 
 const int ID_WIDTH = 40;
-const int COMMENT_WIDTH = 700;
+const int CHAT_TIME_WIDTH = 35;
+const int POST_TIME_WIDTH = 80;
+const int INIT_WIDTH = 60;
+const int COMMENT_WIDTH = 560; // FIXME
 const int COMMENT_ROW_HEIGHT_FORUM = 200;
 const int COMMENT_CHAT_LENGTH = 80;
 const int TOPIC_LENGTH = 80;
@@ -36,6 +39,7 @@ public:
         setModel(model);
         resize(770, 450);
         setColumnWidth(CommentModel::ID_COL, ID_WIDTH);
+        setColumnWidth(CommentModel::INIT_COL, INIT_WIDTH);
         setColumnWidth(CommentModel::CONTENTS_COLUMN, COMMENT_WIDTH);
         setHeaderHeight(0);
         show_last(); // FIXME has no effect in google chrome
@@ -87,7 +91,14 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     CommentModel* model = new CommentModel(type, root, this);
     view_ = new CommentView(model, this);
     if (type == Comment::CHAT_MESSAGE) {
+        // FIXME move this code to CommentView
         view_->setColumnHidden(CommentModel::ID_COL, true);
+        view_->setColumnWidth(CommentModel::TIME_COL, CHAT_TIME_WIDTH);
+    } else if (type == Comment::FORUM_POST) {
+        view_->setColumnWidth(CommentModel::TIME_COL, POST_TIME_WIDTH);
+    } else {
+        view_->setColumnHidden(CommentModel::TIME_COL, true);
+        view_->setColumnHidden(CommentModel::INIT_COL, true);
     }
     if (type == Comment::FORUM_TOPIC) {
         view_->setAlternatingRowColors(true);
