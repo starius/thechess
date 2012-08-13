@@ -20,6 +20,7 @@
 #include "Application.hpp"
 #include "model/all.hpp"
 #include "utils/time_intervals.hpp"
+#include "notify.hpp"
 
 namespace thechess {
 
@@ -93,6 +94,7 @@ private:
             user_.modify()->set_removed(!user_->removed());
         }
         t.commit();
+        tNot->emit(new Object(USER, user_.id()));
         tApp->path().open(tApp->internalPath());
     }
 };

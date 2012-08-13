@@ -79,6 +79,7 @@ private:
     Path path_;
     UserPtr prev_user_;
     Wt::Wc::Gather* gather_;
+    Kick* kick_;
 
     void set_auth_widget();
     void login_handler();

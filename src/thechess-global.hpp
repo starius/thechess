@@ -26,6 +26,7 @@ class Options;
 class Path;
 class Server;
 class Session;
+class Kick;
 
 /** Wt::Dbo backend type */
 enum DatabaseType {

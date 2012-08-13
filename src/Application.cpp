@@ -24,6 +24,7 @@
 #include "Application.hpp"
 #include "config.hpp"
 #include "Session.hpp"
+#include "Kick.hpp"
 #include "model/all.hpp"
 #include "widgets/MainWidget.hpp"
 #include "widgets/MainMenu.hpp"
@@ -32,7 +33,7 @@ namespace thechess {
 
 Application::Application(const Wt::WEnvironment& env, Server& server) :
     Wt::WApplication(env), server_(server), session_(server.pool()),
-    gather_(0) {
+    gather_(0), kick_(0) {
     main_widget_ = new MainWidget(root());
     main_widget_->show_menu(&path_);
     path_.connect_main_widget(main_widget_);
@@ -56,6 +57,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
 }
 
 Application::~Application() {
+    delete kick_;
     try {
         dbo::Transaction t(session());
         user().reread();
@@ -86,6 +88,8 @@ void Application::login_handler() {
     if (prev_user_ != user()) {
         prev_user_.reread();
         if (prev_user_) {
+            delete kick_;
+            kick_ = 0;
             prev_user_.modify()->logout();
         }
         user().reread();
@@ -107,6 +111,7 @@ void Application::login_handler() {
                                                 this));
                 server_.planning().schedule(10 * SECOND, f);
             }
+            kick_ = new Kick();
         }
         prev_user_ = user();
         path_.open(internalPath());
