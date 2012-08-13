@@ -98,7 +98,8 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
         header = tr("tc.forum.topics");
     } else if (type == Comment::FORUM_POST) {
         if (root) {
-            header = tr("tc.forum.topic_posts").arg(root->text());
+            header = tr("tc.forum.topic_posts")
+                     .arg(root->text_or_removed(tApp->user()));
         } else {
             header = tr("tc.forum.all_posts");
         }
@@ -107,7 +108,7 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
             CommentPtr post_text = root;
             CommentPtr post = root->parent();
             header = tr("tc.forum.post_header")
-                     .arg(post.id()).arg(post->text());
+                     .arg(post.id()).arg(post->text_or_removed(tApp->user()));
         }
     }
     if (!header.empty()) {
@@ -115,7 +116,7 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     }
     if (type == Comment::FORUM_COMMENT && root) {
         CommentPtr post_text = root;
-        new Wt::WText(post_text->text(), this);
+        new Wt::WText(post_text->text_or_removed(tApp->user()), this);
         new Wt::WBreak(this);
         new Wt::WText(post_text->created().toString(), this);
         UserPtr user = post_text->init();

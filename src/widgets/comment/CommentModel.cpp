@@ -81,7 +81,7 @@ Wt::WString CommentModel::contents(const CommentPtr& comment) const {
                .arg(spacer)
                .arg(forum_comment_text(comment));
     } else {
-        return comment->text(); // TODO
+        return comment->text_or_removed(tApp->user()); // TODO
     }
 }
 

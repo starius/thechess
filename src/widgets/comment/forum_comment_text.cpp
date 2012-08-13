@@ -13,7 +13,7 @@
 namespace thechess {
 
 Wt::WString forum_comment_text(const CommentPtr& comment) {
-    Wt::WString text = comment->text();
+    Wt::WString text = comment->text_or_removed(tApp->user());
     Wt::Utils::removeScript(text);
     Wt::WString username = comment->init() ?
                            comment->init()->username() :
