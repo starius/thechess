@@ -190,6 +190,9 @@ void CommentList::add_comment(const CommentPtr& parent) {
     comment.modify()->set_init(tApp->user());
     CommentPtr root = comment_model()->root();
     comment.modify()->set_root(root);
+    if (!tApp->user()) {
+        comment.modify()->set_state(Comment::DRAFT);
+    }
     if (comment_model()->type() == Comment::FORUM_POST) {
         comment.flush();
         CommentPtr post_text = tApp->session().add(new Comment(true));
@@ -197,6 +200,9 @@ void CommentList::add_comment(const CommentPtr& parent) {
         post_text.modify()->set_parent(comment);
         post_text.modify()->set_text(post_text_->valueText());
         post_text.modify()->set_init(tApp->user());
+        if (!tApp->user()) {
+            post_text.modify()->set_state(Comment::DRAFT);
+        }
     }
     if (comment_model()->type() == Comment::FORUM_COMMENT) {
         // FORUM_POST's creation time is the time of last comment
