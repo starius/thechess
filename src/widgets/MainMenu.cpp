@@ -36,6 +36,7 @@ private:
     Path* path_;
 
     void reprint() {
+        dbo::Transaction t(tApp->session());
         clear();
         add_section("tc.game.game");
         add_button("tc.game.List", path_->game_list());
@@ -52,10 +53,14 @@ private:
             add_button("tc.user.settings", path_->settings_page());
             add_button("tc.user.my_page",
                        path_->user_view()->get_link(tApp->user().id()));
+            if (tApp->user()->has_permission(User::VIRTUALS_VIEWER)) {
+                add_button("tc.user.Virtuals_list", path_->all_virtuals());
+            }
         }
         add_section("tc.forum.forum");
         add_button("tc.forum.topics", path_->topics());
         add_button("tc.forum.all_posts", path_->all_posts());
+        t.commit();
     }
 
     void add_button(const char* title_id, const Wt::WLink& link) {

@@ -84,6 +84,12 @@ void MainWidget::virtuals_of_user(const UserPtr& user) {
     set_contents(image);
 }
 
+void MainWidget::all_virtuals() {
+    Wt::WImage* image = new Wt::WImage();
+    image->setResource(new VirtualsWidget(image));
+    set_contents(image);
+}
+
 void MainWidget::settings_page() {
     if (tApp->user()) {
         set_contents(new SettingsWidget());

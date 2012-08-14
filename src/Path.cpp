@@ -21,6 +21,7 @@ Path::Path(Wt::WObject* parent):
     user_list_ = new PredefinedNode("user", this);
     user_view_ = new IntegerNode(user_list_);
     virtuals_of_user_ = new PredefinedNode("virtuals", user_view_);
+    all_virtuals_ = new PredefinedNode("virtuals", user_list_);
     settings_page_ = new PredefinedNode("settings", user_list_);
     game_list_ = new PredefinedNode("game", this);
     game_view_ = new IntegerNode(game_list_);
@@ -53,6 +54,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     // TODO user list
     user_view_->opened().connect(this, &Path::open_user);
     virtuals_of_user_->opened().connect(this, &Path::open_virtuals_of_user);
+    all_virtuals_->opened().connect(mw, &MainWidget::all_virtuals);
     settings_page_->opened().connect(mw, &MainWidget::settings_page);
     game_list_->opened().connect(mw, &MainWidget::game_list);
     game_view_->opened().connect(this, &Path::open_game);
