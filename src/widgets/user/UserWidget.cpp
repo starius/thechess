@@ -71,18 +71,22 @@ public:
             }
         }
         new Wt::WBreak(this);
+        tApp->path().user_view()->set_integer_value(user.id());
+        Wt::WAnchor* a;
         if (tApp->user() &&
                 tApp->user()->has_permission(User::VIRTUALS_VIEWER)) {
-            Wt::WAnchor* a = new Wt::WAnchor(this);
-            tApp->path().user_view()->set_integer_value(user.id());
+            a = new Wt::WAnchor(this);
             a->setLink(tApp->path().virtuals_of_user()->link());
             a->setText(tr("tc.user.Virtuals_list"));
             new Wt::WBreak(this);
         }
-        Wt::WAnchor* a = new Wt::WAnchor(this);
-        tApp->path().user_view()->set_integer_value(user.id());
+        a = new Wt::WAnchor(this);
         a->setLink(tApp->path().games_of_user()->link());
         a->setText(tr("tc.game.List"));
+        new Wt::WBreak(this);
+        a = new Wt::WAnchor(this);
+        a->setLink(tApp->path().competitions_of_user()->link());
+        a->setText(tr("tc.competition.List"));
         new Wt::WBreak(this);
         t.commit();
     }
