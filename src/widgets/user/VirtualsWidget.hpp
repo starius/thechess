@@ -21,6 +21,12 @@ public:
     VirtualsWidget(const dbo::Query<BD::BDPair>& pairs,
                    Wt::WObject* parent = 0);
 
+    /** Constructor */
+    VirtualsWidget(const UserPtr& user, Wt::WObject* parent = 0);
+
+    /** Constructor */
+    VirtualsWidget(Wt::WObject* parent = 0);
+
     /** Output competition tree in DOT format (graphviz) */
     void write_input(std::ostream& out) const;
 
