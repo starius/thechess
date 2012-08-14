@@ -42,6 +42,9 @@ public:
     /** View user's virtuals */
     void virtuals_of_user(const UserPtr& user);
 
+    /** View user's games */
+    void games_of_user(const UserPtr& user);
+
     /** View all virtuals */
     void all_virtuals();
 

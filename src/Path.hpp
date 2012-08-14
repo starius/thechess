@@ -43,6 +43,11 @@ public:
         return virtuals_of_user_;
     }
 
+    /** View games of user */
+    url::PredefinedNode* games_of_user() const {
+        return games_of_user_;
+    }
+
     /** View all virtuals */
     url::PredefinedNode* all_virtuals() const {
         return all_virtuals_;
@@ -160,6 +165,7 @@ private:
     url::PredefinedNode* user_list_;
     url::IntegerNode* user_view_;
     url::PredefinedNode* virtuals_of_user_;
+    url::PredefinedNode* games_of_user_;
     url::PredefinedNode* all_virtuals_;
     url::PredefinedNode* settings_page_;
     url::PredefinedNode* game_list_;
@@ -183,8 +189,9 @@ private:
     url::IntegerNode* post_comment_;
     url::IntegerNode* chat_comment_;
 
-    void open_virtuals_of_user();
     void open_user();
+    void open_virtuals_of_user();
+    void open_games_of_user();
     void open_game();
     void open_competition();
     void open_board();

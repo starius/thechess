@@ -21,6 +21,7 @@ Path::Path(Wt::WObject* parent):
     user_list_ = new PredefinedNode("user", this);
     user_view_ = new IntegerNode(user_list_);
     virtuals_of_user_ = new PredefinedNode("virtuals", user_view_);
+    games_of_user_ = new PredefinedNode("games", user_view_);
     all_virtuals_ = new PredefinedNode("virtuals", user_list_);
     settings_page_ = new PredefinedNode("settings", user_list_);
     game_list_ = new PredefinedNode("game", this);
@@ -54,6 +55,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     // TODO user list
     user_view_->opened().connect(this, &Path::open_user);
     virtuals_of_user_->opened().connect(this, &Path::open_virtuals_of_user);
+    games_of_user_->opened().connect(this, &Path::open_games_of_user);
     all_virtuals_->opened().connect(mw, &MainWidget::all_virtuals);
     settings_page_->opened().connect(mw, &MainWidget::settings_page);
     game_list_->opened().connect(mw, &MainWidget::game_list);
@@ -89,6 +91,17 @@ void Path::open_virtuals_of_user() {
     dbo::Transaction t(tApp->session());
     try {
         main_widget_->virtuals_of_user(tApp->session().load<User>(id));
+    } catch (dbo::ObjectNotFoundException)
+    { }
+    t.commit();
+}
+
+void Path::open_games_of_user() {
+    BOOST_ASSERT(main_widget_);
+    long long id = user_view_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        main_widget_->games_of_user(tApp->session().load<User>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
     t.commit();

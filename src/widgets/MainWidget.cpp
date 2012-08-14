@@ -84,6 +84,10 @@ void MainWidget::virtuals_of_user(const UserPtr& user) {
     set_contents(image);
 }
 
+void MainWidget::games_of_user(const UserPtr& user) {
+    set_contents(new GameListWidget(user));
+}
+
 void MainWidget::all_virtuals() {
     Wt::WImage* image = new Wt::WImage();
     image->setResource(new VirtualsWidget(image));
