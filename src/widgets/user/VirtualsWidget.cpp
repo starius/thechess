@@ -64,6 +64,7 @@ void VirtualsWidget::write_input(std::ostream& out) const {
             users.insert(b);
         }
         out << "graph virtuals {" << std::endl;
+        out << "rankdir=LR" << std::endl;
         BOOST_FOREACH (UserPtr user, users) {
             out << user.id();
             std::wstring u = user->username().value();
