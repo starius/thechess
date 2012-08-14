@@ -11,11 +11,16 @@
 #include <Wt/WGlobal>
 #include <Wt/WCompositeWidget>
 
+#include "model/global.hpp"
+
 namespace thechess {
 
 class GameListWidget : public Wt::WCompositeWidget {
 public:
     GameListWidget(Wt::WContainerWidget* parent = 0);
+
+    GameListWidget(const UserPtr& user, Wt::WContainerWidget* parent = 0);
+
 private:
     class GameListWidgetImpl;
 

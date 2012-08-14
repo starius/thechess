@@ -102,6 +102,15 @@ class GameListWidget::GameListWidgetImpl : public Wt::WContainerWidget {
 public:
     GameListWidgetImpl() :
         Wt::WContainerWidget() {
+        initialize();
+    }
+
+    GameListWidgetImpl(const UserPtr& user) :
+        Wt::WContainerWidget(), user_(user) {
+        initialize();
+    }
+
+    void initialize() {
         manager();
         query_model_ = new GameListModel(query(), this);
         table_view_ = new Wt::WTableView(this);
@@ -137,6 +146,11 @@ public:
             q.where("G.white_id = ? or G.black_id = ? or G.init_id = ?")
             .bind(id).bind(id).bind(id);
         }
+        if (user_) {
+            int id = user_->id();
+            q.where("G.white_id = ? or G.black_id = ? or G.init_id = ?")
+            .bind(id).bind(id).bind(id);
+        }
         q.orderBy("G.id");
         t.commit();
         return q;
@@ -146,6 +160,7 @@ private:
     GameListModel* query_model_;
     Wt::WTableView* table_view_;
     Wt::WCheckBox* only_my_;
+    UserPtr user_;
 
     void manager() {
         only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"), this);
@@ -169,6 +184,12 @@ private:
 GameListWidget::GameListWidget(Wt::WContainerWidget* parent) :
     WCompositeWidget(parent) {
     impl_ = new GameListWidgetImpl();
+    setImplementation(impl_);
+}
+
+GameListWidget::GameListWidget(const UserPtr& user, Wt::WContainerWidget* p):
+    WCompositeWidget(p) {
+    impl_ = new GameListWidgetImpl(user);
     setImplementation(impl_);
 }
 
