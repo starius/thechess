@@ -70,13 +70,20 @@ public:
                 b->setText(tr("tc.user.Delete"));
             }
         }
+        new Wt::WBreak(this);
         if (tApp->user() &&
                 tApp->user()->has_permission(User::VIRTUALS_VIEWER)) {
             Wt::WAnchor* a = new Wt::WAnchor(this);
             tApp->path().user_view()->set_integer_value(user.id());
             a->setLink(tApp->path().virtuals_of_user()->link());
             a->setText(tr("tc.user.Virtuals_list"));
+            new Wt::WBreak(this);
         }
+        Wt::WAnchor* a = new Wt::WAnchor(this);
+        tApp->path().user_view()->set_integer_value(user.id());
+        a->setLink(tApp->path().games_of_user()->link());
+        a->setText(tr("tc.game.List"));
+        new Wt::WBreak(this);
         t.commit();
     }
 
