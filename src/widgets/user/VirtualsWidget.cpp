@@ -28,6 +28,10 @@ void VirtualsWidget::write_input(std::ostream& out) const {
     Wt::WApplication::UpdateLock lock(wApp);
     if (lock) {
         dbo::Transaction t(tApp->session());
+        if (!tApp->user() ||
+                !tApp->user()->has_permission(User::VIRTUALS_VIEWER)) {
+            return;
+        }
         typedef std::map<UserPair, int> Scores;
         Scores scores;
         std::set<UserPtr> users;
