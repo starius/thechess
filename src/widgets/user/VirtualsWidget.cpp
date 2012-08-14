@@ -66,7 +66,11 @@ void VirtualsWidget::write_input(std::ostream& out) const {
         out << "graph virtuals {" << std::endl;
         BOOST_FOREACH (UserPtr user, users) {
             out << user.id();
-            std::string username = user->username().toUTF8();
+            std::wstring u = user->username().value();
+            if (u.size() > 16) {
+                u.resize(16);
+            }
+            std::string username = Wt::WString(u).toUTF8();
             boost::replace_all(username, "\"", "\\\"");
             out << "[label=\"" << username << "\"]" << std::endl;
         }
