@@ -38,6 +38,11 @@ public:
         return user_view_;
     }
 
+    /** View virtuals of user */
+    url::PredefinedNode* virtuals_of_user() const {
+        return virtuals_of_user_;
+    }
+
     /** Settings page */
     url::PredefinedNode* settings_page() const {
         return settings_page_;
@@ -149,6 +154,7 @@ private:
     MainWidget* main_widget_;
     url::PredefinedNode* user_list_;
     url::IntegerNode* user_view_;
+    url::PredefinedNode* virtuals_of_user_;
     url::PredefinedNode* settings_page_;
     url::PredefinedNode* game_list_;
     url::IntegerNode* game_view_;
@@ -171,6 +177,7 @@ private:
     url::IntegerNode* post_comment_;
     url::IntegerNode* chat_comment_;
 
+    void open_virtuals_of_user();
     void open_user();
     void open_game();
     void open_competition();

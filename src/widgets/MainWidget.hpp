@@ -39,6 +39,9 @@ public:
     /** View the user */
     void user_view(const UserPtr& user);
 
+    /** View user's virtuals */
+    void virtuals_of_user(const UserPtr& user);
+
     /** Settings page */
     void settings_page();
 

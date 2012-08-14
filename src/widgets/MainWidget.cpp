@@ -25,6 +25,7 @@
 #include "widgets/competition/CompetitionCreateWidget.hpp"
 #include "widgets/competition/CompetitionListWidget.hpp"
 #include "widgets/user/UserWidget.hpp"
+#include "widgets/user/VirtualsWidget.hpp"
 #include "widgets/user/SettingsWidget.hpp"
 #include "widgets/comment/CommentList.hpp"
 #include "widgets/comment/CommentWidget.hpp"
@@ -75,6 +76,12 @@ void MainWidget::update_my_games() {
 
 void MainWidget::user_view(const UserPtr& user) {
     set_contents(new UserWidget(user));
+}
+
+void MainWidget::virtuals_of_user(const UserPtr& user) {
+    Wt::WImage* image = new Wt::WImage();
+    image->setResource(new VirtualsWidget(user, image));
+    set_contents(image);
 }
 
 void MainWidget::settings_page() {
