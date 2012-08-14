@@ -13,6 +13,8 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WCheckBox>
 
+#include "model/global.hpp"
+
 namespace thechess {
 
 class CompetitionListModel;
@@ -22,10 +24,14 @@ class CompetitionListWidget : public Wt::WContainerWidget {
 public:
     CompetitionListWidget(Wt::WContainerWidget* parent = 0);
 
+    CompetitionListWidget(const UserPtr& user, Wt::WContainerWidget* p = 0);
+
 private:
     CompetitionListModel* model_;
     Wt::WCheckBox* only_my_;
+    UserPtr user_;
 
+    void initialize();
     void apply();
     void manager();
 };
