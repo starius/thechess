@@ -10,6 +10,7 @@
 
 #include <Wt/WContainerWidget>
 #include <Wt/WPushButton>
+#include <Wt/WAnchor>
 #include <Wt/WBreak>
 #include <Wt/WText>
 
@@ -68,6 +69,13 @@ public:
             } else {
                 b->setText(tr("tc.user.Delete"));
             }
+        }
+        if (tApp->user() &&
+                tApp->user()->has_permission(User::VIRTUALS_VIEWER)) {
+            Wt::WAnchor* a = new Wt::WAnchor(this);
+            tApp->path().user_view()->set_integer_value(user.id());
+            a->setLink(tApp->path().virtuals_of_user()->link());
+            a->setText(tr("tc.user.Virtuals_list"));
         }
         t.commit();
     }
