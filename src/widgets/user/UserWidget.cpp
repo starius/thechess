@@ -42,7 +42,7 @@ public:
         new Wt::WText(tr("tc.user.Online_time")
                       .arg(td2str(user_->online_time())), this);
         new Wt::WBreak(this);
-        if (tApp->user() && tApp->user() != user_) {
+        if (tApp->user() && tApp->user() != user_ && !user_->removed()) {
             start_button_ = new Wt::WPushButton(
                 Wt::WString::tr("tc.user.Start_game"), this);
             start_button_->clicked()
