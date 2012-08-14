@@ -45,6 +45,9 @@ public:
     /** View user's games */
     void games_of_user(const UserPtr& user);
 
+    /** View user's competitions */
+    void competitions_of_user(const UserPtr& user);
+
     /** View all virtuals */
     void all_virtuals();
 
