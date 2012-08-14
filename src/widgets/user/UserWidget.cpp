@@ -104,6 +104,8 @@ private:
 
     void inverse_removed() {
         dbo::Transaction t(tApp->session());
+        user_.reread();
+        user_->auth_info().reread();
         if (tApp->user() && tApp->user()->can_remove(user_)) {
             user_.modify()->set_removed(!user_->removed());
         }
