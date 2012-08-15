@@ -63,9 +63,18 @@ public:
         return type_;
     }
 
+    /** Get if only Comment's with state=OK are filtered */
+    bool only_ok() const {
+        return only_ok_;
+    }
+
+    /** Set if only Comment's with state=OK are filtered */
+    void set_only_ok(bool only_ok = true);
+
 private:
     Comment::Type type_;
     CommentPtr root_;
+    bool only_ok_;
 };
 
 }

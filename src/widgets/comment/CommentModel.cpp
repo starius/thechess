@@ -14,7 +14,7 @@ namespace thechess {
 CommentModel::CommentModel(Comment::Type type, const CommentPtr& root,
                            Wt::WObject* parent):
     CommentModel::BaseQM(parent),
-    type_(type), root_(root) {
+    type_(type), root_(root), only_ok_(false) {
     dbo::Transaction t(tApp->session());
     setQuery(get_query());
     addColumn("id");
@@ -93,11 +93,21 @@ Wt::WString CommentModel::contents(const CommentPtr& comment) const {
 }
 
 CommentModel::Query CommentModel::get_query() const {
+    Query result;
     if (root_) {
-        return root_->family().find().orderBy("show_index");
+        result = root_->family().find().orderBy("show_index");
     } else {
-        return tApp->session().find<Comment>().where("type = ?").bind(type_);
+        result = tApp->session().find<Comment>().where("type = ?").bind(type_);
     }
+    if (only_ok_) {
+        result.where("state = ?").bind(Comment::OK);
+    }
+    return result;
+}
+
+void CommentModel::set_only_ok(bool only_ok) {
+    only_ok_ = only_ok;
+    setQuery(get_query(), /* keep_columns */ true);
 }
 
 }

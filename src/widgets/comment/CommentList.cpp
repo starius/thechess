@@ -10,6 +10,7 @@
 #include <Wt/WEnvironment>
 #include <Wt/WTableView>
 #include <Wt/WPushButton>
+#include <Wt/WCheckBox>
 #include <Wt/WLineEdit>
 #include <Wt/WTextEdit>
 #include <Wt/WText>
@@ -160,6 +161,11 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
         new Wt::WBreak(this);
     }
     CommentModel* model = new CommentModel(type, root, this);
+    Wt::WCheckBox* only_ok = new Wt::WCheckBox(tr("tc.forum.Only_ok"), this);
+    only_ok->changed().connect(
+        boost::bind(&CommentModel::set_only_ok, model,
+                    boost::bind(&Wt::WAbstractToggleButton::isChecked,
+                                only_ok)));
     view_ = new CommentView(model, this);
     if (type == Comment::FORUM_TOPIC) {
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
