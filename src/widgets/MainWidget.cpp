@@ -34,10 +34,6 @@
 
 namespace thechess {
 
-const int TOP_IN_L = 0;
-const int MIDDLE_IN_L = 1;
-const int BOTTOM_IN_L = 2;
-
 const int AUTH_IN_TOP = 1;
 
 const int MENU_IN_MIDDLE = 0;
