@@ -25,9 +25,12 @@
 
    base64.h renamed to base64.hpp; code style changed in base64.cpp
         -- Boris Nagaev
+
+   base64.hpp is included as chess/base64.hpp
+        -- Boris Nagaev
 */
 
-#include "base64.hpp"
+#include "chess/base64.hpp"
 #include <iostream>
 
 static const std::string base64_chars =
