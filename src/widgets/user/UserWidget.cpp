@@ -39,6 +39,15 @@ public:
         }
         new Wt::WBreak(this);
         new Wt::WText(user_->classification_str(), this);
+        if (user_->can_confirm_classification(tApp->user())) {
+            Wt::WPushButton* b = new Wt::WPushButton(this);
+            if (user_->classification_confirmed()) {
+                b->setText(tr("tc.common.Discard"));
+            } else {
+                b->setText(tr("tc.common.Confirm"));
+            }
+            b->clicked().connect(this, &UserWidgetImpl::inverse_confirmed);
+        }
         new Wt::WBreak(this);
         new Wt::WText(tr("tc.user.Online_time")
                       .arg(td2str(user_->online_time())), this);
@@ -121,6 +130,17 @@ private:
         }
         t.commit();
         tNot->emit(new Object(USER, user_.id()));
+        tApp->path().open(tApp->internalPath());
+    }
+
+    void inverse_confirmed() {
+        dbo::Transaction t(tApp->session());
+        if (user_->classification_confirmed()) {
+            user_.modify()->discard_classification(tApp->user());
+        } else {
+            user_.modify()->confirm_classification(tApp->user());
+        }
+        t.commit();
         tApp->path().open(tApp->internalPath());
     }
 };
