@@ -35,9 +35,6 @@ static void add_comment(const CommentPtr& comment, Wt::WTextEdit* edit) {
     CommentPtr post_text = comment->root();
     CommentPtr post = post_text->parent();
     post.modify()->post_comment_added();
-    if (!tApp->user()) {
-        c.modify()->set_state(Comment::DRAFT);
-    }
     t.commit();
     tApp->setInternalPath(tApp->path().post()->get_full_path(post.id()), true);
 }
