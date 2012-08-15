@@ -68,6 +68,16 @@ bool Comment::can_create(const UserPtr& user, Type type,
     return state_of_new(user, type, parent) != DELETED;
 }
 
+bool Comment::can_edit(const UserPtr& user) const {
+    if (type() != FORUM_POST && type() != FORUM_POST_TEXT) {
+        return false;
+    }
+    if (!user || init() != user) {
+        return false;
+    }
+    return can_create(user, type(), parent());
+}
+
 //FIXME *(collection.begin()) --> collection.front()
 // FIXME 2 if Query family_desc = root_->family().find(), orderBy() fails
 void Comment::set_index() {

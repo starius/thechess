@@ -64,6 +64,9 @@ public:
     static bool can_create(const UserPtr& user, Type type,
                            const CommentPtr& parent = CommentPtr());
 
+    /** Return if the user can edit the comment */
+    bool can_edit(const UserPtr& user) const;
+
     /** Get sorting index.
     The order of indices of a branch should correspond
     the order in the tree for viewing.
