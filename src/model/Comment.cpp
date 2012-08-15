@@ -25,7 +25,7 @@ Comment::Comment(bool):
     type_(NO_TYPE),
     state_(OK),
     created_(now()),
-    edited_(now())
+    edited_(created_)
 { }
 
 Comment::Type Comment::child_type(Comment::Type type) {
@@ -148,7 +148,10 @@ Wt::WString Comment::text_or_removed(const UserPtr& viewer) const {
 
 void Comment::set_text(const Wt::WString& text) {
     text_ = text;
-    edited_ = now();
+    if (now() - edited_ > SECOND) {
+        // edit, not create
+        edited_ = now();
+    }
 }
 
 void Comment::set_init(const UserPtr& init) {
