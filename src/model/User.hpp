@@ -239,6 +239,9 @@ public:
     /** Try to confirm classification by a user */
     void confirm_classification(const UserPtr& user);
 
+    /** Try to discard classification by a user */
+    void discard_classification(const UserPtr& user);
+
     /** Get if the classification is confirmed */
     bool classification_confirmed() const;
 

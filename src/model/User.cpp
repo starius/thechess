@@ -128,6 +128,12 @@ void User::confirm_classification(const UserPtr& user) {
     }
 }
 
+void User::discard_classification(const UserPtr& user) {
+    if (can_confirm_classification(user)) {
+        classification_confirmer_.reset();
+    }
+}
+
 bool User::classification_confirmed() const {
     return classification_confirmer_;
 }
