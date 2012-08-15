@@ -17,7 +17,6 @@
 
 #include "thechess-global.hpp"
 #include "model/all.hpp"
-#include "Options.hpp"
 
 namespace dbo = Wt::Dbo;
 

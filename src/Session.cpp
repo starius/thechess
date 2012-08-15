@@ -14,6 +14,7 @@
 #include <Wt/Auth/Identity>
 
 #include "Session.hpp"
+#include "Options.hpp"
 #include "Server.hpp"
 #include "Planning.hpp"
 #include "model/all.hpp"
