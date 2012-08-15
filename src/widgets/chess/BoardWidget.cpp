@@ -54,7 +54,7 @@ struct PieceStat {
     int stat[Piece::COLOR_COUNT][Piece::LETTER_COUNT];
 };
 
-PieceStat full_stat = PieceStat(Board());
+const PieceStat full_stat = PieceStat(Board());
 
 class TakenPiecesImpl : public Wt::WContainerWidget {
 public:
