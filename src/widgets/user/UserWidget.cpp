@@ -46,7 +46,8 @@ public:
         } else if (user_->classification() != NO_CLASSIFICATION) {
             new Wt::WText(tr("tc.user.not_confirmed"), this);
         }
-        if (user_->can_confirm_classification(tApp->user())) {
+        if (user_->classification() != NO_CLASSIFICATION &&
+                user_->can_confirm_classification(tApp->user())) {
             Wt::WPushButton* b = new Wt::WPushButton(this);
             if (user_->classification_confirmed()) {
                 b->setText(tr("tc.common.Discard"));
