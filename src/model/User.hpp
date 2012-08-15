@@ -58,6 +58,9 @@ public:
         /** Right to join a Competition */
         COMPETITION_JOINER = BOOST_BINARY(00000010 00000000),
 
+        /** Right to change his classification */
+        CLASSIFICATION_CHANGER = BOOST_BINARY(00000100 00000000),
+
         /** Rights of regular user (given to new user) */
         REGULAR_USER = GAME_CREATOR |
                        GAME_JOINER |
@@ -68,7 +71,8 @@ public:
                        COMPETITION_CREATOR |
                        GP_CREATOR |
                        CP_CREATOR |
-                       COMPETITION_JOINER,
+                       COMPETITION_JOINER |
+                       CLASSIFICATION_CHANGER,
 
         /** Right to (un)remove comments and approve draft comments */
         COMMENTS_REMOVER = BOOST_BINARY(00010000 00000000 00000000),
