@@ -193,6 +193,7 @@ GamesTable Competition::games_table() const {
 bool Competition::can_join(const UserPtr& user) const {
     return state_ == RECRUITING &&
            user && !is_member(user) &&
+           user->has_permission(User::COMPETITION_JOINER) &&
            user->games_stat().elo() >= cp_->min_rating() &&
            user->games_stat().elo() <= cp_->max_rating() &&
            user->classification() >= cp_->min_classification() &&
