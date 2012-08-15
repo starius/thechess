@@ -54,9 +54,18 @@ Comment::Type Comment::root_type(Comment::Type type) {
     return NO_TYPE;
 }
 
+Comment::State Comment::state_of_new(const UserPtr& user, Type type,
+                                     const CommentPtr& parent) {
+    if (user) {
+        return OK;
+    } else {
+        return DRAFT;
+    }
+}
+
 bool Comment::can_create(const UserPtr& user, Type type,
                          const CommentPtr& parent) {
-    return true;
+    return state_of_new(user, type, parent) != DELETED;
 }
 
 //FIXME *(collection.begin()) --> collection.front()
@@ -105,6 +114,11 @@ void Comment::set_index() {
     }
 }
 
+void Comment::set_type(Type type) {
+    type_ = type;
+    set_state(state_of_new(this->init(), this->type(), this->parent()));
+}
+
 Wt::WString Comment::text_or_removed(const UserPtr& viewer) const {
     if (state() == OK) {
         return text();
@@ -127,6 +141,11 @@ void Comment::set_text(const Wt::WString& text) {
     edited_ = now();
 }
 
+void Comment::set_init(const UserPtr& init) {
+    init_ = init;
+    set_state(state_of_new(this->init(), this->type(), this->parent()));
+}
+
 void Comment::set_parent(const CommentPtr& parent, bool set_index) {
     if (!parent) {
         return;
@@ -136,6 +155,7 @@ void Comment::set_parent(const CommentPtr& parent, bool set_index) {
     if (set_index) {
         this->set_index();
     }
+    set_state(state_of_new(this->init(), this->type(), this->parent()));
 }
 
 void Comment::post_comment_added() {

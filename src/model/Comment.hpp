@@ -50,7 +50,17 @@ public:
     /** Return type of root */
     static Type root_type(Type type);
 
-    /** Return if the user can write a comment of the type */
+    /** Return the state of new comment, created by the user.
+    If returned value is DELETED, the user can't create a comment.
+    Returned value OK or DRAFT is a state of new comment
+    (it is being set automatically by set_type(), set_init() or set_parent()).
+    */
+    static State state_of_new(const UserPtr& user, Type type,
+                              const CommentPtr& parent = CommentPtr());
+
+    /** Return if the user can write a comment of the type.
+    This is short alias for state_of_new() != DELETED.
+    */
     static bool can_create(const UserPtr& user, Type type,
                            const CommentPtr& parent = CommentPtr());
 
@@ -87,9 +97,7 @@ public:
     }
 
     /** Set type */
-    void set_type(Type type) {
-        type_ = type;
-    }
+    void set_type(Type type);
 
     /** Get state */
     State state() const {
@@ -124,9 +132,7 @@ public:
     }
 
     /** Set the user created the comment */
-    void set_init(const UserPtr& init) {
-        init_ = init;
-    }
+    void set_init(const UserPtr& init);
 
     /** Get the root comment */
     const CommentPtr& root() const {
