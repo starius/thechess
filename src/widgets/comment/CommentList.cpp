@@ -145,6 +145,17 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
             user_anchor->setLink(tApp->path().user_view()->get_link(user.id()));
             user_anchor->setText(user->safe_username());
         }
+        CommentPtr post = post_text->parent();
+        if (post->edited() != post->created()) {
+            new Wt::WBreak(this);
+            new Wt::WText(tr("tc.forum.Post_edited")
+                          .arg(post->edited().toString()), this);
+        }
+        if (post_text->edited() != post_text->created()) {
+            new Wt::WBreak(this);
+            new Wt::WText(tr("tc.forum.Post_text_edited")
+                          .arg(post_text->edited().toString()), this);
+        }
         new Wt::WBreak(this);
         new Wt::WBreak(this);
     }
