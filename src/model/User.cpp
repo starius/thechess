@@ -105,16 +105,9 @@ void User::logout() {
     }
 }
 
-bool User::can_set_classification(const UserPtr& user) const {
-    return user && user.id() == id();
-}
-
-void User::set_classification(const UserPtr& user,
-                              Classification classification) {
-    if (can_set_classification(user)) {
-        classification_ = classification;
-        classification_confirmer_.reset();
-    }
+void User::set_classification(Classification classification) {
+    classification_ = classification;
+    classification_confirmer_.reset();
 }
 
 Classification User::classification() const {

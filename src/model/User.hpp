@@ -224,11 +224,8 @@ public:
     /** Return query of all games in which the user took part */
     dbo::Query<GamePtr> games() const;
 
-    /** Return if a user can set classification of this user */
-    bool can_set_classification(const UserPtr& user) const;
-
     /** Try to set classification by a user */
-    void set_classification(const UserPtr& user, Classification classification);
+    void set_classification(Classification classification);
 
     /** Get classification */
     Classification classification() const;
