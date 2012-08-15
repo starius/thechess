@@ -23,7 +23,6 @@
 
 #include "Application.hpp"
 #include "config.hpp"
-#include "Session.hpp"
 #include "Kick.hpp"
 #include "model/all.hpp"
 #include "widgets/MainWidget.hpp"
