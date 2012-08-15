@@ -32,7 +32,7 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
             return contents(o);
         } else if (index.column() == INIT_COL) {
             return o->init() ?
-                   o->init()->username() :
+                   o->init()->safe_username() :
                    Wt::WString::tr("tc.user.Anonymous");
         } else if (index.column() == TIME_COL) {
             if (type() == Comment::CHAT_MESSAGE) {
@@ -69,7 +69,7 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
 
 Wt::WFlags<Wt::ItemFlag> CommentModel::flags(const Wt::WModelIndex& i) const {
     Wt::WFlags<Wt::ItemFlag> f = BaseQM::flags(i);
-    if (i.column() == CONTENTS_COLUMN) {
+    if (i.column() == CONTENTS_COLUMN || i.column() == INIT_COL) {
         f |= Wt::ItemIsXHTMLText;
     }
     return f;

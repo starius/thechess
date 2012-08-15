@@ -143,7 +143,7 @@ private:
             table_->elementAt(i + LEFT_SHIFT, NAME_COLUMN)
             ->setStyleClass("thechess-td-right");
             table_->elementAt(i + LEFT_SHIFT, NAME_COLUMN)
-            ->addWidget(new Wt::WText(user->username()));
+            ->addWidget(new Wt::WText(user->safe_username()));
             table_->elementAt(i + LEFT_SHIFT, N_COLUMN)
             ->addWidget(new Wt::WText(i_str));
             table_->elementAt(N_ROW, i + TOP_SHIFT)
@@ -250,10 +250,10 @@ private:
         It winner = sc_.winners().find(pair);
         if (winner == sc_.winners().end() || stage == 0)
             title = tr("tc.competition.user_pair")
-                    .arg(pair.first()->username())
-                    .arg(pair.second()->username());
+                    .arg(pair.first()->safe_username())
+                    .arg(pair.second()->safe_username());
         else {
-            title = winner->second->username();
+            title = winner->second->safe_username();
         }
         Wt::WTreeTableNode* n = new Wt::WTreeTableNode(title, 0, parent);
         n->setColumnWidget(STAGE_COLUMN,
@@ -275,7 +275,7 @@ private:
     void print_user_(int stage, const UserPtr& user,
                      Wt::WTreeTableNode* parent) {
         Wt::WTreeTableNode* n;
-        n = new Wt::WTreeTableNode(user->username(), 0, parent);
+        n = new Wt::WTreeTableNode(user->safe_username(), 0, parent);
         n->setColumnWidget(STAGE_COLUMN,
                            new Wt::WText(TO_S(stage + 1)));
         if (stage > 0) {
