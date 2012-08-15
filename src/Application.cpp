@@ -64,7 +64,6 @@ Application::~Application() {
         if (user()) {
             user().modify()->logout();
         }
-        t.commit();
     } catch (std::exception& e) {
         log("warning") << e.what();
     }
@@ -79,7 +78,6 @@ void Application::update_password() {
     if (user()) {
         main_widget_->update_password();
     }
-    t.commit();
 }
 
 void Application::login_handler() {
@@ -132,7 +130,6 @@ void Application::notify(const Wt::WEvent& e) {
         try {
             dbo::Transaction t(session());
             session().rereadAll();
-            t.commit();
         } catch (...) {
         }
     } catch (std::exception& e) {
@@ -193,7 +190,6 @@ void Application::gather_explorer(Wt::Wc::Gather::DataType type,
         }
         bd.modify()->use();
     }
-    t.commit();
 }
 
 }

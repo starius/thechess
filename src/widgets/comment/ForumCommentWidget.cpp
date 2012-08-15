@@ -59,7 +59,6 @@ ForumCommentWidget::ForumCommentWidget(const CommentPtr& comment) {
         add->clicked().connect(boost::bind(add_comment, comment, edit));
     }
     add_remover_buttons(comment, this);
-    t.commit();
 }
 
 }

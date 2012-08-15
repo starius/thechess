@@ -138,7 +138,6 @@ private:
                 anchors_[game.id()] = a;
             }
         }
-        t.commit();
     }
 
     Game::State state_of_(MyGameAnchor* a) const {
@@ -185,7 +184,6 @@ private:
             insert_anchor_(a, game->state());
             a->style_by_state(game->state());
         }
-        t.commit();
     }
 
     void click_handler() {

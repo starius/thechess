@@ -24,7 +24,6 @@ public:
         new Header(tr("tc.user.Settings"), this);
         b = new Wt::WPushButton(tr("Wt.Auth.updatepassword"), this);
         b->clicked().connect(tApp, &Application::update_password);
-        t.commit();
     }
 };
 

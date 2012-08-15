@@ -88,7 +88,6 @@ public:
         a->setLink(tApp->path().competitions_of_user()->link());
         a->setText(tr("tc.competition.List"));
         new Wt::WBreak(this);
-        t.commit();
     }
 
 private:

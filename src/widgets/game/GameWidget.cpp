@@ -100,7 +100,6 @@ protected:
             time_(game_->created() + c->cp()->relax_time(),
                   "tc.game.force_confirm", result);
         }
-        t.commit();
     }
 
 private:
@@ -166,7 +165,6 @@ public:
         print_comment_list();
         status_and_manager();
         countdown_print();
-        t.commit();
     }
 
     virtual void notify(EventPtr) {
@@ -191,7 +189,6 @@ public:
         }
         status_and_manager();
         print_comment();
-        t.commit();
     }
 
 private:
@@ -223,7 +220,6 @@ private:
         dbo::Transaction t(tApp->session());
         print_status();
         print_manager();
-        t.commit();
     }
 
     void countdown_print() {
@@ -245,7 +241,6 @@ private:
                 print_draw_buttons();
             }
         }
-        t.commit();
     }
 
     void print_analysis_button() {
@@ -420,7 +415,6 @@ private:
         .connect(this, &GameWidgetImpl::close_analysis);
         analysis->setModal(false);
         analysis->show();
-        t.commit();
     }
 
     void close_analysis() {
@@ -449,7 +443,6 @@ private:
         } else {
             new Wt::WText(game_->comment(), comment_container_);
         }
-        t.commit();
     }
 
     void print_comment_list() {
@@ -465,14 +458,12 @@ private:
             add->clicked().connect(add, &Wt::WWidget::hide);
             add->clicked().connect(add, &Wt::WWidget::disable);
         }
-        t.commit();
     }
 
     void print_comment_list_impl() {
         dbo::Transaction t(tApp->session());
         CommentPtr comment_base = game_.modify()->comment_base();
         new CommentList(Comment::CHAT_MESSAGE, comment_base, this);
-        t.commit();
     }
 };
 

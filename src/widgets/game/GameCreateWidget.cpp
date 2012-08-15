@@ -31,7 +31,6 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
     if (tApp->user()) {
         print();
     }
-    t.commit();
 }
 
 GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :

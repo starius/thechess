@@ -28,7 +28,6 @@ public:
         bindWidget("limit_private", new Wt::Wc::Countdown());
         bindWidget("limit_std", new Wt::Wc::Countdown());
         reread();
-        t.commit();
     }
 
     void update_user(const UserPtr& user) {
@@ -68,7 +67,6 @@ private:
             limit_std()->resume();
             limit_private()->resume(game()->limit_std_now(user_));
         }
-        t.commit();
     }
 
     Wt::WAnchor* anchor() {
@@ -103,7 +101,6 @@ void GameCountdown::reread() {
     }
     single_countdown(timeout1_, user1);
     single_countdown(timeout2_, user2);
-    t.commit();
 }
 
 void GameCountdown::single_countdown(SingleTimeout*& timeout,

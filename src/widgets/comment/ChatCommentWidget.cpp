@@ -31,7 +31,6 @@ ChatCommentWidget::ChatCommentWidget(const CommentPtr& comment) {
         user_anchor->setText(user->safe_username());
     }
     add_remover_buttons(comment, this);
-    t.commit();
 }
 
 }

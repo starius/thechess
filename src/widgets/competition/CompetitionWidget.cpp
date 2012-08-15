@@ -409,7 +409,6 @@ void CompetitionWidget::reprint() {
     if (!manager || !downcast<CompetitionManager*>(manager)->is_editing()) {
         bindWidget("manager", new CompetitionManager(c));
     }
-    t.commit();
 }
 
 void CompetitionWidget::notify(EventPtr) {

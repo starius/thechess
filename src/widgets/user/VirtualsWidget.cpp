@@ -30,7 +30,6 @@ VirtualsWidget::VirtualsWidget(const UserPtr& user, Wt::WObject* parent):
     pairs_ = BD::pairs(tApp->session());
     pairs_.where("U.user_id = ? or V.user_id = ?")
     .bind(user.id()).bind(user.id());
-    t.commit();
     setMimeType("image/png");
 }
 
@@ -38,7 +37,6 @@ VirtualsWidget::VirtualsWidget(Wt::WObject* parent):
     Wt::Wc::FilterResource("dot -Tpng {1} -o {2}", parent) {
     dbo::Transaction t(tApp->session());
     pairs_ = BD::pairs(tApp->session());
-    t.commit();
     setMimeType("image/png");
 }
 
@@ -81,7 +79,6 @@ void VirtualsWidget::write_input(std::ostream& out) const {
             }
         }
         out << "}" << std::endl;
-        t.commit();
     }
 }
 

@@ -40,7 +40,6 @@ void add_remover_buttons(const CommentPtr& comment, Wt::WContainerWidget* p) {
                                              comment, Comment::DELETED));
         }
     }
-    t.commit();
 }
 
 }

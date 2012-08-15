@@ -52,7 +52,6 @@ void PgnResource::handleRequest(const Wt::Http::Request& request,
         return;
     }
     g->pgn(response.out());
-    t.commit();
 }
 
 }

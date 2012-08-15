@@ -34,7 +34,6 @@ CompetitionCreateWidget::CompetitionCreateWidget(Wt::WContainerWidget* p):
     } else {
         new Wt::WText(tr("tc.competition.Cant_create"), this);
     }
-    t.commit();
 }
 
 CompetitionCreateWidget::CompetitionCreateWidget(const CompetitionPtr& c,
@@ -54,7 +53,6 @@ CompetitionCreateWidget::CompetitionCreateWidget(const CompetitionPtr& c,
     } else {
         new Wt::WText(tr("tc.competition.Cant_change"), this);
     }
-    t.commit();
 }
 
 void CompetitionCreateWidget::print() {

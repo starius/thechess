@@ -21,7 +21,6 @@ CommentModel::CommentModel(Comment::Type type, const CommentPtr& root,
     addColumn("id"); // time
     addColumn("id"); // user
     addColumn("id", ""); // contents
-    t.commit();
 }
 
 boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {

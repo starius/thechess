@@ -199,7 +199,6 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
                  root->type() == Comment::FORUM_TOPIC)) {
         add_remover_buttons(root, this);
     }
-    t.commit();
 }
 
 void CommentList::notify(EventPtr) {

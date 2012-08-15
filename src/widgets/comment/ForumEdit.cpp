@@ -52,7 +52,6 @@ ForumEdit::ForumEdit(const CommentPtr& post_or_text, Wt::WContainerWidget* p):
     edit->setValueText(post_or_text->text());
     Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
     b->clicked().connect(boost::bind(edit_comment, post_or_text, edit));
-    t.commit();
 }
 
 }

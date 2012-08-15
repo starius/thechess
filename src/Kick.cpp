@@ -33,7 +33,6 @@ void Kick::notify(EventPtr) {
     if (!tApp->user() || tApp->user()->removed()) {
         Wt::Wc::bound_post(logout_app)();
     }
-    t.commit();
 }
 
 }

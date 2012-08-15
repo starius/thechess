@@ -56,7 +56,6 @@ public:
         addColumn("ended", Wt::WString::tr("tc.game.ended"));
         addColumn("rating_after_white",
                   Wt::WString::tr("tc.user.rating_after"));
-        t.commit();
     }
 
     boost::any data(const Wt::WModelIndex& index,

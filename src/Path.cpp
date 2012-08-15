@@ -89,7 +89,6 @@ void Path::open_user() {
         main_widget_->user_view(tApp->session().load<User>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
-    t.commit();
 }
 
 void Path::open_virtuals_of_user() {
@@ -100,7 +99,6 @@ void Path::open_virtuals_of_user() {
         main_widget_->virtuals_of_user(tApp->session().load<User>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
-    t.commit();
 }
 
 void Path::open_games_of_user() {
@@ -111,7 +109,6 @@ void Path::open_games_of_user() {
         main_widget_->games_of_user(tApp->session().load<User>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
-    t.commit();
 }
 
 void Path::open_competitions_of_user() {
@@ -122,7 +119,6 @@ void Path::open_competitions_of_user() {
         main_widget_->competitions_of_user(tApp->session().load<User>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
-    t.commit();
 }
 
 void Path::open_game() {
@@ -133,7 +129,6 @@ void Path::open_game() {
         main_widget_->game_view(tApp->session().load<Game>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
-    t.commit();
 }
 
 void Path::open_competition() {
@@ -144,7 +139,6 @@ void Path::open_competition() {
         main_widget_->competition_view(tApp->session().load<Competition>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
-    t.commit();
 }
 
 void Path::open_board() {
@@ -159,7 +153,6 @@ void Path::open_forum_topic_posts() {
         main_widget_->forum_topic_posts(tApp->session().load<Comment>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
-    t.commit();
 }
 
 void Path::open_forum_post() {
@@ -170,7 +163,6 @@ void Path::open_forum_post() {
         main_widget_->forum_post(tApp->session().load<Comment>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
-    t.commit();
 }
 
 void Path::open_forum_post_comment() {
@@ -181,7 +173,6 @@ void Path::open_forum_post_comment() {
         main_widget_->forum_post_comment(tApp->session().load<Comment>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
-    t.commit();
 }
 
 void Path::open_forum_edit() {
@@ -192,7 +183,6 @@ void Path::open_forum_edit() {
         main_widget_->forum_edit(tApp->session().load<Comment>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
-    t.commit();
 }
 
 void Path::open_chat_comment() {
@@ -203,7 +193,6 @@ void Path::open_chat_comment() {
         main_widget_->chat_comment(tApp->session().load<Comment>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
-    t.commit();
 }
 
 }
