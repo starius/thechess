@@ -71,6 +71,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     competition_view_->opened().connect(this, &Path::open_competition);
     competition_new_->opened().connect(mw, &MainWidget::competition_new);
     board_->opened().connect(this, &Path::open_board);
+    board_root_->opened().connect(mw, &MainWidget::moves_widget);
     topics_->opened().connect(mw, &MainWidget::forum_topics);
     topic_posts_->opened().connect(this, &Path::open_forum_topic_posts);
     all_posts_->opened().connect(mw, &MainWidget::forum_all_posts);

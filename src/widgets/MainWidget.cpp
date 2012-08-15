@@ -17,6 +17,7 @@
 #include "widgets/MainMenu.hpp"
 #include "widgets/game/MyGamesList.hpp"
 #include "widgets/chess/BoardWidget.hpp"
+#include "widgets/chess/MovesWidget.hpp"
 #include "widgets/game/GameWidget.hpp"
 #include "widgets/game/GameCreateWidget.hpp"
 #include "widgets/game/GameListWidget.hpp"
@@ -149,6 +150,10 @@ void MainWidget::board_view(const std::string& data) {
                                   /* bottom */ Piece::WHITE, Board(data));
     b->show_lastmove_checkbox(false);
     set_contents(b);
+}
+
+void MainWidget::moves_widget() {
+    set_contents(new MovesWidget(Moves(), /* big */ false, /* active */ true));
 }
 
 void MainWidget::forum_topics() {
