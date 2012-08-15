@@ -402,9 +402,6 @@ private:
                 print_select_(half_move);
                 return;
             } else {
-                modify_undo();
-                lastmove_ = half_move;
-                from_ = Square();
                 move_.emit(half_move);
             }
         } else {
@@ -440,7 +437,6 @@ private:
         modify_undo();
         from_ = Square();
         half_move.turn_into(letter);
-        lastmove_ = half_move;
         move_.emit(half_move);
     }
 
