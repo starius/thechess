@@ -20,6 +20,7 @@
     * show message box Online in UserWidget
     * integrate VirtualsWidget; show graph for one user or for all users
     * GameListWidget and CompetitionListWidget for single user
+    * version 3.0.7
 
 2012-08-10:
     * add widget SettingsWidget at /user/settings/
