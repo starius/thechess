@@ -56,6 +56,23 @@ struct PieceStat {
 
 const PieceStat full_stat = PieceStat(Board());
 
+struct TakenPieceStat : public PieceStat {
+    TakenPieceStat(const Board& board):
+        PieceStat(board) {
+        for (int c = 0; c < Piece::COLOR_COUNT; c++) {
+            int turned_pawns = 0;
+            for (int l = 0; l < Piece::LETTER_COUNT; l++) {
+                stat[c][l] = full_stat.stat[c][l] - stat[c][l];
+                if (stat[c][l] < 0) {
+                    turned_pawns += abs(stat[c][l]);
+                    stat[c][l] = 0;
+                }
+            }
+            stat[c][Piece::PAWN] -= turned_pawns;
+        }
+    }
+};
+
 class TakenPiecesImpl : public Wt::WContainerWidget {
 public:
 
@@ -67,7 +84,7 @@ public:
     }
 
 private:
-    PieceStat taken_stat_;
+    TakenPieceStat taken_stat_;
     int row_size_;
 
     void print_color_(Piece::Color color) {
@@ -80,7 +97,7 @@ private:
     }
 
     void print_piece_(Piece::Color color, Piece::Letter letter) {
-        int c = full_stat.stat[color][letter] - taken_stat_.stat[color][letter];
+        int c = taken_stat_.stat[color][letter];
         for (int i = 0; i < c; i++) {
             new Wt::WImage(BoardWidget::image(Piece(color, letter)), this);
             row_size_ += 1;
