@@ -1,4 +1,10 @@
 
+3.0.7 to 3.0.8
+==============
+
+Set rights_ of admin to 1609565183.
+Set rights_ of regular user to 1023.
+
 3.0.6 to 3.0.7
 ==============
 

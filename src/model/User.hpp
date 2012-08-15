@@ -25,20 +25,97 @@ class User : public dbo::Dbo<User> {
 public:
     /** Rights */
     enum Rights {
+        /** No permissions */
         NONE = 0,
-        COMMENTS_REMOVER = BOOST_BINARY(00000001),
-        CLASSIFICATION_CONFIRMER = BOOST_BINARY(00000010),
-        COMPETITION_CHANGER = BOOST_BINARY(00000100),
-        USER_REMOVER = BOOST_BINARY(00001000),
-        VIRTUALS_VIEWER = BOOST_BINARY(00010000),
-        RIGHTS_CHANGER = BOOST_BINARY(01000000 00000000 00000000 00000000),
-        MODERATOR = COMMENTS_REMOVER |
-                    CLASSIFICATION_CONFIRMER |
-                    COMPETITION_CHANGER |
-                    USER_REMOVER |
-                    VIRTUALS_VIEWER,
-        ADMIN = MODERATOR | RIGHTS_CHANGER,
-        REGULAR_USER = NONE
+
+        /** Right to create a Game */
+        GAME_CREATOR = BOOST_BINARY(00000001),
+
+        /** Right to join a Game */
+        GAME_JOINER = BOOST_BINARY(00000010),
+
+        /** Right to join write chat */
+        CHAT_WRITER = BOOST_BINARY(00000100),
+
+        /** Right to join write chat */
+        PRIVATE_WRITER = BOOST_BINARY(00001000),
+
+        /** Right to create forum posts */
+        FORUM_POST_CREATOR = BOOST_BINARY(00010000),
+
+        /** Right to create forum comments */
+        FORUM_COMMENT_CREATOR = BOOST_BINARY(00100000),
+
+        /** Right to create Competition */
+        COMPETITION_CREATOR = BOOST_BINARY(01000000),
+
+        /** Right to create GP */
+        GP_CREATOR = BOOST_BINARY(10000000),
+
+        /** Right to create CP */
+        CP_CREATOR = BOOST_BINARY(00000001 00000000),
+
+        /** Right to join a Competition */
+        COMPETITION_JOINER = BOOST_BINARY(00000010 00000000),
+
+        /** Rights of regular user (given to new user) */
+        REGULAR_USER = GAME_CREATOR |
+                       GAME_JOINER |
+                       CHAT_WRITER |
+                       PRIVATE_WRITER |
+                       FORUM_POST_CREATOR |
+                       FORUM_COMMENT_CREATOR |
+                       COMPETITION_CREATOR |
+                       GP_CREATOR |
+                       CP_CREATOR |
+                       COMPETITION_JOINER,
+
+        /** Right to (un)remove comments and approve draft comments */
+        COMMENTS_REMOVER = BOOST_BINARY(00010000 00000000 00000000),
+
+        /** Right to confirm user classification */
+        CLASSIFICATION_CONFIRMER = BOOST_BINARY(00100000 00000000 00000000),
+
+        /** Right to change competition */
+        COMPETITION_CHANGER = BOOST_BINARY(01000000 00000000 00000000),
+
+        /** Right to (un)remove a user */
+        USER_REMOVER = BOOST_BINARY(10000000 00000000 00000000),
+
+        /** Right to view virtuals */
+        VIRTUALS_VIEWER = BOOST_BINARY(00000001 00000000 00000000 00000000),
+
+        /** Right to allow the competition to start if with virtuals */
+        VIRTUALS_ALLOWER = BOOST_BINARY(00000010 00000000 00000000 00000000),
+
+        /** Right to change rights that are part of REGULAR_USER */
+        REGULAR_RIGHTS_CHANGER = BOOST_BINARY(0100 00000000 00000000 00000000),
+
+        /** Right to ban registration for the user by IP */
+        REGISTRATION_BANNER = BOOST_BINARY(00001000 00000000 00000000 00000000),
+
+        /** Right to edit Game, GP and CP name and description */
+        RECORDS_EDITOR = BOOST_BINARY(00010000 00000000 00000000 00000000),
+
+        /** Special rights */
+        SUPER_RIGHTS = COMMENTS_REMOVER |
+                       CLASSIFICATION_CONFIRMER |
+                       COMPETITION_CHANGER |
+                       USER_REMOVER |
+                       VIRTUALS_VIEWER |
+                       VIRTUALS_ALLOWER |
+                       REGULAR_RIGHTS_CHANGER |
+                       REGISTRATION_BANNER |
+                       RECORDS_EDITOR,
+
+        /** Modeator */
+        MODERATOR = REGULAR_USER | SUPER_RIGHTS,
+
+        /** Right to change rights that are part of SUPER_RIGHTS */
+        SUPER_RIGHTS_CHANGER = BOOST_BINARY(1000000 00000000 00000000 00000000),
+
+        /** Admin */
+        ADMIN = MODERATOR | SUPER_RIGHTS_CHANGER
     };
 
     /** Default constructor.
