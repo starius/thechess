@@ -117,8 +117,26 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     }
     if (type == Comment::FORUM_COMMENT && root) {
         CommentPtr post_text = root;
+        CommentPtr post = root->parent();
+        header = tr("tc.forum.post_header")
+                 .arg(post.id()).arg(post->text_or_removed(tApp->user()));
+        if (post->can_edit(tApp->user())) {
+            Wt::WAnchor* e = new Wt::WAnchor(this);
+            e->setLink(tApp->path().forum_edit()->get_link(post.id()));
+            e->setText(tr("tc.forum.Edit"));
+            new Wt::WBreak(this);
+        }
+    }
+    if (type == Comment::FORUM_COMMENT && root) {
+        CommentPtr post_text = root;
         new Wt::WText(post_text->text_or_removed(tApp->user()), this);
         new Wt::WBreak(this);
+        if (post_text->can_edit(tApp->user())) {
+            Wt::WAnchor* e = new Wt::WAnchor(this);
+            e->setLink(tApp->path().forum_edit()->get_link(post_text.id()));
+            e->setText(tr("tc.forum.Edit"));
+            new Wt::WText(" ", this);
+        }
         new Wt::WText(post_text->created().toString(), this);
         UserPtr user = post_text->init();
         if (user) {
