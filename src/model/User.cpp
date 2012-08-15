@@ -10,6 +10,7 @@
 
 #include "model/all.hpp"
 #include "config.hpp"
+#include "Application.hpp" // FIXME
 
 DBO_INSTANTIATE_TEMPLATES(thechess::User);
 
@@ -56,7 +57,12 @@ Wt::WString User::username20() const {
 }
 
 Wt::WString User::safe_username() const {
-    return Wt::Utils::htmlEncode(username());
+    if (removed() &&
+            (!tApp->user() || !tApp->user()->has_permission(USER_REMOVER))) {
+        return Wt::WString::tr("tc.user.Removed_message");
+    } else {
+        return Wt::Utils::htmlEncode(username20());
+    }
 }
 
 bool User::has_permission(Rights perm) const {
