@@ -47,6 +47,14 @@ bool User::can_remove(const UserPtr& victim) const {
            self() != victim;
 }
 
+Wt::WString User::username20() const {
+    std::wstring u = username().value();
+    if (u.size() > 20) {
+        u.resize(20);
+    }
+    return Wt::WString(u);
+}
+
 Wt::WString User::safe_username() const {
     return Wt::Utils::htmlEncode(username());
 }

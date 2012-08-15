@@ -94,6 +94,9 @@ public:
         return username_;
     }
 
+    /** Get user name (up to 20 chars) */
+    Wt::WString username20() const;
+
     /** Get HTML-escaped user name */
     Wt::WString safe_username() const;
 
