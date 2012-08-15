@@ -713,8 +713,8 @@ void Game::pgn(std::ostream& out, bool reduced) const {
     int stage = competition_stage_ + 1;
     Wt::WString round = competition_stage_ != -1 ?
                         boost::lexical_cast<std::string>(stage) : "-";
-    std::string white = white_ ? white_->username().toUTF8() : "?";
-    std::string black = black_ ? black_->username().toUTF8() : "?";
+    std::string white = white_ ? white_->username20().toUTF8() : "?";
+    std::string black = black_ ? black_->username20().toUTF8() : "?";
     boost::replace_all(white, "\"", "\\\"");
     boost::replace_all(black, "\"", "\\\"");
     std::string result = is_draw() ? "1/2-1/2" : !winner_ ? "*" :

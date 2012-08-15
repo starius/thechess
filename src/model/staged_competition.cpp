@@ -79,7 +79,7 @@ void write_user(std::ostream& out, int stage_number, const FU& fu) {
 void write_user_label(std::ostream& out, const FU& fu) {
     out << "[label=\"";
     if (fu.second) {
-        std::string username = fu.first->username().toUTF8();
+        std::string username = fu.first->username20().toUTF8();
         boost::replace_all(username, "\"", "\\\"");
         out << username;
     } else {
