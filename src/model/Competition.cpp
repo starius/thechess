@@ -38,6 +38,10 @@ Wt::WString Competition::type2str(Type type) {
     return Wt::WString::tr("tc.competition.Type");
 }
 
+bool Competition::can_create_competition(const UserPtr& user) {
+    return user && user->has_permission(User::COMPETITION_CREATOR);
+}
+
 void Competition::create_competition(const UserPtr& user) {
     set_init(user);
 }

@@ -198,12 +198,8 @@ public:
     /** \name Methods of recruiting state */
     /* @{ */
 
-    /** Return if the user can create competition.
-    \todo Currently all users can create competition.
-    */
-    static bool can_create_competition(const UserPtr& /*user*/) {
-        return true;
-    }
+    /** Return if the user can create competition */
+    static bool can_create_competition(const UserPtr& user);
 
     /** Set the user as competition creator.
     \note You should check user wuth can_create_competition by yourself
