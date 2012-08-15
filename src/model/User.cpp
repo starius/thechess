@@ -7,6 +7,7 @@
 
 #include <Wt/WRandom>
 #include <Wt/Utils>
+#include <boost/algorithm/string/replace.hpp>
 
 #include "model/all.hpp"
 #include "config.hpp"
@@ -61,7 +62,9 @@ Wt::WString User::safe_username() const {
             (!tApp->user() || !tApp->user()->has_permission(USER_REMOVER))) {
         return Wt::WString::tr("tc.user.Removed_message");
     } else {
-        return Wt::Utils::htmlEncode(username20());
+        std::string name = Wt::Utils::htmlEncode(username20()).toUTF8();
+        boost::replace_all(name, " ", "&nbsp;");
+        return Wt::WString::fromUTF8(name);
     }
 }
 
