@@ -36,9 +36,11 @@ namespace thechess {
 
 const int AUTH_IN_TOP = 1;
 
-const int MENU_IN_MIDDLE = 0;
-const int CONTENTS_IN_MIDDLE = 1;
-const int GAME_LIST_IN_MIDDLE = 2;
+enum {
+    MENU_IN_MIDDLE,
+    CONTENTS_IN_MIDDLE,
+    GAME_LIST_IN_MIDDLE
+};
 
 MainWidget::MainWidget(Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent) {

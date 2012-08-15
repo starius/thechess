@@ -36,10 +36,12 @@ typedef dbo::QueryModel<Result> BaseQM;
 
 class RatingModel : public RP::BaseQM {
 public:
-    static const int ID_COLUMN = 0;
-    static const int ENDED_COLUMN = 1;
-    static const int RATING_AFTER_COLUMN = 2;
-    static const int COLUMNS = 3;
+    enum {
+        ID_COLUMN,
+        ENDED_COLUMN,
+        RATING_AFTER_COLUMN,
+        COLUMNS
+    };
 
     RatingModel(const UserPtr& user, Wt::WObject* parent = 0) :
         RP::BaseQM(parent), user_(user) {

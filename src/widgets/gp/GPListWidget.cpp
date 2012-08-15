@@ -23,14 +23,16 @@ namespace thechess {
 
 class GPListModel : public GPListWidget::BaseQM {
 public:
-    static const int N_COLUMN = 0;
-    static const int NAME_COLUMN = 1;
-    static const int DESCRIPTION_COLUMN = 2;
-    static const int CREATED_COLUMN = 3;
-    static const int LIMIT_STD_COLUMN = 4;
-    static const int LIMIT_PRIVATE_COLUMN = 5;
-    static const int NORATING_COLUMN = 6;
-    static const int FIRST_DRAW_COLUMN = 7;
+    enum {
+        N_COLUMN,
+        NAME_COLUMN,
+        DESCRIPTION_COLUMN,
+        CREATED_COLUMN,
+        LIMIT_STD_COLUMN,
+        LIMIT_PRIVATE_COLUMN,
+        NORATING_COLUMN,
+        FIRST_DRAW_COLUMN
+    };
 
     GPListModel(Wt::WObject* parent = 0) :
         GPListWidget::BaseQM(parent) {

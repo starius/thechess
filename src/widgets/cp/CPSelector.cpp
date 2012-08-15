@@ -16,8 +16,10 @@
 
 namespace thechess {
 
-const int CP_SELECTOR_LIST_TAB = 0;
-const int CP_SELECTOR_NEW_TAB = 1;
+enum {
+    CP_SELECTOR_LIST_TAB,
+    CP_SELECTOR_NEW_TAB
+};
 
 CPSelector::CPSelector(Wt::WContainerWidget* p):
     Wt::WPanel(p) {

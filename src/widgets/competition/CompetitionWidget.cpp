@@ -105,8 +105,11 @@ void game_reference_(const GamePtr& game, Wt::WContainerWidget* c) {
     a->setLink(tApp->path().game_view()->get_link(game.id()));
 }
 
-const int NAME_COLUMN = 0;
-const int N_COLUMN = 1;
+enum {
+    NAME_COLUMN,
+    N_COLUMN
+};
+
 const int N_ROW = 0;
 const int LEFT_SHIFT = 1;
 const int TOP_SHIFT = 2;

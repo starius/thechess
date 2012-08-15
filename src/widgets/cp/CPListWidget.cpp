@@ -23,14 +23,16 @@ namespace thechess {
 
 class CPListModel : public CPListWidget::BaseQM {
 public:
-    static const int N_COLUMN = 0;
-    static const int NAME_COLUMN = 1;
-    static const int TYPE_COLUMN = 2;
-    static const int MIN_RATING_COLUMN = 3;
-    static const int MAX_RATING_COLUMN = 4;
-    static const int MIN_CLASSIFICATION_COLUMN = 5;
-    static const int MAX_CLASSIFICATION_COLUMN = 6;
-    static const int FORCE_START_DELAY_COLUMN = 7;
+    enum {
+        N_COLUMN,
+        NAME_COLUMN,
+        TYPE_COLUMN,
+        MIN_RATING_COLUMN,
+        MAX_RATING_COLUMN,
+        MIN_CLASSIFICATION_COLUMN,
+        MAX_CLASSIFICATION_COLUMN,
+        FORCE_START_DELAY_COLUMN
+    };
 
     CPListModel(Wt::WObject* parent = 0) :
         CPListWidget::BaseQM(parent) {

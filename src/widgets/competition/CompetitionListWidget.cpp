@@ -31,14 +31,16 @@ typedef dbo::QueryModel<Result> BaseQM;
 
 class CompetitionListModel : public CLP::BaseQM {
 public:
-    static const int N_COLUMN = 0;
-    static const int NAME_COLUMN = 1;
-    static const int TYPE_COLUMN = 2;
-    static const int STATE_COLUMN = 3;
-    static const int WINNERS_COLUMN = 4;
-    static const int MEMBERS_COLUMN = 5;
-    static const int STARTED_COLUMN = 6;
-    static const int ENDED_COLUMN = 7;
+    enum {
+        N_COLUMN,
+        NAME_COLUMN,
+        TYPE_COLUMN,
+        STATE_COLUMN,
+        WINNERS_COLUMN,
+        MEMBERS_COLUMN,
+        STARTED_COLUMN,
+        ENDED_COLUMN
+    };
 
     CompetitionListModel(const UserPtr& user, Wt::WObject* parent = 0) :
         CLP::BaseQM(parent) {

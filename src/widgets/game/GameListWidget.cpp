@@ -38,15 +38,17 @@ const int GAME_IN_TUPLE = 0;
 
 class GameListModel : public GLP::BaseQM {
 public:
-    static const int N_COLUMN = 0;
-    static const int WHITE_COLUMN = 1;
-    static const int BLACK_COLUMN = 2;
-    static const int STATE_COLUMN = 3;
-    static const int WINNER_COLUMN = 4;
-    static const int STARTED_COLUMN = 5;
-    static const int REAL_RATING_COLUMN = 6;
-    static const int MOVES_SIZE_COLUMN = 7;
-    static const int COMMENT_COLUMN = 8;
+    enum {
+        N_COLUMN,
+        WHITE_COLUMN,
+        BLACK_COLUMN,
+        STATE_COLUMN,
+        WINNER_COLUMN,
+        STARTED_COLUMN,
+        REAL_RATING_COLUMN,
+        MOVES_SIZE_COLUMN,
+        COMMENT_COLUMN
+    };
 
     GameListModel(const GLP::Q& query, Wt::WObject* parent = 0) :
         GLP::BaseQM(parent) {

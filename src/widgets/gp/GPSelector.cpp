@@ -16,8 +16,10 @@
 
 namespace thechess {
 
-const int GP_SELECTOR_LIST_TAB = 0;
-const int GP_SELECTOR_NEW_TAB = 1;
+enum {
+    GP_SELECTOR_LIST_TAB,
+    GP_SELECTOR_NEW_TAB
+};
 
 GPSelector::GPSelector(Wt::WContainerWidget* p):
     Wt::WPanel(p) {
