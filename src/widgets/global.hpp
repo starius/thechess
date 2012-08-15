@@ -15,7 +15,7 @@ class ChatCommentWidget;
 class ClassificationWidget;
 class CommentList;
 class CommentModel;
-class CommentWidget;
+class ForumCommentWidget;
 class CompetitionCreateWidget;
 class CompetitionListWidget;
 class CompetitionWidget;

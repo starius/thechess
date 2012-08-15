@@ -13,7 +13,7 @@
 #include <Wt/WPushButton>
 #include <Wt/Wc/util.hpp>
 
-#include "widgets/comment/CommentWidget.hpp"
+#include "widgets/comment/ForumCommentWidget.hpp"
 #include "widgets/comment/forum_comment_text.hpp"
 #include "widgets/comment/remover_buttons.hpp"
 #include "widgets/Header.hpp"
@@ -39,7 +39,7 @@ static void add_comment(const CommentPtr& comment, Wt::WTextEdit* edit) {
     tApp->setInternalPath(tApp->path().post()->get_full_path(post.id()), true);
 }
 
-CommentWidget::CommentWidget(const CommentPtr& comment) {
+ForumCommentWidget::ForumCommentWidget(const CommentPtr& comment) {
     dbo::Transaction t(tApp->session());
     if (comment->type() != Comment::FORUM_POST_TEXT) {
         return;

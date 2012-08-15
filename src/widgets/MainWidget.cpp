@@ -28,7 +28,7 @@
 #include "widgets/user/VirtualsWidget.hpp"
 #include "widgets/user/SettingsWidget.hpp"
 #include "widgets/comment/CommentList.hpp"
-#include "widgets/comment/CommentWidget.hpp"
+#include "widgets/comment/ForumCommentWidget.hpp"
 #include "widgets/comment/ForumEdit.hpp"
 #include "widgets/comment/ChatCommentWidget.hpp"
 
@@ -174,7 +174,7 @@ void MainWidget::forum_post(const CommentPtr& post) {
 
 void MainWidget::forum_post_comment(const CommentPtr& comment) {
     CommentPtr post_text = comment->root();
-    set_contents(new CommentWidget(comment));
+    set_contents(new ForumCommentWidget(comment));
 }
 
 void MainWidget::forum_edit(const CommentPtr& post_or_text) {

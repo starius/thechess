@@ -15,10 +15,10 @@
 namespace thechess {
 
 /** Viewing widget for a forum comment */
-class CommentWidget : public Wt::WContainerWidget {
+class ForumCommentWidget : public Wt::WContainerWidget {
 public:
     /** Constructor */
-    CommentWidget(const CommentPtr& comment);
+    ForumCommentWidget(const CommentPtr& comment);
 };
 
 }
