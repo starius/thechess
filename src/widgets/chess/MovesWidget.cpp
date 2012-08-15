@@ -87,7 +87,7 @@ public:
                                              /*skip_pieces*/ true);
             char shah = ' ';
             if (board_after.test_shah()) {
-                shah = board_after.test_end() == Board::CHECKMATE ? '#' : '+';
+                shah = board_after.checkmate() ? '#' : '+';
             }
             if (half_move.turn_into() != Piece::LETTER_NULL) {
                 Piece::Color color = board.color(half_move.from());

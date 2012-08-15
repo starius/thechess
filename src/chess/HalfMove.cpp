@@ -115,9 +115,7 @@ std::string HalfMove::san(const Board& board, const Board& board_after,
                 (result += '=') += Piece::piece_char(turn_into());
             }
             if (board_after.test_shah()) {
-                // FIXME https://bitbucket.org/starius/thechess/issue/99
-                bool checkmate = board_after.test_end() == Board::CHECKMATE;
-                result += checkmate ? '#' : '+';
+                result += board_after.checkmate() ? '#' : '+';
             }
         }
     }

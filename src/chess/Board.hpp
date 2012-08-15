@@ -166,6 +166,12 @@ public:
     /** Return finish state of the board */
     FinishState test_end() const;
 
+    /** Return if the game checkmate */
+    bool checkmate() const;
+
+    /** Return if the game stalemate */
+    bool stalemate() const;
+
     /* @} */
 
 private:

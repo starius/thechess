@@ -394,6 +394,14 @@ Board::FinishState Board::test_end() const {
     return state;
 }
 
+bool Board::checkmate() const {
+    return test_end() == CHECKMATE;
+}
+
+bool Board::stalemate() const {
+    return test_end() == STALEMATE;
+}
+
 bool Board::test_shah(Piece::Color c) const {
     Square king_square = find_king(c);
     if (king_square) {
