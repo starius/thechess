@@ -1,7 +1,31 @@
+2012-08-11 - 2012-08-15:
+    * implement forum (topics, posts, comments, Anonymous, edit posts)
+    * improve chat (currenylt only of game)
+    * improve User's permissions system
+    * add moderator permission COMMENTS_REMOVER
+    * add moderator permission CLASSIFICATION_CONFIRMER
+    * add moderator permission COMPETITION_CHANGER
+    * add moderator permission USER_REMOVER
+    * add moderator permission VIRTUALS_VIEWER
+    * fix WTextEdit with fix_text_edit() from wt-classes
+    * load jquery and jquery-countdown in Application to prevent JS errors
+    * make sure that gp is set in CPSelector
+    * add default constructor to RecordWidgetBase
+    * use Header instead of WPanel in CPWidget to prevent WTextEdit crash
+    * use Header instead of WText in *CreateWidget, UserWidget
+    * hide names of removed users and removed comments
+    * add links to User page from CompetitionWidget, GameCountdown, MainMenu
+    * escape " in usernames in DOT and PGN outputs
+    * add methods user.username20(), user.safe_username(), comment.safe_text()
+    * show message box Online in UserWidget
+    * integrate VirtualsWidget; show graph for one user or for all users
+    * GameListWidget and CompetitionListWidget for single user
+
 2012-08-10:
     * add widget SettingsWidget at /user/settings/
     * remove /user/update-password and the item from MainMenu
     * version 3.0.6. Cleanup and bugfix.
+    * print error message if no GP or CP were selected
 
 2012-08-08:
     * remove all layouts. Replace them with WTable or WContainerWidget
