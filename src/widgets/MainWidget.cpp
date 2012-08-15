@@ -173,15 +173,11 @@ void MainWidget::forum_post(const CommentPtr& post) {
 
 void MainWidget::forum_post_comment(const CommentPtr& comment) {
     CommentPtr post_text = comment->root();
-    if (post_text->type() == Comment::FORUM_POST_TEXT) {
-        set_contents(new CommentWidget(comment));
-    }
+    set_contents(new CommentWidget(comment));
 }
 
 void MainWidget::chat_comment(const CommentPtr& comment) {
-    if (comment->type() == Comment::CHAT_MESSAGE) {
-        set_contents(new ChatCommentWidget(comment));
-    }
+    set_contents(new ChatCommentWidget(comment));
 }
 
 Wt::Auth::AuthWidget* MainWidget::auth_widget() {
