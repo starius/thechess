@@ -76,7 +76,7 @@ public:
     void set_query(bool only_my = false) {
         CPListWidget::Q q = tApp->session().find<CP>();
         if (only_my) {
-            q.where("init_id = ?").bind(tApp->user().id());
+            q.where("init_id = ?").bind(tApp->user());
         }
         setQuery(q, /* keep_columns */ true);
     }

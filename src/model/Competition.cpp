@@ -158,7 +158,7 @@ UsersVector Competition::winners_vector() const {
 
 Games Competition::games_with(const UserPtr& user) const {
     return games_.find().where("white_id = ? or black_id = ?")
-           .bind(user.id()).bind(user.id());
+           .bind(user).bind(user);
 }
 
 GamesVector Competition::games_with(const UserPtr& user,

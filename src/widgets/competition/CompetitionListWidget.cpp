@@ -126,10 +126,10 @@ public:
         CLP::Q q = tApp->session().query<CLP::Result>(sql.str());
         q.groupBy("C");
         if (user) {
-            q.bind(user.id());
+            q.bind(user);
         }
         if (only_my) {
-            q.bind(tApp->user().id());
+            q.bind(tApp->user());
         }
         setQuery(q, /* keep_columns */ true);
     }

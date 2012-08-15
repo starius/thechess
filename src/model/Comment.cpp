@@ -84,7 +84,7 @@ void Comment::set_index() {
     typedef dbo::Query<CommentPtr> Query;
     Query family_desc = session()->find<Comment>();
     CommentPtr r = root() ? : parent_->root() ? : parent_;
-    family_desc.where("root_id = ?").bind(r.id());
+    family_desc.where("root_id = ?").bind(r);
     family_desc.where("id <> ?").bind(id()); // except me
     family_desc.orderBy("show_index desc");
     CommentPtr next;

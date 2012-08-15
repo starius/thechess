@@ -29,7 +29,7 @@ VirtualsWidget::VirtualsWidget(const UserPtr& user, Wt::WObject* parent):
     dbo::Transaction t(tApp->session());
     pairs_ = BD::pairs(tApp->session());
     pairs_.where("U.user_id = ? or V.user_id = ?")
-    .bind(user.id()).bind(user.id());
+    .bind(user).bind(user);
     setMimeType("image/png");
 }
 

@@ -70,7 +70,7 @@ public:
     void set_query(bool only_my = false) {
         GPListWidget::Q q = tApp->session().find<GP>();
         if (only_my) {
-            q.where("init_id = ?").bind(tApp->user().id());
+            q.where("init_id = ?").bind(tApp->user());
         }
         setQuery(q, /* keep_columns */ true);
     }
