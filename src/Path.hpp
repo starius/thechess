@@ -160,6 +160,11 @@ public:
         return post_comment_;
     }
 
+    /** Page of the post edit widget */
+    url::IntegerNode* forum_edit() const {
+        return forum_edit_;
+    }
+
     /** Page of comment  */
     url::IntegerNode* chat_comment() const {
         return chat_comment_;
@@ -193,6 +198,7 @@ private:
     url::PredefinedNode* all_posts_;
     url::IntegerNode* post_;
     url::IntegerNode* post_comment_;
+    url::IntegerNode* forum_edit_;
     url::IntegerNode* chat_comment_;
 
     void open_user();
@@ -205,6 +211,7 @@ private:
     void forum_topic_posts();
     void forum_post();
     void forum_post_comment();
+    void open_forum_edit();
     void open_chat_comment();
 };
 

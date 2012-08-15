@@ -96,6 +96,9 @@ public:
     /** View post comment */
     void forum_post_comment(const CommentPtr& comment);
 
+    /** Edit forum post */
+    void forum_edit(const CommentPtr& post_or_text);
+
     /** View chat comment */
     void chat_comment(const CommentPtr& comment);
 
