@@ -480,6 +480,7 @@ See locales-test manpage for more information.
     <message id='tc.game.List'>List of games</message>
     <message id='tc.game.Mistake_proposal'>{1} proposed to roll back game to position before move {2} {3}</message>
     <message id='tc.game.Mistake_propose'>Rollback</message>
+    <message id='tc.game.Move_confirmation'>Move confirmation</message>
     <message id='tc.game.moves_size'>#moves</message>
     <message id='tc.game.norating'>non-rating</message>
     <message id='tc.game.norating_false'>game result will affect members' rating</message>

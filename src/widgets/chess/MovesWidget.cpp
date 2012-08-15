@@ -11,13 +11,16 @@
 
 #include <Wt/WAbstractTableModel>
 #include <Wt/WApplication>
+#include <Wt/WMessageBox>
 #include <Wt/WTable>
 #include <Wt/WEnvironment>
 #include <Wt/WCssDecorationStyle>
 #include <Wt/WImage>
+#include <Wt/WBreak>
 #include <Wt/WLength>
 #include <Wt/WModelIndex>
 #include <Wt/WPushButton>
+#include <Wt/WCheckBox>
 #include <Wt/WString>
 #include <Wt/WTableView>
 
@@ -148,7 +151,7 @@ public:
     MovesWidgetImpl(const Moves& moves,
                     bool big, bool active, int max_moves,
                     bool append_only, Piece::Color bottom) :
-        Wt::WContainerWidget(), cached_moves_(moves),
+        Wt::WContainerWidget(), box_(0), cached_moves_(moves),
         current_move_(moves.size() - 1), max_moves_(max_moves),
         used_moves_(0), append_only_(append_only),
         active_(active), activated_(false) {
@@ -168,6 +171,9 @@ public:
         Wt::WPushButton* goto_last =
             new Wt::WPushButton(">>", board_widget_->inner());
         goto_last->clicked().connect(this, &MovesWidgetImpl::goto_last);
+        board_widget_->inner()->addWidget(new Wt::WBreak());
+        move_confirmation_ = new Wt::WCheckBox(tr("tc.game.Move_confirmation"),
+                                               board_widget_->inner());
         moves_model_ = new MovesModel(&cached_moves_, this);
         moves_table_view_ = new Wt::WTableView();
         columns->elementAt(0, 1)->addWidget(moves_table_view_);
@@ -187,6 +193,10 @@ public:
         moves_table_view_->setSelectionMode(Wt::SingleSelection);
         moves_table_view_->clicked().connect(this, &MovesWidgetImpl::onselect_);
         goto_move_(current_move_); // last half_move
+    }
+
+    ~MovesWidgetImpl() {
+        delete box_;
     }
 
     const Moves& moves() const {
@@ -237,10 +247,20 @@ public:
         move_select();
     }
 
+    bool move_confirmation() const {
+        return move_confirmation_->isChecked();
+    }
+
+    void set_move_confirmation(bool needed) {
+        move_confirmation_->setChecked(needed);
+    }
+
 private:
     BoardWidget* board_widget_;
     MovesModel* moves_model_;
     Wt::WTableView* moves_table_view_;
+    Wt::WCheckBox* move_confirmation_;
+    Wt::WMessageBox* box_;
     Wt::Signal<HalfMove> move_signal_;
 
     CachedMoves cached_moves_;
@@ -263,13 +283,42 @@ private:
         moves_model_->move_changed(n);
     }
 
+    void emit_move(const HalfMove& half_move) {
+        current_move_ += 1;
+        used_moves_ += 1;
+        reset_move_(current_move_, half_move);
+        goto_move_(current_move_);
+        move_signal_.emit(half_move);
+    }
+
     void onmove_(const HalfMove& half_move) {
         if (active()) {
-            current_move_ += 1;
-            used_moves_ += 1;
-            reset_move_(current_move_, half_move);
-            goto_move_(current_move_);
-            move_signal_.emit(half_move);
+            if (!move_confirmation()) {
+                emit_move(half_move);
+            } else if (!box_) {
+                box_ = new Wt::WMessageBox();
+                box_->setCaption(tr("tc.game.Move_confirmation"));
+                const Board& current = cached_moves_.board(current_move_ + 1);
+                Board next = current;
+                next.make_move(half_move);
+                box_->setText(half_move.san(current, next));
+                box_->setButtons(Wt::Ok | Wt::Cancel);
+                box_->setModal(false); // FIXME
+                box_->buttonClicked().connect(
+                    boost::bind(&MovesWidgetImpl::box_clicked,
+                                this, half_move, _1));
+                box_->show();
+            }
+        }
+    }
+
+    void box_clicked(HalfMove half_move, Wt::StandardButton button) {
+        if (box_) {
+            delete box_;
+            box_ = 0;
+            if (button == Wt::Ok) {
+                emit_move(half_move);
+            }
         }
     }
 
@@ -386,6 +435,14 @@ void MovesWidget::set_active(bool active) {
 
 int MovesWidget::current_move() const {
     return impl_->current_move();
+}
+
+bool MovesWidget::move_confirmation() const {
+    return impl_->move_confirmation();
+}
+
+void MovesWidget::set_move_confirmation(bool needed) {
+    impl_->set_move_confirmation(needed);
 }
 
 }

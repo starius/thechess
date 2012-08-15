@@ -39,6 +39,12 @@ public:
     void set_moves(const Moves& moves);
     void set_active(bool active);
 
+    /** Get if confirmation dialog is opened for each move */
+    bool move_confirmation() const;
+
+    /** Set if confirmation dialog is opened for each move */
+    void set_move_confirmation(bool needed = true);
+
 private:
     class MovesWidgetImpl;
 
