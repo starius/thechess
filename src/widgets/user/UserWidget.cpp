@@ -17,6 +17,7 @@
 #include "widgets/user/UserWidget.hpp"
 #include "widgets/user/RatingChanges.hpp"
 #include "widgets/game/GameCreateWidget.hpp"
+#include "widgets/user/user_anchor.hpp"
 #include "widgets/Header.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
@@ -39,6 +40,12 @@ public:
         }
         new Wt::WBreak(this);
         new Wt::WText(user_->classification_str(), this);
+        if (user_->classification_confirmed()) {
+            new Wt::WText(tr("tc.user.confirmed_by"), this);
+            user_anchor(user_->classification_confirmer(), this);
+        } else if (user_->classification() != NO_CLASSIFICATION) {
+            new Wt::WText(tr("tc.user.not_confirmed"), this);
+        }
         if (user_->can_confirm_classification(tApp->user())) {
             Wt::WPushButton* b = new Wt::WPushButton(this);
             if (user_->classification_confirmed()) {
