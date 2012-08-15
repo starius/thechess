@@ -20,6 +20,7 @@
 #include "widgets/comment/CommentList.hpp"
 #include "widgets/comment/CommentModel.hpp"
 #include "widgets/comment/remover_buttons.hpp"
+#include "widgets/user/user_anchor.hpp"
 #include "widgets/Header.hpp"
 #include "model/global.hpp"
 #include "Application.hpp"
@@ -142,9 +143,7 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
         UserPtr user = post_text->init();
         if (user) {
             new Wt::WText(" ", this);
-            Wt::WAnchor* user_anchor = new Wt::WAnchor(this);
-            user_anchor->setLink(tApp->path().user_view()->get_link(user.id()));
-            user_anchor->setText(user->safe_username());
+            user_anchor(user, this);
         }
         CommentPtr post = post_text->parent();
         if (post->edited() != post->created()) {

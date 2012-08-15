@@ -6,12 +6,12 @@
  */
 
 #include <Wt/WText>
-#include <Wt/WAnchor>
 #include <Wt/WPushButton>
 
 #include "widgets/comment/ChatCommentWidget.hpp"
 #include "widgets/comment/forum_comment_text.hpp"
 #include "widgets/comment/remover_buttons.hpp"
+#include "widgets/user/user_anchor.hpp"
 #include "widgets/Header.hpp"
 #include "Application.hpp"
 
@@ -26,9 +26,7 @@ ChatCommentWidget::ChatCommentWidget(const CommentPtr& comment) {
     new Wt::WText(forum_comment_text(comment), this);
     UserPtr user = comment->init();
     if (user) {
-        Wt::WAnchor* user_anchor = new Wt::WAnchor(this);
-        user_anchor->setLink(tApp->path().user_view()->get_link(user.id()));
-        user_anchor->setText(user->safe_username());
+        user_anchor(user, this);
     }
     add_remover_buttons(comment, this);
 }

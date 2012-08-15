@@ -25,6 +25,7 @@
 #include "widgets/competition/CompetitionWidget.hpp"
 #include "widgets/competition/StagedCompetitionGraph.hpp"
 #include "widgets/competition/CompetitionCreateWidget.hpp"
+#include "widgets/user/user_anchor.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
 #include "notify.hpp"
@@ -38,9 +39,7 @@ public:
         setList(true);
         BOOST_FOREACH (const UserPtr& user, c->members_vector()) {
             Wt::WContainerWidget* item = new Wt::WContainerWidget(this);
-            Wt::WAnchor* a = new Wt::WAnchor(item);
-            a->setText(user->safe_username());
-            a->setLink(tApp->path().user_view()->get_link(user->id()));
+            user_anchor(user, item);
         }
     }
 };
