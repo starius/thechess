@@ -22,6 +22,7 @@ class CompetitionWidget;
 class CPWidget;
 class CPListWidget;
 class CPSelector;
+class ForumEdit;
 class GameCountdown;
 class GameCreateWidget;
 class GameListWidget;
