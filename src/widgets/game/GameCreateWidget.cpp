@@ -28,7 +28,7 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
     dbo::Transaction t(tApp->session());
     new Header(tr("tc.game.Competitor")
                .arg(user->username()), this);
-    if (tApp->user()) {
+    if (tApp->user() && tApp->user()->has_permission(User::GAME_CREATOR)) {
         print();
     }
 }
@@ -36,7 +36,7 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
 GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :
     Wt::WContainerWidget(p), with_user_(false) {
     new Header(tr("tc.game.Challenge"), this);
-    if (tApp->user()) {
+    if (tApp->user() && tApp->user()->has_permission(User::GAME_CREATOR)) {
         print();
     }
 }
