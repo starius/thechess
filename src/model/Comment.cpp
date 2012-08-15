@@ -57,6 +57,17 @@ Comment::Type Comment::root_type(Comment::Type type) {
 Comment::State Comment::state_of_new(const UserPtr& user, Type type,
                                      const CommentPtr& parent) {
     if (user) {
+        if (type == CHAT_MESSAGE && !user->has_permission(User::CHAT_WRITER)) {
+            return DELETED;
+        }
+        if (type == FORUM_POST &&
+                !user->has_permission(User::FORUM_POST_CREATOR)) {
+            return DELETED;
+        }
+        if (type == FORUM_COMMENT &&
+                !user->has_permission(User::FORUM_COMMENT_CREATOR)) {
+            return DELETED;
+        }
         return OK;
     } else {
         return DRAFT;
