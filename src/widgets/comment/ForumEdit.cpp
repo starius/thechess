@@ -23,6 +23,9 @@ static void edit_comment(const CommentPtr& post_or_text,
     if (!post_or_text->can_edit(tApp->user())) {
         return;
     }
+    if (edit->valueText().empty()) {
+        return;
+    }
     post_or_text.modify()->set_text(edit->valueText());
     post_or_text.modify()->set_state(Comment::state_of_new(tApp->user(),
                                      Comment::FORUM_COMMENT, post_or_text));
