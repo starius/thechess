@@ -208,9 +208,9 @@ private:
     void open_game();
     void open_competition();
     void open_board();
-    void forum_topic_posts();
-    void forum_post();
-    void forum_post_comment();
+    void open_forum_topic_posts();
+    void open_forum_post();
+    void open_forum_post_comment();
     void open_forum_edit();
     void open_chat_comment();
 };

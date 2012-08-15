@@ -72,10 +72,10 @@ void Path::connect_main_widget(MainWidget* mw) {
     competition_new_->opened().connect(mw, &MainWidget::competition_new);
     board_->opened().connect(this, &Path::open_board);
     topics_->opened().connect(mw, &MainWidget::forum_topics);
-    topic_posts_->opened().connect(this, &Path::forum_topic_posts);
+    topic_posts_->opened().connect(this, &Path::open_forum_topic_posts);
     all_posts_->opened().connect(mw, &MainWidget::forum_all_posts);
-    post_->opened().connect(this, &Path::forum_post);
-    post_comment_->opened().connect(this, &Path::forum_post_comment);
+    post_->opened().connect(this, &Path::open_forum_post);
+    post_comment_->opened().connect(this, &Path::open_forum_post_comment);
     forum_edit_->opened().connect(this, &Path::open_forum_edit);
     chat_comment_->opened().connect(this, &Path::open_chat_comment);
 }
@@ -150,7 +150,7 @@ void Path::open_board() {
     main_widget_->board_view(board_->string());
 }
 
-void Path::forum_topic_posts() {
+void Path::open_forum_topic_posts() {
     BOOST_ASSERT(main_widget_);
     long long id = topic_posts_->integer();
     dbo::Transaction t(tApp->session());
@@ -161,7 +161,7 @@ void Path::forum_topic_posts() {
     t.commit();
 }
 
-void Path::forum_post() {
+void Path::open_forum_post() {
     BOOST_ASSERT(main_widget_);
     long long id = post_->integer();
     dbo::Transaction t(tApp->session());
@@ -172,7 +172,7 @@ void Path::forum_post() {
     t.commit();
 }
 
-void Path::forum_post_comment() {
+void Path::open_forum_post_comment() {
     BOOST_ASSERT(main_widget_);
     long long id = post_comment_->integer();
     dbo::Transaction t(tApp->session());
