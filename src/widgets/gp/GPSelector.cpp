@@ -29,11 +29,13 @@ GPSelector::GPSelector(Wt::WContainerWidget* p):
     setCentralWidget(c);
     new Wt::WText(tr("tc.common.Select_or_create"), c);
     list_ = new GPListWidget();
-    new_cont_ = new Wt::WContainerWidget();
-    new_ = new GPWidget(0, new_cont_);
     tab_ = new Wt::WTabWidget(c);
     tab_->addTab(list_, tr("tc.common.Select_existing"));
-    tab_->addTab(new_cont_, tr("tc.common.Create_new"));
+    if (tApp->user() && tApp->user()->has_permission(User::GP_CREATOR)) {
+        new_cont_ = new Wt::WContainerWidget();
+        new_ = new GPWidget(0, new_cont_);
+        tab_->addTab(new_cont_, tr("tc.common.Create_new"));
+    }
     tab_->currentChanged().connect(this, &GPSelector::tab_handler);
 }
 
