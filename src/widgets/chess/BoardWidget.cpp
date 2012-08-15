@@ -68,8 +68,10 @@ public:
 
 private:
     PieceStat taken_stat_;
+    int row_size_;
 
     void print_color_(Piece::Color color) {
+        row_size_ = 0;
         print_piece_(color, Piece::QUEEN);
         print_piece_(color, Piece::ROOK);
         print_piece_(color, Piece::KNIGHT);
@@ -81,6 +83,11 @@ private:
         int c = full_stat.stat[color][letter] - taken_stat_.stat[color][letter];
         for (int i = 0; i < c; i++) {
             new Wt::WImage(BoardWidget::image(Piece(color, letter)), this);
+            row_size_ += 1;
+            if (row_size_ == 8) {
+                row_size_ = 0;
+                new Wt::WBreak(this);
+            }
         }
     }
 };
