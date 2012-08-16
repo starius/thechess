@@ -38,6 +38,7 @@ class MyGamesList;
 class PgnResource;
 class RatingChanges;
 class RecordWidgetBase;
+class RightsEdit;
 class SettingsWidget;
 class StagedCompetitionGraph;
 class UserWidget;
