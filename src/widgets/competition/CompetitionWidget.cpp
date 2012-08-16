@@ -358,6 +358,9 @@ public:
                 change->clicked()
                 .connect(this, &CompetitionManager::show_change_widget);
             }
+            if (c->can_cancel(tApp->user())) {
+                button_<&Competition::cancel>("tc.common.Cancel");
+            }
         }
         if (c->has_virtuals()) {
             new Wt::WBreak(this);
