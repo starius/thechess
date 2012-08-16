@@ -13,6 +13,7 @@
 #include <Wt/WAnchor>
 #include <Wt/WBreak>
 #include <Wt/WText>
+#include <Wt/WPanel>
 
 #include "widgets/user/UserWidget.hpp"
 #include "widgets/user/RatingChanges.hpp"
@@ -112,6 +113,7 @@ public:
         a->setLink(tApp->path().competitions_of_user()->link());
         a->setText(tr("tc.competition.List"));
         new Wt::WBreak(this);
+        print_rights();
     }
 
 private:
@@ -162,6 +164,26 @@ private:
         }
         t.commit();
         tApp->path().open(tApp->internalPath());
+    }
+
+    void print_right(User::Rights right, Wt::WContainerWidget* p) {
+        if (user_->has_permission(right)) {
+            Wt::WContainerWidget* item = new Wt::WContainerWidget(p);
+            item->addWidget(new Wt::WText(tr(User::right_to_str(right))));
+        }
+    }
+
+    void print_rights() {
+        Wt::WPanel* panel = new Wt::WPanel(this);
+        panel->setCollapsible(true);
+        panel->collapse();
+        panel->setTitle(tr("tc.user.List_rights"));
+        panel->setWidth(300);
+        Wt::WContainerWidget* p = new Wt::WContainerWidget();
+        p->setList(true);
+        panel->setCentralWidget(p);
+        User::for_each_right(boost::bind(&UserWidgetImpl::print_right,
+                                         this, _1, p));
     }
 };
 
