@@ -99,8 +99,9 @@ void VirtualsWidget::initialize(const dbo::Query<BD::BDPair>& pairs) {
     VirtualsResource* res = new VirtualsResource(pairs, this);
     Wt::WSlider* min_score = new Wt::WSlider(this);
     Wt::WText* t = new Wt::WText(this);
-    min_score->setMinimum(20);
-    min_score->setMaximum(250);
+    min_score->setMinimum(10);
+    min_score->setMaximum(1000);
+    min_score->setWidth(600);
     min_score->setValue(Wt::Wc::Gather::MIN_SIGNIFICANT);
     min_score->valueChanged().connect(res, &VirtualsResource::set_min_score);
     min_score->valueChanged().connect(boost::bind(update_text, t, min_score));
