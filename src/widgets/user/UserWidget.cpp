@@ -32,6 +32,7 @@ public:
     UserWidgetImpl(const UserPtr& user) :
         Wt::WContainerWidget(), user_(user) {
         dbo::Transaction t(tApp->session());
+        user_.reread();
         new Header(user_->username(), this);
         if (user_->online()) {
             new Wt::WText(tr("tc.user.Online"), this);
