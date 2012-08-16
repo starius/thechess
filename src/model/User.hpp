@@ -81,7 +81,7 @@ public:
         /** Right to confirm user classification */
         CLASSIFICATION_CONFIRMER = BOOST_BINARY(00100000 00000000 00000000),
 
-        /** Right to change competition and kick users from them */
+        /** Right to change or cancel competition or kick users from them */
         COMPETITION_CHANGER = BOOST_BINARY(01000000 00000000 00000000),
 
         /** Right to (un)remove a user */

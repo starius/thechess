@@ -259,7 +259,8 @@ bool Competition::can_change_parameters(const UserPtr& user) const {
 
 bool Competition::can_cancel(const UserPtr& user) const {
     return state_ == RECRUITING &&
-           user == init();
+           user &&
+           (user == init() || user->has_permission(User::COMPETITION_CHANGER));
 }
 
 void Competition::cancel(const UserPtr& user) {
