@@ -41,7 +41,7 @@ static void add_comment(const CommentPtr& comment, Wt::WTextEdit* edit) {
 
 ForumCommentWidget::ForumCommentWidget(const CommentPtr& comment) {
     dbo::Transaction t(tApp->session());
-    if (comment->type() != Comment::FORUM_POST_TEXT) {
+    if (comment->type() != Comment::FORUM_COMMENT) {
         return;
     }
     new Header(tr("tc.forum.Comment"), this);
