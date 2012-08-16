@@ -7,6 +7,7 @@
 
 #include <cstdlib>
 #include <algorithm>
+#include <sstream>
 #include <boost/foreach.hpp>
 
 #include <Wt/Wc/rand.hpp>
@@ -190,6 +191,25 @@ GamesTable Competition::games_table() const {
     return result;
 }
 
+bool Competition::has_virtuals() const {
+    std::stringstream ids_stream;
+    bool first = true;
+    BOOST_FOREACH (UserPtr user, members_vector()) {
+        if (!first) {
+            ids_stream << ",";
+        }
+        first = false;
+        ids_stream << user.id();
+    }
+    std::string ids = ids_stream.str();
+    dbo::Query<BD::BDPair> pairs = BD::pairs(*session());
+    pairs.where("U.user_id in (" + ids + ") and V.user_id in (" + ids + ")");
+    BD::Scores scores;
+    BD::scores(pairs, scores);
+    BD::filter(scores);
+    return !scores.empty();
+}
+
 bool Competition::can_join(const UserPtr& user) const {
     return state_ == RECRUITING &&
            user && !is_member(user) &&
@@ -252,6 +272,17 @@ void Competition::cancel() {
     state_ = CANCELLED;
 }
 
+bool Competition::can_allow_virtuals(const UserPtr& user) const {
+    return state_ == RECRUITING && user && !virtual_allower() &&
+           user->has_permission(User::VIRTUALS_ALLOWER);
+}
+
+void Competition::allow_virtuals(const UserPtr& user) {
+    if (can_allow_virtuals(user)) {
+        virtual_allower_ = user;
+    }
+}
+
 bool Competition::can_start() const {
     bool result = false;
     if (state_ == RECRUITING) {
@@ -259,6 +290,9 @@ bool Competition::can_start() const {
             if (static_cast<int>(members_.size()) >= cp_->min_users() &&
                     now() - created() >= cp_->min_recruiting_time()) {
                 result = true;
+                if (!virtual_allower_ && has_virtuals()) {
+                    result = false;
+                }
             }
         }
     }

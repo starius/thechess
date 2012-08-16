@@ -177,6 +177,9 @@ public:
     */
     GamesVector games_with(const UserPtr& user, GamesTable& gt) const;
 
+    /** Return if there are virtuals among competition members */
+    bool has_virtuals() const;
+
     /* @} */
 
     /** \name Checking */
@@ -232,6 +235,17 @@ public:
 
     /** Try to cancel the competition by the user */
     void cancel(const UserPtr& user);
+
+    /** Return if the user can allow virtuals in the competitions */
+    bool can_allow_virtuals(const UserPtr& user) const;
+
+    /** Try to allow virtuals in the competitions by the user */
+    void allow_virtuals(const UserPtr& user);
+
+    /** Return the user allowed virtuals */
+    const UserPtr& virtual_allower() const {
+        return virtual_allower_;
+    }
 
     /* @} */
 
