@@ -37,7 +37,7 @@ CPWidget::CPWidget(const CP* cp, bool allow_change_type,
     type_ = new Wt::WComboBox();
     type_->addItem(Competition::type2str(CLASSICAL));
     type_->addItem(Competition::type2str(STAGED));
-    type_->addItem(Competition::type2str(TEAM));
+    // TODO type_->addItem(Competition::type2str(TEAM));
     cell = form_->item(tr("tc.competition.Type"), "", type_, type_);
     set_type_(cp->type());
     if (allow_change_type) {
@@ -195,7 +195,7 @@ void CPWidget::set_type_(CompetitionType t) {
     } else if (t == STAGED) {
         type_->setCurrentIndex(1);
     } else if (t == TEAM) {
-        type_->setCurrentIndex(2);
+        // TODO type_->setCurrentIndex(2);
     }
 }
 
