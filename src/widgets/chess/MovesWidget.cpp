@@ -377,7 +377,7 @@ private:
     }
 
     void history_select() {
-        //FIXME - wron row is shown
+        //FIXME - wrong row is shown
         Wt::WModelIndex index = moves_model_->n2index(current_move_);
         // FIXME http://redmine.emweb.be/issues/1380
         // moves_table_view_->scrollTo(index);
