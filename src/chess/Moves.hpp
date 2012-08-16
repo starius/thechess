@@ -258,12 +258,12 @@ private:
 
     byte q(int i) const;
 
-    Square square_(int i) const;
-    Square square_(int n, SquareType square_type) const;
-    void square_(int i, Square square);
-    void square_(int n, SquareType square_type, Square square);
+    Square square(int i) const;
+    Square square(int n, SquareType square_type) const;
+    void square(int i, Square square);
+    void square(int n, SquareType square_type, Square square);
 
-    void set_half_move_(int n, HalfMove half_move);
+    void set_half_move(int n, HalfMove half_move);
     friend void run_tests();
 };
 

@@ -134,13 +134,13 @@ private:
             if (anchors_.find(game.id()) == anchors_.end()) {
                 MyGameAnchor* a = new MyGameAnchor(game, this);
                 a->clicked().connect(this, &MyGamesListImp::click_handler);
-                insert_anchor_(a, game->state());
+                insert_anchor(a, game->state());
                 anchors_[game.id()] = a;
             }
         }
     }
 
-    Game::State state_of_(MyGameAnchor* a) const {
+    Game::State state_of(MyGameAnchor* a) const {
         int index = indexOf(a);
         for (int i = ORDER_OF_STATES_SIZE - 1; i >= 0; i--)
             if (index >= first_of_state_[i]) {
@@ -149,7 +149,7 @@ private:
         return Game::MIN_ENDED;
     }
 
-    void insert_anchor_(MyGameAnchor* a, Game::State state) {
+    void insert_anchor(MyGameAnchor* a, Game::State state) {
         bool inserted = false;
         for (int i = 0; i < ORDER_OF_STATES_SIZE; i++) {
             if (ORDER_OF_STATES[i] == state) {
@@ -161,7 +161,7 @@ private:
         }
     }
 
-    void extract_anchor_(MyGameAnchor* a) {
+    void extract_anchor(MyGameAnchor* a) {
         int index = indexOf(a);
         removeWidget(a);
         for (int i = 0; i < ORDER_OF_STATES_SIZE; i++)
@@ -170,18 +170,18 @@ private:
             }
     }
 
-    void anchor_notify_handler_(MyGameAnchor* a) {
+    void anchor_notify_handler(MyGameAnchor* a) {
         a->excite();
         dbo::Transaction t(tApp->session());
         int game_id = a->game_id();
         GamePtr game = tApp->session().load<Game>(game_id, /* reread */ true);
         if (game->state() > Game::MIN_ENDED) {
-            extract_anchor_(a);
+            extract_anchor(a);
             anchors_.erase(game_id);
             delete a;
-        } else if (state_of_(a) != game->state()) {
-            extract_anchor_(a);
-            insert_anchor_(a, game->state());
+        } else if (state_of(a) != game->state()) {
+            extract_anchor(a);
+            insert_anchor(a, game->state());
             a->style_by_state(game->state());
         }
     }
@@ -205,7 +205,7 @@ private:
 };
 
 void MyGameAnchor::notify(EventPtr) {
-    list_->anchor_notify_handler_(this);
+    list_->anchor_notify_handler(this);
 }
 
 MyGamesList::MyGamesList(const UserPtr& user, Wt::WContainerWidget* p):

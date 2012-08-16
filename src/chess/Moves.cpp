@@ -25,7 +25,7 @@ Moves::Moves()
 Moves::Moves(HalfMove moves[], int size) :
     svuc_(size, '\0') {
     for (int i = 0; i < size; i++) {
-        set_half_move_(i, moves[i]);
+        set_half_move(i, moves[i]);
     }
 }
 
@@ -33,7 +33,7 @@ Moves::byte Moves::q(int i) const {
     return svuc_[i];
 }
 
-Square Moves::square_(int i) const {
+Square Moves::square(int i) const {
     /*
      0000 0000    0000 0000    0000 0000
      0      1          2         3
@@ -53,7 +53,7 @@ Square Moves::square_(int i) const {
     }
 }
 
-void Moves::square_(int i, Square square) {
+void Moves::square(int i, Square square) {
     int first = (i * 6) / 8;
     int mod_i = i % 4;
     if (mod_i == 0) {
@@ -75,17 +75,17 @@ void Moves::square_(int i, Square square) {
     }
 }
 
-Square Moves::square_(int n, SquareType square_type) const {
-    return square_(n * 2 + (int)square_type);
+Square Moves::square(int n, SquareType square_type) const {
+    return square(n * 2 + (int)square_type);
 }
 
-void Moves::square_(int n, Moves::SquareType square_type, Square square) {
-    square_(n * 2 + (int)square_type, square);
+void Moves::square(int n, Moves::SquareType square_type, Square square) {
+    this->square(n * 2 + (int)square_type, square);
 }
 
-void Moves::set_half_move_(int n, HalfMove half_move) {
-    square_(n, SQUARE_FROM, half_move.from());
-    square_(n, SQUARE_TO, half_move.packed_to());
+void Moves::set_half_move(int n, HalfMove half_move) {
+    square(n, SQUARE_FROM, half_move.from());
+    square(n, SQUARE_TO, half_move.packed_to());
 }
 
 int Moves::size() const {
@@ -102,7 +102,7 @@ void Moves::push(HalfMove half_move) {
         // adding half_move by black
         svuc_.push_back('\0');
     }
-    set_half_move_(current_size, half_move);
+    set_half_move(current_size, half_move);
 }
 
 void Moves::pop() {
@@ -129,11 +129,11 @@ void Moves::reset_half_move(int n, HalfMove half_move) {
 }
 
 HalfMove Moves::half_move(int n, const Board& board) const {
-    return HalfMove(square_(n, SQUARE_FROM), square_(n, SQUARE_TO), board);
+    return HalfMove(square(n, SQUARE_FROM), square(n, SQUARE_TO), board);
 }
 
 HalfMove Moves::half_move(int n) const {
-    return HalfMove(square_(n, SQUARE_FROM), square_(n, SQUARE_TO));
+    return HalfMove(square(n, SQUARE_FROM), square(n, SQUARE_TO));
 }
 
 Board Moves::board(int n) const {

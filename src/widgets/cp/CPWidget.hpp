@@ -60,7 +60,7 @@ private:
 
     void type_handler();
     CompetitionType get_type() const;
-    void set_type_(CompetitionType t);
+    void set_type(CompetitionType t);
 };
 
 }

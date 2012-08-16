@@ -78,25 +78,25 @@ public:
 
     TakenPiecesImpl(const Board& board):
         Wt::WContainerWidget(), taken_stat_(board) {
-        print_color_(Piece::WHITE);
+        print_color(Piece::WHITE);
         new Wt::WBreak(this);
-        print_color_(Piece::BLACK);
+        print_color(Piece::BLACK);
     }
 
 private:
     TakenPieceStat taken_stat_;
     int row_size_;
 
-    void print_color_(Piece::Color color) {
+    void print_color(Piece::Color color) {
         row_size_ = 0;
-        print_piece_(color, Piece::QUEEN);
-        print_piece_(color, Piece::ROOK);
-        print_piece_(color, Piece::KNIGHT);
-        print_piece_(color, Piece::BISHOP);
-        print_piece_(color, Piece::PAWN);
+        print_piece(color, Piece::QUEEN);
+        print_piece(color, Piece::ROOK);
+        print_piece(color, Piece::KNIGHT);
+        print_piece(color, Piece::BISHOP);
+        print_piece(color, Piece::PAWN);
     }
 
-    void print_piece_(Piece::Color color, Piece::Letter letter) {
+    void print_piece(Piece::Color color, Piece::Letter letter) {
         int c = taken_stat_.stat[color][letter];
         for (int i = 0; i < c; i++) {
             new Wt::WImage(BoardWidget::image(Piece(color, letter)), this);
@@ -258,12 +258,12 @@ private:
 
     Wt::Signal<HalfMove> move_;
 
-    void color_black_white_(Wt::WImage* img) {
+    void color_black_white(Wt::WImage* img) {
         img->decorationStyle().setBackgroundColor(Wt::WColor());
     }
 
-    void color_black_white_(Square square) {
-        color_black_white_(image_at(square));
+    void color_black_white(Square square) {
+        color_black_white(image_at(square));
     }
 
     void color_noactive() {
@@ -281,11 +281,11 @@ private:
 
     void color_noactive_undo() {
         if (lastmove_show_ && lastmove_) {
-            color_black_white_(lastmove_.from());
-            color_black_white_(lastmove_.to());
+            color_black_white(lastmove_.from());
+            color_black_white(lastmove_.to());
         }
         if (shah_square_) {
-            color_black_white_(shah_square_);
+            color_black_white(shah_square_);
         }
     }
 
@@ -343,14 +343,14 @@ private:
     }
 
     void modify_to_undo() {
-        color_black_white_();
+        color_black_white();
     }
 
-    void color_black_white_() {
+    void color_black_white() {
         THECHESS_SQUARE_FOREACH (square) {
             Wt::WImage* img = image_at(square);
             img->decorationStyle().setCursor(Wt::ArrowCursor);
-            color_black_white_(img);
+            color_black_white(img);
         }
     }
 
@@ -375,7 +375,7 @@ private:
         }
     }
 
-    void onclick_(Square square) {
+    void onclick(Square square) {
         if (select_turn_into_flag_) {
             return;
         }
@@ -391,15 +391,15 @@ private:
             from_ = square;
             modify();
         } else if (from_) {
-            try_move_(HalfMove(from_, square));
+            try_move(HalfMove(from_, square));
         }
     }
 
-    void try_move_(const HalfMove half_move) {
+    void try_move(const HalfMove half_move) {
         if (board_.test_move(half_move)) {
             if (half_move.could_turn_into(board_)) {
                 select_turn_into_flag_ = true;
-                print_select_(half_move);
+                print_select(half_move);
                 return;
             } else {
                 move_.emit(half_move);
@@ -411,7 +411,7 @@ private:
         }
     }
 
-    void print_select_(HalfMove half_move) {
+    void print_select(HalfMove half_move) {
         static Piece::Letter cc[] =
         { Piece::QUEEN, Piece::ROOK, Piece::BISHOP, Piece::KNIGHT };
         BOOST_FOREACH (Piece::Letter c, cc) {
@@ -419,7 +419,7 @@ private:
             std::string path = BoardWidget::image(cm, big_);
             Wt::WImage* img = new Wt::WImage(path, select_turn_into_);
             img->clicked().connect(boost::bind(
-                                       &BoardWidgetImpl::select_onclick_,
+                                       &BoardWidgetImpl::select_onclick,
                                        this, c, half_move));
             img->decorationStyle().setCursor(Wt::PointingHandCursor);
         }
@@ -430,7 +430,7 @@ private:
         select_turn_into_flag_ = false;
     }
 
-    void select_onclick_(Piece::Letter letter, HalfMove half_move) {
+    void select_onclick(Piece::Letter letter, HalfMove half_move) {
         if (!active_) {
             return;
         }
@@ -490,7 +490,7 @@ void DnDPiece::activate() {
     setDraggable("letter", bwi_->draggable_);
     acceptDrops("letter");
     if (wApp->environment().ajax()) {
-        mouseWentDown().connect(boost::bind(&BoardWidgetImpl::onclick_,
+        mouseWentDown().connect(boost::bind(&BoardWidgetImpl::onclick,
                                             bwi_, square_));
         std::string js_id = bwi_->draggable_->jsRef();
         mouseWentDown().connect(
@@ -498,7 +498,7 @@ void DnDPiece::activate() {
             "$(" + js_id + ").attr('src', $(sender).attr('src'));"
             "}");
     } else {
-        clicked().connect(boost::bind(&BoardWidgetImpl::onclick_,
+        clicked().connect(boost::bind(&BoardWidgetImpl::onclick,
                                       bwi_, square_));
     }
 }
@@ -506,7 +506,7 @@ void DnDPiece::activate() {
 void DnDPiece::dropEvent(Wt::WDropEvent dropEvent) {
     DnDPiece* source = downcast<DnDPiece*>(dropEvent.source());
     if (source->square_ != square_) {
-        bwi_->try_move_(HalfMove(source->square_, square_));
+        bwi_->try_move(HalfMove(source->square_, square_));
     }
     doJavaScript("$(" + bwi_->draggable_->jsRef() + ").hide();");
 }

@@ -571,27 +571,27 @@ private:
 
     CommentPtr comment_base_;
 
-    void set_white_(const UserPtr& user) {
+    void set_white(const UserPtr& user) {
         white_ = user;
     }
-    void set_black_(const UserPtr& user) {
+    void set_black(const UserPtr& user) {
         black_ = user;
     }
-    void set_of_color_(const UserPtr& user, Piece::Color color);
-    void set_random_(const UserPtr& user1, const UserPtr& user2);
+    void set_of_color(const UserPtr& user, Piece::Color color);
+    void set_random(const UserPtr& user1, const UserPtr& user2);
 
     void confirm();
     void start();
     void stop_pause();
-    void finish_(State state, const UserPtr& winner = UserPtr());
+    void finish(State state, const UserPtr& winner = UserPtr());
     void elo_change();
 
-    void push_move_(HalfMove half_move);
-    void pop_moves_(int number);
+    void push_move(HalfMove half_move);
+    void pop_moves(int number);
 
     const char* pgn_termination() const;
-    void pgn_init_moves_(std::ostream& out) const;
-    void pgn_additional_(std::ostream& out) const;
+    void pgn_init_moves(std::ostream& out) const;
+    void pgn_additional(std::ostream& out) const;
 };
 
 }

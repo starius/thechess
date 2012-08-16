@@ -53,7 +53,7 @@ bool HalfMove::could_turn_into(const Board& board) const {
            (to().rank() == Square::RANK_1 || to().rank() == Square::RANK_8);
 }
 
-std::string HalfMove::san_from_(const Board& board) const {
+std::string HalfMove::san_from(const Board& board) const {
     Piece::Letter letter = board.letter(from());
     if (letter == Piece::PAWN && board.test_takes(*this)) {
         return char2str(from().file_char());
@@ -105,7 +105,7 @@ std::string HalfMove::san(const Board& board, const Board& board_after,
         if (!skip_pieces && letter != Piece::PAWN) {
             result += Piece::piece_char(letter);
         }
-        result += san_from_(board);
+        result += san_from(board);
         if (board.test_takes(*this)) {
             result += 'x';
         }

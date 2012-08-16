@@ -56,31 +56,31 @@ protected:
     void add_items(Wt::WContainerWidget* result) {
         dbo::Transaction t(tApp->session());
         result->setList(true);
-        kw_(game_->str_state(), "tc.game.State", result);
-        user_(game_->white(), "tc.game.white", result);
-        user_(game_->black(), "tc.game.black", result);
-        user_(game_->order_user(), "tc.game.order_user", result);
-        user_(game_->init(), "tc.game.init", result);
-        kw_(tr(game_->colors_random() ? "tc.game.colors_random" :
-               "tc.game.colors_not_random"), "tc.game.colors", result);
-        user_(game_->winner(), "tc.common.winner", result);
-        time_(game_->created(), "tc.common.created", result);
-        time_(game_->confirmed(), "tc.game.confirmed", result);
-        time_(game_->started(), "tc.game.started", result);
-        time_(game_->lastmove(), "tc.game.lastmove", result);
-        time_(game_->pause_until(), "tc.game.pause_until", result);
-        time_(game_->ended(), "tc.game.ended", result);
+        kw(game_->str_state(), "tc.game.State", result);
+        user(game_->white(), "tc.game.white", result);
+        user(game_->black(), "tc.game.black", result);
+        user(game_->order_user(), "tc.game.order_user", result);
+        user(game_->init(), "tc.game.init", result);
+        kw(tr(game_->colors_random() ? "tc.game.colors_random" :
+              "tc.game.colors_not_random"), "tc.game.colors", result);
+        user(game_->winner(), "tc.common.winner", result);
+        time(game_->created(), "tc.common.created", result);
+        time(game_->confirmed(), "tc.game.confirmed", result);
+        time(game_->started(), "tc.game.started", result);
+        time(game_->lastmove(), "tc.game.lastmove", result);
+        time(game_->pause_until(), "tc.game.pause_until", result);
+        time(game_->ended(), "tc.game.ended", result);
         if (game_->is_ended()) {
-            bool_(game_->real_rating(), "tc.game.real_rating_true",
-                  "tc.game.real_rating_false", result);
+            bool_item(game_->real_rating(), "tc.game.real_rating_true",
+                      "tc.game.real_rating_false", result);
         } else {
-            bool_(game_->gp()->norating(), "tc.game.norating_true",
-                  "tc.game.norating_false", result);
+            bool_item(game_->gp()->norating(), "tc.game.norating_true",
+                      "tc.game.norating_false", result);
         }
         if (!game_->is_ended()) {
-            item_(Wt::WString::trn("tc.game.First_draw",
-                                   game_->gp()->first_draw() / 2)
-                  .arg(game_->gp()->first_draw() / 2), result);
+            item(Wt::WString::trn("tc.game.First_draw",
+                                  game_->gp()->first_draw() / 2)
+                 .arg(game_->gp()->first_draw() / 2), result);
         }
         const CompetitionPtr& c = game_->competition();
         if (c) {
@@ -92,46 +92,46 @@ protected:
             a->setLink(tApp->path().competition_view()->get_link(c.id()));
         }
         if (game_->state() == Game::CONFIRMED && c) {
-            time_(game_->confirmed() + c->cp()->force_start_delay(),
-                  "tc.game.force_start", result);
+            time(game_->confirmed() + c->cp()->force_start_delay(),
+                 "tc.game.force_start", result);
         }
         if (game_->state() == Game::PROPOSED && c &&
                 c->type() == STAGED) {
-            time_(game_->created() + c->cp()->relax_time(),
-                  "tc.game.force_confirm", result);
+            time(game_->created() + c->cp()->relax_time(),
+                 "tc.game.force_confirm", result);
         }
     }
 
 private:
     GamePtr game_;
 
-    void item_(const Wt::WString& text, Wt::WContainerWidget* r) {
+    void item(const Wt::WString& text, Wt::WContainerWidget* r) {
         Wt::WContainerWidget* li = new Wt::WContainerWidget(r);
         new Wt::WText(text, li);
     }
 
-    void kw_(const Wt::WString& s, const char* tr_id,
-             Wt::WContainerWidget* r) {
-        item_(tr("tc.common.kw").arg(tr(tr_id)).arg(s), r);
+    void kw(const Wt::WString& s, const char* tr_id,
+            Wt::WContainerWidget* r) {
+        item(tr("tc.common.kw").arg(tr(tr_id)).arg(s), r);
     }
 
-    void time_(const Wt::WDateTime& dt, const char* tr_id,
-               Wt::WContainerWidget* r) {
+    void time(const Wt::WDateTime& dt, const char* tr_id,
+              Wt::WContainerWidget* r) {
         if (dt.isValid()) {
-            kw_(dt.toString(), tr_id, r);
+            kw(dt.toString(), tr_id, r);
         }
     }
 
-    void user_(const UserPtr& user, const char* tr_id,
-               Wt::WContainerWidget* r) {
+    void user(const UserPtr& user, const char* tr_id,
+              Wt::WContainerWidget* r) {
         if (user) {
-            kw_(user->safe_username(), tr_id, r);
+            kw(user->safe_username(), tr_id, r);
         }
     }
 
-    void bool_(const bool value, const char* true_id, const char* false_id,
-               Wt::WContainerWidget* r) {
-        item_(tr(value ? true_id : false_id), r);
+    void bool_item(const bool value, const char* true_id, const char* false_id,
+                   Wt::WContainerWidget* r) {
+        item(tr(value ? true_id : false_id), r);
     }
 };
 
@@ -154,7 +154,7 @@ public:
         moves_widget_ = new MovesWidget(moves, big, active, max_moves,
                                         append_only, bottom, this);
         moves_widget_->half_move()
-        .connect(this, &GameWidgetImpl::move_handler_);
+        .connect(this, &GameWidgetImpl::move_handler);
         countdown_ = new GameCountdown(game_, this);
         manager_ = new Wt::WContainerWidget(this);
         comment_container_ = new Wt::WContainerWidget(this);
@@ -199,7 +199,7 @@ private:
     GameCountdown* countdown_;
     Wt::WContainerWidget* comment_container_;
 
-    void move_handler_(const HalfMove& half_move) {
+    void move_handler(const HalfMove& half_move) {
         dbo::Transaction t(tApp->session());
         game_.reread();
         int game_size = game_->moves().size();
@@ -303,7 +303,7 @@ private:
             b = new Wt::WPushButton(tr("tc.game.Pause_propose"),
                                     manager_);
             b->clicked().connect(boost::bind(
-                                     &GameWidgetImpl::pause_propose_,
+                                     &GameWidgetImpl::pause_propose,
                                      this, pause_duration));
         }
     }
@@ -380,7 +380,7 @@ private:
         b->clicked().connect(this, &GameWidgetImpl::action<method>);
     }
 
-    void pause_propose_(Wt::Wc::TimeDurationWidget* pause_duration) {
+    void pause_propose(Wt::Wc::TimeDurationWidget* pause_duration) {
         dbo::Transaction t(tApp->session());
         game_.reread();
         game_.modify()
@@ -421,7 +421,7 @@ private:
         delete sender();
     }
 
-    void comment_handler_(const Wt::WString& text) {
+    void comment_handler(const Wt::WString& text) {
         dbo::Transaction t(tApp->session());
         game_.reread();
         game_.modify()->set_comment(tApp->user(), text);
@@ -439,7 +439,7 @@ private:
                 new Wt::WInPlaceEdit(game_->comment(), comment_container_);
             comment->setEmptyText(tr("tc.game.comment_welcome"));
             comment->valueChanged().connect(this,
-                                            &GameWidgetImpl::comment_handler_);
+                                            &GameWidgetImpl::comment_handler);
         } else {
             new Wt::WText(game_->comment(), comment_container_);
         }

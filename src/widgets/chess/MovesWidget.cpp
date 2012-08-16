@@ -191,8 +191,8 @@ public:
         moves_table_view_->setColumnWidth(0, N_COLUMN_WIDTH);
         moves_table_view_->setSelectionBehavior(Wt::SelectItems);
         moves_table_view_->setSelectionMode(Wt::SingleSelection);
-        moves_table_view_->clicked().connect(this, &MovesWidgetImpl::onselect_);
-        goto_move_(current_move_); // last half_move
+        moves_table_view_->clicked().connect(this, &MovesWidgetImpl::onselect);
+        goto_move(current_move_); // last half_move
     }
 
     ~MovesWidgetImpl() {
@@ -219,8 +219,8 @@ public:
         int i = cached_moves_.size() - 1;
         if (i == -1 || half_move != cached_moves_.half_move(i)) {
             int n = cached_moves_.size();
-            reset_move_(n, half_move);
-            goto_move_(n);
+            reset_move(n, half_move);
+            goto_move(n);
         }
     }
 
@@ -230,7 +230,7 @@ public:
 
     void reset() {
         cached_moves_ = CachedMoves();
-        goto_move_(-1);
+        goto_move(-1);
         moves_model_->move_changed(0);
     }
 
@@ -238,7 +238,7 @@ public:
         cached_moves_ = CachedMoves(moves);
         current_move_ = cached_moves_.size() - 1;
         moves_model_->move_changed(0);
-        goto_move_(current_move_);
+        goto_move(current_move_);
     }
 
     void set_active(bool active) {
@@ -274,11 +274,11 @@ private:
     void check_activate() {
         if (!activated_ && this->active()) {
             activated_ = true;
-            board_widget_->half_move().connect(this, &MovesWidgetImpl::onmove_);
+            board_widget_->half_move().connect(this, &MovesWidgetImpl::onmove);
         }
     }
 
-    void reset_move_(int n, const HalfMove& half_move) {
+    void reset_move(int n, const HalfMove& half_move) {
         cached_moves_.reset_half_move(n, half_move);
         moves_model_->move_changed(n);
     }
@@ -286,12 +286,12 @@ private:
     void emit_move(const HalfMove& half_move) {
         current_move_ += 1;
         used_moves_ += 1;
-        reset_move_(current_move_, half_move);
-        goto_move_(current_move_);
+        reset_move(current_move_, half_move);
+        goto_move(current_move_);
         move_signal_.emit(half_move);
     }
 
-    void onmove_(const HalfMove& half_move) {
+    void onmove(const HalfMove& half_move) {
         if (active()) {
             if (!move_confirmation()) {
                 emit_move(half_move);
@@ -322,7 +322,7 @@ private:
         }
     }
 
-    void onselect_(const Wt::WModelIndex& index) {
+    void onselect(const Wt::WModelIndex& index) {
         int n = moves_model_->index2n(index);
         if (n == -2 && index.column() == 2) {
             // after last half_move
@@ -335,29 +335,29 @@ private:
     }
 
     // -1 means start position
-    void goto_move_(int n = -1) {
+    void goto_move(int n = -1) {
         current_move_ = n;
         move_select();
         history_select();
     }
 
     void goto_first() {
-        goto_move_(-1);
+        goto_move(-1);
     }
 
     void goto_last() {
-        goto_move_(cached_moves_.size() - 1);
+        goto_move(cached_moves_.size() - 1);
     }
 
     void goto_prev() {
         if (current_move_ > -1) {
-            goto_move_(current_move_ - 1);
+            goto_move(current_move_ - 1);
         }
     }
 
     void goto_next() {
         if (current_move_ < cached_moves_.size() - 1) {
-            goto_move_(current_move_ + 1);
+            goto_move(current_move_ + 1);
         }
     }
 

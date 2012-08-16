@@ -268,16 +268,16 @@ private:
 
     bool can_start() const;
     void start(Planning* planning);
-    void create_games_classical_(Planning* planning);
+    void create_games_classical(Planning* planning);
     void cancel();
 
-    void process_(Planning* planning);
-    void process_classical_(Planning* planning);
+    void process(Planning* planning);
+    void process_classical(Planning* planning);
 
-    void finish_(const UsersVector& winners, Planning* planning);
+    void finish(const UsersVector& winners, Planning* planning);
 
-    GamePtr create_game_(const UserPtr& white, const UserPtr& black,
-                         int stage = -1, bool no_draw = false);
+    GamePtr create_game(const UserPtr& white, const UserPtr& black,
+                        int stage = -1, bool no_draw = false);
 
     friend class StagedCompetition;
 };

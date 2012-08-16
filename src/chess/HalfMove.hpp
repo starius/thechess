@@ -128,7 +128,7 @@ private:
     unsigned to_ : 7;
     Piece::Letter turn_into_ : 3;
 
-    std::string san_from_(const Board& board) const;
+    std::string san_from(const Board& board) const;
 };
 
 }

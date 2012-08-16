@@ -39,7 +39,7 @@ CPWidget::CPWidget(const CP* cp, bool allow_change_type,
     type_->addItem(Competition::type2str(STAGED));
     // TODO type_->addItem(Competition::type2str(TEAM));
     cell = form_->item(tr("tc.competition.Type"), "", type_, type_);
-    set_type_(cp->type());
+    set_type(cp->type());
     if (allow_change_type) {
         if (wApp->environment().ajax()) {
             type_->activated().connect(this,
@@ -189,7 +189,7 @@ void CPWidget::type_handler() {
     }
 }
 
-void CPWidget::set_type_(CompetitionType t) {
+void CPWidget::set_type(CompetitionType t) {
     if (t == CLASSICAL) {
         type_->setCurrentIndex(0);
     } else if (t == STAGED) {

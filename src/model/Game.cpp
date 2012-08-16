@@ -141,7 +141,7 @@ void Game::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
         stop_pause();
     } else if (state() == ACTIVE && total_limit_now(order_user()) < TD_NULL) {
         const UserPtr& winner = user_of(Piece::other_color(order_color()));
-        finish_(TIMEOUT, winner);
+        finish(TIMEOUT, winner);
     }
     if (is_ended() && competition()) {
         Object* c = new Object(COMPETITION, competition().id());
@@ -219,17 +219,17 @@ Wt::WDateTime Game::next_check() const {
 void Game::propose_game(const UserPtr& init, const UserPtr& u, Piece::Color c) {
     set_init(init);
     if (c == Piece::COLOR_NULL) {
-        set_random_(init, u);
+        set_random(init, u);
     } else {
-        set_of_color_(init, c);
-        set_of_color_(u, Piece::other_color(c));
+        set_of_color(init, c);
+        set_of_color(u, Piece::other_color(c));
     }
 }
 
 void Game::propose_challenge(const UserPtr& init, Piece::Color c) {
     set_init(init);
     if (c != Piece::COLOR_NULL) {
-        set_of_color_(init, c);
+        set_of_color(init, c);
     } else {
         colors_random_ = true;
     }
@@ -239,7 +239,7 @@ void Game::make_competition_game(const UserPtr& white, const UserPtr& black,
                                  const CompetitionPtr& competition,
                                  int competition_stage, bool random) {
     if (random) {
-        set_random_(white, black);
+        set_random(white, black);
     } else {
         white_ = white;
         black_ = black;
@@ -248,7 +248,7 @@ void Game::make_competition_game(const UserPtr& white, const UserPtr& black,
     competition_stage_ = competition_stage;
 }
 
-void Game::set_random_(const UserPtr& user1, const UserPtr& user2) {
+void Game::set_random(const UserPtr& user1, const UserPtr& user2) {
     colors_random_ = true;
     if (Wt::Wc::rr(2) == 0) {
         white_ = user1;
@@ -259,12 +259,12 @@ void Game::set_random_(const UserPtr& user1, const UserPtr& user2) {
     }
 }
 
-void Game::set_of_color_(const UserPtr& user, Piece::Color color) {
+void Game::set_of_color(const UserPtr& user, Piece::Color color) {
     if (color == Piece::WHITE) {
-        set_white_(user);
+        set_white(user);
     }
     if (color == Piece::BLACK) {
-        set_black_(user);
+        set_black(user);
     }
 }
 
@@ -288,7 +288,7 @@ void Game::join(const UserPtr& user) {
         } else if (black()) {
             white_ = user;
         } else {
-            set_random_(init(), user);
+            set_random(init(), user);
         }
         confirm();
     }
@@ -339,7 +339,7 @@ bool Game::can_cancel(const UserPtr& user) const {
 
 void Game::cancel(const UserPtr& user) {
     if (can_cancel(user)) {
-        finish_(CANCELLED);
+        finish(CANCELLED);
     }
 }
 
@@ -393,15 +393,15 @@ void Game::add_move(const HalfMove& half_move,
         lastmove_ = now();
         Board::FinishState s = board_after.test_end();
         UserPtr order_user_now = order_user();
-        push_move_(half_move);
+        push_move(half_move);
         if (s == Board::CHECKMATE) {
-            finish_(MATE, order_user_now);
+            finish(MATE, order_user_now);
         }
         if (s == Board::STALEMATE) {
             if (gp_->first_draw() != NO_DRAW) {
-                finish_(DRAW_STALEMATE);
+                finish(DRAW_STALEMATE);
             } else {
-                finish_(NO_DRAW_STALEMATE, black());
+                finish(NO_DRAW_STALEMATE, black());
             }
         }
     }
@@ -497,7 +497,7 @@ void Game::mistake_agree(const UserPtr& user) {
         }
         lastmove_ = cached_now;
         mistake_proposer_.reset();
-        pop_moves_(moves().size() - mistake_move());
+        pop_moves(moves().size() - mistake_move());
         mistake_move_ = -1;
     }
 }
@@ -533,7 +533,7 @@ bool Game::can_draw_agree(const UserPtr& user) const {
 void Game::draw_agree(const UserPtr& user) {
     if (can_draw_agree(user)) {
         draw_proposer_.reset();
-        finish_(DRAW_AGREED);
+        finish(DRAW_AGREED);
     }
 }
 
@@ -582,7 +582,7 @@ bool Game::real_rating() const {
     return !gp_->norating() && meet_first_draw();
 }
 
-void Game::finish_(State state, const UserPtr& winner) {
+void Game::finish(State state, const UserPtr& winner) {
     state_ = state;
     if (winner) {
         winner_ = winner;
@@ -607,11 +607,11 @@ void Game::elo_change() {
     rating_after_[Piece::BLACK] = black()->games_stat().elo();
 }
 
-void Game::push_move_(HalfMove half_move) {
+void Game::push_move(HalfMove half_move) {
     moves_.push(half_move);
 }
 
-void Game::pop_moves_(int number) {
+void Game::pop_moves(int number) {
     moves_.pop(number);
 }
 
@@ -660,7 +660,7 @@ const char* Game::pgn_termination() const {
     return "normal";
 }
 
-void Game::pgn_init_moves_(std::ostream& out) const {
+void Game::pgn_init_moves(std::ostream& out) const {
     out << "[SetUp \"" << "1" << "\"]" << std::endl;
     int halfmove_clock = 0;
     Moves::const_iterator i = moves_.begin();
@@ -683,7 +683,7 @@ void Game::pgn_init_moves_(std::ostream& out) const {
     out << "\"]" << std::endl;
 }
 
-void Game::pgn_additional_(std::ostream& out) const {
+void Game::pgn_additional(std::ostream& out) const {
     out << "[PlyCount \"" << size() << "\"]" << std::endl;
     long t1 = gp_->limit_private_init().total_seconds();
     long t2 = gp_->limit_std().total_seconds();
@@ -701,7 +701,7 @@ void Game::pgn_additional_(std::ostream& out) const {
         out << std::endl;
     }
     if (init_moves().size()) {
-        pgn_init_moves_(out);
+        pgn_init_moves(out);
     }
 }
 
@@ -728,7 +728,7 @@ void Game::pgn(std::ostream& out, bool reduced) const {
     out << "[Black \"" << black << "\"]" << std::endl;
     out << "[Result \"" << result << "\"]" << std::endl;
     if (!reduced) {
-        pgn_additional_(out);
+        pgn_additional(out);
     }
     out << std::endl;
     moves_.pgn(out, result, reduced);

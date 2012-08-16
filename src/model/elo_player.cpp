@@ -48,7 +48,7 @@ float EloPlayer::K() const {
            (all_ < elo::BEGINNER_ALL) ? elo::BEGINNER_K : elo::OTHER_K;
 }
 
-void EloPlayer::apply_result_(float q_sum, float S) {
+void EloPlayer::apply_result(float q_sum, float S) {
     elo_ += round(K() * (S - E(q_sum)));
     all_ += 1;
     if (S == VICTORY) {
@@ -60,14 +60,14 @@ void EloPlayer::apply_result_(float q_sum, float S) {
 
 void EloPlayer::win(EloPlayer* loser) {
     float q_sum = Q() + loser->Q();
-    this->apply_result_(q_sum, VICTORY);
-    loser->apply_result_(q_sum, FAIL);
+    this->apply_result(q_sum, VICTORY);
+    loser->apply_result(q_sum, FAIL);
 }
 
 void EloPlayer::draw(EloPlayer* other) {
     float q_sum = Q() + other->Q();
-    this->apply_result_(q_sum, 0.5);
-    other->apply_result_(q_sum, 0.5);
+    this->apply_result(q_sum, 0.5);
+    other->apply_result(q_sum, 0.5);
 }
 
 void EloPlayer::multiple(const EloPlayers& winners, const EloPlayers& losers) {
@@ -79,10 +79,10 @@ void EloPlayer::multiple(const EloPlayers& winners, const EloPlayers& losers) {
         q_sum += player->Q();
     }
     BOOST_FOREACH (EloPlayer* player, winners) {
-        player->apply_result_(q_sum, VICTORY / winners.size());
+        player->apply_result(q_sum, VICTORY / winners.size());
     }
     BOOST_FOREACH (EloPlayer* player, losers) {
-        player->apply_result_(q_sum, FAIL);
+        player->apply_result(q_sum, FAIL);
     }
 }
 

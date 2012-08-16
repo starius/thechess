@@ -110,11 +110,11 @@ private:
 
     void read_games();
     void read_paires();
-    void read_pair_(int stage, const UserPair& pair);
+    void read_pair(int stage, const UserPair& pair);
 
     void start_competition();
     void join_users();
-    void create_games_(Competition* competition, Planning* planning);
+    void create_games(Competition* competition, Planning* planning);
 };
 
 }

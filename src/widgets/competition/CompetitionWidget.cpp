@@ -348,9 +348,9 @@ public:
         c_(c), is_editing_(false) {
         if (tApp->user()) {
             if (c->can_join(tApp->user())) {
-                button_<&Competition::join>("tc.common.Join");
+                button<&Competition::join>("tc.common.Join");
             } else if (c->can_leave(tApp->user())) {
-                button_<&Competition::leave>("tc.game.Leave");
+                button<&Competition::leave>("tc.game.Leave");
             }
             if (c->can_change_parameters(tApp->user())) {
                 Wt::WPushButton* change =
@@ -359,7 +359,7 @@ public:
                 .connect(this, &CompetitionManager::show_change_widget);
             }
             if (c->can_cancel(tApp->user())) {
-                button_<&Competition::cancel>("tc.common.Cancel");
+                button<&Competition::cancel>("tc.common.Cancel");
             }
         }
         if (c->has_virtuals()) {
@@ -369,7 +369,7 @@ public:
                 new Wt::WText(tr("tc.competition.Virtuals_allowed_by"), this);
                 user_anchor(c->virtual_allower(), this);
             } else if (c->can_allow_virtuals(tApp->user())) {
-                button_<&Competition::allow_virtuals>("tc.common.Allow");
+                button<&Competition::allow_virtuals>("tc.common.Allow");
             }
         }
     }
@@ -400,7 +400,7 @@ private:
     }
 
     template <CompetitionMethod method>
-    void button_(const char* title_id) {
+    void button(const char* title_id) {
         Wt::WPushButton* b;
         b = new Wt::WPushButton(tr(title_id), this);
         b->clicked().connect(this, &CompetitionManager::action<method>);

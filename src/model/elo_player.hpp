@@ -124,7 +124,7 @@ private:
     int wins_;
     int fails_;
 
-    void apply_result_(float q_sum, float S);
+    void apply_result(float q_sum, float S);
 };
 
 }

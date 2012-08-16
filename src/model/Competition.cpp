@@ -56,7 +56,7 @@ void Competition::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
         }
     }
     if (state_ == ACTIVE) {
-        process_(planning);
+        process(planning);
     }
     planning->add(task, next_check(), false);
 }
@@ -303,13 +303,13 @@ bool Competition::can_start() const {
 
 void Competition::start(Planning* planning) {
     if (type() == CLASSICAL) {
-        create_games_classical_(planning);
+        create_games_classical(planning);
     }
     state_ = ACTIVE;
     started_ = now();
 }
 
-void Competition::create_games_classical_(Planning* planning) {
+void Competition::create_games_classical(Planning* planning) {
     UsersVector members(members_.begin(), members_.end());
     std::random_shuffle(members.begin(), members.end(),
                         Wt::Wc::rand_for_shuffle);
@@ -331,19 +331,19 @@ void Competition::create_games_classical_(Planning* planning) {
             black_games[black] += 1;
             N[white][black] += 1;
             N[black][white] += 1;
-            create_game_(white, black);
+            create_game(white, black);
         }
         planning->add(new Object(USER, white.id()), now(), false);
     }
 }
 
-void Competition::process_(Planning* planning) {
+void Competition::process(Planning* planning) {
     if (type() == CLASSICAL) {
-        process_classical_(planning);
+        process_classical(planning);
         GamesVector g(games_vector());
         if (all_ended(g)) {
             UsersVector winners = winners_of_games(g);
-            finish_(winners, planning);
+            finish(winners, planning);
         }
     } else if (type() == STAGED) {
         StagedCompetition sc(this);
@@ -351,12 +351,12 @@ void Competition::process_(Planning* planning) {
         if (sc.winner()) {
             UsersVector winners;
             winners.push_back(sc.winner());
-            finish_(winners, planning);
+            finish(winners, planning);
         }
     }
 }
 
-void Competition::process_classical_(Planning* planning) {
+void Competition::process_classical(Planning* planning) {
     BOOST_ASSERT(type() == CLASSICAL);
     std::map<UserPtr, int> used;
     GamesVector proposed;
@@ -382,7 +382,7 @@ void Competition::process_classical_(Planning* planning) {
     }
 }
 
-void Competition::finish_(const UsersVector& winners, Planning*) {
+void Competition::finish(const UsersVector& winners, Planning*) {
     BOOST_FOREACH (const UserPtr& u, winners) {
         winners_.insert(u);
     }
@@ -390,8 +390,8 @@ void Competition::finish_(const UsersVector& winners, Planning*) {
     ended_ = now();
 }
 
-GamePtr Competition::create_game_(const UserPtr& white, const UserPtr& black,
-                                  int stage, bool no_draw) {
+GamePtr Competition::create_game(const UserPtr& white, const UserPtr& black,
+                                 int stage, bool no_draw) {
     GamePtr game = session()->add(new Game(gp()));
     bool random = no_draw;
     game.modify()->make_competition_game(white, black, self(), stage, random);
