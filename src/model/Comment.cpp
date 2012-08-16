@@ -60,6 +60,10 @@ Comment::State Comment::state_of_new(const UserPtr& user, Type type,
         if (type == CHAT_MESSAGE && !user->has_permission(User::CHAT_WRITER)) {
             return DELETED;
         }
+        if (type == FORUM_TOPIC &&
+                !user->has_permission(User::COMMENTS_REMOVER)) {
+            return DELETED;
+        }
         if (type == FORUM_POST &&
                 !user->has_permission(User::FORUM_POST_CREATOR)) {
             return DELETED;

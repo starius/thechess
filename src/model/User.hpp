@@ -75,7 +75,7 @@ public:
                        COMPETITION_JOINER |
                        CLASSIFICATION_CHANGER,
 
-        /** Right to (un)remove comments and approve draft comments */
+        /** Right to (un)remove comments, create topic and approve drafts */
         COMMENTS_REMOVER = BOOST_BINARY(00010000 00000000 00000000),
 
         /** Right to confirm user classification */
