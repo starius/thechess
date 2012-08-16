@@ -6,7 +6,6 @@
  */
 
 #include <Wt/WTable>
-#include <Wt/WImage>
 #include <Wt/WText>
 #include <Wt/Auth/AuthWidget>
 #include <Wt/Wc/util.hpp>
@@ -79,9 +78,7 @@ void MainWidget::user_view(const UserPtr& user) {
 }
 
 void MainWidget::virtuals_of_user(const UserPtr& user) {
-    Wt::WImage* image = new Wt::WImage();
-    image->setResource(new VirtualsWidget(user, image));
-    set_contents(image);
+    set_contents(new VirtualsWidget(user));
 }
 
 void MainWidget::games_of_user(const UserPtr& user) {
@@ -93,9 +90,7 @@ void MainWidget::competitions_of_user(const UserPtr& user) {
 }
 
 void MainWidget::all_virtuals() {
-    Wt::WImage* image = new Wt::WImage();
-    image->setResource(new VirtualsWidget(image));
-    set_contents(image);
+    set_contents(new VirtualsWidget());
 }
 
 void MainWidget::settings_page() {

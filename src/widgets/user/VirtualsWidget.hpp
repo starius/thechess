@@ -8,30 +8,27 @@
 #ifndef THECHESS_WIDGETS_USER_VIRTUALS_WIDGET_HPP_
 #define THECHESS_WIDGETS_USER_VIRTUALS_WIDGET_HPP_
 
-#include <Wt/Wc/FilterResource.hpp>
+#include <Wt/WContainerWidget>
 
 #include "model/all.hpp"
 
 namespace thechess {
 
 /** A widget, showing a graph of virtuals */
-class VirtualsWidget : public Wt::Wc::FilterResource {
+class VirtualsWidget : public Wt::WContainerWidget {
 public:
     /** Constructor */
     VirtualsWidget(const dbo::Query<BD::BDPair>& pairs,
-                   Wt::WObject* parent = 0);
+                   Wt::WContainerWidget* parent = 0);
 
     /** Constructor */
-    VirtualsWidget(const UserPtr& user, Wt::WObject* parent = 0);
+    VirtualsWidget(const UserPtr& user, Wt::WContainerWidget* parent = 0);
 
     /** Constructor */
-    VirtualsWidget(Wt::WObject* parent = 0);
-
-    /** Output competition tree in DOT format (graphviz) */
-    void write_input(std::ostream& out) const;
+    VirtualsWidget(Wt::WContainerWidget* parent = 0);
 
 private:
-    dbo::Query<BD::BDPair> pairs_;
+    void initialize(const dbo::Query<BD::BDPair>& pairs);
 };
 
 }
