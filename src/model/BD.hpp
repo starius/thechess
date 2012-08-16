@@ -8,6 +8,7 @@
 #ifndef THECHESS_MODEL_BD_HPP_
 #define THECHESS_MODEL_BD_HPP_
 
+#include <set>
 #include <boost/tuple/tuple.hpp>
 
 #include "model/model.hpp"
@@ -22,6 +23,9 @@ class BD : public dbo::Dbo<BD> {
 public:
     /** A pair of BDPtr's */
     typedef boost::tuple<BDPtr, BDPtr> BDPair;
+
+    /** Map user pair to int */
+    typedef std::map<UserPair, int> Scores;
 
     /** Default constructor.
     Should be used only by Wt::Dbo itself.
@@ -65,6 +69,17 @@ public:
     \note To avoid redundancy, only rows where U.user_id<V.user_id are selected.
     */
     static dbo::Query<BDPair> pairs(dbo::Session& session);
+
+    /** Increase scores of user pairs, corresponding to the query */
+    static void scores(const dbo::Query<BDPair>& pairs, Scores& scores);
+
+    /** Filter scores map.
+    If min_score = -1, the default one is used.
+    */
+    static void filter(Scores& scores, int min_score = -1);
+
+    /** Add users, involved into scores map, to the set */
+    static void add_users(const Scores& scores, std::set<UserPtr>& users);
 
 private:
     BDId id_;

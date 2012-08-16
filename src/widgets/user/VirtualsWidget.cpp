@@ -10,8 +10,6 @@
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string/replace.hpp>
 
-#include <Wt/Wc/Gather.hpp>
-
 #include "widgets/user/VirtualsWidget.hpp"
 #include "Application.hpp"
 
@@ -47,19 +45,11 @@ void VirtualsWidget::write_input(std::ostream& out) const {
                 !tApp->user()->has_permission(User::VIRTUALS_VIEWER)) {
             return;
         }
-        typedef std::map<UserPair, int> Scores;
-        Scores scores;
+        BD::Scores scores;
         std::set<UserPtr> users;
-        dbo::collection<BD::BDPair> pairs = pairs_;
-        BOOST_FOREACH (BD::BDPair pair, pairs) {
-            UserPtr a = pair.get<0>()->user();
-            UserPtr b = pair.get<1>()->user();
-            Wt::Wc::Gather::DataType type = pair.get<0>()->type();
-            int score = Wt::Wc::Gather::significance(type);
-            scores[UserPair(a, b)] += score;
-            users.insert(a);
-            users.insert(b);
-        }
+        BD::scores(pairs_, scores);
+        BD::filter(scores);
+        BD::add_users(scores, users);
         out << "graph virtuals {" << std::endl;
         out << "rankdir=LR" << std::endl;
         BOOST_FOREACH (UserPtr user, users) {
@@ -68,14 +58,12 @@ void VirtualsWidget::write_input(std::ostream& out) const {
             boost::replace_all(username, "\"", "\\\"");
             out << "[label=\"" << username << "\"]" << std::endl;
         }
-        BOOST_FOREACH (Scores::value_type& pair_and_score, scores) {
+        BOOST_FOREACH (const BD::Scores::value_type& pair_and_score, scores) {
             int score = pair_and_score.second;
             const UserPair& pair = pair_and_score.first;
             const UserPtr a = pair.first();
             const UserPtr b = pair.second();
-            if (score > Wt::Wc::Gather::MIN_SIGNIFICANT) {
-                out << a.id() << "--" << b.id() << std::endl;
-            }
+            out << a.id() << "--" << b.id() << std::endl;
         }
         out << "}" << std::endl;
     }
