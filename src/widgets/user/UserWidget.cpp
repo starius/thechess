@@ -16,6 +16,7 @@
 
 #include "widgets/user/UserWidget.hpp"
 #include "widgets/user/RatingChanges.hpp"
+#include "widgets/user/RightsEdit.hpp"
 #include "widgets/game/GameCreateWidget.hpp"
 #include "widgets/user/user_anchor.hpp"
 #include "widgets/Header.hpp"
@@ -78,6 +79,11 @@ public:
                 .connect(this, &UserWidgetImpl::rating_changes_and_me);
             }
         }
+        if (user->can_change_right(tApp->user())) {
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(tr("tc.user.Edit_rights"), this);
+            b->clicked().connect(this, &UserWidgetImpl::edit_rights);
+        }
         if (tApp->user() && tApp->user()->can_remove(user)) {
             Wt::WPushButton* b = new Wt::WPushButton(this);
             b->clicked().connect(this, &UserWidgetImpl::inverse_removed);
@@ -127,6 +133,11 @@ private:
         rating_and_me_button_->hide();
         RatingChanges* rc = new RatingChanges(user_, this);
         rc->add_user(tApp->user());
+    }
+
+    void edit_rights() {
+        delete sender();
+        new RightsEdit(user_, this);
     }
 
     void inverse_removed() {

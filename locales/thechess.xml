@@ -560,6 +560,7 @@ See locales-test manpage for more information.
     <message id='tc.user.confirmed_by'>, confirmed by </message>
     <message id='tc.user.cp_creator'>create competition parameters</message>
     <message id='tc.user.Delete'>Delete</message>
+    <message id='tc.user.Edit_rights'>Edit rights</message>
     <message id='tc.user.forum_comment_creator'>comment forum</message>
     <message id='tc.user.forum_post_creator'>post forum</message>
     <message id='tc.user.game_creator'>create game</message>
