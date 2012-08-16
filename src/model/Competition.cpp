@@ -221,6 +221,7 @@ void Competition::leave(const UserPtr& user) {
 bool Competition::can_kick(const UserPtr& kicker, const UserPtr& kicked) const {
     return state_ == RECRUITING &&
            is_member(kicked) &&
+           kicker != kicked &&
            (kicker == init() ||
             (kicker && kicker->has_permission(User::COMPETITION_CHANGER)));
 }
