@@ -327,7 +327,8 @@ private:
 class CompetitionView : public Wt::WCompositeWidget {
 public:
     CompetitionView(const CompetitionPtr& c) {
-        if (c->state() >= Competition::ACTIVE) {
+        if (c->state() == Competition::ACTIVE ||
+                c->state() == Competition::ENDED) {
             if (c->type() == CLASSICAL) {
                 setImplementation(new ClassicalView(c));
             }
