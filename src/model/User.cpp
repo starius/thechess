@@ -240,7 +240,9 @@ Wt::WString User::classification_str() const {
 }
 
 bool User::can_confirm_classification(const UserPtr& user) const {
-    return user && user->has_permission(CLASSIFICATION_CONFIRMER);
+    return user && user->has_permission(CLASSIFICATION_CONFIRMER) &&
+           user != self();
+    // FIXME http://redmine.webtoolkit.eu/boards/2/topics/4200
 }
 
 void User::confirm_classification(const UserPtr& user) {
