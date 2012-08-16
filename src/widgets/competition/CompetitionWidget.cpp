@@ -358,6 +358,16 @@ public:
                 .connect(this, &CompetitionManager::show_change_widget);
             }
         }
+        if (c->has_virtuals()) {
+            new Wt::WBreak(this);
+            new Wt::WText(tr("tc.competition.Virtuals"), this);
+            if (c->virtual_allower()) {
+                new Wt::WText(tr("tc.competition.Virtuals_allowed_by"), this);
+                user_anchor(c->virtual_allower(), this);
+            } else if (c->can_allow_virtuals(tApp->user())) {
+                button_<&Competition::allow_virtuals>("tc.common.Allow");
+            }
+        }
     }
 
     bool is_editing() const {

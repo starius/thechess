@@ -340,6 +340,7 @@ See locales-test manpage for more information.
     <message id='tc.comment.Remove'>Remove</message>
 
     <message id='tc.common.Agree'>Agree</message>
+    <message id='tc.common.Allow'>Allow</message>
     <message id='tc.common.Apply'>Apply</message>
     <message id='tc.common.Cancel'>Cancel</message>
     <message id='tc.common.Confirm'>Confirm</message>
@@ -415,8 +416,14 @@ See locales-test manpage for more information.
     <message id='tc.competition.Type_team'>Team</message>
     <message id='tc.competition.user_pair'>{1} - {2}</message>
     <message id='tc.competition.Users'>Number of users</message>
+    <message id='tc.competition.Virtuals_allowed_by'>Virtuals_allowed_by </message>
     <message id='tc.competition.Winner'>Winner</message>
     <message id='tc.competition.Winners'>Winners</message>
+    <message id='tc.competition.Virtuals'>
+        <font style="background:#F2C576;">
+            There are virtuals in the competition.
+        </font>
+    </message>
     <message id='tc.competition.widget_template'>
         <h1>Competition # ${id} ${name}</h1>
         The competition was created ${created}, started ${started}, closed ${ended}.
