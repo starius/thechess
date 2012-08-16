@@ -26,6 +26,7 @@
 #include "model/global.hpp"
 #include "utils/time_intervals.hpp"
 #include "model/elo_player.hpp"
+#include "model/user_pair.hpp"
 #include "chess/Moves.hpp"
 
 /** \file model/model.hpp Code, neede by model classes.

@@ -13,7 +13,6 @@
 #include <Wt/Wc/Gather.hpp>
 
 #include "widgets/user/VirtualsWidget.hpp"
-#include "model/staged_competition.hpp" // for UserPair
 #include "Application.hpp"
 
 namespace thechess {

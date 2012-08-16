@@ -17,32 +17,6 @@
 
 namespace thechess {
 
-UserPair::UserPair() {
-}
-
-UserPair::UserPair(const UserPtr& first, const UserPtr& second) {
-    BOOST_ASSERT(first != second);
-    if (first < second) {
-        first_ = first;
-        second_ = second;
-    } else {
-        first_ = second;
-        second_ = first;
-    }
-}
-
-bool UserPair::operator<(const UserPair& o) const {
-    return first_ < o.first() || (first_ == o.first() && second_ < o.second());
-}
-
-bool UserPair::operator==(const UserPair& other) const {
-    return first_ == other.first() && second_ == other.second();
-}
-
-bool UserPair::operator!=(const UserPair& other) const {
-    return !(*this == other);
-}
-
 StagedCompetition::StagedCompetition(const Competition* competition):
     competition_(competition) {
     BOOST_ASSERT(competition->type() == STAGED);

@@ -20,6 +20,7 @@
 #include "model/object.hpp"
 #include "model/elo_player.hpp"
 #include "model/staged_competition.hpp"
+#include "model/user_pair.hpp"
 #include "Session.hpp"
 #include "Planning.hpp"
 
