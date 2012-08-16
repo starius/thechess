@@ -534,9 +534,12 @@ See locales-test manpage for more information.
     </message>
 
     <message id='tc.user.Anonymous'>Anonymous</message>
+    <message id='tc.user.chat_writer'>write to chat</message>
     <message id='tc.user.classification_a'>class A</message>
     <message id='tc.user.classification_b'>class B</message>
     <message id='tc.user.classification_c'>class C</message>
+    <message id='tc.user.classification_changer'>change classification</message>
+    <message id='tc.user.classification_confirmer'>confirm classification</message>
     <message id='tc.user.classification_d'>class D</message>
     <message id='tc.user.classification_e'>class E</message>
     <message id='tc.user.classification_expert'>expert</message>
@@ -550,21 +553,40 @@ See locales-test manpage for more information.
     <message id='tc.user.classification_national_master'>national master</message>
     <message id='tc.user.classification_none'>without category</message>
     <message id='tc.user.classification_super_grandmaster'>super-grandmaster</message>
+    <message id='tc.user.comments_remover'>remove comments</message>
+    <message id='tc.user.competition_changer'>change competition</message>
+    <message id='tc.user.competition_creator'>create competition</message>
+    <message id='tc.user.competition_joiner'>join competition</message>
     <message id='tc.user.confirmed_by'>, confirmed by </message>
+    <message id='tc.user.cp_creator'>create competition parameters</message>
     <message id='tc.user.Delete'>Delete</message>
+    <message id='tc.user.forum_comment_creator'>comment forum</message>
+    <message id='tc.user.forum_post_creator'>post forum</message>
+    <message id='tc.user.game_creator'>create game</message>
+    <message id='tc.user.game_joiner'>join game</message>
+    <message id='tc.user.gp_creator'>create game parameters</message>
     <message id='tc.user.my_page'>my page</message>
     <message id='tc.user.not_confirmed'>, not confirmed</message>
     <message id='tc.user.Online_time'>Spent online {1}</message>
+    <message id='tc.user.private_writer'>write private message</message>
     <message id='tc.user.rating_after'>rating after</message>
     <message id='tc.user.Rating_changes'>Rating changes</message>
     <message id='tc.user.Rating_changes_and_me'>Rating changes (compared to my ones)</message>
+    <message id='tc.user.records_editor'>edit records</message>
+    <message id='tc.user.registration_banner'>ban IP for registration</message>
+    <message id='tc.user.regular_rights_changer'>change regular rights</message>
     <message id='tc.user.Removed_message'><b>[Removed user]</b></message>
     <message id='tc.user.settings'>settings</message>
     <message id='tc.user.Settings'>Settings</message>
     <message id='tc.user.Start_game'>Start a game</message>
+    <message id='tc.user.super_rights_changer'>change super rights</message>
     <message id='tc.user.Undelete'>Undelete</message>
+    <message id='tc.user.unknown_right'>unknown right</message>
     <message id='tc.user.user'>user</message>
+    <message id='tc.user.user_remover'>remove user</message>
+    <message id='tc.user.virtuals_allower'>allow virtuals in competition</message>
     <message id='tc.user.Virtuals_list'>List of virtuals</message>
+    <message id='tc.user.virtuals_viewer'>view virtuals</message>
     <message id='tc.user.Online'>
         <font style="background:Lightsteelblue;">Online</font>
     </message>

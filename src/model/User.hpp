@@ -9,6 +9,7 @@
 #define THECHESS_MODEL_USER_H_
 
 #include <boost/utility/binary.hpp>
+#include <boost/function.hpp>
 
 #include <Wt/Dbo/Query>
 
@@ -200,10 +201,30 @@ public:
     /** Set user's permission */
     void set_permission(Rights perm, bool can = true);
 
+    /* Return if \p who can change the right of this user */
+    bool can_change_right(Rights perm, const UserPtr& who) const;
+
+    /* Return if \p who can change some right of this user */
+    bool can_change_right(const UserPtr& who) const;
+
     /** Set rights */
     void set_rights(Rights rights) {
         rights_ = rights;
     }
+
+    /** Return translation id for this right */
+    static const char* right_to_str(Rights right);
+
+    /** Apply function f to each possible right.
+    \note Groups of rights, such as REGULAR_USER, are not iterated.
+    */
+    static void for_each_right(const boost::function<void(Rights)> f);
+
+    /** Return if it is a regular right */
+    static bool is_regular_right(Rights right);
+
+    /** Return if it is a super right */
+    static bool is_super_right(Rights right);
 
     /** Run this when user is logging in */
     void login();

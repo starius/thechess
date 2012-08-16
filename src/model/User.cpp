@@ -5,9 +5,11 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <boost/bind.hpp>
+#include <boost/algorithm/string/replace.hpp>
+
 #include <Wt/WRandom>
 #include <Wt/Utils>
-#include <boost/algorithm/string/replace.hpp>
 
 #include "model/all.hpp"
 #include "config.hpp"
@@ -80,6 +82,125 @@ void User::set_permission(Rights perm, bool can) {
         r = Rights(r & (~perm));
     }
     set_rights(r);
+}
+
+bool User::can_change_right(Rights r, const UserPtr& who) const {
+    if (!who) {
+        return false;
+    }
+    if (who != self()) {
+        if (is_regular_right(r) && has_permission(REGULAR_RIGHTS_CHANGER)) {
+            return false;
+        } else if (is_super_right(r) && has_permission(SUPER_RIGHTS_CHANGER)) {
+            return false;
+        }
+    }
+    if (is_regular_right(r) && who->has_permission(REGULAR_RIGHTS_CHANGER)) {
+        return true;
+    } else if (is_super_right(r) && who->has_permission(SUPER_RIGHTS_CHANGER)) {
+        return true;
+    }
+    return false;
+}
+
+static void rights_check(bool& result, const User* me,
+                         User::Rights r, const UserPtr& who) {
+    if (me->can_change_right(r, who)) {
+        result = true;
+    }
+}
+
+bool User::can_change_right(const UserPtr& who) const {
+    if (!who) {
+        return false;
+    }
+    if (!who->has_permission(REGULAR_RIGHTS_CHANGER) &&
+            !who->has_permission(SUPER_RIGHTS_CHANGER)) {
+        return false;
+    }
+    bool result = false;
+    for_each_right(boost::bind(rights_check, boost::ref(result), this,
+                               _1, who));
+    return result;
+}
+
+const char* User::right_to_str(Rights right) {
+    if (right == GAME_CREATOR) {
+        return "tc.user.game_creator";
+    } else if (right == GAME_JOINER) {
+        return "tc.user.game_joiner";
+    } else if (right == CHAT_WRITER) {
+        return "tc.user.chat_writer";
+    } else if (right == PRIVATE_WRITER) {
+        return "tc.user.private_writer";
+    } else if (right == FORUM_POST_CREATOR) {
+        return "tc.user.forum_post_creator";
+    } else if (right == FORUM_COMMENT_CREATOR) {
+        return "tc.user.forum_comment_creator";
+    } else if (right == COMPETITION_CREATOR) {
+        return "tc.user.competition_creator";
+    } else if (right == GP_CREATOR) {
+        return "tc.user.gp_creator";
+    } else if (right == CP_CREATOR) {
+        return "tc.user.cp_creator";
+    } else if (right == COMPETITION_JOINER) {
+        return "tc.user.competition_joiner";
+    } else if (right == CLASSIFICATION_CHANGER) {
+        return "tc.user.classification_changer";
+    } else if (right == COMMENTS_REMOVER) {
+        return "tc.user.comments_remover";
+    } else if (right == CLASSIFICATION_CONFIRMER) {
+        return "tc.user.classification_confirmer";
+    } else if (right == COMPETITION_CHANGER) {
+        return "tc.user.competition_changer";
+    } else if (right == USER_REMOVER) {
+        return "tc.user.user_remover";
+    } else if (right == VIRTUALS_VIEWER) {
+        return "tc.user.virtuals_viewer";
+    } else if (right == VIRTUALS_ALLOWER) {
+        return "tc.user.virtuals_allower";
+    } else if (right == REGULAR_RIGHTS_CHANGER) {
+        return "tc.user.regular_rights_changer";
+    } else if (right == REGISTRATION_BANNER) {
+        return "tc.user.registration_banner";
+    } else if (right == RECORDS_EDITOR) {
+        return "tc.user.records_editor";
+    } else if (right == SUPER_RIGHTS_CHANGER) {
+        return "tc.user.super_rights_changer";
+    }
+    return "tc.user.unknown_right";
+}
+
+void User::for_each_right(const boost::function<void(Rights)> f) {
+    f(GAME_CREATOR);
+    f(GAME_JOINER);
+    f(CHAT_WRITER);
+    f(PRIVATE_WRITER);
+    f(FORUM_POST_CREATOR);
+    f(FORUM_COMMENT_CREATOR);
+    f(COMPETITION_CREATOR);
+    f(GP_CREATOR);
+    f(CP_CREATOR);
+    f(COMPETITION_JOINER);
+    f(CLASSIFICATION_CHANGER);
+    f(COMMENTS_REMOVER);
+    f(CLASSIFICATION_CONFIRMER);
+    f(COMPETITION_CHANGER);
+    f(USER_REMOVER);
+    f(VIRTUALS_VIEWER);
+    f(VIRTUALS_ALLOWER);
+    f(REGULAR_RIGHTS_CHANGER);
+    f(REGISTRATION_BANNER);
+    f(RECORDS_EDITOR);
+    f(SUPER_RIGHTS_CHANGER);
+}
+
+bool User::is_regular_right(Rights right) {
+    return (right & REGULAR_USER) == right;
+}
+
+bool User::is_super_right(Rights right) {
+    return (right & SUPER_RIGHTS) == right;
 }
 
 dbo::Query<GamePtr> User::games() const {
