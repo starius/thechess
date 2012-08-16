@@ -107,6 +107,7 @@ void VirtualsWidget::initialize(const dbo::Query<BD::BDPair>& pairs) {
     new Wt::WBreak(this);
     Wt::WImage* image = new Wt::WImage(this);
     image->setResource(res);
+    image->setWidth(Wt::WLength(100, Wt::WLength::Percentage));
     update_text(t, min_score);
 }
 
