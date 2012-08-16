@@ -243,7 +243,6 @@ private:
 
     Users members_;
 
-    Users virtuals_;
     UserPtr virtual_allower_;
 
     Games games_;
