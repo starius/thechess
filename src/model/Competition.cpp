@@ -271,6 +271,7 @@ void Competition::cancel(const UserPtr& user) {
 
 void Competition::cancel() {
     state_ = CANCELLED;
+    ended_ = now();
 }
 
 bool Competition::can_allow_virtuals(const UserPtr& user) const {
