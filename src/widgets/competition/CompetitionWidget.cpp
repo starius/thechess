@@ -35,12 +35,28 @@ namespace thechess {
 
 class CompetitionMembers : public Wt::WContainerWidget {
 public:
-    CompetitionMembers(const CompetitionPtr& c) {
+    CompetitionMembers(const CompetitionPtr& c):
+        c_(c) {
         setList(true);
         BOOST_FOREACH (const UserPtr& user, c->members_vector()) {
             Wt::WContainerWidget* item = new Wt::WContainerWidget(this);
             user_anchor(user, item);
+            if (c->can_kick(tApp->user(), user)) {
+                Wt::WPushButton* b;
+                b = new Wt::WPushButton(tr("tc.common.Kick"), item);
+                b->clicked().connect(boost::bind(&CompetitionMembers::kick,
+                                                 this, user));
+            }
         }
+    }
+
+private:
+    CompetitionPtr c_;
+
+    void kick(UserPtr user) {
+        dbo::Transaction t(tApp->session());
+        c_.modify()->kick(tApp->user(), user);
+        tNot->emit(new Object(COMPETITION, c_.id()));
     }
 };
 
