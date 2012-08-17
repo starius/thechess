@@ -132,6 +132,7 @@ private:
     Wt::WContainerWidget* bottom_place_;
 
     void set_contents(WWidget* widget);
+    void show_countup();
 };
 
 }

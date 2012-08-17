@@ -7,9 +7,11 @@
 
 #include <Wt/WTable>
 #include <Wt/WText>
+#include <Wt/WDateTime>
 #include <Wt/Auth/AuthWidget>
 #include <Wt/Wc/util.hpp>
 #include <Wt/Wc/SWFStore.hpp>
+#include <Wt/Wc/Countdown.hpp>
 
 #include "model/all.hpp"
 #include "widgets/MainWidget.hpp"
@@ -56,6 +58,7 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
                             Wt::WLength::Auto);
     mygames_place_ = middle->elementAt(0, GAME_LIST_IN_MIDDLE);
     bottom_place_ = new Wt::WContainerWidget(this);
+    show_countup();
 }
 
 void MainWidget::show_menu(Path* path) {
@@ -63,7 +66,7 @@ void MainWidget::show_menu(Path* path) {
 }
 
 MainMenu* MainWidget::main_menu() {
-    return downcast<MainMenu*>(menu_place_->widget(0));
+    return downcast<MainMenu*>(menu_place_->widget(1));
 }
 
 void MainWidget::update_my_games() {
@@ -205,6 +208,22 @@ void MainWidget::set_swfstore(Wt::Wc::SWFStore* swfstore) {
 void MainWidget::set_contents(WWidget* widget) {
     contents_place_->clear();
     contents_place_->addWidget(widget);
+}
+
+static void reset_countup(Wt::Wc::Countdown* countup) {
+    Wt::WDateTime midnight = Wt::WDateTime(now().date());
+    countup->set_since(midnight);
+    countup->set_format("HM");
+    Wt::WDateTime next_midnight = midnight.addDays(1);
+    Td wait = next_midnight - now() + SECOND;
+    Wt::Wc::schedule_action(wait, Wt::Wc::bound_post(boost::bind(reset_countup,
+                            countup)));
+    Wt::Wc::updates_trigger();
+}
+
+void MainWidget::show_countup() {
+    Wt::Wc::Countdown* countup = new Wt::Wc::Countdown(menu_place_);
+    reset_countup(countup);
 }
 
 }
