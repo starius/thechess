@@ -184,13 +184,22 @@ private:
         int game_id = a->game_id();
         GamePtr game = tApp->session().load<Game>(game_id, /* reread */ true);
         if (game->state() > Game::MIN_ENDED) {
-            extract_anchor(a);
-            anchors_.erase(game_id);
-            delete a;
+            Wt::Wc::schedule_action(MINUTE, Wt::Wc::bound_post(boost::bind(
+                                        &MyGamesListImp::remove_anchor,
+                                        this, a, game_id)));
         } else if (state_of(a) != game->state()) {
             extract_anchor(a);
             insert_anchor(a, game->state());
             a->style_by_state(game->state());
+        }
+    }
+
+    void remove_anchor(MyGameAnchor* a, int game_id) {
+        if (indexOf(a) >= 0) {
+            extract_anchor(a);
+            anchors_.erase(game_id);
+            delete a;
+            Wt::Wc::updates_trigger();
         }
     }
 
