@@ -35,6 +35,11 @@ struct Object : public Wt::Wc::notify::Task {
     /** Database id of instance */
     int id;
 
+    /** Id of user, emitted this object.
+    This field is set automatically.
+    */
+    int user_id;
+
     /** Comparison operator */
     bool operator<(const Object& b) const {
         return id < b.id || (id == b.id && type < b.type);

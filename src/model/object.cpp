@@ -15,12 +15,14 @@
 #include "Session.hpp"
 #include "Planning.hpp"
 #include "Server.hpp"
+#include "Application.hpp" // FIXME
 #include "config.hpp"
 
 namespace thechess {
 
 Object::Object(ObjectType ot, int i) :
     type(ot), id(i) {
+    user_id = !tApp ? 0 : !tApp->user() ? 0 : tApp->user().id();
 }
 
 Td rand_td(const std::pair<Td, Td>& range) {
