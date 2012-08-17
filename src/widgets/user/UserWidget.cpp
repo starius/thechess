@@ -114,6 +114,7 @@ public:
         a->setText(tr("tc.competition.List"));
         new Wt::WBreak(this);
         print_rights();
+        print_game_stat();
     }
 
 private:
@@ -187,6 +188,28 @@ private:
         panel->setCentralWidget(p);
         User::for_each_right(boost::bind(&UserWidgetImpl::print_right,
                                          this, _1, p));
+    }
+
+    void print_game_stat() {
+        const EloPlayer& stat = user_->games_stat();
+        new Wt::WText(tr("tc.user.Games_stat").arg(stat.all()).arg(stat.wins())
+                      .arg(stat.draws()).arg(stat.fails()).arg(stat.elo()), this);
+        if (tApp->user() && tApp->user() != user_) {
+            EloPlayer my_stat = tApp->user()->games_stat();
+            EloPlayer his_stat = user_->games_stat();
+            my_stat.win(&his_stat);
+            int if_win = my_stat.elo() - user_->games_stat().elo();
+            my_stat = tApp->user()->games_stat();
+            his_stat = user_->games_stat();
+            his_stat.win(&my_stat);
+            int if_fail = my_stat.elo() - user_->games_stat().elo();
+            my_stat = tApp->user()->games_stat();
+            his_stat = user_->games_stat();
+            his_stat.draw(&my_stat);
+            int if_draw = my_stat.elo() - user_->games_stat().elo();
+            new Wt::WText(tr("tc.user.Games_stat_changes")
+                          .arg(if_win).arg(if_fail).arg(if_draw), this);
+        }
     }
 };
 

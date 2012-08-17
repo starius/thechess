@@ -606,6 +606,17 @@ See locales-test manpage for more information.
     <message id='tc.user.virtuals_allower'>allow virtuals in competition</message>
     <message id='tc.user.Virtuals_list'>List of virtuals</message>
     <message id='tc.user.virtuals_viewer'>view virtuals</message>
+    <message id='tc.user.Games_stat'>
+        Total games played: {1}. Wins: {2}. Draws: {3}. Fails: {4}. Rating: {5}.
+    </message>
+    <message id='tc.user.Games_stat_changes'>
+        Changes of your rating after playing rating game with this user:
+        <ul>
+            <li>if case of win: {1}</li>
+            <li>if case of fail: {2}</li>
+            <li>if case of draw: {3}</li>
+        </ul>
+    </message>
     <message id='tc.user.Online'>
         <font style="background:Lightsteelblue;">Online</font>
     </message>
