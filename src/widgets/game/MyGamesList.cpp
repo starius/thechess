@@ -8,6 +8,7 @@
 #include <boost/foreach.hpp>
 
 #include <Wt/WTable>
+#include <Wt/WSound>
 #include <Wt/WAnchor>
 #include <Wt/WContainerWidget>
 #include <Wt/Dbo/Transaction>
@@ -110,6 +111,7 @@ public:
         Notifiable(Object(USER, user.id()), tNot),
         user_(user),
         last_clicked_(0) {
+        sound_ = new Wt::WSound("/sound/glass.mp3");
         for (int i = 0; i < ORDER_OF_STATES_SIZE; i++) {
             first_of_state_[i] = 0;
         }
@@ -125,6 +127,7 @@ private:
     Anchors anchors_;
     int last_clicked_;
     int first_of_state_[ORDER_OF_STATES_SIZE];
+    Wt::WSound* sound_;
 
     void update_games_list() {
         dbo::Transaction t(tApp->session());
@@ -174,6 +177,8 @@ private:
         const Object* o = DOWNCAST<const Object*>(e.get());
         if (o->user_id != user_.id()) {
             a->excite();
+            sound_->stop();
+            sound_->play();
         }
         dbo::Transaction t(tApp->session());
         int game_id = a->game_id();
