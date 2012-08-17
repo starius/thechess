@@ -239,6 +239,11 @@ public:
         return sessions_ != 0;
     }
 
+    /** Return number of sessions, opened by the user */
+    int sessions() const {
+        return sessions_;
+    }
+
     /** Get total time spent online */
     const Td& online_time() const {
         return online_time_;

@@ -16,6 +16,7 @@
 #include <Wt/WEnvironment>
 #include <Wt/Dbo/Exception>
 #include <Wt/WLogger>
+#include <Wt/WText>
 #include <Wt/Auth/AuthWidget>
 #include <Wt/Wc/util.hpp>
 #include <Wt/Wc/SWFStore.hpp>
@@ -79,6 +80,15 @@ void Application::update_password() {
     }
 }
 
+static void check_session_number() {
+    dbo::Transaction t(tApp->session());
+    if (tApp && tApp->user() && tApp->user()->sessions() > 10) {
+        tApp->root()->clear();
+        new Wt::WText(Wt::WString::tr("tc.user.Many_sessions"), tApp->root());
+        tApp->quit();
+    }
+}
+
 void Application::login_handler() {
     GamesVector games_vector;
     dbo::Transaction t(session());
@@ -92,6 +102,7 @@ void Application::login_handler() {
         user().reread();
         if (user()) {
             user().modify()->login();
+            Wt::Wc::bound_post(check_session_number)();
             {
                 Games games = user()->games().where("state in (?,?,?)")
                               .bind(Game::CONFIRMED)
