@@ -170,8 +170,11 @@ private:
             }
     }
 
-    void anchor_notify_handler(MyGameAnchor* a) {
-        a->excite();
+    void anchor_notify_handler(MyGameAnchor* a, EventPtr e) {
+        const Object* o = DOWNCAST<const Object*>(e.get());
+        if (o->user_id != user_.id()) {
+            a->excite();
+        }
         dbo::Transaction t(tApp->session());
         int game_id = a->game_id();
         GamePtr game = tApp->session().load<Game>(game_id, /* reread */ true);
@@ -204,8 +207,8 @@ private:
     friend class MyGameAnchor;
 };
 
-void MyGameAnchor::notify(EventPtr) {
-    list_->anchor_notify_handler(this);
+void MyGameAnchor::notify(EventPtr e) {
+    list_->anchor_notify_handler(this, e);
 }
 
 MyGamesList::MyGamesList(const UserPtr& user, Wt::WContainerWidget* p):
