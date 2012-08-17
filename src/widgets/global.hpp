@@ -41,6 +41,7 @@ class RecordWidgetBase;
 class RightsEdit;
 class SettingsWidget;
 class StagedCompetitionGraph;
+class UserListWidget;
 class UserWidget;
 class VirtualsWidget;
 

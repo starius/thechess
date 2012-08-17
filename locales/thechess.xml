@@ -543,6 +543,7 @@ See locales-test manpage for more information.
 
     <message id='tc.user.Anonymous'>Anonymous</message>
     <message id='tc.user.chat_writer'>write to chat</message>
+    <message id='tc.user.classification'>classification</message>
     <message id='tc.user.classification_a'>class A</message>
     <message id='tc.user.classification_b'>class B</message>
     <message id='tc.user.classification_c'>class C</message>
@@ -573,11 +574,18 @@ See locales-test manpage for more information.
     <message id='tc.user.forum_post_creator'>post forum</message>
     <message id='tc.user.game_creator'>create game</message>
     <message id='tc.user.game_joiner'>join game</message>
+    <message id='tc.user.games_stat_all'>all games</message>
+    <message id='tc.user.games_stat_draws'>draws</message>
+    <message id='tc.user.games_stat_elo'>rating Elo</message>
+    <message id='tc.user.games_stat_fails'>fails</message>
+    <message id='tc.user.games_stat_wins'>wins</message>
     <message id='tc.user.gp_creator'>create game parameters</message>
     <message id='tc.user.List_rights'>List of rights</message>
     <message id='tc.user.my_page'>my page</message>
     <message id='tc.user.not_confirmed'>, not confirmed</message>
+    <message id='tc.user.Not_removed'>Not removed</message>
     <message id='tc.user.Online_time'>Spent online {1}</message>
+    <message id='tc.user.Only_online'>Only online</message>
     <message id='tc.user.private_writer'>write private message</message>
     <message id='tc.user.rating_after'>rating after</message>
     <message id='tc.user.Rating_changes'>Rating changes</message>

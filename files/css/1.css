@@ -96,6 +96,26 @@ a.thechess-proposed {
     background-color: white;
 }
 
+.thechess-games-all {
+    color: black;
+}
+
+.thechess-games-wins {
+    color: #006400; /* darkGreen */
+}
+
+.thechess-games-fails {
+    color: red;
+}
+
+.thechess-games-draws {
+    color: black;
+}
+
+.thechess-games-rating {
+    color: #00008B; /* darkBlue */
+}
+
 .Wt-tableview .Wt-plaintable td {
     overflow-x: hidden !important;
 }
