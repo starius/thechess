@@ -416,7 +416,7 @@ See locales-test manpage for more information.
     <message id='tc.competition.Type_team'>Team</message>
     <message id='tc.competition.user_pair'>{1} - {2}</message>
     <message id='tc.competition.Users'>Number of users</message>
-    <message id='tc.competition.Virtuals_allowed_by'>Virtuals_allowed_by </message>
+    <message id='tc.competition.Virtuals_allowed_by'>Virtuals_allowed_by&nbsp;</message>
     <message id='tc.competition.Winner'>Winner</message>
     <message id='tc.competition.Winners'>Winners</message>
     <message id='tc.competition.Virtuals'>
@@ -565,7 +565,7 @@ See locales-test manpage for more information.
     <message id='tc.user.competition_changer'>change competition</message>
     <message id='tc.user.competition_creator'>create competition</message>
     <message id='tc.user.competition_joiner'>join competition</message>
-    <message id='tc.user.confirmed_by'>, confirmed by </message>
+    <message id='tc.user.confirmed_by'>, confirmed by&nbsp;</message>
     <message id='tc.user.cp_creator'>create competition parameters</message>
     <message id='tc.user.Delete'>Delete</message>
     <message id='tc.user.Edit_rights'>Edit rights</message>
