@@ -174,6 +174,9 @@ private:
     }
 
     void print_rights() {
+        if (user_->rights() == User::NONE) {
+            return;
+        }
         Wt::WPanel* panel = new Wt::WPanel(this);
         panel->setCollapsible(true);
         panel->collapse();
