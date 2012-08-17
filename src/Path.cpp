@@ -55,7 +55,7 @@ Path::Path(Wt::WObject* parent):
 
 void Path::connect_main_widget(MainWidget* mw) {
     main_widget_ = mw;
-    // TODO user list
+    user_list_->opened().connect(mw, &MainWidget::user_list);
     user_view_->opened().connect(this, &Path::open_user);
     virtuals_of_user_->opened().connect(this, &Path::open_virtuals_of_user);
     games_of_user_->opened().connect(this, &Path::open_games_of_user);

@@ -49,8 +49,9 @@ private:
         if (user_items_) {
             add_button("tc.competition.New", path_->competition_new());
         }
+        add_section("tc.user.user");
+        add_button("tc.user.List", path_->user_list());
         if (user_items_) {
-            add_section("tc.user.user");
             add_button("tc.user.settings", path_->settings_page());
             add_button("tc.user.my_page",
                        path_->user_view()->get_link(tApp->user().id()));

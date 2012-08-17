@@ -27,6 +27,7 @@
 #include "widgets/competition/CompetitionCreateWidget.hpp"
 #include "widgets/competition/CompetitionListWidget.hpp"
 #include "widgets/user/UserWidget.hpp"
+#include "widgets/user/UserListWidget.hpp"
 #include "widgets/user/VirtualsWidget.hpp"
 #include "widgets/user/SettingsWidget.hpp"
 #include "widgets/comment/CommentList.hpp"
@@ -103,7 +104,7 @@ void MainWidget::settings_page() {
 }
 
 void MainWidget::user_list() {
-    // TODO
+    set_contents(new UserListWidget());
 }
 
 void MainWidget::update_password() {
