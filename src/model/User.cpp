@@ -43,6 +43,9 @@ void User::set_removed(bool removed) {
                                     Wt::Auth::User::Disabled :
                                     Wt::Auth::User::Normal;
     auth_info().modify()->setStatus(status);
+    if (removed) {
+        set_rights(NONE);
+    }
 }
 
 bool User::can_remove(const UserPtr& victim) const {
@@ -85,7 +88,7 @@ void User::set_permission(Rights perm, bool can) {
 }
 
 bool User::can_change_right(Rights r, const UserPtr& who) const {
-    if (!who) {
+    if (!who || who->removed() || removed()) {
         return false;
     }
     if (who != self()) {

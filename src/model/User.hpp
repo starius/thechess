@@ -165,7 +165,9 @@ public:
     /** Return if the user was removed */
     bool removed() const;
 
-    /** Set user removed status */
+    /** Set user removed status.
+    Removed user loses all his rights.
+    */
     void set_removed(bool removed = true);
 
     /** Return if this user can remove the victim */
