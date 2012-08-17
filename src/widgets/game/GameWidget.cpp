@@ -141,7 +141,8 @@ public:
     GameWidgetImpl(const GamePtr& game) :
         Wt::WContainerWidget(),
         Notifiable(Object(GAME, game.id()), tNot),
-        game_(game) {
+        game_(game),
+        analysis_(0) {
         dbo::Transaction t(tApp->session());
         game_.reread();
         new Header(tr("tc.game.Header").arg((int)game.id()), this);
@@ -165,6 +166,12 @@ public:
         print_comment_list();
         status_and_manager();
         countdown_print();
+    }
+
+    ~GameWidgetImpl() {
+        if (analysis_) {
+            analysis_->reject();
+        }
     }
 
     virtual void notify(EventPtr) {
@@ -198,6 +205,7 @@ private:
     Wt::WContainerWidget* manager_;
     GameCountdown* countdown_;
     Wt::WContainerWidget* comment_container_;
+    Wt::WDialog* analysis_;
 
     void move_handler(const HalfMove& half_move) {
         dbo::Transaction t(tApp->session());
@@ -400,7 +408,10 @@ private:
 
     void show_analysis() {
         dbo::Transaction t(tApp->session());
-        Wt::WDialog* analysis = new Wt::WDialog(
+        if (analysis_) {
+            return;
+        }
+        analysis_ = new Wt::WDialog(
             tr("tc.game.Analysis_title").arg((int)game_.id()));
         int max_moves = -1;
         bool active = true;
@@ -409,16 +420,17 @@ private:
         Piece::Color bottom = game_->color_of(tApp->user());
         const Moves& moves = game_->moves();
         new MovesWidget(moves, big, active, max_moves,
-                        append_only, bottom, analysis->contents());
-        analysis->setClosable(true);
-        analysis->finished()
+                        append_only, bottom, analysis_->contents());
+        analysis_->setClosable(true);
+        analysis_->finished()
         .connect(this, &GameWidgetImpl::close_analysis);
-        analysis->setModal(false);
-        analysis->show();
+        analysis_->setModal(false);
+        analysis_->show();
     }
 
     void close_analysis() {
-        delete sender();
+        delete analysis_;
+        analysis_ = 0;
     }
 
     void comment_handler(const Wt::WString& text) {
