@@ -28,6 +28,11 @@ public:
     /** Connect nodes to slots of main widget */
     void connect_main_widget(MainWidget* main_widget);
 
+    /** Main page */
+    url::Parser* main_page() {
+        return this;
+    }
+
     /** List of users */
     url::PredefinedNode* user_list() const {
         return user_list_;

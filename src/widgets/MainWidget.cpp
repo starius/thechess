@@ -77,6 +77,11 @@ void MainWidget::update_my_games() {
     }
 }
 
+void MainWidget::main_page() {
+    set_contents(new Wt::WContainerWidget()); // TODO
+    wApp->setTitle(tr("tc.title.MainPage"));
+}
+
 void MainWidget::user_view(const UserPtr& user) {
     set_contents(new UserWidget(user));
     wApp->setTitle(tr("tc.title.UserWidget").arg(user->username20()));

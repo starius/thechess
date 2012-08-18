@@ -33,6 +33,9 @@ public:
     /** Update list of user's games (East) */
     void update_my_games();
 
+    /** Show main page */
+    void main_page();
+
     /** List of users */
     void user_list();
 

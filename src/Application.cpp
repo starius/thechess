@@ -37,6 +37,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     main_widget_ = new MainWidget(root());
     main_widget_->show_menu(&path_);
     path_.connect_main_widget(main_widget_);
+    path_.error404().connect(main_widget_, &MainWidget::main_page);
     set_auth_widget();
     enableUpdates(true);
     useStyleSheet("css/1.css");
@@ -53,7 +54,6 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
             "gh-pages/jquery.countdown.min.js");
     session().login().changed().connect(this, &Application::login_handler);
     login_handler();
-    setTitle(Wt::WString::tr("tc.title.MainPage"));
     path_.open(internalPath());
 }
 

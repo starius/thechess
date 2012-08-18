@@ -56,6 +56,7 @@ Path::Path(Wt::WObject* parent):
 
 void Path::connect_main_widget(MainWidget* mw) {
     main_widget_ = mw;
+    connect(this, boost::bind(&MainWidget::main_page, mw));
     connect(user_list_, boost::bind(&MainWidget::user_list, mw));
     connect(user_view_, boost::bind(&Path::open_user, this));
     connect(virtuals_of_user_, boost::bind(&Path::open_virtuals_of_user, this));
