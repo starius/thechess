@@ -132,9 +132,7 @@ public:
         chart_->setXSeriesColumn(RatingModel::ENDED_COLUMN); // useless
         chart_->axis(Wt::Chart::XAxis).setScale(Wt::Chart::DateScale);
         chart_->resize(700, 500);
-        if (!wApp->environment().ajax()) {
-            chart_->setPreferredMethod(Wt::WPaintedWidget::PngImage);
-        }
+        chart_->setPreferredMethod(Wt::WPaintedWidget::PngImage); // FIXME
         if (user) {
             add_user(user);
         }
