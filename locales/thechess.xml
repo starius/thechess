@@ -12,10 +12,12 @@
 Message id should be like "tc.SECTION.ID"
 
 * SECTION:
+ * comment
  * common
  * competition
+ * forum
  * game
- * time
+ * title
  * user
 
 Messages for board and Wt's translations are in the beginning
@@ -539,6 +541,55 @@ See locales-test manpage for more information.
     <message id='tc.game.Mistake_welcome'>
         Wrong move? Select it and press Rollback -
         game would be rolled back before selected move
+    </message>
+
+    <message id='tc.title.BoardWidget'>Board / TheChess</message>
+    <message id='tc.title.ChatCommentWidget'>Chat message / TheChess</message>
+    <message id='tc.title.CommentList_edit'>Edit / Forum / TheChess</message>
+    <message id='tc.title.GameCreateWidget'>Create / Game / TheChess</message>
+    <message id='tc.title.GameListWidget'>List / Game / TheChess</message>
+    <message id='tc.title.GameWidget'>#{1} / Game / TheChess</message>
+    <message id='tc.title.MainPage'>TheChess</message>
+    <message id='tc.title.MovesWidget'>Board / TheChess</message>
+    <message id='tc.title.SettingsWidget'>Settings / User / TheChess</message>
+    <message id='tc.title.UserListWidget'>List / User / TheChess</message>
+    <message id='tc.title.UserWidget'>{1} / User / TheChess</message>
+    <message id='tc.title.VirtualsWidget'>Virtuals / User / TheChess</message>
+    <message id='tc.title.CommentList_forum_comment'>
+        Comment #{1} / Forum / TheChess
+    </message>
+    <message id='tc.title.CommentList_post'>
+        Post {1} / Forum / TheChess
+    </message>
+    <message id='tc.title.CommentList_posts'>
+        Posts / Forum / TheChess
+    </message>
+    <message id='tc.title.CommentList_topic'>
+        Topic {1} / Forum / TheChess
+    </message>
+    <message id='tc.title.CommentList_topics'>
+        Topics / Forum / TheChess
+    </message>
+    <message id='tc.title.CompetitionCreateWidget'>
+        Create / Competition / TheChess
+    </message>
+    <message id='tc.title.CompetitionListWidget'>
+        List / Competition / TheChess
+    </message>
+    <message id='tc.title.CompetitionListWidget_of'>
+        With {1} / Competition / TheChess
+    </message>
+    <message id='tc.title.CompetitionWidget'>
+        #{1} / Competition / TheChess
+    </message>
+    <message id='tc.title.GPListWidget'>
+        List / Parameters / Game / TheChess
+    </message>
+    <message id='tc.title.GameListWidget_of'>
+        With {1} / Game / TheChess
+    </message>
+    <message id='tc.title.VirtualsWidget_of'>
+        Virtuals of {1} / User / TheChess
     </message>
 
     <message id='tc.user.Anonymous'>Anonymous</message>

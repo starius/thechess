@@ -79,32 +79,40 @@ void MainWidget::update_my_games() {
 
 void MainWidget::user_view(const UserPtr& user) {
     set_contents(new UserWidget(user));
+    wApp->setTitle(tr("tc.title.UserWidget").arg(user->username20()));
 }
 
 void MainWidget::virtuals_of_user(const UserPtr& user) {
     set_contents(new VirtualsWidget(user));
+    wApp->setTitle(tr("tc.title.VirtualsWidget_of").arg(user->username20()));
 }
 
 void MainWidget::games_of_user(const UserPtr& user) {
     set_contents(new GameListWidget(user));
+    wApp->setTitle(tr("tc.title.GameListWidget_of").arg(user->username20()));
 }
 
 void MainWidget::competitions_of_user(const UserPtr& user) {
     set_contents(new CompetitionListWidget(user));
+    wApp->setTitle(tr("tc.title.CompetitionListWidget_of")
+                   .arg(user->username20()));
 }
 
 void MainWidget::all_virtuals() {
     set_contents(new VirtualsWidget());
+    wApp->setTitle(tr("tc.title.VirtualsWidget"));
 }
 
 void MainWidget::settings_page() {
     if (tApp->user()) {
         set_contents(new SettingsWidget());
+        wApp->setTitle(tr("tc.title.SettingsWidget"));
     }
 }
 
 void MainWidget::user_list() {
     set_contents(new UserListWidget());
+    wApp->setTitle(tr("tc.title.UserListWidget"));
 }
 
 void MainWidget::update_password() {
@@ -117,30 +125,37 @@ void MainWidget::update_password() {
 
 void MainWidget::game_view(const GamePtr& game) {
     set_contents(new GameWidget(game));
+    wApp->setTitle(tr("tc.title.GameWidget").arg(game.id()));
 }
 
 void MainWidget::game_list() {
     set_contents(new GameListWidget());
+    wApp->setTitle(tr("tc.title.GameListWidget"));
 }
 
 void MainWidget::game_new() {
     set_contents(new GameCreateWidget());
+    wApp->setTitle(tr("tc.title.GameCreateWidget"));
 }
 
 void MainWidget::gp_list() {
     set_contents(new GPListWidget());
+    wApp->setTitle(tr("tc.title.GPListWidget"));
 }
 
 void MainWidget::competition_view(const CompetitionPtr& competition) {
     set_contents(new CompetitionWidget(competition));
+    wApp->setTitle(tr("tc.title.CompetitionWidget").arg(competition.id()));
 }
 
 void MainWidget::competition_list() {
     set_contents(new CompetitionListWidget());
+    wApp->setTitle(tr("tc.title.CompetitionListWidget"));
 }
 
 void MainWidget::competition_new() {
     set_contents(new CompetitionCreateWidget());
+    wApp->setTitle(tr("tc.title.CompetitionCreateWidget"));
 }
 
 void MainWidget::board_view(const std::string& data) {
@@ -149,42 +164,51 @@ void MainWidget::board_view(const std::string& data) {
                                   /* bottom */ Piece::WHITE, Board(data));
     b->show_lastmove_checkbox(false);
     set_contents(b);
+    wApp->setTitle(tr("tc.title.BoardWidget"));
 }
 
 void MainWidget::moves_widget() {
     set_contents(new MovesWidget(Moves(), /* big */ false, /* active */ true));
+    wApp->setTitle(tr("tc.title.MovesWidget"));
 }
 
 void MainWidget::forum_topics() {
     set_contents(new CommentList(Comment::FORUM_TOPIC));
+    wApp->setTitle(tr("tc.title.CommentList_topics"));
 }
 
 void MainWidget::forum_topic_posts(const CommentPtr& topic) {
     set_contents(new CommentList(Comment::FORUM_POST, topic));
+    wApp->setTitle(tr("tc.title.CommentList_topic").arg(topic->text()));
 }
 
 void MainWidget::forum_all_posts() {
     set_contents(new CommentList(Comment::FORUM_POST));
+    wApp->setTitle(tr("tc.title.CommentList_posts"));
 }
 
 void MainWidget::forum_post(const CommentPtr& post) {
     if (post->children().size()) {
         CommentPtr post_text = post->children().front();
         set_contents(new CommentList(Comment::FORUM_COMMENT, post_text));
+        wApp->setTitle(tr("tc.title.CommentList_post").arg(post->text()));
     }
 }
 
 void MainWidget::forum_post_comment(const CommentPtr& comment) {
     CommentPtr post_text = comment->root();
     set_contents(new ForumCommentWidget(comment));
+    wApp->setTitle(tr("tc.title.CommentList_forum_comment").arg(comment.id()));
 }
 
 void MainWidget::forum_edit(const CommentPtr& post_or_text) {
     set_contents(new ForumEdit(post_or_text));
+    wApp->setTitle(tr("tc.title.CommentList_edit"));
 }
 
 void MainWidget::chat_comment(const CommentPtr& comment) {
     set_contents(new ChatCommentWidget(comment));
+    wApp->setTitle(tr("tc.title.ChatCommentWidget"));
 }
 
 Wt::Auth::AuthWidget* MainWidget::auth_widget() {

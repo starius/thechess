@@ -53,6 +53,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
             "gh-pages/jquery.countdown.min.js");
     session().login().changed().connect(this, &Application::login_handler);
     login_handler();
+    setTitle(Wt::WString::tr("tc.title.MainPage"));
     path_.open(internalPath());
 }
 
