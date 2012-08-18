@@ -6,7 +6,7 @@
  */
 
 #include <Wt/WTable>
-#include <Wt/WText>
+#include <Wt/WAnchor>
 #include <Wt/WDateTime>
 #include <Wt/Auth/AuthWidget>
 #include <Wt/Wc/util.hpp>
@@ -48,7 +48,10 @@ enum {
 MainWidget::MainWidget(Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent) {
     Wt::WTable* top = new Wt::WTable(this);
-    top->elementAt(0, 0)->addWidget(new Wt::WText(tr("tc.common.Logo")));
+    Wt::WAnchor* logo = new Wt::WAnchor();
+    logo->setText(tr("tc.common.Logo"));
+    logo->setLink(Wt::WLink(Wt::WLink::InternalPath, "/")); // main page
+    top->elementAt(0, 0)->addWidget(logo);
     auth_place_ = top->elementAt(0, AUTH_IN_TOP);
     Wt::WTable* middle = new Wt::WTable(this);
     middle->resize(Wt::WLength(100, Wt::WLength::Percentage),
