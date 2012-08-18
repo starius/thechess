@@ -170,10 +170,12 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
         line_edit->setTextSize(TOPIC_LENGTH);
+        line_edit->setMaxLength(TOPIC_LENGTH);
     } else if (type == Comment::FORUM_POST) {
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
         line_edit->setTextSize(POST_LENGTH);
+        line_edit->setMaxLength(POST_LENGTH);
         post_text_ = new Wt::WTextEdit(this);
         Wt::Wc::fix_text_edit(post_text_);
     } else if (type == Comment::CHAT_MESSAGE) {
@@ -182,6 +184,7 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
         edit_->enterPressed().connect(boost::bind(&CommentList::add_comment,
                                       this, root));
         line_edit->setTextSize(COMMENT_CHAT_LENGTH);
+        line_edit->setMaxLength(COMMENT_CHAT_LENGTH);
     } else if (type == Comment::FORUM_COMMENT) {
         Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
         edit_ = text_edit;
@@ -210,7 +213,19 @@ CommentModel* CommentList::comment_model() const {
 }
 
 void CommentList::add_comment(const CommentPtr& parent) {
-    if (edit_->valueText().empty()) {
+    Wt::WString text = edit_->valueText();
+    Comment::Type type = comment_model()->type();
+    if (text.empty()) {
+        return;
+    }
+    if (type == Comment::FORUM_TOPIC && text.value().size() > TOPIC_LENGTH) {
+        return;
+    }
+    if (type == Comment::FORUM_POST && text.value().size() > POST_LENGTH) {
+        return;
+    }
+    if (type == Comment::CHAT_MESSAGE &&
+            text.value().size() > COMMENT_CHAT_LENGTH) {
         return;
     }
     dbo::Transaction t(tApp->session());
@@ -219,12 +234,12 @@ void CommentList::add_comment(const CommentPtr& parent) {
     }
     CommentPtr comment = tApp->session().add(new Comment(true));
     comment.modify()->set_parent(parent);
-    comment.modify()->set_type(comment_model()->type());
-    comment.modify()->set_text(edit_->valueText());
+    comment.modify()->set_type(type);
+    comment.modify()->set_text(text);
     comment.modify()->set_init(tApp->user());
     CommentPtr root = comment_model()->root();
     comment.modify()->set_root(root);
-    if (comment_model()->type() == Comment::FORUM_POST) {
+    if (type == Comment::FORUM_POST) {
         comment.flush();
         CommentPtr post_text = tApp->session().add(new Comment(true));
         post_text.modify()->set_type(Comment::FORUM_POST_TEXT);
@@ -232,14 +247,14 @@ void CommentList::add_comment(const CommentPtr& parent) {
         post_text.modify()->set_text(post_text_->valueText());
         post_text.modify()->set_init(tApp->user());
     }
-    if (comment_model()->type() == Comment::FORUM_COMMENT) {
+    if (type == Comment::FORUM_COMMENT) {
         // FORUM_POST's creation time is the time of last comment
         CommentPtr post = root->parent();
         post.modify()->post_comment_added();
     }
     t.commit();
     edit_->setValueText("");
-    if (comment_model()->type() == Comment::FORUM_POST) {
+    if (type == Comment::FORUM_POST) {
         post_text_->setValueText("");
     }
     tNot->emit(new Object(COMMENT, root.id()));
