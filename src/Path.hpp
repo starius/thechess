@@ -25,7 +25,7 @@ public:
     /** Constructor */
     Path(Wt::WObject* parent = 0);
 
-    /** Connect opened() signals to slots of main widget */
+    /** Connect nodes to slots of main widget */
     void connect_main_widget(MainWidget* main_widget);
 
     /** List of users */

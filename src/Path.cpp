@@ -6,6 +6,7 @@
  */
 
 #include <boost/assert.hpp>
+#include <boost/bind.hpp>
 
 #include "Path.hpp"
 #include "Application.hpp"
@@ -55,30 +56,30 @@ Path::Path(Wt::WObject* parent):
 
 void Path::connect_main_widget(MainWidget* mw) {
     main_widget_ = mw;
-    user_list_->opened().connect(mw, &MainWidget::user_list);
-    user_view_->opened().connect(this, &Path::open_user);
-    virtuals_of_user_->opened().connect(this, &Path::open_virtuals_of_user);
-    games_of_user_->opened().connect(this, &Path::open_games_of_user);
-    competitions_of_user_->opened().connect(this,
-                                            &Path::open_competitions_of_user);
-    all_virtuals_->opened().connect(mw, &MainWidget::all_virtuals);
-    settings_page_->opened().connect(mw, &MainWidget::settings_page);
-    game_list_->opened().connect(mw, &MainWidget::game_list);
-    game_view_->opened().connect(this, &Path::open_game);
-    game_new_->opened().connect(mw, &MainWidget::game_new);
-    gp_list_->opened().connect(mw, &MainWidget::gp_list);
-    competition_list_->opened().connect(mw, &MainWidget::competition_list);
-    competition_view_->opened().connect(this, &Path::open_competition);
-    competition_new_->opened().connect(mw, &MainWidget::competition_new);
-    board_->opened().connect(this, &Path::open_board);
-    board_root_->opened().connect(mw, &MainWidget::moves_widget);
-    topics_->opened().connect(mw, &MainWidget::forum_topics);
-    topic_posts_->opened().connect(this, &Path::open_forum_topic_posts);
-    all_posts_->opened().connect(mw, &MainWidget::forum_all_posts);
-    post_->opened().connect(this, &Path::open_forum_post);
-    post_comment_->opened().connect(this, &Path::open_forum_post_comment);
-    forum_edit_->opened().connect(this, &Path::open_forum_edit);
-    chat_comment_->opened().connect(this, &Path::open_chat_comment);
+    connect(user_list_, boost::bind(&MainWidget::user_list, mw));
+    connect(user_view_, boost::bind(&Path::open_user, this));
+    connect(virtuals_of_user_, boost::bind(&Path::open_virtuals_of_user, this));
+    connect(games_of_user_, boost::bind(&Path::open_games_of_user, this));
+    connect(competitions_of_user_, boost::bind(&Path::open_competitions_of_user,
+            this));
+    connect(all_virtuals_, boost::bind(&MainWidget::all_virtuals, mw));
+    connect(settings_page_, boost::bind(&MainWidget::settings_page, mw));
+    connect(game_list_, boost::bind(&MainWidget::game_list, mw));
+    connect(game_view_, boost::bind(&Path::open_game, this));
+    connect(game_new_, boost::bind(&MainWidget::game_new, mw));
+    connect(gp_list_, boost::bind(&MainWidget::gp_list, mw));
+    connect(competition_list_, boost::bind(&MainWidget::competition_list, mw));
+    connect(competition_view_, boost::bind(&Path::open_competition, this));
+    connect(competition_new_, boost::bind(&MainWidget::competition_new, mw));
+    connect(board_, boost::bind(&Path::open_board, this));
+    connect(board_root_, boost::bind(&MainWidget::moves_widget, mw));
+    connect(topics_, boost::bind(&MainWidget::forum_topics, mw));
+    connect(topic_posts_, boost::bind(&Path::open_forum_topic_posts, this));
+    connect(all_posts_, boost::bind(&MainWidget::forum_all_posts, mw));
+    connect(post_, boost::bind(&Path::open_forum_post, this));
+    connect(post_comment_, boost::bind(&Path::open_forum_post_comment, this));
+    connect(forum_edit_, boost::bind(&Path::open_forum_edit, this));
+    connect(chat_comment_, boost::bind(&Path::open_chat_comment, this));
 }
 
 void Path::open_user() {
