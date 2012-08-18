@@ -36,7 +36,8 @@ static void add_comment(const CommentPtr& comment, Wt::WTextEdit* edit) {
     CommentPtr post = post_text->parent();
     post.modify()->post_comment_added();
     t.commit();
-    tApp->setInternalPath(tApp->path().post()->get_full_path(post.id()), true);
+    tApp->path().post()->set_integer_value(post.id());
+    tApp->path().post()->open();
 }
 
 ForumCommentWidget::ForumCommentWidget(const CommentPtr& comment) {

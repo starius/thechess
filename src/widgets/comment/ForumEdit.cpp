@@ -32,7 +32,8 @@ static void edit_comment(const CommentPtr& post_or_text,
     CommentPtr post = post_or_text->type() == Comment::FORUM_POST ?
                       post_or_text : post_or_text->parent();
     t.commit();
-    tApp->setInternalPath(tApp->path().post()->get_full_path(post.id()), true);
+    tApp->path().post()->set_integer_value(post.id());
+    tApp->path().post()->open();
 }
 
 ForumEdit::ForumEdit(const CommentPtr& post_or_text, Wt::WContainerWidget* p):
