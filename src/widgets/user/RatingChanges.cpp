@@ -47,8 +47,7 @@ public:
         RP::BaseQM(parent), user_(user) {
         dbo::Transaction t(tApp->session());
         RP::Q query = tApp->session().find<Game>();
-        long long uid = user_.id(); // FIXME http://redmine.emweb.be/issues/1124
-        query.where("white_id = ? or black_id = ?").bind(uid).bind(uid);
+        query.where("white_id = ? or black_id = ?").bind(user_).bind(user_);
         query.where("rating_after_white != -1");
         query.orderBy("ended");
         setQuery(query);
