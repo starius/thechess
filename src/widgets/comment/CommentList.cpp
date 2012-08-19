@@ -126,8 +126,6 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     if (type == Comment::FORUM_COMMENT && root) {
         CommentPtr post_text = root;
         CommentPtr post = root->parent();
-        header = tr("tc.forum.post_header")
-                 .arg(post.id()).arg(post->text_or_removed(tApp->user()));
         if (post->can_edit(tApp->user())) {
             Wt::WAnchor* e = new Wt::WAnchor(this);
             e->setLink(tApp->path().forum_edit()->get_link(post.id()));
