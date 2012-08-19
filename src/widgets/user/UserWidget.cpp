@@ -193,7 +193,8 @@ private:
     void print_game_stat() {
         const EloPlayer& stat = user_->games_stat();
         new Wt::WText(tr("tc.user.Games_stat").arg(stat.all()).arg(stat.wins())
-                      .arg(stat.draws()).arg(stat.fails()).arg(stat.elo()), this);
+                      .arg(stat.draws()).arg(stat.fails()).arg(stat.elo()),
+                      this);
         if (tApp->user() && tApp->user() != user_) {
             EloPlayer my_stat = tApp->user()->games_stat();
             EloPlayer his_stat = user_->games_stat();
