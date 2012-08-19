@@ -12,6 +12,7 @@
 #include <Wt/WPushButton>
 #include <Wt/WEnvironment>
 #include <Wt/Dbo/QueryModel>
+#include <Wt/Wc/Pager.hpp>
 
 #include "widgets/user/UserListWidget.hpp"
 #include "Application.hpp"
@@ -147,6 +148,11 @@ public:
         setColumnWidth(UserListModel::DRAWS_COLUMN, 50);
         setColumnWidth(UserListModel::FAILS_COLUMN, 50);
         setColumnWidth(UserListModel::RATING_COLUMN, 50);
+    }
+
+protected:
+    WWidget* createPageNavigationBar() {
+        return new Wt::Wc::Pager(this);
     }
 };
 

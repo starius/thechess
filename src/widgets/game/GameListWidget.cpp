@@ -15,6 +15,7 @@
 #include <Wt/Dbo/QueryModel>
 #include <Wt/Dbo/ptr_tuple>
 #include <Wt/Dbo/ptr>
+#include <Wt/Wc/Pager.hpp>
 
 #include <Wt/WCheckBox>
 #include <Wt/WPushButton>
@@ -100,6 +101,13 @@ public:
     }
 };
 
+class TableView : public Wt::WTableView {
+protected:
+    WWidget* createPageNavigationBar() {
+        return new Wt::Wc::Pager(this);
+    }
+};
+
 class GameListWidget::GameListWidgetImpl : public Wt::WContainerWidget {
 public:
     GameListWidgetImpl() :
@@ -115,7 +123,8 @@ public:
     void initialize() {
         manager();
         query_model_ = new GameListModel(query(), this);
-        table_view_ = new Wt::WTableView(this);
+        table_view_ = new TableView();
+        addWidget(table_view_);
         table_view_->setModel(query_model_);
         table_view_->resize(770, 450);
         table_view_->setColumnWidth(GameListModel::N_COLUMN, 65);

@@ -16,6 +16,7 @@
 #include <Wt/WText>
 #include <Wt/WAnchor>
 #include <Wt/Wc/util.hpp>
+#include <Wt/Wc/Pager.hpp>
 
 #include "widgets/comment/CommentList.hpp"
 #include "widgets/comment/CommentModel.hpp"
@@ -88,6 +89,11 @@ public:
 
     CommentModel* comment_model() const {
         return downcast<CommentModel*>(model());
+    }
+
+protected:
+    WWidget* createPageNavigationBar() {
+        return new Wt::Wc::Pager(this);
     }
 };
 

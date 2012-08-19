@@ -23,6 +23,7 @@
 #include <Wt/WCheckBox>
 #include <Wt/WString>
 #include <Wt/WTableView>
+#include <Wt/Wc/Pager.hpp>
 
 #include "widgets/chess/MovesWidget.hpp"
 #include "chess/Piece.hpp"
@@ -146,6 +147,13 @@ private:
     int max_show_move_;
 };
 
+class TableView : public Wt::WTableView {
+protected:
+    WWidget* createPageNavigationBar() {
+        return new Wt::Wc::Pager(this);
+    }
+};
+
 class MovesWidget::MovesWidgetImpl : public Wt::WContainerWidget {
 public:
     MovesWidgetImpl(const Moves& moves,
@@ -175,7 +183,7 @@ public:
         move_confirmation_ = new Wt::WCheckBox(tr("tc.game.Move_confirmation"),
                                                board_widget_->inner());
         moves_model_ = new MovesModel(&cached_moves_, this);
-        moves_table_view_ = new Wt::WTableView();
+        moves_table_view_ = new TableView();
         columns->elementAt(0, 1)->addWidget(moves_table_view_);
         moves_table_view_->setModel(moves_model_);
         int moves_per_page = big ? 20 : 10;

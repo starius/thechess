@@ -15,6 +15,7 @@
 #include <Wt/WString>
 #include <Wt/WPushButton>
 #include <Wt/WEnvironment>
+#include <Wt/Wc/Pager.hpp>
 
 #include "widgets/competition/CompetitionListWidget.hpp"
 #include "model/all.hpp"
@@ -151,6 +152,11 @@ public:
         setColumnWidth(CompetitionListModel::STARTED_COLUMN, 70);
         setColumnWidth(CompetitionListModel::ENDED_COLUMN, 70);
         setRowHeaderCount(1); // fixed id_columns when scrolling
+    }
+
+protected:
+    WWidget* createPageNavigationBar() {
+        return new Wt::Wc::Pager(this);
     }
 };
 

@@ -15,6 +15,7 @@
 #include <Wt/WPushButton>
 #include <Wt/WCheckBox>
 #include <Wt/WEnvironment>
+#include <Wt/Wc/Pager.hpp>
 
 #include "widgets/cp/CPListWidget.hpp"
 #include "Application.hpp"
@@ -118,6 +119,11 @@ public:
         setColumnWidth(CPListModel::MAX_CLASSIFICATION_COLUMN, 70);
         setColumnWidth(CPListModel::FORCE_START_DELAY_COLUMN, 60);
         setRowHeaderCount(1); // fixed id_columns when scrolling
+    }
+
+protected:
+    WWidget* createPageNavigationBar() {
+        return new Wt::Wc::Pager(this);
     }
 };
 

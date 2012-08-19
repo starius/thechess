@@ -15,6 +15,7 @@
 #include <Wt/WPushButton>
 #include <Wt/WCheckBox>
 #include <Wt/WEnvironment>
+#include <Wt/Wc/Pager.hpp>
 
 #include "widgets/gp/GPListWidget.hpp"
 #include "Application.hpp"
@@ -112,6 +113,11 @@ public:
         setColumnWidth(GPListModel::NORATING_COLUMN, 40);
         setColumnWidth(GPListModel::FIRST_DRAW_COLUMN, 30);
         setRowHeaderCount(1); // fixed id_columns when scrolling
+    }
+
+protected:
+    WWidget* createPageNavigationBar() {
+        return new Wt::Wc::Pager(this);
     }
 };
 
