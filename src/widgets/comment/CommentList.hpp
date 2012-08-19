@@ -36,6 +36,8 @@ private:
 
     CommentModel* comment_model() const;
 
+    void print_header();
+
     void add_comment(const CommentPtr& parent);
 };
 

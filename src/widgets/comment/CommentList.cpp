@@ -102,27 +102,9 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     Wt::WContainerWidget(parent),
     Notifiable(Object(COMMENT, root.id()), tNot) {
     dbo::Transaction t(tApp->session());
-    Wt::WString header;
-    if (type == Comment::FORUM_TOPIC) {
-        header = tr("tc.forum.topics");
-    } else if (type == Comment::FORUM_POST) {
-        if (root) {
-            header = tr("tc.forum.topic_posts")
-                     .arg(root->text_or_removed(tApp->user()));
-        } else {
-            header = tr("tc.forum.all_posts");
-        }
-    } else if (type == Comment::FORUM_COMMENT) {
-        if (root) {
-            CommentPtr post_text = root;
-            CommentPtr post = root->parent();
-            header = tr("tc.forum.post_header")
-                     .arg(post.id()).arg(post->text_or_removed(tApp->user()));
-        }
-    }
-    if (!header.empty()) {
-        new Header(header, this);
-    }
+    CommentModel* model = new CommentModel(type, root, this);
+    view_ = new CommentView(model); // do it here to provide comment_model()
+    print_header();
     if (type == Comment::FORUM_COMMENT && root) {
         CommentPtr post_text = root;
         CommentPtr post = root->parent();
@@ -163,13 +145,12 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
         new Wt::WBreak(this);
         new Wt::WBreak(this);
     }
-    CommentModel* model = new CommentModel(type, root, this);
     Wt::WCheckBox* only_ok = new Wt::WCheckBox(tr("tc.forum.Only_ok"), this);
     only_ok->changed().connect(
         boost::bind(&CommentModel::set_only_ok, model,
                     boost::bind(&Wt::WAbstractToggleButton::isChecked,
                                 only_ok)));
-    view_ = new CommentView(model, this);
+    addWidget(view_);
     if (type == Comment::FORUM_TOPIC) {
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
@@ -214,6 +195,32 @@ void CommentList::notify(EventPtr) {
 
 CommentModel* CommentList::comment_model() const {
     return view_->comment_model();
+}
+
+void CommentList::print_header() {
+    CommentPtr root = comment_model()->root();
+    Comment::Type type = comment_model()->type();
+    Wt::WString header;
+    if (type == Comment::FORUM_TOPIC) {
+        header = tr("tc.forum.topics");
+    } else if (type == Comment::FORUM_POST) {
+        if (root) {
+            header = tr("tc.forum.topic_posts")
+                     .arg(root->text_or_removed(tApp->user()));
+        } else {
+            header = tr("tc.forum.all_posts");
+        }
+    } else if (type == Comment::FORUM_COMMENT) {
+        if (root) {
+            CommentPtr post_text = root;
+            CommentPtr post = root->parent();
+            header = tr("tc.forum.post_header")
+                     .arg(post.id()).arg(post->text_or_removed(tApp->user()));
+        }
+    }
+    if (!header.empty()) {
+        new Header(header, this);
+    }
 }
 
 void CommentList::add_comment(const CommentPtr& parent) {
