@@ -8,6 +8,7 @@
 #include <iostream>
 #include <boost/lexical_cast.hpp>
 
+#include <Wt/WEnvironment>
 #include <Wt/WLogger>
 #include <Wt/WObject>
 #include <Wt/WAnchor>
@@ -426,6 +427,23 @@ private:
         .connect(this, &GameWidgetImpl::close_analysis);
         analysis_->setModal(false);
         analysis_->show();
+        if (tApp->environment().agentIsChrome()) {
+            // FIXME
+            Wt::Wc::schedule_action(SECOND, Wt::Wc::bound_post(boost::bind(
+                                        &GameWidgetImpl::fix_chrome, this)));
+        }
+    }
+
+    // FIXME
+    void fix_chrome() {
+        if (!analysis_) {
+            return;
+        }
+        MovesWidget* moves_widget;
+        moves_widget = DOWNCAST<MovesWidget*>(analysis_->contents()->widget(0));
+        Moves moves = moves_widget->moves();
+        moves_widget->set_moves(moves);
+        Wt::Wc::updates_trigger();
     }
 
     void close_analysis() {
