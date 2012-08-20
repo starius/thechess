@@ -106,44 +106,7 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     view_ = new CommentView(model); // do it here to provide comment_model()
     print_header();
     if (type == Comment::FORUM_COMMENT && root) {
-        CommentPtr post_text = root;
-        CommentPtr post = root->parent();
-        if (post->can_edit(tApp->user())) {
-            Wt::WAnchor* e = new Wt::WAnchor(this);
-            e->setLink(tApp->path().forum_edit()->get_link(post.id()));
-            e->setText(tr("tc.forum.Edit"));
-            new Wt::WBreak(this);
-        }
-    }
-    if (type == Comment::FORUM_COMMENT && root) {
-        CommentPtr post_text = root;
-        new Wt::WText(post_text->text_or_removed(tApp->user()), this);
-        new Wt::WBreak(this);
-        if (post_text->can_edit(tApp->user())) {
-            Wt::WAnchor* e = new Wt::WAnchor(this);
-            e->setLink(tApp->path().forum_edit()->get_link(post_text.id()));
-            e->setText(tr("tc.forum.Edit"));
-            new Wt::WText(" ", this);
-        }
-        new Wt::WText(post_text->created().toString(), this);
-        UserPtr user = post_text->init();
-        if (user) {
-            new Wt::WText(" ", this);
-            user_anchor(user, this);
-        }
-        CommentPtr post = post_text->parent();
-        if (post->edited() != post->created()) {
-            new Wt::WBreak(this);
-            new Wt::WText(tr("tc.forum.Post_edited")
-                          .arg(post->edited().toString()), this);
-        }
-        if (post_text->edited() != post_text->created()) {
-            new Wt::WBreak(this);
-            new Wt::WText(tr("tc.forum.Post_text_edited")
-                          .arg(post_text->edited().toString()), this);
-        }
-        new Wt::WBreak(this);
-        new Wt::WBreak(this);
+        print_post();
     }
     Wt::WCheckBox* only_ok = new Wt::WCheckBox(tr("tc.forum.Only_ok"), this);
     only_ok->changed().connect(
@@ -221,6 +184,43 @@ void CommentList::print_header() {
     if (!header.empty()) {
         new Header(header, this);
     }
+}
+
+void CommentList::print_post() {
+    CommentPtr post_text = comment_model()->root();
+    CommentPtr post = post_text->parent();
+    if (post->can_edit(tApp->user())) {
+        Wt::WAnchor* e = new Wt::WAnchor(this);
+        e->setLink(tApp->path().forum_edit()->get_link(post.id()));
+        e->setText(tr("tc.forum.Edit"));
+        new Wt::WBreak(this);
+    }
+    new Wt::WText(post_text->text_or_removed(tApp->user()), this);
+    new Wt::WBreak(this);
+    if (post_text->can_edit(tApp->user())) {
+        Wt::WAnchor* e = new Wt::WAnchor(this);
+        e->setLink(tApp->path().forum_edit()->get_link(post_text.id()));
+        e->setText(tr("tc.forum.Edit"));
+        new Wt::WText(" ", this);
+    }
+    new Wt::WText(post_text->created().toString(), this);
+    UserPtr user = post_text->init();
+    if (user) {
+        new Wt::WText(" ", this);
+        user_anchor(user, this);
+    }
+    if (post->edited() != post->created()) {
+        new Wt::WBreak(this);
+        new Wt::WText(tr("tc.forum.Post_edited")
+                      .arg(post->edited().toString()), this);
+    }
+    if (post_text->edited() != post_text->created()) {
+        new Wt::WBreak(this);
+        new Wt::WText(tr("tc.forum.Post_text_edited")
+                      .arg(post_text->edited().toString()), this);
+    }
+    new Wt::WBreak(this);
+    new Wt::WBreak(this);
 }
 
 void CommentList::add_comment(const CommentPtr& parent) {
