@@ -8,6 +8,7 @@
 #include <boost/bind.hpp>
 
 #include <Wt/WText>
+#include <Wt/WAnchor>
 #include <Wt/WTextEdit>
 #include <Wt/WPushButton>
 #include <Wt/Wc/util.hpp>
@@ -50,6 +51,20 @@ ForumCommentWidget::ForumCommentWidget(const CommentPtr& comment) {
     UserPtr user = comment->init();
     if (user) {
         user_anchor(user, this);
+    }
+    CommentPtr post_text = comment->root();
+    CommentPtr post = post_text->parent();
+    new Wt::WBreak(this);
+    Wt::WAnchor* a = new Wt::WAnchor(this);
+    a->setLink(tApp->path().post()->get_link(post.id()));
+    a->setText(tr("tc.forum.post_header")
+               .arg(post.id()).arg(post->text_or_removed(tApp->user())));
+    CommentPtr parent = comment->parent();
+    if (parent->type() == Comment::FORUM_COMMENT) {
+        new Wt::WBreak(this);
+        Wt::WAnchor* g = new Wt::WAnchor(this);
+        g->setLink(tApp->path().post_comment()->get_link(parent.id()));
+        g->setText(tr("tc.forum.Goto_parent").arg(parent.id()));
     }
     Wt::WTextEdit* edit = new Wt::WTextEdit(this);
     Wt::Wc::fix_text_edit(edit);
