@@ -194,6 +194,14 @@ void CommentList::print_post() {
         new Wt::WText(tr("tc.forum.Post_text_edited")
                       .arg(post_text->edited().toString()), this);
     }
+    CommentPtr topic = post->parent();
+    if (topic) {
+        new Wt::WBreak(this);
+        Wt::WAnchor* a = new Wt::WAnchor(this);
+        a->setLink(tApp->path().topic_posts()->get_link(topic.id()));
+        a->setText(tr("tc.forum.topic_posts")
+                   .arg(topic->text_or_removed(tApp->user())));
+    }
     new Wt::WBreak(this);
     new Wt::WBreak(this);
 }
