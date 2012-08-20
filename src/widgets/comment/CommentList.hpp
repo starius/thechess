@@ -38,6 +38,7 @@ private:
 
     void print_header();
     void print_post();
+    void print_edits();
 
     void add_comment(const CommentPtr& parent);
 };

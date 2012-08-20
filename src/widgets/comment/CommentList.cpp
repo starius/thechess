@@ -114,32 +114,7 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
                     boost::bind(&Wt::WAbstractToggleButton::isChecked,
                                 only_ok)));
     addWidget(view_);
-    if (type == Comment::FORUM_TOPIC) {
-        Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
-        edit_ = line_edit;
-        line_edit->setTextSize(TOPIC_LENGTH);
-        line_edit->setMaxLength(TOPIC_LENGTH);
-    } else if (type == Comment::FORUM_POST) {
-        Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
-        edit_ = line_edit;
-        line_edit->setTextSize(POST_LENGTH);
-        line_edit->setMaxLength(POST_LENGTH);
-        post_text_ = new Wt::WTextEdit(this);
-        Wt::Wc::fix_text_edit(post_text_);
-    } else if (type == Comment::CHAT_MESSAGE) {
-        Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
-        edit_ = line_edit;
-        edit_->enterPressed().connect(boost::bind(&CommentList::add_comment,
-                                      this, root));
-        line_edit->setTextSize(COMMENT_CHAT_LENGTH);
-        line_edit->setMaxLength(COMMENT_CHAT_LENGTH);
-    } else if (type == Comment::FORUM_COMMENT) {
-        Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
-        edit_ = text_edit;
-        Wt::Wc::fix_text_edit(text_edit);
-    } else {
-        // log error
-    }
+    print_edits();
     if (Comment::can_create(tApp->user(), comment_model()->type(), root)) {
         Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
         add->clicked().connect(boost::bind(&CommentList::add_comment,
@@ -271,6 +246,37 @@ void CommentList::add_comment(const CommentPtr& parent) {
     tNot->emit(new Object(COMMENT, root.id()));
     if (!wApp->environment().ajax()) {
         comment_model()->reload();
+    }
+}
+
+void CommentList::print_edits() {
+    CommentPtr root = comment_model()->root();
+    Comment::Type type = comment_model()->type();
+    if (type == Comment::FORUM_TOPIC) {
+        Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
+        edit_ = line_edit;
+        line_edit->setTextSize(TOPIC_LENGTH);
+        line_edit->setMaxLength(TOPIC_LENGTH);
+    } else if (type == Comment::FORUM_POST) {
+        Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
+        edit_ = line_edit;
+        line_edit->setTextSize(POST_LENGTH);
+        line_edit->setMaxLength(POST_LENGTH);
+        post_text_ = new Wt::WTextEdit(this);
+        Wt::Wc::fix_text_edit(post_text_);
+    } else if (type == Comment::CHAT_MESSAGE) {
+        Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
+        edit_ = line_edit;
+        edit_->enterPressed().connect(boost::bind(&CommentList::add_comment,
+                                      this, root));
+        line_edit->setTextSize(COMMENT_CHAT_LENGTH);
+        line_edit->setMaxLength(COMMENT_CHAT_LENGTH);
+    } else if (type == Comment::FORUM_COMMENT) {
+        Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
+        edit_ = text_edit;
+        Wt::Wc::fix_text_edit(text_edit);
+    } else {
+        // log error
     }
 }
 
