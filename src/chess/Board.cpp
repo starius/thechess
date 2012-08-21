@@ -45,7 +45,7 @@ int PieceStat::sum(Piece::Color c) const {
 
 int PieceStat::sum(Piece::Letter l) const {
     int result = 0;
-    for (int c = 0; c < Piece::COLOR_COUNT; c++) {
+    for (int c = 0; c < 2; c++) {
         result += stat[c][l];
     }
     return result;
@@ -53,7 +53,7 @@ int PieceStat::sum(Piece::Letter l) const {
 
 int PieceStat::sum() const {
     int result = 0;
-    for (int c = 0; c < Piece::COLOR_COUNT; c++) {
+    for (int c = 0; c < 2; c++) {
         for (int l = 0; l < Piece::LETTER_COUNT; l++) {
             result += stat[c][l];
         }
@@ -75,7 +75,7 @@ const PieceStat full_stat = PieceStat(Board());
 
 TakenPieceStat::TakenPieceStat(const Board& board):
     PieceStat(board) {
-    for (int c = 0; c < Piece::COLOR_COUNT; c++) {
+    for (int c = 0; c < 2; c++) {
         int turned_pawns = 0;
         for (int l = 0; l < Piece::LETTER_COUNT; l++) {
             stat[c][l] = full_stat.stat[c][l] - stat[c][l];

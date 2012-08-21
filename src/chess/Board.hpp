@@ -57,8 +57,11 @@ public:
         /** Return if this game is a draw since no side can checkmate */
         bool is_material_draw() const;
 
-        /** Number of pieces of given color/letter */
-        int stat[Piece::COLOR_COUNT][Piece::LETTER_COUNT];
+        /** Number of pieces of given color/letter.
+        stat[color][letter = number of pieces of given color and given letter.
+        COLOR_NULL is not acceptabl here.
+        */
+        int stat[2][Piece::LETTER_COUNT];
     };
 
     /** Numbers of taken pieces */
