@@ -296,6 +296,17 @@ public:
 
     /* @} */
 
+    /** \name Draws with judge */
+    /* @{ */
+
+    /** Return if this user can call for automatic judge (DRAW_3 and DRAW_50) */
+    bool can_check_auto_draws(const UserPtr& user) const;
+
+    /** Try to call for automatic judge */
+    void check_auto_draws(const UserPtr& user);
+
+    /* @} */
+
     /** \name Information about members */
     /* @{ */
 

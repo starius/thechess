@@ -15,6 +15,7 @@
 
 #include "model/all.hpp"
 #include "chess/Board.hpp"
+#include "chess/CachedMoves.hpp"
 
 DBO_INSTANTIATE_TEMPLATES(thechess::Game);
 
@@ -555,6 +556,21 @@ bool Game::can_draw_discard(const UserPtr& user) const {
 void Game::draw_discard(const UserPtr& user) {
     if (can_draw_discard(user)) {
         draw_proposer_.reset();
+    }
+}
+
+bool Game::can_check_auto_draws(const UserPtr& user) const {
+    return state() == ACTIVE && is_member(user);
+}
+
+void Game::check_auto_draws(const UserPtr& user) {
+    if (can_check_auto_draws(user)) {
+        CachedMoves cm(moves());
+        if (cm.is_draw_3()) {
+            finish(DRAW_3);
+        } else if (cm.is_draw_50()) {
+            finish(DRAW_50);
+        }
     }
 }
 
