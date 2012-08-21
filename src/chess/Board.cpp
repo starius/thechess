@@ -35,6 +35,32 @@ PieceStat::PieceStat(const Board& board) {
     }
 }
 
+int PieceStat::sum(Piece::Color c) const {
+    int result = 0;
+    for (int l = 0; l < Piece::LETTER_COUNT; l++) {
+        result += stat[c][l];
+    }
+    return result;
+}
+
+int PieceStat::sum(Piece::Letter l) const {
+    int result = 0;
+    for (int c = 0; c < Piece::COLOR_COUNT; c++) {
+        result += stat[c][l];
+    }
+    return result;
+}
+
+int PieceStat::sum() const {
+    int result = 0;
+    for (int c = 0; c < Piece::COLOR_COUNT; c++) {
+        for (int l = 0; l < Piece::LETTER_COUNT; l++) {
+            result += stat[c][l];
+        }
+    }
+    return result;
+}
+
 const PieceStat full_stat = PieceStat(Board());
 
 TakenPieceStat::TakenPieceStat(const Board& board):

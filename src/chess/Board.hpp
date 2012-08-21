@@ -45,6 +45,15 @@ public:
         /** Constructor */
         PieceStat(const Board& board);
 
+        /** Return total number of pieces of given color */
+        int sum(Piece::Color color) const;
+
+        /** Return total number of pieces of given letter */
+        int sum(Piece::Letter letter) const;
+
+        /** Return total number of pieces */
+        int sum() const;
+
         /** Number of pieces of given color/letter */
         int stat[Piece::COLOR_COUNT][Piece::LETTER_COUNT];
     };
