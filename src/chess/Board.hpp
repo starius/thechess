@@ -33,10 +33,28 @@ Objects of this class are very light, consuming only 34 bytes per object:
         Note: a1, h1 - white; a8, h8 - black, a1, a8 - long; h1, h8 - short
       - Pawn promotion: 1 bit (0 if was not) + 3 bits (FILE of pawn)
 
+Internal classes PieceStat and TakenPieceStat can be used to determine number of
+remaining or taken pieces.
+
 \ingroup chess
 */
 class Board {
 public:
+    /** Numbers of pieces remaining on a board */
+    struct PieceStat {
+        /** Constructor */
+        PieceStat(const Board& board);
+
+        /** Number of pieces of given color/letter */
+        int stat[Piece::COLOR_COUNT][Piece::LETTER_COUNT];
+    };
+
+    /** Numbers of taken pieces */
+    struct TakenPieceStat : public PieceStat {
+        /** Constructor */
+        TakenPieceStat(const Board& board);
+    };
+
     /** Result of testing if board is checkmate or stalemate */
     enum FinishState {
         NOTHING = 0, /**< Neither checkmate, not stalemate */

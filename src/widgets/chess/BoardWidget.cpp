@@ -41,38 +41,6 @@ namespace thechess {
 
 class BoardWidgetImpl;
 
-struct PieceStat {
-    PieceStat(const Board& board) {
-        memset(stat, 0x00, sizeof(stat));
-        THECHESS_SQUARE_FOREACH (square) {
-            if (board.isset(square)) {
-                stat[board.color(square)][board.letter(square)] += 1;
-            }
-        }
-    }
-
-    int stat[Piece::COLOR_COUNT][Piece::LETTER_COUNT];
-};
-
-const PieceStat full_stat = PieceStat(Board());
-
-struct TakenPieceStat : public PieceStat {
-    TakenPieceStat(const Board& board):
-        PieceStat(board) {
-        for (int c = 0; c < Piece::COLOR_COUNT; c++) {
-            int turned_pawns = 0;
-            for (int l = 0; l < Piece::LETTER_COUNT; l++) {
-                stat[c][l] = full_stat.stat[c][l] - stat[c][l];
-                if (stat[c][l] < 0) {
-                    turned_pawns += abs(stat[c][l]);
-                    stat[c][l] = 0;
-                }
-            }
-            stat[c][Piece::PAWN] -= turned_pawns;
-        }
-    }
-};
-
 class TakenPiecesImpl : public Wt::WContainerWidget {
 public:
 
@@ -84,7 +52,7 @@ public:
     }
 
 private:
-    TakenPieceStat taken_stat_;
+    Board::TakenPieceStat taken_stat_;
     int row_size_;
 
     void print_color(Piece::Color color) {

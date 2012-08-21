@@ -23,6 +23,35 @@ namespace thechess {
 const int ORDER_BYTE = 32;
 const int CASTLING_BYTE = 33;
 
+typedef Board::PieceStat PieceStat;
+typedef Board::TakenPieceStat TakenPieceStat;
+
+PieceStat::PieceStat(const Board& board) {
+    memset(stat, 0x00, sizeof(stat));
+    THECHESS_SQUARE_FOREACH (square) {
+        if (board.isset(square)) {
+            stat[board.color(square)][board.letter(square)] += 1;
+        }
+    }
+}
+
+const PieceStat full_stat = PieceStat(Board());
+
+TakenPieceStat::TakenPieceStat(const Board& board):
+    PieceStat(board) {
+    for (int c = 0; c < Piece::COLOR_COUNT; c++) {
+        int turned_pawns = 0;
+        for (int l = 0; l < Piece::LETTER_COUNT; l++) {
+            stat[c][l] = full_stat.stat[c][l] - stat[c][l];
+            if (stat[c][l] < 0) {
+                turned_pawns += abs(stat[c][l]);
+                stat[c][l] = 0;
+            }
+        }
+        stat[c][Piece::PAWN] -= turned_pawns;
+    }
+}
+
 void Board::init_pieces(Square::Rank rank, Piece::Color color) {
     piece(Square(Square::FILE_A, rank), Piece(color, Piece::ROOK));
     piece(Square(Square::FILE_B, rank), Piece(color, Piece::KNIGHT));
