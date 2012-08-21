@@ -138,6 +138,17 @@ std::string Board::to_string() const {
     return result;
 }
 
+bool Board::operator<(const Board& other) const {
+    for (int i = 0; i < PIECES_SIZE; i++) {
+        if (pieces_[i] < other.pieces_[i]) {
+            return true;
+        } else if (pieces_[i] > other.pieces_[i]) {
+            return false;
+        }
+    }
+    return false;
+}
+
 Board::byte Board::q(Square square) const {
     int i = square.i();
     byte b = pieces_[i / 2];
