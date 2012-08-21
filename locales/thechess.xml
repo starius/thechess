@@ -459,6 +459,7 @@ See locales-test manpage for more information.
     <message id='tc.game.Analysis'>Analysis</message>
     <message id='tc.game.Analysis_title'>Analysis of game # {1}</message>
     <message id='tc.game.black'>black</message>
+    <message id='tc.game.Call_auto_judge'>Call auto judge</message>
     <message id='tc.game.Challenge'>Challenge</message>
     <message id='tc.game.colors'>colors</message>
     <message id='tc.game.colors_not_random'>predetermined</message>

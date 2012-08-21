@@ -358,6 +358,10 @@ private:
             new Wt::WBreak(manager_);
             but<&Game::draw_propose>("tc.game.Draw_propose");
         }
+        if (game_->can_check_auto_draws(tApp->user())) {
+            new Wt::WBreak(manager_);
+            but<&Game::check_auto_draws>("tc.game.Call_auto_judge");
+        }
     }
 
     void print_status() {
