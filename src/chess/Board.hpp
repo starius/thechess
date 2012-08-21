@@ -54,6 +54,9 @@ public:
         /** Return total number of pieces */
         int sum() const;
 
+        /** Return if this game is a draw since no side can checkmate */
+        bool is_material_draw() const;
+
         /** Number of pieces of given color/letter */
         int stat[Piece::COLOR_COUNT][Piece::LETTER_COUNT];
     };
@@ -64,7 +67,9 @@ public:
         TakenPieceStat(const Board& board);
     };
 
-    /** Result of testing if board is checkmate or stalemate */
+    /** Result of testing if board is checkmate or stalemate.
+    Also you must check PieceStat::is_material_draw().
+    */
     enum FinishState {
         NOTHING = 0, /**< Neither checkmate, not stalemate */
         CHECKMATE = 1, /**< Checkmate */

@@ -61,6 +61,16 @@ int PieceStat::sum() const {
     return result;
 }
 
+bool PieceStat::is_material_draw() const {
+    // https://bitbucket.org/starius/thechess/src/32546eeb5b57/todo#cl-11
+    if (sum() == sum(Piece::KNIGHT) + 2 /* kings */) {
+        return true; // both sides have knights only
+    } else if (sum() == 2 + 2 && sum(Piece::KNIGHT) + sum(Piece::BISHOP) == 2) {
+        return true; // both sides have only a knight or a bishop
+    }
+    return false;
+}
+
 const PieceStat full_stat = PieceStat(Board());
 
 TakenPieceStat::TakenPieceStat(const Board& board):
