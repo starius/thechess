@@ -521,6 +521,7 @@ See locales-test manpage for more information.
     <message id='tc.game.State_draw_50'>Fifty-move draw</message>
     <message id='tc.game.State_draw_agreed'>Draw by agreement</message>
     <message id='tc.game.State_draw_stalemate'>Stalemate</message>
+    <message id='tc.game.State_draw_timeout'>Draw through timeout</message>
     <message id='tc.game.State_mate'>Mate</message>
     <message id='tc.game.State_no_draw_stalemate'>Stalemate in game without draws, so black wins</message>
     <message id='tc.game.State_pause'>Paused</message>
