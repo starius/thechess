@@ -41,6 +41,9 @@ public:
     /** Return board position before the half-move */
     const Board& board(int n) const;
 
+    /** Return if the same position repeated >=3 times (type of draw) */
+    bool is_draw_3() const;
+
     /** Const iterator */
     class const_iterator : public Moves::base_iterator {
     public:

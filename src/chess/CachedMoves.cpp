@@ -46,6 +46,22 @@ const Board& CachedMoves::board(int n) const {
     return boards_[n];
 }
 
+bool CachedMoves::is_draw_3() const {
+    typedef std::map<Board, int> B2C;
+    B2C board2count;
+    for (const_iterator i = begin(); i != end(); ++i) {
+        const Board& board = i.board();
+        board2count[board] += 1;
+    }
+    for (B2C::iterator i = board2count.begin(); i != board2count.end(); ++i) {
+        int count = i->second;
+        if (count >= 3) {
+            return true;
+        }
+    }
+    return false;
+}
+
 CachedMoves::const_iterator& CachedMoves::const_iterator::operator --() {
     --n_;
     return *this;
