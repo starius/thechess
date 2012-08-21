@@ -404,6 +404,10 @@ void Game::add_move(const HalfMove& half_move,
                 finish(NO_DRAW_STALEMATE, black());
             }
         }
+        Board::PieceStat stat(board_after);
+        if (stat.is_material_draw()) {
+            finish(DRAW_2_KINGS);
+        }
     }
 }
 
