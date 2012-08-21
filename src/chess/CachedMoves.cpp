@@ -8,6 +8,7 @@
 #include <Wt/Wc/util.hpp>
 
 #include "chess/CachedMoves.hpp"
+#include "chess/Piece.hpp"
 
 namespace thechess {
 
@@ -60,6 +61,23 @@ bool CachedMoves::is_draw_3() const {
         }
     }
     return false;
+}
+
+bool CachedMoves::is_draw_50() const {
+    if (moves_number() < 50) {
+        return false;
+    }
+    for (const_iterator i = iter(size() - 50 * 2); i != end(); ++i) {
+        const HalfMove& half_move = *i;
+        const Board& board = i.board();
+        if (board.letter(half_move.from()) == Piece::PAWN) {
+            return false;
+        }
+        if (board.test_takes(half_move)) {
+            return false;
+        }
+    }
+    return true;
 }
 
 CachedMoves::const_iterator& CachedMoves::const_iterator::operator --() {

@@ -44,6 +44,9 @@ public:
     /** Return if the same position repeated >=3 times (type of draw) */
     bool is_draw_3() const;
 
+    /** Return if no capture and no pawn has been moved in last 50 moves */
+    bool is_draw_50() const;
+
     /** Const iterator */
     class const_iterator : public Moves::base_iterator {
     public:
