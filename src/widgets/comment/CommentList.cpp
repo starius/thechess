@@ -38,6 +38,7 @@ const int COMMENT_ROW_HEIGHT_FORUM = 200;
 const int COMMENT_CHAT_LENGTH = 80;
 const int TOPIC_LENGTH = 80;
 const int POST_LENGTH = 80;
+const int LOG_LENGTH = 1000;
 
 class CommentList::CommentView : public Wt::WTableView {
 public:
@@ -60,7 +61,8 @@ public:
             comment_width -= POST_TIME_WIDTH;
             comment_width -= INIT_WIDTH;
             setColumnWidth(CommentModel::TIME_COL, POST_TIME_WIDTH);
-        } else if (type == Comment::CHAT_MESSAGE) {
+        } else if (type == Comment::CHAT_MESSAGE ||
+                   type == Comment::LOG_ENTRY) {
             setAlternatingRowColors(true);
             setColumnHidden(CommentModel::ID_COL, true);
             comment_width -= CHAT_TIME_WIDTH;
@@ -103,6 +105,11 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     Notifiable(Object(COMMENT, root.id()), tNot),
     edit_(0) {
     dbo::Transaction t(tApp->session());
+    if (type == Comment::LOG_ENTRY) {
+        if (!tApp->user() || !tApp->user()->has_permission(User::LOGS_READER)) {
+            return;
+        }
+    }
     CommentModel* model = new CommentModel(type, root, this);
     view_ = new CommentView(model); // do it here to provide comment_model()
     print_header();
@@ -156,6 +163,8 @@ void CommentList::print_header() {
             header = tr("tc.forum.post_header")
                      .arg(post.id()).arg(post->text_or_removed(tApp->user()));
         }
+    } else if (type == Comment::LOG_ENTRY) {
+        header = tr("tc.comment.admin_log");
     }
     if (!header.empty()) {
         new Header(header, this);
@@ -217,6 +226,9 @@ void CommentList::add_comment(const CommentPtr& parent) {
         return;
     }
     if (type == Comment::FORUM_POST && text.value().size() > POST_LENGTH) {
+        return;
+    }
+    if (type == Comment::LOG_ENTRY && text.value().size() > LOG_LENGTH) {
         return;
     }
     if (type == Comment::CHAT_MESSAGE &&
@@ -284,6 +296,11 @@ void CommentList::print_edits() {
         Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
         edit_ = text_edit;
         Wt::Wc::fix_text_edit(text_edit);
+    } else if (type == Comment::LOG_ENTRY) {
+        Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
+        edit_ = line_edit;
+        line_edit->setTextSize(80);
+        line_edit->setMaxLength(LOG_LENGTH);
     } else {
         // log error
     }

@@ -34,7 +34,8 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
                    o->init()->safe_username() :
                    Wt::WString::tr("tc.user.Anonymous");
         } else if (index.column() == TIME_COL) {
-            if (type() == Comment::CHAT_MESSAGE) {
+            if (type() == Comment::CHAT_MESSAGE ||
+                    type() == Comment::LOG_ENTRY) {
                 return o->created().toString("HH:mm");
             } else if (type() == Comment::FORUM_POST) {
                 return o->created().toString();

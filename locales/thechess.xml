@@ -336,6 +336,7 @@ See locales-test manpage for more information.
     </message>
 
     <message id='tc.comment.Add'>Add message</message>
+    <message id='tc.comment.admin_log'>admin log</message>
     <message id='tc.comment.Approve'>Approve</message>
     <message id='tc.comment.deleted_message'>[Deleted]</message>
     <message id='tc.comment.draft_message'>[Draft]</message>
