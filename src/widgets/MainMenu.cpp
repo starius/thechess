@@ -44,6 +44,7 @@ private:
             add_button("tc.game.Challenge", path_->game_new());
         }
         add_button("tc.game.Testing_board", path_->board_root());
+        add_button("tc.game.Parameters", path_->gp_list());
         add_section("tc.competition.competition");
         add_button("tc.competition.List", path_->competition_list());
         if (user_items_) {
