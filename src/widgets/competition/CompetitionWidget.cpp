@@ -76,6 +76,7 @@ public:
     CompetitionTerms(const CompetitionPtr& c) {
         using namespace config::competition::defaults;
         CPPtr cp = c->cp();
+        GPPtr gp = c->gp();
         kw("tc.competition.Rating", tr("tc.common.interval")
            .arg(cp->min_rating()).arg(cp->max_rating()));
         if (cp->min_classification() != MIN_CLASSIFICATION ||
@@ -101,6 +102,12 @@ public:
             kw("tc.competition.Relax_time", td2str(cp->relax_time()));
             kw("tc.competition.Min_substages", cp->min_substages());
             kw("tc.competition.Increment_substages", cp->increment_substages());
+        }
+        {
+            Wt::WAnchor* a = new Wt::WAnchor(this);
+            a->setText(tr("tc.game.Parameters"));
+            a->setLink(tApp->path().gp_view()->get_link(gp.id()));
+            new Wt::WBreak(this);
         }
     }
 

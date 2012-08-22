@@ -71,17 +71,23 @@ protected:
         time(game_->lastmove(), "tc.game.lastmove", result);
         time(game_->pause_until(), "tc.game.pause_until", result);
         time(game_->ended(), "tc.game.ended", result);
+        const GPPtr& gp = game_->gp();
         if (game_->is_ended()) {
             bool_item(game_->real_rating(), "tc.game.real_rating_true",
                       "tc.game.real_rating_false", result);
         } else {
-            bool_item(game_->gp()->norating(), "tc.game.norating_true",
+            bool_item(gp->norating(), "tc.game.norating_true",
                       "tc.game.norating_false", result);
         }
         if (!game_->is_ended()) {
-            item(Wt::WString::trn("tc.game.First_draw",
-                                  game_->gp()->first_draw() / 2)
-                 .arg(game_->gp()->first_draw() / 2), result);
+            item(Wt::WString::trn("tc.game.First_draw", gp->first_draw() / 2)
+                 .arg(gp->first_draw() / 2), result);
+        }
+        {
+            Wt::WContainerWidget* li = new Wt::WContainerWidget(result);
+            Wt::WAnchor* a = new Wt::WAnchor(li);
+            a->setText(tr("tc.game.Parameters"));
+            a->setLink(tApp->path().gp_view()->get_link(gp.id()));
         }
         const CompetitionPtr& c = game_->competition();
         if (c) {
