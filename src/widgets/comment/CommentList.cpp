@@ -100,7 +100,8 @@ protected:
 CommentList::CommentList(Comment::Type type, const CommentPtr& root,
                          Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent),
-    Notifiable(Object(COMMENT, root.id()), tNot) {
+    Notifiable(Object(COMMENT, root.id()), tNot),
+    edit_(0) {
     dbo::Transaction t(tApp->session());
     CommentModel* model = new CommentModel(type, root, this);
     view_ = new CommentView(model); // do it here to provide comment_model()
@@ -115,7 +116,7 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
                                 only_ok)));
     addWidget(view_);
     print_edits();
-    if (Comment::can_create(tApp->user(), comment_model()->type(), root)) {
+    if (Comment::can_create(tApp->user(), type, root) && edit_) {
         Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
         add->clicked().connect(boost::bind(&CommentList::add_comment,
                                            this, root));
