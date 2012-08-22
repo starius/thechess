@@ -74,7 +74,10 @@ Comment::State Comment::state_of_new(const UserPtr& user, Type type,
         }
         return OK;
     } else {
-        return DRAFT;
+        if (type == CHAT_MESSAGE || type == FORUM_COMMENT) {
+            return DRAFT;
+        }
+        return DELETED;
     }
 }
 
