@@ -175,6 +175,11 @@ public:
         return chat_comment_;
     }
 
+    /** Admin log */
+    url::PredefinedNode* admin_log() const {
+        return admin_log_;
+    }
+
 private:
     MainWidget* main_widget_;
     url::PredefinedNode* user_list_;
@@ -205,6 +210,7 @@ private:
     url::IntegerNode* post_comment_;
     url::IntegerNode* forum_edit_;
     url::IntegerNode* chat_comment_;
+    url::PredefinedNode* admin_log_;
 
     void open_user();
     void open_virtuals_of_user();

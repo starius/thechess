@@ -59,6 +59,9 @@ private:
             if (tApp->user()->has_permission(User::VIRTUALS_VIEWER)) {
                 add_button("tc.user.Virtuals_list", path_->all_virtuals());
             }
+            if (tApp->user()->has_permission(User::LOGS_READER)) {
+                add_button("tc.comment.admin_log", path_->admin_log());
+            }
         }
         add_section("tc.forum.forum");
         add_button("tc.forum.topics", path_->topics());

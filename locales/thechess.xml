@@ -549,6 +549,7 @@ See locales-test manpage for more information.
 
     <message id='tc.title.BoardWidget'>Board / TheChess</message>
     <message id='tc.title.ChatCommentWidget'>Chat message / TheChess</message>
+    <message id='tc.title.CommentList_admin_log'>Admin log / TheChess</message>
     <message id='tc.title.CommentList_edit'>Edit / Forum / TheChess</message>
     <message id='tc.title.GameCreateWidget'>Create / Game / TheChess</message>
     <message id='tc.title.GameListWidget'>List / Game / TheChess</message>

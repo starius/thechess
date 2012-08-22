@@ -225,6 +225,11 @@ void MainWidget::chat_comment(const CommentPtr& comment) {
     wApp->setTitle(tr("tc.title.ChatCommentWidget"));
 }
 
+void MainWidget::admin_log() {
+    set_contents(new CommentList(Comment::LOG_ENTRY));
+    wApp->setTitle(tr("tc.title.CommentList_admin_log"));
+}
+
 Wt::Auth::AuthWidget* MainWidget::auth_widget() {
     return downcast<Wt::Auth::AuthWidget*>(auth_place_->widget(0));
 }

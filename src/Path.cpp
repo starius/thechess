@@ -51,6 +51,8 @@ Path::Path(Wt::WObject* parent):
     forum_edit_ = new IntegerNode(forum_edit);
     PredefinedNode* comment = new PredefinedNode("comment", this);
     chat_comment_ = new IntegerNode(comment);
+    PredefinedNode* admin = new PredefinedNode("admin", this);
+    admin_log_ = new PredefinedNode("log", admin);
     tApp->internalPathChanged().connect(this, &Parser::open);
 }
 
@@ -82,6 +84,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(post_comment_, boost::bind(&Path::open_forum_post_comment, this));
     connect(forum_edit_, boost::bind(&Path::open_forum_edit, this));
     connect(chat_comment_, boost::bind(&Path::open_chat_comment, this));
+    connect(admin_log_, boost::bind(&MainWidget::admin_log, mw));
 }
 
 void Path::open_user() {

@@ -111,6 +111,9 @@ public:
     /** View chat comment */
     void chat_comment(const CommentPtr& comment);
 
+    /** View admin log */
+    void admin_log();
+
     /** Get authentication widget.
     \attention Auth widget should be set (by Application).
     */
