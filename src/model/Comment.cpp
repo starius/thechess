@@ -145,6 +145,9 @@ void Comment::set_type(Type type) {
 }
 
 Wt::WString Comment::text_or_removed(const UserPtr& viewer) const {
+    if (type() == LOG_ENTRY && !viewer->has_permission(User::LOGS_READER)) {
+        return "";
+    }
     if (state() == OK) {
         return text();
     } else {

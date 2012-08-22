@@ -27,8 +27,9 @@ public:
         FORUM_POST = 70, /**< Commentable by FORUM_POST_TEXT; one-line;
                               root=FORUM_TOPIC */
         FORUM_POST_TEXT = 71, /**< Commentable by FORUM_COMMENT; multi-line */
-        FORUM_COMMENT = 75 /**< Commentable by FORUM_COMMENT; multi-line;
-                                root=FORUM_POST_TEXT */
+        FORUM_COMMENT = 75, /**< Commentable by FORUM_COMMENT; multi-line;
+                                 root=FORUM_POST_TEXT */
+        LOG_ENTRY = 100 /** Security log */
     };
 
     /** The state of comment */
