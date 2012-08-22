@@ -639,6 +639,7 @@ See locales-test manpage for more information.
     <message id='tc.user.gp_creator'>create game parameters</message>
     <message id='tc.user.List'>List of users</message>
     <message id='tc.user.List_rights'>List of rights</message>
+    <message id='tc.user.logs_reader'>logs reader</message>
     <message id='tc.user.Many_sessions'>Too many sessions</message>
     <message id='tc.user.my_page'>my page</message>
     <message id='tc.user.not_confirmed'>, not confirmed</message>

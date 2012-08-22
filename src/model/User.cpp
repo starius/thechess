@@ -168,6 +168,8 @@ const char* User::right_to_str(Rights right) {
         return "tc.user.registration_banner";
     } else if (right == RECORDS_EDITOR) {
         return "tc.user.records_editor";
+    } else if (right == LOGS_READER) {
+        return "tc.user.logs_reader";
     } else if (right == SUPER_RIGHTS_CHANGER) {
         return "tc.user.super_rights_changer";
     }
@@ -195,6 +197,7 @@ void User::for_each_right(const boost::function<void(Rights)> f) {
     f(REGULAR_RIGHTS_CHANGER);
     f(REGISTRATION_BANNER);
     f(RECORDS_EDITOR);
+    f(LOGS_READER);
     f(SUPER_RIGHTS_CHANGER);
 }
 

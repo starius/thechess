@@ -102,6 +102,9 @@ public:
         /** Right to edit Game, GP and CP name and description */
         RECORDS_EDITOR = BOOST_BINARY(00010000 00000000 00000000 00000000),
 
+        /** Right to read logs */
+        LOGS_READER = BOOST_BINARY(00100000 00000000 00000000 00000000),
+
         /** Special rights */
         SUPER_RIGHTS = COMMENTS_REMOVER |
                        CLASSIFICATION_CONFIRMER |
@@ -111,7 +114,8 @@ public:
                        VIRTUALS_ALLOWER |
                        REGULAR_RIGHTS_CHANGER |
                        REGISTRATION_BANNER |
-                       RECORDS_EDITOR,
+                       RECORDS_EDITOR |
+                       LOGS_READER,
 
         /** Modeator */
         MODERATOR = REGULAR_USER | SUPER_RIGHTS,
