@@ -72,6 +72,10 @@ Comment::State Comment::state_of_new(const UserPtr& user, Type type,
                 !user->has_permission(User::FORUM_COMMENT_CREATOR)) {
             return DELETED;
         }
+        if (type == LOG_ENTRY &&
+                !user->has_permission(User::LOGS_READER)) {
+            return DELETED;
+        }
         return OK;
     } else {
         if (type == CHAT_MESSAGE || type == FORUM_COMMENT) {
