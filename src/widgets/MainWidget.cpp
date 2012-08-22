@@ -23,6 +23,7 @@
 #include "widgets/game/GameCreateWidget.hpp"
 #include "widgets/game/GameListWidget.hpp"
 #include "widgets/gp/GPListWidget.hpp"
+#include "widgets/gp/GPWidget.hpp"
 #include "widgets/competition/CompetitionWidget.hpp"
 #include "widgets/competition/CompetitionCreateWidget.hpp"
 #include "widgets/competition/CompetitionListWidget.hpp"
@@ -149,6 +150,11 @@ void MainWidget::game_new() {
 void MainWidget::gp_list() {
     set_contents(new GPListWidget());
     wApp->setTitle(tr("tc.title.GPListWidget"));
+}
+
+void MainWidget::gp_view(const GPPtr& gp) {
+    set_contents(new GPWidget(gp.get()));
+    wApp->setTitle(tr("tc.title.GPWidget").arg(gp.id()));
 }
 
 void MainWidget::competition_view(const CompetitionPtr& competition) {

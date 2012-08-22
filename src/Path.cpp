@@ -69,6 +69,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(game_view_, boost::bind(&Path::open_game, this));
     connect(game_new_, boost::bind(&MainWidget::game_new, mw));
     connect(gp_list_, boost::bind(&MainWidget::gp_list, mw));
+    connect(gp_view_, boost::bind(&Path::open_gp, this));
     connect(competition_list_, boost::bind(&MainWidget::competition_list, mw));
     connect(competition_view_, boost::bind(&Path::open_competition, this));
     connect(competition_new_, boost::bind(&MainWidget::competition_new, mw));
@@ -129,6 +130,16 @@ void Path::open_game() {
     dbo::Transaction t(tApp->session());
     try {
         main_widget_->game_view(tApp->session().load<Game>(id));
+    } catch (dbo::ObjectNotFoundException)
+    { }
+}
+
+void Path::open_gp() {
+    BOOST_ASSERT(main_widget_);
+    long long id = gp_view_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        main_widget_->gp_view(tApp->session().load<GP>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
 }

@@ -211,6 +211,7 @@ private:
     void open_games_of_user();
     void open_competitions_of_user();
     void open_game();
+    void open_gp();
     void open_competition();
     void open_board();
     void open_forum_topic_posts();

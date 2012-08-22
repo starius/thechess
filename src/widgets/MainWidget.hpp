@@ -72,6 +72,9 @@ public:
     /** List of game parameters */
     void gp_list();
 
+    /** View the gp */
+    void gp_view(const GPPtr& gp);
+
     /** List of competitions */
     void competition_list();
 
