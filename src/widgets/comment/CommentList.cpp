@@ -264,12 +264,12 @@ void CommentList::print_edits() {
     if (type == Comment::FORUM_TOPIC) {
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
-        line_edit->setTextSize(TOPIC_LENGTH);
+        line_edit->setTextSize(80);
         line_edit->setMaxLength(TOPIC_LENGTH);
     } else if (type == Comment::FORUM_POST) {
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
-        line_edit->setTextSize(POST_LENGTH);
+        line_edit->setTextSize(80);
         line_edit->setMaxLength(POST_LENGTH);
         post_text_ = new Wt::WTextEdit(this);
         Wt::Wc::fix_text_edit(post_text_);
@@ -278,7 +278,7 @@ void CommentList::print_edits() {
         edit_ = line_edit;
         edit_->enterPressed().connect(boost::bind(&CommentList::add_comment,
                                       this, root));
-        line_edit->setTextSize(COMMENT_CHAT_LENGTH);
+        line_edit->setTextSize(80);
         line_edit->setMaxLength(COMMENT_CHAT_LENGTH);
     } else if (type == Comment::FORUM_COMMENT) {
         Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
