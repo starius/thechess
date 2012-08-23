@@ -269,7 +269,7 @@ private:
     bool can_start() const;
     void start(Planning* planning);
     void create_games_classical(Planning* planning);
-    void cancel();
+    void cancel_impl();
 
     void process(Planning* planning);
     void process_classical(Planning* planning);

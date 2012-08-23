@@ -52,7 +52,7 @@ void Competition::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
         if (can_start()) {
             start(planning);
         } else if (now() - created() > cp_->max_recruiting_time()) {
-            cancel();
+            cancel_impl();
         }
     }
     if (state_ == ACTIVE) {
@@ -265,11 +265,11 @@ bool Competition::can_cancel(const UserPtr& user) const {
 
 void Competition::cancel(const UserPtr& user) {
     if (can_cancel(user)) {
-        cancel();
+        cancel_impl();
     }
 }
 
-void Competition::cancel() {
+void Competition::cancel_impl() {
     state_ = CANCELLED;
     ended_ = now();
 }
