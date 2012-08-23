@@ -49,7 +49,7 @@ public:
         resize(COMMENT_WIDTH, COMMENT_HEIGHT);
         setColumnWidth(CommentModel::ID_COL, ID_WIDTH);
         setColumnWidth(CommentModel::INIT_COL, INIT_WIDTH);
-        int comment_width = COMMENT_WIDTH - 30;
+        int comment_width = COMMENT_WIDTH - 40;
         if (type == Comment::FORUM_TOPIC) {
             setAlternatingRowColors(true);
             comment_width -= ID_WIDTH;
