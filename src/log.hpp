@@ -9,6 +9,7 @@
 #define THECHESS_LOG_HPP_
 
 #include <Wt/WString>
+#include <Wt/Wc/global.hpp>
 
 namespace thechess {
 
@@ -16,6 +17,10 @@ namespace thechess {
 \warning tApp must be available.
 */
 void admin_log(const Wt::WString& message);
+
+/** Return HTML anchor */
+Wt::WString html_a(Wt::Wc::url::IntegerNode* node, int id,
+                   const Wt::WString& text);
 
 /** Return HTML anchor to this user */
 Wt::WString user_a(int user_id);
