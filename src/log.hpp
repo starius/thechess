@@ -17,6 +17,9 @@ namespace thechess {
 */
 void admin_log(const Wt::WString& message);
 
+/** Return HTML anchor to this user */
+Wt::WString user_a(int user_id);
+
 }
 
 #endif
