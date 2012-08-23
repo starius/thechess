@@ -13,6 +13,7 @@
 
 #include "widgets/user/RightsEdit.hpp"
 #include "Application.hpp"
+#include "log.hpp"
 
 namespace thechess {
 
@@ -45,6 +46,7 @@ void RightsEdit::save() {
         Wt::WCheckBox* box = it.second;
         user_.modify()->set_permission(right, box->isChecked());
     }
+    admin_log("Change rights of " + user_a(user_.id()));
     t.commit();
     tApp->path().open(tApp->internalPath());
 }
