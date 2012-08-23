@@ -25,6 +25,7 @@
 #include "model/all.hpp"
 #include "utils/time_intervals.hpp"
 #include "notify.hpp"
+#include "log.hpp"
 
 namespace thechess {
 
@@ -151,6 +152,11 @@ private:
         if (tApp->user() && tApp->user()->can_remove(user_)) {
             user_.modify()->set_removed(!user_->removed());
         }
+        if (user_->removed()) {
+            admin_log("Remove user " + user_a(user_.id()));
+        } else {
+            admin_log("Unremove user " + user_a(user_.id()));
+        }
         t.commit();
         tNot->emit(new Object(USER, user_.id()));
         tApp->path().open(tApp->internalPath());
@@ -160,8 +166,10 @@ private:
         dbo::Transaction t(tApp->session());
         if (user_->classification_confirmed()) {
             user_.modify()->discard_classification(tApp->user());
+            admin_log("Discard classification of " + user_a(user_.id()));
         } else {
             user_.modify()->confirm_classification(tApp->user());
+            admin_log("Confirm classification of " + user_a(user_.id()));
         }
         t.commit();
         tApp->path().open(tApp->internalPath());
