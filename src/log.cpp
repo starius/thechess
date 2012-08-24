@@ -33,5 +33,10 @@ Wt::WString user_a(int user_id) {
     return html_a(tApp->path().user_view(), user_id, name);
 }
 
+Wt::WString comp_a(int id) {
+    Wt::WString t = Wt::WString("competition {1}").arg(id);
+    return html_a(tApp->path().competition_view(), id, t);
+}
+
 }
 

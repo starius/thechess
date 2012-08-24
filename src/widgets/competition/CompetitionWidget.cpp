@@ -57,9 +57,7 @@ private:
     void kick(UserPtr user) {
         dbo::Transaction t(tApp->session());
         c_.modify()->kick(tApp->user(), user);
-        Wt::WString c_a = html_a(tApp->path().competition_view(), c_.id(),
-                                 Wt::WString("competition {1}").arg(c_.id()));
-        admin_log("Kick " + user_a(user.id()) + " from " + c_a);
+        admin_log("Kick " + user_a(user.id()) + " from " + comp_a(c_.id()));
         t.commit();
         tNot->emit(new Object(COMPETITION, c_.id()));
     }
@@ -408,9 +406,7 @@ private:
         c_.reread();
         (c_.modify()->*method)(tApp->user());
         if (method == &Competition::cancel) {
-            Wt::WString t = Wt::WString("competition {1}").arg(c_.id());
-            Wt::WString a = html_a(tApp->path().competition_view(), c_.id(), t);
-            admin_log("Cancel " + a);
+            admin_log("Cancel " + comp_a(c_.id()));
         }
         t.commit();
         tApp->server().planning().add(new Object(COMPETITION, c_.id()), now());
