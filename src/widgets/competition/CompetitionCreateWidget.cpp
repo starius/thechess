@@ -18,6 +18,7 @@
 #include "model/all.hpp"
 #include "Application.hpp"
 #include "config.hpp"
+#include "log.hpp"
 
 namespace thechess {
 
@@ -79,9 +80,12 @@ void CompetitionCreateWidget::button_handler() {
     if (c_) {
         comp = c_;
         write_record(comp.modify(), /* init */ false);
+        admin_log("Change " + comp_a(comp.id()));
     } else {
         comp = tApp->session().add(new Competition(true));
         write_record(comp.modify(), /* init */ true);
+        comp.flush();
+        admin_log("Create " + comp_a(comp.id()));
     }
     comp.modify()->set_gp(gp_selector_->gp());
     comp.modify()->set_cp(cp);
