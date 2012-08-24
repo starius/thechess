@@ -290,6 +290,7 @@ void CommentList::print_edits() {
         line_edit->setTextSize(80);
         line_edit->setMaxLength(POST_LENGTH);
         post_text_ = new Wt::WTextEdit(this);
+        new Wt::WBreak(this);
         Wt::Wc::fix_text_edit(post_text_);
     } else if (type == Comment::CHAT_MESSAGE) {
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
@@ -300,6 +301,7 @@ void CommentList::print_edits() {
         line_edit->setMaxLength(COMMENT_CHAT_LENGTH);
     } else if (type == Comment::FORUM_COMMENT) {
         Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
+        new Wt::WBreak(this);
         edit_ = text_edit;
         Wt::Wc::fix_text_edit(text_edit);
     } else if (type == Comment::LOG_ENTRY) {

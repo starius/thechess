@@ -67,6 +67,7 @@ ForumCommentWidget::ForumCommentWidget(const CommentPtr& comment) {
         g->setText(tr("tc.forum.Goto_parent").arg(parent.id()));
     }
     Wt::WTextEdit* edit = new Wt::WTextEdit(this);
+    new Wt::WBreak(this);
     Wt::Wc::fix_text_edit(edit);
     if (Comment::can_create(tApp->user(), Comment::FORUM_COMMENT, comment)) {
         Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
