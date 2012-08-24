@@ -7,6 +7,7 @@
 
 #include <Wt/WString>
 #include <Wt/Utils>
+#include <Wt/Wc/util.hpp>
 
 #include "model/all.hpp"
 #include "Application.hpp"
@@ -36,6 +37,36 @@ Wt::WString user_a(int user_id) {
 Wt::WString comp_a(int id) {
     Wt::WString t = Wt::WString("competition {1}").arg(id);
     return html_a(tApp->path().competition_view(), id, t);
+}
+
+Wt::WString comm_a(int comment_id) {
+    dbo::Transaction t(tApp->session());
+    CommentPtr comment = tApp->session().load<Comment>(comment_id);
+    Wt::Wc::url::IntegerNode* node = 0;
+    Wt::WString text;
+    int id;
+    if (comment->type() == Comment::CHAT_MESSAGE) {
+        node = tApp->path().chat_comment();
+        text = "chat message {1}";
+        id = comment.id();
+    } else if (comment->type() == Comment::FORUM_POST_TEXT) {
+        node = tApp->path().post();
+        text = "forum post {1}";
+        id = comment->parent().id();
+    } else if (comment->type() == Comment::FORUM_TOPIC) {
+        node = tApp->path().topic_posts();
+        text = "forum topic {1}";
+        id = comment.id();
+    } else if (comment->type() == Comment::FORUM_COMMENT) {
+        node = tApp->path().post_comment();
+        text = "forum comment {1}";
+        id = comment.id();
+    }
+    if (node) {
+        text.arg(id);
+        return html_a(node, id, text);
+    }
+    return TO_S(comment_id);
 }
 
 }

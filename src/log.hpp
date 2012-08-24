@@ -28,6 +28,9 @@ Wt::WString user_a(int user_id);
 /** Return HTML anchor to this competition */
 Wt::WString comp_a(int id);
 
+/** Return HTML anchor to this comment */
+Wt::WString comm_a(int id);
+
 }
 
 #endif
