@@ -407,6 +407,8 @@ private:
         (c_.modify()->*method)(tApp->user());
         if (method == &Competition::cancel) {
             admin_log("Cancel " + comp_a(c_.id()));
+        } else if (method == &Competition::allow_virtuals) {
+            admin_log("Allow virtuals in " + comp_a(c_.id()));
         }
         t.commit();
         tApp->server().planning().add(new Object(COMPETITION, c_.id()), now());
