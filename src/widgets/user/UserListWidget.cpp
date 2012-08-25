@@ -53,7 +53,7 @@ public:
         addColumn("id", tr("tc.user.games_stat_draws")); // dummy
         addColumn("games_stat_fails", tr("tc.user.games_stat_fails"));
         addColumn("games_stat_elo", tr("tc.user.games_stat_elo"));
-        sort(RATING_COLUMN);
+        sort(RATING_COLUMN, Wt::DescendingOrder);
     }
 
     bool only_online() const {
