@@ -36,7 +36,11 @@ public:
         CONTENTS_COLUMN /**< Contents of the comment */
     };
 
-    /** Constructor */
+    /** Constructor.
+    \param type Type of selected comments. NO_TYPE means all comments.
+    \param root Root of selected comments.
+    \param parent Parent widget.
+    */
     CommentModel(Comment::Type type, const CommentPtr& root = CommentPtr(),
                  Wt::WObject* parent = 0);
 

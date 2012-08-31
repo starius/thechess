@@ -23,6 +23,21 @@ CommentModel::CommentModel(Comment::Type type, const CommentPtr& root,
     addColumn("id", ""); // contents
 }
 
+static boost::any comment_page(const CommentPtr& o) {
+    dbo::Transaction t(tApp->session());
+    if (o->type() == Comment::FORUM_TOPIC) {
+        return tApp->path().topic_posts()->get_link(o.id());
+    } else if (o->type() == Comment::FORUM_POST) {
+        return tApp->path().post()->get_link(o.id());
+    } else if (o->type() == Comment::FORUM_COMMENT) {
+        return tApp->path().post_comment()->get_link(o.id());
+    } else if (o->type() == Comment::CHAT_MESSAGE && tApp->user() &&
+               tApp->user()->has_permission(User::COMMENTS_REMOVER)) {
+        return tApp->path().chat_comment()->get_link(o.id());
+    }
+    return boost::any();
+}
+
 boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
     dbo::Transaction t(tApp->session());
     if (role == Wt::DisplayRole) {
@@ -36,20 +51,13 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
         } else if (index.column() == TIME_COL) {
             if (type() == Comment::CHAT_MESSAGE) {
                 return o->created().toString("HH:mm");
-            } else if (type() == Comment::FORUM_POST ||
-                       type() == Comment::LOG_ENTRY) {
+            } else {
                 return o->created().toString();
             }
         }
     } else if (role == Wt::LinkRole && index.column() == ID_COL) {
         const CommentPtr& o = resultRow(index.row());
-        if (type() == Comment::FORUM_TOPIC) {
-            return tApp->path().topic_posts()->get_link(o.id());
-        } else if (type() == Comment::FORUM_POST) {
-            return tApp->path().post()->get_link(o.id());
-        } else if (type() == Comment::FORUM_COMMENT) {
-            return tApp->path().post_comment()->get_link(o.id());
-        }
+        return comment_page(o);
     } else if (role == Wt::LinkRole && index.column() == INIT_COL) {
         const CommentPtr& o = resultRow(index.row());
         UserPtr user = o->init();
@@ -58,11 +66,7 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
         }
     } else if (role == Wt::LinkRole && index.column() == TIME_COL) {
         const CommentPtr& o = resultRow(index.row());
-        UserPtr u = tApp->user();
-        if (o->type() == Comment::CHAT_MESSAGE && u &&
-                u->has_permission(User::COMMENTS_REMOVER)) {
-            return tApp->path().chat_comment()->get_link(o.id());
-        }
+        return comment_page(o);
     }
     return BaseQM::data(index, role);
 }
@@ -95,12 +99,25 @@ Wt::WString CommentModel::contents(const CommentPtr& comment) const {
 CommentModel::Query CommentModel::get_query() const {
     Query result;
     if (root_) {
-        result = root_->family().find().orderBy("show_index");
+        result = root_->family().find();
     } else {
-        result = tApp->session().find<Comment>().where("type = ?").bind(type_);
+        result = tApp->session().find<Comment>();
+    }
+    if (type_ != Comment::NO_TYPE) {
+        result.where("type = ?").bind(type_);
+    } else {
+        result.where("type in (?, ?, ?)")
+        .bind(Comment::CHAT_MESSAGE)
+        .bind(Comment::FORUM_POST)
+        .bind(Comment::FORUM_COMMENT);
     }
     if (only_ok_) {
         result.where("state = ?").bind(Comment::OK);
+    }
+    if (type_ == Comment::FORUM_COMMENT) {
+        result.orderBy("show_index");
+    } else if (type_ == Comment::NO_TYPE) {
+        result.orderBy("id desc");
     }
     return result;
 }

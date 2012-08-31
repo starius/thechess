@@ -36,6 +36,7 @@ const int LOG_TIME_WIDTH = 145;
 const int POST_TIME_WIDTH = 145;
 const int INIT_WIDTH = 60;
 const int COMMENT_ROW_HEIGHT_FORUM = 200;
+const int ALL_COMMENTS_ROW_HEIGHT = 40;
 const int COMMENT_CHAT_LENGTH = 80;
 const int TOPIC_LENGTH = 80;
 const int POST_LENGTH = 80;
@@ -59,6 +60,13 @@ public:
         } else if (type == Comment::FORUM_POST) {
             setAlternatingRowColors(true);
             comment_width -= ID_WIDTH;
+            comment_width -= POST_TIME_WIDTH;
+            comment_width -= INIT_WIDTH;
+            setColumnWidth(CommentModel::TIME_COL, POST_TIME_WIDTH);
+        } else if (type == Comment::NO_TYPE) {
+            setRowHeight(ALL_COMMENTS_ROW_HEIGHT);
+            setAlternatingRowColors(true);
+            setColumnHidden(CommentModel::ID_COL, true);
             comment_width -= POST_TIME_WIDTH;
             comment_width -= INIT_WIDTH;
             setColumnWidth(CommentModel::TIME_COL, POST_TIME_WIDTH);

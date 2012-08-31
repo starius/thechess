@@ -20,7 +20,9 @@ namespace thechess {
 /** Widget containing a list of comments */
 class CommentList : public Wt::WContainerWidget, public Notifiable {
 public:
-    /** Constructor */
+    /** Constructor.
+    \see CommentModel::CommentModel
+    */
     CommentList(Comment::Type type, const CommentPtr& root = CommentPtr(),
                 Wt::WContainerWidget* parent = 0);
 
