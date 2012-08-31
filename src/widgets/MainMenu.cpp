@@ -66,6 +66,7 @@ private:
         add_section("tc.forum.forum");
         add_button("tc.forum.topics", path_->topics());
         add_button("tc.forum.all_posts", path_->all_posts());
+        add_button("tc.forum.all_comments", path_->all_comments());
     }
 
     void add_button(const char* title_id, const Wt::WLink& link) {

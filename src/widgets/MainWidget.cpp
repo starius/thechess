@@ -230,6 +230,11 @@ void MainWidget::admin_log() {
     wApp->setTitle(tr("tc.title.CommentList_admin_log"));
 }
 
+void MainWidget::all_comments() {
+    set_contents(new CommentList(Comment::NO_TYPE));
+    wApp->setTitle(tr("tc.title.CommentList_all_comments"));
+}
+
 Wt::Auth::AuthWidget* MainWidget::auth_widget() {
     return downcast<Wt::Auth::AuthWidget*>(auth_place_->widget(0));
 }

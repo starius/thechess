@@ -180,6 +180,11 @@ public:
         return admin_log_;
     }
 
+    /** All comments */
+    url::PredefinedNode* all_comments() const {
+        return all_comments_;
+    }
+
 private:
     MainWidget* main_widget_;
     url::PredefinedNode* user_list_;
@@ -211,6 +216,7 @@ private:
     url::IntegerNode* forum_edit_;
     url::IntegerNode* chat_comment_;
     url::PredefinedNode* admin_log_;
+    url::PredefinedNode* all_comments_;
 
     void open_user();
     void open_virtuals_of_user();
