@@ -206,17 +206,18 @@ private:
                       this);
         if (tApp->user() && tApp->user() != user_) {
             EloPlayer my_stat = tApp->user()->games_stat();
+            EloPlayer my_orig = my_stat;
             EloPlayer his_stat = user_->games_stat();
             my_stat.win(&his_stat);
-            int if_win = my_stat.elo() - user_->games_stat().elo();
+            int if_win = my_stat.elo() - my_orig.elo();
             my_stat = tApp->user()->games_stat();
             his_stat = user_->games_stat();
             his_stat.win(&my_stat);
-            int if_fail = my_stat.elo() - user_->games_stat().elo();
+            int if_fail = my_stat.elo() - my_orig.elo();
             my_stat = tApp->user()->games_stat();
             his_stat = user_->games_stat();
             his_stat.draw(&my_stat);
-            int if_draw = my_stat.elo() - user_->games_stat().elo();
+            int if_draw = my_stat.elo() - my_orig.elo();
             new Wt::WText(tr("tc.user.Games_stat_changes")
                           .arg(if_win).arg(if_fail).arg(if_draw), this);
         }
