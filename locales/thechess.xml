@@ -501,6 +501,7 @@ See locales-test manpage for more information.
     <message id='tc.game.norating_true'>game result will not affect members' rating</message>
     <message id='tc.game.of_black'>of black</message>
     <message id='tc.game.of_white'>of white</message>
+    <message id='tc.game.Only_commented'>Only commented</message>
     <message id='tc.game.order_user'>move maker</message>
     <message id='tc.game.Overturn_board'>Flip</message>
     <message id='tc.game.Parameters'>Game parameters</message>

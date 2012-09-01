@@ -157,6 +157,9 @@ public:
             q.where("G.white_id = ? or G.black_id = ? or G.init_id = ?")
             .bind(id).bind(id).bind(id);
         }
+        if (only_commented_->isChecked()) {
+            q.where("G.name <> ''");
+        }
         if (user_) {
             int id = user_->id();
             q.where("G.white_id = ? or G.black_id = ? or G.init_id = ?")
@@ -171,6 +174,7 @@ private:
     GameListModel* query_model_;
     Wt::WTableView* table_view_;
     Wt::WCheckBox* only_my_;
+    Wt::WCheckBox* only_commented_;
     UserPtr user_;
 
     void manager() {
@@ -179,6 +183,8 @@ private:
         if (!tApp->user()) {
             only_my_->setEnabled(false);
         }
+        only_commented_ = new Wt::WCheckBox(tr("tc.game.Only_commented"), this);
+        only_commented_->changed().connect(this, &GameListWidgetImpl::apply);
         if (!tApp->environment().ajax()) {
             Wt::WPushButton* apply_button =
                 new Wt::WPushButton(tr("tc.common.Apply"), this);
