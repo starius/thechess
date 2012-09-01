@@ -34,6 +34,7 @@
     * use PNG device for RatingChanges; hide it because of bugs in Wt 3.2.1
     * use Pager from wt-classes for all WTableView widgets
     * URLs for gp and cp
+    * version 3.0.8
 
 2012-08-11 - 2012-08-15:
     * implement forum (topics, posts, comments, Anonymous, edit posts)
