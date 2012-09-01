@@ -32,7 +32,6 @@ public:
         DRAW_50 = 52, /**< ended because of 50 without pawn or takes */
         DRAW_3 = 53, /**< ended because same position repeated thrice */
         DRAW_2_KINGS = 54, /**< ended with low material draw */
-        DRAW_TIMEOUT = 55, /**< ended with draw by timeout */
         SURRENDERED = 61, /**< ended because one of users surrendered */
         TIMEOUT = 62, /**< ended because of timeout */
         CANCELLED = 63, /**< ended because user cancelled it */

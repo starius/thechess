@@ -42,8 +42,7 @@ bool Game::is_ended() const {
 
 bool Game::is_draw() const {
     return state() == DRAW_STALEMATE || state() == DRAW_AGREED ||
-           state() == DRAW_50 || state() == DRAW_3 || state() == DRAW_2_KINGS ||
-           state() == DRAW_TIMEOUT;
+           state() == DRAW_50 || state() == DRAW_3 || state() == DRAW_2_KINGS;
 }
 
 bool Game::is_win() const {
@@ -78,9 +77,6 @@ const char* Game::state2str_id(State state) {
     }
     if (state == DRAW_2_KINGS) {
         return "tc.game.State_draw_2_kings";
-    }
-    if (state == DRAW_TIMEOUT) {
-        return "tc.game.State_draw_timeout";
     }
     if (state == SURRENDERED) {
         return "tc.game.State_surrendered";
@@ -676,7 +672,7 @@ const char* Game::pgn_termination() const {
     } else if (state_ == TIMEOUT) {
         return "time forfeit";
     } else if (state_ == DRAW_50 || state_ == DRAW_3 ||
-               state_ == DRAW_2_KINGS || state_ == DRAW_TIMEOUT) {
+               state_ == DRAW_2_KINGS) {
         return "adjudication";
     } else if (state_ == CANCELLED) {
         return "abandoned";    // ?? FIXME
