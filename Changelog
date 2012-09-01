@@ -1,3 +1,40 @@
+2012-08-15 - 2012-09-01:
+    * classification confirmation
+    * rights editor and list of rights
+    * regular rights (game/competition creation/join, chat, forum, ...)
+    * search virtuals in competitions and allow them by moderator
+    * kick from competition, cancel competition
+    * users list
+    * play a sound when game is changed (move is made)
+    * do not play a sound and excite game anchor on my actions (MyGamesList)
+    * wait 1 min before removing ended game from MyGamesList
+    * rating, awards and expected changes of my rating on UserWidget
+    * (bugfix) TEAM was removed from CPWidget competition type combox
+    * max sessions number = 10 for one user
+    * change page title
+    * lowercase all menu items
+    * mainpage; logo is a anchor to main page; 404->mainpage
+    * max length of topic and post text
+    * hide names of deleted users and texts of deleted comments
+    * add links to UserWidget everywhere
+    * link to my page from main menu
+    * go to parent comment, post, topic (forum)
+    * log moder/admin actions to special "chat"
+    * implement DRAW_2, DRAW_3 and DRAW_50
+    * add emotions to tinymce (forum)
+    * add global chat and "all comments"
+    * show MovesWidget at /board/
+    * fix number of pawns in Taken Pieces (PieceStat)
+    * split "long lines" while printing TakenPieces (BoardWidget)
+    * moves confirmation
+    * virtuals viewer can change significance threshold by a slider
+    * do not allow open more than one analysis dialogs (GameWidget)
+    * add clock (server time) new logo
+    * removed user loses all his rights
+    * use PNG device for RatingChanges; hide it because of bugs in Wt 3.2.1
+    * use Pager from wt-classes for all WTableView widgets
+    * URLs for gp and cp
+
 2012-08-11 - 2012-08-15:
     * implement forum (topics, posts, comments, Anonymous, edit posts)
     * improve chat (currenylt only of game)
