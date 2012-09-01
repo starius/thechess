@@ -102,6 +102,9 @@ CommentModel::Query CommentModel::get_query() const {
         result = root_->family().find();
     } else {
         result = tApp->session().find<Comment>();
+        if (type_ == Comment::CHAT_MESSAGE) {
+            result.where("root_id is null");
+        }
     }
     if (type_ != Comment::NO_TYPE) {
         result.where("type = ?").bind(type_);

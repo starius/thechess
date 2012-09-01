@@ -54,6 +54,7 @@ Path::Path(Wt::WObject* parent):
     PredefinedNode* admin = new PredefinedNode("admin", this);
     admin_log_ = new PredefinedNode("log", admin);
     all_comments_ = new PredefinedNode("comments", this);
+    global_chat_ = new PredefinedNode("chat", this);
     tApp->internalPathChanged().connect(this, &Parser::open);
 }
 
@@ -87,6 +88,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(chat_comment_, boost::bind(&Path::open_chat_comment, this));
     connect(admin_log_, boost::bind(&MainWidget::admin_log, mw));
     connect(all_comments_, boost::bind(&MainWidget::all_comments, mw));
+    connect(global_chat_, boost::bind(&MainWidget::global_chat, mw));
 }
 
 void Path::open_user() {

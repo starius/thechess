@@ -185,6 +185,11 @@ public:
         return all_comments_;
     }
 
+    /** Global chat */
+    url::PredefinedNode* global_chat() const {
+        return global_chat_;
+    }
+
 private:
     MainWidget* main_widget_;
     url::PredefinedNode* user_list_;
@@ -217,6 +222,7 @@ private:
     url::IntegerNode* chat_comment_;
     url::PredefinedNode* admin_log_;
     url::PredefinedNode* all_comments_;
+    url::PredefinedNode* global_chat_;
 
     void open_user();
     void open_virtuals_of_user();

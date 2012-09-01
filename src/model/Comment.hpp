@@ -22,7 +22,8 @@ public:
     enum Type {
         NO_TYPE = 0, /**< Invalid type. E.g., child_type(CHAT_MESSAGE) */
         CHAT_ROOT = 50, /**< Commentable by CHAT_MESSAGE; no author or text */
-        CHAT_MESSAGE = 55, /**< Non-commentable; one line; root=CHAT_ROOT */
+        CHAT_MESSAGE = 55, /**< Non-commentable; one line;
+                                root=CHAT_ROOT or 0 if global chat */
         FORUM_TOPIC = 60, /**< Commentable by FORUM_POST; one-line */
         FORUM_POST = 70, /**< Commentable by FORUM_POST_TEXT; one-line;
                               root=FORUM_TOPIC */

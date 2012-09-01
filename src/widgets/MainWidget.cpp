@@ -235,6 +235,11 @@ void MainWidget::all_comments() {
     wApp->setTitle(tr("tc.title.CommentList_all_comments"));
 }
 
+void MainWidget::global_chat() {
+    set_contents(new CommentList(Comment::CHAT_MESSAGE));
+    wApp->setTitle(tr("tc.title.CommentList_global_chat"));
+}
+
 Wt::Auth::AuthWidget* MainWidget::auth_widget() {
     return downcast<Wt::Auth::AuthWidget*>(auth_place_->widget(0));
 }

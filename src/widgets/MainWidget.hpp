@@ -117,6 +117,9 @@ public:
     /** View all comments */
     void all_comments();
 
+    /** View global chat */
+    void global_chat();
+
     /** Get authentication widget.
     \attention Auth widget should be set (by Application).
     */

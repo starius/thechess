@@ -67,6 +67,7 @@ private:
         add_button("tc.forum.topics", path_->topics());
         add_button("tc.forum.all_posts", path_->all_posts());
         add_button("tc.forum.all_comments", path_->all_comments());
+        add_button("tc.forum.global_chat", path_->global_chat());
     }
 
     void add_button(const char* title_id, const Wt::WLink& link) {
