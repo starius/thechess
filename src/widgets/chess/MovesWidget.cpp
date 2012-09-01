@@ -201,6 +201,7 @@ public:
         moves_table_view_->setSelectionMode(Wt::SingleSelection);
         moves_table_view_->clicked().connect(this, &MovesWidgetImpl::onselect);
         goto_move(current_move_); // last half_move
+        move_confirmation_->setHidden(!active_);
     }
 
     ~MovesWidgetImpl() {
@@ -253,6 +254,7 @@ public:
         active_ = active;
         check_activate();
         move_select();
+        move_confirmation_->setHidden(!active_);
     }
 
     bool move_confirmation() const {
