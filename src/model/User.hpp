@@ -93,10 +93,10 @@ public:
         /** Right to change rights that are part of REGULAR_USER */
         REGULAR_RIGHTS_CHANGER = BOOST_BINARY(0100 00000000 00000000 00000000),
 
-        /** Right to ban registration for the user by IP */
+        /** \todo Right to ban registration for the user by IP */
         REGISTRATION_BANNER = BOOST_BINARY(00001000 00000000 00000000 00000000),
 
-        /** Right to edit Game, GP and CP name and description */
+        /** \todo Right to edit Game, GP and CP name and description */
         RECORDS_EDITOR = BOOST_BINARY(00010000 00000000 00000000 00000000),
 
         /** Right to read logs */
