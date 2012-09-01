@@ -571,61 +571,61 @@ See locales-test manpage for more information.
     <message id='tc.menu.users_list'>list of users</message>
     <message id='tc.menu.virtuals_list'>list of virtuals</message>
 
-    <message id='tc.title.BoardWidget'>Board / TheChess</message>
-    <message id='tc.title.ChatCommentWidget'>Chat message / TheChess</message>
-    <message id='tc.title.CommentList_admin_log'>Admin log / TheChess</message>
-    <message id='tc.title.CommentList_edit'>Edit / Forum / TheChess</message>
-    <message id='tc.title.CommentList_global_chat'>Chat / TheChess</message>
-    <message id='tc.title.GameCreateWidget'>Create / Game / TheChess</message>
-    <message id='tc.title.GameListWidget'>List / Game / TheChess</message>
-    <message id='tc.title.GameWidget'>#{1} / Game / TheChess</message>
+    <message id='tc.title.BoardWidget'>Board « TheChess</message>
+    <message id='tc.title.ChatCommentWidget'>Chat message « TheChess</message>
+    <message id='tc.title.CommentList_admin_log'>Admin log « TheChess</message>
+    <message id='tc.title.CommentList_edit'>Edit « Forum « TheChess</message>
+    <message id='tc.title.CommentList_global_chat'>Chat « TheChess</message>
+    <message id='tc.title.GameCreateWidget'>Create « Game « TheChess</message>
+    <message id='tc.title.GameListWidget'>List « Game « TheChess</message>
+    <message id='tc.title.GameWidget'>#{1} « Game « TheChess</message>
     <message id='tc.title.MainPage'>TheChess</message>
-    <message id='tc.title.MovesWidget'>Board / TheChess</message>
-    <message id='tc.title.SettingsWidget'>Settings / User / TheChess</message>
-    <message id='tc.title.UserListWidget'>List / User / TheChess</message>
-    <message id='tc.title.UserWidget'>{1} / User / TheChess</message>
-    <message id='tc.title.VirtualsWidget'>Virtuals / User / TheChess</message>
+    <message id='tc.title.MovesWidget'>Board « TheChess</message>
+    <message id='tc.title.SettingsWidget'>Settings « User « TheChess</message>
+    <message id='tc.title.UserListWidget'>List « User « TheChess</message>
+    <message id='tc.title.UserWidget'>{1} « User « TheChess</message>
+    <message id='tc.title.VirtualsWidget'>Virtuals « User « TheChess</message>
     <message id='tc.title.CommentList_all_comments'>
-        All comments / TheChess
+        All comments « TheChess
     </message>
     <message id='tc.title.CommentList_forum_comment'>
-        Comment #{1} / Forum / TheChess
+        Comment #{1} « Forum « TheChess
     </message>
     <message id='tc.title.CommentList_post'>
-        Post {1} / Forum / TheChess
+        Post {1} « Forum « TheChess
     </message>
     <message id='tc.title.CommentList_posts'>
-        Posts / Forum / TheChess
+        Posts « Forum « TheChess
     </message>
     <message id='tc.title.CommentList_topic'>
-        Topic {1} / Forum / TheChess
+        Topic {1} « Forum « TheChess
     </message>
     <message id='tc.title.CommentList_topics'>
-        Topics / Forum / TheChess
+        Topics « Forum « TheChess
     </message>
     <message id='tc.title.CompetitionCreateWidget'>
-        Create / Competition / TheChess
+        Create « Competition « TheChess
     </message>
     <message id='tc.title.CompetitionListWidget'>
-        List / Competition / TheChess
+        List « Competition « TheChess
     </message>
     <message id='tc.title.CompetitionListWidget_of'>
-        With {1} / Competition / TheChess
+        With {1} « Competition « TheChess
     </message>
     <message id='tc.title.CompetitionWidget'>
-        #{1} / Competition / TheChess
+        #{1} « Competition « TheChess
     </message>
     <message id='tc.title.GPListWidget'>
-        List / Parameters / Game / TheChess
+        List « Parameters « Game « TheChess
     </message>
     <message id='tc.title.GPWidget'>
-        {1} / Parameters / Game / TheChess
+        {1} « Parameters « Game « TheChess
     </message>
     <message id='tc.title.GameListWidget_of'>
-        With {1} / Game / TheChess
+        With {1} « Game « TheChess
     </message>
     <message id='tc.title.VirtualsWidget_of'>
-        Virtuals of {1} / User / TheChess
+        Virtuals of {1} « User « TheChess
     </message>
 
     <message id='tc.user.Anonymous'>Anonymous</message>
