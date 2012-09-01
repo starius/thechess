@@ -286,6 +286,16 @@ public:
         return games_stat_;
     }
 
+    /** Get competitions user is member of */
+    const Competitions& competitions() const {
+        return competitions_;
+    }
+
+    /** Get competitions user is winner of */
+    const Competitions& won_competitions() const {
+        return won_competitions_;
+    }
+
     /** Return string representation of user classification */
     static Wt::WString classification2str(Classification c);
 
