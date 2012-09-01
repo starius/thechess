@@ -20,6 +20,7 @@
 #include "widgets/user/RightsEdit.hpp"
 #include "widgets/game/GameCreateWidget.hpp"
 #include "widgets/user/user_anchor.hpp"
+#include "widgets/user/awards.hpp"
 #include "widgets/Header.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
@@ -200,6 +201,7 @@ private:
     }
 
     void print_game_stat() {
+        addWidget(awards_widget(user_));
         const EloPlayer& stat = user_->games_stat();
         new Wt::WText(tr("tc.user.Games_stat").arg(stat.all()).arg(stat.wins())
                       .arg(stat.draws()).arg(stat.fails()).arg(stat.elo()),
