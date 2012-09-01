@@ -70,7 +70,8 @@ public:
             start_button_->clicked()
             .connect(this, &UserWidgetImpl::game_form);
         }
-        if (user->games_stat().all() > 0) {
+        if (0) { //user->games_stat().all() > 0) {
+            // crash in Wt 3.2.1
             rating_button_ = new Wt::WPushButton(
                 Wt::WString::tr("tc.user.Rating_changes"), this);
             rating_button_->clicked()
