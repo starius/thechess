@@ -66,7 +66,9 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
         }
     } else if (role == Wt::LinkRole && index.column() == TIME_COL) {
         const CommentPtr& o = resultRow(index.row());
-        return comment_page(o);
+        if (type() != Comment::FORUM_POST) {
+            return comment_page(o);
+        }
     }
     return BaseQM::data(index, role);
 }
