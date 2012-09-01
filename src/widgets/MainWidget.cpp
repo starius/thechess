@@ -16,6 +16,7 @@
 #include "model/all.hpp"
 #include "widgets/MainWidget.hpp"
 #include "widgets/MainMenu.hpp"
+#include "widgets/MainPage.hpp"
 #include "widgets/game/MyGamesList.hpp"
 #include "widgets/chess/BoardWidget.hpp"
 #include "widgets/chess/MovesWidget.hpp"
@@ -82,7 +83,7 @@ void MainWidget::update_my_games() {
 }
 
 void MainWidget::main_page() {
-    set_contents(new Wt::WContainerWidget()); // TODO
+    set_contents(new MainPage());
     wApp->setTitle(tr("tc.title.MainPage"));
 }
 

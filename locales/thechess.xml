@@ -17,6 +17,7 @@ Message id should be like "tc.SECTION.ID"
  * competition
  * forum
  * game
+ * main
  * menu
  * title
  * user
@@ -549,6 +550,10 @@ See locales-test manpage for more information.
     <message id='tc.game.Mistake_welcome'>
         Wrong move? Select it and press Rollback -
         game would be rolled back before selected move
+    </message>
+
+    <message id='tc.main.main'>
+        <h1>Welcome!</h1>
     </message>
 
     <message id='tc.menu.admin_log'>admin log</message>

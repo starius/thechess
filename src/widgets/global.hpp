@@ -32,6 +32,7 @@ class GPSelector;
 class GPWidget;
 class Header;
 class MainMenu;
+class MainPage;
 class MainWidget;
 class MovesWidget;
 class MyGamesList;
