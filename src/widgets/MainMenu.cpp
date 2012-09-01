@@ -38,36 +38,36 @@ private:
     void reprint() {
         dbo::Transaction t(tApp->session());
         clear();
-        add_section("tc.game.game");
-        add_button("tc.game.List", path_->game_list());
+        add_section("tc.menu.game");
+        add_button("tc.menu.games_list", path_->game_list());
         if (user_items_) {
-            add_button("tc.game.Challenge", path_->game_new());
+            add_button("tc.menu.challenge", path_->game_new());
         }
-        add_button("tc.game.Testing_board", path_->board_root());
-        add_button("tc.game.Parameters", path_->gp_list());
-        add_section("tc.competition.competition");
-        add_button("tc.competition.List", path_->competition_list());
+        add_button("tc.menu.testing_board", path_->board_root());
+        add_button("tc.menu.game_parameters", path_->gp_list());
+        add_section("tc.menu.competition");
+        add_button("tc.menu.competitions_list", path_->competition_list());
         if (user_items_) {
-            add_button("tc.competition.New", path_->competition_new());
+            add_button("tc.menu.new_competition", path_->competition_new());
         }
-        add_section("tc.user.user");
-        add_button("tc.user.List", path_->user_list());
+        add_section("tc.menu.user");
+        add_button("tc.menu.users_list", path_->user_list());
         if (user_items_) {
-            add_button("tc.user.settings", path_->settings_page());
-            add_button("tc.user.my_page",
+            add_button("tc.menu.settings", path_->settings_page());
+            add_button("tc.menu.my_page",
                        path_->user_view()->get_link(tApp->user().id()));
             if (tApp->user()->has_permission(User::VIRTUALS_VIEWER)) {
-                add_button("tc.user.Virtuals_list", path_->all_virtuals());
+                add_button("tc.menu.virtuals_list", path_->all_virtuals());
             }
             if (tApp->user()->has_permission(User::LOGS_READER)) {
-                add_button("tc.comment.admin_log", path_->admin_log());
+                add_button("tc.menu.admin_log", path_->admin_log());
             }
         }
-        add_section("tc.forum.forum");
-        add_button("tc.forum.topics", path_->topics());
-        add_button("tc.forum.all_posts", path_->all_posts());
-        add_button("tc.forum.all_comments", path_->all_comments());
-        add_button("tc.forum.global_chat", path_->global_chat());
+        add_section("tc.menu.forum");
+        add_button("tc.menu.topics", path_->topics());
+        add_button("tc.menu.all_posts", path_->all_posts());
+        add_button("tc.menu.all_comments", path_->all_comments());
+        add_button("tc.menu.global_chat", path_->global_chat());
     }
 
     void add_button(const char* title_id, const Wt::WLink& link) {
