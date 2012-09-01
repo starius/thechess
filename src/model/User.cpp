@@ -160,8 +160,6 @@ const char* User::right_to_str(Rights right) {
         return "tc.user.user_remover";
     } else if (right == VIRTUALS_VIEWER) {
         return "tc.user.virtuals_viewer";
-    } else if (right == VIRTUALS_ALLOWER) {
-        return "tc.user.virtuals_allower";
     } else if (right == REGULAR_RIGHTS_CHANGER) {
         return "tc.user.regular_rights_changer";
     } else if (right == REGISTRATION_BANNER) {
@@ -193,7 +191,6 @@ void User::for_each_right(const boost::function<void(Rights)> f) {
     f(COMPETITION_CHANGER);
     f(USER_REMOVER);
     f(VIRTUALS_VIEWER);
-    f(VIRTUALS_ALLOWER);
     f(REGULAR_RIGHTS_CHANGER);
     f(REGISTRATION_BANNER);
     f(RECORDS_EDITOR);

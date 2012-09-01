@@ -276,7 +276,8 @@ void Competition::cancel_impl() {
 
 bool Competition::can_allow_virtuals(const UserPtr& user) const {
     return state_ == RECRUITING && user && !virtual_allower() &&
-           user->has_permission(User::VIRTUALS_ALLOWER);
+           user->has_permission(User::COMPETITION_CHANGER) &&
+           user->has_permission(User::VIRTUALS_VIEWER);
 }
 
 void Competition::allow_virtuals(const UserPtr& user) {

@@ -90,9 +90,6 @@ public:
         /** Right to view virtuals */
         VIRTUALS_VIEWER = BOOST_BINARY(00000001 00000000 00000000 00000000),
 
-        /** Right to allow the competition to start if with virtuals */
-        VIRTUALS_ALLOWER = BOOST_BINARY(00000010 00000000 00000000 00000000),
-
         /** Right to change rights that are part of REGULAR_USER */
         REGULAR_RIGHTS_CHANGER = BOOST_BINARY(0100 00000000 00000000 00000000),
 
@@ -111,7 +108,6 @@ public:
                        COMPETITION_CHANGER |
                        USER_REMOVER |
                        VIRTUALS_VIEWER |
-                       VIRTUALS_ALLOWER |
                        REGULAR_RIGHTS_CHANGER |
                        REGISTRATION_BANNER |
                        RECORDS_EDITOR |
