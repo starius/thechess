@@ -42,6 +42,16 @@ const int TOPIC_LENGTH = 80;
 const int POST_LENGTH = 80;
 const int LOG_LENGTH = 1000;
 
+static void add_emotions(Wt::WTextEdit* e) {
+    const char* const buttons =
+        "fontselect,|,bold,italic,underline,|"
+        ",fontsizeselect,|,forecolor,backcolor,|"
+        ",justifyleft,justifycenter,justifyright,justifyfull,|,anchor,|"
+        ",numlist,bullist,|,emotions";
+    e->setExtraPlugins("emotions");
+    e->setConfigurationSetting("theme_advanced_buttons1", std::string(buttons));
+}
+
 class CommentList::CommentView : public Wt::WTableView {
 public:
     CommentView(CommentModel* model, Wt::WContainerWidget* p = 0):
@@ -298,8 +308,9 @@ void CommentList::print_edits() {
         line_edit->setTextSize(80);
         line_edit->setMaxLength(POST_LENGTH);
         post_text_ = new Wt::WTextEdit(this);
-        new Wt::WBreak(this);
         Wt::Wc::fix_text_edit(post_text_);
+        add_emotions(post_text_);
+        new Wt::WBreak(this);
     } else if (type == Comment::CHAT_MESSAGE) {
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
@@ -309,9 +320,10 @@ void CommentList::print_edits() {
         line_edit->setMaxLength(COMMENT_CHAT_LENGTH);
     } else if (type == Comment::FORUM_COMMENT) {
         Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
+        Wt::Wc::fix_text_edit(text_edit);
+        add_emotions(text_edit);
         new Wt::WBreak(this);
         edit_ = text_edit;
-        Wt::Wc::fix_text_edit(text_edit);
     } else if (type == Comment::LOG_ENTRY) {
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
         edit_ = line_edit;
