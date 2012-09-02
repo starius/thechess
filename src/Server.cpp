@@ -14,6 +14,7 @@
 #include <Wt/Auth/PasswordVerifier>
 #include <Wt/Auth/PasswordStrengthValidator>
 #include <Wt/Auth/HashFunction>
+#include <Wt/Wc/util.hpp>
 
 #include "Server.hpp"
 #include "Application.hpp"
@@ -57,12 +58,20 @@ const Options& Server::options() const {
     return options_;
 }
 
+Options& Server::options() {
+    return options_;
+}
+
 dbo::FixedSqlConnectionPool& Server::pool() {
     return pool_;
 }
 
 Notifier& Server::notifier() {
     return notifier_;
+}
+
+Server* Server::instance() {
+    return DOWNCAST<Server*>(WServer::instance());
 }
 
 void Server::auth_init() {

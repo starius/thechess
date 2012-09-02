@@ -41,6 +41,9 @@ public:
     /** Get application options */
     const Options& options() const;
 
+    /** Get application options */
+    Options& options();
+
     /** Get sql connection pool */
     dbo::FixedSqlConnectionPool& pool();
 
@@ -61,6 +64,9 @@ public:
     const Wt::Auth::PasswordService& password_service() const {
         return password_service_;
     }
+
+    /** Return current server */
+    static Server* instance();
 
 private:
     Options options_;

@@ -76,6 +76,9 @@ public:
         return top_logged_in_content_id_;
     }
 
+    /** Return options used in current application */
+    static Options* instance();
+
 private:
     const Wt::WServer& server_;
 

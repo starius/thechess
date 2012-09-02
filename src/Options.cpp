@@ -11,6 +11,7 @@
 #include <boost/assert.hpp>
 
 #include "Options.hpp"
+#include "Server.hpp"
 #include "config.hpp"
 
 namespace thechess {
@@ -44,6 +45,10 @@ Options::Options(const Wt::WServer& server):
     read_int_value("main_page_content_id", main_page_content_id_);
     read_int_value("footer_content_id", footer_content_id_);
     read_int_value("top_logged_in_content_id", top_logged_in_content_id_);
+}
+
+Options* Options::instance() {
+    return &Server::instance()->options();
 }
 
 bool Options::read_int_value(const std::string& name, int& value) {
