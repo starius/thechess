@@ -8,12 +8,13 @@
 #ifndef THECHESS_TOP_BLOCK_HPP_
 #define THECHESS_TOP_BLOCK_HPP_
 
-#include <Wt/WContainerWidget>
+#include <Wt/WGlobal>
+#include <Wt/WText>
 
 namespace thechess {
 
 /** Widget shown right to AuthWidget when user ias logged in */
-class TopBlock : public Wt::WContainerWidget {
+class TopBlock : public Wt::WText {
 public:
     /** Constructor */
     TopBlock(Wt::WContainerWidget* parent = 0);

@@ -8,12 +8,13 @@
 #ifndef THECHESS_MAIN_PAGE_HPP_
 #define THECHESS_MAIN_PAGE_HPP_
 
-#include <Wt/WContainerWidget>
+#include <Wt/WGlobal>
+#include <Wt/WText>
 
 namespace thechess {
 
 /** Main page widget */
-class MainPage : public Wt::WContainerWidget {
+class MainPage : public Wt::WText {
 public:
     /** Constructor */
     MainPage(Wt::WContainerWidget* parent = 0);
