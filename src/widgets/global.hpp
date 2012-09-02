@@ -16,6 +16,7 @@ class ClassificationWidget;
 class CommentList;
 class CommentModel;
 class ForumCommentWidget;
+class Footer;
 class CompetitionCreateWidget;
 class CompetitionListWidget;
 class CompetitionWidget;

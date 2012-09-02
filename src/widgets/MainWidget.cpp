@@ -17,6 +17,7 @@
 #include "widgets/MainWidget.hpp"
 #include "widgets/MainMenu.hpp"
 #include "widgets/MainPage.hpp"
+#include "widgets/Footer.hpp"
 #include "widgets/game/MyGamesList.hpp"
 #include "widgets/chess/BoardWidget.hpp"
 #include "widgets/chess/MovesWidget.hpp"
@@ -64,6 +65,7 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
                             Wt::WLength::Auto);
     mygames_place_ = middle->elementAt(0, GAME_LIST_IN_MIDDLE);
     bottom_place_ = new Wt::WContainerWidget(this);
+    addWidget(new Footer());
     show_countup();
 }
 
