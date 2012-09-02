@@ -14,6 +14,7 @@
 #include "config.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
+#include "utils/text_edit.hpp"
 
 namespace thechess {
 
@@ -34,7 +35,7 @@ void RecordWidgetBase::add_record_inputs(const Record* record,
     description = new Wt::WTextEdit(record->description());
     form->item(Wt::WString::tr("tc.common.Description"), "",
                description, description);
-    Wt::Wc::fix_text_edit(description);
+    patch_text_edit(description);
 }
 
 void RecordWidgetBase::write_record(Record* record, bool init) const {

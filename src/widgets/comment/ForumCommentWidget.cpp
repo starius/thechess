@@ -11,7 +11,6 @@
 #include <Wt/WAnchor>
 #include <Wt/WTextEdit>
 #include <Wt/WPushButton>
-#include <Wt/Wc/util.hpp>
 
 #include "widgets/comment/ForumCommentWidget.hpp"
 #include "widgets/comment/forum_comment_text.hpp"
@@ -19,6 +18,7 @@
 #include "widgets/user/user_anchor.hpp"
 #include "widgets/Header.hpp"
 #include "Application.hpp"
+#include "utils/text_edit.hpp"
 
 namespace thechess {
 
@@ -67,8 +67,8 @@ ForumCommentWidget::ForumCommentWidget(const CommentPtr& comment) {
         g->setText(tr("tc.forum.Goto_parent").arg(parent.id()));
     }
     Wt::WTextEdit* edit = new Wt::WTextEdit(this);
+    patch_text_edit(edit);
     new Wt::WBreak(this);
-    Wt::Wc::fix_text_edit(edit);
     if (Comment::can_create(tApp->user(), Comment::FORUM_COMMENT, comment)) {
         Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
         add->clicked().connect(boost::bind(add_comment, comment, edit));

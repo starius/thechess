@@ -10,10 +10,10 @@
 #include <Wt/WTextEdit>
 #include <Wt/WLineEdit>
 #include <Wt/WPushButton>
-#include <Wt/Wc/util.hpp>
 
 #include "widgets/comment/ForumEdit.hpp"
 #include "Application.hpp"
+#include "utils/text_edit.hpp"
 
 namespace thechess {
 
@@ -47,7 +47,7 @@ ForumEdit::ForumEdit(const CommentPtr& post_or_text, Wt::WContainerWidget* p):
         edit = new Wt::WLineEdit(this);
     } else {
         Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
-        Wt::Wc::fix_text_edit(text_edit);
+        patch_text_edit(text_edit);
         edit = text_edit;
     }
     edit->setValueText(post_or_text->text());

@@ -15,7 +15,6 @@
 #include <Wt/WTextEdit>
 #include <Wt/WText>
 #include <Wt/WAnchor>
-#include <Wt/Wc/util.hpp>
 #include <Wt/Wc/Pager.hpp>
 
 #include "widgets/comment/CommentList.hpp"
@@ -25,6 +24,7 @@
 #include "widgets/Header.hpp"
 #include "model/global.hpp"
 #include "Application.hpp"
+#include "utils/text_edit.hpp"
 
 namespace thechess {
 
@@ -41,16 +41,6 @@ const int COMMENT_CHAT_LENGTH = 80;
 const int TOPIC_LENGTH = 80;
 const int POST_LENGTH = 80;
 const int LOG_LENGTH = 1000;
-
-static void add_emotions(Wt::WTextEdit* e) {
-    const char* const buttons =
-        "fontselect,|,bold,italic,underline,|"
-        ",fontsizeselect,|,forecolor,backcolor,|"
-        ",justifyleft,justifycenter,justifyright,justifyfull,|,anchor,image,|"
-        ",numlist,bullist,|,emotions";
-    e->setExtraPlugins("emotions");
-    e->setConfigurationSetting("theme_advanced_buttons1", std::string(buttons));
-}
 
 class CommentList::CommentView : public Wt::WTableView {
 public:
@@ -308,8 +298,7 @@ void CommentList::print_edits() {
         line_edit->setTextSize(80);
         line_edit->setMaxLength(POST_LENGTH);
         post_text_ = new Wt::WTextEdit(this);
-        Wt::Wc::fix_text_edit(post_text_);
-        add_emotions(post_text_);
+        patch_text_edit(post_text_);
         new Wt::WBreak(this);
     } else if (type == Comment::CHAT_MESSAGE) {
         Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
@@ -320,8 +309,7 @@ void CommentList::print_edits() {
         line_edit->setMaxLength(COMMENT_CHAT_LENGTH);
     } else if (type == Comment::FORUM_COMMENT) {
         Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
-        Wt::Wc::fix_text_edit(text_edit);
-        add_emotions(text_edit);
+        patch_text_edit(text_edit);
         new Wt::WBreak(this);
         edit_ = text_edit;
     } else if (type == Comment::LOG_ENTRY) {
