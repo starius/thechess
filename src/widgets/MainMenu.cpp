@@ -56,10 +56,10 @@ private:
             add_button("tc.menu.settings", path_->settings_page());
             add_button("tc.menu.my_page",
                        path_->user_view()->get_link(tApp->user().id()));
-            if (tApp->user()->has_permission(User::VIRTUALS_VIEWER)) {
+            if (tApp->user()->has_permission(VIRTUALS_VIEWER)) {
                 add_button("tc.menu.virtuals_list", path_->all_virtuals());
             }
-            if (tApp->user()->has_permission(User::LOGS_READER)) {
+            if (tApp->user()->has_permission(LOGS_READER)) {
                 add_button("tc.menu.admin_log", path_->admin_log());
             }
         }

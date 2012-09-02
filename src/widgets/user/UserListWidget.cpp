@@ -81,7 +81,7 @@ private:
         dbo::Transaction t(tApp->session());
         ULP::Q q = tApp->session().find<User>();
         if (not_removed_) {
-            q.where("rights != ?").bind(User::NONE);
+            q.where("rights != ?").bind(NONE);
         }
         if (only_online_) {
             q.where("sessions != 0");

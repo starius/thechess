@@ -102,7 +102,7 @@ public:
         tApp->path().user_view()->set_integer_value(user.id());
         Wt::WAnchor* a;
         if (tApp->user() &&
-                tApp->user()->has_permission(User::VIRTUALS_VIEWER)) {
+                tApp->user()->has_permission(VIRTUALS_VIEWER)) {
             a = new Wt::WAnchor(this);
             a->setLink(tApp->path().virtuals_of_user()->link());
             a->setText(tr("tc.user.Virtuals_list"));
@@ -185,7 +185,7 @@ private:
     }
 
     void print_rights() {
-        if (user_->rights() == User::NONE) {
+        if (user_->rights() == NONE) {
             return;
         }
         Wt::WPanel* panel = new Wt::WPanel(this);

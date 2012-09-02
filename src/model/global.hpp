@@ -10,6 +10,7 @@
 
 #include <string>
 #include <vector>
+#include <boost/utility/binary.hpp>
 
 #include <Wt/WGlobal>
 
@@ -125,7 +126,7 @@ typedef std::vector<BDPtr> BDsVector;
 
 /* @} */
 
-/** \name Type of Competition and CP */
+/** \name Model-related enums */
 /* @{ */
 
 namespace thechess {
@@ -142,15 +143,6 @@ const CompetitionType COMPETITION_TYPES[] = {CLASSICAL, STAGED, TEAM};
 
 /** Length of COMPETITION_TYPES */
 const int COMPETITION_TYPES_SIZE = 3;
-
-}
-
-/* @} */
-
-/** \name Classification of User */
-/* @{ */
-
-namespace thechess {
 
 /** Classification of player */
 enum Classification {
@@ -191,6 +183,105 @@ enum ObjectType {
     USER,
     COMMENT,
     COMPETITION
+};
+
+/** Rights */
+enum UserRights {
+    /** No permissions */
+    NONE = 0,
+
+    /** Right to create a Game */
+    GAME_CREATOR = BOOST_BINARY(00000001),
+
+    /** Right to join a Game */
+    GAME_JOINER = BOOST_BINARY(00000010),
+
+    /** Right to join write chat */
+    CHAT_WRITER = BOOST_BINARY(00000100),
+
+    /** Right to join write chat */
+    PRIVATE_WRITER = BOOST_BINARY(00001000),
+
+    /** Right to create forum posts */
+    FORUM_POST_CREATOR = BOOST_BINARY(00010000),
+
+    /** Right to create forum comments */
+    FORUM_COMMENT_CREATOR = BOOST_BINARY(00100000),
+
+    /** Right to create Competition */
+    COMPETITION_CREATOR = BOOST_BINARY(01000000),
+
+    /** Right to create GP */
+    GP_CREATOR = BOOST_BINARY(10000000),
+
+    /** Right to create CP */
+    CP_CREATOR = BOOST_BINARY(00000001 00000000),
+
+    /** Right to join a Competition */
+    COMPETITION_JOINER = BOOST_BINARY(00000010 00000000),
+
+    /** Right to change his classification */
+    CLASSIFICATION_CHANGER = BOOST_BINARY(00000100 00000000),
+
+    /** Rights of regular user (given to new user) */
+    REGULAR_USER = GAME_CREATOR |
+                   GAME_JOINER |
+                   CHAT_WRITER |
+                   PRIVATE_WRITER |
+                   FORUM_POST_CREATOR |
+                   FORUM_COMMENT_CREATOR |
+                   COMPETITION_CREATOR |
+                   GP_CREATOR |
+                   CP_CREATOR |
+                   COMPETITION_JOINER |
+                   CLASSIFICATION_CHANGER,
+
+    /** Right to (un)remove comments, create topic and approve drafts */
+    COMMENTS_REMOVER = BOOST_BINARY(00010000 00000000 00000000),
+
+    /** Right to confirm user classification */
+    CLASSIFICATION_CONFIRMER = BOOST_BINARY(00100000 00000000 00000000),
+
+    /** Right to change or cancel competition or kick users from them */
+    COMPETITION_CHANGER = BOOST_BINARY(01000000 00000000 00000000),
+
+    /** Right to (un)remove a user */
+    USER_REMOVER = BOOST_BINARY(10000000 00000000 00000000),
+
+    /** Right to view virtuals */
+    VIRTUALS_VIEWER = BOOST_BINARY(00000001 00000000 00000000 00000000),
+
+    /** Right to change rights that are part of REGULAR_USER */
+    REGULAR_RIGHTS_CHANGER = BOOST_BINARY(0100 00000000 00000000 00000000),
+
+    /** \todo Right to ban registration for the user by IP */
+    REGISTRATION_BANNER = BOOST_BINARY(00001000 00000000 00000000 00000000),
+
+    /** \todo Right to edit Game, GP and CP name and description */
+    RECORDS_EDITOR = BOOST_BINARY(00010000 00000000 00000000 00000000),
+
+    /** Right to read logs */
+    LOGS_READER = BOOST_BINARY(00100000 00000000 00000000 00000000),
+
+    /** Special rights */
+    SUPER_RIGHTS = COMMENTS_REMOVER |
+                   CLASSIFICATION_CONFIRMER |
+                   COMPETITION_CHANGER |
+                   USER_REMOVER |
+                   VIRTUALS_VIEWER |
+                   REGULAR_RIGHTS_CHANGER |
+                   REGISTRATION_BANNER |
+                   RECORDS_EDITOR |
+                   LOGS_READER,
+
+    /** Modeator */
+    MODERATOR = REGULAR_USER | SUPER_RIGHTS,
+
+    /** Right to change rights that are part of SUPER_RIGHTS */
+    SUPER_RIGHTS_CHANGER = BOOST_BINARY(1000000 00000000 00000000 00000000),
+
+    /** Admin */
+    ADMIN = MODERATOR | SUPER_RIGHTS_CHANGER
 };
 
 }

@@ -15,7 +15,7 @@ namespace thechess {
 
 static void change_state(CommentPtr comment, Comment::State state) {
     dbo::Transaction t(tApp->session());
-    if (tApp->user() && tApp->user()->has_permission(User::COMMENTS_REMOVER)) {
+    if (tApp->user() && tApp->user()->has_permission(COMMENTS_REMOVER)) {
         comment.modify()->set_state(state);
         if (comment->type() == Comment::FORUM_POST_TEXT) {
             CommentPtr post = comment->parent();
@@ -31,7 +31,7 @@ static void change_state(CommentPtr comment, Comment::State state) {
 
 void add_remover_buttons(const CommentPtr& comment, Wt::WContainerWidget* p) {
     dbo::Transaction t(tApp->session());
-    if (tApp->user() && tApp->user()->has_permission(User::COMMENTS_REMOVER)) {
+    if (tApp->user() && tApp->user()->has_permission(COMMENTS_REMOVER)) {
         Wt::WPushButton* b;
         if (comment->state() != Comment::OK) {
             b = new Wt::WPushButton(Wt::WString::tr("tc.comment.Approve"), p);

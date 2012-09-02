@@ -31,7 +31,7 @@ GPSelector::GPSelector(Wt::WContainerWidget* p):
     list_ = new GPListWidget();
     tab_ = new Wt::WTabWidget(c);
     tab_->addTab(list_, tr("tc.common.Select_existing"));
-    if (tApp->user() && tApp->user()->has_permission(User::GP_CREATOR)) {
+    if (tApp->user() && tApp->user()->has_permission(GP_CREATOR)) {
         new_cont_ = new Wt::WContainerWidget();
         new_ = new GPWidget(0, new_cont_);
         tab_->addTab(new_cont_, tr("tc.common.Create_new"));

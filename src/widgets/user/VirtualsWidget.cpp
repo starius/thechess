@@ -33,7 +33,7 @@ public:
         if (lock) {
             dbo::Transaction t(tApp->session());
             if (!tApp->user() ||
-                    !tApp->user()->has_permission(User::VIRTUALS_VIEWER)) {
+                    !tApp->user()->has_permission(VIRTUALS_VIEWER)) {
                 return;
             }
             BD::Scores scores;

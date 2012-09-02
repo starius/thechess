@@ -57,23 +57,23 @@ Comment::Type Comment::root_type(Comment::Type type) {
 Comment::State Comment::state_of_new(const UserPtr& user, Type type,
                                      const CommentPtr& parent) {
     if (user) {
-        if (type == CHAT_MESSAGE && !user->has_permission(User::CHAT_WRITER)) {
+        if (type == CHAT_MESSAGE && !user->has_permission(CHAT_WRITER)) {
             return DELETED;
         }
         if (type == FORUM_TOPIC &&
-                !user->has_permission(User::COMMENTS_REMOVER)) {
+                !user->has_permission(COMMENTS_REMOVER)) {
             return DELETED;
         }
         if (type == FORUM_POST &&
-                !user->has_permission(User::FORUM_POST_CREATOR)) {
+                !user->has_permission(FORUM_POST_CREATOR)) {
             return DELETED;
         }
         if (type == FORUM_COMMENT &&
-                !user->has_permission(User::FORUM_COMMENT_CREATOR)) {
+                !user->has_permission(FORUM_COMMENT_CREATOR)) {
             return DELETED;
         }
         if (type == LOG_ENTRY &&
-                !user->has_permission(User::LOGS_READER)) {
+                !user->has_permission(LOGS_READER)) {
             return DELETED;
         }
         return OK;
@@ -152,7 +152,7 @@ void Comment::set_type(Type type) {
 }
 
 Wt::WString Comment::text_or_removed(const UserPtr& viewer) const {
-    if (type() == LOG_ENTRY && !viewer->has_permission(User::LOGS_READER)) {
+    if (type() == LOG_ENTRY && !viewer->has_permission(LOGS_READER)) {
         return "";
     }
     if (state() == OK) {
@@ -164,7 +164,7 @@ Wt::WString Comment::text_or_removed(const UserPtr& viewer) const {
         } else if (state() == DRAFT) {
             result = Wt::WString::tr("tc.comment.draft_message");
         }
-        if (viewer && viewer->has_permission(User::COMMENTS_REMOVER)) {
+        if (viewer && viewer->has_permission(COMMENTS_REMOVER)) {
             result += text();
         }
         return result;

@@ -28,7 +28,7 @@ public:
         new Header(tr("tc.user.Settings"), this);
         b = new Wt::WPushButton(tr("Wt.Auth.updatepassword"), this);
         b->clicked().connect(tApp, &Application::update_password);
-        if (tApp->user()->has_permission(User::CLASSIFICATION_CHANGER)) {
+        if (tApp->user()->has_permission(CLASSIFICATION_CHANGER)) {
             print_classification_changer();
         }
     }
@@ -50,7 +50,7 @@ private:
         if (!tApp->user()) {
             return;
         }
-        if (tApp->user()->has_permission(User::CLASSIFICATION_CHANGER)) {
+        if (tApp->user()->has_permission(CLASSIFICATION_CHANGER)) {
             tApp->user().modify()->set_classification(class_->value());
         }
     }

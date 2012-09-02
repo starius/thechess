@@ -40,7 +40,7 @@ Wt::WString Competition::type2str(Type type) {
 }
 
 bool Competition::can_create_competition(const UserPtr& user) {
-    return user && user->has_permission(User::COMPETITION_CREATOR);
+    return user && user->has_permission(COMPETITION_CREATOR);
 }
 
 void Competition::create_competition(const UserPtr& user) {
@@ -213,7 +213,7 @@ bool Competition::has_virtuals() const {
 bool Competition::can_join(const UserPtr& user) const {
     return state_ == RECRUITING &&
            user && !is_member(user) &&
-           user->has_permission(User::COMPETITION_JOINER) &&
+           user->has_permission(COMPETITION_JOINER) &&
            user->games_stat().elo() >= cp_->min_rating() &&
            user->games_stat().elo() <= cp_->max_rating() &&
            user->classification() >= cp_->min_classification() &&
@@ -243,7 +243,7 @@ bool Competition::can_kick(const UserPtr& kicker, const UserPtr& kicked) const {
            is_member(kicked) &&
            kicker != kicked &&
            (kicker == init() ||
-            (kicker && kicker->has_permission(User::COMPETITION_CHANGER)));
+            (kicker && kicker->has_permission(COMPETITION_CHANGER)));
 }
 
 void Competition::kick(const UserPtr& kicker, const UserPtr& kicked) {
@@ -254,13 +254,13 @@ void Competition::kick(const UserPtr& kicker, const UserPtr& kicked) {
 
 bool Competition::can_change_parameters(const UserPtr& user) const {
     return state_ == RECRUITING && user &&
-           (user == init() || user->has_permission(User::COMPETITION_CHANGER));
+           (user == init() || user->has_permission(COMPETITION_CHANGER));
 }
 
 bool Competition::can_cancel(const UserPtr& user) const {
     return state_ == RECRUITING &&
            user &&
-           (user == init() || user->has_permission(User::COMPETITION_CHANGER));
+           (user == init() || user->has_permission(COMPETITION_CHANGER));
 }
 
 void Competition::cancel(const UserPtr& user) {
@@ -276,8 +276,8 @@ void Competition::cancel_impl() {
 
 bool Competition::can_allow_virtuals(const UserPtr& user) const {
     return state_ == RECRUITING && user && !virtual_allower() &&
-           user->has_permission(User::COMPETITION_CHANGER) &&
-           user->has_permission(User::VIRTUALS_VIEWER);
+           user->has_permission(COMPETITION_CHANGER) &&
+           user->has_permission(VIRTUALS_VIEWER);
 }
 
 void Competition::allow_virtuals(const UserPtr& user) {

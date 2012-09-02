@@ -279,7 +279,7 @@ bool Game::is_creation() const {
 
 bool Game::can_join(const UserPtr& user) const {
     return user && !is_member(user) && is_challenge() &&
-           user->has_permission(User::GAME_JOINER);
+           user->has_permission(GAME_JOINER);
 }
 
 void Game::join(const UserPtr& user) {

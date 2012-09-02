@@ -130,7 +130,7 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     edit_(0) {
     dbo::Transaction t(tApp->session());
     if (type == Comment::LOG_ENTRY) {
-        if (!tApp->user() || !tApp->user()->has_permission(User::LOGS_READER)) {
+        if (!tApp->user() || !tApp->user()->has_permission(LOGS_READER)) {
             return;
         }
     }
