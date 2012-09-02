@@ -8,6 +8,7 @@
 #include <cmath>
 
 #include "model/all.hpp"
+#include "Options.hpp"
 
 DBO_INSTANTIATE_TEMPLATES(thechess::Comment);
 
@@ -78,7 +79,12 @@ Comment::State Comment::state_of_new(const UserPtr& user, Type type,
         }
         return OK;
     } else {
-        if (type == CHAT_MESSAGE || type == FORUM_COMMENT) {
+        UserRights anon_rights = Options::instance()->anonymous_rights();
+        // TODO banned IP
+        if (type == CHAT_MESSAGE && (anon_rights & CHAT_WRITER)) {
+            return DRAFT;
+        }
+        if (type == FORUM_COMMENT && (anon_rights & FORUM_COMMENT_CREATOR)) {
             return DRAFT;
         }
         return DELETED;
