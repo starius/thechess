@@ -14,6 +14,7 @@
 #include "model/all.hpp"
 #include "config.hpp"
 #include "Application.hpp" // FIXME
+#include "Options.hpp" // FIXME
 
 DBO_INSTANTIATE_TEMPLATES(thechess::User);
 
@@ -21,10 +22,12 @@ namespace thechess {
 
 User::User(const Wt::WString& username):
     username_(username),
-    rights_(REGULAR_USER),
+    rights_(NONE),
     sessions_(0),
     classification_(NO_CLASSIFICATION),
     games_stat_(true) {
+    set_rights(Options::instance()->regular_user_rights());
+    // TODO banned_ip_user_rights
 }
 
 User::User() {
