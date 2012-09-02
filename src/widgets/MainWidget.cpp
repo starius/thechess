@@ -18,6 +18,7 @@
 #include "widgets/MainMenu.hpp"
 #include "widgets/MainPage.hpp"
 #include "widgets/Footer.hpp"
+#include "widgets/TopBlock.hpp"
 #include "widgets/game/MyGamesList.hpp"
 #include "widgets/chess/BoardWidget.hpp"
 #include "widgets/chess/MovesWidget.hpp"
@@ -40,7 +41,11 @@
 
 namespace thechess {
 
-const int AUTH_IN_TOP = 1;
+enum {
+    LOGO_IN_TOP,
+    AUTH_IN_TOP,
+    TOP_IN_TOP
+};
 
 enum {
     MENU_IN_MIDDLE,
@@ -56,6 +61,7 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
     logo->setLink(Wt::WLink(Wt::WLink::InternalPath, "/")); // main page
     top->elementAt(0, 0)->addWidget(logo);
     auth_place_ = top->elementAt(0, AUTH_IN_TOP);
+    top_place_ = top->elementAt(0, TOP_IN_TOP);
     Wt::WTable* middle = new Wt::WTable(this);
     middle->resize(Wt::WLength(100, Wt::WLength::Percentage),
                    Wt::WLength::Auto);
@@ -260,6 +266,13 @@ void MainWidget::set_swfstore(Wt::Wc::SWFStore* swfstore) {
     swfstore->setMaximumSize(1, 1);
     bottom_place_->clear();
     bottom_place_->addWidget(swfstore);
+}
+
+void MainWidget::set_top_block_shown(bool shown) {
+    top_place_->clear();
+    if (shown) {
+        top_place_->addWidget(new TopBlock());
+    }
 }
 
 void MainWidget::set_contents(WWidget* widget) {

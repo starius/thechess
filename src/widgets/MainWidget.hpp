@@ -139,8 +139,14 @@ public:
     */
     void set_swfstore(Wt::Wc::SWFStore* swfstore);
 
+    /** Set if top block (right to AuthWidget) is shown.
+    This block (TopBlock) is shown if user is logged in.
+    */
+    void set_top_block_shown(bool shown = true);
+
 private:
     Wt::WContainerWidget* auth_place_;
+    Wt::WContainerWidget* top_place_;
     Wt::WContainerWidget* menu_place_;
     Wt::WContainerWidget* contents_place_;
     Wt::WContainerWidget* mygames_place_;
