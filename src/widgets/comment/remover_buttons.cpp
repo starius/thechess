@@ -6,6 +6,8 @@
  */
 
 #include <Wt/WPushButton>
+#include <Wt/WText>
+#include <Wt/WBreak>
 
 #include "model/all.hpp"
 #include "Application.hpp"
@@ -43,6 +45,11 @@ void add_remover_buttons(const CommentPtr& comment, Wt::WContainerWidget* p) {
             b->clicked().connect(boost::bind(change_state,
                                              comment, Comment::DELETED));
         }
+    }
+    if (tApp->user() && tApp->user()->has_permission(REGISTRATION_BANNER)) {
+        p->addWidget(new Wt::WBreak());
+        p->addWidget(new Wt::WText(comment->ip()));
+        // TODO ban button
     }
 }
 
