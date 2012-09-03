@@ -8,7 +8,7 @@ $ cmake ..
 $ make
 
 Run thechess application:
-$ ./run.sh
+$ ./thechess-run
 
 Install:
 FIXME
