@@ -87,6 +87,9 @@ Comment::State Comment::state_of_new(const UserPtr& user, Type type,
         if (type == FORUM_COMMENT && (anon_rights & FORUM_COMMENT_CREATOR)) {
             return DRAFT;
         }
+        if (type == FORUM_POST && (anon_rights & FORUM_POST_CREATOR)) {
+            return DRAFT;
+        }
         return DELETED;
     }
 }
