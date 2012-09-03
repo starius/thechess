@@ -231,8 +231,11 @@ void CommentList::print_post() {
 }
 
 void CommentList::add_comment(const CommentPtr& parent) {
-    Wt::WString text = edit_->valueText();
     Comment::Type type = comment_model()->type();
+    Wt::WString text = edit_->valueText();
+    if (type == Comment::FORUM_COMMENT) {
+        text = patch_text_edit_text(text);
+    }
     if (text.empty()) {
         return;
     }
@@ -265,7 +268,8 @@ void CommentList::add_comment(const CommentPtr& parent) {
         CommentPtr post_text = tApp->session().add(new Comment(true));
         post_text.modify()->set_type(Comment::FORUM_POST_TEXT);
         post_text.modify()->set_parent(comment);
-        post_text.modify()->set_text(post_text_->valueText());
+        Wt::WString description = post_text_->valueText();
+        post_text.modify()->set_text(patch_text_edit_text(description));
         post_text.modify()->set_init(tApp->user());
     }
     if (type == Comment::FORUM_COMMENT) {

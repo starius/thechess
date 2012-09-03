@@ -5,6 +5,8 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <boost/algorithm/string/replace.hpp>
+
 #include <Wt/WTextEdit>
 #include <Wt/Wc/util.hpp>
 
@@ -25,6 +27,16 @@ static void add_emotions_and_image(Wt::WTextEdit* e) {
 void patch_text_edit(Wt::WTextEdit* text_edit) {
     add_emotions_and_image(text_edit);
     Wt::Wc::fix_text_edit(text_edit);
+}
+
+Wt::WString patch_text_edit_text(const Wt::WString& text) {
+    std::string value = text.toUTF8();
+    boost::replace_all(value, "src=\"../../../../../", "src=\"/");
+    boost::replace_all(value, "src=\"../../../../", "src=\"/");
+    boost::replace_all(value, "src=\"../../../", "src=\"/");
+    boost::replace_all(value, "src=\"../../", "src=\"/");
+    boost::replace_all(value, "src=\"../", "src=\"/");
+    return Wt::WString::fromUTF8(value);
 }
 
 }

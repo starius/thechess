@@ -30,7 +30,7 @@ static void add_comment(const CommentPtr& comment, Wt::WTextEdit* edit) {
     CommentPtr c = tApp->session().add(new Comment(true));
     c.modify()->set_parent(comment);
     c.modify()->set_type(Comment::FORUM_COMMENT);
-    c.modify()->set_text(edit->valueText());
+    c.modify()->set_text(patch_text_edit_text(edit->valueText()));
     c.modify()->set_init(tApp->user());
     c.modify()->set_root(comment->root());
     CommentPtr post_text = comment->root();

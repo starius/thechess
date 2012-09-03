@@ -44,7 +44,8 @@ void RecordWidgetBase::write_record(Record* record, bool init) const {
         name_str.resize(config::MAX_NAME);
     }
     record->set_name(name_str);
-    std::wstring description_str = description->text().value();
+    Wt::WString text = description->text();
+    std::wstring description_str = patch_text_edit_text(text).value();
     if (description_str.length() > config::MAX_DESCRIPTION) {
         description_str.resize(config::MAX_DESCRIPTION);
     }
