@@ -17,7 +17,6 @@
 #include <Wt/Dbo/Exception>
 #include <Wt/WLogger>
 #include <Wt/WText>
-#include <Wt/Auth/AuthWidget>
 #include <Wt/Wc/util.hpp>
 #include <Wt/Wc/SWFStore.hpp>
 #include <Wt/Wc/Gather.hpp>
@@ -155,28 +154,7 @@ Application* Application::instance() {
 }
 
 void Application::set_auth_widget() {
-    using namespace Wt::Auth;
-#if WT_MINOR==0x0
-    // Wt 3.2.0
-    AuthWidget* w = new AuthWidget(server().auth_service(),
-                                   session().user_database(),
-                                   session().login());
-    w->addPasswordAuth(&server().password_service());
-#else
-    AuthModel* m = new AuthModel(server().auth_service(),
-                                 session().user_database(),
-                                 this);
-    m->addPasswordAuth(&server().password_service());
-    AuthWidget* w = new AuthWidget(session().login());
-    w->setModel(m);
-#endif
-    w->setRegistrationEnabled(true);
-    try {
-        w->processEnvironment();
-    } catch (std::exception& e) {
-        log("warning") << "AuthWidget.processEnvironment(): " << e.what();
-    }
-    main_widget_->set_auth_widget(w);
+    main_widget_->set_auth_widget();
 }
 
 void Application::gather_init() {

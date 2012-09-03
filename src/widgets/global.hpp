@@ -10,6 +10,7 @@
 
 namespace thechess {
 
+class AuthWidget;
 class BoardWidget;
 class ChatCommentWidget;
 class ClassificationWidget;

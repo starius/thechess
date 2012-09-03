@@ -19,6 +19,7 @@
 #include "widgets/MainPage.hpp"
 #include "widgets/Footer.hpp"
 #include "widgets/TopBlock.hpp"
+#include "widgets/user/AuthWidget.hpp"
 #include "widgets/game/MyGamesList.hpp"
 #include "widgets/chess/BoardWidget.hpp"
 #include "widgets/chess/MovesWidget.hpp"
@@ -253,9 +254,9 @@ Wt::Auth::AuthWidget* MainWidget::auth_widget() {
     return downcast<Wt::Auth::AuthWidget*>(auth_place_->widget(0));
 }
 
-void MainWidget::set_auth_widget(Wt::Auth::AuthWidget* widget) {
+void MainWidget::set_auth_widget() {
     auth_place_->clear();
-    auth_place_->addWidget(widget);
+    auth_place_->addWidget(new AuthWidget());
 }
 
 Wt::Wc::SWFStore* MainWidget::swf_store() {

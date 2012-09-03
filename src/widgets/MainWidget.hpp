@@ -126,7 +126,7 @@ public:
     Wt::Auth::AuthWidget* auth_widget();
 
     /** Set authentication widget */
-    void set_auth_widget(Wt::Auth::AuthWidget* widget);
+    void set_auth_widget();
 
     /** Get SWF store.
     \attention The widget must be set (by Application).
