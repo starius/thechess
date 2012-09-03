@@ -13,6 +13,9 @@ $ ./thechess-run
 Install:
 FIXME
 
+Setup SMTP daemon to use Gmail on Debian:
+http://wiki.debian.org/GmailAndExim4
+
 Dependencies:
  * witty library (>=3.2.0)
  * wt-classes library (https://bitbucket.org/starius/wt-classes/)
