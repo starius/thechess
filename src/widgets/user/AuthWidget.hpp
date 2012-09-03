@@ -18,6 +18,10 @@ class AuthWidget : public Wt::Auth::AuthWidget {
 public:
     /** Constructor */
     AuthWidget(Wt::WContainerWidget* parent = 0);
+
+protected:
+    /** Return registration model */
+    Wt::Auth::RegistrationModel* createRegistrationModel();
 };
 
 }

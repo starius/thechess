@@ -6,6 +6,7 @@
  */
 
 #include <Wt/Auth/AuthModel>
+#include <Wt/Auth/RegistrationModel>
 
 #include "widgets/user/AuthWidget.hpp"
 #include "Application.hpp"
@@ -35,6 +36,13 @@ AuthWidget::AuthWidget(Wt::WContainerWidget* parent):
     } catch (std::exception& e) {
         tApp->log("warning") << "AuthWidget.processEnvironment(): " << e.what();
     }
+}
+
+Wt::Auth::RegistrationModel* AuthWidget::createRegistrationModel() {
+    Wt::Auth::RegistrationModel* result;
+    result = Wt::Auth::AuthWidget::createRegistrationModel();
+    result->setEmailPolicy(Wt::Auth::RegistrationModel::EmailMandatory);
+    return result;
 }
 
 }
