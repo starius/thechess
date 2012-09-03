@@ -175,6 +175,11 @@ public:
         return edited_;
     }
 
+    /** Return IP address from which this comment was created */
+    const std::string& ip() const {
+        return ip_;
+    }
+
     /** Get (direct) children */
     const Comments& children() const {
         return children_;
@@ -198,6 +203,7 @@ public:
         dbo::belongsTo(a, parent_, "parent");
         dbo::field(a, created_, "created");
         dbo::field(a, edited_, "edited");
+        dbo::field(a, ip_, "ip");
         dbo::hasMany(a, children_, dbo::ManyToOne, "parent");
         dbo::hasMany(a, family_, dbo::ManyToOne, "root");
     }
@@ -213,6 +219,7 @@ private:
     CommentPtr parent_;
     Wt::WDateTime created_;
     Wt::WDateTime edited_;
+    std::string ip_;
 
     Comments children_;
     Comments family_;

@@ -7,6 +7,9 @@
 
 #include <cmath>
 
+#include <Wt/WApplication>
+#include <Wt/WEnvironment>
+
 #include "model/all.hpp"
 #include "Options.hpp"
 
@@ -26,8 +29,11 @@ Comment::Comment(bool):
     type_(NO_TYPE),
     state_(OK),
     created_(now()),
-    edited_(created_)
-{ }
+    edited_(created_) {
+    if (wApp) {
+        ip_ = wApp->environment().clientAddress();
+    }
+}
 
 Comment::Type Comment::child_type(Comment::Type type) {
     if (type == CHAT_ROOT) {

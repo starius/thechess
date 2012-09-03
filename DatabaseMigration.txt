@@ -1,4 +1,9 @@
 
+3.0.8 to 3.0.9
+==============
+
+alter table "thechess_comment" add column "ip" text not null default "";
+
 3.0.7 to 3.0.8
 ==============
 
