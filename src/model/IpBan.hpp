@@ -91,7 +91,7 @@ public:
     }
 
     /** Return if current wApp is banned.
-    \warning tApp must be set.
+    \warning If tApp is not set, false is returned.
     */
     static bool i_am_banned();
 

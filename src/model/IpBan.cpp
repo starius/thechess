@@ -23,6 +23,9 @@ IpBan::IpBan(bool):
 { }
 
 bool IpBan::i_am_banned() {
+    if (!tApp) {
+        return false;
+    }
     dbo::Transaction t(tApp->session());
     std::string ip = wApp->environment().clientAddress();
     return tApp->session().find<IpBan>()
