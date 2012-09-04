@@ -28,7 +28,8 @@ public:
     enum {
         IP,
         LAST_USE,
-        BANNED
+        BANNED,
+        BAN
     };
 
     IpListModel(const UserPtr& user, Wt::WObject* parent = 0):
@@ -38,6 +39,7 @@ public:
         addColumn("value", tr("tc.user.ip"));
         addColumn("used", tr("tc.common.last"));
         addColumn("type", tr("tc.user.Already_banned")); // dummy
+        addColumn("type", tr("tc.user.New_ban")); // dummy
         sort(LAST_USE, Wt::DescendingOrder);
     }
 
@@ -59,10 +61,15 @@ private:
         if (role == Wt::DisplayRole) {
             if (index.column() == BANNED) {
                 return IpBan::is_banned(o->value());
+            } else if (index.column() == BAN) {
+                return tr("tc.user.New_ban");
             }
         } else if (role == Wt::LinkRole) {
             if (index.column() == IP) {
                 return tApp->path().banned_ip()->get_link(o->value());
+            } else if (index.column() == BAN) {
+                tApp->path().user_view()->set_integer_value(user_.id());
+                return tApp->path().new_ip_ban()->get_link(o->value());
             }
         }
         return ILP::BaseQM::data(index, role);
