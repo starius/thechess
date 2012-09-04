@@ -24,12 +24,11 @@ IpBan::IpBan(bool):
     enabled_(true), start_(now())
 { }
 
-bool IpBan::am_i_banned() {
+bool IpBan::is_banned(const std::string& ip) {
     if (!tApp) {
         return false;
     }
     dbo::Transaction t(tApp->session());
-    std::string ip = wApp->environment().clientAddress();
     IpBans bans = tApp->session().find<IpBan>()
                   .where("ip = ?").bind(ip)
                   .where("enabled = ?").bind(true)
@@ -40,6 +39,14 @@ bool IpBan::am_i_banned() {
         }
     }
     return false;
+}
+
+bool IpBan::am_i_banned() {
+    if (!tApp) {
+        return false;
+    }
+    std::string ip = wApp->environment().clientAddress();
+    return is_banned(ip);
 }
 
 }

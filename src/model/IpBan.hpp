@@ -90,6 +90,11 @@ public:
         creator_ = creator;
     }
 
+    /** Return if IP is banned.
+    \warning If tApp is not set, false is returned.
+    */
+    static bool is_banned(const std::string& ip);
+
     /** Return if current wApp is banned.
     \warning If tApp is not set, false is returned.
     */
