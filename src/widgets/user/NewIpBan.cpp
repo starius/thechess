@@ -25,6 +25,10 @@ NewIpBan::NewIpBan(const std::string& ip, const Wt::WString& reason,
     if (!tApp->user() || !tApp->user()->has_permission(REGISTRATION_BANNER)) {
         return;
     }
+    if (IpBan::is_banned(ip)) {
+        addWidget(new Wt::WText(tr("tc.user.Already_banned")));
+        return;
+    }
     Wt::Wc::TableForm* f = new Wt::Wc::TableForm(this);
     f->item(tr("tc.user.ip"), "", 0, new Wt::WText(Wt::WString::fromUTF8(ip)));
     duration_ = new Wt::Wc::TimeDurationWidget(MINUTE, 3 * DAY, WEEK);
