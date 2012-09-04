@@ -21,7 +21,6 @@
 namespace thechess {
 
 namespace ULP {
-typedef Wt::WString S;
 typedef UserPtr Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
