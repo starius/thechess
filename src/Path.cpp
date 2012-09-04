@@ -53,6 +53,8 @@ Path::Path(Wt::WObject* parent):
     chat_comment_ = new IntegerNode(comment);
     PredefinedNode* admin = new PredefinedNode("admin", this);
     admin_log_ = new PredefinedNode("log", admin);
+    all_banned_ip_ = new PredefinedNode("ip", user_list_);
+    banned_ip_ = new StringNode(all_banned_ip_);
     all_comments_ = new PredefinedNode("comments", this);
     global_chat_ = new PredefinedNode("chat", this);
     tApp->internalPathChanged().connect(this, &Parser::open);
@@ -87,6 +89,8 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(forum_edit_, boost::bind(&Path::open_forum_edit, this));
     connect(chat_comment_, boost::bind(&Path::open_chat_comment, this));
     connect(admin_log_, boost::bind(&MainWidget::admin_log, mw));
+    connect(all_banned_ip_, boost::bind(&MainWidget::all_banned_ip, mw));
+    connect(banned_ip_, boost::bind(&Path::open_banned_ip, this));
     connect(all_comments_, boost::bind(&MainWidget::all_comments, mw));
     connect(global_chat_, boost::bind(&MainWidget::global_chat, mw));
 }
@@ -213,6 +217,11 @@ void Path::open_chat_comment() {
         main_widget_->chat_comment(tApp->session().load<Comment>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
+}
+
+void Path::open_banned_ip() {
+    BOOST_ASSERT(main_widget_);
+    main_widget_->banned_ip(banned_ip_->string());
 }
 
 }

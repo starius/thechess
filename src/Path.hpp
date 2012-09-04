@@ -180,6 +180,16 @@ public:
         return admin_log_;
     }
 
+    /** All bans by IP */
+    url::PredefinedNode* all_banned_ip() const {
+        return all_banned_ip_;
+    }
+
+    /** Bans of this IP */
+    url::StringNode* banned_ip() const {
+        return banned_ip_;
+    }
+
     /** All comments */
     url::PredefinedNode* all_comments() const {
         return all_comments_;
@@ -221,6 +231,8 @@ private:
     url::IntegerNode* forum_edit_;
     url::IntegerNode* chat_comment_;
     url::PredefinedNode* admin_log_;
+    url::PredefinedNode* all_banned_ip_;
+    url::StringNode* banned_ip_;
     url::PredefinedNode* all_comments_;
     url::PredefinedNode* global_chat_;
 
@@ -237,6 +249,7 @@ private:
     void open_forum_post_comment();
     void open_forum_edit();
     void open_chat_comment();
+    void open_banned_ip();
 };
 
 }

@@ -36,6 +36,7 @@
 #include "widgets/user/VirtualsWidget.hpp"
 #include "widgets/user/SettingsWidget.hpp"
 #include "widgets/user/IpList.hpp"
+#include "widgets/user/IpBanList.hpp"
 #include "widgets/comment/CommentList.hpp"
 #include "widgets/comment/ForumCommentWidget.hpp"
 #include "widgets/comment/ForumEdit.hpp"
@@ -242,6 +243,16 @@ void MainWidget::chat_comment(const CommentPtr& comment) {
 void MainWidget::admin_log() {
     set_contents(new CommentList(Comment::LOG_ENTRY));
     wApp->setTitle(tr("tc.title.CommentList_admin_log"));
+}
+
+void MainWidget::all_banned_ip() {
+    set_contents(new IpBanList());
+    wApp->setTitle(tr("tc.title.IpBanList"));
+}
+
+void MainWidget::banned_ip(const std::string& ip) {
+    set_contents(new IpBanList(ip));
+    wApp->setTitle(tr("tc.title.IpBanList"));
 }
 
 void MainWidget::all_comments() {

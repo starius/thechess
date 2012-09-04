@@ -114,6 +114,12 @@ public:
     /** View admin log */
     void admin_log();
 
+    /** View all banned IPs */
+    void all_banned_ip();
+
+    /** View bans of the IP */
+    void banned_ip(const std::string& ip);
+
     /** View all comments */
     void all_comments();
 
