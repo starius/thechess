@@ -85,8 +85,10 @@ Comment::State Comment::state_of_new(const UserPtr& user, Type type,
         }
         return OK;
     } else {
-        UserRights anon_rights = Options::instance()->anonymous_rights();
-        // TODO banned IP
+        int anon_rights = Options::instance()->anonymous_rights();
+        if (IpBan::am_i_banned()) {
+            anon_rights &= Options::instance()->banned_ip_user_rights();
+        }
         if (type == CHAT_MESSAGE && (anon_rights & CHAT_WRITER)) {
             return DRAFT;
         }

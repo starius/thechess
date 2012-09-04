@@ -26,8 +26,11 @@ User::User(const Wt::WString& username):
     sessions_(0),
     classification_(NO_CLASSIFICATION),
     games_stat_(true) {
-    set_rights(Options::instance()->regular_user_rights());
-    // TODO banned_ip_user_rights
+    if (IpBan::am_i_banned()) {
+        set_rights(Options::instance()->banned_ip_user_rights());
+    } else {
+        set_rights(Options::instance()->regular_user_rights());
+    }
 }
 
 User::User() {
