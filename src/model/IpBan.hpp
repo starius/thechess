@@ -26,9 +26,7 @@ public:
     /** Create instance to be added to database */
     IpBan(bool);
 
-    /** Get IP address.
-    Defaults to IP of current wApp, if any.
-    */
+    /** Get IP address */
     const std::string& ip() const {
         return ip_;
     }

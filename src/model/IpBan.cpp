@@ -19,11 +19,8 @@ IpBan::IpBan()
 { }
 
 IpBan::IpBan(bool):
-    enabled_(true), start_(now()) {
-    if (wApp) {
-        ip_ = wApp->environment().clientAddress();
-    }
-}
+    enabled_(true), start_(now())
+{ }
 
 bool IpBan::i_am_banned() {
     dbo::Transaction t(tApp->session());
