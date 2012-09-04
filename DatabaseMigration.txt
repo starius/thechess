@@ -12,7 +12,8 @@ create table "thechess_ip_ban" (
     "enabled" boolean not null,
     "start" text,
     "stop" text,
-    "reason" text not null
+    "reason" text not null,
+    "creator_id" bigint
 )
 
 3.0.7 to 3.0.8

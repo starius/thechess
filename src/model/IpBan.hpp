@@ -80,6 +80,16 @@ public:
         reason_ = reason;
     }
 
+    /** Get the user, who created this ban */
+    const UserPtr& creator() const {
+        return creator_;
+    }
+
+    /** Set the user, who created this ban */
+    void set_creator(const UserPtr& creator) {
+        creator_ = creator;
+    }
+
     /** Return if current wApp is banned.
     \warning tApp must be set.
     */
@@ -93,6 +103,7 @@ public:
         dbo::field(a, start_, "start");
         dbo::field(a, stop_, "stop");
         dbo::field(a, reason_, "reason");
+        dbo::belongsTo(a, creator_, "creator");
     }
 
 private:
@@ -101,6 +112,7 @@ private:
     Wt::WDateTime start_;
     Wt::WDateTime stop_;
     Wt::WString reason_;
+    UserPtr creator_;
 };
 
 }
