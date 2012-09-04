@@ -359,6 +359,7 @@ See locales-test manpage for more information.
     <message id='tc.common.Join'>Join</message>
     <message id='tc.common.Kick'>Kick</message>
     <message id='tc.common.kw'>{1}: {2}</message>
+    <message id='tc.common.last'>last</message>
     <message id='tc.common.Name'>Name</message>
     <message id='tc.common.no_params_error'>parameters aren't selected</message>
     <message id='tc.common.number'>#</message>

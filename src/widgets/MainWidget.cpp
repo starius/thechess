@@ -35,6 +35,7 @@
 #include "widgets/user/UserListWidget.hpp"
 #include "widgets/user/VirtualsWidget.hpp"
 #include "widgets/user/SettingsWidget.hpp"
+#include "widgets/user/IpList.hpp"
 #include "widgets/comment/CommentList.hpp"
 #include "widgets/comment/ForumCommentWidget.hpp"
 #include "widgets/comment/ForumEdit.hpp"
@@ -102,7 +103,10 @@ void MainWidget::user_view(const UserPtr& user) {
 }
 
 void MainWidget::virtuals_of_user(const UserPtr& user) {
-    set_contents(new VirtualsWidget(user));
+    Wt::WContainerWidget* c = new Wt::WContainerWidget();
+    c->addWidget(new VirtualsWidget(user));
+    c->addWidget(new IpList(user));
+    set_contents(c);
     wApp->setTitle(tr("tc.title.VirtualsWidget_of").arg(user->username20()));
 }
 
