@@ -679,6 +679,7 @@ See locales-test manpage for more information.
     <message id='tc.user.logs_reader'>logs reader</message>
     <message id='tc.user.Many_sessions'>Too many sessions</message>
     <message id='tc.user.my_page'>my page</message>
+    <message id='tc.user.New_ban'>New ban</message>
     <message id='tc.user.not_confirmed'>, not confirmed</message>
     <message id='tc.user.Not_removed'>Not removed</message>
     <message id='tc.user.Online_time'>Spent online {1}</message>

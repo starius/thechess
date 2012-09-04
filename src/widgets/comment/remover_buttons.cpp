@@ -5,12 +5,16 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <boost/bind.hpp>
+
 #include <Wt/WPushButton>
 #include <Wt/WText>
 #include <Wt/WBreak>
+#include <Wt/Wc/util.hpp>
 
 #include "model/all.hpp"
 #include "Application.hpp"
+#include "widgets/user/NewIpBan.hpp"
 #include "log.hpp"
 
 namespace thechess {
@@ -31,6 +35,13 @@ static void change_state(CommentPtr comment, Comment::State state) {
     tApp->path().open(tApp->internalPath());
 }
 
+static void show_new_ban(Wt::WPushButton* b, CommentPtr c) {
+    dbo::Transaction t(tApp->session());
+    Wt::WContainerWidget* parent = DOWNCAST<Wt::WContainerWidget*>(b->parent());
+    delete b;
+    parent->addWidget(new NewIpBan(c->ip(), comm_a(c.id())));
+}
+
 void add_remover_buttons(const CommentPtr& comment, Wt::WContainerWidget* p) {
     dbo::Transaction t(tApp->session());
     if (tApp->user() && tApp->user()->has_permission(COMMENTS_REMOVER)) {
@@ -49,7 +60,9 @@ void add_remover_buttons(const CommentPtr& comment, Wt::WContainerWidget* p) {
     if (tApp->user() && tApp->user()->has_permission(REGISTRATION_BANNER)) {
         p->addWidget(new Wt::WBreak());
         p->addWidget(new Wt::WText(comment->ip()));
-        // TODO ban button
+        Wt::WPushButton* b;
+        b = new Wt::WPushButton(Wt::WString::tr("tc.user.New_ban"), p);
+        b->clicked().connect(boost::bind(show_new_ban, b, comment));
     }
 }
 
