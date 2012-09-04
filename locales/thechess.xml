@@ -354,6 +354,7 @@ See locales-test manpage for more information.
     <message id='tc.common.created'>created</message>
     <message id='tc.common.Description'>Description</message>
     <message id='tc.common.Discard'>Discard</message>
+    <message id='tc.common.duration'>duration</message>
     <message id='tc.common.interval'>from {1} to {2}</message>
     <message id='tc.common.Join'>Join</message>
     <message id='tc.common.Kick'>Kick</message>
@@ -633,6 +634,7 @@ See locales-test manpage for more information.
     </message>
 
     <message id='tc.user.Anonymous'>Anonymous</message>
+    <message id='tc.user.ban_reason'>reason of ban</message>
     <message id='tc.user.chat_writer'>write to chat</message>
     <message id='tc.user.classification'>classification</message>
     <message id='tc.user.classification_a'>class A</message>
@@ -671,6 +673,7 @@ See locales-test manpage for more information.
     <message id='tc.user.games_stat_fails'>fails</message>
     <message id='tc.user.games_stat_wins'>wins</message>
     <message id='tc.user.gp_creator'>create game parameters</message>
+    <message id='tc.user.ip'>ip-address</message>
     <message id='tc.user.List'>List of users</message>
     <message id='tc.user.List_rights'>List of rights</message>
     <message id='tc.user.logs_reader'>logs reader</message>

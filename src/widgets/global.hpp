@@ -39,6 +39,7 @@ class MainPage;
 class MainWidget;
 class MovesWidget;
 class MyGamesList;
+class NewIpBan;
 class PgnResource;
 class RatingChanges;
 class RecordWidgetBase;
