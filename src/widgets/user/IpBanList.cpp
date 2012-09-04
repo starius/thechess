@@ -100,6 +100,10 @@ public:
         Wt::WTableView(p) {
         setModel(model);
         resize(BLP::WIDTH, BLP::HEIGHT);
+        setColumnWidth(IpBanListModel::ENABLED, 100);
+        setColumnWidth(IpBanListModel::IP, 100);
+        setColumnWidth(IpBanListModel::START, 100);
+        setColumnWidth(IpBanListModel::STOP, 100);
     }
 
 protected:
