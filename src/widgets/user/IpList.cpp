@@ -60,8 +60,11 @@ private:
             if (index.column() == BANNED) {
                 return IpBan::is_banned(o->value());
             }
+        } else if (role == Wt::LinkRole) {
+            if (index.column() == IP) {
+                return tApp->path().banned_ip()->get_link(o->value());
+            }
         }
-        // TODO reference to IP page
         return ILP::BaseQM::data(index, role);
     }
 

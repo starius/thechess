@@ -70,7 +70,7 @@ private:
             }
         } else if (role == Wt::LinkRole) {
             if (index.column() == IP) {
-                // TODO link to list of bans of this IP only
+                return tApp->path().banned_ip()->get_link(o->ip());
             } else if (index.column() == CREATOR) {
                 return tApp->path().user_view()->get_link(o->creator().id());
             }

@@ -8,7 +8,7 @@
 #include <boost/bind.hpp>
 
 #include <Wt/WPushButton>
-#include <Wt/WText>
+#include <Wt/WAnchor>
 #include <Wt/WBreak>
 #include <Wt/Wc/util.hpp>
 
@@ -59,7 +59,10 @@ void add_remover_buttons(const CommentPtr& comment, Wt::WContainerWidget* p) {
     }
     if (tApp->user() && tApp->user()->has_permission(REGISTRATION_BANNER)) {
         p->addWidget(new Wt::WBreak());
-        p->addWidget(new Wt::WText(comment->ip()));
+        Wt::WAnchor* a = new Wt::WAnchor();
+        a->setText(comment->ip());
+        a->setLink(tApp->path().banned_ip()->get_link(comment->ip()));
+        p->addWidget(a);
         Wt::WPushButton* b;
         b = new Wt::WPushButton(Wt::WString::tr("tc.user.New_ban"), p);
         b->clicked().connect(boost::bind(show_new_ban, b, comment));
