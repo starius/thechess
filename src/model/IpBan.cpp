@@ -5,6 +5,8 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <boost/foreach.hpp>
+
 #include <Wt/WApplication>
 #include <Wt/WEnvironment>
 
@@ -28,13 +30,16 @@ bool IpBan::am_i_banned() {
     }
     dbo::Transaction t(tApp->session());
     std::string ip = wApp->environment().clientAddress();
-    return tApp->session().find<IpBan>()
-           .where("ip = ?").bind(ip)
-           .where("enabled = ?").bind(true)
-           .where("start < ?").bind(now())
-           .where("stop > ?").bind(now())
-           .limit(1)
-           .resultList().size();
+    IpBans bans = tApp->session().find<IpBan>()
+                  .where("ip = ?").bind(ip)
+                  .where("enabled = ?").bind(true)
+                  .resultList();
+    BOOST_FOREACH (IpBanPtr ban, bans) {
+        if (ban->start() <= now() && now() <= ban->stop()) {
+            return true;
+        }
+    }
+    return false;
 }
 
 }
