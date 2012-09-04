@@ -82,6 +82,11 @@ public:
         reason_ = reason;
     }
 
+    /** Return if current wApp is banned.
+    \warning tApp must be set.
+    */
+    static bool i_am_banned();
+
     /** Wt::Dbo persist implementation */
     template<class Action>
     void persist(Action& a) {

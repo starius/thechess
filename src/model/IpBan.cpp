@@ -9,6 +9,7 @@
 #include <Wt/WEnvironment>
 
 #include "model/all.hpp"
+#include "Application.hpp"
 
 DBO_INSTANTIATE_TEMPLATES(thechess::IpBan);
 
@@ -22,6 +23,18 @@ IpBan::IpBan(bool):
     if (wApp) {
         ip_ = wApp->environment().clientAddress();
     }
+}
+
+bool IpBan::i_am_banned() {
+    dbo::Transaction t(tApp->session());
+    std::string ip = wApp->environment().clientAddress();
+    return tApp->session().find<IpBan>()
+           .where("ip = ?").bind(ip)
+           .where("enabled = ?").bind(true)
+           .where("start < ?").bind(now())
+           .where("stop > ?").bind(now())
+           .limit(1)
+           .resultList().size();
 }
 
 }
