@@ -564,6 +564,7 @@ See locales-test manpage for more information.
     <message id='tc.menu.admin_log'>admin log</message>
     <message id='tc.menu.all_comments'>all comments</message>
     <message id='tc.menu.all_posts'>all posts</message>
+    <message id='tc.menu.banned_ip'>banned ip</message>
     <message id='tc.menu.challenge'>challenge</message>
     <message id='tc.menu.competition'>competition</message>
     <message id='tc.menu.competitions_list'>list of competitions</message>

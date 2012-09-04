@@ -62,6 +62,9 @@ private:
             if (tApp->user()->has_permission(LOGS_READER)) {
                 add_button("tc.menu.admin_log", path_->admin_log());
             }
+            if (tApp->user()->has_permission(REGISTRATION_BANNER)) {
+                add_button("tc.menu.banned_ip", path_->all_banned_ip());
+            }
         }
         add_section("tc.menu.forum");
         add_button("tc.menu.topics", path_->topics());
