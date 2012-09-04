@@ -93,7 +93,7 @@ public:
     /** Return if current wApp is banned.
     \warning If tApp is not set, false is returned.
     */
-    static bool i_am_banned();
+    static bool am_i_banned();
 
     /** Wt::Dbo persist implementation */
     template<class Action>

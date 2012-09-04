@@ -22,7 +22,7 @@ IpBan::IpBan(bool):
     enabled_(true), start_(now())
 { }
 
-bool IpBan::i_am_banned() {
+bool IpBan::am_i_banned() {
     if (!tApp) {
         return false;
     }
