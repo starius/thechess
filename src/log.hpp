@@ -19,6 +19,9 @@ namespace thechess {
 void admin_log(const Wt::WString& message);
 
 /** Return HTML anchor */
+Wt::WString html_a(const Wt::WString& path, const Wt::WString& text);
+
+/** Return HTML anchor */
 Wt::WString html_a(Wt::Wc::url::IntegerNode* node, int id,
                    const Wt::WString& text);
 

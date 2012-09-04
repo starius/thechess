@@ -22,9 +22,13 @@ void admin_log(const Wt::WString& message) {
     comment.modify()->set_text(message);
 }
 
+Wt::WString html_a(const Wt::WString& path, const Wt::WString& text) {
+    return "<a href='" + path + "'>" + text + "</a>";
+}
+
 Wt::WString html_a(Wt::Wc::url::IntegerNode* node, int id,
                    const Wt::WString& text) {
-    return "<a href='" + node->get_full_path(id) + "'>" + text + "</a>";
+    return html_a(node->get_full_path(id), text);
 }
 
 Wt::WString user_a(int user_id) {
