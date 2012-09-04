@@ -120,6 +120,9 @@ public:
     /** View bans of the IP */
     void banned_ip(const std::string& ip);
 
+    /** New IP ban of user */
+    void new_ip_ban(const std::string& ip, const UserPtr& user);
+
     /** View all comments */
     void all_comments();
 

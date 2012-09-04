@@ -37,10 +37,12 @@
 #include "widgets/user/SettingsWidget.hpp"
 #include "widgets/user/IpList.hpp"
 #include "widgets/user/IpBanList.hpp"
+#include "widgets/user/NewIpBan.hpp"
 #include "widgets/comment/CommentList.hpp"
 #include "widgets/comment/ForumCommentWidget.hpp"
 #include "widgets/comment/ForumEdit.hpp"
 #include "widgets/comment/ChatCommentWidget.hpp"
+#include "log.hpp"
 
 namespace thechess {
 
@@ -253,6 +255,11 @@ void MainWidget::all_banned_ip() {
 void MainWidget::banned_ip(const std::string& ip) {
     set_contents(new IpBanList(ip));
     wApp->setTitle(tr("tc.title.IpBanList"));
+}
+
+void MainWidget::new_ip_ban(const std::string& ip, const UserPtr& user) {
+    set_contents(new NewIpBan(ip, user_a(user.id())));
+    wApp->setTitle(tr("tc.title.NewIpBan"));
 }
 
 void MainWidget::all_comments() {

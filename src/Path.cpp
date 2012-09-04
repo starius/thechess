@@ -55,6 +55,7 @@ Path::Path(Wt::WObject* parent):
     admin_log_ = new PredefinedNode("log", admin);
     all_banned_ip_ = new PredefinedNode("ip", user_list_);
     banned_ip_ = new StringNode(all_banned_ip_);
+    new_ip_ban_ = new StringNode(virtuals_of_user_);
     all_comments_ = new PredefinedNode("comments", this);
     global_chat_ = new PredefinedNode("chat", this);
     tApp->internalPathChanged().connect(this, &Parser::open);
@@ -91,6 +92,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(admin_log_, boost::bind(&MainWidget::admin_log, mw));
     connect(all_banned_ip_, boost::bind(&MainWidget::all_banned_ip, mw));
     connect(banned_ip_, boost::bind(&Path::open_banned_ip, this));
+    connect(new_ip_ban_, boost::bind(&Path::open_new_ip_ban, this));
     connect(all_comments_, boost::bind(&MainWidget::all_comments, mw));
     connect(global_chat_, boost::bind(&MainWidget::global_chat, mw));
 }
@@ -222,6 +224,17 @@ void Path::open_chat_comment() {
 void Path::open_banned_ip() {
     BOOST_ASSERT(main_widget_);
     main_widget_->banned_ip(banned_ip_->string());
+}
+
+void Path::open_new_ip_ban() {
+    BOOST_ASSERT(main_widget_);
+    long long id = user_view_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        UserPtr user = tApp->session().load<User>(id);
+        main_widget_->new_ip_ban(new_ip_ban_->string(), user);
+    } catch (dbo::ObjectNotFoundException)
+    { }
 }
 
 }

@@ -190,6 +190,11 @@ public:
         return banned_ip_;
     }
 
+    /** New ban of user with this IP */
+    url::StringNode* new_ip_ban() const {
+        return new_ip_ban_;
+    }
+
     /** All comments */
     url::PredefinedNode* all_comments() const {
         return all_comments_;
@@ -233,6 +238,7 @@ private:
     url::PredefinedNode* admin_log_;
     url::PredefinedNode* all_banned_ip_;
     url::StringNode* banned_ip_;
+    url::StringNode* new_ip_ban_;
     url::PredefinedNode* all_comments_;
     url::PredefinedNode* global_chat_;
 
@@ -250,6 +256,7 @@ private:
     void open_forum_edit();
     void open_chat_comment();
     void open_banned_ip();
+    void open_new_ip_ban();
 };
 
 }
