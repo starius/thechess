@@ -169,6 +169,9 @@ void Application::gather_init() {
 
 void Application::gather_explorer(Wt::Wc::Gather::DataType type,
                                   const std::string& value) {
+    if (type == Wt::Wc::Gather::IP && value == "127.0.0.1") {
+        return;
+    }
     dbo::Transaction t(session());
     if (user()) {
         BDId bd_id(user(), type, value);
