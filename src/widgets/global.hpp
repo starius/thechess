@@ -34,6 +34,7 @@ class GPListWidget;
 class GPSelector;
 class GPWidget;
 class Header;
+class IpBanList;
 class IpList;
 class MainMenu;
 class MainPage;

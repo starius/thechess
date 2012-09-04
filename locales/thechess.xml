@@ -352,9 +352,11 @@ See locales-test manpage for more information.
     <message id='tc.common.Create'>Create</message>
     <message id='tc.common.Create_new'>Create new item</message>
     <message id='tc.common.created'>created</message>
+    <message id='tc.common.creator'>creator</message>
     <message id='tc.common.Description'>Description</message>
     <message id='tc.common.Discard'>Discard</message>
     <message id='tc.common.duration'>duration</message>
+    <message id='tc.common.enabled'>enabled</message>
     <message id='tc.common.interval'>from {1} to {2}</message>
     <message id='tc.common.Join'>Join</message>
     <message id='tc.common.Kick'>Kick</message>
@@ -368,6 +370,8 @@ See locales-test manpage for more information.
     <message id='tc.common.Reset'>Reset</message>
     <message id='tc.common.Save'>Save</message>
     <message id='tc.common.Select_existing'>Select existing item</message>
+    <message id='tc.common.start'>start</message>
+    <message id='tc.common.stop'>stop</message>
     <message id='tc.common.winner'>winner</message>
     <message id='tc.common.Logo'>
         <font style='font-size: 50px; color:#2A7D4F;'>TheChess</font>
