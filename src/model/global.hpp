@@ -37,6 +37,7 @@ class CP;
 class Competition;
 class Comment;
 class BD;
+class IpBan;
 
 #ifndef DOXYGEN_ONLY
 typedef dbo::ptr<User> UserPtr;
@@ -46,6 +47,7 @@ typedef dbo::ptr<CP> CPPtr;
 typedef dbo::ptr<Competition> CompetitionPtr;
 typedef dbo::ptr<Comment> CommentPtr;
 typedef dbo::ptr<BD> BDPtr;
+typedef dbo::ptr<IpBan> IpBanPtr;
 #else
 /** Dbo pointer to User */
 typedef User* UserPtr;
@@ -67,6 +69,9 @@ typedef Comment* CommentPtr;
 
 /** Dbo pointer to BD */
 typedef BD* BDPtr;
+
+/** Dbo pointer to IpBan */
+typedef IpBan* IpBanPtr;
 #endif
 
 #ifndef DOXYGEN_ONLY
@@ -77,6 +82,7 @@ typedef dbo::collection<CPPtr> CPs;
 typedef dbo::collection<CompetitionPtr> Competitions;
 typedef dbo::collection<CommentPtr> Comments;
 typedef dbo::collection<BDPtr> BDs;
+typedef dbo::collection<IpBanPtr> IpBans;
 #else
 /** User dbo collection */
 typedef User* Users;
@@ -98,6 +104,9 @@ typedef Comment* Comments;
 
 /** BD dbo collection */
 typedef BD* BDs;
+
+/** IpBan dbo collection */
+typedef IpBan* IpBans;
 
 #endif
 
@@ -121,6 +130,9 @@ typedef std::vector<CommentPtr> CommentsVector;
 
 /** BD vector */
 typedef std::vector<BDPtr> BDsVector;
+
+/** IpBan vector */
+typedef std::vector<IpBanPtr> IpBansVector;
 
 }
 

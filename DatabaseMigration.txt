@@ -4,6 +4,17 @@
 
 alter table "thechess_comment" add column "ip" text not null default "";
 
+(sqlite3)
+create table "thechess_ip_ban" (
+    "id" integer primary key autoincrement,
+    "version" integer not null,
+    "ip" text not null,
+    "enabled" boolean not null,
+    "start" text,
+    "stop" text,
+    "reason" text not null
+)
+
 3.0.7 to 3.0.8
 ==============
 

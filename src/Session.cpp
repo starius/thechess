@@ -32,6 +32,7 @@ Session::Session(dbo::FixedSqlConnectionPool& pool):
     mapClass<Competition>("thechess_competition");
     mapClass<Comment>("thechess_comment");
     mapClass<BD>("thechess_bd");
+    mapClass<IpBan>("thechess_ip_ban");
     mapClass<AuthInfo>("auth_info");
     mapClass<AuthInfo::AuthIdentityType>("auth_identity");
     mapClass<AuthInfo::AuthTokenType>("auth_token");
