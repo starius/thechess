@@ -44,7 +44,7 @@ Wt::Auth::User User::auth_user() const {
     return tApp->session().user_database().find(auth_info());
 }
 
-const std::string& User::email() const {
+std::string User::email() const {
     return auth_info()->email();
 }
 

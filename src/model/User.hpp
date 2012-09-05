@@ -71,7 +71,7 @@ public:
     Wt::Auth::User auth_user() const;
 
     /** Return verified e-mail */
-    const std::string& email() const;
+    std::string email() const;
 
     /** Set unverified e-mail address and send confirmation mail.
     \warning tApp must be defined.
