@@ -78,6 +78,7 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
     bottom_place_ = new Wt::WContainerWidget(this);
     addWidget(new Footer());
     show_countup();
+    show_is_banned();
 }
 
 void MainWidget::show_menu(Path* path) {
@@ -85,7 +86,7 @@ void MainWidget::show_menu(Path* path) {
 }
 
 MainMenu* MainWidget::main_menu() {
-    return downcast<MainMenu*>(menu_place_->widget(1));
+    return downcast<MainMenu*>(menu_place_->widget(menu_place_->count() - 1));
 }
 
 void MainWidget::update_my_games() {
@@ -317,6 +318,13 @@ static void reset_countup(Wt::Wc::Countdown* countup) {
 void MainWidget::show_countup() {
     Wt::Wc::Countdown* countup = new Wt::Wc::Countdown(menu_place_);
     reset_countup(countup);
+}
+
+void MainWidget::show_is_banned() {
+    if (IpBan::am_i_banned()) {
+        menu_place_->addWidget(new Wt::WBreak());
+        menu_place_->addWidget(new Wt::WText(tr("tc.user.This_ip_banned")));
+    }
 }
 
 }

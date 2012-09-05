@@ -163,6 +163,7 @@ private:
 
     void set_contents(WWidget* widget);
     void show_countup();
+    void show_is_banned();
 };
 
 }
