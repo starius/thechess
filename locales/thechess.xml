@@ -693,6 +693,7 @@ See locales-test manpage for more information.
     <message id='tc.user.Not_removed'>Not removed</message>
     <message id='tc.user.Online_time'>Spent online {1}</message>
     <message id='tc.user.Only_online'>Only online</message>
+    <message id='tc.user.Password_example'>Password example:&nbsp;</message>
     <message id='tc.user.private_writer'>write private message</message>
     <message id='tc.user.rating_after'>rating after</message>
     <message id='tc.user.Rating_changes'>Rating changes</message>

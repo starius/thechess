@@ -5,8 +5,12 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <Wt/WContainerWidget>
+#include <Wt/WText>
 #include <Wt/Auth/AuthModel>
 #include <Wt/Auth/RegistrationModel>
+#include <Wt/Auth/RegistrationWidget>
+#include <Wt/Wc/rand.hpp>
 
 #include "widgets/user/AuthWidget.hpp"
 #include "Application.hpp"
@@ -20,7 +24,8 @@ AuthWidget::AuthWidget(Wt::WContainerWidget* parent):
         tApp->session().user_database(),
 #endif
         tApp->session().login(),
-        parent) {
+        parent),
+    model_(0) {
     using namespace Wt::Auth;
 #if WT_MINOR==0x0
     addPasswordAuth(&Server::instance()->password_service());
@@ -55,6 +60,35 @@ public:
         setEmailPolicy(Wt::Auth::RegistrationModel::EmailMandatory);
     }
 };
+
+class RegistrationWidget : public Wt::Auth::RegistrationWidget {
+public:
+    RegistrationWidget(AuthWidget* authWidget = 0):
+        Wt::Auth::RegistrationWidget(authWidget)
+    { }
+
+    void close() {
+        delete parent(); // WContainerWidget
+    }
+};
+
+Wt::WWidget* AuthWidget::createRegistrationView(const Wt::Auth::Identity& id) {
+    Wt::WContainerWidget* result = new Wt::WContainerWidget();
+    if (!model_) {
+        model_ = createRegistrationModel();
+    } else {
+        model_->reset();
+    }
+    if (id.isValid()) {
+        model_->registerIdentified(id);
+    }
+    RegistrationWidget* w = new RegistrationWidget(this);
+    w->setModel(model_);
+    result->addWidget(w);
+    result->addWidget(new Wt::WText(tr("tc.user.Password_example")));
+    result->addWidget(new Wt::WText(Wt::Wc::good_password()));
+    return result;
+}
 
 Wt::Auth::RegistrationModel* AuthWidget::createRegistrationModel() {
     return new RegistrationModel(this);

@@ -19,9 +19,15 @@ public:
     /** Constructor */
     AuthWidget(Wt::WContainerWidget* parent = 0);
 
+    /** Return registration view */
+    Wt::WWidget* createRegistrationView(const Wt::Auth::Identity& id);
+
 protected:
     /** Return registration model */
     Wt::Auth::RegistrationModel* createRegistrationModel();
+
+private:
+    Wt::Auth::RegistrationModel* model_;
 };
 
 }
