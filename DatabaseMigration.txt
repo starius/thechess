@@ -2,6 +2,8 @@
 3.0.8 to 3.0.9
 ==============
 
+Set rights_ of regular user to 4095.
+
 alter table "thechess_comment" add column "ip" text not null default "";
 
 (sqlite3)
