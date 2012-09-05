@@ -131,7 +131,7 @@ Board::Board(const std::string& data) {
 }
 
 std::string Board::to_string() const {
-    std::string result =  base64_encode(pieces_, sizeof(pieces_));
+    std::string result = base64_encode(pieces_, sizeof(pieces_));
     boost::algorithm::replace_all(result, "+", "-");
     boost::algorithm::replace_all(result, "/", ".");
     boost::algorithm::replace_all(result, "=", "");
