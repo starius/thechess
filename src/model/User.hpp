@@ -65,6 +65,19 @@ public:
     /** Return (first of) auth info */
     AuthInfoPtr auth_info() const;
 
+    /** Return the Auth::User corresponding to a Dbo user.
+    \warning tApp must be defined.
+    */
+    Wt::Auth::User auth_user() const;
+
+    /** Return verified e-mail */
+    const std::string& email() const;
+
+    /** Set unverified e-mail address and send confirmation mail.
+    \warning tApp must be defined.
+    */
+    void set_email(const std::string& email);
+
     /** Return if the user was removed */
     bool removed() const;
 

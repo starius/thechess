@@ -40,6 +40,18 @@ AuthInfoPtr User::auth_info() const {
     return auth_infos_.front();
 }
 
+Wt::Auth::User User::auth_user() const {
+    return tApp->session().user_database().find(auth_info());
+}
+
+const std::string& User::email() const {
+    return auth_info()->email();
+}
+
+void User::set_email(const std::string& email) {
+    Server::instance()->auth_service().verifyEmailAddress(auth_user(), email);
+}
+
 bool User::removed() const {
     return auth_info()->status() == Wt::Auth::User::Disabled;
 }
