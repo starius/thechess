@@ -21,6 +21,8 @@ create table "thechess_ip_ban" (
 alter table "thechess_game" add column "norating" boolean
 not null default false;
 
+alter table "thechess_competition" add column "comment_base_id" bigint;
+
 3.0.7 to 3.0.8
 ==============
 

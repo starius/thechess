@@ -73,6 +73,7 @@ public:
         dbo::field(a, started_, "started");
         dbo::field(a, ended_, "ended");
         dbo::hasMany(a, winners_, dbo::ManyToMany, "winners_competition");
+        dbo::field(a, comment_base_, "comment_base");
     }
 
     /** Get competition parameters */
@@ -249,6 +250,19 @@ public:
 
     /* @} */
 
+    /** \name Methods of comments */
+    /* @{ */
+
+    /** Return if there is a comment base  */
+    bool has_comment_base() const;
+
+    /** Return comment base.
+    Lazy created.
+    */
+    const CommentPtr& comment_base();
+
+    /* @} */
+
 private:
     // common attributes
     CPPtr cp_;
@@ -265,6 +279,8 @@ private:
     Wt::WDateTime ended_;
 
     Users winners_;
+
+    CommentPtr comment_base_;
 
     bool can_start() const;
     void start(Planning* planning);

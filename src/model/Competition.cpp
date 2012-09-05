@@ -286,6 +286,19 @@ void Competition::allow_virtuals(const UserPtr& user) {
     }
 }
 
+bool Competition::has_comment_base() const {
+    return comment_base_;
+}
+
+const CommentPtr& Competition::comment_base() {
+    if (!comment_base_) {
+        comment_base_ = session()->add(new Comment(true));
+        comment_base_.modify()->set_type(Comment::CHAT_ROOT);
+        comment_base_.flush();
+    }
+    return comment_base_;
+}
+
 bool Competition::can_start() const {
     bool result = false;
     if (state_ == RECRUITING) {

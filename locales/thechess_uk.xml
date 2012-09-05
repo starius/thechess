@@ -70,6 +70,7 @@
         <br/><h2>Переможці</h2> ${winners}
         <br/><h2>Подробиці</h2>${view}
         <br/><h2>Керування</h2>${manager}
+        <br/><h2>Чат</h2>${chat}
     </message>
 
     <message id="tc.game.Analysis">Аналіз</message>

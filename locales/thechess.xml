@@ -446,6 +446,7 @@ See locales-test manpage for more information.
         <br /> <h2>Winners</h2> ${winners}
         <br /> <h2>Details</h2>${view}
         <br /> <h2>Management</h2>${manager}
+        <br /> <h2>Chat</h2>${chat}
     </message>
 
     <message id='tc.forum.all_comments'>all comments</message>

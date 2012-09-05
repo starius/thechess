@@ -26,6 +26,7 @@
 #include "widgets/competition/StagedCompetitionGraph.hpp"
 #include "widgets/competition/CompetitionCreateWidget.hpp"
 #include "widgets/user/user_anchor.hpp"
+#include "widgets/comment/CommentList.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
 #include "notify.hpp"
@@ -426,6 +427,38 @@ private:
     }
 };
 
+class CompetitionChat : public Wt::WContainerWidget {
+public:
+    CompetitionChat(const CompetitionPtr& c):
+        c_(c) {
+        print_comment_list();
+    }
+
+private:
+    CompetitionPtr c_;
+
+    void print_comment_list() {
+        dbo::Transaction t(tApp->session());
+        if (c_->has_comment_base()) {
+            print_comment_list_impl();
+        } else {
+            new Wt::WBreak(this);
+            Wt::WPushButton* add = new Wt::WPushButton(this);
+            add->setText(tr("tc.comment.Add"));
+            add->clicked().connect(this,
+                                   &CompetitionChat::print_comment_list_impl);
+            add->clicked().connect(add, &Wt::WWidget::hide);
+            add->clicked().connect(add, &Wt::WWidget::disable);
+        }
+    }
+
+    void print_comment_list_impl() {
+        dbo::Transaction t(tApp->session());
+        CommentPtr comment_base = c_.modify()->comment_base();
+        addWidget(new CommentList(Comment::CHAT_MESSAGE, comment_base));
+    }
+};
+
 CompetitionWidget::CompetitionWidget(const CompetitionPtr& competition,
                                      Wt::WContainerWidget* p):
     Wt::WTemplate(tr("tc.competition.widget_template"), p),
@@ -449,6 +482,7 @@ void CompetitionWidget::reprint() {
     bindWidget("winners", new CompetitionWinners(c));
     bindWidget("terms", new CompetitionTerms(c));
     bindWidget("view", new CompetitionView(c));
+    bindWidget("chat", new CompetitionChat(c));
     Wt::WWidget* manager = resolveWidget("manager");
     if (!manager || !downcast<CompetitionManager*>(manager)->is_editing()) {
         bindWidget("manager", new CompetitionManager(c));

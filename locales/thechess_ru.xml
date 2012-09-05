@@ -77,6 +77,7 @@
         <br /> <h2>Победители</h2> ${winners}
         <br /> <h2>Подробности</h2>${view}
         <br /> <h2>Управление</h2>${manager}
+        <br /> <h2>Чат</h2>${chat}
     </message>
 
     <message id='tc.game.Analysis'>Анализ</message>
