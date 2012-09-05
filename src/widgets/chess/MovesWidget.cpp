@@ -32,7 +32,7 @@
 namespace thechess {
 
 const int MOVES_COLUMN_WIDTH = 100;
-const int N_COLUMN_WIDTH = 20;
+const int N_COLUMN_WIDTH = 30;
 const int MOVES_ROW_HEIGHT = 35;
 const int NAVIGATION_BAR_HEIGHT = 25; // set in wt.css
 const int JS_WIDTH = (MOVES_COLUMN_WIDTH + 20) * 2 + (N_COLUMN_WIDTH + 7) + 20;
