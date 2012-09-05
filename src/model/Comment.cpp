@@ -67,20 +67,17 @@ Comment::State Comment::state_of_new(const UserPtr& user, Type type,
         if (type == CHAT_MESSAGE && !user->has_permission(CHAT_WRITER)) {
             return DELETED;
         }
-        if (type == FORUM_TOPIC &&
-                !user->has_permission(COMMENTS_REMOVER)) {
+        if (type == FORUM_TOPIC && !user->has_permission(COMMENTS_REMOVER)) {
             return DELETED;
         }
-        if (type == FORUM_POST &&
-                !user->has_permission(FORUM_POST_CREATOR)) {
+        if (type == FORUM_POST && !user->has_permission(FORUM_POST_CREATOR)) {
             return DELETED;
         }
         if (type == FORUM_COMMENT &&
                 !user->has_permission(FORUM_COMMENT_CREATOR)) {
             return DELETED;
         }
-        if (type == LOG_ENTRY &&
-                !user->has_permission(LOGS_READER)) {
+        if (type == LOG_ENTRY && !user->has_permission(LOGS_READER)) {
             return DELETED;
         }
         return OK;
