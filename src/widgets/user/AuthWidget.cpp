@@ -38,11 +38,26 @@ AuthWidget::AuthWidget(Wt::WContainerWidget* parent):
     }
 }
 
+class RegistrationModel : public Wt::Auth::RegistrationModel {
+public:
+    RegistrationModel(Wt::WObject* parent = 0):
+        Wt::Auth::RegistrationModel(Server::instance()->auth_service(),
+                                    tApp->session().user_database(),
+                                    tApp->session().login(),
+                                    this) {
+        addPasswordAuth(&Server::instance()->password_service());
+        setEmailPolicy(Wt::Auth::RegistrationModel::EmailMandatory);
+    }
+
+    void reset() {
+        // FIXME http://redmine.emweb.be/issues/1421
+        Wt::Auth::RegistrationModel::reset();
+        setEmailPolicy(Wt::Auth::RegistrationModel::EmailMandatory);
+    }
+};
+
 Wt::Auth::RegistrationModel* AuthWidget::createRegistrationModel() {
-    Wt::Auth::RegistrationModel* result;
-    result = Wt::Auth::AuthWidget::createRegistrationModel();
-    result->setEmailPolicy(Wt::Auth::RegistrationModel::EmailMandatory);
-    return result;
+    return new RegistrationModel(this);
 }
 
 }
