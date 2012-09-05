@@ -26,6 +26,7 @@ const int HEIGHT = 500;
 class IpListModel : public ILP::BaseQM {
 public:
     enum {
+        USER,
         IP,
         LAST_USE,
         BAN
@@ -35,6 +36,7 @@ public:
         ILP::BaseQM(parent),
         user_(user) {
         set_query();
+        addColumn("type", tr("tc.user.user")); // dummy
         addColumn("value", tr("tc.user.ip"));
         addColumn("used", tr("tc.common.last"));
         addColumn("type", tr("tc.user.New_ban")); // dummy
@@ -63,6 +65,8 @@ private:
                 } else {
                     return tr("tc.user.New_ban");
                 }
+            } else if (index.column() == USER) {
+                return o->user()->username();
             }
         } else if (role == Wt::LinkRole) {
             if (index.column() == IP) {
@@ -70,6 +74,8 @@ private:
             } else if (index.column() == BAN && !IpBan::is_banned(o->value())) {
                 tApp->path().user_view()->set_integer_value(user_.id());
                 return tApp->path().new_ip_ban()->get_link(o->value());
+            } else if (index.column() == USER) {
+                return tApp->path().user_view()->get_link(o->user().id());
             }
         }
         return ILP::BaseQM::data(index, role);
