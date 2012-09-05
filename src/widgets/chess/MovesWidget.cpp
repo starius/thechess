@@ -304,6 +304,9 @@ private:
     }
 
     void onmove(const HalfMove& half_move) {
+        if (cached_moves_.size() > 10000) {
+            return;
+        }
         if (active()) {
             if (!move_confirmation()) {
                 emit_move(half_move);
