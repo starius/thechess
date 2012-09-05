@@ -33,6 +33,7 @@ class GameWidget;
 class GPListWidget;
 class GPSelector;
 class GPWidget;
+class Gravatar;
 class Header;
 class IpBanList;
 class IpList;
