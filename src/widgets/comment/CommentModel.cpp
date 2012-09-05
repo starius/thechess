@@ -14,7 +14,7 @@ namespace thechess {
 CommentModel::CommentModel(Comment::Type type, const CommentPtr& root,
                            const UserPtr& init, Wt::WObject* parent):
     CommentModel::BaseQM(parent),
-    type_(type), root_(root), init_(init), only_ok_(false) {
+    type_(type), root_(root), init_(init), only_ok_(false), only_my_(false) {
     dbo::Transaction t(tApp->session());
     setQuery(get_query());
     addColumn("id");
@@ -119,6 +119,9 @@ CommentModel::Query CommentModel::get_query() const {
     if (init_) {
         result.where("init_id = ?").bind(init_);
     }
+    if (only_my_) {
+        result.where("init_id = ?").bind(tApp->user().id());
+    }
     if (only_ok_) {
         result.where("state = ?").bind(Comment::OK);
     }
@@ -132,6 +135,11 @@ CommentModel::Query CommentModel::get_query() const {
 
 void CommentModel::set_only_ok(bool only_ok) {
     only_ok_ = only_ok;
+    setQuery(get_query(), /* keep_columns */ true);
+}
+
+void CommentModel::set_only_my(bool only_my) {
+    only_my_ = only_my;
     setQuery(get_query(), /* keep_columns */ true);
 }
 

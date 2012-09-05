@@ -80,11 +80,20 @@ public:
     /** Set if only Comment's with state=OK are filtered */
     void set_only_ok(bool only_ok = true);
 
+    /** Get if only my comments are shown */
+    bool only_my() const {
+        return only_my_;
+    }
+
+    /** Set if only my comments are shown */
+    void set_only_my(bool only_my = true);
+
 private:
     Comment::Type type_;
     CommentPtr root_;
     UserPtr init_;
     bool only_ok_;
+    bool only_my_;
 };
 
 }

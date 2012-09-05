@@ -135,6 +135,14 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
         boost::bind(&CommentModel::set_only_ok, model,
                     boost::bind(&Wt::WAbstractToggleButton::isChecked,
                                 only_ok)));
+    if (tApp->user() && !init) {
+        Wt::WCheckBox* only_my = new Wt::WCheckBox(this);
+        only_my->setText(tr("tc.common.Only_my"));
+        only_my->changed().connect(
+            boost::bind(&CommentModel::set_only_my, model,
+                        boost::bind(&Wt::WAbstractToggleButton::isChecked,
+                                    only_my)));
+    }
     addWidget(view_);
     print_edits();
     if (Comment::can_create(tApp->user(), type, root) && edit_) {
