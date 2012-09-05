@@ -28,7 +28,6 @@ public:
     enum {
         IP,
         LAST_USE,
-        BANNED,
         BAN
     };
 
@@ -38,7 +37,6 @@ public:
         set_query();
         addColumn("value", tr("tc.user.ip"));
         addColumn("used", tr("tc.common.last"));
-        addColumn("type", tr("tc.user.Already_banned")); // dummy
         addColumn("type", tr("tc.user.New_ban")); // dummy
         sort(LAST_USE, Wt::DescendingOrder);
     }
@@ -59,15 +57,17 @@ private:
         dbo::Transaction t(tApp->session());
         const BDPtr& o = resultRow(index.row());
         if (role == Wt::DisplayRole) {
-            if (index.column() == BANNED) {
-                return IpBan::is_banned(o->value());
-            } else if (index.column() == BAN) {
-                return tr("tc.user.New_ban");
+            if (index.column() == BAN) {
+                if (IpBan::is_banned(o->value())) {
+                    return tr("tc.user.Already_banned");
+                } else {
+                    return tr("tc.user.New_ban");
+                }
             }
         } else if (role == Wt::LinkRole) {
             if (index.column() == IP) {
                 return tApp->path().banned_ip()->get_link(o->value());
-            } else if (index.column() == BAN) {
+            } else if (index.column() == BAN && !IpBan::is_banned(o->value())) {
                 tApp->path().user_view()->set_integer_value(user_.id());
                 return tApp->path().new_ip_ban()->get_link(o->value());
             }
