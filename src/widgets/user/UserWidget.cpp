@@ -16,6 +16,7 @@
 #include <Wt/WPanel>
 
 #include "widgets/user/UserWidget.hpp"
+#include "widgets/user/Gravatar.hpp"
 #include "widgets/user/RatingChanges.hpp"
 #include "widgets/user/RightsEdit.hpp"
 #include "widgets/game/GameCreateWidget.hpp"
@@ -37,6 +38,8 @@ public:
         dbo::Transaction t(tApp->session());
         user_.reread();
         new Header(user_->username(), this);
+        new Wt::WBreak(this);
+        new Gravatar(user_, this);
         if (user_->online()) {
             new Wt::WText(tr("tc.user.Online"), this);
         }
