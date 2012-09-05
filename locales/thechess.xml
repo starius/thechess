@@ -595,6 +595,7 @@ See locales-test manpage for more information.
     <message id='tc.title.IpBanList'>List of IP bans « TheChess</message>
     <message id='tc.title.MainPage'>TheChess</message>
     <message id='tc.title.MovesWidget'>Board « TheChess</message>
+    <message id='tc.title.MovesWidget_moves'>Moves « TheChess</message>
     <message id='tc.title.NewIpBan'>New ban « TheChess</message>
     <message id='tc.title.SettingsWidget'>Settings « User « TheChess</message>
     <message id='tc.title.UserListWidget'>List « User « TheChess</message>

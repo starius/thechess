@@ -87,6 +87,9 @@ public:
     /** View the board */
     void board_view(const std::string& data);
 
+    /** View the moves */
+    void moves_view(const std::string& data);
+
     /** View MovesWidget */
     void moves_widget();
 

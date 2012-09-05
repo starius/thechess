@@ -140,6 +140,13 @@ public:
         return board_;
     }
 
+    /** Moves URL.
+    Parameter: Moves::to_string()
+    */
+    url::StringNode* moves() const {
+        return moves_;
+    }
+
     /** Forum topics */
     url::PredefinedNode* topics() const {
         return topics_;
@@ -233,6 +240,7 @@ private:
     url::PredefinedNode* cp_new_;
     url::PredefinedNode* board_root_;
     url::StringNode* board_;
+    url::StringNode* moves_;
     url::PredefinedNode* topics_;
     url::IntegerNode* topic_posts_;
     url::PredefinedNode* all_posts_;
@@ -256,6 +264,7 @@ private:
     void open_gp();
     void open_competition();
     void open_board();
+    void open_moves();
     void open_forum_topic_posts();
     void open_forum_post();
     void open_forum_post_comment();

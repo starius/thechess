@@ -200,6 +200,11 @@ void MainWidget::board_view(const std::string& data) {
     wApp->setTitle(tr("tc.title.BoardWidget"));
 }
 
+void MainWidget::moves_view(const std::string& m) {
+    set_contents(new MovesWidget(Moves(m), /* big */ false, /* active */ true));
+    wApp->setTitle(tr("tc.title.MovesWidget_moves"));
+}
+
 void MainWidget::moves_widget() {
     set_contents(new MovesWidget(Moves(), /* big */ false, /* active */ true));
     wApp->setTitle(tr("tc.title.MovesWidget"));
