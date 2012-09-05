@@ -20,14 +20,12 @@ namespace thechess {
 class SettingsWidget::SettingsWidgetImpl : public Wt::WContainerWidget {
 public:
     SettingsWidgetImpl() {
-        Wt::WPushButton* b;
         dbo::Transaction t(tApp->session());
         if (!tApp->user()) {
             return;
         }
         new Header(tr("tc.user.Settings"), this);
-        b = new Wt::WPushButton(tr("Wt.Auth.updatepassword"), this);
-        b->clicked().connect(tApp, &Application::update_password);
+        print_password_changer();
         if (tApp->user()->has_permission(CLASSIFICATION_CHANGER)) {
             print_classification_changer();
         }
@@ -35,6 +33,13 @@ public:
 
 private:
     ClassificationWidget* class_;
+
+    void print_password_changer() {
+        new Wt::WBreak(this);
+        Wt::WPushButton* b;
+        b = new Wt::WPushButton(tr("Wt.Auth.updatepassword"), this);
+        b->clicked().connect(tApp, &Application::update_password);
+    }
 
     void print_classification_changer() {
         new Wt::WBreak(this);
