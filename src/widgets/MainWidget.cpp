@@ -255,7 +255,10 @@ void MainWidget::all_banned_ip() {
 }
 
 void MainWidget::banned_ip(const std::string& ip) {
-    set_contents(new IpBanList(ip));
+    Wt::WContainerWidget* c = new Wt::WContainerWidget();
+    c->addWidget(new IpBanList(ip));
+    c->addWidget(new IpList(ip));
+    set_contents(c);
     wApp->setTitle(tr("tc.title.IpBanList"));
 }
 

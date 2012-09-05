@@ -33,8 +33,20 @@ public:
     };
 
     IpListModel(const UserPtr& user, Wt::WObject* parent = 0):
-        ILP::BaseQM(parent),
-        user_(user) {
+        ILP::BaseQM(parent), user_(user) {
+        initialize();
+    }
+
+    IpListModel(const std::string& ip, Wt::WObject* parent = 0):
+        ILP::BaseQM(parent), ip_(ip) {
+        initialize();
+    }
+
+private:
+    UserPtr user_;
+    std::string ip_;
+
+    void initialize() {
         set_query();
         addColumn("type", tr("tc.user.user")); // dummy
         addColumn("value", tr("tc.user.ip"));
@@ -43,14 +55,15 @@ public:
         sort(LAST_USE, Wt::DescendingOrder);
     }
 
-private:
-    UserPtr user_;
-
     void set_query() {
         dbo::Transaction t(tApp->session());
         ILP::Q q = tApp->session().find<BD>();
-        q.where("user_id = ?").bind(user_);
         q.where("type = ?").bind(Wt::Wc::Gather::IP);
+        if (user_) {
+            q.where("user_id = ?").bind(user_);
+        } else {
+            q.where("value = ?").bind(ip_);
+        }
         setQuery(q, /* keep_columns */ true);
     }
 
@@ -72,7 +85,7 @@ private:
             if (index.column() == IP) {
                 return tApp->path().banned_ip()->get_link(o->value());
             } else if (index.column() == BAN && !IpBan::is_banned(o->value())) {
-                tApp->path().user_view()->set_integer_value(user_.id());
+                tApp->path().user_view()->set_integer_value(o->user().id());
                 return tApp->path().new_ip_ban()->get_link(o->value());
             } else if (index.column() == USER) {
                 return tApp->path().user_view()->get_link(o->user().id());
@@ -106,6 +119,15 @@ IpList::IpList(const UserPtr& user, Wt::WContainerWidget* parent):
         return;
     }
     IpListModel* m = new IpListModel(user, this);
+    IpListView* view = new IpListView(m, this);
+}
+
+IpList::IpList(const std::string& ip, Wt::WContainerWidget* parent):
+    WContainerWidget(parent) {
+    if (!tApp->user() || !tApp->user()->has_permission(REGISTRATION_BANNER)) {
+        return;
+    }
+    IpListModel* m = new IpListModel(ip, this);
     IpListView* view = new IpListView(m, this);
 }
 

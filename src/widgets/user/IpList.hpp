@@ -22,6 +22,9 @@ class IpList : public Wt::WContainerWidget {
 public:
     /** Constructor */
     IpList(const UserPtr& user, Wt::WContainerWidget* parent = 0);
+
+    /** Constructor */
+    IpList(const std::string& ip, Wt::WContainerWidget* parent = 0);
 };
 
 }
