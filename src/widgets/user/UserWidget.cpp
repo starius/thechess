@@ -40,15 +40,17 @@ public:
         new Header(user_->username(), this);
         new Wt::WBreak(this);
         new Gravatar(user_, this);
-        if (user_->online()) {
-            new Wt::WText(tr("tc.user.Online"), this);
-        }
         if (tApp->user()) {
             // TODO add option to hide this from regular users
             new Wt::WBreak(this);
             new Wt::WText(user_->email(), this);
         }
+        if (user_->online()) {
+            new Wt::WBreak(this);
+            new Wt::WText(tr("tc.user.Online"), this);
+        }
         if (user_->removed()) {
+            new Wt::WBreak(this);
             new Wt::WText(tr("tc.user.Removed_message"), this);
         }
         new Wt::WBreak(this);
