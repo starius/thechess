@@ -126,6 +126,9 @@ public:
     /** View all comments */
     void all_comments();
 
+    /** View comments of the user */
+    void user_comments(const UserPtr& user);
+
     /** View global chat */
     void global_chat();
 

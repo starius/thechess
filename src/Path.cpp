@@ -57,6 +57,7 @@ Path::Path(Wt::WObject* parent):
     banned_ip_ = new StringNode(all_banned_ip_);
     new_ip_ban_ = new StringNode(virtuals_of_user_);
     all_comments_ = new PredefinedNode("comments", this);
+    user_comments_ = new PredefinedNode("comments", user_view_);
     global_chat_ = new PredefinedNode("chat", this);
     tApp->internalPathChanged().connect(this, &Parser::open);
 }
@@ -94,6 +95,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(banned_ip_, boost::bind(&Path::open_banned_ip, this));
     connect(new_ip_ban_, boost::bind(&Path::open_new_ip_ban, this));
     connect(all_comments_, boost::bind(&MainWidget::all_comments, mw));
+    connect(user_comments_, boost::bind(&Path::open_user_comments, this));
     connect(global_chat_, boost::bind(&MainWidget::global_chat, mw));
 }
 
@@ -233,6 +235,16 @@ void Path::open_new_ip_ban() {
     try {
         UserPtr user = tApp->session().load<User>(id);
         main_widget_->new_ip_ban(new_ip_ban_->string(), user);
+    } catch (dbo::ObjectNotFoundException)
+    { }
+}
+
+void Path::open_user_comments() {
+    BOOST_ASSERT(main_widget_);
+    long long id = user_view_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        main_widget_->user_comments(tApp->session().load<User>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
 }

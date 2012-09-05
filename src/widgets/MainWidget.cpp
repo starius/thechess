@@ -268,6 +268,12 @@ void MainWidget::all_comments() {
     wApp->setTitle(tr("tc.title.CommentList_all_comments"));
 }
 
+void MainWidget::user_comments(const UserPtr& user) {
+    set_contents(new CommentList(Comment::NO_TYPE, CommentPtr(), user));
+    wApp->setTitle(tr("tc.title.CommentList_user_comments")
+                   .arg(user->username20()));
+}
+
 void MainWidget::global_chat() {
     set_contents(new CommentList(Comment::CHAT_MESSAGE));
     wApp->setTitle(tr("tc.title.CommentList_global_chat"));

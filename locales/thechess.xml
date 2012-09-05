@@ -616,6 +616,9 @@ See locales-test manpage for more information.
     <message id='tc.title.CommentList_topics'>
         Topics « Forum « TheChess
     </message>
+    <message id='tc.title.CommentList_user_comments'>
+        Comments « {1} « TheChess
+    </message>
     <message id='tc.title.CompetitionCreateWidget'>
         Create « Competition « TheChess
     </message>

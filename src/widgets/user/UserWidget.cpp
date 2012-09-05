@@ -116,6 +116,10 @@ public:
         a->setLink(tApp->path().competitions_of_user()->link());
         a->setText(tr("tc.competition.List"));
         new Wt::WBreak(this);
+        a = new Wt::WAnchor(this);
+        a->setLink(tApp->path().user_comments()->link());
+        a->setText(tr("tc.forum.all_comments"));
+        new Wt::WBreak(this);
         print_rights();
         print_game_stat();
     }

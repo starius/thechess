@@ -200,6 +200,11 @@ public:
         return all_comments_;
     }
 
+    /** Comments of the user */
+    url::PredefinedNode* user_comments() const {
+        return user_comments_;
+    }
+
     /** Global chat */
     url::PredefinedNode* global_chat() const {
         return global_chat_;
@@ -240,6 +245,7 @@ private:
     url::StringNode* banned_ip_;
     url::StringNode* new_ip_ban_;
     url::PredefinedNode* all_comments_;
+    url::PredefinedNode* user_comments_;
     url::PredefinedNode* global_chat_;
 
     void open_user();
@@ -257,6 +263,7 @@ private:
     void open_chat_comment();
     void open_banned_ip();
     void open_new_ip_ban();
+    void open_user_comments();
 };
 
 }
