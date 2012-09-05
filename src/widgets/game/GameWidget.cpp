@@ -255,6 +255,9 @@ private:
                 print_mistake_buttons();
                 print_draw_buttons();
             }
+            if (game_->is_ended()) {
+                print_ended_buttons();
+            }
         }
     }
 
@@ -367,6 +370,13 @@ private:
         if (game_->can_check_auto_draws(tApp->user())) {
             new Wt::WBreak(manager_);
             but<&Game::check_auto_draws>("tc.game.Call_auto_judge");
+        }
+    }
+
+    void print_ended_buttons() {
+        if (game_->can_mark_norating(tApp->user())) {
+            new Wt::WBreak(manager_);
+            but<&Game::mark_norating>("tc.game.Mark_norating");
         }
     }
 

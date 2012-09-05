@@ -264,7 +264,7 @@ enum UserRights {
     /** Right to (un)remove a user */
     USER_REMOVER = BOOST_BINARY(10000000 00000000 00000000),
 
-    /** Right to view virtuals */
+    /** Right to view virtuals, allow them in competition and set g.norating */
     VIRTUALS_VIEWER = BOOST_BINARY(00000001 00000000 00000000 00000000),
 
     /** Right to change rights that are part of REGULAR_USER */

@@ -16,6 +16,7 @@
 #include "model/all.hpp"
 #include "chess/Board.hpp"
 #include "chess/CachedMoves.hpp"
+#include "log.hpp"
 
 DBO_INSTANTIATE_TEMPLATES(thechess::Game);
 
@@ -601,6 +602,18 @@ bool Game::meet_first_draw() const {
 
 bool Game::real_rating() const {
     return !gp_->norating() && meet_first_draw() && !norating();
+}
+
+bool Game::can_mark_norating(const UserPtr& user) const {
+    return user && user->has_permission(VIRTUALS_VIEWER) && !is_member(user) &&
+           is_ended() && real_rating();
+}
+
+void Game::mark_norating(const UserPtr& user) {
+    if (can_mark_norating(user)) {
+        set_norating(true);
+        admin_log("Mark norating " + game_a(id()));
+    }
 }
 
 void Game::finish(State state, const UserPtr& winner) {

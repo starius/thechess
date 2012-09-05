@@ -387,6 +387,15 @@ public:
     */
     bool real_rating() const;
 
+    /** Return if the user can mark this game norating.
+    This user must have VIRTUALS_VIEWER and not be a member of the game.
+    The game must be finished and currently not norating.
+    */
+    bool can_mark_norating(const UserPtr& user) const;
+
+    /** Try to mark game norating */
+    void mark_norating(const UserPtr& user);
+
     /** Return the number of moves of the game */
     int moves_number() const {
         return Moves::moves_number(size());

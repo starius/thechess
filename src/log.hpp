@@ -34,6 +34,9 @@ Wt::WString comp_a(int id);
 /** Return HTML anchor to this comment */
 Wt::WString comm_a(int id);
 
+/** Return HTML anchor to this game */
+Wt::WString game_a(int id);
+
 }
 
 #endif

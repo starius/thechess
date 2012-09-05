@@ -20,6 +20,7 @@ void admin_log(const Wt::WString& message) {
     comment.modify()->set_type(Comment::LOG_ENTRY);
     comment.modify()->set_init(tApp->user());
     comment.modify()->set_text(message);
+    comment.modify()->set_state(Comment::OK);
 }
 
 Wt::WString html_a(const Wt::WString& path, const Wt::WString& text) {
@@ -71,6 +72,11 @@ Wt::WString comm_a(int comment_id) {
         return html_a(node, id, text);
     }
     return TO_S(comment_id);
+}
+
+Wt::WString game_a(int id) {
+    Wt::WString t = Wt::WString("game {1}").arg(id);
+    return html_a(tApp->path().game_view(), id, t);
 }
 
 }
