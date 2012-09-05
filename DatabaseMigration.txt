@@ -18,6 +18,9 @@ create table "thechess_ip_ban" (
     "creator_id" bigint
 )
 
+alter table "thechess_game" add column "norating" boolean
+not null default false;
+
 3.0.7 to 3.0.8
 ==============
 

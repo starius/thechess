@@ -33,7 +33,8 @@ Game::Game(const GPPtr& gp):
     competition_stage_(-1),
     pause_proposed_td_(TD_NULL),
     mistake_move_(-1),
-    rating_after_(-1)
+    rating_after_(-1),
+    norating_(false)
 { }
 
 bool Game::is_ended() const {
@@ -599,7 +600,7 @@ bool Game::meet_first_draw() const {
 }
 
 bool Game::real_rating() const {
-    return !gp_->norating() && meet_first_draw();
+    return !gp_->norating() && meet_first_draw() && !norating();
 }
 
 void Game::finish(State state, const UserPtr& winner) {

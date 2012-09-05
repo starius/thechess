@@ -80,6 +80,7 @@ public:
         dbo::field(a, draw_proposer_, "draw_proposer");
         dbo::field(a, rating_after_, "rating_after");
         dbo::field(a, comment_base_, "comment_base");
+        dbo::field(a, norating_, "norating");
     }
 
     /** Turn this game into game proposed by one user to another.
@@ -371,7 +372,19 @@ public:
     /** Return if the game reached size, required for draw by agreement */
     bool meet_first_draw() const;
 
-    /** Return if the game is affecting rating of users */
+    /** Return if this game was marked as norating */
+    bool norating() const {
+        return norating_;
+    }
+
+    /** Set if this game was marked as norating */
+    void set_norating(bool norating) {
+        norating_ = norating;
+    }
+
+    /** Return if the game is affecting rating of users.
+    Depends on gp()->norating(), meet_first_draw() and norating().
+    */
     bool real_rating() const;
 
     /** Return the number of moves of the game */
@@ -581,6 +594,7 @@ private:
     WhiteBlack<int> rating_after_;
 
     CommentPtr comment_base_;
+    bool norating_;
 
     void set_white(const UserPtr& user) {
         white_ = user;
