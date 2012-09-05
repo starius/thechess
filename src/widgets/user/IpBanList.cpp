@@ -11,6 +11,7 @@
 #include <Wt/Wc/Pager.hpp>
 
 #include "widgets/user/IpBanList.hpp"
+#include "widgets/Header.hpp"
 #include "Application.hpp"
 
 namespace thechess {
@@ -117,6 +118,7 @@ IpBanList::IpBanList(const std::string& ip, Wt::WContainerWidget* parent):
     if (!tApp->user() || !tApp->user()->has_permission(REGISTRATION_BANNER)) {
         return;
     }
+    addWidget(new Header(tr("tc.user.IpBanList")));
     IpBanListModel* m = new IpBanListModel(ip, this);
     IpBanListView* view = new IpBanListView(m, this);
 }
@@ -126,6 +128,7 @@ IpBanList::IpBanList(Wt::WContainerWidget* parent):
     if (!tApp->user() || !tApp->user()->has_permission(REGISTRATION_BANNER)) {
         return;
     }
+    addWidget(new Header(tr("tc.user.IpBanList")));
     IpBanListModel* m = new IpBanListModel("", this);
     IpBanListView* view = new IpBanListView(m, this);
 }

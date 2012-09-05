@@ -10,6 +10,7 @@
 #include <Wt/Wc/Pager.hpp>
 
 #include "widgets/user/IpList.hpp"
+#include "widgets/Header.hpp"
 #include "Application.hpp"
 
 namespace thechess {
@@ -118,6 +119,7 @@ IpList::IpList(const UserPtr& user, Wt::WContainerWidget* parent):
     if (!tApp->user() || !tApp->user()->has_permission(REGISTRATION_BANNER)) {
         return;
     }
+    addWidget(new Header(tr("tc.user.IpList")));
     IpListModel* m = new IpListModel(user, this);
     IpListView* view = new IpListView(m, this);
 }
@@ -127,6 +129,7 @@ IpList::IpList(const std::string& ip, Wt::WContainerWidget* parent):
     if (!tApp->user() || !tApp->user()->has_permission(REGISTRATION_BANNER)) {
         return;
     }
+    addWidget(new Header(tr("tc.user.IpList")));
     IpListModel* m = new IpListModel(ip, this);
     IpListView* view = new IpListView(m, this);
 }

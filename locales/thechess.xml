@@ -687,6 +687,8 @@ See locales-test manpage for more information.
     <message id='tc.user.games_stat_wins'>wins</message>
     <message id='tc.user.gp_creator'>create game parameters</message>
     <message id='tc.user.ip'>ip-address</message>
+    <message id='tc.user.IpBanList'>List of IP bans</message>
+    <message id='tc.user.IpList'>List of IP</message>
     <message id='tc.user.List'>List of users</message>
     <message id='tc.user.List_rights'>List of rights</message>
     <message id='tc.user.logs_reader'>logs reader</message>
