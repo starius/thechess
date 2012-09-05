@@ -146,6 +146,7 @@ void MainWidget::update_password() {
     const Wt::Auth::User& user = auth_widget()->login().user();
     if (user.isValid()) {
         auth_widget()->letUpdatePassword(user, /* promptPassword */ true);
+        // FIXME promptPassword does not work in Wt 3.2.1
         // FIXME Freezes, memory leak
     }
 }
