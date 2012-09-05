@@ -266,7 +266,7 @@ enum UserRights {
     /** Right to change rights that are part of REGULAR_USER */
     REGULAR_RIGHTS_CHANGER = BOOST_BINARY(0100 00000000 00000000 00000000),
 
-    /** \todo Right to ban registration for the user by IP */
+    /** Right to ban registration for the user by IP */
     REGISTRATION_BANNER = BOOST_BINARY(00001000 00000000 00000000 00000000),
 
     /** \todo Right to edit Game, GP and CP name and description */
