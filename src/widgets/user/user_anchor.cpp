@@ -6,6 +6,7 @@
  */
 
 #include <Wt/WAnchor>
+#include <Wt/WText>
 
 #include "widgets/user/user_anchor.hpp"
 #include "widgets/user/Gravatar.hpp"
@@ -25,6 +26,9 @@ Wt::WWidget* user_anchor(const UserPtr& user, Wt::WContainerWidget* parent) {
     Wt::WAnchor* anchor = new Wt::WAnchor(result);
     anchor->setLink(tApp->path().user_view()->get_link(user.id()));
     anchor->setText(user->safe_username());
+    if (user->online()) {
+        result->addWidget(new Wt::WText(Wt::WString::tr("tc.user.Online")));
+    }
     return result;
 }
 
