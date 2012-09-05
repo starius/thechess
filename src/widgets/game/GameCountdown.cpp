@@ -15,6 +15,7 @@
 #include "model/all.hpp"
 #include "Application.hpp"
 #include "widgets/game/GameCountdown.hpp"
+#include "widgets/user/user_anchor.hpp"
 
 namespace thechess {
 
@@ -69,11 +70,8 @@ private:
         }
     }
 
-    Wt::WAnchor* anchor() {
-        Wt::WAnchor* result = new Wt::WAnchor();
-        result->setText(user_->safe_username());
-        result->setLink(tApp->path().user_view()->get_link(user_.id()));
-        return result;
+    Wt::WWidget* anchor() {
+        return user_anchor(user_);
     }
 };
 
