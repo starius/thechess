@@ -235,6 +235,9 @@ enum UserRights {
     /** Right to change his classification */
     CLASSIFICATION_CHANGER = BOOST_BINARY(00000100 00000000),
 
+    /** Right to show non-default avatar */
+    AVATAR_NONDEFAULT = BOOST_BINARY(00001000 00000000),
+
     /** Rights of regular user (given to new user) */
     REGULAR_USER = GAME_CREATOR |
                    GAME_JOINER |
@@ -246,7 +249,8 @@ enum UserRights {
                    GP_CREATOR |
                    CP_CREATOR |
                    COMPETITION_JOINER |
-                   CLASSIFICATION_CHANGER,
+                   CLASSIFICATION_CHANGER |
+                   AVATAR_NONDEFAULT,
 
     /** Right to (un)remove comments, create topic and approve drafts */
     COMMENTS_REMOVER = BOOST_BINARY(00010000 00000000 00000000),

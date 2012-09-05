@@ -15,6 +15,7 @@ Gravatar::Gravatar(const UserPtr& user, Wt::WContainerWidget* parent):
     dbo::Transaction t(tApp->session());
     set_email(user->email());
     set_default(Wt::Wc::GravatarImage::WAVATAR);
+    set_force_default(!user->has_permission(AVATAR_NONDEFAULT));
 }
 
 }

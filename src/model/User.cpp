@@ -168,6 +168,8 @@ const char* User::right_to_str(Rights right) {
         return "tc.user.competition_joiner";
     } else if (right == CLASSIFICATION_CHANGER) {
         return "tc.user.classification_changer";
+    } else if (right == AVATAR_NONDEFAULT) {
+        return "tc.user.avatar_nondefault";
     } else if (right == COMMENTS_REMOVER) {
         return "tc.user.comments_remover";
     } else if (right == CLASSIFICATION_CONFIRMER) {
@@ -204,6 +206,7 @@ void User::for_each_right(const boost::function<void(Rights)> f) {
     f(CP_CREATOR);
     f(COMPETITION_JOINER);
     f(CLASSIFICATION_CHANGER);
+    f(AVATAR_NONDEFAULT);
     f(COMMENTS_REMOVER);
     f(CLASSIFICATION_CONFIRMER);
     f(COMPETITION_CHANGER);

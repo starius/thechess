@@ -646,6 +646,7 @@ See locales-test manpage for more information.
 
     <message id='tc.user.Already_banned'>Already banned</message>
     <message id='tc.user.Anonymous'>Anonymous</message>
+    <message id='tc.user.avatar_nondefault'>avatar nondefault</message>
     <message id='tc.user.ban_reason'>reason of ban</message>
     <message id='tc.user.chat_writer'>write to chat</message>
     <message id='tc.user.classification'>classification</message>
