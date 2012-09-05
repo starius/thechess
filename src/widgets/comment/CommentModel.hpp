@@ -42,7 +42,7 @@ public:
     \param parent Parent widget.
     */
     CommentModel(Comment::Type type, const CommentPtr& root = CommentPtr(),
-                 Wt::WObject* parent = 0);
+                 const UserPtr& init = UserPtr(), Wt::WObject* parent = 0);
 
     /** Return data at a specific model index */
     boost::any data(const Wt::WModelIndex& index,
@@ -62,6 +62,11 @@ public:
         return root_;
     }
 
+    /** Return init */
+    const UserPtr& init() const {
+        return init_;
+    }
+
     /** Return type */
     Comment::Type type() const {
         return type_;
@@ -78,6 +83,7 @@ public:
 private:
     Comment::Type type_;
     CommentPtr root_;
+    UserPtr init_;
     bool only_ok_;
 };
 

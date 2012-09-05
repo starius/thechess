@@ -24,6 +24,7 @@ public:
     \see CommentModel::CommentModel
     */
     CommentList(Comment::Type type, const CommentPtr& root = CommentPtr(),
+                const UserPtr& init = UserPtr(),
                 Wt::WContainerWidget* parent = 0);
 
     /** Update widget with new/changed comments */

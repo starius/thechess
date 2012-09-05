@@ -503,7 +503,7 @@ private:
     void print_comment_list_impl() {
         dbo::Transaction t(tApp->session());
         CommentPtr comment_base = game_.modify()->comment_base();
-        new CommentList(Comment::CHAT_MESSAGE, comment_base, this);
+        addWidget(new CommentList(Comment::CHAT_MESSAGE, comment_base));
     }
 };
 

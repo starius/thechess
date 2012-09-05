@@ -114,7 +114,7 @@ protected:
 };
 
 CommentList::CommentList(Comment::Type type, const CommentPtr& root,
-                         Wt::WContainerWidget* parent):
+                         const UserPtr& init, Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent),
     Notifiable(Object(COMMENT, root.id()), tNot),
     edit_(0) {
@@ -124,7 +124,7 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
             return;
         }
     }
-    CommentModel* model = new CommentModel(type, root, this);
+    CommentModel* model = new CommentModel(type, root, init, this);
     view_ = new CommentView(model); // do it here to provide comment_model()
     print_header();
     if (type == Comment::FORUM_COMMENT && root) {
