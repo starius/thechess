@@ -8,17 +8,23 @@
 #include <Wt/WAnchor>
 
 #include "widgets/user/user_anchor.hpp"
+#include "widgets/user/Gravatar.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
 #include "Path.hpp"
 
 namespace thechess {
 
-Wt::WAnchor* user_anchor(const UserPtr& user, Wt::WContainerWidget* parent) {
+Wt::WWidget* user_anchor(const UserPtr& user, Wt::WContainerWidget* parent) {
     dbo::Transaction t(tApp->session());
-    Wt::WAnchor* result = new Wt::WAnchor(parent);
-    result->setLink(tApp->path().user_view()->get_link(user.id()));
-    result->setText(user->safe_username());
+    Wt::WContainerWidget* result = new Wt::WContainerWidget(parent);
+    result->setInline(true);
+    Gravatar* gravatar = new Gravatar(user, result);
+    gravatar->set_size(15);
+    result->addWidget(gravatar);
+    Wt::WAnchor* anchor = new Wt::WAnchor(result);
+    anchor->setLink(tApp->path().user_view()->get_link(user.id()));
+    anchor->setText(user->safe_username());
     return result;
 }
 

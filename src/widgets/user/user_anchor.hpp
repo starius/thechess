@@ -14,7 +14,8 @@
 
 namespace thechess {
 
-Wt::WAnchor* user_anchor(const UserPtr& user, Wt::WContainerWidget* parent = 0);
+/** Return widget, containing anchor to user's page */
+Wt::WWidget* user_anchor(const UserPtr& user, Wt::WContainerWidget* parent = 0);
 
 }
 
