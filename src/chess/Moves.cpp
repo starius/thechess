@@ -10,12 +10,14 @@
 #include <string>
 #include <algorithm>
 #include <boost/format.hpp>
+#include <boost/algorithm/string/replace.hpp>
 
 #include <Wt/Wc/PlainTextWritter.hpp>
 
 #include "chess/Moves.hpp"
 #include "chess/HalfMove.hpp"
 #include "chess/Square.hpp"
+#include "chess/base64.hpp"
 
 namespace thechess {
 
@@ -27,6 +29,23 @@ Moves::Moves(HalfMove moves[], int size) :
     for (int i = 0; i < size; i++) {
         set_half_move(i, moves[i]);
     }
+}
+
+Moves::Moves(const std::string& data) {
+    std::string data1(data);
+    boost::algorithm::replace_all(data1, "-", "+");
+    boost::algorithm::replace_all(data1, ".", "/");
+    data1 += std::string((4 - data1.size() % 4) % 4, '=');
+    std::string moves = base64_decode(data1);
+    svuc_.assign(moves.begin(), moves.end());
+}
+
+std::string Moves::to_string() const {
+    std::string result = base64_encode(&svuc_[0], svuc_.size());
+    boost::algorithm::replace_all(result, "+", "-");
+    boost::algorithm::replace_all(result, "/", ".");
+    boost::algorithm::replace_all(result, "=", "");
+    return result;
 }
 
 Moves::byte Moves::q(int i) const {
