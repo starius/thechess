@@ -342,6 +342,7 @@ See locales-test manpage for more information.
     <message id='tc.comment.Approve'>Approve</message>
     <message id='tc.comment.deleted_message'>[Deleted]</message>
     <message id='tc.comment.draft_message'>[Draft]</message>
+    <message id='tc.comment.private_messages'>private messages</message>
     <message id='tc.comment.Remove'>Remove</message>
 
     <message id='tc.common.Agree'>Agree</message>
@@ -583,6 +584,7 @@ See locales-test manpage for more information.
     <message id='tc.menu.global_chat'>global chat</message>
     <message id='tc.menu.my_page'>my page</message>
     <message id='tc.menu.new_competition'>new competition</message>
+    <message id='tc.menu.private_messages'>private messages</message>
     <message id='tc.menu.settings'>settings</message>
     <message id='tc.menu.testing_board'>testing board</message>
     <message id='tc.menu.topics'>topics</message>
@@ -595,6 +597,7 @@ See locales-test manpage for more information.
     <message id='tc.title.CommentList_admin_log'>Admin log « TheChess</message>
     <message id='tc.title.CommentList_edit'>Edit « Forum « TheChess</message>
     <message id='tc.title.CommentList_global_chat'>Chat « TheChess</message>
+    <message id='tc.title.CommentList_my_messages'>My messages « TheChess</message>
     <message id='tc.title.GameCreateWidget'>Create « Game « TheChess</message>
     <message id='tc.title.GameListWidget'>List « Game « TheChess</message>
     <message id='tc.title.GameWidget'>#{1} « Game « TheChess</message>

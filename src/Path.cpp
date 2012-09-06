@@ -59,6 +59,7 @@ Path::Path(Wt::WObject* parent):
     banned_ip_ = new StringNode(all_banned_ip_);
     new_ip_ban_ = new StringNode(virtuals_of_user_);
     all_comments_ = new PredefinedNode("comments", this);
+    my_messages_ = new PredefinedNode("messages", this);
     user_comments_ = new PredefinedNode("comments", user_view_);
     global_chat_ = new PredefinedNode("chat", this);
     tApp->internalPathChanged().connect(this, &Parser::open);
@@ -98,6 +99,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(banned_ip_, boost::bind(&Path::open_banned_ip, this));
     connect(new_ip_ban_, boost::bind(&Path::open_new_ip_ban, this));
     connect(all_comments_, boost::bind(&MainWidget::all_comments, mw));
+    connect(my_messages_, boost::bind(&MainWidget::my_messages, mw));
     connect(user_comments_, boost::bind(&Path::open_user_comments, this));
     connect(global_chat_, boost::bind(&MainWidget::global_chat, mw));
 }

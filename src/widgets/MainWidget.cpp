@@ -297,6 +297,11 @@ void MainWidget::all_comments() {
     wApp->setTitle(tr("tc.title.CommentList_all_comments"));
 }
 
+void MainWidget::my_messages() {
+    set_contents(new CommentList(Comment::PRIVATE_MESSAGE));
+    wApp->setTitle(tr("tc.title.CommentList_my_messages"));
+}
+
 void MainWidget::user_comments(const UserPtr& user) {
     set_contents(new CommentList(Comment::NO_TYPE, CommentPtr(), user));
     wApp->setTitle(tr("tc.title.CommentList_user_comments")

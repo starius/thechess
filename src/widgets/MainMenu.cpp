@@ -56,6 +56,7 @@ private:
             add_button("tc.menu.settings", path_->settings_page());
             add_button("tc.menu.my_page",
                        path_->user_view()->get_link(tApp->user().id()));
+            add_button("tc.menu.private_messages", path_->my_messages());
             if (tApp->user()->has_permission(VIRTUALS_VIEWER)) {
                 add_button("tc.menu.virtuals_list", path_->all_virtuals());
             }

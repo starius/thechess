@@ -207,6 +207,11 @@ public:
         return all_comments_;
     }
 
+    /** My messages */
+    url::PredefinedNode* my_messages() const {
+        return my_messages_;
+    }
+
     /** Comments of the user */
     url::PredefinedNode* user_comments() const {
         return user_comments_;
@@ -253,6 +258,7 @@ private:
     url::StringNode* banned_ip_;
     url::StringNode* new_ip_ban_;
     url::PredefinedNode* all_comments_;
+    url::PredefinedNode* my_messages_;
     url::PredefinedNode* user_comments_;
     url::PredefinedNode* global_chat_;
 

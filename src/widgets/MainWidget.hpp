@@ -136,6 +136,9 @@ public:
     /** View all comments */
     void all_comments();
 
+    /** My messages */
+    void my_messages();
+
     /** View comments of the user */
     void user_comments(const UserPtr& user);
 
