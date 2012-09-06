@@ -80,12 +80,17 @@ private:
     UserPtr prev_user_;
     Wt::Wc::Gather* gather_;
     Kick* kick_;
+    bool online_;
+    Wt::WDateTime last_user_event_;
+    Wt::WDateTime next_check_;
 
     void set_auth_widget();
     void login_handler();
     void gather_init();
     void gather_explorer(Wt::Wc::Gather::DataType type,
                          const std::string& value);
+    void user_action();
+    void online_check();
 };
 
 }

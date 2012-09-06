@@ -32,7 +32,8 @@ namespace thechess {
 
 Application::Application(const Wt::WEnvironment& env, Server& server) :
     Wt::WApplication(env), server_(server), session_(server.pool()),
-    gather_(0), kick_(0) {
+    gather_(0), kick_(0),
+    online_(true), last_user_event_(now()), next_check_(now()) {
     main_widget_ = new MainWidget(root());
     main_widget_->show_menu(&path_);
     path_.connect_main_widget(main_widget_);
@@ -54,6 +55,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     session().login().changed().connect(this, &Application::login_handler);
     login_handler();
     path_.open(internalPath());
+    internalPathChanged().connect(this, &Application::user_action);
 }
 
 Application::~Application() {
@@ -135,7 +137,11 @@ void Application::login_handler() {
 
 void Application::notify(const Wt::WEvent& e) {
     try {
+        Wt::EventType e_type = e.eventType();
         Wt::WApplication::notify(e);
+        if (e_type == Wt::UserEvent) {
+            user_action();
+        }
     } catch (dbo::StaleObjectException e) {
         log("notice") << e.what();
         try {
@@ -182,6 +188,44 @@ void Application::gather_explorer(Wt::Wc::Gather::DataType type,
             bd = session().add(new BD(bd_id));
         }
         bd.modify()->use();
+    }
+}
+
+void Application::user_action() {
+    last_user_event_ = now();
+    if (!online_) {
+        dbo::Transaction t(session());
+        online_ = true;
+        user().reread();
+        if (user()) {
+            user().modify()->login();
+        }
+    }
+    if (now() > next_check_) {
+        Td timeout = Options::instance()->away_timeout();
+        Td td = timeout + SECOND;
+        next_check_ = now() + td;
+        Wt::Wc::schedule_action(td, Wt::Wc::bound_post(boost::bind(
+                                    &Application::online_check, this)));
+    }
+}
+
+void Application::online_check() {
+    Td timeout = Options::instance()->away_timeout();
+    if (now() - last_user_event_ > timeout) {
+        if (online_) {
+            dbo::Transaction t(session());
+            user().reread();
+            if (user()) {
+                online_ = false;
+                user().modify()->logout();
+            }
+        }
+    } else {
+        next_check_ = last_user_event_ + timeout + SECOND;
+        Td td = next_check_ - now();
+        Wt::Wc::schedule_action(td, Wt::Wc::bound_post(boost::bind(
+                                    &Application::online_check, this)));
     }
 }
 
