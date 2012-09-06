@@ -562,7 +562,7 @@ void Game::draw_discard(const UserPtr& user) {
 }
 
 bool Game::can_check_auto_draws(const UserPtr& user) const {
-    return state() == ACTIVE && is_member(user);
+    return state() == ACTIVE && is_member(user) && meet_first_draw();
 }
 
 void Game::check_auto_draws(const UserPtr& user) {
