@@ -8,6 +8,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WPushButton>
 #include <Wt/WLineEdit>
+#include <Wt/WTextEdit>
 #include <Wt/WCheckBox>
 #include <Wt/WBreak>
 
@@ -16,6 +17,7 @@
 #include "widgets/Header.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
+#include "utils/text_edit.hpp"
 
 namespace thechess {
 
@@ -33,6 +35,7 @@ public:
             print_classification_changer();
         }
         print_settings_changer();
+        print_description_changer();
     }
 
 private:
@@ -40,6 +43,7 @@ private:
     Wt::WLineEdit* email_;
     Wt::WCheckBox* public_email_;
     Wt::WCheckBox* names_in_mymenu_;
+    Wt::WTextEdit* description_;
 
     void print_password_changer() {
         new Wt::WBreak(this);
@@ -76,6 +80,14 @@ private:
         b->clicked().connect(this, &SettingsWidgetImpl::save_settings);
     }
 
+    void print_description_changer() {
+        new Wt::WBreak(this);
+        description_ = new Wt::WTextEdit(tApp->user()->description(), this);
+        patch_text_edit(description_);
+        Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
+        b->clicked().connect(this, &SettingsWidgetImpl::save_description);
+    }
+
     void save_classification() {
         dbo::Transaction t(tApp->session());
         if (!tApp->user()) {
@@ -108,6 +120,12 @@ private:
         if (names_in_mymenu != User::has_s(SWITCH_NAMES_IN_MYMENU)) {
             tApp->update_my_games();
         }
+    }
+
+    void save_description() {
+        dbo::Transaction t(tApp->session());
+        Wt::WString description = patch_text_edit_text(description_->text());
+        tApp->user().modify()->set_description(description);
     }
 };
 

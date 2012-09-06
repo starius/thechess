@@ -135,6 +135,7 @@ public:
         print_rights();
         print_game_stat();
         print_competition_stat();
+        print_description();
     }
 
 private:
@@ -249,6 +250,12 @@ private:
         new Wt::WText(tr("tc.common.Stat").arg(stat.all()).arg(stat.wins())
                       .arg(stat.draws()).arg(stat.fails()).arg(stat.elo()),
                       this);
+    }
+
+    void print_description() {
+        new Wt::WBreak(this);
+        new Wt::WText(tr("tc.common.Description") + ": ", this);
+        new Wt::WText(user_->safe_description(), this);
     }
 };
 
