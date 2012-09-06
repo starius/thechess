@@ -371,9 +371,6 @@ const Td COOKIE_AGE = 5 * 366 * DAY;
 /** Authentication token cookie name */
 const char* const COOKIE_NAME = "thechessauth";
 
-/** Default checkness of Show-lastmove checkbox */
-const bool SHOW_LASTMOVE = true;
-
 /** Thether user information should be collected.
 see wt-classes/Gather.
 */

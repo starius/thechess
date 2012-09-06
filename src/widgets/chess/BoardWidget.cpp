@@ -33,6 +33,7 @@
 #include "widgets/chess/BoardWidget.hpp"
 #include "chess/HalfMove.hpp"
 #include "chess/Piece.hpp"
+#include "model/all.hpp"
 #include "Application.hpp"
 #include "Path.hpp"
 #include "config.hpp"
@@ -111,8 +112,8 @@ public:
                     const Board& board) :
         Wt::WContainerWidget(), board_(board), bottom_(bottom),
         active_(active), activated_(false), big_(big),
-        lastmove_show_(config::SHOW_LASTMOVE),
         select_turn_into_flag_(false) {
+        lastmove_show_ = User::has_setting_or_default(SWITCH_LASTMOVE);
         correct_bottom();
         board_template_ = new Wt::WTemplate(tr(xml_message()), this);
         THECHESS_SQUARE_FOREACH (square) {
@@ -133,7 +134,7 @@ public:
         taken_pieces_ = new TakenPieces(board_, this);
         lastmove_box_ = new Wt::WCheckBox(this);
         lastmove_box_->setText(tr("tc.game.Highlight_lastmove"));
-        lastmove_box_->setChecked(config::SHOW_LASTMOVE);
+        lastmove_box_->setChecked(lastmove_show_);
         lastmove_box_->changed().connect(
             boost::bind(&BoardWidgetImpl::show_lastmove, this,
                         boost::bind<bool>(&Wt::WAbstractToggleButton::isChecked,
@@ -192,6 +193,7 @@ public:
     void show_lastmove(bool show = true) {
         color_noactive_undo();
         lastmove_show_ = show;
+        User::set_setting_or_default(SWITCH_LASTMOVE, show);
         modify();
         lastmove_box_->setChecked(show);
     }
