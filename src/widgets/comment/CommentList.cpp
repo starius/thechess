@@ -76,7 +76,8 @@ public:
             comment_width -= CHAT_TIME_WIDTH;
             comment_width -= INIT_WIDTH;
             setColumnWidth(CommentModel::TIME_COL, CHAT_TIME_WIDTH);
-        } else if (type == Comment::LOG_ENTRY) {
+        } else if (type == Comment::LOG_ENTRY ||
+                   type == Comment::PRIVATE_MESSAGE) {
             setAlternatingRowColors(true);
             setColumnHidden(CommentModel::ID_COL, true);
             comment_width -= LOG_TIME_WIDTH;
@@ -121,6 +122,12 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     dbo::Transaction t(tApp->session());
     if (type == Comment::LOG_ENTRY) {
         if (!tApp->user() || !tApp->user()->has_permission(LOGS_READER)) {
+            return;
+        }
+    }
+    if (type == Comment::PRIVATE_MESSAGE) {
+        if (!tApp->user() || !tApp->user()->has_comment_base() ||
+                !tApp->user().modify()->comment_base() != root) {
             return;
         }
     }
@@ -189,6 +196,8 @@ void CommentList::print_header() {
         }
     } else if (type == Comment::LOG_ENTRY) {
         header = tr("tc.comment.admin_log");
+    } else if (type == Comment::PRIVATE_MESSAGE) {
+        header = tr("tc.comment.private_messages");
     }
     if (!header.empty()) {
         new Header(header, this);
@@ -331,9 +340,9 @@ void CommentList::print_edits() {
         edit_ = line_edit;
         line_edit->setTextSize(80);
         line_edit->setMaxLength(LOG_LENGTH);
-    } else {
-        // log error
     }
+    // PRIVATE_MESSAGE has no 'Add' feature.
+    // see UserWidget
 }
 
 }

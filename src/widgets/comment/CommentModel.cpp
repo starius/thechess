@@ -16,6 +16,10 @@ CommentModel::CommentModel(Comment::Type type, const CommentPtr& root,
     CommentModel::BaseQM(parent),
     type_(type), root_(root), init_(init) {
     dbo::Transaction t(tApp->session());
+    if (type == Comment::PRIVATE_MESSAGE && !root_ &&
+            tApp->user() && tApp->user()->has_comment_base()) {
+        root_ = tApp->user().modify()->comment_base();
+    }
     only_ok_ = User::has_s(SWITCH_ONLY_OK_COMMENTS);
     only_my_ = User::has_s(SWITCH_ONLY_MY_COMMENTS);
     setQuery(get_query());
@@ -35,6 +39,8 @@ static boost::any comment_page(const CommentPtr& o) {
         return tApp->path().post_comment()->get_link(o.id());
     } else if (o->type() == Comment::CHAT_MESSAGE && tApp->user() &&
                tApp->user()->has_permission(COMMENTS_REMOVER)) {
+        return tApp->path().chat_comment()->get_link(o.id());
+    } else if (o->type() == Comment::PRIVATE_MESSAGE) {
         return tApp->path().chat_comment()->get_link(o.id());
     }
     return boost::any();

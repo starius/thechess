@@ -19,7 +19,8 @@ namespace thechess {
 
 ChatCommentWidget::ChatCommentWidget(const CommentPtr& comment) {
     dbo::Transaction t(tApp->session());
-    if (comment->type() != Comment::CHAT_MESSAGE) {
+    if (comment->type() != Comment::CHAT_MESSAGE &&
+            comment->type() != Comment::PRIVATE_MESSAGE) {
         return;
     }
     new Header(tr("tc.forum.Comment"), this);
@@ -28,7 +29,9 @@ ChatCommentWidget::ChatCommentWidget(const CommentPtr& comment) {
     if (user) {
         user_anchor(user, this);
     }
-    add_remover_buttons(comment, this);
+    if (comment->type() == Comment::CHAT_MESSAGE) {
+        add_remover_buttons(comment, this);
+    }
 }
 
 }

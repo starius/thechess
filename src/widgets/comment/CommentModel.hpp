@@ -38,7 +38,7 @@ public:
 
     /** Constructor.
     \param type Type of selected comments. NO_TYPE means all comments.
-    \param root Root of selected comments.
+    \param root Root of selected comments (automatically for PRIVATE_MESSAGE).
     \param parent Parent widget.
     */
     CommentModel(Comment::Type type, const CommentPtr& root = CommentPtr(),
