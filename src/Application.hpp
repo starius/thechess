@@ -58,6 +58,9 @@ public:
     /** Show Update Password dialog */
     void update_password();
 
+    /** (Re)create or hide my games */
+    void update_my_games();
+
     /** Get active Application.
     Same as WApplication::instance().
     There is macro for this method: tApp.

@@ -32,7 +32,12 @@ public:
     MyGameAnchor(const GamePtr& game, MyGamesListImp* list):
         Notifiable(Object(GAME, game.id()), tNot),
         game_id_(game.id()), list_(list) {
-        setText(boost::lexical_cast<std::string>(game_id_));
+        if (!User::has_s(SWITCH_NAMES_IN_MYMENU) ||
+                !game->other_user(tApp->user())) {
+            setText(boost::lexical_cast<std::string>(game_id_));
+        } else {
+            setText(game->other_user(tApp->user())->safe_username());
+        }
         setLink(tApp->path().game_view()->get_link(game_id_));
         setInline(false);
         UserPtr user = tApp->user();

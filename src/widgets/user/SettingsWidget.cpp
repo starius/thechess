@@ -39,6 +39,7 @@ private:
     ClassificationWidget* class_;
     Wt::WLineEdit* email_;
     Wt::WCheckBox* public_email_;
+    Wt::WCheckBox* names_in_mymenu_;
 
     void print_password_changer() {
         new Wt::WBreak(this);
@@ -68,6 +69,9 @@ private:
         new Wt::WBreak(this);
         public_email_ = new Wt::WCheckBox(tr("tc.user.Public_email"), this);
         public_email_->setChecked(User::has_s(SWITCH_PUBLIC_EMAIL));
+        new Wt::WBreak(this);
+        names_in_mymenu_ = new Wt::WCheckBox(tr("tc.user.Names_in_menu"), this);
+        names_in_mymenu_->setChecked(User::has_s(SWITCH_NAMES_IN_MYMENU));
         Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
         b->clicked().connect(this, &SettingsWidgetImpl::save_settings);
     }
@@ -99,6 +103,11 @@ private:
 
     void save_settings() {
         User::set_s(SWITCH_PUBLIC_EMAIL, public_email_->isChecked());
+        bool names_in_mymenu = User::has_s(SWITCH_NAMES_IN_MYMENU);
+        User::set_s(SWITCH_NAMES_IN_MYMENU, names_in_mymenu_->isChecked());
+        if (names_in_mymenu != User::has_s(SWITCH_NAMES_IN_MYMENU)) {
+            tApp->update_my_games();
+        }
     }
 };
 

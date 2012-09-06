@@ -82,6 +82,10 @@ void Application::update_password() {
     }
 }
 
+void Application::update_my_games() {
+    main_widget_->update_my_games();
+}
+
 static void check_session_number() {
     dbo::Transaction t(tApp->session());
     if (tApp && tApp->user() && tApp->user()->sessions() > 10) {
