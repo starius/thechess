@@ -180,6 +180,16 @@ public:
         return ip_;
     }
 
+    /** Get score of the comment (not used) */
+    int score() const {
+        return score_;
+    }
+
+    /** Set score of the comment */
+    void set_score(int score) {
+        score_ = score;
+    }
+
     /** Get (direct) children */
     const Comments& children() const {
         return children_;
@@ -204,6 +214,7 @@ public:
         dbo::field(a, created_, "created");
         dbo::field(a, edited_, "edited");
         dbo::field(a, ip_, "ip");
+        dbo::field(a, score_, "score");
         dbo::hasMany(a, children_, dbo::ManyToOne, "parent");
         dbo::hasMany(a, family_, dbo::ManyToOne, "root");
     }
@@ -220,6 +231,7 @@ private:
     Wt::WDateTime created_;
     Wt::WDateTime edited_;
     std::string ip_;
+    int score_;
 
     Comments children_;
     Comments family_;

@@ -29,7 +29,8 @@ Comment::Comment(bool):
     type_(NO_TYPE),
     state_(OK),
     created_(now()),
-    edited_(created_) {
+    edited_(created_),
+    score_(0) {
     if (wApp) {
         ip_ = wApp->environment().clientAddress();
     }

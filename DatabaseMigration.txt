@@ -48,6 +48,8 @@ alter table "thechess_user" add column
 alter table "thechess_user" add column
     "locale" varchar(5) not null default '';
 
+alter table "thechess_comment" add column "score" integer not null default 0;
+
 
 3.0.7 to 3.0.8
 ==============
