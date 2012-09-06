@@ -256,9 +256,11 @@ private:
     }
 
     void print_description() {
-        new Wt::WBreak(this);
-        new Wt::WText(tr("tc.common.Description") + ": ", this);
-        new Wt::WText(user_->safe_description(), this);
+        if (!user_->description().empty()) {
+            new Wt::WBreak(this);
+            new Wt::WText(tr("tc.common.Description") + ": ", this);
+            new Wt::WText(user_->safe_description(), this);
+        }
     }
 };
 
