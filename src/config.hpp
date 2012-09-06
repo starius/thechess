@@ -106,6 +106,24 @@ const int CONNECTIONS_IN_POOL = 10;
 */
 const bool NORATING = false;
 
+/** Rights of regular user */
+const UserRights REGULAR_USER_RIGHTS = REGULAR_USER;
+
+/** Rights of banned user */
+const UserRights BANNED_IP_USER_RIGHTS = NONE;
+
+/** Rights of Anonymous */
+const UserRights ANONYMOUS_RIGHTS = REGULAR_USER;
+
+/** Comment id for main page */
+const int MAIN_PAGE_CONTENT_ID = -1;
+
+/** Comment id for footer */
+const int FOOTER_CONTENT_ID = -1;
+
+/** Comment id for top */
+const int TOP_LOGGED_IN_CONTENT_ID = -1;
+
 }
 
 /** The namespace for max allowed values of parameters */

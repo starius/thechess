@@ -21,12 +21,12 @@ Options::Options(const Wt::WServer& server):
     database_type_(config::defaults::DATABASE_TYPE),
     database_value_(config::defaults::DATABASE_VALUE),
     connections_in_pool_(config::defaults::CONNECTIONS_IN_POOL),
-    regular_user_rights_(REGULAR_USER),
-    banned_ip_user_rights_(NONE),
-    anonymous_rights_(REGULAR_USER),
-    main_page_content_id_(-1),
-    footer_content_id_(-1),
-    top_logged_in_content_id_(-1) {
+    regular_user_rights_(config::defaults::REGULAR_USER_RIGHTS),
+    banned_ip_user_rights_(config::defaults::BANNED_IP_USER_RIGHTS),
+    anonymous_rights_(config::defaults::ANONYMOUS_RIGHTS),
+    main_page_content_id_(config::defaults::MAIN_PAGE_CONTENT_ID),
+    footer_content_id_(config::defaults::FOOTER_CONTENT_ID),
+    top_logged_in_content_id_(config::defaults::TOP_LOGGED_IN_CONTENT_ID) {
     std::string value;
     if (server.readConfigurationProperty("database_type", value)) {
         BOOST_ASSERT(value == "postgres" ||
