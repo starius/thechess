@@ -16,8 +16,11 @@ TopBlock::TopBlock(Wt::WContainerWidget* parent):
     int comment_id = Options::instance()->top_logged_in_content_id();
     if (comment_id > 0) {
         dbo::Transaction t(tApp->session());
-        CommentPtr comment = tApp->session().load<Comment>(comment_id);
-        setText(comment->text());
+        try {
+            CommentPtr comment = tApp->session().load<Comment>(comment_id);
+            setText(comment->text());
+        } catch (...)
+        { }
     }
 }
 

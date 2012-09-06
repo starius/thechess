@@ -16,11 +16,13 @@ MainPage::MainPage(Wt::WContainerWidget* parent):
     int comment_id = Options::instance()->main_page_content_id();
     if (comment_id > 0) {
         dbo::Transaction t(tApp->session());
-        CommentPtr comment = tApp->session().load<Comment>(comment_id);
-        setText(comment->text());
-    } else {
-        setText(tr("tc.main.main"));
+        try {
+            CommentPtr comment = tApp->session().load<Comment>(comment_id);
+            setText(comment->text());
+        } catch (...)
+        { }
     }
+    setText(tr("tc.main.main"));
 }
 
 }
