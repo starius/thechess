@@ -45,9 +45,12 @@ public:
             new Wt::WBreak(this);
             new Wt::WText(user_->email(), this);
         }
+        new Wt::WBreak(this);
         if (user_->online()) {
-            new Wt::WBreak(this);
             new Wt::WText(tr("tc.user.Online"), this);
+        } else {
+            new Wt::WText(tr("tc.user.Last_enter")
+                          .arg(user_->last_enter().toString()), this);
         }
         if (user_->removed()) {
             new Wt::WBreak(this);

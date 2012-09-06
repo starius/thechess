@@ -160,6 +160,11 @@ public:
         return sessions_;
     }
 
+    /** Return date time of last enter */
+    const Wt::WDateTime& last_enter() const {
+        return last_enter_;
+    }
+
     /** Get total time spent online */
     const Td& online_time() const {
         return online_time_;
