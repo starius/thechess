@@ -27,7 +27,7 @@ This widget is used to show board state or to input one chess move from user.
 class BoardWidget : public Wt::WCompositeWidget {
 public:
     /** Constructor.
-    \param big    Whether big images are used.
+    \param big    Whether big images are used. (Deprecated, not used)
     \param active Whether user could select a piece and perform a move
         (and emit half_move()).
     \param bottom Board side, showed at the bottom side.

@@ -111,9 +111,10 @@ public:
     BoardWidgetImpl(bool big, bool active, Piece::Color bottom,
                     const Board& board) :
         Wt::WContainerWidget(), board_(board), bottom_(bottom),
-        active_(active), activated_(false), big_(big),
+        active_(active), activated_(false),
         select_turn_into_flag_(false) {
         lastmove_show_ = User::has_s(SWITCH_LASTMOVE);
+        big_ = User::has_s(SWITCH_BIG);
         correct_bottom();
         board_template_ = new Wt::WTemplate(tr(xml_message()), this);
         THECHESS_SQUARE_FOREACH (square) {
@@ -139,6 +140,11 @@ public:
             boost::bind(&BoardWidgetImpl::show_lastmove, this,
                         boost::bind<bool>(&Wt::WAbstractToggleButton::isChecked,
                                           lastmove_box_)));
+        new Wt::WBreak(this);
+        big_box_ = new Wt::WCheckBox(this);
+        big_box_->setText(tr("tc.game.Enlarged_images"));
+        big_box_->setChecked(big_);
+        big_box_->changed().connect(this, &BoardWidgetImpl::big_changed);
         update_board_anchor();
     }
 
@@ -224,6 +230,7 @@ private:
     DnDPiece* images_[64];
     Wt::WImage* draggable_;
     Wt::WCheckBox* lastmove_box_;
+    Wt::WCheckBox* big_box_;
     Wt::WAnchor* board_anchor_;
 
     Wt::Signal<HalfMove> move_;
@@ -452,6 +459,12 @@ private:
                 img->activate();
             }
         }
+    }
+
+    void big_changed() {
+        big_ = big_box_->isChecked();
+        User::set_s(SWITCH_BIG, big_);
+        board_build();
     }
 
 };
