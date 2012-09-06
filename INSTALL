@@ -14,7 +14,8 @@ Install:
 FIXME
 
 Setup SMTP daemon to use Gmail on Debian:
-http://wiki.debian.org/GmailAndExim4
+Postfix: http://bit.ly/OcGopv (asynchronous)
+Exim4:   http://wiki.debian.org/GmailAndExim4 (synchronous)
 
 Dependencies:
  * witty library (>=3.2.0)
