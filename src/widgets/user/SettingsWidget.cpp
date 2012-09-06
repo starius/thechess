@@ -13,6 +13,7 @@
 #include <Wt/WTextEdit>
 #include <Wt/WCheckBox>
 #include <Wt/WBreak>
+#include <Wt/Wc/TimeDurationWidget.hpp>
 
 #include "widgets/user/SettingsWidget.hpp"
 #include "widgets/user/ClassificationWidget.hpp"
@@ -37,6 +38,7 @@ public:
             print_classification_changer();
         }
         print_settings_changer();
+        print_filter_min_online();
         print_description_changer();
         print_recalculation();
     }
@@ -47,6 +49,7 @@ private:
     Wt::WCheckBox* public_email_;
     Wt::WCheckBox* names_in_mymenu_;
     Wt::WTextEdit* description_;
+    Wt::Wc::TimeDurationWidget* filter_min_online_;
 
     void print_password_changer() {
         new Wt::WBreak(this);
@@ -81,6 +84,16 @@ private:
         names_in_mymenu_->setChecked(User::has_s(SWITCH_NAMES_IN_MYMENU));
         Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
         b->clicked().connect(this, &SettingsWidgetImpl::save_settings);
+    }
+
+    void print_filter_min_online() {
+        new Wt::WBreak(this);
+        new Wt::WText(tr("tc.user.Filter_min_online"), this);
+        filter_min_online_ = new Wt::Wc::TimeDurationWidget(TD_NULL,
+                tApp->user()->filter_min_online(), 100 * WEEK,
+                this);
+        Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
+        b->clicked().connect(this, &SettingsWidgetImpl::save_filter_min_online);
     }
 
     void print_description_changer() {
@@ -130,6 +143,12 @@ private:
         if (names_in_mymenu != User::has_s(SWITCH_NAMES_IN_MYMENU)) {
             tApp->update_my_games();
         }
+    }
+
+    void save_filter_min_online() {
+        dbo::Transaction t(tApp->session());
+        Td td = filter_min_online_->corrected_value();
+        tApp->user().modify()->set_filter_min_online(td);
     }
 
     void save_description() {

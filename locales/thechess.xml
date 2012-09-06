@@ -740,6 +740,9 @@ See locales-test manpage for more information.
     <message id='tc.user.Competitions_stat'>
         <h2>Competitions stats:</h2>
     </message>
+    <message id='tc.user.Filter_min_online'>
+        Min online time spend by user to be able to send you a message
+    </message>
     <message id='tc.user.Games_stat'>
         <h2>Games stats:</h2>
     </message>
