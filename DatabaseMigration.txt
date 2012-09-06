@@ -23,6 +23,30 @@ not null default false;
 
 alter table "thechess_competition" add column "comment_base_id" bigint;
 
+alter table "thechess_user" add column
+    "competitions_stat_elo" integer not null default 1200;
+alter table "thechess_user" add column
+    "competitions_stat_all" integer not null default 0;
+alter table "thechess_user" add column
+    "competitions_stat_wins" integer not null default 0;
+alter table "thechess_user" add column
+    "competitions_stat_fails" integer not null default 0;
+alter table "thechess_user" add column
+    "comment_base_id" bigint;
+alter table "thechess_user" add column
+    "settings" integer not null default 8226;
+alter table "thechess_user" add column
+    "karma" integer not null default 0;
+alter table "thechess_user" add column
+    "registration_date" text default '2012-09-06 13:44:18.283517';
+alter table "thechess_user" add column
+    "avatar_path" text not null default '';
+alter table "thechess_user" add column
+    "filter_min_online" integer;
+alter table "thechess_user" add column
+    "description" text not null default '';
+
+
 3.0.7 to 3.0.8
 ==============
 

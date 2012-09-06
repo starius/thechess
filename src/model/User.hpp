@@ -60,6 +60,14 @@ public:
         dbo::hasMany(a, auth_infos_, dbo::ManyToOne, "user");
         dbo::hasMany(a, gps_, dbo::ManyToOne, "init");
         dbo::hasMany(a, cps_, dbo::ManyToOne, "init");
+        dbo::field(a, competitions_stat_, "compteitions_stat");
+        dbo::field(a, comment_base_, "comment_base");
+        dbo::field(a, settings_, "settings");
+        dbo::field(a, karma_, "karma");
+        dbo::field(a, registration_date_, "registration_date");
+        dbo::field(a, avatar_path_, "avatar_path");
+        dbo::field(a, filter_min_online_, "filter_min_online");
+        dbo::field(a, description_, "description");
     }
 
     /** Return (first of) auth info */
@@ -220,6 +228,81 @@ public:
     /** Return string representation of user classification */
     static Wt::WString classification2str(Classification c);
 
+    /** Get competitions statistics */
+    const EloPlayer& competitions_stat() const {
+        return competitions_stat_;
+    }
+
+    /** Access competitions statistics */
+    EloPlayer& competitions_stat() {
+        return competitions_stat_;
+    }
+
+    /** Return if this user has comment base for private messages */
+    bool has_comment_base() const;
+
+    /** Return comment base for private messages */
+    const CommentPtr& comment_base();
+
+    /** Get sessings */
+    UserSettings settings() const {
+        return settings_;
+    }
+
+    /** Set sessings */
+    void set_settings(UserSettings settings) {
+        settings_ = settings;
+    }
+
+    /** Return if the user has enabed the setting */
+    bool has_setting(UserSettings setting) const;
+
+    /** Enable or disable the setting */
+    void set_setting(UserSettings setting, bool value);
+
+    /** Get karma */
+    int karma() const {
+        return karma_;
+    }
+
+    /** Set karma */
+    void set_karma(int karma) {
+        karma_ = karma;
+    }
+
+    /** Get registration date */
+    const Wt::WDateTime& registration_date() const {
+        return registration_date_;
+    }
+
+    /** Get avatar path (compatibility with old version) */
+    const std::string& avatar_path() const {
+        return avatar_path_;
+    }
+
+    /** Return min online_time of other user to send private message */
+    const Td& filter_min_online() const {
+        return filter_min_online_;
+    }
+
+    /** Set min online_time of other user to send private message */
+    void set_filter_min_online(const Td& filter_min_online) {
+        filter_min_online_ = filter_min_online;
+    }
+
+    /** Get description (written by the user) */
+    const Wt::WString& description() const {
+        return description_;
+    }
+
+    /** Get description (written by the user) or [Deleted] */
+    Wt::WString safe_description() const;
+
+    /** Set description (written by the user) */
+    void set_description(const Wt::WString& description) {
+        description_ = description;
+    }
+
 private:
     Wt::WString username_;
     Rights rights_; // default constructor: 0
@@ -242,6 +325,15 @@ private:
     Competitions won_competitions_;
 
     EloPlayer games_stat_;
+
+    EloPlayer competitions_stat_;
+    CommentPtr comment_base_;
+    UserSettings settings_;
+    int karma_;
+    Wt::WDateTime registration_date_;
+    std::string avatar_path_;
+    Td filter_min_online_;
+    Wt::WString description_;
 
     AuthInfos auth_infos_;
 

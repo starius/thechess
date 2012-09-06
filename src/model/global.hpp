@@ -300,6 +300,59 @@ enum UserRights {
     ADMIN = MODERATOR | SUPER_RIGHTS_CHANGER
 };
 
+/** Settings */
+enum UserSettings {
+    /** No settings */
+    SWITCH_NO = 0,
+
+    /** Show big pieces */
+    SWITCH_BIG = BOOST_BINARY(00000001),
+
+    /** Highlight lastmove */
+    SWITCH_LASTMOVE = BOOST_BINARY(00000010),
+
+    /** Show only validated comments */
+    SWITCH_ONLY_OK_COMMENTS = BOOST_BINARY(00000100),
+
+    /** Show only my comments */
+    SWITCH_ONLY_MY_COMMENTS = BOOST_BINARY(00001000),
+
+    /** Show only online users */
+    SWITCH_ONLY_ONLINE_USERS = BOOST_BINARY(00010000),
+
+    /** Show only not removed users */
+    SWITCH_ONLY_NOT_REMOVED_USERS = BOOST_BINARY(00100000),
+
+    /** Show only my competitions */
+    SWITCH_ONLY_MY_COMPETITIONS = BOOST_BINARY(01000000),
+
+    /** Show only my games */
+    SWITCH_ONLY_MY_GAMES = BOOST_BINARY(10000000),
+
+    /** Show only commented games */
+    SWITCH_ONLY_COMMENTED_GAMES = BOOST_BINARY(00000001 00000000),
+
+    /** Show only my gp */
+    SWITCH_ONLY_MY_GP = BOOST_BINARY(00000010 00000000),
+
+    /** Show only my cp */
+    SWITCH_ONLY_MY_CP = BOOST_BINARY(00000100 00000000),
+
+    /** Show user names instead of game numbers */
+    SWITCH_NAMES_IN_MYMENU = BOOST_BINARY(00001000 00000000),
+
+    /** Move confirmation */
+    SWITCH_MOVE_CONFIRMATION = BOOST_BINARY(00010000 00000000),
+
+    /** Show email to regular users */
+    SWITCH_PUBLIC_EMAIL = BOOST_BINARY(00100000 00000000),
+
+    /** Default value of settings of new user or Anonymous */
+    SWITCH_DEFAULT = SWITCH_LASTMOVE |
+                     SWITCH_ONLY_NOT_REMOVED_USERS |
+                     SWITCH_PUBLIC_EMAIL
+};
+
 }
 
 /* @} */

@@ -25,7 +25,11 @@ User::User(const Wt::WString& username):
     rights_(NONE),
     sessions_(0),
     classification_(NO_CLASSIFICATION),
-    games_stat_(true) {
+    games_stat_(true),
+    competitions_stat_(true),
+    settings_(SWITCH_DEFAULT),
+    karma_(0),
+    registration_date_(now()) {
     if (IpBan::am_i_banned()) {
         set_rights(Options::instance()->banned_ip_user_rights());
     } else {
@@ -336,6 +340,42 @@ Wt::WString User::classification2str(Classification c) {
         return Wt::WString::tr("tc.user.classification_j");
     }
     return Wt::WString::tr("tc.user.classification_none");
+}
+
+bool User::has_comment_base() const {
+    return comment_base_;
+}
+
+const CommentPtr& User::comment_base() {
+    if (!comment_base_) {
+        comment_base_ = session()->add(new Comment(true));
+        comment_base_.modify()->set_type(Comment::CHAT_ROOT);
+        comment_base_.flush();
+    }
+    return comment_base_;
+}
+
+bool User::has_setting(UserSettings setting) const {
+    return (settings() & setting) == setting;
+}
+
+void User::set_setting(UserSettings setting, bool value) {
+    UserSettings s = settings();
+    if (value) {
+        s = UserSettings(s | setting);
+    } else {
+        s = UserSettings(s & (~setting));
+    }
+    set_settings(s);
+}
+
+Wt::WString User::safe_description() const {
+    if (removed() &&
+            (!tApp->user() || !tApp->user()->has_permission(USER_REMOVER))) {
+        return Wt::WString::tr("tc.user.Removed_message");
+    } else {
+        return description();
+    }
 }
 
 }
