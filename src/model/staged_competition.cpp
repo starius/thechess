@@ -227,9 +227,9 @@ void StagedCompetition::create_games(Competition* competition,
         int stage = stage_and_pair.first;
         UserPair pair = stage_and_pair.second;
         if (!winners_[pair] && Competition::all_ended(games_[pair])) {
-            bool no_draw = static_cast<int>(games_[pair].size()) ==
-                           competition->cp()->min_substages() + stage *
-                           competition->cp()->increment_substages();
+            int substages = competition->cp()->min_substages() + stage *
+                            competition->cp()->increment_substages();
+            bool no_draw = games_[pair].size() >= 2 * substages;
             int n = no_draw ? 1 : 2;
             for (int i = 0; i < n; i++) {
                 const UserPtr& white = i ? pair.first() : pair.second();
