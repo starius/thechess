@@ -63,7 +63,7 @@ Application::~Application() {
     try {
         dbo::Transaction t(session());
         user().reread();
-        if (user()) {
+        if (user() && online_) {
             user().modify()->logout();
         }
     } catch (std::exception& e) {
@@ -99,11 +99,14 @@ void Application::login_handler() {
         if (prev_user_) {
             delete kick_;
             kick_ = 0;
-            prev_user_.modify()->logout();
+            if (online_) {
+                prev_user_.modify()->logout();
+            }
         }
         user().reread();
         if (user()) {
             user().modify()->login();
+            online_ = true;
             Wt::Wc::bound_post(check_session_number)();
             {
                 Games games = user()->games().where("state in (?,?,?)")
