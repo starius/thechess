@@ -40,8 +40,7 @@ public:
         new Header(user_->username(), this);
         new Wt::WBreak(this);
         new Gravatar(user_, this);
-        if (tApp->user()) {
-            // TODO add option to hide this from regular users
+        if (tApp->user() && user_->has_setting(SWITCH_PUBLIC_EMAIL)) {
             new Wt::WBreak(this);
             new Wt::WText(user_->email(), this);
         }

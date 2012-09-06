@@ -8,6 +8,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WPushButton>
 #include <Wt/WLineEdit>
+#include <Wt/WCheckBox>
 #include <Wt/WBreak>
 
 #include "widgets/user/SettingsWidget.hpp"
@@ -31,11 +32,13 @@ public:
         if (tApp->user()->has_permission(CLASSIFICATION_CHANGER)) {
             print_classification_changer();
         }
+        print_settings_changer();
     }
 
 private:
     ClassificationWidget* class_;
     Wt::WLineEdit* email_;
+    Wt::WCheckBox* public_email_;
 
     void print_password_changer() {
         new Wt::WBreak(this);
@@ -61,6 +64,14 @@ private:
         b->clicked().connect(this, &SettingsWidgetImpl::save_classification);
     }
 
+    void print_settings_changer() {
+        new Wt::WBreak(this);
+        public_email_ = new Wt::WCheckBox(tr("tc.user.Public_email"), this);
+        public_email_->setChecked(User::has_s(SWITCH_PUBLIC_EMAIL));
+        Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
+        b->clicked().connect(this, &SettingsWidgetImpl::save_settings);
+    }
+
     void save_classification() {
         dbo::Transaction t(tApp->session());
         if (!tApp->user()) {
@@ -84,6 +95,10 @@ private:
         if (email != tApp->user()->email()) {
             tApp->user().modify()->set_email(email);
         }
+    }
+
+    void save_settings() {
+        User::set_s(SWITCH_PUBLIC_EMAIL, public_email_->isChecked());
     }
 };
 
