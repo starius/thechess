@@ -211,6 +211,24 @@ bool Competition::has_virtuals() const {
     return !scores.empty();
 }
 
+void Competition::stat_change() {
+    UsersVector members = members_vector();
+    UsersVector winners = winners_vector();
+    std::set<UserPtr> set_of_winners;
+    EloPlayers elo_winners;
+    EloPlayers elo_losers;
+    BOOST_FOREACH (const UserPtr& u, winners) {
+        set_of_winners.insert(u);
+        elo_winners.push_back(&u.modify()->competitions_stat());
+    }
+    BOOST_FOREACH (const UserPtr& u, members) {
+        if (set_of_winners.find(u) == set_of_winners.end()) {
+            elo_losers.push_back(&u.modify()->competitions_stat());
+        }
+    }
+    EloPlayer::multiple(elo_winners, elo_losers);
+}
+
 bool Competition::can_join(const UserPtr& user) const {
     return state_ == RECRUITING &&
            user && !is_member(user) &&
@@ -399,22 +417,12 @@ void Competition::process_classical(Planning* planning) {
 
 void Competition::finish(const UsersVector& winners, Planning*) {
     UsersVector members = members_vector();
-    std::set<UserPtr> set_of_winners;
-    EloPlayers elo_winners;
-    EloPlayers elo_losers;
     BOOST_FOREACH (const UserPtr& u, winners) {
         winners_.insert(u);
-        set_of_winners.insert(u);
-        elo_winners.push_back(&u.modify()->competitions_stat());
     }
-    BOOST_FOREACH (const UserPtr& u, members) {
-        if (set_of_winners.find(u) == set_of_winners.end()) {
-            elo_losers.push_back(&u.modify()->competitions_stat());
-        }
-    }
-    EloPlayer::multiple(elo_winners, elo_losers);
     state_ = ENDED;
     ended_ = now();
+    stat_change();
 }
 
 GamePtr Competition::create_game(const UserPtr& white, const UserPtr& black,

@@ -181,6 +181,13 @@ public:
     /** Return if there are virtuals among competition members */
     bool has_virtuals() const;
 
+    /** Update competittions stats of members.
+    This is called automaticaly when game is finished.
+    If you call this manually, you should call this method of
+    all the competitions, ordered by ended().
+    */
+    void stat_change();
+
     /* @} */
 
     /** \name Checking */
