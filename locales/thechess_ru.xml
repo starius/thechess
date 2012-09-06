@@ -141,7 +141,7 @@
     <message id='tc.game.State_draw_agreed'>Ничья по соглашению</message>
     <message id='tc.game.State_draw_stalemate'>Пат</message>
     <message id='tc.game.State_mate'>Мат</message>
-    <message id='tc.game.State_no_draw_stalemate'>Пат в игре без ничьих, побеждают черные</message>
+    <message id='tc.game.State_no_draw_stalemate'>Ничья в игре без ничьих, побеждают черные</message>
     <message id='tc.game.State_pause'>Приостановленная</message>
     <message id='tc.game.State_proposed'>Предложенная</message>
     <message id='tc.game.State_state'>Неизвестное состояние</message>

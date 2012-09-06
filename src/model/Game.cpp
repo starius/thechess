@@ -409,7 +409,11 @@ void Game::add_move(const HalfMove& half_move,
         }
         Board::PieceStat stat(board_after);
         if (stat.is_material_draw()) {
-            finish(DRAW_2_KINGS);
+            if (gp_->first_draw() != NO_DRAW) {
+                finish(DRAW_2_KINGS);
+            } else {
+                finish(NO_DRAW_STALEMATE, black());
+            }
         }
     }
 }

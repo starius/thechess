@@ -134,7 +134,7 @@
     <message id="tc.game.State_draw_agreed">Нічия за згодою</message>
     <message id="tc.game.State_draw_stalemate">Пат</message>
     <message id="tc.game.State_mate">Мат</message>
-    <message id="tc.game.State_no_draw_stalemate">Пат в грі без нічиїх, перемагають чорні</message>
+    <message id="tc.game.State_no_draw_stalemate">Нічия в грі без нічиїх, перемагають чорні</message>
     <message id="tc.game.State_pause">Призупинена</message>
     <message id="tc.game.State_proposed">Запропонована</message>
     <message id="tc.game.State_state">Невідомий стан</message>
