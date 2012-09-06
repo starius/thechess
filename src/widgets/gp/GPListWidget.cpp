@@ -149,11 +149,13 @@ void GPListWidget::set_gp(const GPPtr& gp) {
 
 void GPListWidget::apply() {
     bool only_my = only_my_->isChecked() && tApp->user();
+    User::set_s(SWITCH_ONLY_MY_GP, only_my);
     model_->set_query(only_my);
 }
 
 void GPListWidget::manager() {
     only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"), this);
+    only_my_->setChecked(User::has_s(SWITCH_ONLY_MY_GP));
     only_my_->changed().connect(this, &GPListWidget::apply);
     if (!tApp->user()) {
         only_my_->setEnabled(false);

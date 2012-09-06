@@ -131,12 +131,14 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
         print_post();
     }
     Wt::WCheckBox* only_ok = new Wt::WCheckBox(tr("tc.forum.Only_ok"), this);
+    only_ok->setChecked(model->only_ok());
     only_ok->changed().connect(
         boost::bind(&CommentModel::set_only_ok, model,
                     boost::bind(&Wt::WAbstractToggleButton::isChecked,
                                 only_ok)));
     if (tApp->user() && !init) {
         Wt::WCheckBox* only_my = new Wt::WCheckBox(this);
+        only_my->setChecked(model->only_my());
         only_my->setText(tr("tc.common.Only_my"));
         only_my->changed().connect(
             boost::bind(&CommentModel::set_only_my, model,

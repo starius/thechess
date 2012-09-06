@@ -180,11 +180,13 @@ void CompetitionListWidget::initialize() {
 
 void CompetitionListWidget::apply() {
     bool only_my = only_my_->isChecked() && tApp->user();
+    User::set_s(SWITCH_ONLY_MY_COMPETITIONS, only_my);
     model_->set_query(only_my, user_);
 }
 
 void CompetitionListWidget::manager() {
     only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"), this);
+    only_my_->setChecked(User::has_s(SWITCH_ONLY_MY_COMPETITIONS));
     only_my_->changed().connect(this, &CompetitionListWidget::apply);
     if (!tApp->user()) {
         only_my_->setEnabled(false);

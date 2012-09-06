@@ -42,8 +42,9 @@ public:
     };
 
     UserListModel(Wt::WObject* parent = 0) :
-        ULP::BaseQM(parent),
-        only_online_(false), not_removed_(true) {
+        ULP::BaseQM(parent) {
+        only_online_ = User::has_s(SWITCH_ONLY_ONLINE_USERS);
+        not_removed_ = User::has_s(SWITCH_ONLY_NOT_REMOVED_USERS);
         set_query();
         addColumn("id", tr("tc.common.Name")); // dummy
         addColumn("id", tr("tc.user.classification")); // dummy
@@ -61,6 +62,7 @@ public:
 
     void set_only_online(bool only_online) {
         only_online_ = only_online;
+        User::set_s(SWITCH_ONLY_ONLINE_USERS, only_online);
         set_query();
     }
 
@@ -70,6 +72,7 @@ public:
 
     void set_not_removed(bool not_removed) {
         not_removed_ = not_removed;
+        User::set_s(SWITCH_ONLY_NOT_REMOVED_USERS, not_removed);
         set_query();
     }
 

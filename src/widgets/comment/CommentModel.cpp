@@ -14,8 +14,10 @@ namespace thechess {
 CommentModel::CommentModel(Comment::Type type, const CommentPtr& root,
                            const UserPtr& init, Wt::WObject* parent):
     CommentModel::BaseQM(parent),
-    type_(type), root_(root), init_(init), only_ok_(false), only_my_(false) {
+    type_(type), root_(root), init_(init) {
     dbo::Transaction t(tApp->session());
+    only_ok_ = User::has_s(SWITCH_ONLY_OK_COMMENTS);
+    only_my_ = User::has_s(SWITCH_ONLY_MY_COMMENTS);
     setQuery(get_query());
     addColumn("id");
     addColumn("id"); // time
@@ -135,11 +137,13 @@ CommentModel::Query CommentModel::get_query() const {
 
 void CommentModel::set_only_ok(bool only_ok) {
     only_ok_ = only_ok;
+    User::set_s(SWITCH_ONLY_OK_COMMENTS, only_ok);
     setQuery(get_query(), /* keep_columns */ true);
 }
 
 void CommentModel::set_only_my(bool only_my) {
     only_my_ = only_my;
+    User::set_s(SWITCH_ONLY_MY_COMMENTS, only_my);
     setQuery(get_query(), /* keep_columns */ true);
 }
 

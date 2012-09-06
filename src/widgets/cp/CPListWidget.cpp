@@ -155,11 +155,13 @@ void CPListWidget::set_cp(const CPPtr& cp) {
 
 void CPListWidget::apply() {
     bool only_my = only_my_->isChecked() && tApp->user();
+    User::set_s(SWITCH_ONLY_MY_CP, only_my);
     model_->set_query(only_my);
 }
 
 void CPListWidget::manager() {
     only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"), this);
+    only_my_->setChecked(User::has_s(SWITCH_ONLY_MY_CP));
     only_my_->changed().connect(this, &CPListWidget::apply);
     if (!tApp->user()) {
         only_my_->setEnabled(false);

@@ -179,11 +179,13 @@ private:
 
     void manager() {
         only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"), this);
+        only_my_->setChecked(User::has_s(SWITCH_ONLY_MY_GAMES));
         only_my_->changed().connect(this, &GameListWidgetImpl::apply);
         if (!tApp->user()) {
             only_my_->setEnabled(false);
         }
         only_commented_ = new Wt::WCheckBox(tr("tc.game.Only_commented"), this);
+        only_commented_->setChecked(User::has_s(SWITCH_ONLY_COMMENTED_GAMES));
         only_commented_->changed().connect(this, &GameListWidgetImpl::apply);
         if (!tApp->environment().ajax()) {
             Wt::WPushButton* apply_button =
@@ -193,6 +195,8 @@ private:
     }
 
     void apply() {
+        User::set_s(SWITCH_ONLY_MY_GAMES, only_my_->isChecked());
+        User::set_s(SWITCH_ONLY_COMMENTED_GAMES, only_commented_->isChecked());
         query_model_->setQuery(query(), /* keep_columns */ true);
     }
 
