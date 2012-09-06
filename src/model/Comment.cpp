@@ -38,7 +38,7 @@ Comment::Comment(bool):
 
 Comment::Type Comment::child_type(Comment::Type type) {
     if (type == CHAT_ROOT) {
-        return CHAT_MESSAGE;
+        return CHAT_MESSAGE; // FIXME PRIVATE_MESSAGE also match
     } else if (type == FORUM_TOPIC) {
         return FORUM_POST;
     } else if (type == FORUM_POST) {
@@ -52,7 +52,7 @@ Comment::Type Comment::child_type(Comment::Type type) {
 }
 
 Comment::Type Comment::root_type(Comment::Type type) {
-    if (type == CHAT_MESSAGE) {
+    if (type == CHAT_MESSAGE || PRIVATE_MESSAGE) {
         return CHAT_ROOT;
     } else if (type == FORUM_POST) {
         return FORUM_TOPIC;
@@ -79,6 +79,9 @@ Comment::State Comment::state_of_new(const UserPtr& user, Type type,
             return DELETED;
         }
         if (type == LOG_ENTRY && !user->has_permission(LOGS_READER)) {
+            return DELETED;
+        }
+        if (type == PRIVATE_MESSAGE && !user->has_permission(PRIVATE_WRITER)) {
             return DELETED;
         }
         return OK;
@@ -173,6 +176,12 @@ void Comment::set_type(Type type) {
 Wt::WString Comment::text_or_removed(const UserPtr& viewer) const {
     if (type() == LOG_ENTRY && !viewer->has_permission(LOGS_READER)) {
         return "";
+    }
+    if (type() == PRIVATE_MESSAGE) {
+        if (!parent() || !viewer->has_comment_base() ||
+                viewer.modify()->comment_base() != parent()) {
+            return "";
+        }
     }
     if (state() == OK) {
         return text();

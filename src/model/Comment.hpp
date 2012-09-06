@@ -30,6 +30,7 @@ public:
         FORUM_POST_TEXT = 71, /**< Commentable by FORUM_COMMENT; multi-line */
         FORUM_COMMENT = 75, /**< Commentable by FORUM_COMMENT; multi-line;
                                  root=FORUM_POST_TEXT */
+        PRIVATE_MESSAGE = 90, /** Non-commentable; one line; root=CHAT_ROOT */
         LOG_ENTRY = 100 /** Security log */
     };
 
