@@ -68,6 +68,7 @@ public:
         dbo::field(a, avatar_path_, "avatar_path");
         dbo::field(a, filter_min_online_, "filter_min_online");
         dbo::field(a, description_, "description");
+        dbo::field(a, locale_, "locale", /* size */ 5);
     }
 
     /** Return (first of) auth info */
@@ -321,6 +322,18 @@ public:
         description_ = description;
     }
 
+    /** Preferred locale.
+    Empty value cause using browser default.
+    */
+    const std::string& locale() const {
+        return locale_;
+    }
+
+    /** Set prefered locale */
+    void set_locale(const std::string& locale) {
+        locale_ = locale;
+    }
+
 private:
     Wt::WString username_;
     Rights rights_; // default constructor: 0
@@ -352,6 +365,7 @@ private:
     std::string avatar_path_;
     Td filter_min_online_;
     Wt::WString description_;
+    std::string locale_;
 
     AuthInfos auth_infos_;
 
