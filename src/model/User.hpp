@@ -124,6 +124,9 @@ public:
     /** Return if the user has the permission */
     bool has_permission(Rights perm) const;
 
+    /** Return if the user has the permission */
+    static bool has_permission(Rights perm, Rights rights);
+
     /** Set user's permission */
     void set_permission(Rights perm, bool can = true);
 
@@ -256,6 +259,9 @@ public:
 
     /** Return if the user has enabed the setting */
     bool has_setting(UserSettings setting) const;
+
+    /** Return if the user has enabed the setting */
+    static bool has_setting(UserSettings setting, UserSettings settings);
 
     /** Enable or disable the setting */
     void set_setting(UserSettings setting, bool value);

@@ -82,17 +82,21 @@ Comment::State Comment::state_of_new(const UserPtr& user, Type type,
         }
         return OK;
     } else {
-        int anon_rights = Options::instance()->anonymous_rights();
+        UserRights anon_rights = Options::instance()->anonymous_rights();
         if (IpBan::am_i_banned()) {
-            anon_rights &= Options::instance()->banned_ip_user_rights();
+            int a = anon_rights & Options::instance()->banned_ip_user_rights();
+            anon_rights = UserRights(a);
         }
-        if (type == CHAT_MESSAGE && (anon_rights & CHAT_WRITER)) {
+        if (type == CHAT_MESSAGE &&
+                User::has_permission(CHAT_WRITER, anon_rights)) {
             return DRAFT;
         }
-        if (type == FORUM_COMMENT && (anon_rights & FORUM_COMMENT_CREATOR)) {
+        if (type == FORUM_COMMENT &&
+                User::has_permission(FORUM_COMMENT_CREATOR, anon_rights)) {
             return DRAFT;
         }
-        if (type == FORUM_POST && (anon_rights & FORUM_POST_CREATOR)) {
+        if (type == FORUM_POST &&
+                User::has_permission(FORUM_POST_CREATOR, anon_rights)) {
             return DRAFT;
         }
         return DELETED;

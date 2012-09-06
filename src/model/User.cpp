@@ -96,7 +96,11 @@ Wt::WString User::safe_username() const {
 }
 
 bool User::has_permission(Rights perm) const {
-    return (rights() & perm) == perm;
+    return has_permission(perm, rights());
+}
+
+bool User::has_permission(Rights perm, Rights rights) {
+    return (rights & perm) == perm;
 }
 
 void User::set_permission(Rights perm, bool can) {
@@ -356,7 +360,11 @@ const CommentPtr& User::comment_base() {
 }
 
 bool User::has_setting(UserSettings setting) const {
-    return (settings() & setting) == setting;
+    return has_setting(setting, settings());
+}
+
+bool User::has_setting(UserSettings setting, UserSettings settings) {
+    return (settings & setting) == setting;
 }
 
 void User::set_setting(UserSettings setting, bool value) {
