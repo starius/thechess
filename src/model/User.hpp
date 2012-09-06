@@ -334,6 +334,9 @@ public:
         locale_ = locale;
     }
 
+    /** Return if this user can send message to another user */
+    bool can_send_message(const UserPtr& to) const;
+
 private:
     Wt::WString username_;
     Rights rights_; // default constructor: 0

@@ -10,6 +10,7 @@
 
 #include <Wt/WContainerWidget>
 #include <Wt/WPushButton>
+#include <Wt/WLineEdit>
 #include <Wt/WAnchor>
 #include <Wt/WBreak>
 #include <Wt/WText>
@@ -139,6 +140,7 @@ public:
         print_game_stat();
         print_competition_stat();
         print_description();
+        print_send();
     }
 
 private:
@@ -260,6 +262,33 @@ private:
             new Wt::WBreak(this);
             new Wt::WText(tr("tc.common.Description") + ": ", this);
             new Wt::WText(user_->safe_description(), this);
+        }
+    }
+
+    void print_send() {
+        if (tApp->user() && tApp->user()->can_send_message(user_)) {
+            new Wt::WBreak(this);
+            Wt::WLineEdit* m = new Wt::WLineEdit(this);
+            m->setTextSize(50);
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(tr("tc.common.Send"), this);
+            b->clicked().connect(boost::bind(&UserWidgetImpl::send, this, m));
+        }
+    }
+
+    void send(Wt::WLineEdit* m) {
+        dbo::Transaction t(tApp->session());
+        if (tApp->user() && tApp->user()->can_send_message(user_)) {
+            CommentPtr base = user_.modify()->comment_base();
+            base.flush();
+            CommentPtr message = tApp->session().add(new Comment(true));
+            message.modify()->set_text(m->text());
+            message.modify()->set_init(tApp->user());
+            message.modify()->set_parent(base);
+            message.modify()->set_root(base);
+            message.modify()->set_type(Comment::PRIVATE_MESSAGE);
+            t.commit();
+            m->setText("");
         }
     }
 };

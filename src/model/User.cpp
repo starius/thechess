@@ -400,5 +400,12 @@ Wt::WString User::safe_description() const {
     }
 }
 
+bool User::can_send_message(const UserPtr& to) const {
+    return self() != to &&
+           online_time() >= to->filter_min_online() &&
+           Comment::can_create(self(), Comment::PRIVATE_MESSAGE);
+    // TODO filter table
+}
+
 }
 
