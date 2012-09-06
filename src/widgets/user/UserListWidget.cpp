@@ -38,7 +38,9 @@ public:
         WINS_COLUMN,
         DRAWS_COLUMN,
         FAILS_COLUMN,
-        RATING_COLUMN
+        RATING_COLUMN,
+        ONLINE_TIME,
+        REGISTRATION_DATE
     };
 
     UserListModel(Wt::WObject* parent = 0) :
@@ -53,6 +55,8 @@ public:
         addColumn("id", tr("tc.user.games_stat_draws")); // dummy
         addColumn("games_stat_fails", tr("tc.user.games_stat_fails"));
         addColumn("games_stat_elo", tr("tc.user.games_stat_elo"));
+        addColumn("id", tr("tc.user.Online_time").arg("")); // dummy
+        addColumn("registration_date", tr("tc.user.Registration_date").arg(""));
         sort(RATING_COLUMN, Wt::DescendingOrder);
     }
 
@@ -102,6 +106,8 @@ private:
                 return o->classification_str();
             } else if (index.column() == DRAWS_COLUMN) {
                 return o->games_stat().draws();
+            } else if (index.column() == ONLINE_TIME) {
+                return td2str(o->online_time());
             }
         } else if (role == Wt::LinkRole) {
             if (index.column() == NAME_COLUMN) {
@@ -143,13 +149,15 @@ public:
         Wt::WTableView(p) {
         setModel(model);
         resize(ULP::WIDTH, ULP::HEIGHT);
-        setColumnWidth(UserListModel::NAME_COLUMN, 300);
+        setColumnWidth(UserListModel::NAME_COLUMN, 200);
         setColumnWidth(UserListModel::CLASSIFICATION_COLUMN, 150);
-        setColumnWidth(UserListModel::ALL_COLUMN, 50);
-        setColumnWidth(UserListModel::WINS_COLUMN, 50);
-        setColumnWidth(UserListModel::DRAWS_COLUMN, 50);
-        setColumnWidth(UserListModel::FAILS_COLUMN, 50);
-        setColumnWidth(UserListModel::RATING_COLUMN, 50);
+        setColumnWidth(UserListModel::ALL_COLUMN, 30);
+        setColumnWidth(UserListModel::WINS_COLUMN, 30);
+        setColumnWidth(UserListModel::DRAWS_COLUMN, 30);
+        setColumnWidth(UserListModel::FAILS_COLUMN, 30);
+        setColumnWidth(UserListModel::RATING_COLUMN, 30);
+        setColumnWidth(UserListModel::ONLINE_TIME, 50);
+        setColumnWidth(UserListModel::REGISTRATION_DATE, 120);
     }
 
 protected:
