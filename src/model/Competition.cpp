@@ -6,6 +6,7 @@
  */
 
 #include <cstdlib>
+#include <set>
 #include <algorithm>
 #include <sstream>
 #include <boost/foreach.hpp>
@@ -397,9 +398,21 @@ void Competition::process_classical(Planning* planning) {
 }
 
 void Competition::finish(const UsersVector& winners, Planning*) {
+    UsersVector members = members_vector();
+    std::set<UserPtr> set_of_winners;
+    EloPlayers elo_winners;
+    EloPlayers elo_losers;
     BOOST_FOREACH (const UserPtr& u, winners) {
         winners_.insert(u);
+        set_of_winners.insert(u);
+        elo_winners.push_back(&u.modify()->competitions_stat());
     }
+    BOOST_FOREACH (const UserPtr& u, members) {
+        if (set_of_winners.find(u) == set_of_winners.end()) {
+            elo_losers.push_back(&u.modify()->competitions_stat());
+        }
+    }
+    EloPlayer::multiple(elo_winners, elo_losers);
     state_ = ENDED;
     ended_ = now();
 }
