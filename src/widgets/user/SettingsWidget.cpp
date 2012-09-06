@@ -76,9 +76,13 @@ private:
         if (!tApp->user()) {
             return;
         }
+        std::string email = email_->text().toUTF8();
+        if (email.length() < 3 || email.find('@') == std::string::npos) {
+            return;
+        }
         delete sender();
-        if (email_->text().toUTF8() != tApp->user()->email()) {
-            tApp->user().modify()->set_email(email_->text().toUTF8());
+        if (email != tApp->user()->email()) {
+            tApp->user().modify()->set_email(email);
         }
     }
 };
