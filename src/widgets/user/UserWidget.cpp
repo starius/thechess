@@ -77,6 +77,9 @@ public:
         new Wt::WText(tr("tc.user.Online_time")
                       .arg(td2str(user_->online_time())), this);
         new Wt::WBreak(this);
+        new Wt::WText(tr("tc.user.Registration_date")
+                      .arg(user_->registration_date().toString()), this);
+        new Wt::WBreak(this);
         if (tApp->user() && tApp->user() != user_ && !user_->removed()) {
             start_button_ = new Wt::WPushButton(
                 Wt::WString::tr("tc.user.Start_game"), this);
