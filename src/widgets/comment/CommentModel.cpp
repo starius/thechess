@@ -108,7 +108,11 @@ Wt::WString CommentModel::contents(const CommentPtr& comment) const {
 
 CommentModel::Query CommentModel::get_query() const {
     Query result;
-    if (root_) {
+    if (type_ == Comment::PRIVATE_MESSAGE) {
+        result = tApp->session().find<Comment>();
+        result.where("root_id = ? or init_id = ?")
+        .bind(root_).bind(tApp->user());
+    } else if (root_) {
         result = root_->family().find();
     } else {
         result = tApp->session().find<Comment>();

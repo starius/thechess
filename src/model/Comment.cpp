@@ -177,7 +177,7 @@ Wt::WString Comment::text_or_removed(const UserPtr& viewer) const {
     if (type() == LOG_ENTRY && !viewer->has_permission(LOGS_READER)) {
         return "";
     }
-    if (type() == PRIVATE_MESSAGE) {
+    if (type() == PRIVATE_MESSAGE && viewer != init()) {
         if (!parent() || !viewer->has_comment_base() ||
                 viewer.modify()->comment_base() != parent()) {
             return "";

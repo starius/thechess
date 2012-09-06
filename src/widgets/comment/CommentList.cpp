@@ -125,11 +125,8 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
             return;
         }
     }
-    if (type == Comment::PRIVATE_MESSAGE) {
-        if (!tApp->user() || !tApp->user()->has_comment_base() ||
-                !tApp->user().modify()->comment_base() != root) {
-            return;
-        }
+    if (type == Comment::PRIVATE_MESSAGE && !tApp->user()) {
+        return;
     }
     CommentModel* model = new CommentModel(type, root, init, this);
     view_ = new CommentView(model); // do it here to provide comment_model()
