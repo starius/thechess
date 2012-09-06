@@ -352,8 +352,8 @@ private:
     }
 
     void print_draw_buttons() {
+        new Wt::WBreak(manager_);
         if (game_->is_draw_proposed()) {
-            new Wt::WBreak(manager_);
             new Wt::WText(tr("tc.game.Draw_proposal")
                           .arg(game_->draw_proposer()->safe_username()),
                           manager_);
@@ -364,12 +364,13 @@ private:
                 but<&Game::draw_discard>("tc.common.Discard");
             }
         } else if (game_->can_draw_propose(tApp->user())) {
-            new Wt::WBreak(manager_);
             but<&Game::draw_propose>("tc.game.Draw_propose");
         }
         if (game_->can_check_auto_draws(tApp->user())) {
-            new Wt::WBreak(manager_);
             but<&Game::check_auto_draws>("tc.game.Call_auto_judge");
+        }
+        if (game_->can_surrender(tApp->user())) {
+            but<&Game::surrender>("tc.game.Surrender");
         }
     }
 

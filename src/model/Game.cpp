@@ -561,6 +561,17 @@ void Game::draw_discard(const UserPtr& user) {
     }
 }
 
+bool Game::can_surrender(const UserPtr& user) const {
+    return state() == ACTIVE &&
+           is_member(user);
+}
+
+void Game::surrender(const UserPtr& user) {
+    if (can_surrender(user)) {
+        finish(SURRENDERED, other_user(user));
+    }
+}
+
 bool Game::can_check_auto_draws(const UserPtr& user) const {
     return state() == ACTIVE && is_member(user) && meet_first_draw();
 }

@@ -294,6 +294,12 @@ public:
     /** The user tries to discard the draw by agreement */
     void draw_discard(const UserPtr& user);
 
+    /** Return if the user can surrender */
+    bool can_surrender(const UserPtr& user) const;
+
+    /** The user tries to surrender */
+    void surrender(const UserPtr& user);
+
     /* @} */
 
     /** \name Draws with judge */

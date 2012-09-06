@@ -544,6 +544,7 @@ See locales-test manpage for more information.
     <message id='tc.game.State_state'>Undefined state</message>
     <message id='tc.game.State_surrendered'>Surrendered</message>
     <message id='tc.game.State_timeout'>Timeout</message>
+    <message id='tc.game.Surrender'>Surrender</message>
     <message id='tc.game.Testing_board'>Testing board</message>
     <message id='tc.game.white'>white</message>
     <message id='tc.game.your_color'>your color</message>
