@@ -279,7 +279,7 @@ public:
     /** Enable or disable the setting */
     void set_setting(UserSettings setting, bool value);
 
-    /** Get karma */
+    /** Get karma (not used) */
     int karma() const {
         return karma_;
     }
