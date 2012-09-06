@@ -102,6 +102,7 @@ void Application::login_handler() {
             if (online_) {
                 prev_user_.modify()->logout();
             }
+            prev_user_.flush();
         }
         user().reread();
         if (user()) {
@@ -125,6 +126,7 @@ void Application::login_handler() {
                 server_.planning().schedule(10 * SECOND, f);
             }
             kick_ = new Kick();
+            user().flush();
         }
         prev_user_ = user();
         path_.open(internalPath());
