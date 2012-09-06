@@ -113,7 +113,7 @@ public:
         Wt::WContainerWidget(), board_(board), bottom_(bottom),
         active_(active), activated_(false), big_(big),
         select_turn_into_flag_(false) {
-        lastmove_show_ = User::has_setting_or_default(SWITCH_LASTMOVE);
+        lastmove_show_ = User::has_s(SWITCH_LASTMOVE);
         correct_bottom();
         board_template_ = new Wt::WTemplate(tr(xml_message()), this);
         THECHESS_SQUARE_FOREACH (square) {
@@ -193,7 +193,7 @@ public:
     void show_lastmove(bool show = true) {
         color_noactive_undo();
         lastmove_show_ = show;
-        User::set_setting_or_default(SWITCH_LASTMOVE, show);
+        User::set_s(SWITCH_LASTMOVE, show);
         modify();
         lastmove_box_->setChecked(show);
     }

@@ -267,13 +267,13 @@ public:
     This variant works even for Anonymous.
     \warning tApp must be defined.
     */
-    static bool has_setting_or_default(UserSettings setting);
+    static bool has_s(UserSettings setting);
 
     /** Set if the user has enabled the setting.
     This variant works even for Anonymous.
     \warning tApp must be defined.
     */
-    static bool set_setting_or_default(UserSettings setting, bool value);
+    static bool set_s(UserSettings setting, bool value);
 
     /** Enable or disable the setting */
     void set_setting(UserSettings setting, bool value);
