@@ -71,6 +71,7 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
     middle->resize(Wt::WLength(100, Wt::WLength::Percentage),
                    Wt::WLength::Auto);
     menu_place_ = middle->elementAt(0, MENU_IN_MIDDLE);
+    clock_and_locale_ = new Wt::WContainerWidget(menu_place_);
     contents_place_ = middle->elementAt(0, CONTENTS_IN_MIDDLE);
     contents_place_->resize(Wt::WLength(80, Wt::WLength::Percentage),
                             Wt::WLength::Auto);
@@ -83,6 +84,25 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
 
 void MainWidget::show_menu(Path* path) {
     menu_place_->addWidget(new MainMenu(path));
+}
+
+typedef MainWidget::LocaleSetter LocaleSetter;
+
+static Wt::WWidget* create_locale_setter(const LocaleSetter& locale_setter,
+        const std::string& locale) {
+    Wt::WImage* result = new Wt::WImage("img/locale/" + locale + ".png");
+    result->setHeight(16);
+    result->clicked().connect(boost::bind(locale_setter, locale));
+    result->setMargin(5, Wt::Left | Wt::Right);
+    result->decorationStyle().setCursor(Wt::PointingHandCursor);
+    return result;
+}
+
+void MainWidget::add_locale_setters(const LocaleSetter& locale_setter) {
+    clock_and_locale_->addWidget(create_locale_setter(locale_setter, "en"));
+    clock_and_locale_->addWidget(create_locale_setter(locale_setter, "ru"));
+    clock_and_locale_->addWidget(create_locale_setter(locale_setter, "uk"));
+    clock_and_locale_->addWidget(create_locale_setter(locale_setter, "be"));
 }
 
 MainMenu* MainWidget::main_menu() {
@@ -331,7 +351,8 @@ static void reset_countup(Wt::Wc::Countdown* countup) {
 }
 
 void MainWidget::show_countup() {
-    Wt::Wc::Countdown* countup = new Wt::Wc::Countdown(menu_place_);
+    Wt::Wc::Countdown* countup = new Wt::Wc::Countdown(clock_and_locale_);
+    countup->setInline(true);
     reset_countup(countup);
 }
 

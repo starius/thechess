@@ -8,6 +8,8 @@
 #ifndef THECHESS_MAIN_WIDGET_HPP_
 #define THECHESS_MAIN_WIDGET_HPP_
 
+#include <boost/function.hpp>
+
 #include <Wt/WGlobal>
 #include <Wt/WContainerWidget>
 #include <Wt/Wc/global.hpp>
@@ -21,11 +23,16 @@ namespace thechess {
 /** Main Application widget */
 class MainWidget : public Wt::WContainerWidget {
 public:
+    typedef boost::function<void(const std::string&)> LocaleSetter;
+
     /** Constructor */
     MainWidget(Wt::WContainerWidget* parent = 0);
 
     /** Show the menu with references */
     void show_menu(Path* path);
+
+    /** Add locale setters */
+    void add_locale_setters(const LocaleSetter& locale_setter);
 
     /** Get main menu */
     MainMenu* main_menu();
@@ -163,6 +170,7 @@ private:
     Wt::WContainerWidget* auth_place_;
     Wt::WContainerWidget* top_place_;
     Wt::WContainerWidget* menu_place_;
+    Wt::WContainerWidget* clock_and_locale_;
     Wt::WContainerWidget* contents_place_;
     Wt::WContainerWidget* mygames_place_;
     Wt::WContainerWidget* bottom_place_;

@@ -61,6 +61,9 @@ public:
     /** (Re)create or hide my games */
     void update_my_games();
 
+    /** User set locale */
+    void set_locale_by_user(const std::string& locale);
+
     /** Get active Application.
     Same as WApplication::instance().
     There is macro for this method: tApp.

@@ -35,6 +35,9 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     gather_(0), kick_(0),
     online_(true), last_user_event_(now()), next_check_(now()) {
     main_widget_ = new MainWidget(root());
+    main_widget_->add_locale_setters(boost::bind(
+                                         &Application::set_locale_by_user,
+                                         this, _1));
     main_widget_->show_menu(&path_);
     path_.connect_main_widget(main_widget_);
     path_.error404().connect(main_widget_, &MainWidget::main_page);
@@ -86,6 +89,14 @@ void Application::update_my_games() {
     main_widget_->update_my_games();
 }
 
+void Application::set_locale_by_user(const std::string& locale) {
+    setLocale(locale);
+    dbo::Transaction t(tApp->session());
+    if (user()) {
+        user().modify()->set_locale(locale);
+    }
+}
+
 static void check_session_number() {
     dbo::Transaction t(tApp->session());
     if (tApp && tApp->user() && tApp->user()->sessions() > 10) {
@@ -130,6 +141,9 @@ void Application::login_handler() {
                 server_.planning().schedule(10 * SECOND, f);
             }
             kick_ = new Kick();
+            if (!user()->locale().empty()) {
+                setLocale(user()->locale());
+            }
             user().flush();
         }
         prev_user_ = user();
