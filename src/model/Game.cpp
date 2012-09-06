@@ -98,6 +98,23 @@ const char* Game::state2str_id(State state) {
     return "tc.game.State_state";
 }
 
+void Game::stat_change() {
+    if (!real_rating()) {
+        return;
+    }
+    white_.reread();
+    black_.reread();
+    if (is_win()) {
+        EloPlayer& other_stat = other_user(winner_).modify()->games_stat();
+        winner_.modify()->games_stat().win(&other_stat);
+    }
+    if (is_draw()) {
+        white_.modify()->games_stat().draw(&(black_.modify()->games_stat()));
+    }
+    rating_after_[Piece::WHITE] = white()->games_stat().elo();
+    rating_after_[Piece::BLACK] = black()->games_stat().elo();
+}
+
 Wt::WString Game::str_state() const {
     return Wt::WString::tr(state2str_id(state()));
 }
@@ -637,23 +654,7 @@ void Game::finish(State state, const UserPtr& winner) {
         winner_ = winner;
     }
     ended_ = now();
-    if (real_rating()) {
-        elo_change();
-    }
-}
-
-void Game::elo_change() {
-    white_.reread();
-    black_.reread();
-    if (is_win()) {
-        EloPlayer& other_stat = other_user(winner_).modify()->games_stat();
-        winner_.modify()->games_stat().win(&other_stat);
-    }
-    if (is_draw()) {
-        white_.modify()->games_stat().draw(&(black_.modify()->games_stat()));
-    }
-    rating_after_[Piece::WHITE] = white()->games_stat().elo();
-    rating_after_[Piece::BLACK] = black()->games_stat().elo();
+    stat_change();
 }
 
 void Game::push_move(HalfMove half_move) {

@@ -573,6 +573,13 @@ public:
     /** Convert given state to i18n id */
     static const char* state2str_id(State state);
 
+    /** Update games stats of members and rating_after() if real_rating().
+    This is called automaticaly when game is finished.
+    If you call this manually, you should call this method of all the games,
+    ordered by ended().
+    */
+    void stat_change();
+
 private:
     GPPtr gp_;
     State state_;
@@ -624,7 +631,6 @@ private:
     void start();
     void stop_pause();
     void finish(State state, const UserPtr& winner = UserPtr());
-    void elo_change();
 
     void push_move(HalfMove half_move);
     void pop_moves(int number);
