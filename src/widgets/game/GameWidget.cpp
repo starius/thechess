@@ -80,8 +80,13 @@ protected:
                       "tc.game.norating_false", result);
         }
         if (!game_->is_ended()) {
-            item(Wt::WString::trn("tc.game.First_draw", gp->first_draw() / 2)
-                 .arg(gp->first_draw() / 2), result);
+            if (gp->first_draw() != NO_DRAW) {
+                int first_draw =  gp->first_draw() / 2;
+                item(Wt::WString::trn("tc.game.First_draw", first_draw)
+                     .arg(gp->first_draw() / 2), result);
+            } else {
+                item(Wt::WString::tr("tc.game.No_draw"), result);
+            }
         }
         {
             Wt::WContainerWidget* li = new Wt::WContainerWidget(result);
