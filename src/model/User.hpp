@@ -263,6 +263,12 @@ public:
     /** Return if the user has enabled the setting */
     static bool has_setting(UserSettings setting, UserSettings settings);
 
+    /** Return if the user has enabled the setting.
+    This variant works even for Anonymous.
+    \warning tApp must be defined.
+    */
+    static bool has_setting_or_default(UserSettings setting);
+
     /** Enable or disable the setting */
     void set_setting(UserSettings setting, bool value);
 
