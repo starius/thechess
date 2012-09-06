@@ -14,7 +14,11 @@ Gravatar::Gravatar(const UserPtr& user, Wt::WContainerWidget* parent):
     GravatarImage("", parent) {
     dbo::Transaction t(tApp->session());
     set_email(user->email());
-    set_default(Wt::Wc::GravatarImage::WAVATAR);
+    if (!user->avatar_path().empty()) {
+        set_default(user->avatar_path());
+    } else {
+        set_default(Wt::Wc::GravatarImage::WAVATAR);
+    }
     set_force_default(!user->has_permission(AVATAR_NONDEFAULT));
 }
 
