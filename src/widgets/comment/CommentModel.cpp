@@ -18,7 +18,7 @@ CommentModel::CommentModel(Comment::Type type, const CommentPtr& root,
     dbo::Transaction t(tApp->session());
     if (type == Comment::PRIVATE_MESSAGE && !root_ &&
             tApp->user() && tApp->user()->has_comment_base()) {
-        root_ = tApp->user().modify()->comment_base();
+        root_ = tApp->user()->comment_base();
     }
     only_ok_ = User::has_s(SWITCH_ONLY_OK_COMMENTS);
     only_my_ = User::has_s(SWITCH_ONLY_MY_COMMENTS);

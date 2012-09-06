@@ -525,6 +525,11 @@ public:
     */
     const CommentPtr& comment_base();
 
+    /** Get comment base (may return 0) */
+    const CommentPtr& comment_base() const {
+        return comment_base_;
+    }
+
     /* @} */
 
     /** \name Competition-related methods */

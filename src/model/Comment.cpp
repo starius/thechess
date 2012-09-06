@@ -179,7 +179,7 @@ Wt::WString Comment::text_or_removed(const UserPtr& viewer) const {
     }
     if (type() == PRIVATE_MESSAGE && viewer != init()) {
         if (!parent() || !viewer->has_comment_base() ||
-                viewer.modify()->comment_base() != parent()) {
+                viewer->comment_base() != parent()) {
             return "";
         }
     }
