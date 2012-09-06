@@ -134,6 +134,7 @@ public:
         new Wt::WBreak(this);
         print_rights();
         print_game_stat();
+        print_competition_stat();
     }
 
 private:
@@ -219,7 +220,8 @@ private:
     void print_game_stat() {
         addWidget(awards_widget(user_));
         const EloPlayer& stat = user_->games_stat();
-        new Wt::WText(tr("tc.user.Games_stat").arg(stat.all()).arg(stat.wins())
+        new Wt::WText(tr("tc.user.Games_stat"), this);
+        new Wt::WText(tr("tc.common.Stat").arg(stat.all()).arg(stat.wins())
                       .arg(stat.draws()).arg(stat.fails()).arg(stat.elo()),
                       this);
         if (tApp->user() && tApp->user() != user_) {
@@ -239,6 +241,14 @@ private:
             new Wt::WText(tr("tc.user.Games_stat_changes")
                           .arg(if_win).arg(if_fail).arg(if_draw), this);
         }
+    }
+
+    void print_competition_stat() {
+        const EloPlayer& stat = user_->competitions_stat();
+        new Wt::WText(tr("tc.user.Competitions_stat"), this);
+        new Wt::WText(tr("tc.common.Stat").arg(stat.all()).arg(stat.wins())
+                      .arg(stat.draws()).arg(stat.fails()).arg(stat.elo()),
+                      this);
     }
 };
 

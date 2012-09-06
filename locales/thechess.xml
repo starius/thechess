@@ -382,6 +382,9 @@ See locales-test manpage for more information.
         To create a derivative, first click on existing item
         and then go to the second tab and change it.
     </message>
+    <message id='tc.common.Stat'>
+        Total played: {1}. Wins: {2}. Draws: {3}. Fails: {4}. Rating: {5}.
+    </message>
 
     <message id='tc.competition.Cant_change'>You have no permission to change this competition</message>
     <message id='tc.competition.Cant_create'>You have no permission to create competition</message>
@@ -728,8 +731,11 @@ See locales-test manpage for more information.
     <message id='tc.user.user_remover'>remove user</message>
     <message id='tc.user.Virtuals_list'>List of virtuals</message>
     <message id='tc.user.virtuals_viewer'>view virtuals</message>
+    <message id='tc.user.Competitions_stat'>
+        <h2>Competitions stats:</h2>
+    </message>
     <message id='tc.user.Games_stat'>
-        Total games played: {1}. Wins: {2}. Draws: {3}. Fails: {4}. Rating: {5}.
+        <h2>Games stats:</h2>
     </message>
     <message id='tc.user.Games_stat_changes'>
         Changes of your rating after playing rating game with this user:
