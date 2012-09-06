@@ -28,6 +28,7 @@
 #include "widgets/chess/MovesWidget.hpp"
 #include "chess/Piece.hpp"
 #include "chess/HalfMove.hpp"
+#include "model/all.hpp"
 
 namespace thechess {
 
@@ -203,6 +204,9 @@ public:
         moves_table_view_->clicked().connect(this, &MovesWidgetImpl::onselect);
         goto_move(current_move_); // last half_move
         move_confirmation_->setHidden(!active_);
+        move_confirmation_->setChecked(User::has_s(SWITCH_MOVE_CONFIRMATION));
+        move_confirmation_->changed()
+        .connect(this, &MovesWidgetImpl::move_confirmation_changed);
     }
 
     ~MovesWidgetImpl() {
@@ -410,6 +414,9 @@ private:
         }
     }
 
+    void move_confirmation_changed() {
+        User::set_s(SWITCH_MOVE_CONFIRMATION, move_confirmation_->isChecked());
+    }
 };
 
 MovesWidget::MovesWidget(const Moves& moves,
