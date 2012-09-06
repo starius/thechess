@@ -127,6 +127,9 @@ const int TOP_LOGGED_IN_CONTENT_ID = -1;
 /** Time of inactivity after which user is considered offline */
 const Td AWAY_TIMEOUT = 5 * MINUTE;
 
+/** Default settings of user */
+const UserSettings DEFAULT_SETTINGS = SWITCH_DEFAULT;
+
 }
 
 /** The namespace for max allowed values of parameters */

@@ -82,6 +82,11 @@ public:
         return away_timeout_;
     }
 
+    /** Default user settings */
+    UserSettings default_settings() const {
+        return default_settings_;
+    }
+
     /** Return options used in current application */
     static Options* instance();
 
@@ -98,6 +103,7 @@ private:
     int footer_content_id_;
     int top_logged_in_content_id_;
     Td away_timeout_;
+    UserSettings default_settings_;
 
     bool read_int_value(const std::string& name, int& value);
 };
