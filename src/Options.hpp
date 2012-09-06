@@ -14,6 +14,7 @@
 
 #include "thechess-global.hpp"
 #include "model/global.hpp"
+#include "utils/time_intervals.hpp"
 
 namespace thechess {
 
@@ -76,6 +77,11 @@ public:
         return top_logged_in_content_id_;
     }
 
+    /** Time of inactivity after which user is considered offline */
+    const Td& away_timeout() const {
+        return away_timeout_;
+    }
+
     /** Return options used in current application */
     static Options* instance();
 
@@ -91,6 +97,7 @@ private:
     int main_page_content_id_;
     int footer_content_id_;
     int top_logged_in_content_id_;
+    Td away_timeout_;
 
     bool read_int_value(const std::string& name, int& value);
 };

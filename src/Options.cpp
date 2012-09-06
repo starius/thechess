@@ -26,7 +26,8 @@ Options::Options(const Wt::WServer& server):
     anonymous_rights_(config::defaults::ANONYMOUS_RIGHTS),
     main_page_content_id_(config::defaults::MAIN_PAGE_CONTENT_ID),
     footer_content_id_(config::defaults::FOOTER_CONTENT_ID),
-    top_logged_in_content_id_(config::defaults::TOP_LOGGED_IN_CONTENT_ID) {
+    top_logged_in_content_id_(config::defaults::TOP_LOGGED_IN_CONTENT_ID),
+    away_timeout_(config::defaults::AWAY_TIMEOUT) {
     std::string value;
     if (server.readConfigurationProperty("database_type", value)) {
         BOOST_ASSERT(value == "postgres" ||
@@ -45,6 +46,11 @@ Options::Options(const Wt::WServer& server):
     read_int_value("main_page_content_id", main_page_content_id_);
     read_int_value("footer_content_id", footer_content_id_);
     read_int_value("top_logged_in_content_id", top_logged_in_content_id_);
+    int away_timeout_seconds = -1;
+    read_int_value("away_timeout_seconds", away_timeout_seconds);
+    if (away_timeout_seconds) {
+        away_timeout_ = away_timeout_seconds * SECOND;
+    }
 }
 
 Options* Options::instance() {
