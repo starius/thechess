@@ -5,6 +5,8 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <boost/foreach.hpp>
+
 #include <Wt/WContainerWidget>
 #include <Wt/WPushButton>
 #include <Wt/WLineEdit>
@@ -36,6 +38,7 @@ public:
         }
         print_settings_changer();
         print_description_changer();
+        print_recalculation();
     }
 
 private:
@@ -88,6 +91,13 @@ private:
         b->clicked().connect(this, &SettingsWidgetImpl::save_description);
     }
 
+    void print_recalculation() {
+        new Wt::WBreak(this);
+        Wt::WPushButton* b;
+        b = new Wt::WPushButton(tr("tc.user.Recalculation"), this);
+        b->clicked().connect(this, &SettingsWidgetImpl::recalculation);
+    }
+
     void save_classification() {
         dbo::Transaction t(tApp->session());
         if (!tApp->user()) {
@@ -126,6 +136,23 @@ private:
         dbo::Transaction t(tApp->session());
         Wt::WString description = patch_text_edit_text(description_->text());
         tApp->user().modify()->set_description(description);
+    }
+
+    void recalculation() {
+        dbo::Transaction t(tApp->session());
+        Users users = tApp->session().find<User>().resultList();
+        BOOST_FOREACH (UserPtr user, users) {
+            user.modify()->games_stat().reset();
+            user.modify()->competitions_stat().reset();
+        }
+        Games games = tApp->session().find<Game>().resultList();
+        BOOST_FOREACH (GamePtr game, games) {
+            game.modify()->stat_change();
+        }
+        Competitions ccc = tApp->session().find<Competition>().resultList();
+        BOOST_FOREACH (CompetitionPtr c, ccc) {
+            c.modify()->stat_change();
+        }
     }
 };
 
