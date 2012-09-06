@@ -67,6 +67,9 @@ public:
     /** Constructor */
     EloPlayer(bool);
 
+    /** Reset stat */
+    void reset();
+
     /** Get Elo rating */
     const int& elo() const {
         return elo_;

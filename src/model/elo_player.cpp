@@ -26,6 +26,10 @@ EloPlayer::EloPlayer(bool):
     fails_(0) {
 }
 
+void EloPlayer::reset() {
+    *this = EloPlayer(true);
+}
+
 int EloPlayer::draws() const {
     return all_ - wins_ - fails_;
 }
