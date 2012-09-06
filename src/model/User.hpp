@@ -257,10 +257,10 @@ public:
         settings_ = settings;
     }
 
-    /** Return if the user has enabed the setting */
+    /** Return if the user has enabled the setting */
     bool has_setting(UserSettings setting) const;
 
-    /** Return if the user has enabed the setting */
+    /** Return if the user has enabled the setting */
     static bool has_setting(UserSettings setting, UserSettings settings);
 
     /** Enable or disable the setting */
