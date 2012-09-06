@@ -374,6 +374,13 @@ bool User::has_setting_or_default(UserSettings setting) {
     return has_setting(setting, settings);
 }
 
+bool User::set_setting_or_default(UserSettings setting, bool value) {
+    dbo::Transaction t(tApp->session());
+    if (tApp->user()) {
+        tApp->user().modify()->set_setting(setting, value);
+    }
+}
+
 void User::set_setting(UserSettings setting, bool value) {
     UserSettings s = settings();
     if (value) {
