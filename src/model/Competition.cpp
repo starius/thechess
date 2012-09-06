@@ -419,12 +419,22 @@ void Competition::finish(const UsersVector& winners, Planning*) {
 
 GamePtr Competition::create_game(const UserPtr& white, const UserPtr& black,
                                  int stage, bool no_draw) {
-    GamePtr game = session()->add(new Game(gp()));
+    GPPtr gp_ptr = gp();
+    if (no_draw) {
+        GPPtr no_draw;
+        dbo::Query<GPPtr> q = session()->find<GP>()
+                              .where("first_draw = ?").bind(NO_DRAW);
+        if (q.resultList().size()) {
+            no_draw = q.resultList().front();
+        } else {
+            no_draw = session()->add(new GP(true));
+            no_draw.modify()->set_no_draw();
+        }
+        gp_ptr = no_draw;
+    }
+    GamePtr game = session()->add(new Game(gp_ptr));
     bool random = no_draw;
     game.modify()->make_competition_game(white, black, self(), stage, random);
-    if (no_draw) {
-        //game.modify()->set_no_draw(); FIXME
-    }
     return game;
 }
 
