@@ -470,6 +470,7 @@ void Game::pause_agree(const UserPtr& user) {
         pause_proposer_.reset();
         state_ = PAUSE;
         pause_until_ = now() + pause_proposed_td();
+        pause_limit_ -= pause_proposed_td();
     }
 }
 
