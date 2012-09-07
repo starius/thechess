@@ -18,5 +18,9 @@ Planning::Planning(Server& server):
     set_notification_server(&server.notifier());
 }
 
+Planning* Planning::instance() {
+    return &Server::instance()->planning();
+}
+
 }
 

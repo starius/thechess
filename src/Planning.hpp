@@ -29,6 +29,9 @@ public:
         return server_;
     }
 
+    /** Return current instance */
+    static Planning* instance();
+
 private:
     Server& server_;
 };
