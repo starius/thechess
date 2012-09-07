@@ -238,6 +238,9 @@ bool Competition::can_join(const UserPtr& user) const {
            user->games_stat().elo() <= cp_->max_rating() &&
            user->classification() >= cp_->min_classification() &&
            user->classification() <= cp_->max_classification() &&
+           user->online_time() >= cp_->min_online_time() &&
+           (user->online_time() <= cp_->max_online_time() ||
+            cp_->max_online_time() < SECOND) &&
            static_cast<int>(members_.size()) < cp_->max_users();
 }
 
