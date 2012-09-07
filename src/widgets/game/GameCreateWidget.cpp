@@ -28,6 +28,10 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
     dbo::Transaction t(tApp->session());
     new Header(tr("tc.game.Competitor")
                .arg(user->username()), this);
+    if (User::is_blocked(tApp->user(), user_)) {
+        new Wt::WText(tr("tc.user.User_blocked_you"), this);
+        return;
+    }
     if (tApp->user() && tApp->user()->has_permission(GAME_CREATOR)) {
         print();
     }
