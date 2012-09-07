@@ -31,8 +31,16 @@ namespace thechess {
 */
 class Application : public Wt::WApplication {
 public:
-    /** Constructor */
+    /** Constructor fot Wt::Application mode */
     Application(const Wt::WEnvironment& env, Server& server);
+
+    /** Constructor fot Wt::WidgetSet mode.
+    URL parameters:
+     - type = game
+     - entry = id of entry (e.g, game)
+     - div = DOM id to be bound
+    */
+    Application(bool, const Wt::WEnvironment& env, Server& server);
 
     /** Destructor */
     virtual ~Application();

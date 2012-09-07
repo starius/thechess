@@ -27,6 +27,7 @@
 #include "model/all.hpp"
 #include "widgets/MainWidget.hpp"
 #include "widgets/MainMenu.hpp"
+#include "widget-set.hpp"
 
 namespace thechess {
 
@@ -59,6 +60,24 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     login_handler();
     path_.open(internalPath());
     internalPathChanged().connect(this, &Application::user_action);
+}
+
+Application::Application(bool, const Wt::WEnvironment& env, Server& server):
+    Wt::WApplication(env), server_(server), session_(server.pool()),
+    gather_(0), kick_(0),
+    online_(true), last_user_event_(now()), next_check_(now()) {
+    enableUpdates(true);
+    useStyleSheet("css/1.css");
+    messageResourceBundle().use(Wt::WApplication::appRoot() +
+                                "locales/thechess");
+    messageResourceBundle().use(Wt::WApplication::appRoot() +
+                                "locales/wtclasses/wtclasses");
+    messageResourceBundle().use(Wt::WApplication::appRoot() +
+                                "locales/wt");
+    setCssTheme("polished");
+    // TODO require-dependent widgets.
+    // http://redmine.emweb.be/issues/1429
+    init_widget_mode();
 }
 
 Application::~Application() {
