@@ -50,6 +50,8 @@ alter table "thechess_user" add column
 
 alter table "thechess_comment" add column "score" integer not null default 0;
 
+alter table "thechess_cp" add column "min_online_time" integer default 0;
+alter table "thechess_cp" add column "max_online_time" integer default 0;
 
 3.0.7 to 3.0.8
 ==============

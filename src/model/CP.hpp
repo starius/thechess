@@ -54,6 +54,8 @@ public:
         dbo::field(a, relax_time_, "relax_time");
         dbo::field(a, min_substages_, "min_substages");
         dbo::field(a, increment_substages_, "increment_substages");
+        dbo::field(a, min_online_time_, "min_online_time");
+        dbo::field(a, max_online_time_, "max_online_time");
     }
 
     /** Get type */
@@ -127,6 +129,28 @@ public:
     /** Set max acceptable classification of members */
     void set_max_classification(Classification v) {
         max_classification_ = v;
+    }
+
+    /** Get min online time required from members */
+    const Td& min_online_time() const {
+        return min_online_time_;
+    }
+
+    /** Set min online time required from members */
+    void set_min_online_time(const Td& min_online_time) {
+        min_online_time_ = min_online_time;
+    }
+
+    /** Get max online time required from members.
+    TD_NULL means that this limitation is not applied.
+    */
+    const Td& max_online_time() const {
+        return max_online_time_;
+    }
+
+    /** Set max online time required from members */
+    void set_max_online_time(const Td& max_online_time) {
+        max_online_time_ = max_online_time;
     }
 
     /* @} */
@@ -289,6 +313,10 @@ private:
     Td relax_time_;
     int min_substages_;
     int increment_substages_;
+
+    // all
+    Td min_online_time_;
+    Td max_online_time_;
 };
 
 }

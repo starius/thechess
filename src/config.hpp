@@ -204,6 +204,12 @@ const int MIN_SUBSTAGES = 1;
 /** Increment of the number of substages per each substage */
 const int INCREMENT_SUBSTAGES = 0;
 
+/** Min online time required from member */
+const Td MIN_ONLINE_TIME = TD_NULL;
+
+/** Max online time required from member */
+const Td MAX_ONLINE_TIME = WEEK;
+
 }
 
 /** The namespace for default values of parameters */
@@ -259,6 +265,12 @@ const int INCREMENT_SUBSTAGES = 1;
 */
 const bool NORATING = true;
 
+/** Min online time required from member */
+const Td MIN_ONLINE_TIME = TD_NULL;
+
+/** Max online time required from member */
+const Td MAX_ONLINE_TIME = TD_NULL;
+
 }
 
 /** The namespace for max allowed values of parameters */
@@ -305,6 +317,12 @@ const int MIN_SUBSTAGES = 15;
 
 /** Increment of the number of substages per each substage */
 const int INCREMENT_SUBSTAGES = 3;
+
+/** Min online time required from member */
+const Td MIN_ONLINE_TIME = 50 * WEEK;
+
+/** Max online time required from member */
+const Td MAX_ONLINE_TIME = 10 * 52 * WEEK;
 
 }
 
