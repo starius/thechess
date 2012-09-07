@@ -9,6 +9,7 @@
 
 #include <Wt/WContainerWidget>
 #include <Wt/WPushButton>
+#include <Wt/WAnchor>
 #include <Wt/WLineEdit>
 #include <Wt/WTextEdit>
 #include <Wt/WCheckBox>
@@ -34,6 +35,7 @@ public:
         new Header(tr("tc.user.Settings"), this);
         print_password_changer();
         print_email_changer();
+        print_avater_note();
         if (tApp->user()->has_permission(CLASSIFICATION_CHANGER)) {
             print_classification_changer();
         }
@@ -64,6 +66,13 @@ private:
         Wt::WPushButton* b;
         b = new Wt::WPushButton(tr("tc.common.Save"), this);
         b->clicked().connect(this, &SettingsWidgetImpl::save_email);
+    }
+
+    void print_avater_note() {
+        new Wt::WBreak(this);
+        Wt::WAnchor* a = new Wt::WAnchor("http://gravatar.com", this);
+        a->setText(tr("tc.user.Change_avatar"));
+        a->setTarget(Wt::TargetNewWindow);
     }
 
     void print_classification_changer() {
