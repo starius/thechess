@@ -147,6 +147,9 @@ public:
         print_competition_stat();
         print_description();
         print_send();
+        if (tApp->user()) {
+            print_block();
+        }
     }
 
 private:
@@ -283,6 +286,17 @@ private:
         }
     }
 
+    void print_block() {
+        new Wt::WBreak(this);
+        Wt::WPushButton* b = new Wt::WPushButton(this);
+        b->clicked().connect(this, &UserWidgetImpl::inverse_blocked);
+        if (User::is_blocked(user_, tApp->user())) {
+            b->setText(tr("tc.user.Unblock"));
+        } else {
+            b->setText(tr("tc.user.Block"));
+        }
+    }
+
     void send(Wt::WLineEdit* m) {
         dbo::Transaction t(tApp->session());
         if (tApp->user() && tApp->user()->can_send_message(user_)) {
@@ -297,6 +311,20 @@ private:
             t.commit();
             m->setText("");
         }
+    }
+
+    void inverse_blocked() {
+        dbo::Transaction t(tApp->session());
+        tApp->user().reread();
+        if (tApp->user()) {
+            if (User::is_blocked(user_, tApp->user())) {
+                tApp->user().modify()->remove_from_my_filter(user_);
+            } else {
+                tApp->user().modify()->add_to_my_filter(user_);
+            }
+        }
+        t.commit();
+        tApp->path().open(tApp->internalPath());
     }
 };
 

@@ -662,6 +662,7 @@ See locales-test manpage for more information.
     <message id='tc.user.Anonymous'>Anonymous</message>
     <message id='tc.user.avatar_nondefault'>avatar nondefault</message>
     <message id='tc.user.ban_reason'>reason of ban</message>
+    <message id='tc.user.Block'>Block</message>
     <message id='tc.user.Change_avatar'>Change avatar</message>
     <message id='tc.user.chat_writer'>write to chat</message>
     <message id='tc.user.classification'>classification</message>
@@ -733,6 +734,7 @@ See locales-test manpage for more information.
     <message id='tc.user.Start_game'>Start a game</message>
     <message id='tc.user.super_rights_changer'>change super rights</message>
     <message id='tc.user.This_ip_banned'>This IP is banned</message>
+    <message id='tc.user.Unblock'>Unblock</message>
     <message id='tc.user.Undelete'>Undelete</message>
     <message id='tc.user.unknown_right'>unknown right</message>
     <message id='tc.user.user'>user</message>
