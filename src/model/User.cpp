@@ -410,6 +410,18 @@ Wt::WString User::safe_description() const {
     }
 }
 
+bool User::is_blocked(const UserPtr& bad, const UserPtr& good) {
+    return bad && good && good->i_blocked_them().count(bad);
+}
+
+void User::add_to_my_filter(const UserPtr& bad) {
+    i_blocked_them_.insert(bad);
+}
+
+void User::remove_from_my_filter(const UserPtr& bad) {
+    i_blocked_them_.erase(bad);
+}
+
 bool User::can_send_message(const UserPtr& to) const {
     return self() != to &&
            online_time() >= to->filter_min_online() &&

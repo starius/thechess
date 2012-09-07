@@ -357,6 +357,25 @@ public:
         vacation_until_ = vacation_until;
     }
 
+    /** Get list of users blocked by this user */
+    const Users& i_blocked_them() const {
+        return i_blocked_them_;
+    }
+
+    /** Get list of users who has blocked this user */
+    const Users& they_blocked_me() const {
+        return they_blocked_me_;
+    }
+
+    /** Return if first user is blocked by second user */
+    static bool is_blocked(const UserPtr& bad, const UserPtr& good);
+
+    /** Add bad user to my message filter */
+    void add_to_my_filter(const UserPtr& bad);
+
+    /** Remove bad user from my message filter */
+    void remove_from_my_filter(const UserPtr& bad);
+
     /** Return if this user can send message to another user */
     bool can_send_message(const UserPtr& to) const;
 
