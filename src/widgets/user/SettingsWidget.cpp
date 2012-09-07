@@ -42,6 +42,10 @@ public:
         print_settings_changer();
         print_filter_min_online();
         print_description_changer();
+        if (!tApp->user()->vacation_until().isValid() ||
+                tApp->user()->vacation_until() < now()) {
+            print_vacation();
+        }
         print_recalculation();
     }
 
@@ -51,6 +55,7 @@ private:
     Wt::WCheckBox* public_email_;
     Wt::WCheckBox* names_in_mymenu_;
     Wt::WTextEdit* description_;
+    Wt::Wc::TimeDurationWidget* vacation_duration_;
     Wt::Wc::TimeDurationWidget* filter_min_online_;
 
     void print_password_changer() {
@@ -113,6 +118,15 @@ private:
         b->clicked().connect(this, &SettingsWidgetImpl::save_description);
     }
 
+    void print_vacation() {
+        new Wt::WBreak(this);
+        new Wt::WText(tr("tc.user.Vacation_until").arg(""), this);
+        vacation_duration_ = new Wt::Wc::TimeDurationWidget(DAY, 5 * DAY,
+                50 * WEEK, this);
+        Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
+        b->clicked().connect(this, &SettingsWidgetImpl::save_vacation);
+    }
+
     void print_recalculation() {
         new Wt::WBreak(this);
         Wt::WPushButton* b;
@@ -167,6 +181,21 @@ private:
         tApp->user().reread();
         Wt::WString description = patch_text_edit_text(description_->text());
         tApp->user().modify()->set_description(description);
+    }
+
+    void save_vacation() {
+        dbo::Transaction t(tApp->session());
+        tApp->user().reread();
+        if (!tApp->user()->vacation_until().isValid() ||
+                tApp->user()->vacation_until() < now()) {
+            Td duration = vacation_duration_->corrected_value();
+            Wt::WDateTime until = now() + duration;
+            tApp->user().modify()->set_vacation_until(until);
+            Games games = tApp->user()->games().resultList();
+            BOOST_FOREACH (GamePtr g, games) {
+                g.modify()->take_vacation_pause(duration);
+            }
+        }
     }
 
     void recalculation() {
