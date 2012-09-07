@@ -710,6 +710,7 @@ See locales-test manpage for more information.
     <message id='tc.user.List_rights'>List of rights</message>
     <message id='tc.user.logs_reader'>logs reader</message>
     <message id='tc.user.Many_sessions'>Too many sessions</message>
+    <message id='tc.user.My_blocklist'>My blocklist</message>
     <message id='tc.user.my_page'>my page</message>
     <message id='tc.user.Names_in_menu'>Show usernames in game menu</message>
     <message id='tc.user.New_ban'>New ban</message>

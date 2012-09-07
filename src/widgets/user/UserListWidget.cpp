@@ -44,7 +44,8 @@ public:
     };
 
     UserListModel(Wt::WObject* parent = 0) :
-        ULP::BaseQM(parent) {
+        ULP::BaseQM(parent),
+        only_blocked_(false) {
         only_online_ = User::has_s(SWITCH_ONLY_ONLINE_USERS);
         not_removed_ = User::has_s(SWITCH_ONLY_NOT_REMOVED_USERS);
         set_query();
@@ -80,12 +81,29 @@ public:
         set_query();
     }
 
+    bool only_blocked() const {
+        return only_blocked_;
+    }
+
+    void set_only_blocked(bool only_blocked) {
+        only_blocked_ = only_blocked;
+        set_query();
+    }
+
 private:
-    bool only_online_, not_removed_;
+    bool only_online_, not_removed_, only_blocked_;
 
     void set_query() {
         dbo::Transaction t(tApp->session());
-        ULP::Q q = tApp->session().find<User>();
+        ULP::Q q;
+        if (only_blocked_) {
+            q = tApp->session().query<UserPtr>(
+                    "select U from thechess_message_filter F "
+                    "left join thechess_user U on F.bad_id = U.id");
+            q.where("F.good_id = ?").bind(tApp->user());
+        } else {
+            q = tApp->session().find<User>();
+        }
         if (not_removed_) {
             q.where("rights != ?").bind(NONE);
         }
@@ -179,6 +197,13 @@ UserListWidget::UserListWidget(Wt::WContainerWidget* parent) :
     nr->changed().connect(
         boost::bind(&UserListModel::set_not_removed, m,
                     boost::bind(&Wt::WAbstractToggleButton::isChecked, nr)));
+    if (tApp->user()) {
+        Wt::WCheckBox* b = new Wt::WCheckBox(tr("tc.user.My_blocklist"), this);
+        b->setChecked(m->only_blocked());
+        b->changed().connect(
+            boost::bind(&UserListModel::set_only_blocked, m,
+                        boost::bind(&Wt::WAbstractToggleButton::isChecked, b)));
+    }
     UserListView* view = new UserListView(m, this);
 }
 
