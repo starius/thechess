@@ -518,6 +518,7 @@ private:
 
     void print_comment_list_impl() {
         dbo::Transaction t(tApp->session());
+        game_.reread();
         CommentPtr comment_base = game_.modify()->comment_base();
         addWidget(new CommentList(Comment::CHAT_MESSAGE, comment_base));
     }

@@ -64,6 +64,7 @@ void User::set_removed(bool removed) {
     Wt::Auth::User::Status status = removed ?
                                     Wt::Auth::User::Disabled :
                                     Wt::Auth::User::Normal;
+    auth_info().reread();
     auth_info().modify()->setStatus(status);
     if (removed) {
         set_rights(NONE);
@@ -377,6 +378,7 @@ bool User::has_s(UserSettings setting) {
 bool User::set_s(UserSettings setting, bool value) {
     dbo::Transaction t(tApp->session());
     if (tApp->user()) {
+        tApp->user().reread();
         tApp->user().modify()->set_setting(setting, value);
     }
 }

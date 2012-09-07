@@ -189,6 +189,7 @@ private:
 
     void inverse_confirmed() {
         dbo::Transaction t(tApp->session());
+        user_.reread();
         if (user_->classification_confirmed()) {
             user_.modify()->discard_classification(tApp->user());
             admin_log("Discard classification of " + user_a(user_.id()));

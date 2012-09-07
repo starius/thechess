@@ -93,6 +93,7 @@ void Application::set_locale_by_user(const std::string& locale) {
     setLocale(locale);
     dbo::Transaction t(tApp->session());
     if (user()) {
+        user().reread();
         user().modify()->set_locale(locale);
     }
 }

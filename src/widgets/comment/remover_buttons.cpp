@@ -21,10 +21,12 @@ namespace thechess {
 
 static void change_state(CommentPtr comment, Comment::State state) {
     dbo::Transaction t(tApp->session());
+    comment.reread();
     if (tApp->user() && tApp->user()->has_permission(COMMENTS_REMOVER)) {
         comment.modify()->set_state(state);
         if (comment->type() == Comment::FORUM_POST_TEXT) {
             CommentPtr post = comment->parent();
+            post.reread();
             post.modify()->set_state(state);
         }
         // admin log

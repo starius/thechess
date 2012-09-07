@@ -221,7 +221,8 @@ void Competition::stat_change() {
         set_of_winners.insert(u);
         elo_winners.push_back(&u.modify()->competitions_stat());
     }
-    BOOST_FOREACH (const UserPtr& u, members) {
+    BOOST_FOREACH (UserPtr u, members) {
+        u.reread();
         if (set_of_winners.find(u) == set_of_winners.end()) {
             elo_losers.push_back(&u.modify()->competitions_stat());
         }

@@ -57,6 +57,7 @@ private:
 
     void kick(UserPtr user) {
         dbo::Transaction t(tApp->session());
+        c_.reread();
         c_.modify()->kick(tApp->user(), user);
         admin_log("Kick " + user_a(user.id()) + " from " + comp_a(c_.id()));
         t.commit();
@@ -454,6 +455,7 @@ private:
 
     void print_comment_list_impl() {
         dbo::Transaction t(tApp->session());
+        c_.reread();
         CommentPtr comment_base = c_.modify()->comment_base();
         addWidget(new CommentList(Comment::CHAT_MESSAGE, comment_base));
     }

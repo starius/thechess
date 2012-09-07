@@ -79,6 +79,7 @@ void CompetitionCreateWidget::button_handler() {
     error_message_->setText("");
     if (c_) {
         comp = c_;
+        comp.reread();
         write_record(comp.modify(), /* init */ false);
         admin_log("Change " + comp_a(comp.id()));
     } else {

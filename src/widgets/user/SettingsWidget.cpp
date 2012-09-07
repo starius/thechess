@@ -125,6 +125,7 @@ private:
         if (!tApp->user()) {
             return;
         }
+        tApp->user().reread();
         if (tApp->user()->has_permission(CLASSIFICATION_CHANGER)) {
             tApp->user().modify()->set_classification(class_->value());
         }
@@ -156,12 +157,14 @@ private:
 
     void save_filter_min_online() {
         dbo::Transaction t(tApp->session());
+        tApp->user().reread();
         Td td = filter_min_online_->corrected_value();
         tApp->user().modify()->set_filter_min_online(td);
     }
 
     void save_description() {
         dbo::Transaction t(tApp->session());
+        tApp->user().reread();
         Wt::WString description = patch_text_edit_text(description_->text());
         tApp->user().modify()->set_description(description);
     }

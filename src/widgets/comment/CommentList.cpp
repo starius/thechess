@@ -291,6 +291,7 @@ void CommentList::add_comment(const CommentPtr& parent) {
     if (type == Comment::FORUM_COMMENT) {
         // FORUM_POST's creation time is the time of last comment
         CommentPtr post = root->parent();
+        post.reread();
         post.modify()->post_comment_added();
     }
     t.commit();

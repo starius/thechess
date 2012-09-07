@@ -22,8 +22,9 @@
 
 namespace thechess {
 
-static void add_comment(const CommentPtr& comment, Wt::WTextEdit* edit) {
+static void add_comment(CommentPtr comment, Wt::WTextEdit* edit) {
     dbo::Transaction t(tApp->session());
+    comment.reread();
     if (!Comment::can_create(tApp->user(), Comment::FORUM_COMMENT, comment)) {
         return;
     }
@@ -35,6 +36,7 @@ static void add_comment(const CommentPtr& comment, Wt::WTextEdit* edit) {
     c.modify()->set_root(comment->root());
     CommentPtr post_text = comment->root();
     CommentPtr post = post_text->parent();
+    post.reread();
     post.modify()->post_comment_added();
     t.commit();
     tApp->path().post()->set_integer_value(post.id());

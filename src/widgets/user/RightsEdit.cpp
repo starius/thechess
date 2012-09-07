@@ -41,6 +41,7 @@ void RightsEdit::add_item(User::Rights right) {
 
 void RightsEdit::save() {
     dbo::Transaction t(tApp->session());
+    user_.reread();
     BOOST_FOREACH (const Items::value_type& it, items_) {
         User::Rights right = it.first;
         Wt::WCheckBox* box = it.second;

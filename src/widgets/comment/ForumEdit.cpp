@@ -17,9 +17,9 @@
 
 namespace thechess {
 
-static void edit_comment(const CommentPtr& post_or_text,
-                         Wt::WFormWidget* edit) {
+static void edit_comment(CommentPtr post_or_text, Wt::WFormWidget* edit) {
     dbo::Transaction t(tApp->session());
+    post_or_text.reread();
     if (!post_or_text->can_edit(tApp->user())) {
         return;
     }
