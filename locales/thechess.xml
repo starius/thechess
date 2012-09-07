@@ -370,8 +370,8 @@ See locales-test manpage for more information.
     <message id='tc.common.Refresh'>Refresh</message>
     <message id='tc.common.Reset'>Reset</message>
     <message id='tc.common.Save'>Save</message>
-    <message id='tc.common.Send'>Send</message>
     <message id='tc.common.Select_existing'>Select existing item</message>
+    <message id='tc.common.Send'>Send</message>
     <message id='tc.common.start'>start</message>
     <message id='tc.common.stop'>stop</message>
     <message id='tc.common.winner'>winner</message>
