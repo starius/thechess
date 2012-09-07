@@ -70,6 +70,10 @@ public:
         dbo::field(a, description_, "description");
         dbo::field(a, locale_, "locale", /* size */ 5);
         dbo::field(a, vacation_until_, "vacation_until");
+        dbo::hasMany(a, i_blocked_them_, dbo::ManyToMany,
+                     "thechess_message_filter", "good_id");
+        dbo::hasMany(a, they_blocked_me_, dbo::ManyToMany,
+                     "thechess_message_filter", "bad_id");
     }
 
     /** Return (first of) auth info */
@@ -389,6 +393,9 @@ private:
     Wt::WString description_;
     std::string locale_;
     Wt::WDateTime vacation_until_;
+
+    Users i_blocked_them_;
+    Users they_blocked_me_;
 
     AuthInfos auth_infos_;
 

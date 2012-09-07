@@ -55,6 +55,12 @@ alter table "thechess_cp" add column "max_online_time" integer default 0;
 
 alter table "thechess_user" add column "vacation_until" text;
 
+CREATE TABLE "thechess_message_filter" (
+  "good_id" bigint not null,
+  "bad_id" bigint not null,
+  primary key ("good_id", "bad_id")
+);
+
 
 3.0.7 to 3.0.8
 ==============
