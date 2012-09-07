@@ -90,6 +90,11 @@ public:
                .arg(User::classification2str(cp->min_classification()))
                .arg(User::classification2str(cp->max_classification())));
         }
+        if (cp->min_online_time() > SECOND || cp->max_online_time() >= SECOND) {
+            kw("tc.competition.Online_time", tr("tc.common.interval")
+               .arg(td2str(cp->min_online_time()))
+               .arg(td2str(cp->max_online_time())));
+        }
         kw("tc.competition.Force_start_delay", td2str(cp->force_start_delay()));
         if (c->type() == CLASSICAL || c->type() == STAGED) {
             kw("tc.competition.Users", tr("tc.common.interval")

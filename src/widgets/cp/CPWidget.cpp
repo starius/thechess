@@ -69,6 +69,19 @@ CPWidget::CPWidget(const CP* cp, bool allow_change_type,
                                           max_classification_);
     form_->item(tr("tc.competition.Members_classification"), "",
                 min_classification_, interval);
+    //
+    min_online_time_ = new Wt::Wc::TimeDurationWidget(
+        min::MIN_ONLINE_TIME,
+        cp->min_online_time(), max::MIN_ONLINE_TIME);
+    max_online_time_ = new Wt::Wc::TimeDurationWidget(
+        min::MAX_ONLINE_TIME,
+        cp->max_online_time(), max::MAX_ONLINE_TIME);
+    Wt::Wc::IntervalWidget* online_time;
+    online_time = new Wt::Wc::IntervalWidget(min_online_time_,
+            max_online_time_);
+    form_->item(tr("tc.competition.Online_time"), "",
+                min_online_time_->form_widget(), online_time);
+    //
     force_start_delay_ = new Wt::Wc::TimeDurationWidget(min::FORCE_START_DELAY,
             cp->force_start_delay(), max::FORCE_START_DELAY);
     form_->item(tr("tc.competition.Force_start_delay"), "",
@@ -132,6 +145,8 @@ void CPWidget::apply_parameters(CP* cp) {
     cp->set_max_rating(max_rating_->corrected_value());
     cp->set_min_classification(min_classification_->value());
     cp->set_max_classification(max_classification_->value());
+    cp->set_min_online_time(min_online_time_->value());
+    cp->set_max_online_time(max_online_time_->value());
     cp->set_force_start_delay(force_start_delay_->corrected_value());
     if (t == CLASSICAL || t == STAGED) {
         cp->set_min_users(min_users_->corrected_value());

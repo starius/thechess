@@ -58,6 +58,9 @@ private:
     Wt::Wc::ConstrainedSpinBox* min_substages_;
     Wt::Wc::ConstrainedSpinBox* increment_substages_;
 
+    Wt::Wc::TimeDurationWidget* min_online_time_;
+    Wt::Wc::TimeDurationWidget* max_online_time_;
+
     void type_handler();
     CompetitionType get_type() const;
     void set_type(CompetitionType t);

@@ -410,6 +410,7 @@ See locales-test manpage for more information.
     <message id='tc.competition.min_rating'>min rating</message>
     <message id='tc.competition.Min_substages'>First stage substages</message>
     <message id='tc.competition.New'>Create new competition</message>
+    <message id='tc.competition.Online_time'>Online time of members</message>
     <message id='tc.competition.Parameters'>Competition parameters</message>
     <message id='tc.competition.Rating'>Rating of members</message>
     <message id='tc.competition.Recruiting_time'>Recruiting time</message>
