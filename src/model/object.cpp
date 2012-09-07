@@ -66,5 +66,13 @@ std::string Object::key() const {
            boost::lexical_cast<std::string>(id);
 }
 
+NewMessage::NewMessage(int r):
+    reader_id(r)
+{ }
+
+std::string NewMessage::key() const {
+    return TO_S(reader_id);
+}
+
 }
 

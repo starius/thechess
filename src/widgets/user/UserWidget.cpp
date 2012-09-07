@@ -311,6 +311,7 @@ private:
             t.commit();
             m->setText("");
             tNot->emit(new Object(COMMENT, base.id()));
+            tNot->emit(new NewMessage(user_.id()));
         }
     }
 

@@ -58,6 +58,29 @@ struct Object : public Wt::Wc::notify::Task {
     std::string key() const;
 };
 
+/** Event emited when private messge is sent */
+class NewMessage : public Wt::Wc::notify::Event {
+public:
+    /** Constructor */
+    NewMessage(int reader_id);
+
+    /** ID of addressee User */
+    int reader_id;
+
+    /** Comparison operator */
+    bool operator<(const NewMessage& b) const {
+        return reader_id < b.reader_id;
+    }
+
+    /** Comparison operator */
+    bool operator==(const NewMessage& b) const {
+        return reader_id == b.reader_id;
+    }
+
+    /** Get event key */
+    std::string key() const;
+};
+
 }
 
 #endif
