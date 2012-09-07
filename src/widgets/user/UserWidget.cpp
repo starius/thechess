@@ -310,6 +310,7 @@ private:
             message.modify()->set_type(Comment::PRIVATE_MESSAGE);
             t.commit();
             m->setText("");
+            tNot->emit(new Object(COMMENT, base.id()));
         }
     }
 

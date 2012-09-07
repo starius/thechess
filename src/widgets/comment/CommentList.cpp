@@ -25,6 +25,7 @@
 #include "model/global.hpp"
 #include "Application.hpp"
 #include "utils/text_edit.hpp"
+#include "notify.hpp"
 
 namespace thechess {
 
@@ -42,10 +43,11 @@ const int TOPIC_LENGTH = 80;
 const int POST_LENGTH = 80;
 const int LOG_LENGTH = 1000;
 
-class CommentList::CommentView : public Wt::WTableView {
+class CommentList::CommentView : public Wt::WTableView, public Notifiable {
 public:
     CommentView(CommentModel* model, Wt::WContainerWidget* p = 0):
-        Wt::WTableView(p) {
+        Wt::WTableView(p),
+        Notifiable(Object(COMMENT, model->root().id()), tNot) {
         setModel(model);
         Comment::Type type = model->type();
         resize(COMMENT_WIDTH, COMMENT_HEIGHT);
@@ -108,6 +110,11 @@ public:
         return downcast<CommentModel*>(model());
     }
 
+    void notify(EventPtr) {
+        comment_model()->reload();
+        show_last();
+    }
+
 protected:
     WWidget* createPageNavigationBar() {
         return new Wt::Wc::Pager(this);
@@ -117,7 +124,6 @@ protected:
 CommentList::CommentList(Comment::Type type, const CommentPtr& root,
                          const UserPtr& init, Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent),
-    Notifiable(Object(COMMENT, root.id()), tNot),
     edit_(0) {
     dbo::Transaction t(tApp->session());
     if (type == Comment::LOG_ENTRY) {
@@ -160,11 +166,6 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
                  root->type() == Comment::FORUM_TOPIC)) {
         add_remover_buttons(root, this);
     }
-}
-
-void CommentList::notify(EventPtr) {
-    comment_model()->reload();
-    view_->show_last();
 }
 
 CommentModel* CommentList::comment_model() const {
