@@ -222,6 +222,17 @@ public:
     /** The user tries to discard proposed pause */
     void pause_discard(const UserPtr& user);
 
+    /** Take vacation pause.
+    For competition games: pause_limit is used, it can not be exceeded.
+    For other games pause_limit is not spant for this.
+    If game is already paused and pause_until() < now() + duration,
+    then pause is prolonged (if it is competition game,
+    prolongation is limited by pause_limit).
+
+    It is safe to call this method event if game can not be paused (eg, ended).
+    */
+    void take_vacation_pause(Td duration);
+
     /* @} */
 
     /** \name Mistake and rollback management */

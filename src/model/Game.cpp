@@ -17,6 +17,7 @@
 #include "chess/Board.hpp"
 #include "chess/CachedMoves.hpp"
 #include "log.hpp"
+#include "Planning.hpp"
 
 DBO_INSTANTIATE_TEMPLATES(thechess::Game);
 
@@ -483,6 +484,30 @@ void Game::pause_discard(const UserPtr& user) {
         pause_proposer_.reset();
         pause_proposed_td_ = TD_NULL;
     }
+}
+
+void Game::take_vacation_pause(Td duration) {
+    if (state() == ACTIVE) {
+        if (competition_) {
+            duration = std::min(duration, pause_limit_);
+            pause_limit_ -= duration;
+        }
+        if (duration > TD_NULL) {
+            state_ = PAUSE;
+            pause_until_ = now() + duration;
+            pause_proposed_td_ = duration;
+        }
+    } else if (state() == PAUSE && pause_until_ < now() + duration) {
+        Td addition = now() + duration - pause_until_;
+        if (competition_) {
+            addition = std::min(addition, pause_limit_);
+            pause_limit_ -= addition;
+        }
+        pause_until_ += addition;
+        pause_proposed_td_ += addition;
+    }
+    Planning::instance()->add(new Object(GAME, id()), now(),
+                              /* immediately */ false);
 }
 
 bool Game::can_mistake_propose(const UserPtr& user) const {
