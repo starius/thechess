@@ -737,6 +737,7 @@ See locales-test manpage for more information.
     <message id='tc.user.unknown_right'>unknown right</message>
     <message id='tc.user.user'>user</message>
     <message id='tc.user.user_remover'>remove user</message>
+    <message id='tc.user.Vacation_until'>Vacation until {1}</message>
     <message id='tc.user.Virtuals_list'>List of virtuals</message>
     <message id='tc.user.virtuals_viewer'>view virtuals</message>
     <message id='tc.user.Competitions_stat'>

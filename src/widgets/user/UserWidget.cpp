@@ -80,6 +80,12 @@ public:
         new Wt::WBreak(this);
         new Wt::WText(tr("tc.user.Registration_date")
                       .arg(user_->registration_date().toString()), this);
+        if (user_->vacation_until().isValid() &&
+                user_->vacation_until() > now()) {
+            new Wt::WBreak(this);
+            new Wt::WText(tr("tc.user.Vacation_until")
+                          .arg(user_->vacation_until().toString()), this);
+        }
         new Wt::WBreak(this);
         if (tApp->user() && tApp->user() != user_ && !user_->removed()) {
             start_button_ = new Wt::WPushButton(
