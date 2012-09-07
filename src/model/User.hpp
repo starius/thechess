@@ -69,6 +69,7 @@ public:
         dbo::field(a, filter_min_online_, "filter_min_online");
         dbo::field(a, description_, "description");
         dbo::field(a, locale_, "locale", /* size */ 5);
+        dbo::field(a, vacation_until_, "vacation_until");
     }
 
     /** Return (first of) auth info */
@@ -117,10 +118,10 @@ public:
         username_ = username;
     }
 
-    /** Get rights */
-    Rights rights() const {
-        return rights_;
-    }
+    /** Get rights.
+    \see vacation_until().
+    */
+    Rights rights() const;
 
     /** Return if the user has the permission */
     bool has_permission(Rights perm) const;
@@ -339,6 +340,19 @@ public:
         locale_ = locale;
     }
 
+    /** Get date of end of vacation.
+    Any date in the past means that vacation was not taken or has finished.
+    While vacation, result of rights() does not & REGULAR_USER.
+    */
+    const Wt::WDateTime& vacation_until() const {
+        return vacation_until_;
+    }
+
+    /** Set date of end of vacation */
+    void set_vacation_until(const Wt::WDateTime& vacation_until) {
+        vacation_until_ = vacation_until;
+    }
+
     /** Return if this user can send message to another user */
     bool can_send_message(const UserPtr& to) const;
 
@@ -374,6 +388,7 @@ private:
     Td filter_min_online_;
     Wt::WString description_;
     std::string locale_;
+    Wt::WDateTime vacation_until_;
 
     AuthInfos auth_infos_;
 

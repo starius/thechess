@@ -100,6 +100,14 @@ bool User::has_permission(Rights perm) const {
     return has_permission(perm, rights());
 }
 
+UserRights User::rights() const {
+    Rights result = rights_;
+    if (vacation_until_.isValid() && vacation_until_ > now()) {
+        result = Rights(result & ~REGULAR_USER);
+    }
+    return result;
+}
+
 bool User::has_permission(Rights perm, Rights rights) {
     return (rights & perm) == perm;
 }
