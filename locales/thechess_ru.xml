@@ -9,23 +9,59 @@
  See the LICENSE file for terms of use.
 -->
 
+    <message id='tc.comment.Add'>Добавить сообщение</message>
+    <message id='tc.comment.admin_log'>административный журнал</message>
+    <message id='tc.comment.Approve'>Одобрить</message>
+    <message id='tc.comment.deleted_message'>[Удалено]</message>
+    <message id='tc.comment.draft_message'>[Черновик]</message>
+    <message id='tc.comment.private_messages'>личные сообщения</message>
+    <message id='tc.comment.Remove'>Удалить</message>
+
     <message id='tc.common.Agree'>Согласиться</message>
+    <message id='tc.common.Allow'>Позволить</message>
     <message id='tc.common.Apply'>Применить</message>
+    <message id='tc.common.Board'>Доска</message>
     <message id='tc.common.Cancel'>Отменить</message>
     <message id='tc.common.Confirm'>Подтвердить</message>
     <message id='tc.common.Create'>Создать</message>
+    <message id='tc.common.Create_new'>Создать новую запись</message>
     <message id='tc.common.created'>создано</message>
+    <message id='tc.common.creator'>создатель</message>
     <message id='tc.common.Description'>Описание</message>
     <message id='tc.common.Discard'>Отказаться</message>
+    <message id='tc.common.duration'>продолжительность</message>
+    <message id='tc.common.enabled'>включено</message>
+    <message id='tc.common.Game'>Игра</message>
     <message id='tc.common.interval'>от {1} до {2}</message>
     <message id='tc.common.Join'>Присоединиться</message>
+    <message id='tc.common.Kick'>Выкинуть</message>
+    <message id='tc.common.kw'>{1}: {2}</message>
+    <message id='tc.common.last'>последний</message>
+    <message id='tc.common.Links'>Ссылки</message>
+    <message id='tc.common.Moves'>Ходы</message>
     <message id='tc.common.Name'>Имя</message>
+    <message id='tc.common.no_params_error'>не выбраны параметры</message>
     <message id='tc.common.number'>№</message>
     <message id='tc.common.Only_my'>Только мои</message>
     <message id='tc.common.Refresh'>Обновить</message>
     <message id='tc.common.Reset'>Сброс</message>
     <message id='tc.common.Save'>Сохранить</message>
+    <message id='tc.common.Select_existing'>Выбрать существующую запись</message>
+    <message id='tc.common.Send'>Отправить</message>
+    <message id='tc.common.start'>начало</message>
+    <message id='tc.common.stop'>конец</message>
     <message id='tc.common.winner'>победитель</message>
+    <message id='tc.common.Select_or_create'>
+        Пожалуйста, выберите существующую запись (кликнув на неё)
+        или создайте свою собственную.
+        Чтобы создать унаследовать новую запись от существующей,
+        сначала кликните на существующую запись,
+        а потом пройдите во вторую вкладку для внесения изменений.
+    </message>
+    <message id='tc.common.Stat'>
+        Всего сыграно: {1}. Побед: {2}. Ничьих: {3}. Поражений: {4}.
+        Рейтинг: {5}.
+    </message>
 
     <message id='tc.competition.Cant_change'>Вы не можете изменять этот турнир</message>
     <message id='tc.competition.Cant_create'>Вы не можете создавать турниры</message>
@@ -39,15 +75,21 @@
     <message id='tc.competition.Games_list'>Список игр</message>
     <message id='tc.competition.Increment_substages'>Рост числа подраундов</message>
     <message id='tc.competition.List'>Список турниров</message>
+    <message id='tc.competition.max_classification'>максимальный разряд</message>
+    <message id='tc.competition.max_rating'>максимальный рейтинг</message>
     <message id='tc.competition.Max_simultaneous_games'>Одновременные игры</message>
     <message id='tc.competition.Members_classification'>Разряд участников</message>
     <message id='tc.competition.members_number'>участники</message>
+    <message id='tc.competition.min_classification'>минимальный разряд</message>
+    <message id='tc.competition.min_rating'>минимальный рейтинг</message>
     <message id='tc.competition.Min_substages'>Подраундов в первом раунде</message>
+    <message id='tc.competition.Online_time'>Время, проведенное участниками ондайн</message>
     <message id='tc.competition.Parameters'>Параметры турнира</message>
     <message id='tc.competition.Rating'>Рейтинг участников</message>
     <message id='tc.competition.Recruiting_time'>Время на сборы</message>
     <message id='tc.competition.Relax_time'>Время на отдых</message>
     <message id='tc.competition.Score'>Счет</message>
+    <message id='tc.competition.Select_cp'>Выбор параметров турнира</message>
     <message id='tc.competition.Show_games'>Показать номера партий</message>
     <message id='tc.competition.Show_wins'>Показать число побед</message>
     <message id='tc.competition.Stage'>Раунд</message>
@@ -63,8 +105,14 @@
     <message id='tc.competition.Type_staged'>Ступенчатый</message>
     <message id='tc.competition.Type_team'>Командный</message>
     <message id='tc.competition.Users'>Число участников</message>
+    <message id='tc.competition.Virtuals_allowed_by'>Клоны разрешены&nbsp;</message>
     <message id='tc.competition.Winner'>Победитель</message>
     <message id='tc.competition.Winners'>Победители</message>
+    <message id='tc.competition.Virtuals'>
+        <font style="background:#F2C576;">
+            В турнире есть клоны.
+        </font>
+    </message>
     <message id='tc.competition.widget_template'>
         <h1>Турнир № ${id} ${name}</h1>
         Турнир создан ${created}, стартовал ${started}, был закрыт ${ended}.
@@ -79,9 +127,27 @@
         <br /> <h2>Чат</h2>${chat}
     </message>
 
+    <message id='tc.forum.all_comments'>все комментарии</message>
+    <message id='tc.forum.all_posts'>все посты</message>
+    <message id='tc.forum.Comment'>Страница комментария</message>
+    <message id='tc.forum.Edit'>Правка</message>
+    <message id='tc.forum.Goto_parent'>Открыть родительский комментарий #{1}</message>
+    <message id='tc.forum.Only_ok'>Показывать только подтвержденные записи</message>
+    <message id='tc.forum.Post_edited'>Заголовок поста отредактирован {1}</message>
+    <message id='tc.forum.post_header'>пост {1}: {2}</message>
+    <message id='tc.forum.Post_text_edited'>Пост отредактирован {1}</message>
+    <message id='tc.forum.topic_posts'>посты тематики {1}</message>
+    <message id='tc.forum.topics'>тематики</message>
+    <message id='tc.forum.comment_template'>
+        От {1}, {2} писал(а):
+        <br />
+        {3}
+    </message>
+
     <message id='tc.game.Analysis'>Анализ</message>
     <message id='tc.game.Analysis_title'>Анализ игры № {1}</message>
     <message id='tc.game.black'>черный</message>
+    <message id='tc.game.Call_auto_judge'>Вызвать автоматического судью</message>
     <message id='tc.game.Challenge'>Вызов</message>
     <message id='tc.game.colors'>цвета</message>
     <message id='tc.game.colors_not_random'>предопределены</message>
@@ -99,24 +165,30 @@
     <message id='tc.game.Draw_proposal'>Ничья предложена, предложил {1}</message>
     <message id='tc.game.Draw_propose'>Предложить ничью</message>
     <message id='tc.game.ended'>завершена</message>
+    <message id='tc.game.Enlarged_images'>Увеличенные изображения</message>
     <message id='tc.game.first_draw'>число ходов для ничьей</message>
     <message id='tc.game.force_confirm'>форсированное подтверждение</message>
     <message id='tc.game.force_start'>форсированный старт</message>
     <message id='tc.game.Header'>Игра № {1}</message>
+    <message id='tc.game.Highlight_lastmove'>Подсветить последний ход</message>
     <message id='tc.game.init'>создатель игры</message>
     <message id='tc.game.lastmove'>последний ход (или его эквивалент)</message>
     <message id='tc.game.Leave'>Выйти</message>
     <message id='tc.game.limit_private_init'>невозобновляемый запас</message>
     <message id='tc.game.limit_std'>возобновляемый запас времени</message>
     <message id='tc.game.List'>Список игр</message>
+    <message id='tc.game.Mark_norating'>Пометить как нерейтинговую</message>
     <message id='tc.game.Mistake_proposal'>{1} предлагает откатить к позиции, предшествующей ходу {2} {3}</message>
     <message id='tc.game.Mistake_propose'>Откатить</message>
+    <message id='tc.game.Move_confirmation'>Подтверждение хода</message>
     <message id='tc.game.moves_size'>ходов</message>
+    <message id='tc.game.No_draw'>Игра не может завершиться вничью</message>
     <message id='tc.game.norating'>нерейтинговая</message>
     <message id='tc.game.norating_false'>результат игры повлияет на рейтинг участников</message>
     <message id='tc.game.norating_true'>результат игры не повлияет на рейтинг участников</message>
     <message id='tc.game.of_black'>черных</message>
     <message id='tc.game.of_white'>белых</message>
+    <message id='tc.game.Only_commented'>Только прокомментированные</message>
     <message id='tc.game.order_user'>ходит</message>
     <message id='tc.game.Overturn_board'>Перевернуть</message>
     <message id='tc.game.Parameters'>Параметры партии</message>
@@ -128,6 +200,7 @@
     <message id='tc.game.real_rating'>рейтинговая</message>
     <message id='tc.game.real_rating_false'>результат игры не влияет на рейтинг участников</message>
     <message id='tc.game.real_rating_true'>результат игры влияет на рейтинг участников</message>
+    <message id='tc.game.Select_gp'>Выбор параметров партии</message>
     <message id='tc.game.Start_position'>Исходная позиция</message>
     <message id='tc.game.started'>начата</message>
     <message id='tc.game.State'>Состояние</message>
@@ -146,6 +219,7 @@
     <message id='tc.game.State_state'>Неизвестное состояние</message>
     <message id='tc.game.State_surrendered'>Сдана</message>
     <message id='tc.game.State_timeout'>Просрочена</message>
+    <message id='tc.game.Surrender'>Сдаться</message>
     <message id='tc.game.white'>белый</message>
     <message id='tc.game.your_color'>цвет ваших фигур</message>
     <message id='tc.game.First_draw'>
@@ -167,9 +241,109 @@
         будет восстановлена позиция, предшествующая выделенному ходу
     </message>
 
+    <message id='tc.main.main'>
+        <h1>Добро пожаловать!</h1>
+    </message>
+
+    <message id='tc.menu.admin_log'>административный журнал</message>
+    <message id='tc.menu.all_comments'>все комментарии</message>
+    <message id='tc.menu.all_posts'>все посты</message>
+    <message id='tc.menu.banned_ip'>забаненные IP</message>
+    <message id='tc.menu.challenge'>вызов</message>
+    <message id='tc.menu.competition'>турнир</message>
+    <message id='tc.menu.competitions_list'>список турниров</message>
+    <message id='tc.menu.forum'>форум</message>
+    <message id='tc.menu.game'>игра</message>
+    <message id='tc.menu.game_parameters'>параматры игры</message>
+    <message id='tc.menu.games_list'>список игр</message>
+    <message id='tc.menu.global_chat'>общий чат</message>
+    <message id='tc.menu.my_page'>моя страница</message>
+    <message id='tc.menu.new_competition'>новый турнир</message>
+    <message id='tc.menu.private_messages'>личные сообщения</message>
+    <message id='tc.menu.settings'>настройки</message>
+    <message id='tc.menu.testing_board'>доска для проб</message>
+    <message id='tc.menu.topics'>тематики</message>
+    <message id='tc.menu.user'>пользователь</message>
+    <message id='tc.menu.users_list'>список пользователей</message>
+    <message id='tc.menu.virtuals_list'>список клонов</message>
+
+    <message id='tc.title.BoardWidget'>Доска « TheChess</message>
+    <message id='tc.title.ChatCommentWidget'>Сообщение чата « TheChess</message>
+    <message id='tc.title.CommentList_admin_log'>Административный журнир « TheChess</message>
+    <message id='tc.title.CommentList_edit'>Правка « Форум « TheChess</message>
+    <message id='tc.title.CommentList_global_chat'>Чат « TheChess</message>
+    <message id='tc.title.CommentList_my_messages'>Мои сообщения « TheChess</message>
+    <message id='tc.title.GameCreateWidget'>Create « Игра « TheChess</message>
+    <message id='tc.title.GameListWidget'>Список « Игра « TheChess</message>
+    <message id='tc.title.GameWidget'>№{1} « Игра « TheChess</message>
+    <message id='tc.title.IpBanList'>Список банов по IP « TheChess</message>
+    <message id='tc.title.MainPage'>TheChess</message>
+    <message id='tc.title.MovesWidget'>Доска « TheChess</message>
+    <message id='tc.title.MovesWidget_moves'>Ходы « TheChess</message>
+    <message id='tc.title.NewIpBan'>Новый бан « TheChess</message>
+    <message id='tc.title.SettingsWidget'>Настройки « Пользователь « TheChess</message>
+    <message id='tc.title.UserListWidget'>Список « Пользователь « TheChess</message>
+    <message id='tc.title.UserWidget'>{1} « Пользователь « TheChess</message>
+    <message id='tc.title.VirtualsWidget'>Клоны « Пользователь « TheChess</message>
+    <message id='tc.title.CommentList_all_comments'>
+        Все комментарии « TheChess
+    </message>
+    <message id='tc.title.CommentList_forum_comment'>
+        Комментарий #{1} « Форум « TheChess
+    </message>
+    <message id='tc.title.CommentList_post'>
+        Пост {1} « Форум « TheChess
+    </message>
+    <message id='tc.title.CommentList_posts'>
+        Посты « Форум « TheChess
+    </message>
+    <message id='tc.title.CommentList_topic'>
+        Тематика {1} « Форум « TheChess
+    </message>
+    <message id='tc.title.CommentList_topics'>
+        Тематики « Форум « TheChess
+    </message>
+    <message id='tc.title.CommentList_user_comments'>
+        Комментарии « {1} « TheChess
+    </message>
+    <message id='tc.title.CompetitionCreateWidget'>
+        Create « Турнир « TheChess
+    </message>
+    <message id='tc.title.CompetitionListWidget'>
+        Список « Турнир « TheChess
+    </message>
+    <message id='tc.title.CompetitionListWidget_of'>
+        С {1} « Турнир « TheChess
+    </message>
+    <message id='tc.title.CompetitionWidget'>
+        №{1} « Турнир « TheChess
+    </message>
+    <message id='tc.title.GameListWidget_of'>
+        С {1} « Игра « TheChess
+    </message>
+    <message id='tc.title.GPListWidget'>
+        Список « Параметры « Игра « TheChess
+    </message>
+    <message id='tc.title.GPWidget'>
+        {1} « Параметры « Игра « TheChess
+    </message>
+    <message id='tc.title.VirtualsWidget_of'>
+        Клоны {1} « Пользователь « TheChess
+    </message>
+
+    <message id='tc.user.Already_banned'>Уже в бане</message>
+    <message id='tc.user.Anonymous'>Анонимус</message>
+    <message id='tc.user.avatar_nondefault'>аватар не по умолчанию</message>
+    <message id='tc.user.ban_reason'>причина бана</message>
+    <message id='tc.user.Block'>Заблокировать</message>
+    <message id='tc.user.Change_avatar'>Изменить аватар</message>
+    <message id='tc.user.chat_writer'>писать в чат</message>
+    <message id='tc.user.classification'>разряд</message>
     <message id='tc.user.classification_a'>первый разряд</message>
     <message id='tc.user.classification_b'>второй разряд</message>
     <message id='tc.user.classification_c'>третий разряд</message>
+    <message id='tc.user.classification_changer'>изменять разряд</message>
+    <message id='tc.user.classification_confirmer'>подтверждать разряд</message>
     <message id='tc.user.classification_d'>средний любитель (4)</message>
     <message id='tc.user.classification_e'>слабый любитель (5)</message>
     <message id='tc.user.classification_expert'>кандидат в мастера</message>
@@ -183,11 +357,81 @@
     <message id='tc.user.classification_national_master'>национальный мастер</message>
     <message id='tc.user.classification_none'>без разряда</message>
     <message id='tc.user.classification_super_grandmaster'>супергроссмейстер</message>
+    <message id='tc.user.comments_remover'>удалять комментарии</message>
+    <message id='tc.user.competition_changer'>изменять турнир</message>
+    <message id='tc.user.competition_creator'>создавать турнир</message>
+    <message id='tc.user.competition_joiner'>присоединяться к турниру</message>
+    <message id='tc.user.confirmed_by'>, подтверждено&nbsp;</message>
+    <message id='tc.user.cp_creator'>создать параметры турнира</message>
+    <message id='tc.user.Delete'>Удалить</message>
+    <message id='tc.user.Edit_rights'>Редактировать права</message>
+    <message id='tc.user.forum_comment_creator'>комментировать форум</message>
+    <message id='tc.user.forum_post_creator'>создавать пост</message>
+    <message id='tc.user.game_creator'>создавать игру</message>
+    <message id='tc.user.game_joiner'>присоединяться к игре</message>
+    <message id='tc.user.games_stat_all'>все игры</message>
+    <message id='tc.user.games_stat_draws'>ничьи</message>
+    <message id='tc.user.games_stat_elo'>рейтинг Эло</message>
+    <message id='tc.user.games_stat_fails'>поражения</message>
+    <message id='tc.user.games_stat_wins'>победы</message>
+    <message id='tc.user.gp_creator'>изменять параметры игры</message>
+    <message id='tc.user.ip'>ip-адрес</message>
+    <message id='tc.user.IpBanList'>Список банов по IP</message>
+    <message id='tc.user.IpList'>Список IP</message>
+    <message id='tc.user.Last_enter'>Последний вход: {1}</message>
+    <message id='tc.user.List_rights'>Список прав</message>
+    <message id='tc.user.logs_reader'>читать журнал администратора</message>
+    <message id='tc.user.Many_sessions'>Слишком много сессий</message>
+    <message id='tc.user.My_blocklist'>Мой черный список</message>
+    <message id='tc.user.Names_in_menu'>Показывать имя пользователя в меню с играми</message>
+    <message id='tc.user.New_ban'>Новый бан</message>
+    <message id='tc.user.not_confirmed'>, не подтверждено</message>
+    <message id='tc.user.Not_removed'>Не удаленные</message>
     <message id='tc.user.Online_time'>Время, проведенное на сайте: {1}</message>
+    <message id='tc.user.Only_online'>Только на сайте</message>
+    <message id='tc.user.Password_example'>Пример пароля:&nbsp;</message>
+    <message id='tc.user.private_writer'>написать личное сообщение</message>
+    <message id='tc.user.Public_email'>Показывать e-mail обычным пользователям</message>
     <message id='tc.user.rating_after'>рейтинг после</message>
     <message id='tc.user.Rating_changes'>Изменения рейтинга</message>
     <message id='tc.user.Rating_changes_and_me'>Изменения рейтинга (в сравнении с моим рейтингом)</message>
+    <message id='tc.user.Recalculation'>Полный пересчет рейтингов</message>
+    <message id='tc.user.records_editor'>редактировать записи</message>
+    <message id='tc.user.registration_banner'>банить IP</message>
+    <message id='tc.user.Registration_date'>Дата регистрации: {1}</message>
+    <message id='tc.user.regular_rights_changer'>изменять обычные права</message>
+    <message id='tc.user.Removed_message'><b>[Удаленный пользователь]</b></message>
+    <message id='tc.user.Settings'>Настройки</message>
     <message id='tc.user.Start_game'>Начать игру</message>
+    <message id='tc.user.super_rights_changer'>изменять особые права</message>
+    <message id='tc.user.This_ip_banned'>Этот IP-адрес заблокирован</message>
+    <message id='tc.user.Unblock'>Разблокировать</message>
+    <message id='tc.user.Undelete'>Восстановить</message>
+    <message id='tc.user.unknown_right'>неизвестное право</message>
+    <message id='tc.user.user'>пользователь</message>
+    <message id='tc.user.User_blocked_you'>Этот пользователь Вас заблокировал</message>
+    <message id='tc.user.user_remover'>удалять пользователей</message>
+    <message id='tc.user.Vacation_until'>В отпуске до {1}</message>
+    <message id='tc.user.Virtuals_list'>Список клонов</message>
+    <message id='tc.user.virtuals_viewer'>смотреть клонов</message>
+    <message id='tc.user.Competitions_stat'>
+        <h2>Турнирная статистика:</h2>
+    </message>
+    <message id='tc.user.Filter_min_online'>
+        Минимальное время, проведенное пользователем на сайте,
+        чтобы он мог отправлять Вам сообщение
+    </message>
+    <message id='tc.user.Games_stat'>
+        <h2>Игровая статистика:</h2>
+    </message>
+    <message id='tc.user.Games_stat_changes'>
+        Изменения Вашего рейтинга в случае игры с этим пользователем:
+        <ul>
+            <li>в случае победы: {1}</li>
+            <li>в случае поражения: {2}</li>
+            <li>в случае ничьей: {3}</li>
+        </ul>
+    </message>
 
 </messages>
 
