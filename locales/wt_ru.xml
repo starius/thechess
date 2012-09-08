@@ -164,7 +164,7 @@
   <message id="Wt.Auth.login-form-title">Вход</message>
   <message id="Wt.Auth.login-form-info"></message>
   <message id="Wt.Auth.user-name">Имя пользователя</message>
-  <message id="Wt.Auth.user-name-info">Введите имя Вашего пользователя</message>
+  <message id="Wt.Auth.user-name-info">Ваше имя</message>
   <message id="Wt.Auth.user-name-invalid">Неверно</message>
   <message id="Wt.Auth.email">Адрес электронной почты</message>
   <message id="Wt.Auth.email-info">Введите адрес Вашей электронной почты</message>
@@ -172,13 +172,13 @@
     Введите адрес Вашей электронной почты (необязательно)
   </message>
   <message id="Wt.Auth.password">Пароль</message>
-  <message id="Wt.Auth.password-info">Введите Ваш пароль</message>
+  <message id="Wt.Auth.password-info">Введите пароль</message>
   <message id="Wt.Auth.remember-me">Запомнить меня</message>
   <message id="Wt.Auth.remember-me-info.days">
-    Помнить о входе на протяжение {1} дней
+    в течение {1} дней
   </message>
   <message id="Wt.Auth.remember-me-info.weeks">
-    Помнить о входе на протяжение {1} недель
+    в течение {1} недель
   </message>
   <message id="Wt.Auth.lost-password">Забыл пароль</message>
   <message id="Wt.Auth.login">Вход</message>
@@ -215,7 +215,7 @@
   <message id="Wt.Auth.password-tooshort">Мин. размер {1} символов</message>
   <message id="Wt.Auth.passwords-dont-match">Пароли не совпадают</message>
   <message id="Wt.Auth.registration">Регистрация</message>
-  <message id="Wt.Auth.register">Зарегистрироваться</message>
+  <message id="Wt.Auth.register">Регистрация</message>
   <message id="Wt.Auth.error-user-invalid">Регистрация сорвалась.</message>
 
   <!-- PasswordPromptDialog -->
