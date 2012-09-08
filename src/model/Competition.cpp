@@ -203,6 +203,9 @@ bool Competition::has_virtuals() const {
         ids_stream << user.id();
     }
     std::string ids = ids_stream.str();
+    if (ids.empty()) {
+        return false; // no members => no virtuals
+    }
     dbo::Query<BD::BDPair> pairs = BD::pairs(*session());
     pairs.where("U.user_id in (" + ids + ") and V.user_id in (" + ids + ")");
     BD::Scores scores;

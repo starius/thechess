@@ -125,7 +125,7 @@ public:
             }
         }
         CLP::Q q = tApp->session().query<CLP::Result>(sql.str());
-        q.groupBy("C");
+        q.groupBy("C, CP.type");
         if (user) {
             q.bind(user);
         }
