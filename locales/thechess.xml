@@ -727,7 +727,7 @@ See locales-test manpage for more information.
     <message id='tc.user.Rating_changes_and_me'>Rating changes (compared to my ones)</message>
     <message id='tc.user.Recalculation'>Full stats recalculation</message>
     <message id='tc.user.records_editor'>edit records</message>
-    <message id='tc.user.registration_banner'>ban IP for registration</message>
+    <message id='tc.user.registration_banner'>ban IP</message>
     <message id='tc.user.Registration_date'>Registration date: {1}</message>
     <message id='tc.user.regular_rights_changer'>change regular rights</message>
     <message id='tc.user.Removed_message'><b>[Removed user]</b></message>
