@@ -653,14 +653,14 @@ See locales-test manpage for more information.
     <message id='tc.title.CompetitionWidget'>
         #{1} « Competition « TheChess
     </message>
+    <message id='tc.title.GameListWidget_of'>
+        With {1} « Game « TheChess
+    </message>
     <message id='tc.title.GPListWidget'>
         List « Parameters « Game « TheChess
     </message>
     <message id='tc.title.GPWidget'>
         {1} « Parameters « Game « TheChess
-    </message>
-    <message id='tc.title.GameListWidget_of'>
-        With {1} « Game « TheChess
     </message>
     <message id='tc.title.VirtualsWidget_of'>
         Virtuals of {1} « User « TheChess
