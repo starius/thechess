@@ -181,7 +181,6 @@ public:
         Wt::WPushButton* goto_last =
             new Wt::WPushButton(">>", board_widget_->inner());
         goto_last->clicked().connect(this, &MovesWidgetImpl::goto_last);
-        moves_anchor_ = new Wt::WAnchor("", "#", board_widget_->inner());
         set_links_handler(boost::bind(&MovesWidgetImpl::links, this, _1));
         board_widget_->inner()->addWidget(new Wt::WBreak());
         move_confirmation_ = new Wt::WCheckBox(tr("tc.game.Move_confirmation"),
@@ -283,7 +282,6 @@ private:
     Wt::WCheckBox* move_confirmation_;
     Wt::WMessageBox* box_;
     Wt::Signal<HalfMove> move_signal_;
-    Wt::WAnchor* moves_anchor_;
 
     CachedMoves cached_moves_;
     int current_move_;
@@ -364,13 +362,6 @@ private:
         current_move_ = n;
         move_select();
         history_select();
-        update_moves_anchor();
-    }
-
-    void update_moves_anchor() {
-        url::StringNode* moves_node = tApp->path().moves();
-        moves_node->set_string(cached_moves_.to_string());
-        moves_anchor_->setLink(moves_node->link());
     }
 
     void goto_first() {

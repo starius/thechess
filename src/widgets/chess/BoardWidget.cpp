@@ -132,7 +132,6 @@ public:
         board_build();
         select_turn_into_ = new Wt::WContainerWidget(this);
         turn_button_place_ = new Wt::WContainerWidget(this);
-        board_anchor_ = new Wt::WAnchor("", "#", turn_button_place_);
         Wt::WPushButton* links = new Wt::WPushButton(tr("tc.common.Links"));
         turn_button_place_->addWidget(links);
         links->clicked().connect(this, &BoardWidgetImpl::show_links);
@@ -152,7 +151,6 @@ public:
         big_box_->setText(tr("tc.game.Enlarged_images"));
         big_box_->setChecked(big_);
         big_box_->changed().connect(this, &BoardWidgetImpl::big_changed);
-        update_board_anchor();
     }
 
     ~BoardWidgetImpl() {
@@ -191,7 +189,6 @@ public:
         if (active_) {
             modify();
         }
-        update_board_anchor();
     }
 
     void bottom_set(Piece::Color bottom) {
@@ -247,7 +244,6 @@ private:
     Wt::WImage* draggable_;
     Wt::WCheckBox* lastmove_box_;
     Wt::WCheckBox* big_box_;
-    Wt::WAnchor* board_anchor_;
 
     Wt::Signal<HalfMove> move_;
     LinksHandler links_handler_;
@@ -289,12 +285,6 @@ private:
             Wt::WImage* img = image_at(square);
             img->setImageRef(BoardWidget::image(board_.piece(square), big_));
         }
-    }
-
-    void update_board_anchor() {
-        url::StringNode* board_node = tApp->path().board();
-        board_node->set_string(board_.to_string());
-        board_anchor_->setLink(board_node->link());
     }
 
     void modify_from() {
