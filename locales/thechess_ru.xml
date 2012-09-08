@@ -432,6 +432,9 @@
             <li>в случае ничьей: {3}</li>
         </ul>
     </message>
+    <message id='tc.user.Online'>
+        <font style="background:Lightsteelblue;">На сайте</font>
+    </message>
 
 </messages>
 
