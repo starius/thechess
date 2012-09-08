@@ -13,6 +13,9 @@ $ ./thechess-run
 Install:
 FIXME
 
+thechess options can be configured in wt_config.xml:
+    <property name="database_type">postgres</property>
+
 Setup SMTP daemon to use Gmail on Debian:
 Postfix: http://bit.ly/OcGopv (asynchronous)
 Exim4:   http://wiki.debian.org/GmailAndExim4 (synchronous)
@@ -20,6 +23,24 @@ Exim4:   http://wiki.debian.org/GmailAndExim4 (synchronous)
 Postgres:
 http://www.cyberciti.biz/faq/howto-add-postgresql-user-account/
 use file postgres-create-tables.sql to create tables
+thechess options:
+    database_type: postgres
+    database_value: user=user dbname=dbname password=password
+
+SQLite3:
+thechess options:
+    database_type: sqlite3
+    database_value: path/to/file.db
+
+Other options:
+    int connections_in_pool
+    int regular_user_rights (see examples in database)
+    int banned_ip_user_rights
+    int anonymous_rights
+    int main_page_content_id
+    int footer_content_id
+    int top_logged_in_content_id
+    int away_timeout_seconds
 
 Dependencies:
  * witty library (>=3.2.1)
