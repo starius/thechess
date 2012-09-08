@@ -247,7 +247,7 @@
     <message id='tc.menu.competitions_list'>список турниров</message>
     <message id='tc.menu.forum'>форум</message>
     <message id='tc.menu.game'>игра</message>
-    <message id='tc.menu.game_parameters'>параматры игры</message>
+    <message id='tc.menu.game_parameters'>параметры игры</message>
     <message id='tc.menu.games_list'>список игр</message>
     <message id='tc.menu.global_chat'>общий чат</message>
     <message id='tc.menu.my_page'>моя страница</message>
