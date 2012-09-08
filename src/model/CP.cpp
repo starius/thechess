@@ -36,9 +36,8 @@ CP::CP(bool):
     min_substages_(ccd::MIN_SUBSTAGES),
     increment_substages_(ccd::INCREMENT_SUBSTAGES),
     min_online_time_(ccd::MIN_ONLINE_TIME),
-    max_online_time_(ccd::MAX_ONLINE_TIME) {
-    //set_norating(ccd::NORATING); FIXME
-}
+    max_online_time_(ccd::MAX_ONLINE_TIME)
+{ }
 
 }
 
