@@ -6,9 +6,9 @@
  */
 
 #include <boost/assert.hpp>
+#include <boost/foreach.hpp>
 
 #include <Wt/Dbo/Transaction>
-
 #include <Wt/Http/Request>
 #include <Wt/Http/Response>
 
@@ -33,8 +33,18 @@ PgnResource::~PgnResource() {
 void PgnResource::handleRequest(const Wt::Http::Request& request,
                                 Wt::Http::Response& response) {
     dbo::Transaction t(session_);
-    GamePtr g;
     const std::string* game_id_str = request.getParameter("game");
+    if (game_id_str && *game_id_str == "all") {
+        suggestFileName("all.pgn");
+        // TODO frequency check
+        Games games = session_.find<Game>();
+        BOOST_FOREACH (GamePtr g, games) {
+            g->pgn(response.out());
+            response.out() << std::endl;
+        }
+        return;
+    }
+    GamePtr g;
     if (game_id_str) {
         suggestFileName((*game_id_str) + ".pgn");
         try {
