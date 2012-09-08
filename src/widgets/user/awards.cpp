@@ -25,8 +25,7 @@ double Log2(double n) {
 Awards awards_of(const UserPtr& user) {
     dbo::Transaction t(tApp->session());
     Awards result;
-    // FIXME EloPlayer for competitions
-    int won_comp = user->won_competitions().size();
+    int won_comp = user->competitions_stat().wins();
     result.competitions = won_comp ? int(Log2(won_comp)) + 1 : 0;
     const EloPlayer& e = user->games_stat();
     result.game_3 = std::max(e.all() / 500, e.wins() / 250);
