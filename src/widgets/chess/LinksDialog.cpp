@@ -48,7 +48,15 @@ void LinksDialog::add_game(int game) {
 void LinksDialog::add_url(const std::string& url, const Wt::WString& name) {
     Wt::WLineEdit* l = new Wt::WLineEdit(url);
     l->setTextSize(40);
-    // TODO select all
+    l->focussed().connect("function(o, e) {"
+                          "$(o).select();"
+                          // Work around Chrome's little problem
+                          "$(o).mouseup(function() {"
+                          // Prevent further mouseup intervention
+                          "$(o).unbind('mouseup');"
+                          "return false;"
+                          "});"
+                          "}");
     f_->item(name, "", l, l);
 }
 
