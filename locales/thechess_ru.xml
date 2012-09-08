@@ -43,7 +43,6 @@
     <message id='tc.competition.Members_classification'>Разряд участников</message>
     <message id='tc.competition.members_number'>участники</message>
     <message id='tc.competition.Min_substages'>Подраундов в первом раунде</message>
-    <message id='tc.competition.New'>Создать турнир</message>
     <message id='tc.competition.Parameters'>Параметры турнира</message>
     <message id='tc.competition.Rating'>Рейтинг участников</message>
     <message id='tc.competition.Recruiting_time'>Время на сборы</message>

@@ -413,7 +413,6 @@ See locales-test manpage for more information.
     <message id='tc.competition.min_classification'>min classification</message>
     <message id='tc.competition.min_rating'>min rating</message>
     <message id='tc.competition.Min_substages'>First stage substages</message>
-    <message id='tc.competition.New'>Create new competition</message>
     <message id='tc.competition.Online_time'>Online time of members</message>
     <message id='tc.competition.Parameters'>Competition parameters</message>
     <message id='tc.competition.Rating'>Rating of members</message>
@@ -463,8 +462,6 @@ See locales-test manpage for more information.
     <message id='tc.forum.all_posts'>all posts</message>
     <message id='tc.forum.Comment'>Comment's page</message>
     <message id='tc.forum.Edit'>Edit</message>
-    <message id='tc.forum.forum'>forum</message>
-    <message id='tc.forum.global_chat'>global chat</message>
     <message id='tc.forum.Goto_parent'>Open parent comment #{1}</message>
     <message id='tc.forum.Only_ok'>Show only validated records</message>
     <message id='tc.forum.Post_edited'>Post title edited {1}</message>
@@ -504,7 +501,6 @@ See locales-test manpage for more information.
     <message id='tc.game.first_draw'>move number for draw</message>
     <message id='tc.game.force_confirm'>forced confirmation</message>
     <message id='tc.game.force_start'>forced start</message>
-    <message id='tc.game.game'>game</message>
     <message id='tc.game.Header'>Game # {1}</message>
     <message id='tc.game.Highlight_lastmove'>Highlight lastmove</message>
     <message id='tc.game.init'>game initiator</message>
@@ -556,7 +552,6 @@ See locales-test manpage for more information.
     <message id='tc.game.State_surrendered'>Surrendered</message>
     <message id='tc.game.State_timeout'>Timeout</message>
     <message id='tc.game.Surrender'>Surrender</message>
-    <message id='tc.game.Testing_board'>Testing board</message>
     <message id='tc.game.white'>white</message>
     <message id='tc.game.your_color'>your color</message>
     <message id='tc.game.external_code'>
@@ -714,12 +709,10 @@ See locales-test manpage for more information.
     <message id='tc.user.IpBanList'>List of IP bans</message>
     <message id='tc.user.IpList'>List of IP</message>
     <message id='tc.user.Last_enter'>Last enter: {1}</message>
-    <message id='tc.user.List'>List of users</message>
     <message id='tc.user.List_rights'>List of rights</message>
     <message id='tc.user.logs_reader'>logs reader</message>
     <message id='tc.user.Many_sessions'>Too many sessions</message>
     <message id='tc.user.My_blocklist'>My blocklist</message>
-    <message id='tc.user.my_page'>my page</message>
     <message id='tc.user.Names_in_menu'>Show usernames in game menu</message>
     <message id='tc.user.New_ban'>New ban</message>
     <message id='tc.user.not_confirmed'>, not confirmed</message>
@@ -738,7 +731,6 @@ See locales-test manpage for more information.
     <message id='tc.user.Registration_date'>Registration date: {1}</message>
     <message id='tc.user.regular_rights_changer'>change regular rights</message>
     <message id='tc.user.Removed_message'><b>[Removed user]</b></message>
-    <message id='tc.user.settings'>settings</message>
     <message id='tc.user.Settings'>Settings</message>
     <message id='tc.user.Start_game'>Start a game</message>
     <message id='tc.user.super_rights_changer'>change super rights</message>
