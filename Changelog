@@ -1,3 +1,31 @@
+2012-09-02 - 2012-09-09: (a lot of database schema changes)
+    * new build method (cat all .cpp in a dir into one before compilation)
+    * IP address (log IP of Anonymous author, ban, list IP of users)
+    * chat of competition
+    * private messages of users
+    * filter for private messages; + min-online-time-based filter
+    * settings bitset (yes/no settings) (large list of switches)
+    * player can surrender
+    * fix competition.no_draw (wrong decision making about no_draw)
+    * fix game.pause_limit (it was not decreased at all)
+    * add field norating to Game (settable by moderator)
+    * competition stats of player
+    * add a lot of fields to User (see DatabaseMigration.txt)
+    * avatars (with fallback to old images)
+    * do not consider Away-users Online (and do not count-up their online_time)
+    * add several new Options (see INSTALL)
+    * add flags of countries to change language and save selection if logged-in
+    * full recalculation of stats
+    * links for moves, not only boards. + WidgetSet to print game state
+    * add online_time (new limitation) to CP
+    * add vacations
+    * fix postgres; add database indices
+    * add translations
+    * add mail how-to to INSTALL
+    * allow to change e-mail address
+    * add 'image' button to tinymce
+    * add instance() static method to several singleton(-like) classes
+
 2012-08-15 - 2012-09-01:
     * classification confirmation
     * rights editor and list of rights
