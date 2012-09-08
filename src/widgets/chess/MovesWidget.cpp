@@ -26,6 +26,7 @@
 #include <Wt/Wc/Pager.hpp>
 
 #include "widgets/chess/MovesWidget.hpp"
+#include "widgets/chess/LinksDialog.hpp"
 #include "chess/Piece.hpp"
 #include "chess/HalfMove.hpp"
 #include "model/all.hpp"
@@ -181,6 +182,7 @@ public:
             new Wt::WPushButton(">>", board_widget_->inner());
         goto_last->clicked().connect(this, &MovesWidgetImpl::goto_last);
         moves_anchor_ = new Wt::WAnchor("", "#", board_widget_->inner());
+        set_links_handler(boost::bind(&MovesWidgetImpl::links, this, _1));
         board_widget_->inner()->addWidget(new Wt::WBreak());
         move_confirmation_ = new Wt::WCheckBox(tr("tc.game.Move_confirmation"),
                                                board_widget_->inner());
@@ -268,6 +270,10 @@ public:
 
     void set_move_confirmation(bool needed) {
         move_confirmation_->setChecked(needed);
+    }
+
+    void set_links_handler(const LinksHandler& links_handler) {
+        board_widget_->set_links_handler(links_handler);
     }
 
 private:
@@ -417,6 +423,10 @@ private:
     void move_confirmation_changed() {
         User::set_s(SWITCH_MOVE_CONFIRMATION, move_confirmation_->isChecked());
     }
+
+    void links(LinksDialog* dialog) {
+        dialog->add_moves(cached_moves_);
+    }
 };
 
 MovesWidget::MovesWidget(const Moves& moves,
@@ -471,6 +481,10 @@ bool MovesWidget::move_confirmation() const {
 
 void MovesWidget::set_move_confirmation(bool needed) {
     impl_->set_move_confirmation(needed);
+}
+
+void MovesWidget::set_links_handler(const LinksHandler& links_handler) {
+    impl_->set_links_handler(links_handler);
 }
 
 }

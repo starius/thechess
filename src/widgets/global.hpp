@@ -37,6 +37,7 @@ class Gravatar;
 class Header;
 class IpBanList;
 class IpList;
+class LinksDialog;
 class MainMenu;
 class MainPage;
 class MainWidget;

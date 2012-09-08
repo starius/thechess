@@ -31,6 +31,7 @@
 #include <Wt/Wc/util.hpp>
 
 #include "widgets/chess/BoardWidget.hpp"
+#include "widgets/chess/LinksDialog.hpp"
 #include "chess/HalfMove.hpp"
 #include "chess/Piece.hpp"
 #include "model/all.hpp"
@@ -108,11 +109,14 @@ private:
 
 class BoardWidgetImpl : public Wt::WContainerWidget {
 public:
+    typedef BoardWidget::LinksHandler LinksHandler;
+
     BoardWidgetImpl(bool big, bool active, Piece::Color bottom,
                     const Board& board) :
         Wt::WContainerWidget(), board_(board), bottom_(bottom),
         active_(active), activated_(false),
-        select_turn_into_flag_(false) {
+        select_turn_into_flag_(false),
+        dialog_(0) {
         lastmove_show_ = User::has_s(SWITCH_LASTMOVE);
         big_ = User::has_s(SWITCH_BIG);
         correct_bottom();
@@ -129,6 +133,9 @@ public:
         select_turn_into_ = new Wt::WContainerWidget(this);
         turn_button_place_ = new Wt::WContainerWidget(this);
         board_anchor_ = new Wt::WAnchor("", "#", turn_button_place_);
+        Wt::WPushButton* links = new Wt::WPushButton(tr("tc.common.Links"));
+        turn_button_place_->addWidget(links);
+        links->clicked().connect(this, &BoardWidgetImpl::show_links);
         Wt::WPushButton* turn_button = new Wt::WPushButton(turn_button_place_);
         turn_button->setText(tr("tc.game.Overturn_board"));
         turn_button->clicked().connect(this, &BoardWidgetImpl::turn);
@@ -146,6 +153,11 @@ public:
         big_box_->setChecked(big_);
         big_box_->changed().connect(this, &BoardWidgetImpl::big_changed);
         update_board_anchor();
+    }
+
+    ~BoardWidgetImpl() {
+        delete dialog_;
+        dialog_ = 0;
     }
 
     const char* xml_message() {
@@ -208,6 +220,10 @@ public:
         lastmove_box_->setHidden(!show);
     }
 
+    void set_links_handler(const LinksHandler& links_handler) {
+        links_handler_ = links_handler;
+    }
+
 private:
     friend class DnDPiece;
 
@@ -234,6 +250,8 @@ private:
     Wt::WAnchor* board_anchor_;
 
     Wt::Signal<HalfMove> move_;
+    LinksHandler links_handler_;
+    LinksDialog* dialog_;
 
     void color_black_white(Wt::WImage* img) {
         img->decorationStyle().setBackgroundColor(Wt::WColor());
@@ -467,6 +485,24 @@ private:
         board_build();
     }
 
+    void show_links() {
+        if (dialog_) {
+            return;
+        }
+        dialog_ = new LinksDialog();
+        dialog_->add_board(board_);
+        if (!links_handler_.empty()) {
+            links_handler_(dialog_);
+        }
+        dialog_->show();
+        dialog_->finished().connect(this, &BoardWidgetImpl::dialog_closed);
+    }
+
+    void dialog_closed() {
+        delete dialog_;
+        dialog_ = 0;
+    }
+
 };
 
 void DnDPiece::activate() {
@@ -535,6 +571,10 @@ void BoardWidget::show_lastmove(bool show) {
 
 void BoardWidget::show_lastmove_checkbox(bool show) {
     impl_->show_lastmove_checkbox(show);
+}
+
+void BoardWidget::set_links_handler(const LinksHandler& links_handler) {
+    impl_->set_links_handler(links_handler);
 }
 
 }

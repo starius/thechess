@@ -23,6 +23,8 @@ namespace thechess {
 
 class MovesWidget : public Wt::WCompositeWidget {
 public:
+    typedef BoardWidget::LinksHandler LinksHandler;
+
     MovesWidget(const Moves& moves, bool big = false, bool active = false,
                 int max_moves = -1, bool append_only = false,
                 Piece::Color bottom = Piece::WHITE,
@@ -44,6 +46,11 @@ public:
 
     /** Set if confirmation dialog is opened for each move */
     void set_move_confirmation(bool needed = true);
+
+    /** Set links handler.
+    \see BoardWidget::set_links_handler
+    */
+    void set_links_handler(const LinksHandler& links_handler);
 
 private:
     class MovesWidgetImpl;

@@ -348,6 +348,7 @@ See locales-test manpage for more information.
     <message id='tc.common.Agree'>Agree</message>
     <message id='tc.common.Allow'>Allow</message>
     <message id='tc.common.Apply'>Apply</message>
+    <message id='tc.common.Board'>Board</message>
     <message id='tc.common.Cancel'>Cancel</message>
     <message id='tc.common.Confirm'>Confirm</message>
     <message id='tc.common.Create'>Create</message>
@@ -358,11 +359,14 @@ See locales-test manpage for more information.
     <message id='tc.common.Discard'>Discard</message>
     <message id='tc.common.duration'>duration</message>
     <message id='tc.common.enabled'>enabled</message>
+    <message id='tc.common.Game'>Game</message>
     <message id='tc.common.interval'>from {1} to {2}</message>
     <message id='tc.common.Join'>Join</message>
     <message id='tc.common.Kick'>Kick</message>
     <message id='tc.common.kw'>{1}: {2}</message>
     <message id='tc.common.last'>last</message>
+    <message id='tc.common.Links'>Links</message>
+    <message id='tc.common.Moves'>Moves</message>
     <message id='tc.common.Name'>Name</message>
     <message id='tc.common.no_params_error'>parameters aren't selected</message>
     <message id='tc.common.number'>#</message>
