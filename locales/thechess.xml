@@ -559,6 +559,10 @@ See locales-test manpage for more information.
     <message id='tc.game.Testing_board'>Testing board</message>
     <message id='tc.game.white'>white</message>
     <message id='tc.game.your_color'>your color</message>
+    <message id='tc.game.external_code'>
+<div id="thechess_game_{1}"></div>
+<script src="{2}" type="text/javascript"></script>
+    </message>
     <message id='tc.game.First_draw'>
         <plural case='0'>
             Surrender or draw can be made when {1} non-predetermined move is done

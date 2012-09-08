@@ -27,6 +27,7 @@
 #include "widgets/game/GameCountdown.hpp"
 #include "widgets/game/GameWidget.hpp"
 #include "widgets/chess/MovesWidget.hpp"
+#include "widgets/chess/LinksDialog.hpp"
 #include "widgets/comment/CommentList.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
@@ -166,6 +167,8 @@ public:
         const Moves& moves = game_->moves();
         moves_widget_ = new MovesWidget(moves, big, active, max_moves,
                                         append_only, bottom, this);
+        moves_widget_->set_links_handler(boost::bind(&GameWidgetImpl::links,
+                                         this, _1));
         moves_widget_->half_move()
         .connect(this, &GameWidgetImpl::move_handler);
         countdown_ = new GameCountdown(game_, this);
@@ -521,6 +524,12 @@ private:
         game_.reread();
         CommentPtr comment_base = game_.modify()->comment_base();
         addWidget(new CommentList(Comment::CHAT_MESSAGE, comment_base));
+    }
+
+    void links(LinksDialog* dialog) {
+        dbo::Transaction t(tApp->session());
+        dialog->add_moves(game_->moves());
+        dialog->add_game(game_.id());
     }
 };
 
