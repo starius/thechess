@@ -10,6 +10,7 @@
 
 #include <Wt/WContainerWidget>
 #include <Wt/WTableView>
+#include <Wt/WAnchor>
 #include <Wt/Dbo/Transaction>
 #include <Wt/Dbo/Query>
 #include <Wt/Dbo/QueryModel>
@@ -23,6 +24,7 @@
 #include <Wt/WEnvironment>
 
 #include "widgets/game/GameListWidget.hpp"
+#include "widgets/Header.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
 
@@ -204,11 +206,14 @@ private:
 
 GameListWidget::GameListWidget(Wt::WContainerWidget* parent) :
     WContainerWidget(parent) {
+    addWidget(new Header(tr("tc.game.List")));
     addWidget(new GameListWidgetImpl());
+    addWidget(new Wt::WAnchor("/pgn/?game=all", tr("tc.game.Download_pgn")));
 }
 
 GameListWidget::GameListWidget(const UserPtr& user, Wt::WContainerWidget* p):
     WContainerWidget(p) {
+    addWidget(new Header(tr("tc.game.List")));
     addWidget(new GameListWidgetImpl(user));
 }
 
