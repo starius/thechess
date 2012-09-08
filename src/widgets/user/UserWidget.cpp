@@ -147,7 +147,7 @@ public:
         print_competition_stat();
         print_description();
         print_send();
-        if (tApp->user()) {
+        if (tApp->user() && tApp->user() != user_) {
             print_block();
         }
     }
