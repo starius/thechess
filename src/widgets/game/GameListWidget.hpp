@@ -8,23 +8,17 @@
 #ifndef THECHESS_WIDGETS_GAMELISTWIDGET_HPP_
 #define THECHESS_WIDGETS_GAMELISTWIDGET_HPP_
 
-#include <Wt/WGlobal>
-#include <Wt/WCompositeWidget>
+#include <Wt/WContainerWidget>
 
 #include "model/global.hpp"
 
 namespace thechess {
 
-class GameListWidget : public Wt::WCompositeWidget {
+class GameListWidget : public Wt::WContainerWidget {
 public:
     GameListWidget(Wt::WContainerWidget* parent = 0);
 
     GameListWidget(const UserPtr& user, Wt::WContainerWidget* parent = 0);
-
-private:
-    class GameListWidgetImpl;
-
-    GameListWidgetImpl* impl_;
 };
 
 }

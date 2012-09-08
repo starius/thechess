@@ -108,7 +108,7 @@ protected:
     }
 };
 
-class GameListWidget::GameListWidgetImpl : public Wt::WContainerWidget {
+class GameListWidgetImpl : public Wt::WContainerWidget {
 public:
     GameListWidgetImpl() :
         Wt::WContainerWidget() {
@@ -203,15 +203,13 @@ private:
 };
 
 GameListWidget::GameListWidget(Wt::WContainerWidget* parent) :
-    WCompositeWidget(parent) {
-    impl_ = new GameListWidgetImpl();
-    setImplementation(impl_);
+    WContainerWidget(parent) {
+    addWidget(new GameListWidgetImpl());
 }
 
 GameListWidget::GameListWidget(const UserPtr& user, Wt::WContainerWidget* p):
-    WCompositeWidget(p) {
-    impl_ = new GameListWidgetImpl(user);
-    setImplementation(impl_);
+    WContainerWidget(p) {
+    addWidget(new GameListWidgetImpl(user));
 }
 
 }
