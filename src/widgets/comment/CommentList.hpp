@@ -11,7 +11,7 @@
 #include <Wt/WGlobal>
 #include <Wt/WContainerWidget>
 
-#include "model/global.hpp"
+#include "model/all.hpp"
 #include "widgets/global.hpp"
 
 namespace thechess {
