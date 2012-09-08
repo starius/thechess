@@ -22,10 +22,11 @@ http://www.cyberciti.biz/faq/howto-add-postgresql-user-account/
 use file postgres-create-tables.sql to create tables
 
 Dependencies:
- * witty library (>=3.2.0)
+ * witty library (>=3.2.1)
  * wt-classes library (https://bitbucket.org/starius/wt-classes/)
  * dot command (graphviz lib)
  * Boost library >= 1.44
+ * pwqgen command (optional)
 FIXME
 
 ------------------------------------------
