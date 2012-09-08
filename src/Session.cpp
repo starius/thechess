@@ -44,7 +44,6 @@ void Session::reconsider(Server& server) {
         dbo::Transaction t(*this);
         createTables();
         std::cerr << "Created database" << std::endl;
-        execute("CREATE INDEX comment_index ON thechess_comment('show_index')");
         t.commit();
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
