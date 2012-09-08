@@ -18,6 +18,7 @@
 #include "chess/CachedMoves.hpp"
 #include "log.hpp"
 #include "Planning.hpp"
+#include "Options.hpp"
 
 DBO_INSTANTIATE_TEMPLATES(thechess::Game);
 
@@ -784,7 +785,7 @@ void Game::pgn_additional(std::ostream& out) const {
 // see http://cfajohnson.com/chess/SAN/SAN_DOC/Standard
 void Game::pgn(std::ostream& out, bool reduced) const {
     Wt::WString event = competition_ ? competition_->name() : "?";
-    Wt::WString site = "FIXME";
+    Wt::WString site = Options::instance()->pgn_site();
     Wt::WString date = started_.isValid() ? started_.toString("yyyy.MM.dd") :
                        "????.??.??";
     int stage = competition_stage_ + 1;

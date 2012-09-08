@@ -41,6 +41,7 @@ Other options:
     int footer_content_id
     int top_logged_in_content_id
     int away_timeout_seconds
+    string pgn_site
 
 Dependencies:
  * witty library (>=3.2.1)

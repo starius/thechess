@@ -28,7 +28,8 @@ Options::Options(const Wt::WServer& server):
     footer_content_id_(config::defaults::FOOTER_CONTENT_ID),
     top_logged_in_content_id_(config::defaults::TOP_LOGGED_IN_CONTENT_ID),
     away_timeout_(config::defaults::AWAY_TIMEOUT),
-    default_settings_(config::defaults::DEFAULT_SETTINGS) {
+    default_settings_(config::defaults::DEFAULT_SETTINGS),
+    pgn_site_(config::defaults::PGN_SITE) {
     std::string value;
     if (server.readConfigurationProperty("database_type", value)) {
         BOOST_ASSERT(value == "postgres" ||
@@ -53,6 +54,7 @@ Options::Options(const Wt::WServer& server):
         away_timeout_ = away_timeout_seconds * SECOND;
     }
     read_int_value("default_settings", (int&)(default_settings_));
+    server.readConfigurationProperty("pgn_site", pgn_site_);
 }
 
 Options* Options::instance() {

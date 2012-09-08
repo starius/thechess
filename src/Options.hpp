@@ -87,6 +87,11 @@ public:
         return default_settings_;
     }
 
+    /** String used as value of PGN [Site] tag */
+    const std::string& pgn_site() const {
+        return pgn_site_;
+    }
+
     /** Return options used in current application */
     static Options* instance();
 
@@ -104,6 +109,7 @@ private:
     int top_logged_in_content_id_;
     Td away_timeout_;
     UserSettings default_settings_;
+    std::string pgn_site_;
 
     bool read_int_value(const std::string& name, int& value);
 };

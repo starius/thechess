@@ -130,6 +130,11 @@ const Td AWAY_TIMEOUT = 5 * MINUTE;
 /** Default settings of user */
 const UserSettings DEFAULT_SETTINGS = SWITCH_DEFAULT;
 
+/** String used as value of PGN [Site] tag.
+see Options::pgn_site()
+*/
+const char* const PGN_SITE = "TheChess, Internet";
+
 }
 
 /** The namespace for max allowed values of parameters */
