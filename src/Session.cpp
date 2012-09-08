@@ -45,14 +45,18 @@ void Session::reconsider(Server& server) {
         createTables();
         std::cerr << "Created database" << std::endl;
         execute("CREATE INDEX comment_index ON thechess_comment('show_index')");
-        add_user(server, "admin", "123").modify()->set_rights(ADMIN);
-        std::cerr << "and admin user (password 123)" << std::endl;
-        add_user(server, "user", "123");
-        std::cerr << "and user user (password 123)" << std::endl;
         t.commit();
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
         std::cerr << "Using existing database" << std::endl;
+    }
+    {
+        dbo::Transaction t(*this);
+        UserPtr admin = add_user(server, "admin", "123");
+        if (admin) {
+            admin.modify()->set_rights(ADMIN);
+        }
+        add_user(server, "user", "123");
     }
     dbo::Transaction t(*this);
     execute("update thechess_user set sessions = ?").bind(0);
@@ -101,6 +105,12 @@ UserPtr Session::user() {
 
 UserPtr Session::add_user(const Server& server, const Wt::WString& name,
                           const Wt::WString& password) {
+    if (find<AuthInfo::AuthIdentityType>()
+            .where("provider = 'loginname' and identity = ?")
+            .bind(name).resultList().size()) {
+        // already exists
+        return UserPtr();
+    }
     Wt::Auth::User user = user_database_.registerNew();
     user.addIdentity(Wt::Auth::Identity::LoginName, name);
     server.password_service().updatePassword(user, password);
