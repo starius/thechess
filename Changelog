@@ -25,6 +25,7 @@
     * allow to change e-mail address
     * add 'image' button to tinymce
     * add instance() static method to several singleton(-like) classes
+    * version 3.0.9
 
 2012-08-15 - 2012-09-01:
     * classification confirmation
