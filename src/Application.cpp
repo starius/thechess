@@ -74,6 +74,8 @@ Application::Application(bool, const Wt::WEnvironment& env, Server& server):
                                 "locales/wtclasses/wtclasses");
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/wt");
+    messageResourceBundle().use(Wt::WApplication::appRoot() +
+                                "locales/auth");
     setCssTheme("polished");
     // TODO require-dependent widgets.
     // http://redmine.emweb.be/issues/1429
