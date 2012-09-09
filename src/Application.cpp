@@ -184,7 +184,8 @@ void Application::notify(const Wt::WEvent& e) {
         Wt::EventType e_type = e.eventType();
         Wt::WApplication::notify(e);
         if (e_type == Wt::UserEvent) {
-            user_action();
+            // FIXME this does not work
+            //user_action();
         }
     } catch (dbo::StaleObjectException e) {
         log("notice") << e.what();
@@ -236,6 +237,7 @@ void Application::gather_explorer(Wt::Wc::Gather::DataType type,
 }
 
 void Application::user_action() {
+    // this never called
     last_user_event_ = now();
     if (!online_) {
         dbo::Transaction t(session());
@@ -255,6 +257,7 @@ void Application::user_action() {
 }
 
 void Application::online_check() {
+    // this never called
     Td timeout = Options::instance()->away_timeout();
     if (now() - last_user_event_ > timeout) {
         if (online_) {
