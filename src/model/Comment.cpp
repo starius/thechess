@@ -52,7 +52,7 @@ Comment::Type Comment::child_type(Comment::Type type) {
 }
 
 Comment::Type Comment::root_type(Comment::Type type) {
-    if (type == CHAT_MESSAGE || PRIVATE_MESSAGE) {
+    if (type == CHAT_MESSAGE || type == PRIVATE_MESSAGE) {
         return CHAT_ROOT;
     } else if (type == FORUM_POST) {
         return FORUM_TOPIC;
