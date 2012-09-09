@@ -6,6 +6,7 @@
  */
 
 #include <Wt/WText>
+#include <Wt/WBreak>
 #include <Wt/WPushButton>
 
 #include "widgets/comment/ChatCommentWidget.hpp"
@@ -27,6 +28,7 @@ ChatCommentWidget::ChatCommentWidget(const CommentPtr& comment) {
     new Wt::WText(forum_comment_text(comment), this);
     UserPtr user = comment->init();
     if (user) {
+        new Wt::WBreak(this);
         user_anchor(user, this);
     }
     if (comment->type() == Comment::CHAT_MESSAGE) {
