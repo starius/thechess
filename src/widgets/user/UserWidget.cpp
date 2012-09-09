@@ -146,8 +146,9 @@ public:
         print_game_stat();
         print_competition_stat();
         print_description();
-        print_send();
         if (tApp->user() && tApp->user() != user_) {
+            new Header(tr("tc.comment.private_messages"), this);
+            print_send();
             print_block();
         }
     }
