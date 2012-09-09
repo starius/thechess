@@ -8,6 +8,7 @@
 #include <string>
 
 #include <Wt/WAnchor>
+#include <Wt/WBreak>
 #include <Wt/WText>
 
 #include "widgets/MainMenu.hpp"
@@ -87,6 +88,7 @@ private:
     }
 
     void add_section(const char* title_id) {
+        addWidget(new Wt::WBreak());
         Wt::WContainerWidget* c = new Wt::WContainerWidget(this);
         Wt::WText* text = new Wt::WText(tr(title_id), c);
         text->setStyleClass("thechess-section");
