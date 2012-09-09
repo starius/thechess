@@ -168,9 +168,12 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     addWidget(view_);
     if (Comment::can_create(tApp->user(), type, root)) {
         print_edits();
-        Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
-        add->clicked().connect(boost::bind(&CommentList::add_comment,
-                                           this, root));
+        if (edit_) {
+            Wt::WPushButton* add;
+            add = new Wt::WPushButton(tr("tc.comment.Add"), this);
+            add->clicked().connect(boost::bind(&CommentList::add_comment,
+                                               this, root));
+        }
     }
     if (root && (root->type() == Comment::FORUM_POST_TEXT ||
                  root->type() == Comment::FORUM_TOPIC)) {
