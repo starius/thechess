@@ -175,10 +175,8 @@
   <message id="Wt.Auth.password-info">Введите пароль</message>
   <message id="Wt.Auth.remember-me">Запомнить меня</message>
   <message id="Wt.Auth.remember-me-info.days">
-    в течение {1} дней
   </message>
   <message id="Wt.Auth.remember-me-info.weeks">
-    в течение {1} недель
   </message>
   <message id="Wt.Auth.lost-password">Забыл пароль</message>
   <message id="Wt.Auth.login">Вход</message>

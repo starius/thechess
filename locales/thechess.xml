@@ -84,6 +84,11 @@ See locales-test manpage for more information.
         </div>
     </message>
 
+  <message id="Wt.Auth.remember-me-info.days">
+  </message>
+  <message id="Wt.Auth.remember-me-info.weeks">
+  </message>
+
   <message id="Wt.Auth.confirmmail.body">
 Hello {1},
 
