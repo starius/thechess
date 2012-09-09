@@ -50,8 +50,8 @@ public:
         addColumn("C.name", tr("tc.common.Name"));
         addColumn("CP.type", tr("tc.competition.Type"));
         addColumn("C.state", tr("tc.competition.State"));
-        addColumn("C.id", tr("tc.competition.Winners"));
-        addColumn("C.id", tr("tc.competition.members_number"));
+        addColumn("C.id", tr("tc.competition.Winners")); // dummy
+        addColumn("C.id", tr("tc.competition.members_number")); // dummy
         addColumn("C.started", tr("tc.competition.Started"));
         addColumn("C.ended", tr("tc.competition.Ended"));
     }
