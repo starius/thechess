@@ -460,8 +460,11 @@ private:
 
     void print_comment_list_impl() {
         dbo::Transaction t(tApp->session());
-        c_.reread();
-        CommentPtr comment_base = c_.modify()->comment_base();
+        CommentPtr comment_base = c_->comment_base();
+        if (!comment_base) {
+            c_.reread();
+            comment_base = c_.modify()->comment_base();
+        }
         addWidget(new CommentList(Comment::CHAT_MESSAGE, comment_base));
     }
 };

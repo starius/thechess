@@ -301,7 +301,11 @@ private:
     void send(Wt::WLineEdit* m) {
         dbo::Transaction t(tApp->session());
         if (tApp->user() && tApp->user()->can_send_message(user_)) {
-            CommentPtr base = user_.modify()->comment_base();
+            CommentPtr base = user_->comment_base();
+            if (!base) {
+                user_.reread();
+                base = user_.modify()->comment_base();
+            }
             base.flush();
             CommentPtr message = tApp->session().add(new Comment(true));
             message.modify()->set_text(m->text());
