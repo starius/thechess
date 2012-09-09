@@ -118,10 +118,10 @@ UserPtr Session::add_user(const Server& server, const Wt::WString& name,
 }
 
 UserPtr Session::auth_info_to_user(const AuthInfoPtr& auth_info) {
-    Wt::WString username = auth_info->identity(Wt::Auth::Identity::LoginName);
     UserPtr user = auth_info->user();
     if (!user) {
-        user = add(new User(username));
+        Wt::WString name = auth_info->identity(Wt::Auth::Identity::LoginName);
+        user = add(new User(name));
         auth_info.modify()->setUser(user);
     }
     return user;
