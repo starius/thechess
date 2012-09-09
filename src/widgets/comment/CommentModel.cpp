@@ -39,8 +39,7 @@ static boost::any comment_page(const CommentPtr& o) {
         return tApp->path().post()->get_link(o.id());
     } else if (o->type() == Comment::FORUM_COMMENT) {
         return tApp->path().post_comment()->get_link(o.id());
-    } else if (o->type() == Comment::CHAT_MESSAGE && tApp->user() &&
-               tApp->user()->has_permission(COMMENTS_REMOVER)) {
+    } else if (o->type() == Comment::CHAT_MESSAGE) {
         return tApp->path().chat_comment()->get_link(o.id());
     } else if (o->type() == Comment::PRIVATE_MESSAGE) {
         return tApp->path().chat_comment()->get_link(o.id());
