@@ -140,6 +140,10 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     if (type == Comment::PRIVATE_MESSAGE && !tApp->user()) {
         return;
     }
+    if (type != Comment::NO_TYPE && root &&
+            Comment::root_type(type) != root->type()) {
+        return;
+    }
     CommentModel* model = new CommentModel(type, root, init, this);
     view_ = new CommentView(model); // do it here to provide comment_model()
     print_header();
