@@ -49,14 +49,14 @@ public:
         only_online_ = User::has_s(SWITCH_ONLY_ONLINE_USERS);
         not_removed_ = User::has_s(SWITCH_ONLY_NOT_REMOVED_USERS);
         set_query();
-        addColumn("id", tr("tc.common.Name")); // dummy
-        addColumn("id", tr("tc.user.classification")); // dummy
+        addColumn("name", tr("tc.common.Name")); // dummy
+        addColumn("classification", tr("tc.user.classification")); // dummy
         addColumn("games_stat_all", tr("tc.user.games_stat_all"));
         addColumn("games_stat_wins", tr("tc.user.games_stat_wins"));
         addColumn("id", tr("tc.user.games_stat_draws")); // dummy
         addColumn("games_stat_fails", tr("tc.user.games_stat_fails"));
         addColumn("games_stat_elo", tr("tc.user.games_stat_elo"));
-        addColumn("id", tr("tc.user.Online_time").arg("")); // dummy
+        addColumn("online_time", tr("tc.user.Online_time").arg("")); // dummy
         addColumn("registration_date", tr("tc.user.Registration_date").arg(""));
         sort(RATING_COLUMN, Wt::DescendingOrder);
     }
