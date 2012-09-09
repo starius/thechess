@@ -59,7 +59,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     session().login().changed().connect(this, &Application::login_handler);
     login_handler();
     path_.open(internalPath());
-    internalPathChanged().connect(this, &Application::user_action);
+    //internalPathChanged().connect(this, &Application::user_action);
 }
 
 Application::Application(bool, const Wt::WEnvironment& env, Server& server):
