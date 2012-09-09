@@ -49,7 +49,7 @@ public:
         only_online_ = User::has_s(SWITCH_ONLY_ONLINE_USERS);
         not_removed_ = User::has_s(SWITCH_ONLY_NOT_REMOVED_USERS);
         set_query();
-        addColumn("name", tr("tc.common.Name")); // dummy
+        addColumn("username", tr("tc.common.Name")); // dummy
         addColumn("classification", tr("tc.user.classification")); // dummy
         addColumn("games_stat_all", tr("tc.user.games_stat_all"));
         addColumn("games_stat_wins", tr("tc.user.games_stat_wins"));
