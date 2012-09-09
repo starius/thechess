@@ -9,12 +9,12 @@
 #define THECHESS_MAIN_PAGE_HPP_
 
 #include <Wt/WGlobal>
-#include <Wt/WText>
+#include <Wt/WTemplate>
 
 namespace thechess {
 
 /** Main page widget */
-class MainPage : public Wt::WText {
+class MainPage : public Wt::WTemplate {
 public:
     /** Constructor */
     MainPage(Wt::WContainerWidget* parent = 0);

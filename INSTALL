@@ -42,6 +42,8 @@ Other options:
     int top_logged_in_content_id
     int away_timeout_seconds
     string pgn_site
+    int champion_id
+    int best_players_shown
 
 Dependencies:
  * witty library (>=3.2.1)

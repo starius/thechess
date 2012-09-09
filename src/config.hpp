@@ -135,6 +135,12 @@ see Options::pgn_site()
 */
 const char* const PGN_SITE = "TheChess, Internet";
 
+/** ID of champion show on MainPage */
+const int CHAMPION_ID = -1;
+
+/** Number of best players shown as main page */
+const int BEST_PLAYERS_SHOWN = 3;
+
 }
 
 /** The namespace for max allowed values of parameters */

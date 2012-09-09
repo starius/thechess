@@ -92,6 +92,16 @@ public:
         return pgn_site_;
     }
 
+    /** ID of champion shown on MainPage */
+    int champion_id() const {
+        return champion_id_;
+    }
+
+    /** Number of best players shown as main page */
+    int best_players_shown() const {
+        return best_players_shown_;
+    }
+
     /** Return options used in current application */
     static Options* instance();
 
@@ -110,6 +120,8 @@ private:
     Td away_timeout_;
     UserSettings default_settings_;
     std::string pgn_site_;
+    int champion_id_;
+    int best_players_shown_;
 
     bool read_int_value(const std::string& name, int& value);
 };

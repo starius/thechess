@@ -29,7 +29,9 @@ Options::Options(const Wt::WServer& server):
     top_logged_in_content_id_(config::defaults::TOP_LOGGED_IN_CONTENT_ID),
     away_timeout_(config::defaults::AWAY_TIMEOUT),
     default_settings_(config::defaults::DEFAULT_SETTINGS),
-    pgn_site_(config::defaults::PGN_SITE) {
+    pgn_site_(config::defaults::PGN_SITE),
+    champion_id_(config::defaults::CHAMPION_ID),
+    best_players_shown_(config::defaults::BEST_PLAYERS_SHOWN) {
     std::string value;
     if (server.readConfigurationProperty("database_type", value)) {
         BOOST_ASSERT(value == "postgres" ||
@@ -55,6 +57,8 @@ Options::Options(const Wt::WServer& server):
     }
     read_int_value("default_settings", (int&)(default_settings_));
     server.readConfigurationProperty("pgn_site", pgn_site_);
+    read_int_value("champion_id", champion_id_);
+    read_int_value("best_players_shown", best_players_shown_);
 }
 
 Options* Options::instance() {

@@ -238,6 +238,12 @@
 
     <message id='tc.main.main'>
         <h1>Добро пожаловать!</h1>
+        <h2>Чемпион:</h2>
+        <br />
+        ${champion}
+        <h2>Лучшие игроки:</h2>
+        <br />
+        ${best_players}
     </message>
 
     <message id='tc.menu.admin_log'>административный журнал</message>
