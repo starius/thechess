@@ -167,6 +167,8 @@ CommentModel::Query CommentModel::get_query() const {
         result.orderBy("show_index");
     } else if (type_ == Comment::NO_TYPE) {
         result.orderBy("id desc");
+    } else {
+        result.orderBy("id");
     }
     return result;
 }
