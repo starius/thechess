@@ -158,7 +158,7 @@ private:
     Wt::WPushButton* start_button_;
     Wt::WPushButton* rating_button_;
     Wt::WPushButton* rating_and_me_button_;
-    Wt::WText* message_sent_;
+    Wt::WAnchor* message_sent_;
 
     void game_form() {
         start_button_->hide();
@@ -285,7 +285,9 @@ private:
             Wt::WPushButton* b;
             b = new Wt::WPushButton(tr("tc.common.Send"), this);
             b->clicked().connect(boost::bind(&UserWidgetImpl::send, this, m));
-            message_sent_ = new Wt::WText(tr("tc.user.Message_sent"), this);
+            message_sent_ = new Wt::WAnchor(this);
+            message_sent_->setText(tr("tc.user.Message_sent"));
+            message_sent_->setLink(tApp->path().my_messages()->link());
             message_sent_->hide();
         }
     }
