@@ -90,6 +90,7 @@ private:
         Wt::WContainerWidget* c = new Wt::WContainerWidget(this);
         Wt::WText* text = new Wt::WText(tr(title_id), c);
         text->setStyleClass("thechess-section");
+        doJavaScript("$(" + c->jsRef() + ").css('list-style-type', 'none');");
     }
 };
 
