@@ -428,6 +428,7 @@ TheChess.
     <message id='tc.comment.Approve'>Approve</message>
     <message id='tc.comment.deleted_message'>[Deleted]</message>
     <message id='tc.comment.draft_message'>[Draft]</message>
+    <message id='tc.comment.Global_chat'>Global chat</message>
     <message id='tc.comment.private_messages'>private messages</message>
     <message id='tc.comment.Remove'>Remove</message>
 

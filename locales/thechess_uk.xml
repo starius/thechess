@@ -7,6 +7,7 @@
     <message id='tc.comment.Approve'>Одобрить</message>
     <message id='tc.comment.deleted_message'>[Удалено]</message>
     <message id='tc.comment.draft_message'>[Черновик]</message>
+    <message id='tc.comment.Global_chat'>Общий чат</message>
     <message id='tc.comment.private_messages'>личные сообщения</message>
     <message id='tc.comment.Remove'>Удалить</message>
 

@@ -196,6 +196,8 @@ void CommentList::print_header() {
         header = tr("tc.comment.admin_log");
     } else if (type == Comment::PRIVATE_MESSAGE) {
         header = tr("tc.comment.private_messages");
+    } else if (type == Comment::CHAT_MESSAGE) {
+        header = tr("tc.comment.Global_chat");
     }
     if (!header.empty()) {
         new Header(header, this);
