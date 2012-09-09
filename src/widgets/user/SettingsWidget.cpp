@@ -67,6 +67,7 @@ private:
 
     void print_email_changer() {
         new Wt::WBreak(this);
+        new Wt::WText(tr("tc.user.Email"), this);
         email_ = new Wt::WLineEdit(tApp->user()->email(), this);
         Wt::WPushButton* b;
         b = new Wt::WPushButton(tr("tc.common.Save"), this);
