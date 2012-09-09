@@ -245,6 +245,7 @@ private:
     url::PredefinedNode* cp_new_;
     url::PredefinedNode* board_root_;
     url::StringNode* board_;
+    url::PredefinedNode* moves_root_;
     url::StringNode* moves_;
     url::PredefinedNode* topics_;
     url::IntegerNode* topic_posts_;
