@@ -83,6 +83,7 @@ private:
 
     void print_classification_changer() {
         new Wt::WBreak(this);
+        new Wt::WText(tr("tc.user.classification"), this);
         class_ = new ClassificationWidget(NO_CLASSIFICATION,
                                           tApp->user()->classification(),
                                           SUPER_GRANDMASTER, this);
