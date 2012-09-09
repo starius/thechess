@@ -50,10 +50,16 @@ public:
         Notifiable(Object(COMMENT, model->root().id()), tNot) {
         setModel(model);
         Comment::Type type = model->type();
+        int comment_width = COMMENT_WIDTH - 40;
         resize(COMMENT_WIDTH, COMMENT_HEIGHT);
         setColumnWidth(CommentModel::ID_COL, ID_WIDTH);
         setColumnWidth(CommentModel::INIT_COL, INIT_WIDTH);
-        int comment_width = COMMENT_WIDTH - 40;
+        if (type == Comment::PRIVATE_MESSAGE) {
+            setColumnWidth(CommentModel::DESTINATION_COL, INIT_WIDTH);
+            comment_width -= INIT_WIDTH;
+        } else {
+            setColumnHidden(CommentModel::DESTINATION_COL, true);
+        }
         if (type == Comment::FORUM_TOPIC) {
             setAlternatingRowColors(true);
             comment_width -= ID_WIDTH;

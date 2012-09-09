@@ -28,6 +28,7 @@ CommentModel::CommentModel(Comment::Type type, const CommentPtr& root,
     addColumn("id");
     addColumn("id"); // time
     addColumn("id"); // user
+    addColumn("id"); // destination
     addColumn("id", ""); // contents
 }
 
@@ -47,6 +48,19 @@ static boost::any comment_page(const CommentPtr& o) {
     return boost::any();
 }
 
+UserPtr destination_user(const CommentPtr& message) {
+    dbo::Transaction t(tApp->session());
+    try {
+        UserPtr user = tApp->session().find<User>()
+                       .where("comment_base_id = ?").bind(message->root());
+        if (user) {
+            return user;
+        }
+    } catch (...)
+    { }
+    return UserPtr();
+}
+
 boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
     dbo::Transaction t(tApp->session());
     if (role == Wt::DisplayRole) {
@@ -57,6 +71,11 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
             return o->init() ?
                    o->init()->safe_username() :
                    Wt::WString::tr("tc.user.Anonymous");
+        } else if (index.column() == DESTINATION_COL) {
+            UserPtr user = destination_user(o);
+            if (user) {
+                return user->safe_username();
+            }
         } else if (index.column() == TIME_COL) {
             if (type() == Comment::CHAT_MESSAGE) {
                 return o->created().toString("HH:mm");
@@ -70,6 +89,12 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
     } else if (role == Wt::LinkRole && index.column() == INIT_COL) {
         const CommentPtr& o = resultRow(index.row());
         UserPtr user = o->init();
+        if (user) {
+            return tApp->path().user_view()->get_link(user.id());
+        }
+    } else if (role == Wt::LinkRole && index.column() == DESTINATION_COL) {
+        const CommentPtr& o = resultRow(index.row());
+        UserPtr user = destination_user(o);
         if (user) {
             return tApp->path().user_view()->get_link(user.id());
         }

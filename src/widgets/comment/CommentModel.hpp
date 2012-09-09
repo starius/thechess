@@ -33,6 +33,7 @@ public:
         ID_COL, /**< ID (href) */
         TIME_COL, /** Time (creation or last comment) */
         INIT_COL, /** User */
+        DESTINATION_COL, /** Destination user */
         CONTENTS_COLUMN /**< Contents of the comment */
     };
 
