@@ -133,6 +133,7 @@ h2 {
 .thechess-section {
     font: bold 17px 'Arial' , Tahoma, Arial;
     color: black;
+    margin-left: -15px;
 }
 
 .thechess-error {
