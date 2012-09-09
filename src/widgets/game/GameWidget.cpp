@@ -280,7 +280,8 @@ private:
     void print_before_active_buttons() {
         if (game_->competition()) {
             UserPtr competitor = game_->other_user(tApp->user());
-            if (game_->has_competition_confirmed(competitor)) {
+            if (game_->state() == Game::PROPOSED &&
+                    game_->has_competition_confirmed(competitor)) {
                 new Wt::WText(tr("tc.game.Competition_other_proposed")
                               .arg(competitor->safe_username()), manager_);
                 new Wt::WBreak(manager_);
