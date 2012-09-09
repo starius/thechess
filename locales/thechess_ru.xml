@@ -243,7 +243,7 @@
         будет восстановлена позиция, предшествующая выделенному ходу
     </message>
 
-    <message id='tc.main.main'>
+    <message id='tc.main.main_template'>
         <h1>Добро пожаловать!</h1>
         <h2>Чемпион:</h2>
         <br />

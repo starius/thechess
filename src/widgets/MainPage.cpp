@@ -29,7 +29,7 @@ MainPage::MainPage(Wt::WContainerWidget* parent):
         { }
     }
     if (templateText().empty()) {
-        setTemplateText(tr("tc.main.main"));
+        setTemplateText(tr("tc.main.main_template"));
     }
     int best_players_shown = Options::instance()->best_players_shown();
     Users best_users = tApp->session().find<User>()

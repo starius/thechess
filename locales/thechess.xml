@@ -659,7 +659,7 @@ TheChess.
         game would be rolled back before selected move
     </message>
 
-    <message id='tc.main.main'>
+    <message id='tc.main.main_template'>
         <h1>Welcome!</h1>
         <h2>Champion:</h2>
         <br />
