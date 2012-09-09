@@ -41,14 +41,14 @@ private:
         clear();
         add_section("tc.menu.game");
         add_button("tc.menu.games_list", path_->game_list());
-        if (user_items_) {
+        if (user_items_ && tApp->user()->has_permission(GAME_CREATOR)) {
             add_button("tc.menu.challenge", path_->game_new());
         }
         add_button("tc.menu.testing_board", path_->board_root());
         add_button("tc.menu.game_parameters", path_->gp_list());
         add_section("tc.menu.competition");
         add_button("tc.menu.competitions_list", path_->competition_list());
-        if (user_items_) {
+        if (user_items_ && tApp->user()->has_permission(COMPETITION_CREATOR)) {
             add_button("tc.menu.new_competition", path_->competition_new());
         }
         add_section("tc.menu.user");
