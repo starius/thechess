@@ -162,8 +162,8 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
                                     only_my)));
     }
     addWidget(view_);
-    print_edits();
-    if (Comment::can_create(tApp->user(), type, root) && edit_) {
+    if (Comment::can_create(tApp->user(), type, root)) {
+        print_edits();
         Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
         add->clicked().connect(boost::bind(&CommentList::add_comment,
                                            this, root));
@@ -256,6 +256,9 @@ void CommentList::print_post() {
 }
 
 void CommentList::add_comment(const CommentPtr& parent) {
+    if (!edit_) {
+        return;
+    }
     Comment::Type type = comment_model()->type();
     Wt::WString text = edit_->valueText();
     if (type == Comment::FORUM_COMMENT) {
