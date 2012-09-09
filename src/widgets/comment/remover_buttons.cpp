@@ -47,6 +47,7 @@ static void show_new_ban(Wt::WPushButton* b, CommentPtr c) {
 void add_remover_buttons(const CommentPtr& comment, Wt::WContainerWidget* p) {
     dbo::Transaction t(tApp->session());
     if (tApp->user() && tApp->user()->has_permission(COMMENTS_REMOVER)) {
+        p->addWidget(new Wt::WBreak());
         Wt::WPushButton* b;
         if (comment->state() != Comment::OK) {
             b = new Wt::WPushButton(Wt::WString::tr("tc.comment.Approve"), p);
