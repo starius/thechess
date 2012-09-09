@@ -125,6 +125,11 @@ a.thechess-proposed {
     color: #004080;
 }
 
+h2 {
+    font: bold 15px 'Arial' , Tahoma, Arial;
+    color: #004080;
+}
+
 .thechess-section {
     font: bold 17px 'Arial' , Tahoma, Arial;
     color: black;
