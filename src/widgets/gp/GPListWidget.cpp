@@ -16,6 +16,7 @@
 #include <Wt/WCheckBox>
 #include <Wt/WEnvironment>
 #include <Wt/Wc/Pager.hpp>
+#include <Wt/Wc/util.hpp>
 
 #include "widgets/gp/GPListWidget.hpp"
 #include "Application.hpp"
@@ -36,7 +37,8 @@ public:
     };
 
     GPListModel(Wt::WObject* parent = 0) :
-        GPListWidget::BaseQM(parent) {
+        GPListWidget::BaseQM(parent),
+        only_my_(false) {
         set_query();
         addColumn("id", tr("tc.common.number"));
         addColumn("name", tr("tc.common.Name"));
@@ -68,34 +70,32 @@ public:
         return Wt::WString::tr(key);
     }
 
-    void set_query(bool only_my = false) {
+    void set_only_my(bool only_my) {
+        only_my_ = only_my;
+        set_query();
+    }
+
+    void set_query() {
         GPListWidget::Q q = tApp->session().find<GP>();
-        if (only_my) {
+        if (only_my_) {
             q.where("init_id = ?").bind(tApp->user());
+        }
+        if (gp_) {
+            q.orderBy("id = " + TO_S(gp_.id()) + " desc, games_size desc");
+        } else {
+            q.orderBy("games_size desc");
         }
         setQuery(q, /* keep_columns */ true);
     }
 
-    Wt::WModelIndex result_to_index(const GPPtr& ptr) {
-        sort(N_COLUMN);
-        int result = -1;
-        if (ptr) {
-            try {
-                int row = ptr.id() - 1;
-                if (resultRow(row).id() == ptr.id()) {
-                    result = row;
-                } else {
-                    // shift
-                    row -= resultRow(row).id() - ptr.id();
-                    if (resultRow(row).id() == ptr.id()) {
-                        result = row;
-                    }
-                }
-            } catch (...)
-            { }
-        }
-        return result != -1 ? index(result, N_COLUMN) : Wt::WModelIndex();
+    void set_gp(const GPPtr& gp) {
+        gp_ = gp;
+        set_query();
     }
+
+private:
+    bool only_my_;
+    GPPtr gp_;
 };
 
 class GPListView : public Wt::WTableView {
@@ -140,9 +140,9 @@ GPPtr GPListWidget::gp() const {
 }
 
 void GPListWidget::set_gp(const GPPtr& gp) {
-    Wt::WModelIndex index = model_->result_to_index(gp);
-    if (index.isValid()) {
-        view_->select(index);
+    model_->set_gp(gp);
+    if (model_->rowCount() && model_->resultRow(0) == gp) {
+        view_->select(model_->index(0, 0));
         //view_->scrollTo(index); // FIXME http://redmine.emweb.be/issues/1380
     }
 }
@@ -150,7 +150,7 @@ void GPListWidget::set_gp(const GPPtr& gp) {
 void GPListWidget::apply() {
     bool only_my = only_my_->isChecked() && tApp->user();
     User::set_s(SWITCH_ONLY_MY_GP, only_my);
-    model_->set_query(only_my);
+    model_->set_only_my(only_my);
 }
 
 void GPListWidget::manager() {
