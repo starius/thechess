@@ -44,6 +44,7 @@ public:
         dbo::field(a, norating_, "norating");
         dbo::field(a, pause_limit_init_, "pause_limit_init");
         dbo::field(a, first_draw_, "first_draw");
+        dbo::field(a, games_size_, "games_size");
     }
 
     /** Get init moves */
@@ -122,6 +123,16 @@ public:
     */
     void set_no_draw();
 
+    /** Return cached number of games */
+    int games_size() const {
+        return games_size_;
+    }
+
+    /** Set cached number of games */
+    void set_games_size(int games_size) {
+        games_size_ = games_size;
+    }
+
 private:
     GPPtr parent_;
     GPs children_;
@@ -139,6 +150,7 @@ private:
     bool norating_;
 
     int first_draw_;
+    int games_size_;
 };
 
 /** This value of first_draw() indicates a game without draw possibility */

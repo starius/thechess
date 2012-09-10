@@ -91,7 +91,8 @@ CREATE TABLE "thechess_cp" (
   "min_substages" integer not null,
   "increment_substages" integer not null,
   "min_online_time" interval,
-  "max_online_time" interval
+  "max_online_time" interval,
+  "competitions_size" integer not null
 );
 CREATE TABLE "thechess_game" (
   "id" serial primary key,
@@ -142,7 +143,8 @@ CREATE TABLE "thechess_gp" (
   "limit_private_init" interval,
   "norating" boolean not null,
   "pause_limit_init" interval,
-  "first_draw" integer not null
+  "first_draw" integer not null,
+  "games_size" integer not null
 );
 CREATE TABLE "thechess_ip_ban" (
   "id" serial primary key,
@@ -276,6 +278,7 @@ CREATE INDEX "cp_max_rating" ON "thechess_cp" ("max_rating");
 CREATE INDEX "cp_min_classification" ON "thechess_cp" ("min_classification");
 CREATE INDEX "cp_max_classification" ON "thechess_cp" ("max_classification");
 CREATE INDEX "cp_force_start_delay" ON "thechess_cp" ("force_start_delay");
+CREATE INDEX "cp_competitions_size" ON "thechess_cp" ("competitions_size");
 CREATE INDEX "game_name" ON "thechess_game" ("name");
 CREATE INDEX "game_started" ON "thechess_game" ("started");
 CREATE INDEX "game_state" ON "thechess_game" ("state");
@@ -286,6 +289,7 @@ CREATE INDEX "gp_limit_std" ON "thechess_gp" ("limit_std");
 CREATE INDEX "gp_limit_private_init" ON "thechess_gp" ("limit_private_init");
 CREATE INDEX "gp_first_draw" ON "thechess_gp" ("first_draw");
 CREATE INDEX "gp_norating" ON "thechess_gp" ("norating");
+CREATE INDEX "gp_games_size" ON "thechess_gp" ("games_size");
 CREATE INDEX "ip_ip" ON "thechess_ip_ban" ("ip");
 CREATE INDEX "ip_enabled" ON "thechess_ip_ban" ("enabled");
 CREATE INDEX "ip_start" ON "thechess_ip_ban" ("start");

@@ -56,6 +56,7 @@ public:
         dbo::field(a, increment_substages_, "increment_substages");
         dbo::field(a, min_online_time_, "min_online_time");
         dbo::field(a, max_online_time_, "max_online_time");
+        dbo::field(a, competitions_size_, "competitions_size");
     }
 
     /** Get type */
@@ -86,6 +87,16 @@ public:
     /** Set parent */
     void set_parent(const CPPtr& parent) {
         parent_ = parent;
+    }
+
+    /** Return cached number of competitions */
+    int competitions_size() const {
+        return competitions_size_;
+    }
+
+    /** Set cached number of competitions */
+    void set_competitions_size(int competitions_size) {
+        competitions_size_ = competitions_size;
     }
 
     /** \name Restrictions for users */
@@ -317,6 +328,7 @@ private:
     // all
     Td min_online_time_;
     Td max_online_time_;
+    int competitions_size_;
 };
 
 }

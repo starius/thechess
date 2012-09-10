@@ -21,7 +21,8 @@ GP::GP(bool):
     limit_private_init_(config::defaults::LIMIT_PRIVATE_INIT),
     pause_limit_init_(config::defaults::PAUSE_LIMIT_INIT),
     norating_(config::defaults::NORATING),
-    first_draw_(config::defaults::FIRST_DRAW) {
+    first_draw_(config::defaults::FIRST_DRAW),
+    games_size_(0) {
 }
 
 void GP::set_no_draw() {

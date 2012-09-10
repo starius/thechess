@@ -37,8 +37,9 @@ Game::Game(const GPPtr& gp):
     pause_proposed_td_(TD_NULL),
     mistake_move_(-1),
     rating_after_(-1),
-    norating_(false)
-{ }
+    norating_(false) {
+    gp.modify()->set_games_size(gp->games_size() + 1);
+}
 
 bool Game::is_ended() const {
     return is_draw() || is_win() || state() == CANCELLED;

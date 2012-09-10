@@ -82,9 +82,7 @@ public:
     }
 
     /** Set competition parameters */
-    void set_cp(const CPPtr& cp) {
-        cp_ = cp;
-    }
+    void set_cp(const CPPtr& cp);
 
     /** Get game parameters.
     If self gp is defined, return self gp.

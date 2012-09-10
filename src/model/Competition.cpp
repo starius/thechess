@@ -133,6 +133,14 @@ UsersVector Competition::winners_of_games(const GamesVector& games) {
     return winners;
 }
 
+void Competition::set_cp(const CPPtr& cp) {
+    if (cp_) {
+        cp_.modify()->set_competitions_size(cp_->competitions_size() - 1);
+    }
+    cp_ = cp;
+    cp.modify()->set_competitions_size(cp->competitions_size() + 1);
+}
+
 const GPPtr& Competition::gp() const {
     const GPPtr& gp = gp_;
     return gp ? gp_ : cp()->gp();
