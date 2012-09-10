@@ -117,6 +117,26 @@ public:
         parent_ = parent;
     }
 
+    /** Return list of GPs based on this GP */
+    const GPs& children() const {
+        return children_;
+    }
+
+    /** Return list of Games based on this GP */
+    const Games& games() const {
+        return games_;
+    }
+
+    /** Return list of CPs based on this GP */
+    const CPs& cps() const {
+        return cps_;
+    }
+
+    /** Return list of Competitions based on this GP */
+    const Competitions& competitions() const {
+        return competitions_;
+    }
+
     /** Set min time limits and forbid game being finished with draw.
     All types of draw become impossible except stalemate.
     In case of stalemate games is ended with NO_DRAW_STALEMATE, black wins.

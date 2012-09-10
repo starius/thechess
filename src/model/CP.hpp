@@ -89,6 +89,16 @@ public:
         parent_ = parent;
     }
 
+    /** Return list of CPs based on this CP */
+    const CPs& children() const {
+        return children_;
+    }
+
+    /** Return list of Competitions based on this CP */
+    const Competitions& competitions() const {
+        return competitions_;
+    }
+
     /** Return cached number of competitions */
     int competitions_size() const {
         return competitions_size_;
