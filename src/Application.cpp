@@ -184,15 +184,19 @@ void Application::notify(const Wt::WEvent& e) {
             // FIXME this does not work
             //user_action();
         }
-    } catch (dbo::StaleObjectException e) {
-        log("notice") << e.what();
-        try {
-            dbo::Transaction t(session());
-            session().rereadAll();
-        } catch (...) {
-        }
+        // } catch (dbo::StaleObjectException e) {
+        //     log("notice") << e.what();
+        //     try {
+        //         dbo::Transaction t(session());
+        //         // session().rereadAll();
+        //         // FIXME rereadAll() causes segfault on SettingsWidget
+        //         // if tApp->user() is stale
+        //     } catch (...) {
+        //     }
+        //     quit();
     } catch (std::exception& e) {
         log("fatal") << e.what();
+        redirect(internalPath());
         quit();
     }
 }
