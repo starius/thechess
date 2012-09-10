@@ -88,6 +88,9 @@ public:
     /** Set auto value for sorting index using information about parents */
     void set_index();
 
+    /** Set auto value for depth */
+    void set_depth();
+
     /** Get depth.
     For root depth is 0, for its children -- 1 and so on.
     This field is not significant, it could be recalculated

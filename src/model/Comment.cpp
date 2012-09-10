@@ -169,6 +169,12 @@ void Comment::set_index() {
     }
 }
 
+void Comment::set_depth() {
+    if (parent()) {
+        depth_ = parent()->depth() + 1;
+    }
+}
+
 void Comment::set_type(Type type) {
     type_ = type;
     set_state(state_of_new(this->init(), this->type(), this->parent()));
@@ -218,7 +224,7 @@ void Comment::set_parent(const CommentPtr& parent, bool set_index) {
         return;
     }
     parent_ = parent;
-    depth_ = parent->depth() + 1;
+    set_depth();
     if (set_index) {
         this->set_index();
     }
