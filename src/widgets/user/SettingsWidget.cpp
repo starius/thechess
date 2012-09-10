@@ -215,6 +215,14 @@ private:
         BOOST_FOREACH (CompetitionPtr c, ccc) {
             c.modify()->stat_change();
         }
+        GPs gps = tApp->session().find<GP>().resultList();
+        BOOST_FOREACH (GPPtr gp, gps) {
+            gp.modify()->set_games_size(gp->games().size());
+        }
+        CPs cps = tApp->session().find<CP>().resultList();
+        BOOST_FOREACH (CPPtr cp, cps) {
+            cp.modify()->set_competitions_size(cp->competitions().size());
+        }
     }
 };
 
