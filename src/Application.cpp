@@ -94,10 +94,6 @@ Application::~Application() {
     }
 }
 
-UserPtr Application::user() {
-    return session().user();
-}
-
 void Application::update_password() {
     dbo::Transaction t(session());
     if (user()) {
@@ -130,6 +126,7 @@ static void check_session_number() {
 void Application::login_handler() {
     GamesVector games_vector;
     dbo::Transaction t(session());
+    user_ = session().user();
     if (prev_user_ != user()) {
         prev_user_.reread();
         if (prev_user_) {

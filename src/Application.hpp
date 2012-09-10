@@ -61,7 +61,16 @@ public:
     }
 
     /** Return user */
-    UserPtr user();
+    const UserPtr& user() const {
+        return user_;
+    }
+
+    /** Return user.
+    This version for .reread().
+    */
+    UserPtr& user() {
+        return user_;
+    }
 
     /** Show Update Password dialog */
     void update_password();
@@ -97,6 +106,7 @@ private:
     bool online_;
     Wt::WDateTime last_user_event_;
     Wt::WDateTime next_check_;
+    UserPtr user_;
 
     void set_auth_widget();
     void login_handler();
