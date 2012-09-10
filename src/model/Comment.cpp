@@ -159,7 +159,8 @@ void Comment::set_index() {
         Comments family_desc_collection = family_desc.resultList();
         if (family_desc_collection.size()) {
             CommentPtr last = *family_desc_collection.begin();
-            if (abs(last->index() - index()) > COMMENT_GAP) {
+            if (abs(last->index() - index()) > COMMENT_GAP ||
+                    index() < COMMENT_GAP) {
                 index_ = last->index() + COMMENT_STEP;
             }
         } else {
