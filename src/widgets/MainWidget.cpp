@@ -155,6 +155,8 @@ void MainWidget::settings_page() {
     if (tApp->user()) {
         set_contents(new SettingsWidget());
         wApp->setTitle(tr("tc.title.SettingsWidget"));
+    } else {
+        set_contents(new Wt::WContainerWidget());
     }
 }
 
