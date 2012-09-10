@@ -223,6 +223,24 @@ private:
         BOOST_FOREACH (CPPtr cp, cps) {
             cp.modify()->set_competitions_size(cp->competitions().size());
         }
+        t.commit();
+        // comments
+        dbo::Transaction t2(tApp->session());
+        Session& s = tApp->session();
+        s.execute("update thechess_comment set show_index = 1, depth = 1 "
+                  "where type = ?").bind(Comment::FORUM_POST_TEXT);
+        s.execute("update thechess_comment set show_index = 0, depth = 0 "
+                  "where type = ?").bind(Comment::FORUM_COMMENT);
+        t2.commit();
+        dbo::Transaction t3(tApp->session());
+        Comments comments = tApp->session().find<Comment>()
+                            .where("type = ?").bind(Comment::FORUM_COMMENT)
+                            .orderBy("id");
+        BOOST_FOREACH (CommentPtr comment, comments) {
+            comment.modify()->set_depth();
+            comment.modify()->set_index();
+        }
+        t3.commit();
     }
 };
 
