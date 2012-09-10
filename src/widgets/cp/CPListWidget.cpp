@@ -16,6 +16,7 @@
 #include <Wt/WCheckBox>
 #include <Wt/WEnvironment>
 #include <Wt/Wc/Pager.hpp>
+#include <Wt/Wc/util.hpp>
 
 #include "widgets/cp/CPListWidget.hpp"
 #include "Application.hpp"
@@ -74,34 +75,33 @@ public:
         return Wt::WString::tr(key);
     }
 
-    void set_query(bool only_my = false) {
+    void set_only_my(bool only_my) {
+        only_my_ = only_my;
+        set_query();
+    }
+
+    void set_query() {
         CPListWidget::Q q = tApp->session().find<CP>();
-        if (only_my) {
+        if (only_my_) {
             q.where("init_id = ?").bind(tApp->user());
+        }
+        if (cp_) {
+            q.orderBy("id = " + TO_S(cp_.id()) +
+                      " desc, competitions_size desc");
+        } else {
+            q.orderBy("competitions_size desc");
         }
         setQuery(q, /* keep_columns */ true);
     }
 
-    Wt::WModelIndex result_to_index(const CPPtr& ptr) {
-        sort(N_COLUMN);
-        int result = -1;
-        if (ptr) {
-            try {
-                int row = ptr.id() - 1;
-                if (resultRow(row).id() == ptr.id()) {
-                    result = row;
-                } else {
-                    // shift
-                    row -= resultRow(row).id() - ptr.id();
-                    if (resultRow(row).id() == ptr.id()) {
-                        result = row;
-                    }
-                }
-            } catch (...)
-            { }
-        }
-        return result != -1 ? index(result, N_COLUMN) : Wt::WModelIndex();
+    void set_cp(const CPPtr& cp) {
+        cp_ = cp;
+        set_query();
     }
+
+private:
+    bool only_my_;
+    CPPtr cp_;
 };
 
 class CPListView : public Wt::WTableView {
@@ -146,9 +146,9 @@ CPPtr CPListWidget::cp() const {
 }
 
 void CPListWidget::set_cp(const CPPtr& cp) {
-    Wt::WModelIndex index = model_->result_to_index(cp);
-    if (index.isValid()) {
-        view_->select(index);
+    model_->set_cp(cp);
+    if (model_->rowCount() && model_->resultRow(0) == cp) {
+        view_->select(model_->index(0, 0));
         //view_->scrollTo(index); FIXME http://redmine.emweb.be/issues/1380
     }
 }
@@ -156,7 +156,7 @@ void CPListWidget::set_cp(const CPPtr& cp) {
 void CPListWidget::apply() {
     bool only_my = only_my_->isChecked() && tApp->user();
     User::set_s(SWITCH_ONLY_MY_CP, only_my);
-    model_->set_query(only_my);
+    model_->set_only_my(only_my);
 }
 
 void CPListWidget::manager() {
