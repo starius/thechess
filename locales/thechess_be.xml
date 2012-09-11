@@ -66,7 +66,7 @@
     <message id="tc.competition.Force_start_delay">Фарсіраваны старт партыі</message>
     <message id="tc.competition.Games_factor">Множнік партый</message>
     <message id="tc.competition.Games_list">Спіс гульняў</message>
-    <message id='tc.competition.Header'>Турнир № {1}</message>
+    <message id='tc.competition.Header'>Турнір № {1}</message>
     <message id="tc.competition.Increment_substages">Рост ліку падраўндаў</message>
     <message id="tc.competition.List">Спіс турніраў</message>
     <message id="tc.competition.max_classification">максімальны разрад</message>
