@@ -2,36 +2,36 @@
 <messages nplurals="3"
     plural="(n%10 == 0 || n%10 >= 5 || n/10%10 == 1) ? 2 : n%10==1 ? 0 : 1">
 
-    <message id="tc.comment.Add">Добавить сообщение</message>
-    <message id="tc.comment.admin_log">административный журнал</message>
-    <message id="tc.comment.Approve">Одобрить</message>
-    <message id="tc.comment.deleted_message">[Удалено]</message>
-    <message id="tc.comment.draft_message">[Черновик]</message>
+    <message id="tc.comment.Add">Дадаць паведамленне</message>
+    <message id="tc.comment.admin_log">адміністрацыйны журнал</message>
+    <message id="tc.comment.Approve">Адабрыць</message>
+    <message id="tc.comment.deleted_message">[Выдалена]</message>
+    <message id="tc.comment.draft_message">[Чарнавік]</message>
     <message id='tc.comment.Global_chat'>Общий чат</message>
-    <message id="tc.comment.private_messages">личные сообщения</message>
-    <message id="tc.comment.Remove">Удалить</message>
+    <message id="tc.comment.private_messages">асабістыя паведамленні</message>
+    <message id="tc.comment.Remove">Выдаліць</message>
 
     <message id="tc.common.Agree">Пагадзіцца</message>
-    <message id="tc.common.Allow">Позволить</message>
+    <message id="tc.common.Allow">Дазволіць</message>
     <message id="tc.common.Apply">Прымяніць</message>
-    <message id="tc.common.Board">Доска</message>
+    <message id="tc.common.Board">Дошка</message>
     <message id="tc.common.Cancel">Адмяніць</message>
     <message id="tc.common.Confirm">Пацвердзіць</message>
     <message id="tc.common.Create">Стварыць</message>
-    <message id="tc.common.Create_new">Создать новую запись</message>
+    <message id="tc.common.Create_new">Стварыць новы запіс</message>
     <message id="tc.common.created">створана</message>
-    <message id="tc.common.creator">создатель</message>
+    <message id="tc.common.creator">стваральнік</message>
     <message id="tc.common.Description">Апісанне</message>
     <message id="tc.common.Discard">Адмовіцца</message>
-    <message id="tc.common.duration">продолжительность</message>
-    <message id="tc.common.enabled">включено</message>
-    <message id="tc.common.Game">Игра</message>
+    <message id="tc.common.duration">працягласць</message>
+    <message id="tc.common.enabled">уключана</message>
+    <message id="tc.common.Game">Гульня</message>
     <message id="tc.common.interval">ад {1} да {2}</message>
     <message id="tc.common.Join">Далучыцца</message>
-    <message id="tc.common.Kick">Выкинуть</message>
-    <message id="tc.common.last">последний</message>
-    <message id="tc.common.Links">Ссылки</message>
-    <message id="tc.common.Moves">Ходы</message>
+    <message id="tc.common.Kick">Выкінуць</message>
+    <message id="tc.common.last">апошні</message>
+    <message id="tc.common.Links">Спасылкі</message>
+    <message id="tc.common.Moves">Хады</message>
     <message id="tc.common.Name">Назва</message>
     <message id="tc.common.no_params_error">не выбраны параметры</message>
     <message id="tc.common.number">№</message>
@@ -39,21 +39,21 @@
     <message id="tc.common.Refresh">Аднавіць</message>
     <message id="tc.common.Reset">Скід</message>
     <message id="tc.common.Save">Захаваць</message>
-    <message id="tc.common.Select_existing">Выбрать существующую запись</message>
-    <message id="tc.common.Send">Отправить</message>
-    <message id="tc.common.start">начало</message>
-    <message id="tc.common.stop">конец</message>
+    <message id="tc.common.Select_existing">Абраць існуючы запіс</message>
+    <message id="tc.common.Send">Адправіць</message>
+    <message id="tc.common.start">пачатак</message>
+    <message id="tc.common.stop">канец</message>
     <message id="tc.common.winner">пераможца</message>
     <message id="tc.common.Select_or_create">
-        Пожалуйста, выберите существующую запись (кликнув на неё)
-        или создайте свою собственную.
-        Чтобы создать унаследовать новую запись от существующей,
-        сначала кликните на существующую запись,
-        а потом пройдите во вторую вкладку для внесения изменений.
+        Калі ласка, выбярце існуючы запіс (клікнуўшы па ім)
+        ці стварыце свой уласны.
+        Каб стварыць успадкаваць новы запіс ад існага,
+        спачатку клікніце на існы запіс,
+        а потым прайдзіце ў другую ўкладку для ўнясення змен.
     </message>
     <message id="tc.common.Stat">
-        Всего сыграно: {1}. Побед: {2}. Ничьих: {3}. Поражений: {4}.
-        Рейтинг: {5}.
+        Усяго згуляна: {1}. Перамог: {2}. Нічыіх: {3}. Паражэнняў: {4}.
+        Рэйтынг: {5}.
     </message>
 
     <message id="tc.competition.Cant_change">Вы не можаце змяняць гэты турнір</message>
@@ -69,21 +69,21 @@
     <message id='tc.competition.Header'>Турнир № {1}</message>
     <message id="tc.competition.Increment_substages">Рост ліку падраўндаў</message>
     <message id="tc.competition.List">Спіс турніраў</message>
-    <message id="tc.competition.max_classification">максимальный разряд</message>
-    <message id="tc.competition.max_rating">максимальный рейтинг</message>
+    <message id="tc.competition.max_classification">максімальны разрад</message>
+    <message id="tc.competition.max_rating">максімальны рэйтынг</message>
     <message id="tc.competition.Max_simultaneous_games">Адначасовыя гульні</message>
     <message id="tc.competition.Members_classification">Разрад удзельнікаў</message>
     <message id="tc.competition.members_number">удзельнікі</message>
-    <message id="tc.competition.min_classification">минимальный разряд</message>
-    <message id="tc.competition.min_rating">минимальный рейтинг</message>
-    <message id="tc.competition.Min_substages">Подраундов в первом раунде</message>
-    <message id="tc.competition.Online_time">Время, проведенное участниками ондайн</message>
+    <message id="tc.competition.min_classification">мінімальны разрад</message>
+    <message id="tc.competition.min_rating">мінімальны рэйтынг</message>
+    <message id="tc.competition.Min_substages">Падраундаў у першым раўндзе</message>
+    <message id="tc.competition.Online_time">Час, праведзены ўдзельнікамі анлайн</message>
     <message id="tc.competition.Parameters">Параметры турніру</message>
     <message id="tc.competition.Rating">Рэйтынг удзельнікаў</message>
     <message id="tc.competition.Recruiting_time">Час на зборы</message>
     <message id="tc.competition.Relax_time">Час на адпачынак</message>
     <message id="tc.competition.Score">Лік</message>
-    <message id="tc.competition.Select_cp">Выбор параметров турнира</message>
+    <message id="tc.competition.Select_cp">Выбар параметраў турніру</message>
     <message id="tc.competition.Show_games">Паказаць нумары партый</message>
     <message id="tc.competition.Show_wins">Паказаць колькасць перамог</message>
     <message id="tc.competition.Stage">Раунд</message>
@@ -99,12 +99,12 @@
     <message id="tc.competition.Type_staged">Ступеністы</message>
     <message id="tc.competition.Type_team">Камандны</message>
     <message id="tc.competition.Users">Колькасць удзельнікаў</message>
-    <message id="tc.competition.Virtuals_allowed_by">Клоны разрешены&nbsp;</message>
+    <message id="tc.competition.Virtuals_allowed_by">Клоны дазволены&nbsp;</message>
     <message id="tc.competition.Winner">Пераможца</message>
     <message id="tc.competition.Winners">Пераможцы</message>
     <message id="tc.competition.Virtuals">
         <font style="background:#F2C576;">
-            В турнире есть клоны.
+            У турніры ёсць клоны.
         </font>
     </message>
     <message id="tc.competition.widget_template">
@@ -121,19 +121,19 @@
         <br /> <h2>Чат</h2>${chat}
     </message>
 
-    <message id="tc.forum.all_comments">все комментарии</message>
-    <message id="tc.forum.all_posts">все посты</message>
-    <message id="tc.forum.Comment">Страница комментария</message>
-    <message id="tc.forum.Edit">Правка</message>
-    <message id="tc.forum.Goto_parent">Открыть родительский комментарий #{1}</message>
-    <message id="tc.forum.Only_ok">Показывать только подтвержденные записи</message>
-    <message id="tc.forum.Post_edited">Заголовок поста отредактирован {1}</message>
+    <message id="tc.forum.all_comments">усе каментарыі</message>
+    <message id="tc.forum.all_posts">усе пасты</message>
+    <message id="tc.forum.Comment">Старонка каментарыя</message>
+    <message id="tc.forum.Edit">Праўка</message>
+    <message id="tc.forum.Goto_parent">Адкрыць бацькоўскі каментарый #{1}</message>
+    <message id="tc.forum.Only_ok">Паказваць толькі пацверджаныя запісы</message>
+    <message id="tc.forum.Post_edited">Загаловак паста адрэдактаваны {1}</message>
     <message id="tc.forum.post_header">пост {1}: {2}</message>
-    <message id="tc.forum.Post_text_edited">Пост отредактирован {1}</message>
-    <message id="tc.forum.topic_posts">посты тематики {1}</message>
-    <message id="tc.forum.topics">тематики</message>
+    <message id="tc.forum.Post_text_edited">Пост адрэдактаваны {1}</message>
+    <message id="tc.forum.topic_posts">пасты тэматыкі {1}</message>
+    <message id="tc.forum.topics">тэматыкі</message>
     <message id="tc.forum.comment_template">
-        От {1}, {2} писал(а):
+        Ад {1}, {2} пісаў(а):
         <br />
         {3}
     </message>
@@ -141,13 +141,13 @@
     <message id="tc.game.Analysis">Аналіз</message>
     <message id="tc.game.Analysis_title">Аналіз гульні № {1}</message>
     <message id="tc.game.black">чорны</message>
-    <message id="tc.game.Call_auto_judge">Вызвать автоматического судью</message>
+    <message id="tc.game.Call_auto_judge">Выклікаць аўтаматычнага суддзю</message>
     <message id="tc.game.Challenge">Выклік</message>
     <message id="tc.game.colors">колеры</message>
     <message id="tc.game.colors_not_random">наканаваны</message>
     <message id="tc.game.colors_random">абраны выпадкова</message>
-    <message id="tc.game.comment">каментар</message>
-    <message id="tc.game.comment_welcome">увядзіце ваш каментар тут</message>
+    <message id="tc.game.comment">каментарый</message>
+    <message id="tc.game.comment_welcome">увядзіце ваш каментарый тут</message>
     <message id="tc.game.Competition_confirm">Пацвердзіць</message>
     <message id="tc.game.Competition_confirm_welcome">Гульня можа быць пацверджана загадзя</message>
     <message id="tc.game.Competition_discard">Адмовіцца</message>
@@ -159,30 +159,30 @@
     <message id="tc.game.Draw_proposal">Нічыя прапанавана, прапанаваў {1}</message>
     <message id="tc.game.Draw_propose">Прапанаваць нічыю</message>
     <message id="tc.game.ended">завершана</message>
-    <message id="tc.game.Enlarged_images">Увеличенные изображения</message>
+    <message id="tc.game.Enlarged_images">Павялічаныя адлюстраванні</message>
     <message id="tc.game.first_draw">колькасць хадоў для нічыёй</message>
     <message id="tc.game.force_confirm">фарсіраванае пацверджанне</message>
     <message id="tc.game.force_start">фарсіраваны старт</message>
     <message id="tc.game.Header">Гульня № {1}</message>
-    <message id="tc.game.Highlight_lastmove">Подсветить последний ход</message>
+    <message id="tc.game.Highlight_lastmove">Падсвятліць апошні ход</message>
     <message id="tc.game.init">стваральнік гульні</message>
     <message id="tc.game.lastmove">апошні ход (ці яго эквівалент)</message>
     <message id="tc.game.Leave">Выйсці</message>
     <message id="tc.game.limit_private_init">неўзнаўляльны запас</message>
     <message id="tc.game.limit_std">узнаўляльны запас часу</message>
     <message id="tc.game.List">Спіс гульняў</message>
-    <message id='tc.game.Mark_norating'>Пометить как нерейтинговую</message>
+    <message id='tc.game.Mark_norating'>Пазначыць як нерэйтынгавую</message>
     <message id="tc.game.Mistake_proposal">{1} прапануе адкаціць да пазіцыі, папярэдняй ходу {2} {3}</message>
     <message id="tc.game.Mistake_propose">Адкаціць</message>
-    <message id="tc.game.Move_confirmation">Подтверждение хода</message>
+    <message id="tc.game.Move_confirmation">Пацверджанне ходу</message>
     <message id="tc.game.moves_size">хадоў</message>
-    <message id="tc.game.No_draw">Игра не может завершиться вничью</message>
+    <message id="tc.game.No_draw">Гульня не можа завяршыцца ўнічыю</message>
     <message id="tc.game.norating">нерэйтынгавая</message>
     <message id="tc.game.norating_false">вынік гульні паўплывае на рэйтынг удзельнікаў</message>
     <message id="tc.game.norating_true">вынік гульні не паўплывае на рэйтынг удзельнікаў</message>
     <message id="tc.game.of_black">чорных</message>
     <message id="tc.game.of_white">белых</message>
-    <message id="tc.game.Only_commented">Только прокомментированные</message>
+    <message id="tc.game.Only_commented">Толькі пракаментаваныя</message>
     <message id="tc.game.order_user">ходзіць</message>
     <message id="tc.game.Overturn_board">Перавярнуць</message>
     <message id="tc.game.Parameters">Параметры партыі</message>
@@ -194,7 +194,7 @@
     <message id="tc.game.real_rating">рэйтынгавая</message>
     <message id="tc.game.real_rating_false">вынік гульні не ўплывае на рэйтынг удзельнікаў</message>
     <message id="tc.game.real_rating_true">вынік гульні ўплывае на рэйтынг удзельнікаў</message>
-    <message id="tc.game.Select_gp">Выбор параметров партии</message>
+    <message id="tc.game.Select_gp">Выбар параметраў партыі</message>
     <message id="tc.game.Start_position">Зыходная пазіцыя</message>
     <message id="tc.game.started">пачата</message>
     <message id="tc.game.State">Стан</message>
@@ -213,7 +213,7 @@
     <message id="tc.game.State_state">Невядомы стан</message>
     <message id="tc.game.State_surrendered">Здадзена</message>
     <message id="tc.game.State_timeout">Пратэрмінавана</message>
-    <message id="tc.game.Surrender">Сдаться</message>
+    <message id="tc.game.Surrender">Здацца</message>
     <message id="tc.game.white">белы</message>
     <message id="tc.game.your_color">колер вашых фігураў</message>
     <message id="tc.game.First_draw">
@@ -236,7 +236,7 @@
     </message>
 
     <message id="tc.main.main_template">
-        <h1>Добро пожаловать!</h1>
+        <h1>Калі ласка!</h1>
         <h2>Чемпион:</h2>
         <br />
         ${champion}
@@ -245,105 +245,105 @@
         ${best_players}
     </message>
 
-    <message id="tc.menu.admin_log">административный журнал</message>
-    <message id="tc.menu.all_comments">все комментарии</message>
-    <message id="tc.menu.all_posts">все посты</message>
-    <message id="tc.menu.banned_ip">забаненные IP</message>
-    <message id="tc.menu.challenge">вызов</message>
-    <message id="tc.menu.competition">турнир</message>
-    <message id="tc.menu.competitions_list">список турниров</message>
+    <message id="tc.menu.admin_log">адміністрацыйны журнал</message>
+    <message id="tc.menu.all_comments">усе каментарыі</message>
+    <message id="tc.menu.all_posts">усе пасты</message>
+    <message id="tc.menu.banned_ip">забаненыя IP</message>
+    <message id="tc.menu.challenge">выклік</message>
+    <message id="tc.menu.competition">турнір</message>
+    <message id="tc.menu.competitions_list">спіс турніраў</message>
     <message id="tc.menu.forum">форум</message>
-    <message id="tc.menu.game">игра</message>
-    <message id="tc.menu.game_parameters">параметры игры</message>
-    <message id="tc.menu.games_list">список игр</message>
-    <message id="tc.menu.global_chat">общий чат</message>
-    <message id="tc.menu.my_page">моя страница</message>
-    <message id="tc.menu.new_competition">новый турнир</message>
-    <message id="tc.menu.private_messages">личные сообщения</message>
-    <message id="tc.menu.settings">настройки</message>
-    <message id="tc.menu.testing_board">доска для проб</message>
-    <message id="tc.menu.topics">тематики</message>
-    <message id="tc.menu.user">пользователь</message>
-    <message id="tc.menu.users_list">список пользователей</message>
-    <message id="tc.menu.virtuals_list">список клонов</message>
+    <message id="tc.menu.game">гульня</message>
+    <message id="tc.menu.game_parameters">параметры гульні</message>
+    <message id="tc.menu.games_list">спіс гульняў</message>
+    <message id="tc.menu.global_chat">агульны чат</message>
+    <message id="tc.menu.my_page">мая старонка</message>
+    <message id="tc.menu.new_competition">новы турнір</message>
+    <message id="tc.menu.private_messages">асабістыя паведамленні</message>
+    <message id="tc.menu.settings">налады</message>
+    <message id="tc.menu.testing_board">дошка для спроб</message>
+    <message id="tc.menu.topics">тэматыкі</message>
+    <message id="tc.menu.user">карыстальнік</message>
+    <message id="tc.menu.users_list">спіс карыстанікаў</message>
+    <message id="tc.menu.virtuals_list">спіс клонаў</message>
 
-    <message id="tc.title.BoardWidget">Доска « TheChess</message>
-    <message id="tc.title.ChatCommentWidget">Сообщение чата « TheChess</message>
-    <message id="tc.title.CommentList_admin_log">Административный журнир « TheChess</message>
-    <message id="tc.title.CommentList_edit">Правка « Форум « TheChess</message>
+    <message id="tc.title.BoardWidget">Дошка « TheChess</message>
+    <message id="tc.title.ChatCommentWidget">Паведамленне чата « TheChess</message>
+    <message id="tc.title.CommentList_admin_log">Адміністрацыйны журнал « TheChess</message>
+    <message id="tc.title.CommentList_edit">Праўка « Форум « TheChess</message>
     <message id="tc.title.CommentList_global_chat">Чат « TheChess</message>
-    <message id="tc.title.CommentList_my_messages">Мои сообщения « TheChess</message>
-    <message id="tc.title.GameCreateWidget">Create « Игра « TheChess</message>
-    <message id="tc.title.GameListWidget">Список « Игра « TheChess</message>
-    <message id="tc.title.GameWidget">№{1} « Игра « TheChess</message>
-    <message id="tc.title.IpBanList">Список банов по IP « TheChess</message>
+    <message id="tc.title.CommentList_my_messages">Мае паведамленні « TheChess</message>
+    <message id="tc.title.GameCreateWidget">Create « Гульня « TheChess</message>
+    <message id="tc.title.GameListWidget">Спіс « Гульня « TheChess</message>
+    <message id="tc.title.GameWidget">№{1} « Гульня « TheChess</message>
+    <message id="tc.title.IpBanList">Спіс банаў па IP « TheChess</message>
     <message id="tc.title.MainPage">TheChess</message>
-    <message id="tc.title.MovesWidget">Доска « TheChess</message>
-    <message id="tc.title.MovesWidget_moves">Ходы « TheChess</message>
-    <message id="tc.title.NewIpBan">Новый бан « TheChess</message>
-    <message id="tc.title.SettingsWidget">Настройки « Пользователь « TheChess</message>
-    <message id="tc.title.UserListWidget">Список « Пользователь « TheChess</message>
-    <message id="tc.title.UserWidget">{1} « Пользователь « TheChess</message>
-    <message id="tc.title.VirtualsWidget">Клоны « Пользователь « TheChess</message>
+    <message id="tc.title.MovesWidget">Дошка « TheChess</message>
+    <message id="tc.title.MovesWidget_moves">Хады « TheChess</message>
+    <message id="tc.title.NewIpBan">Новы бан « TheChess</message>
+    <message id="tc.title.SettingsWidget">Налады « Карыстальнік « TheChess</message>
+    <message id="tc.title.UserListWidget">Спіс « Карыстальнік « TheChess</message>
+    <message id="tc.title.UserWidget">{1} « Карыстальнік « TheChess</message>
+    <message id="tc.title.VirtualsWidget">Клоны « Карыстальнік « TheChess</message>
     <message id="tc.title.CommentList_all_comments">
-        Все комментарии « TheChess
+        Усе каментарыі « TheChess
     </message>
     <message id="tc.title.CommentList_forum_comment">
-        Комментарий #{1} « Форум « TheChess
+        Каментарый #{1} « Форум « TheChess
     </message>
     <message id="tc.title.CommentList_post">
         Пост {1} « Форум « TheChess
     </message>
     <message id="tc.title.CommentList_posts">
-        Посты « Форум « TheChess
+        Пасты « Форум « TheChess
     </message>
     <message id="tc.title.CommentList_topic">
-        Тематика {1} « Форум « TheChess
+        Тэматыка {1} « Форум « TheChess
     </message>
     <message id="tc.title.CommentList_topics">
-        Тематики « Форум « TheChess
+        Тэматыкі « Форум « TheChess
     </message>
     <message id="tc.title.CommentList_user_comments">
-        Комментарии « {1} « TheChess
+        Каментарыі « {1} « TheChess
     </message>
     <message id="tc.title.CompetitionCreateWidget">
-        Create « Турнир « TheChess
+        Create « Турнір « TheChess
     </message>
     <message id="tc.title.CompetitionListWidget">
-        Список « Турнир « TheChess
+        Спіс « Турнір « TheChess
     </message>
     <message id="tc.title.CompetitionListWidget_of">
-        С {1} « Турнир « TheChess
+        С {1} « Турнір « TheChess
     </message>
     <message id="tc.title.CompetitionWidget">
-        №{1} « Турнир « TheChess
+        №{1} « Турнір « TheChess
     </message>
     <message id="tc.title.GameListWidget_of">
-        С {1} « Игра « TheChess
+        С {1} « Гульня « TheChess
     </message>
     <message id="tc.title.GPListWidget">
-        Список « Параметры « Игра « TheChess
+        Спіс « Параметры « Гульня « TheChess
     </message>
     <message id="tc.title.GPWidget">
-        {1} « Параметры « Игра « TheChess
+        {1} « Параметры « Гульня « TheChess
     </message>
     <message id="tc.title.VirtualsWidget_of">
-        Клоны {1} « Пользователь « TheChess
+        Клоны {1} « Карыстальнік « TheChess
     </message>
 
-    <message id="tc.user.Already_banned">Уже в бане</message>
-    <message id="tc.user.Anonymous">Анонимус</message>
-    <message id="tc.user.avatar_nondefault">аватар не по умолчанию</message>
-    <message id="tc.user.ban_reason">причина бана</message>
-    <message id="tc.user.Block">Заблокировать</message>
-    <message id="tc.user.Change_avatar">Изменить аватар</message>
-    <message id="tc.user.chat_writer">писать в чат</message>
-    <message id="tc.user.classification">разряд</message>
+    <message id="tc.user.Already_banned">Ужо ў бане</message>
+    <message id="tc.user.Anonymous">Ананімус</message>
+    <message id="tc.user.avatar_nondefault">аватар не па змаўчанні</message>
+    <message id="tc.user.ban_reason">прычына бану</message>
+    <message id="tc.user.Block">Заблакаваць</message>
+    <message id="tc.user.Change_avatar">Змяніць аватар</message>
+    <message id="tc.user.chat_writer">пісаць у чат</message>
+    <message id="tc.user.classification">разрад</message>
     <message id="tc.user.classification_a">першы разрад</message>
     <message id="tc.user.classification_b">другі разрад</message>
     <message id="tc.user.classification_c">трэці разрад</message>
-    <message id="tc.user.classification_changer">изменять разряд</message>
-    <message id="tc.user.classification_confirmer">подтверждать разряд</message>
+    <message id="tc.user.classification_changer">змяняць разрад</message>
+    <message id="tc.user.classification_confirmer">пацвярджаць разрад</message>
     <message id="tc.user.classification_d">сярэдні аматар(4)</message>
     <message id="tc.user.classification_e">слабы аматар(5)</message>
     <message id="tc.user.classification_expert">кандыдат у майстры</message>
@@ -357,84 +357,84 @@
     <message id="tc.user.classification_national_master">нацыянальны майстар</message>
     <message id="tc.user.classification_none">без разраду</message>
     <message id="tc.user.classification_super_grandmaster">супергросмайстар</message>
-    <message id="tc.user.comments_remover">удалять комментарии</message>
-    <message id="tc.user.competition_changer">изменять турнир</message>
-    <message id="tc.user.competition_creator">создавать турнир</message>
-    <message id="tc.user.competition_joiner">присоединяться к турниру</message>
-    <message id="tc.user.confirmed_by">, подтверждено&nbsp;</message>
-    <message id="tc.user.cp_creator">создать параметры турнира</message>
-    <message id="tc.user.Delete">Удалить</message>
-    <message id="tc.user.Edit_rights">Редактировать права</message>
-    <message id="tc.user.forum_comment_creator">комментировать форум</message>
-    <message id="tc.user.forum_post_creator">создавать пост</message>
-    <message id="tc.user.game_creator">создавать игру</message>
-    <message id="tc.user.game_joiner">присоединяться к игре</message>
-    <message id="tc.user.games_stat_all">все игры</message>
-    <message id="tc.user.games_stat_draws">ничьи</message>
-    <message id="tc.user.games_stat_elo">рейтинг Эло</message>
-    <message id="tc.user.games_stat_fails">поражения</message>
-    <message id="tc.user.games_stat_wins">победы</message>
-    <message id="tc.user.gp_creator">изменять параметры игры</message>
-    <message id="tc.user.ip">ip-адрес</message>
-    <message id="tc.user.IpBanList">Список банов по IP</message>
-    <message id="tc.user.IpList">Список IP</message>
-    <message id="tc.user.Last_enter">Последний вход: {1}</message>
-    <message id="tc.user.List_rights">Список прав</message>
-    <message id="tc.user.logs_reader">читать журнал администратора</message>
-    <message id="tc.user.Many_sessions">Слишком много сессий</message>
+    <message id="tc.user.comments_remover">выдаляць каментарыі</message>
+    <message id="tc.user.competition_changer">змяняць турнір</message>
+    <message id="tc.user.competition_creator">ствараць турнір</message>
+    <message id="tc.user.competition_joiner">далучацца да турніру</message>
+    <message id="tc.user.confirmed_by">, пацверджана&nbsp;</message>
+    <message id="tc.user.cp_creator">стварыць параметры турніру</message>
+    <message id="tc.user.Delete">Выдаліць</message>
+    <message id="tc.user.Edit_rights">Рэдактаваць правы</message>
+    <message id="tc.user.forum_comment_creator">каментыраваць форум</message>
+    <message id="tc.user.forum_post_creator">ствараць пост</message>
+    <message id="tc.user.game_creator">ствараць гульню</message>
+    <message id="tc.user.game_joiner">далучацца да гульні</message>
+    <message id="tc.user.games_stat_all">усе гульні</message>
+    <message id="tc.user.games_stat_draws">нічыі</message>
+    <message id="tc.user.games_stat_elo">рэйтынг Эло</message>
+    <message id="tc.user.games_stat_fails">паражэнні</message>
+    <message id="tc.user.games_stat_wins">перамогі</message>
+    <message id="tc.user.gp_creator">змяняць параметры гульні</message>
+    <message id="tc.user.ip">ip-адрас</message>
+    <message id="tc.user.IpBanList">Спіс банаў па IP</message>
+    <message id="tc.user.IpList">Спіс IP</message>
+    <message id="tc.user.Last_enter">Апошні ўваход: {1}</message>
+    <message id="tc.user.List_rights">Спіс правоў</message>
+    <message id="tc.user.logs_reader">чытаць журнал адміністратара</message>
+    <message id="tc.user.Many_sessions">Занадта шмат сесій</message>
     <message id='tc.user.Message_sent'>Сообщение отправлено</message>
-    <message id='tc.user.My_blocklist'>В моём чёрном списке</message>
-    <message id="tc.user.Names_in_menu">Показывать имя пользователя в меню с играми</message>
-    <message id="tc.user.New_ban">Новый бан</message>
-    <message id="tc.user.not_confirmed">, не подтверждено</message>
-    <message id="tc.user.Not_removed">Не удаленные</message>
+    <message id='tc.user.My_blocklist'>У маім чорным спісе</message>
+    <message id="tc.user.Names_in_menu">Паказваць імя карыстальніка ў меню з гульнямі</message>
+    <message id="tc.user.New_ban">Новы бан</message>
+    <message id="tc.user.not_confirmed">, не пацверджана</message>
+    <message id="tc.user.Not_removed">Не выдаленыя</message>
     <message id="tc.user.Online_time">Час, праведзены на сайце: {1}</message>
-    <message id="tc.user.Only_online">Только на сайте</message>
-    <message id="tc.user.Password_example">Пример пароля:&nbsp;</message>
-    <message id="tc.user.private_writer">написать личное сообщение</message>
-    <message id="tc.user.Public_email">Показывать e-mail обычным пользователям</message>
+    <message id="tc.user.Only_online">Толькі на сайце</message>
+    <message id="tc.user.Password_example">Прыклад пароля:&nbsp;</message>
+    <message id="tc.user.private_writer">напісаць асабістае паведамленне</message>
+    <message id="tc.user.Public_email">Паказваць e-mail звычайным карыстальнікам</message>
     <message id="tc.user.rating_after">рэйтынг пасля</message>
     <message id="tc.user.Rating_changes">Змяненні рэйтынгу</message>
     <message id="tc.user.Rating_changes_and_me">Змяненні рэйтынгу (у параўнанні з маім рэйтынгам)</message>
-    <message id="tc.user.Recalculation">Полный пересчет рейтингов</message>
-    <message id="tc.user.records_editor">редактировать записи</message>
-    <message id="tc.user.registration_banner">банить IP</message>
-    <message id="tc.user.Registration_date">Дата регистрации: {1}</message>
-    <message id="tc.user.regular_rights_changer">изменять обычные права</message>
-    <message id="tc.user.Removed_message"><b>[Удаленный пользователь]</b></message>
-    <message id="tc.user.Settings">Настройки</message>
+    <message id="tc.user.Recalculation">Поўны пералік рэйтынгаў</message>
+    <message id="tc.user.records_editor">рэдактаваць запісы</message>
+    <message id="tc.user.registration_banner">баніць IP</message>
+    <message id="tc.user.Registration_date">Дата рэгістрацыі: {1}</message>
+    <message id="tc.user.regular_rights_changer">змяняць звычайныя правы</message>
+    <message id="tc.user.Removed_message"><b>[Выдалены карыстальнік]</b></message>
+    <message id="tc.user.Settings">Налады</message>
     <message id="tc.user.Start_game">Пачаць гульню</message>
-    <message id="tc.user.super_rights_changer">изменять особые права</message>
-    <message id="tc.user.This_ip_banned">Этот IP-адрес заблокирован</message>
-    <message id="tc.user.Unblock">Разблокировать</message>
-    <message id="tc.user.Undelete">Восстановить</message>
-    <message id="tc.user.unknown_right">неизвестное право</message>
-    <message id="tc.user.user">пользователь</message>
-    <message id="tc.user.User_blocked_you">Этот пользователь Вас заблокировал</message>
-    <message id="tc.user.user_remover">удалять пользователей</message>
-    <message id="tc.user.Vacation_until">В отпуске до {1}</message>
-    <message id="tc.user.Virtuals_list">Список клонов</message>
-    <message id="tc.user.virtuals_viewer">смотреть клонов</message>
+    <message id="tc.user.super_rights_changer">змяняць адмысловыя правы</message>
+    <message id="tc.user.This_ip_banned">Гэты IP-адрас заблакіраваны</message>
+    <message id="tc.user.Unblock">Разблакіраваць</message>
+    <message id="tc.user.Undelete">Аднавіць</message>
+    <message id="tc.user.unknown_right">невядомае права</message>
+    <message id="tc.user.user">карыстальнік</message>
+    <message id="tc.user.User_blocked_you">Гэты карыстальнік Вас заблакіраваў</message>
+    <message id="tc.user.user_remover">выдаляць карыстальнікаў</message>
+    <message id="tc.user.Vacation_until">У водпуску да {1}</message>
+    <message id="tc.user.Virtuals_list">Спіс клонаў</message>
+    <message id="tc.user.virtuals_viewer">глядзець клонаў</message>
     <message id="tc.user.Competitions_stat">
-        <h2>Турнирная статистика:</h2>
+        <h2>Турнірная статыстыка:</h2>
     </message>
     <message id="tc.user.Filter_min_online">
-        Минимальное время, проведенное пользователем на сайте,
-        чтобы он мог отправлять Вам сообщение
+        Мінімальны час, праведзены карыстальнікам на сайце,
+        каб ён мог адпраўляць Вам паведамленне
     </message>
     <message id="tc.user.Games_stat">
-        <h2>Игровая статистика:</h2>
+        <h2>Гульнявая статыстыка:</h2>
     </message>
     <message id="tc.user.Games_stat_changes">
-        Изменения Вашего рейтинга в случае игры с этим пользователем:
+        Змяненні Вашага рэйтынгу ў выпадку гульні з гэтым карыстальнікам:
         <ul>
-            <li>в случае победы: {1}</li>
-            <li>в случае поражения: {2}</li>
-            <li>в случае ничьей: {3}</li>
+            <li>у выпадку перамогі: {1}</li>
+            <li>у выпадку паражэння: {2}</li>
+            <li>у выпадку нічыёй: {3}</li>
         </ul>
     </message>
     <message id='tc.user.Online'>
-        <font style="background:Lightsteelblue;">На сайте</font>
+        <font style="background:Lightsteelblue;">На сайце</font>
     </message>
 
 </messages>

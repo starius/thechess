@@ -99,191 +99,191 @@
 
   <!-- BaseAuth, PasswordAuth and OAuth models -->
 
-  <message id="Wt.Auth.error-invalid-token">Операция не может быть завершена: непраивльный талон.</message>
-  <message id="Wt.Auth.error-token-expired">Операция не может быть завершена: просроченный талон.</message>
+  <message id="Wt.Auth.error-invalid-token">Аперацыя не можа быць завершана: няправільны талон.</message>
+  <message id="Wt.Auth.error-token-expired">Аперацыя не можа быць завершана: пратэрмінаваны талон.</message>
   <message id="Wt.Auth.mail-sent">
-      Отправлено письмо. Следуйте инструкциям из письма для установки нового пароля.
+      Адпраўлена пісьмо. Карыстайцеся інструкцыям з пісьма для ўстаноўкі новага пароля.
   </message>
-  <message id="Wt.Auth.info-email-confirmed">Ваш адрес электронной почты подтвержден.</message>
+  <message id="Wt.Auth.info-email-confirmed">Ваш адрас электроннай пошты пацверджаны.</message>
 
   <message id="Wt.Auth.passwdqc.reason-error">
-    Проверка сорвалась
+    Праверка сарвалася
   </message>
   <message id="Wt.Auth.passwdqc.reason-same">
-    Такой же, как предыдущий
+    Такі ж, як папярэдні
   </message>
   <message id="Wt.Auth.passwdqc.reason-similar">
-    Основан на предыдущем
+    Заснаваны на папярэднім
   </message>
   <message id="Wt.Auth.passwdqc.reason-short">
-    Слишком короткий
+    Вельмі кароткі
   </message>
   <message id="Wt.Auth.passwdqc.reason-long">
-    Слишком длинный
+    Вельмі доўгі
   </message>
   <message id="Wt.Auth.passwdqc.reason-simpleshort">
-    Недостаточно различных символов или классов символов для этой длины
+    Недастаткова розных знакаў ці класаў знакаў для гэтай даўжыні
   </message>
   <message id="Wt.Auth.passwdqc.reason-simple">
-    Недостаточно различных символов или классов
+    Недастаткова розных знакаў ці класаў
   </message>
   <message id="Wt.Auth.passwdqc.reason-personal">
-    Основан на личной информации
+    Заснаваны на асабістай інфармацыі
   </message>
   <message id="Wt.Auth.passwdqc.reason-word">
-    Основан на слове из словаря, а не на фразе
+    Заснаваны на слове са слоўніка, а не на фразе
   </message>
   <message id="Wt.Auth.passwdqc.reason-seq">
-    Основан на распространенной последовательности символов
+    Заснаваны на распаўсюджанай паслядоўнасці знакаў
   </message>
 
   <message id="Wt.Auth.GoogleService.badresponse">
-    <p>Извините, не удается выполнить вход с использованием аккаунта Google.</p>
+    <p>Выбачце, не атрымоўваецца выканаць уваход з выкарыстаннем акаўнта Google.</p>
     <small>
-      <p>Сервер идентификации Google выдал неожиданный ответ.</p>
+      <p>Сервер ідэнтыфікацыі Google выдаў нечаканы адказ.</p>
     </small>
   </message>
 
   <message id="Wt.Auth.FacebookService.badresponse">
-    <p>Извините, не удается выполнить вход с использованием аккаунта Facebook.</p>
+    <p>Выбачце, не атрымоўваецца выканаць уваход з выкарыстаннем акаўнта Facebook.</p>
     <small>
-      <p>Сервер идентификации Facebook выдал неожиданный ответ.</p>
+      <p>Сервер ідэнтыфікацыі Facebook выдаў нечаканы адказ.</p>
     </small>
   </message>
 
   <!-- LoginWidget -->
 
-  <message id="Wt.Auth.login-form-title">Вход</message>
+  <message id="Wt.Auth.login-form-title">Уваход</message>
   <message id="Wt.Auth.login-form-info"></message>
-  <message id="Wt.Auth.user-name">Имя пользователя</message>
-  <message id="Wt.Auth.user-name-info">Ваше имя</message>
-  <message id="Wt.Auth.user-name-invalid">Неверно</message>
-  <message id="Wt.Auth.email">Адрес электронной почты</message>
-  <message id="Wt.Auth.email-info">Введите адрес Вашей электронной почты</message>
+  <message id="Wt.Auth.user-name">Імя карыстальніка</message>
+  <message id="Wt.Auth.user-name-info">Ваша імя</message>
+  <message id="Wt.Auth.user-name-invalid">Недакладна</message>
+  <message id="Wt.Auth.email">Адрас электроннай пошты</message>
+  <message id="Wt.Auth.email-info">Увядзіце адрас Вашай электроннай пошты</message>
   <message id="Wt.Auth.optional-email-info">
-    Введите адрес Вашей электронной почты (необязательно)
+    Увядзіце адрас Вашай электроннай пошты (неабавязкова)
   </message>
   <message id="Wt.Auth.password">Пароль</message>
-  <message id="Wt.Auth.password-info">Введите пароль</message>
-  <message id="Wt.Auth.remember-me">Запомнить меня</message>
+  <message id="Wt.Auth.password-info">Увядзіце пароль</message>
+  <message id="Wt.Auth.remember-me">Запомніць мяне</message>
   <message id="Wt.Auth.remember-me-info.days">
   </message>
   <message id="Wt.Auth.remember-me-info.weeks">
   </message>
-  <message id="Wt.Auth.lost-password">Забыл пароль</message>
-  <message id="Wt.Auth.login">Вход</message>
-  <message id="Wt.Auth.logout">Выход</message>
-  <message id="Wt.Auth.throttle-retry">Повторить попытку через {1}с</message>
+  <message id="Wt.Auth.lost-password">Забыўся пароль</message>
+  <message id="Wt.Auth.login">Уваход</message>
+  <message id="Wt.Auth.logout">Выхад</message>
+  <message id="Wt.Auth.throttle-retry">Паўтарыць спробу праз {1}с</message>
 
   <!-- RegistrationWidget -->
 
-  <message id="Wt.Auth.registration-form-title">Регистрация</message>
+  <message id="Wt.Auth.registration-form-title">Рэгістрацыя</message>
   <message id="Wt.Auth.registration-form-info">
-      Пожалуйста, введите следующую информацию для регистрации.
+      Калі ласка, увядзіце наступную інфармацыю для рэгістрацыі.
   </message>
   <message id="Wt.Auth.password-or-oauth-registration">
-      <h3>Регистрация с использованием имени пользователя и пароля:</h3>
+      <h3>Рэгістрацыя з выкарыстаннем імя карыстальніка і пароля:</h3>
   </message>
   <message id="Wt.Auth.oauth-registration">
-      <h3>Регистрация с использованием провайдера идентификации:
+      <h3>Рэгістрацыя з выкарыстаннем правайдара ідэнтыфікацыі:
   </h3></message>
   <message id="Wt.Auth.or-oauth-registration">
-      <h3>Или, зарегистрируйтесь с использованием провайдера идентификации:</h3>
+      <h3>Ці, зарэгіструйцеся з выкарыстаннем правайдара ідэнтыфікацыі:</h3>
   </message>
-  <message id="Wt.Auth.valid">Подходит</message>
+  <message id="Wt.Auth.valid">Падыходзіць</message>
   <message id="Wt.Auth.choose-password">Пароль</message>
-  <message id="Wt.Auth.choose-password-info">Выберите пароль</message>
-  <message id="Wt.Auth.repeat-password">Повторите пароль</message>
-  <message id="Wt.Auth.repeat-password-info">Введите Ваш пароль ещё раз</message>
-  <message id="Wt.Auth.email-invalid">Неверный адрес электронной почты</message>
-  <message id="Wt.Auth.email-exists">Адрес электронной почты уже зарегистрирован</message>
-  <message id="Wt.Auth.oauth">Ваш аккаунт</message>
-  <message id="Wt.Auth.oauth-info">Выберите один из Ваших аккаунтов</message>
-  <message id="Wt.Auth.user-name-exists">Такой пользователь уже есть</message>
-  <message id="Wt.Auth.confirm-is-you">Пользователь уже есть, это не Вы?</message>
-  <message id="Wt.Auth.user-name-tooshort">Мин. размер {1} символов</message>
-  <message id="Wt.Auth.password-tooshort">Мин. размер {1} символов</message>
-  <message id="Wt.Auth.passwords-dont-match">Пароли не совпадают</message>
-  <message id="Wt.Auth.registration">Регистрация</message>
-  <message id="Wt.Auth.register">Регистрация</message>
-  <message id="Wt.Auth.error-user-invalid">Регистрация сорвалась.</message>
+  <message id="Wt.Auth.choose-password-info">Выбярыце пароль</message>
+  <message id="Wt.Auth.repeat-password">Паўтарыце пароль</message>
+  <message id="Wt.Auth.repeat-password-info">Увядзіце Ваш пароль яшчэ раз</message>
+  <message id="Wt.Auth.email-invalid">Недакладны адрас электроннай пошты</message>
+  <message id="Wt.Auth.email-exists">Адрас электроннай пошты ўжо зарэгістраваны</message>
+  <message id="Wt.Auth.oauth">Ваш акаўнт</message>
+  <message id="Wt.Auth.oauth-info">Выбярыце адзін з Вашых акаўнтаў</message>
+  <message id="Wt.Auth.user-name-exists">Такі карыстальнік ужо ёсць</message>
+  <message id="Wt.Auth.confirm-is-you">Карыстальнік ужо ёсць, гэта не Вы?</message>
+  <message id="Wt.Auth.user-name-tooshort">Мін. памер {1} знакаў</message>
+  <message id="Wt.Auth.password-tooshort">Мін. памер {1} знакаў</message>
+  <message id="Wt.Auth.passwords-dont-match">Паролі не супадаюць</message>
+  <message id="Wt.Auth.registration">Рэгістрацыя</message>
+  <message id="Wt.Auth.register">Рэгістрацыя</message>
+  <message id="Wt.Auth.error-user-invalid">Рэгістрацыя сарвалася.</message>
 
   <!-- PasswordPromptDialog -->
 
-  <message id="Wt.Auth.enter-password">Введите Ваш пароль</message>
-  <message id="Wt.Auth.password-prompt-form-title">Введите Ваш пароль</message>
+  <message id="Wt.Auth.enter-password">Увядзіце Ваш пароль</message>
+  <message id="Wt.Auth.password-prompt-form-title">Увядзіце Ваш пароль</message>
   <message id="Wt.Auth.password-prompt-form-info"></message>
-  <message id="Wt.Auth.password-invalid">Неверный пароль</message>
+  <message id="Wt.Auth.password-invalid">Недакладны пароль</message>
 
   <!-- UpdatePasswordWidget -->
 
-  <message id="Wt.Auth.updatepassword">Обновить пароль</message>
-  <message id="Wt.Auth.update-password-form-title">Обновить пароль</message>
-  <message id="Wt.Auth.update-password-form-info">Введите новый пароль ниже</message>
-  <message id="Wt.Auth.old-password">Текущий пароль</message>
-  <message id="Wt.Auth.old-password-info">Введите Ваш текущий пароль</message>
-  <message id="Wt.Auth.new-password">Новый пароль</message>
-  <message id="Wt.Auth.repeat-new-password">Повторите новый пароль</message>
-  <message id="Wt.Auth.repeat-new-password-info">Введите Ваш новый пароль ещё раз</message>
+  <message id="Wt.Auth.updatepassword">Абнавіць пароль</message>
+  <message id="Wt.Auth.update-password-form-title">Абнавіць пароль</message>
+  <message id="Wt.Auth.update-password-form-info">Увядзіце новы пароль ніжэй</message>
+  <message id="Wt.Auth.old-password">Тякучы пароль</message>
+  <message id="Wt.Auth.old-password-info">Увядзіце Ваш тякучы пароль</message>
+  <message id="Wt.Auth.new-password">Новы пароль</message>
+  <message id="Wt.Auth.repeat-new-password">Паўтарыце новы пароль</message>
+  <message id="Wt.Auth.repeat-new-password-info">Увядзіце Ваш новы пароль яшчэ раз</message>
 
   <!-- LostPasswordDialog -->
 
-  <message id="Wt.Auth.lostpassword">Забыл пароль? Нет проблем!</message>
-  <message id="Wt.Auth.lost-password-form-title">Востановить Ваш пароль</message>
-  <message id="Wt.Auth.lost-password-form-info">Пожалуйста, введите ниже Ваш
-      адрес электронной почты, использованный в хоже регистрации.
-      Вам будет направлено письмо с инструкциями по установке нового пароля.
+  <message id="Wt.Auth.lostpassword">Забыўся пароль? Няма праблем!</message>
+  <message id="Wt.Auth.lost-password-form-title">Аднавіць Ваш пароль</message>
+  <message id="Wt.Auth.lost-password-form-info">Калі ласка, увядзіце ніжэй Ваш
+      адрас электроннай пошты, скарыстаны падчас рэгістрацыі.
+      Вам будзе накіравана пісьмо з інструкцыямі па ўстаноўцы новага пароля.
   </message>
-  <message id="Wt.Auth.send">Отправить</message>
+  <message id="Wt.Auth.send">Адправіць</message>
 
   <!-- Message boxes -->
 
-  <message id="Wt.Auth.error">Ошибка</message>
-  <message id="Wt.Auth.notice">Замечание</message>
+  <message id="Wt.Auth.error">Памылка</message>
+  <message id="Wt.Auth.notice">Заўвага</message>
 
   <!-- Emails -->
 
-  <message id="Wt.Auth.confirmmail.subject">Ссылка для активации аккаунта пользователя</message>
+  <message id="Wt.Auth.confirmmail.subject">Спасылка для актывацыі акаўнта карыстальніка</message>
 
   <message id="Wt.Auth.confirmmail.body">
-Здравствуйте, {1}!
+Прывітанне, {1}!
 
-Спасибо, что присоединились!
+Дзякуй, што далучыліся!
 
-Чтобы завершить регистрация, пожалуйста, окончательно подтвердите Ваш аккаунт,
-щелкнув на следующую ссылку или скопировав адрес URL в Ваш браузер.
+Каб завяршыць рэгістрацыю, калі ласка, канчаткова пацвердзіце Ваш акаўнт,
+пстрыкнуўшы на наступную спасылку ці скапіраваўшы адрас URL у Ваш браўзар.
 
-Пожалуйста, нажмите сюда, чтобы подтвердить Вашу регистрацию или
-скопируйте и вставьте адрес URL в Ваш браузер: (Замечание:
-убедитесь, что Вы скопировали в вставили весь адрес URL,
-включая часть, переходящую на вторую строку.)
+Калі ласка, націсніце сюды, каб пацвердзіць Вашу рэгістрацыю ці
+скапіруйце і ўстаўце адрас URL у Ваш браўзар: (Заўвага:
+пераканайцеся, што Вы скапіравалі і ўставілі ўвесь адрас URL,
+уключаючы частку, пераходзячую на другі радок.)
 
 {3}
 
-Успешной игры!
+Паспяховай гульні!
 
 TheChess
   </message>
 
   <message id="Wt.Auth.confirmmail.htmlbody">
-    <h3>Здравствуйте, {1}!</h3>
+    <h3>Прывітанне, {1}!</h3>
 
-    <p>Спасибо, что присоединились!</p>
+    <p>Дзякуй, што далучыліся!</p>
 
-    <p>Чтобы завершить регистрация, пожалуйста,
-        окончательно подтвердите Ваш аккаунт,
-        щелкнув на следующую ссылку или скопировав адрес URL в Ваш браузер.
+    <p>Каб завяршыць рэгістрацыю, калі ласка,
+        канчаткова пацвердзіце Ваш акаўнт,
+        пстрыкнуўшы на наступную спасылку ці скапіраваўшы адрас URL у Ваш браўзар.
     </p>
 
-    <p>Пожалуйста, <a href="{3}">нажмите сюда</a>,
-        чтобы подтвердить Вашу регистрацию или
-        скопируйте и вставьте адрес URL в Ваш браузер:
-    <i>(Замечание: убедитесь, что Вы скопировали в вставили весь адрес URL,
-    включая часть, переходящую на вторую строку.)</i></p>
+    <p>Калі ласка, <a href="{3}">націсніце сюды</a>,
+        каб пацвердзіць Вашу рэгістрацыю ці
+        скапіруйце і ўстаўце адрас URL у Ваш браўзар:
+    <i>(Заўвага: пераканаецеся, што Вы скапіравалі і ўставілі ўвесь адрас URL,
+    уключаючы частку, пераходзячую на другі радок.)</i></p>
 
     <b>{3}</b>
 
-    <p>Успешной игры!</p>
+    <p>Паспяховай гульні!</p>
 
     <p>TheChess.</p>
   </message>
@@ -291,51 +291,52 @@ TheChess
   <message id="Wt.Auth.lostpasswordmail.subject">Инструкции по восстановлению пароля</message>
 
   <message id="Wt.Auth.lostpasswordmail.body">
-Здравствуйте {1}!
+Прывітанне! {1}!
 
-Это письмо направлено Вам, так как кто-то (предположительно Вы?)
-выразил желание выбрать новый пароль, так как он позабыл старый пароль.
+Гэты пісьмо накіравана Вам, бо хтосьці (меркавана Вы?)
+выказаў жаданне выбраць новы пароль, бо ён забыўся стары пароль.
 
-Если Вы заказали это, то выберите новый пароль, кликнув по следующей ссылке
-или скопировав адрес URL в Ваш браузер. Если Вы этого не заказывали,
-Вы можете спокойно проигнорировать и отбросить это письмо.
+Калі Вы заказалі гэта, то выбярыце новы пароль, клікнуўшы па наступнай спасылцы
+ці скапіраваўшы адрас URL у Ваш браўзар. Калі Вы гэтага не заказвалі,
+Вы можаце спакойна праігнараваць і адкінуць гэта пісьмо.
 
-Пожалуйста, скопируйте и вставьте следующий адрес URL в Ваш браузер:
-(Замечание: убедитесь, что Вы скопировали в вставили весь адрес URL,
-включая часть, переходящую на вторую строку.)
+Калі ласка, скапіруйце і ўстаўце наступны адрас URL у Ваш браўзар:
+(Заўвага: пераканайцеся, што Вы скапіравалі і ўставілі ўвесь адрас URL,
+уключаючы частку, пераходзячую на другі радок.)
+
 
 {3}
 
-Успешной игры!
+Паспяховай гульні!
 
 TheChess
   </message>
 
   <message id="Wt.Auth.lostpasswordmail.htmlbody">
-    <h3>Здравствуйте {1}!</h3>
+    <h3>Прывітанне {1}!</h3>
 
-    <p>Это письмо направлено Вам, так как кто-то
-        (предположительно Вы?)
-        выразил желание выбрать новый пароль,
-        так как он позабыл старый пароль.
+    <p>Гэта пісьмо накіравана Вам, бо хтосьці
+        (меркавана Вы?)
+        выказаў жаданне выбраць новы пароль,
+        бо ён забыўся стары пароль.
     </p>
 
-    <p>Если Вы заказали это, то выберите новый пароль,
-        кликнув по следующей ссылке
-        или скопировав адрес URL в Ваш браузер.
-        Если Вы этого не заказывали,
-        Вы можете спокойно проигнорировать и отбросить это письмо.
+    <p>Калі Вы заказалі гэта, то выбярыце новы пароль,
+        клікнуўшы па наступнай спасылцы
+        ці скапіраваўшы адрас URL у Ваш браўзар.
+        Калі Вы гэтага не заказвалі,
+        Вы можаце спакойна праігнараваць і адкінуць гэта пісьмо.
     </p>
 
-    <p>Пожалуйста, <a href="{3}">нажмите сюда</a>,
-        чтобы выбрать новый пароль или
-        скопируйте и вставьте адрес URL в Ваш браузер:
-    <i>(Замечание: убедитесь, что Вы скопировали в вставили весь адрес URL,
-    включая часть, переходящую на вторую строку.)</i></p>
+    <p>Калі ласка, <a href="{3}">націсніце сюды</a>,
+        каб выбраць новы пароль ці
+        скапіруйце і ўстаўце адрас URL у Ваш браўзар:
+    <i>(Заўвага: пераканайцеся, што Вы скапіравалі і ўставілі ўвесь адрас URL,
+    уключаючы частку, пераходзячую на другі радок.)</i></p>
 
     <b>{3}</b>
 
-    <p>Успешной игры!</p>
+    <p>Паспяховай гульні!</p>
 
     <p>TheChess</p>
   </message>
