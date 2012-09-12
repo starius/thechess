@@ -41,7 +41,7 @@ User::User() {
 }
 
 AuthInfoPtr User::auth_info() const {
-    return auth_infos_.front();
+    return auth_infos_.size() ? auth_infos_.front() : AuthInfoPtr();
 }
 
 Wt::Auth::User User::auth_user() const {
@@ -49,7 +49,7 @@ Wt::Auth::User User::auth_user() const {
 }
 
 std::string User::email() const {
-    return auth_info()->email();
+    return auth_info() ? auth_info()->email() : "";
 }
 
 void User::set_email(const std::string& email) {
@@ -57,10 +57,13 @@ void User::set_email(const std::string& email) {
 }
 
 bool User::removed() const {
-    return auth_info()->status() == Wt::Auth::User::Disabled;
+    return auth_info() && (auth_info()->status() == Wt::Auth::User::Disabled);
 }
 
 void User::set_removed(bool removed) {
+    if (!auth_info()) {
+        return;
+    }
     Wt::Auth::User::Status status = removed ?
                                     Wt::Auth::User::Disabled :
                                     Wt::Auth::User::Normal;
