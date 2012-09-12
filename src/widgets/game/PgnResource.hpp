@@ -9,6 +9,7 @@
 #define THECHESS_WIDGETS_PGN_RESOURCE_HPP_
 
 #include <Wt/WResource>
+#include <Wt/WFileResource>
 
 #include "model/all.hpp"
 #include "thechess-global.hpp"
@@ -27,6 +28,19 @@ public:
 
 private:
     GamePtr game_;
+    Session session_;
+};
+
+class AllPgnResource : public Wt::WFileResource {
+public:
+    AllPgnResource(Server& server, Wt::WObject* p = 0);
+    ~AllPgnResource();
+
+    virtual void handleRequest(const Wt::Http::Request& request,
+                               Wt::Http::Response& response);
+
+private:
+    Wt::WDateTime last_rebuild_;
     Session session_;
 };
 

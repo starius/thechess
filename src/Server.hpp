@@ -74,6 +74,7 @@ private:
     Notifier notifier_;
     Planning planning_;
     PgnResource pgn_;
+    AllPgnResource all_pgn_;
     Wt::WFileResource swfstore_;
     Wt::WFileResource storage_whitelist_; // 404 Not Found
     Wt::Auth::AuthService auth_service_;

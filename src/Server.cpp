@@ -50,9 +50,10 @@ Server::Server(int argc, char** argv):
     // options_ needs read conf
     options_((setServerConfiguration(argc, argv), *this)),
     pool_(Session::new_connection(options_), options_.connections_in_pool()),
-    notifier_(this), planning_(*this), pgn_(*this),
+    notifier_(this), planning_(*this), pgn_(*this), all_pgn_(*this),
     swfstore_("application/x-shockwave-flash", swfstore),
     password_service_(auth_service_) {
+    addResource(&all_pgn_, "/pgn/all.pgn");
     addResource(&pgn_, "/pgn/");
     addResource(&swfstore_, "/swfstore.swf");
     addResource(&storage_whitelist_, "/storage-whitelist.xml");

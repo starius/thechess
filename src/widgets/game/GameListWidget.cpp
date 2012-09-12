@@ -208,7 +208,7 @@ GameListWidget::GameListWidget(Wt::WContainerWidget* parent) :
     WContainerWidget(parent) {
     addWidget(new Header(tr("tc.game.List")));
     addWidget(new GameListWidgetImpl());
-    addWidget(new Wt::WAnchor("/pgn/?game=all", tr("tc.game.Download_pgn")));
+    addWidget(new Wt::WAnchor("/pgn/all.pgn", tr("tc.game.Download_pgn")));
 }
 
 GameListWidget::GameListWidget(const UserPtr& user, Wt::WContainerWidget* p):

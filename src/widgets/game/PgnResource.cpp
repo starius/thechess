@@ -5,12 +5,15 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <cstdio>
+#include <fstream>
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
 #include <Wt/Dbo/Transaction>
 #include <Wt/Http/Request>
 #include <Wt/Http/Response>
+#include <Wt/Wc/util.hpp>
 
 #include "widgets/game/PgnResource.hpp"
 #include "Server.hpp"
@@ -34,16 +37,6 @@ void PgnResource::handleRequest(const Wt::Http::Request& request,
                                 Wt::Http::Response& response) {
     dbo::Transaction t(session_);
     const std::string* game_id_str = request.getParameter("game");
-    if (game_id_str && *game_id_str == "all") {
-        suggestFileName("all.pgn");
-        // TODO frequency check
-        Games games = session_.find<Game>();
-        BOOST_FOREACH (GamePtr g, games) {
-            g->pgn(response.out());
-            response.out() << std::endl;
-        }
-        return;
-    }
     GamePtr g;
     if (game_id_str) {
         suggestFileName((*game_id_str) + ".pgn");
@@ -62,6 +55,37 @@ void PgnResource::handleRequest(const Wt::Http::Request& request,
         return;
     }
     g->pgn(response.out());
+}
+
+AllPgnResource::AllPgnResource(Server& server, Wt::WObject* p):
+    Wt::WFileResource(p), session_(server.pool()) {
+    suggestFileName("all.pgn");
+}
+
+AllPgnResource::~AllPgnResource() {
+    beingDeleted();
+    remove(fileName().c_str());
+}
+
+const Td REBUILD_FREQ = HOUR;
+
+void AllPgnResource::handleRequest(const Wt::Http::Request& request,
+                                   Wt::Http::Response& response) {
+    if (fileName().empty()) {
+        setFileName(Wt::Wc::unique_filename());
+    }
+    if (!last_rebuild_.isValid() || now() - last_rebuild_ > REBUILD_FREQ) {
+        last_rebuild_ = now();
+        std::ofstream file_stream(fileName().c_str());
+        dbo::Transaction t(session_);
+        Games games = session_.find<Game>();
+        BOOST_FOREACH (GamePtr g, games) {
+            g->pgn(file_stream);
+            file_stream << std::endl;
+        }
+        setChanged();
+    }
+    Wt::WFileResource::handleRequest(request, response);
 }
 
 }
