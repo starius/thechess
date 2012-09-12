@@ -7,6 +7,7 @@
     <message id='tc.comment.Approve'>Схвалити</message>
     <message id='tc.comment.deleted_message'>[Видалено]</message>
     <message id='tc.comment.draft_message'>[Чорновик]</message>
+    <message id='tc.comment.Global_chat'>Общий чат</message>
     <message id='tc.comment.private_messages'>особисті повідомлення</message>
     <message id='tc.comment.Remove'>Видалити</message>
 
@@ -66,6 +67,7 @@
     <message id="tc.competition.Force_start_delay">Форсований старт партії</message>
     <message id="tc.competition.Games_factor">Множник партій</message>
     <message id="tc.competition.Games_list">Перелік ігор</message>
+    <message id='tc.competition.Header'>Турнір № {1}</message>
     <message id="tc.competition.Increment_substages">Зростання числа підраундів</message>
     <message id="tc.competition.List">Перелік турнірів</message>
     <message id="tc.competition.max_classification">максимальний розряд</message>
@@ -381,6 +383,7 @@
     <message id="tc.user.List_rights">Перелік прав</message>
     <message id="tc.user.logs_reader">читати журнал адміністратора</message>
     <message id="tc.user.Many_sessions">Забагато сесій</message>
+    <message id='tc.user.Message_sent'>Сообщение отправлено</message>
     <message id='tc.user.My_blocklist'>В моєму чорному списку</message>
     <message id="tc.user.Names_in_menu">Показувати ім’я користувача в меню з іграми</message>
     <message id="tc.user.New_ban">Новий бан</message>
