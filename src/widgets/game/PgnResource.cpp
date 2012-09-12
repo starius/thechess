@@ -35,6 +35,7 @@ PgnResource::~PgnResource() {
 
 void PgnResource::handleRequest(const Wt::Http::Request& request,
                                 Wt::Http::Response& response) {
+    response.setMimeType("application/x-chess-pgn");
     dbo::Transaction t(session_);
     const std::string* game_id_str = request.getParameter("game");
     GamePtr g;
@@ -59,6 +60,7 @@ void PgnResource::handleRequest(const Wt::Http::Request& request,
 
 AllPgnResource::AllPgnResource(Server& server, Wt::WObject* p):
     Wt::WFileResource(p), session_(server.pool()) {
+    setMimeType("application/x-chess-pgn");
     suggestFileName("all.pgn");
 }
 
