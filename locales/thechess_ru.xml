@@ -382,7 +382,7 @@
     <message id='tc.user.games_stat_elo'>рейтинг Эло</message>
     <message id='tc.user.games_stat_fails'>поражения</message>
     <message id='tc.user.games_stat_wins'>победы</message>
-    <message id='tc.user.gp_creator'>изменять параметры игры</message>
+    <message id='tc.user.gp_creator'>создавать параметры игры</message>
     <message id='tc.user.ip'>ip-адрес</message>
     <message id='tc.user.IpBanList'>Список банов по IP</message>
     <message id='tc.user.IpList'>Список IP</message>
