@@ -134,6 +134,7 @@ CPListWidget::CPListWidget(Wt::WContainerWidget* p):
     apply();
     view_ = new CPListView(model_, this);
     view_->setSelectionMode(Wt::SingleSelection);
+    select_first();
 }
 
 CPPtr CPListWidget::cp() const {
@@ -148,8 +149,7 @@ CPPtr CPListWidget::cp() const {
 void CPListWidget::set_cp(const CPPtr& cp) {
     model_->set_cp(cp);
     if (model_->rowCount() && model_->resultRow(0) == cp) {
-        view_->select(model_->index(0, 0));
-        //view_->scrollTo(index); FIXME http://redmine.emweb.be/issues/1380
+        select_first();
     }
 }
 
@@ -170,6 +170,12 @@ void CPListWidget::manager() {
         Wt::WPushButton* apply_button =
             new Wt::WPushButton(tr("tc.common.Apply"), this);
         apply_button->clicked().connect(this, &CPListWidget::apply);
+    }
+}
+
+void CPListWidget::select_first() {
+    if (model_->rowCount()) {
+        view_->select(model_->index(0, 0));
     }
 }
 
