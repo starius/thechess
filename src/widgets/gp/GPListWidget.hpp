@@ -51,6 +51,7 @@ private:
 
     void apply();
     void manager();
+    void select_first();
 };
 
 }

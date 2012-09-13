@@ -128,6 +128,7 @@ GPListWidget::GPListWidget(Wt::WContainerWidget* p):
     apply();
     view_ = new GPListView(model_, this);
     view_->setSelectionMode(Wt::SingleSelection);
+    select_first();
 }
 
 GPPtr GPListWidget::gp() const {
@@ -142,8 +143,7 @@ GPPtr GPListWidget::gp() const {
 void GPListWidget::set_gp(const GPPtr& gp) {
     model_->set_gp(gp);
     if (model_->rowCount() && model_->resultRow(0) == gp) {
-        view_->select(model_->index(0, 0));
-        //view_->scrollTo(index); // FIXME http://redmine.emweb.be/issues/1380
+        select_first();
     }
 }
 
@@ -164,6 +164,12 @@ void GPListWidget::manager() {
         Wt::WPushButton* apply_button =
             new Wt::WPushButton(tr("tc.common.Apply"), this);
         apply_button->clicked().connect(this, &GPListWidget::apply);
+    }
+}
+
+void GPListWidget::select_first() {
+    if (model_->rowCount()) {
+        view_->select(model_->index(0, 0));
     }
 }
 
