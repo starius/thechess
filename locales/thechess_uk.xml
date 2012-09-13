@@ -7,7 +7,7 @@
     <message id='tc.comment.Approve'>Схвалити</message>
     <message id='tc.comment.deleted_message'>[Видалено]</message>
     <message id='tc.comment.draft_message'>[Чорновик]</message>
-    <message id='tc.comment.Global_chat'>Общий чат</message>
+    <message id='tc.comment.Global_chat'>Загальний чат</message>
     <message id='tc.comment.private_messages'>особисті повідомлення</message>
     <message id='tc.comment.Remove'>Видалити</message>
 
@@ -238,10 +238,10 @@
 
     <message id='tc.main.main_template'>
         <h1>Ласкаво просимо!</h1>
-        <h2>Чемпион:</h2>
+        <h2>Чемпіон:</h2>
         <br />
         ${champion}
-        <h2>Лучшие игроки:</h2>
+        <h2>Кращі гравці:</h2>
         <br />
         ${best_players}
     </message>
@@ -383,7 +383,7 @@
     <message id="tc.user.List_rights">Перелік прав</message>
     <message id="tc.user.logs_reader">читати журнал адміністратора</message>
     <message id="tc.user.Many_sessions">Забагато сесій</message>
-    <message id='tc.user.Message_sent'>Сообщение отправлено</message>
+    <message id='tc.user.Message_sent'>Повідомлення відправлено</message>
     <message id='tc.user.My_blocklist'>В моєму чорному списку</message>
     <message id="tc.user.Names_in_menu">Показувати ім’я користувача в меню з іграми</message>
     <message id="tc.user.New_ban">Новий бан</message>
