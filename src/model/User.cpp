@@ -57,10 +57,13 @@ void User::set_email(const std::string& email) {
 }
 
 bool User::removed() const {
-    return auth_info() && (auth_info()->status() == Wt::Auth::User::Disabled);
+    return rights() == NONE;
 }
 
 void User::set_removed(bool removed) {
+    if (removed) {
+        set_rights(NONE);
+    }
     if (!auth_info()) {
         return;
     }
@@ -69,9 +72,6 @@ void User::set_removed(bool removed) {
                                     Wt::Auth::User::Normal;
     auth_info().reread();
     auth_info().modify()->setStatus(status);
-    if (removed) {
-        set_rights(NONE);
-    }
 }
 
 bool User::can_remove(const UserPtr& victim) const {
