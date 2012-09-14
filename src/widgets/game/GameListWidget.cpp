@@ -32,7 +32,7 @@ namespace thechess {
 
 namespace GLP {
 typedef Wt::WString S;
-typedef boost::tuple<GamePtr, bool, S, S, S> Result;
+typedef boost::tuple<GamePtr, S, S, S> Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 
@@ -141,9 +141,8 @@ public:
 
     static GLP::Q all_games() {
         std::string sql;
-        sql = "select G, GP.norating, Wh.username, B.username, Wi.username "
+        sql = "select G, Wh.username, B.username, Wi.username "
               "from thechess_game G "
-              "left join thechess_gp GP on G.gp_id=GP.id "
               "left join thechess_user Wh on G.white_id=Wh.id "
               "left join thechess_user B on G.black_id=B.id "
               "left join thechess_user Wi on G.winner_game_id=Wi.id ";
