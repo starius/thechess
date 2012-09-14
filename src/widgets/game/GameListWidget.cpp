@@ -52,9 +52,12 @@ public:
         COMMENT_COLUMN
     };
 
-    GameListModel(const GLP::Q& query, Wt::WObject* parent = 0) :
-        GLP::BaseQM(parent) {
-        setQuery(query);
+    GameListModel(const UserPtr& user, Wt::WObject* parent = 0) :
+        GLP::BaseQM(parent),
+        only_my_(false),
+        only_commented_(false),
+        user_(user) {
+        set_query();
         addColumn("G.id", tr("tc.common.number"));
         addColumn("Wh.username", tr("tc.game.white"));
         addColumn("B.username", tr("tc.game.black"));
@@ -94,9 +97,54 @@ public:
         return GLP::BaseQM::data(index, role);
     }
 
+    void set_query() {
+        dbo::Transaction t(tApp->session());
+        GLP::Q q = tApp->session().query<GLP::Result>(
+                       "select G, Wh.username, B.username, Wi.username "
+                       "from thechess_game G "
+                       "left join thechess_user Wh on G.white_id=Wh.id "
+                       "left join thechess_user B on G.black_id=B.id "
+                       "left join thechess_user Wi on G.winner_game_id=Wi.id ");
+        if (only_my_ && tApp->user()) {
+            int id = tApp->user()->id();
+            q.where("G.white_id = ? or G.black_id = ? or G.init_id = ?")
+            .bind(id).bind(id).bind(id);
+        }
+        if (only_commented_) {
+            q.where("G.name <> ''");
+        }
+        if (user_) {
+            int id = user_->id();
+            q.where("G.white_id = ? or G.black_id = ? or G.init_id = ?")
+            .bind(id).bind(id).bind(id);
+        }
+        q.orderBy("G.id");
+        setQuery(q, /* keep_columns */ true);
+        t.commit();
+    }
+
     static Wt::WString tr(const char* key) {
         return Wt::WString::tr(key);
     }
+
+    void set_only_my(bool only_my) {
+        if (only_my != only_my_) {
+            only_my_ = only_my;
+            set_query();
+        }
+    }
+
+    void set_only_commented(bool only_commented) {
+        if (only_commented != only_commented_) {
+            only_commented_ = only_commented;
+            set_query();
+        }
+    }
+
+private:
+    bool only_my_;
+    bool only_commented_;
+    UserPtr user_;
 };
 
 class GameTableView : public Wt::WTableView {
@@ -117,16 +165,16 @@ public:
     }
 
     GameListWidgetImpl(const UserPtr& user) :
-        Wt::WContainerWidget(), user_(user) {
-        initialize();
+        Wt::WContainerWidget() {
+        initialize(user);
     }
 
-    void initialize() {
+    void initialize(const UserPtr& user = UserPtr()) {
+        model_ = new GameListModel(user, this);
         manager();
-        query_model_ = new GameListModel(query(), this);
         table_view_ = new GameTableView();
         addWidget(table_view_);
-        table_view_->setModel(query_model_);
+        table_view_->setModel(model_);
         table_view_->setSortingEnabled(false);
         table_view_->resize(770, 450);
         table_view_->setColumnWidth(GameListModel::N_COLUMN, 65);
@@ -139,53 +187,23 @@ public:
         table_view_->setColumnWidth(GameListModel::COMMENT_COLUMN, 120);
     }
 
-    static GLP::Q all_games() {
-        std::string sql;
-        sql = "select G, Wh.username, B.username, Wi.username "
-              "from thechess_game G "
-              "left join thechess_user Wh on G.white_id=Wh.id "
-              "left join thechess_user B on G.black_id=B.id "
-              "left join thechess_user Wi on G.winner_game_id=Wi.id ";
-        return tApp->session().query<GLP::Result>(sql);
-    }
-
-    GLP::Q query() {
-        dbo::Transaction t(tApp->session());
-        GLP::Q q = all_games();
-        if (only_my_->isChecked() && tApp->user()) {
-            int id = tApp->user()->id();
-            q.where("G.white_id = ? or G.black_id = ? or G.init_id = ?")
-            .bind(id).bind(id).bind(id);
-        }
-        if (only_commented_->isChecked()) {
-            q.where("G.name <> ''");
-        }
-        if (user_) {
-            int id = user_->id();
-            q.where("G.white_id = ? or G.black_id = ? or G.init_id = ?")
-            .bind(id).bind(id).bind(id);
-        }
-        q.orderBy("G.id");
-        t.commit();
-        return q;
-    }
-
 private:
-    GameListModel* query_model_;
+    GameListModel* model_;
     Wt::WTableView* table_view_;
     Wt::WCheckBox* only_my_;
     Wt::WCheckBox* only_commented_;
-    UserPtr user_;
 
     void manager() {
         only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"), this);
         only_my_->setChecked(User::has_s(SWITCH_ONLY_MY_GAMES));
+        model_->set_only_my(User::has_s(SWITCH_ONLY_MY_GAMES));
         only_my_->changed().connect(this, &GameListWidgetImpl::apply);
         if (!tApp->user()) {
             only_my_->setEnabled(false);
         }
         only_commented_ = new Wt::WCheckBox(tr("tc.game.Only_commented"), this);
         only_commented_->setChecked(User::has_s(SWITCH_ONLY_COMMENTED_GAMES));
+        model_->set_only_commented(User::has_s(SWITCH_ONLY_COMMENTED_GAMES));
         only_commented_->changed().connect(this, &GameListWidgetImpl::apply);
         if (!tApp->environment().ajax()) {
             Wt::WPushButton* apply_button =
@@ -197,7 +215,8 @@ private:
     void apply() {
         User::set_s(SWITCH_ONLY_MY_GAMES, only_my_->isChecked());
         User::set_s(SWITCH_ONLY_COMMENTED_GAMES, only_commented_->isChecked());
-        query_model_->setQuery(query(), /* keep_columns */ true);
+        model_->set_only_my(only_my_->isChecked());
+        model_->set_only_commented(only_commented_->isChecked());
     }
 
 };
