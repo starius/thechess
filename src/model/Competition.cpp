@@ -238,7 +238,9 @@ void Competition::stat_change() {
             elo_losers.push_back(&u.modify()->competitions_stat());
         }
     }
-    EloPlayer::multiple(elo_winners, elo_losers);
+    if (!elo_winners.empty() && !elo_losers.empty()) {
+        EloPlayer::multiple(elo_winners, elo_losers);
+    }
 }
 
 bool Competition::can_join(const UserPtr& user) const {
