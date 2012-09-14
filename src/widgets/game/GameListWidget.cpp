@@ -48,7 +48,6 @@ public:
         STATE_COLUMN,
         WINNER_COLUMN,
         STARTED_COLUMN,
-        REAL_RATING_COLUMN,
         MOVES_SIZE_COLUMN,
         COMMENT_COLUMN
     };
@@ -62,7 +61,6 @@ public:
         addColumn("G.state", tr("tc.game.State")); // dummy
         addColumn("Wi.username", tr("tc.common.winner"));
         addColumn("G.started", tr("tc.game.started"));
-        addColumn("GP.norating", tr("tc.game.real_rating")); // dummy
         addColumn("G.id", tr("tc.game.moves_size")); // dummy
         addColumn("G.name", tr("tc.game.comment"));
     }
@@ -76,8 +74,6 @@ public:
                 return game->str_state();
             } else if (index.column() == MOVES_SIZE_COLUMN) {
                 return game->moves_number();
-            } else if (index.column() == REAL_RATING_COLUMN) {
-                return game->real_rating();
             }
         } else if (role == Wt::LinkRole) {
             UserPtr user;
@@ -135,7 +131,6 @@ public:
         table_view_->setColumnWidth(GameListModel::STATE_COLUMN, 80);
         table_view_->setColumnWidth(GameListModel::WINNER_COLUMN, 120);
         table_view_->setColumnWidth(GameListModel::STARTED_COLUMN, 70);
-        table_view_->setColumnWidth(GameListModel::REAL_RATING_COLUMN, 40);
         table_view_->setColumnWidth(GameListModel::MOVES_SIZE_COLUMN, 40);
         table_view_->setColumnWidth(GameListModel::COMMENT_COLUMN, 120);
     }
