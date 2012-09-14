@@ -88,6 +88,7 @@ dbo::SqlConnection* Session::new_connection(const Options& options) {
 #ifndef NDEBUG
     connection->setProperty("show-queries", "true");
 #endif
+    connection->setProperty("enable_nestloop", "on");
     return connection;
 }
 
