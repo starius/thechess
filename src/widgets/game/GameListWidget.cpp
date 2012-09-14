@@ -127,6 +127,7 @@ public:
         table_view_ = new GameTableView();
         addWidget(table_view_);
         table_view_->setModel(query_model_);
+        table_view_->setSortingEnabled(false);
         table_view_->resize(770, 450);
         table_view_->setColumnWidth(GameListModel::N_COLUMN, 65);
         table_view_->setColumnWidth(GameListModel::WHITE_COLUMN, 75);
