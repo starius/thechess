@@ -149,7 +149,7 @@ private:
     int max_show_move_;
 };
 
-class TableView : public Wt::WTableView {
+class MovesTableView : public Wt::WTableView {
 protected:
     WWidget* createPageNavigationBar() {
         return new Wt::Wc::Pager(this);
@@ -186,7 +186,7 @@ public:
         move_confirmation_ = new Wt::WCheckBox(tr("tc.game.Move_confirmation"),
                                                board_widget_->inner());
         moves_model_ = new MovesModel(&cached_moves_, this);
-        moves_table_view_ = new TableView();
+        moves_table_view_ = new MovesTableView();
         columns->elementAt(0, 1)->addWidget(moves_table_view_);
         moves_table_view_->setModel(moves_model_);
         int moves_per_page = big ? 20 : 10;

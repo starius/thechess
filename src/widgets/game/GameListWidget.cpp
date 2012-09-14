@@ -99,7 +99,7 @@ public:
     }
 };
 
-class TableView : public Wt::WTableView {
+class GameTableView : public Wt::WTableView {
 protected:
     WWidget* createPageNavigationBar() {
         return new Wt::Wc::Pager(this);
@@ -121,7 +121,7 @@ public:
     void initialize() {
         manager();
         query_model_ = new GameListModel(query(), this);
-        table_view_ = new TableView();
+        table_view_ = new GameTableView();
         addWidget(table_view_);
         table_view_->setModel(query_model_);
         table_view_->resize(770, 450);
