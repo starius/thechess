@@ -173,9 +173,9 @@ public:
         setColumnWidth(UserListModel::WINS_COLUMN, 30);
         setColumnWidth(UserListModel::DRAWS_COLUMN, 30);
         setColumnWidth(UserListModel::FAILS_COLUMN, 30);
-        setColumnWidth(UserListModel::RATING_COLUMN, 30);
-        setColumnWidth(UserListModel::ONLINE_TIME, 75);
-        setColumnWidth(UserListModel::REGISTRATION_DATE, 110);
+        setColumnWidth(UserListModel::RATING_COLUMN, 50);
+        setColumnWidth(UserListModel::ONLINE_TIME, 85);
+        setColumnWidth(UserListModel::REGISTRATION_DATE, 75);
     }
 
 protected:
