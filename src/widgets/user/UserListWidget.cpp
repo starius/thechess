@@ -107,6 +107,7 @@ private:
         if (not_removed_) {
             q.where("rights != ?").bind(NONE);
             q.where("vacation_until is null");
+            q.where("last_enter > ?").bind(now() - 10 * WEEK);
         }
         if (only_online_) {
             q.where("sessions != 0");
