@@ -60,7 +60,7 @@ private:
                        path_->user_view()->get_link(tApp->user().id()));
             addWidget(new MessagesAnchor());
             if (tApp->user()->has_permission(VIRTUALS_VIEWER)) {
-                add_button("tc.menu.virtuals_list", path_->all_virtuals());
+                //add_button("tc.menu.virtuals_list", path_->all_virtuals());
             }
             if (tApp->user()->has_permission(LOGS_READER)) {
                 add_button("tc.menu.admin_log", path_->admin_log());

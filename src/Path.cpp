@@ -74,7 +74,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(games_of_user_, boost::bind(&Path::open_games_of_user, this));
     connect(competitions_of_user_, boost::bind(&Path::open_competitions_of_user,
             this));
-    connect(all_virtuals_, boost::bind(&MainWidget::all_virtuals, mw));
+    //connect(all_virtuals_, boost::bind(&MainWidget::all_virtuals, mw));
     connect(settings_page_, boost::bind(&MainWidget::settings_page, mw));
     connect(game_list_, boost::bind(&MainWidget::game_list, mw));
     connect(game_view_, boost::bind(&Path::open_game, this));
