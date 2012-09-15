@@ -12,14 +12,17 @@
 
 #include <Wt/WImage>
 #include <Wt/WText>
+#include <Wt/WBreak>
 #include <Wt/WSlider>
 #include <Wt/Wc/FilterResource.hpp>
 
 #include "widgets/user/VirtualsWidget.hpp"
+#include "widgets/user/user_anchor.hpp"
 #include "Application.hpp"
 
 namespace thechess {
 
+// TODO. Does not work with large graphs. Crashes
 class VirtualsResource : public Wt::Wc::FilterResource {
 public:
     VirtualsResource(const dbo::Query<BD::BDPair>& pairs, Wt::WObject* parent):
@@ -69,6 +72,46 @@ private:
     int min_score_;
 };
 
+class VirtualsList : public Wt::WContainerWidget {
+public:
+    VirtualsList(const dbo::Query<BD::BDPair>& pairs,
+                 Wt::WContainerWidget* parent = 0):
+        Wt::WContainerWidget(parent),
+        pairs_(pairs), min_score_(Wt::Wc::Gather::MIN_SIGNIFICANT) {
+        update_list();
+    }
+
+    void update_list() {
+        clear();
+        dbo::Transaction t(tApp->session());
+        if (!tApp->user() ||
+                !tApp->user()->has_permission(VIRTUALS_VIEWER)) {
+            return;
+        }
+        BD::Scores scores;
+        BD::scores(pairs_, scores);
+        BD::filter(scores, min_score_);
+        BOOST_FOREACH (BD::Scores::value_type& pair_and_score, scores) {
+            const UserPair& pair = pair_and_score.first;
+            const UserPtr a = pair.first();
+            const UserPtr b = pair.second();
+            addWidget(new Wt::WBreak());
+            addWidget(user_anchor(a));
+            addWidget(new Wt::WText(" &mdash; "));
+            addWidget(user_anchor(b));
+        }
+    }
+
+    void set_min_score(int min_score) {
+        min_score_ = min_score;
+        update_list();
+    }
+
+private:
+    dbo::Query<BD::BDPair> pairs_;
+    int min_score_;
+};
+
 VirtualsWidget::VirtualsWidget(const dbo::Query<BD::BDPair>& pairs,
                                Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent) {
@@ -95,19 +138,17 @@ static void update_text(Wt::WText* label, Wt::WSlider* slider) {
 }
 
 void VirtualsWidget::initialize(const dbo::Query<BD::BDPair>& pairs) {
-    VirtualsResource* res = new VirtualsResource(pairs, this);
+    VirtualsList* list = new VirtualsList(pairs);
     Wt::WSlider* min_score = new Wt::WSlider(this);
     Wt::WText* t = new Wt::WText(this);
     min_score->setMinimum(10);
     min_score->setMaximum(1000);
     min_score->setWidth(600);
     min_score->setValue(Wt::Wc::Gather::MIN_SIGNIFICANT);
-    min_score->valueChanged().connect(res, &VirtualsResource::set_min_score);
+    min_score->valueChanged().connect(list, &VirtualsList::set_min_score);
     min_score->valueChanged().connect(boost::bind(update_text, t, min_score));
     new Wt::WBreak(this);
-    Wt::WImage* image = new Wt::WImage(this);
-    image->setResource(res);
-    image->setWidth(Wt::WLength(100, Wt::WLength::Percentage));
+    addWidget(list);
     update_text(t, min_score);
 }
 
