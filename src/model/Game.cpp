@@ -786,12 +786,13 @@ void Game::pgn_additional(std::ostream& out) const {
 
 // see http://cfajohnson.com/chess/SAN/SAN_DOC/Standard
 void Game::pgn(std::ostream& out, bool reduced) const {
-    Wt::WString event = competition_ ? competition_->name() : "?";
-    Wt::WString site = Options::instance()->pgn_site();
-    Wt::WString date = started_.isValid() ? started_.toString("yyyy.MM.dd") :
+    std::string event = competition_ ? competition_->name().toUTF8() : "?";
+    const std::string& site = Options::instance()->pgn_site();
+    std::string date = started_.isValid() ?
+                       started_.toString("yyyy.MM.dd").toUTF8() :
                        "????.??.??";
     int stage = competition_stage_ + 1;
-    Wt::WString round = competition_stage_ != -1 ?
+    std::string round = competition_stage_ != -1 ?
                         boost::lexical_cast<std::string>(stage) : "-";
     std::string white = white_ ? white_->username20().toUTF8() : "?";
     std::string black = black_ ? black_->username20().toUTF8() : "?";
