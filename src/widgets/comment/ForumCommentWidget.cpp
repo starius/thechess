@@ -52,6 +52,7 @@ ForumCommentWidget::ForumCommentWidget(const CommentPtr& comment) {
     new Wt::WText(forum_comment_text(comment), this);
     UserPtr user = comment->init();
     if (user) {
+        new Wt::WBreak(this);
         user_anchor(user, this);
     }
     CommentPtr post_text = comment->root();
