@@ -169,12 +169,12 @@ public:
         Wt::WTableView(p) {
         setModel(model);
         resize(ULP::WIDTH, ULP::HEIGHT);
-        setColumnWidth(UserListModel::NAME_COLUMN, 200);
+        setColumnWidth(UserListModel::NAME_COLUMN, 170);
         setColumnWidth(UserListModel::CLASSIFICATION_COLUMN, 150);
-        setColumnWidth(UserListModel::ALL_COLUMN, 30);
-        setColumnWidth(UserListModel::WINS_COLUMN, 30);
+        setColumnWidth(UserListModel::ALL_COLUMN, 40);
+        setColumnWidth(UserListModel::WINS_COLUMN, 40);
         setColumnWidth(UserListModel::DRAWS_COLUMN, 30);
-        setColumnWidth(UserListModel::FAILS_COLUMN, 30);
+        setColumnWidth(UserListModel::FAILS_COLUMN, 40);
         setColumnWidth(UserListModel::RATING_COLUMN, 50);
         setColumnWidth(UserListModel::ONLINE_TIME, 85);
         setColumnWidth(UserListModel::REGISTRATION_DATE, 75);
