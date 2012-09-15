@@ -209,7 +209,7 @@ private:
             BOOST_FOREACH (UserPtr user, users) {
                 user.modify()->games_stat().reset();
             }
-            Games games = s.find<Game>().resultList();
+            Games games = s.find<Game>().orderBy("ended").resultList();
             BOOST_FOREACH (GamePtr game, games) {
                 game.modify()->stat_change();
             }
@@ -220,7 +220,8 @@ private:
             BOOST_FOREACH (UserPtr user, users) {
                 user.modify()->competitions_stat().reset();
             }
-            Competitions ccc = s.find<Competition>().resultList();
+            Competitions ccc = s.find<Competition>()
+                               .orderBy("ended").resultList();
             BOOST_FOREACH (CompetitionPtr c, ccc) {
                 c.modify()->stat_change();
             }
