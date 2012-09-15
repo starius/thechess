@@ -20,6 +20,7 @@
 #include "widgets/user/ClassificationWidget.hpp"
 #include "widgets/Header.hpp"
 #include "Application.hpp"
+#include "Server.hpp"
 #include "model/all.hpp"
 #include "utils/text_edit.hpp"
 
@@ -201,53 +202,53 @@ private:
     }
 
     void recalculation() {
+        Session s(Server::instance()->pool());
         {
-            dbo::Transaction t(tApp->session());
-            Users users = tApp->session().find<User>().resultList();
+            dbo::Transaction t(s);
+            Users users = s.find<User>().resultList();
             BOOST_FOREACH (UserPtr user, users) {
                 user.modify()->games_stat().reset();
             }
-            Games games = tApp->session().find<Game>().resultList();
+            Games games = s.find<Game>().resultList();
             BOOST_FOREACH (GamePtr game, games) {
                 game.modify()->stat_change();
             }
         }
         {
-            dbo::Transaction t(tApp->session());
-            Users users = tApp->session().find<User>().resultList();
+            dbo::Transaction t(s);
+            Users users = s.find<User>().resultList();
             BOOST_FOREACH (UserPtr user, users) {
                 user.modify()->competitions_stat().reset();
             }
-            Competitions ccc = tApp->session().find<Competition>().resultList();
+            Competitions ccc = s.find<Competition>().resultList();
             BOOST_FOREACH (CompetitionPtr c, ccc) {
                 c.modify()->stat_change();
             }
         }
         {
-            dbo::Transaction t(tApp->session());
-            GPs gps = tApp->session().find<GP>().resultList();
+            dbo::Transaction t(s);
+            GPs gps = s.find<GP>().resultList();
             BOOST_FOREACH (GPPtr gp, gps) {
                 gp.modify()->set_games_size(gp->games().size());
             }
         }
         {
-            dbo::Transaction t(tApp->session());
-            CPs cps = tApp->session().find<CP>().resultList();
+            dbo::Transaction t(s);
+            CPs cps = s.find<CP>().resultList();
             BOOST_FOREACH (CPPtr cp, cps) {
                 cp.modify()->set_competitions_size(cp->competitions().size());
             }
         }
         // comments
         {
-            dbo::Transaction t(tApp->session());
-            Session& s = tApp->session();
+            dbo::Transaction t(s);
             s.execute("update thechess_comment set show_index = 1, depth = 1 "
                       "where type = ?").bind(Comment::FORUM_POST_TEXT);
             s.execute("update thechess_comment set show_index = 0, depth = 0 "
                       "where type = ?").bind(Comment::FORUM_COMMENT);
         }
         {
-            dbo::Transaction t(tApp->session());
+            dbo::Transaction t(s);
             Comments comments = tApp->session().find<Comment>()
                                 .where("type = ?").bind(Comment::FORUM_COMMENT)
                                 .orderBy("id");
