@@ -117,6 +117,7 @@ public:
         active_(active), activated_(false),
         select_turn_into_flag_(false),
         dialog_(0) {
+        Wt::WPushButton* b;
         lastmove_show_ = User::has_s(SWITCH_LASTMOVE);
         big_ = User::has_s(SWITCH_BIG);
         correct_bottom();
@@ -146,11 +147,23 @@ public:
             boost::bind(&BoardWidgetImpl::show_lastmove, this,
                         boost::bind<bool>(&Wt::WAbstractToggleButton::isChecked,
                                           lastmove_box_)));
+        if (!wApp->environment().ajax()) {
+            b = new Wt::WPushButton(tr("tc.common.Apply"), this);
+            b->clicked().connect(
+                boost::bind(&BoardWidgetImpl::show_lastmove, this,
+                            boost::bind<bool>(
+                                &Wt::WAbstractToggleButton::isChecked,
+                                lastmove_box_)));
+        }
         new Wt::WBreak(this);
         big_box_ = new Wt::WCheckBox(this);
         big_box_->setText(tr("tc.game.Enlarged_images"));
         big_box_->setChecked(big_);
         big_box_->changed().connect(this, &BoardWidgetImpl::big_changed);
+        if (!wApp->environment().ajax()) {
+            b = new Wt::WPushButton(tr("tc.common.Apply"), this);
+            b->clicked().connect(this, &BoardWidgetImpl::big_changed);
+        }
     }
 
     ~BoardWidgetImpl() {

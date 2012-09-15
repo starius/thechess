@@ -24,6 +24,7 @@
 #include <Wt/WString>
 #include <Wt/WTableView>
 #include <Wt/Wc/Pager.hpp>
+#include <Wt/Wc/util.hpp>
 
 #include "widgets/chess/MovesWidget.hpp"
 #include "widgets/chess/LinksDialog.hpp"
@@ -165,6 +166,7 @@ public:
         current_move_(moves.size() - 1), max_moves_(max_moves),
         used_moves_(0), append_only_(append_only),
         active_(active), activated_(false) {
+        Wt::WPushButton* b;
         Wt::WTable* columns = new Wt::WTable(this);
         board_widget_ = new BoardWidget(big, this->active(), bottom);
         columns->elementAt(0, 0)->addWidget(board_widget_);
@@ -208,6 +210,11 @@ public:
         move_confirmation_->setChecked(User::has_s(SWITCH_MOVE_CONFIRMATION));
         move_confirmation_->changed()
         .connect(this, &MovesWidgetImpl::move_confirmation_changed);
+        if (!wApp->environment().ajax()) {
+            b = new Wt::WPushButton(tr("tc.common.Apply"), this);
+            b->clicked().connect(this,
+                                 &MovesWidgetImpl::move_confirmation_changed);
+        }
     }
 
     ~MovesWidgetImpl() {
@@ -404,6 +411,7 @@ private:
         Wt::WModelIndex index = moves_model_->n2index(current_move_);
         // FIXME http://redmine.emweb.be/issues/1380
         // moves_table_view_->scrollTo(index);
+        Wt::Wc::scroll_to_last(moves_table_view_);
         if (current_move_ > -1) {
             moves_table_view_->select(index);
         } else {
