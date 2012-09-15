@@ -50,7 +50,6 @@ public:
                 out << "[label=\"" << username << "\"]" << std::endl;
             }
             BOOST_FOREACH (BD::Scores::value_type& pair_and_score, scores) {
-                int score = pair_and_score.second;
                 const UserPair& pair = pair_and_score.first;
                 const UserPtr a = pair.first();
                 const UserPtr b = pair.second();
