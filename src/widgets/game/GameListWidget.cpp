@@ -56,8 +56,7 @@ public:
         GLP::BaseQM(parent),
         only_my_(false),
         only_commented_(false),
-        user_(user),
-        row_count_(0) {
+        user_(user) {
         set_query();
         addColumn("G.id", tr("tc.common.number"));
         addColumn("G.id", tr("tc.game.white")); // dummy
@@ -113,30 +112,8 @@ public:
         return f;
     }
 
-    int rowCount(const Wt::WModelIndex& parent = Wt::WModelIndex()) const {
-        return row_count_;
-    }
-
     void set_query() {
         dbo::Transaction t(tApp->session());
-        dbo::Query<int> q_size = tApp->session().query<int>(
-                                     "select count(G) "
-                                     "from thechess_game G ");
-        if (only_my_ && tApp->user()) {
-            int id = tApp->user()->id();
-            q_size.where("G.white_id = ? or G.black_id = ? or G.init_id = ?")
-            .bind(id).bind(id).bind(id);
-        }
-        if (only_commented_) {
-            q_size.where("G.name <> ''");
-        }
-        if (user_) {
-            int id = user_->id();
-            q_size.where("G.white_id = ? or G.black_id = ? or G.init_id = ?")
-            .bind(id).bind(id).bind(id);
-        }
-        row_count_ = q_size.resultValue();
-        //
         GLP::Q q = tApp->session().query<GLP::Result>(
                        "select G from thechess_game G");
         if (only_my_ && tApp->user()) {
@@ -179,7 +156,6 @@ private:
     bool only_my_;
     bool only_commented_;
     UserPtr user_;
-    int row_count_;
 };
 
 class GameTableView : public Wt::WTableView {
