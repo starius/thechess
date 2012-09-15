@@ -152,6 +152,7 @@ public:
         setColumnWidth(CompetitionListModel::STARTED_COLUMN, 70);
         setColumnWidth(CompetitionListModel::ENDED_COLUMN, 70);
         setRowHeaderCount(1); // fixed id_columns when scrolling
+        setSortingEnabled(false);
     }
 
 protected:
