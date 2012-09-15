@@ -19,6 +19,7 @@
     <message id='tc.comment.Remove'>Удалить</message>
 
     <message id='tc.common.Agree'>Согласиться</message>
+    <message id='tc.common.all'>все</message>
     <message id='tc.common.Allow'>Позволить</message>
     <message id='tc.common.Apply'>Применить</message>
     <message id='tc.common.Board'>Доска</message>

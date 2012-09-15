@@ -486,6 +486,7 @@ TheChess.
     <message id='tc.comment.Remove'>Remove</message>
 
     <message id='tc.common.Agree'>Agree</message>
+    <message id='tc.common.all'>all</message>
     <message id='tc.common.Allow'>Allow</message>
     <message id='tc.common.Apply'>Apply</message>
     <message id='tc.common.Board'>Board</message>

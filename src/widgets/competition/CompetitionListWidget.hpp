@@ -17,6 +17,7 @@
 
 namespace thechess {
 
+class CompetitionStateSelect;
 class CompetitionListModel;
 class CompetitionListView;
 
@@ -27,6 +28,7 @@ public:
     CompetitionListWidget(const UserPtr& user, Wt::WContainerWidget* p = 0);
 
 private:
+    CompetitionStateSelect* state_;
     CompetitionListModel* model_;
     Wt::WCheckBox* only_my_;
     UserPtr user_;

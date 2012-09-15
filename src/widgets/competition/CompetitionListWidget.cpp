@@ -14,6 +14,7 @@
 #include <Wt/Dbo/QueryModel>
 #include <Wt/WString>
 #include <Wt/WPushButton>
+#include <Wt/WComboBox>
 #include <Wt/WEnvironment>
 #include <Wt/Wc/Pager.hpp>
 
@@ -30,6 +31,43 @@ typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 }
 
+class CompetitionStateSelect : public Wt::WComboBox {
+public:
+    enum State {
+        ALL,
+        RECRUITING,
+        ACTIVE,
+        ENDED,
+        CANCELLED
+    };
+
+    CompetitionStateSelect(Wt::WContainerWidget* parent = 0):
+        WComboBox(parent) {
+        addItem(tr("tc.common.all"));
+        addItem(tr(Competition::state2str(Competition::RECRUITING)));
+        addItem(tr(Competition::state2str(Competition::ACTIVE)));
+        addItem(tr(Competition::state2str(Competition::ENDED)));
+        addItem(tr(Competition::state2str(Competition::CANCELLED)));
+    }
+
+    State state() const {
+        return State(currentIndex());
+    }
+
+    static Competition::State state(State s) {
+        if (s == RECRUITING) {
+            return Competition::RECRUITING;
+        } else if (s == ACTIVE) {
+            return Competition::ACTIVE;
+        } else if (s == ENDED) {
+            return Competition::ENDED;
+        } else if (s == CANCELLED) {
+            return Competition::CANCELLED;
+        }
+        return Competition::CANCELLED; // unknown state
+    }
+};
+
 class CompetitionListModel : public CLP::BaseQM {
 public:
     enum {
@@ -42,6 +80,8 @@ public:
         STARTED_COLUMN,
         ENDED_COLUMN
     };
+
+    typedef CompetitionStateSelect::State State;
 
     CompetitionListModel(const UserPtr& user, Wt::WObject* parent = 0) :
         CLP::BaseQM(parent) {
@@ -80,7 +120,8 @@ public:
         return Wt::WString::tr(key);
     }
 
-    void set_query(bool only_my = false, const UserPtr& user = UserPtr()) {
+    void set_query(bool only_my = false, const UserPtr& user = UserPtr(),
+                   State state = CompetitionStateSelect::ALL) {
         DatabaseType t = tApp->server().options().database_type();
         std::stringstream sql;
         sql << "select C, ";
@@ -124,6 +165,9 @@ public:
                 sql << "where I.thechess_user_id = ? ";
             }
         }
+        if (state != CompetitionStateSelect::ALL) {
+            sql << "where C.state = ? ";
+        }
         CLP::Q q = tApp->session().query<CLP::Result>(sql.str());
         q.groupBy("C, CP.type");
         if (user) {
@@ -131,6 +175,9 @@ public:
         }
         if (only_my) {
             q.bind(tApp->user());
+        }
+        if (state != CompetitionStateSelect::ALL) {
+            q.bind(CompetitionStateSelect::state(state));
         }
         setQuery(q, /* keep_columns */ true);
     }
@@ -182,7 +229,7 @@ void CompetitionListWidget::initialize() {
 void CompetitionListWidget::apply() {
     bool only_my = only_my_->isChecked() && tApp->user();
     User::set_s(SWITCH_ONLY_MY_COMPETITIONS, only_my);
-    model_->set_query(only_my, user_);
+    model_->set_query(only_my, user_, state_->state());
 }
 
 void CompetitionListWidget::manager() {
@@ -192,6 +239,8 @@ void CompetitionListWidget::manager() {
     if (!tApp->user()) {
         only_my_->setEnabled(false);
     }
+    state_ = new CompetitionStateSelect(this);
+    state_->changed().connect(this, &CompetitionListWidget::apply);
     if (!tApp->environment().ajax()) {
         Wt::WPushButton* apply_button =
             new Wt::WPushButton(tr("tc.common.Apply"), this);

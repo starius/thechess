@@ -12,6 +12,7 @@
     <message id="tc.comment.Remove">Выдаліць</message>
 
     <message id="tc.common.Agree">Пагадзіцца</message>
+    <message id='tc.common.all'>ўсё</message>
     <message id="tc.common.Allow">Дазволіць</message>
     <message id="tc.common.Apply">Прымяніць</message>
     <message id="tc.common.Board">Дошка</message>
