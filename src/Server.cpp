@@ -53,7 +53,7 @@ Server::Server(int argc, char** argv):
     notifier_(this), planning_(*this), pgn_(*this), all_pgn_(*this),
     swfstore_("application/x-shockwave-flash", swfstore),
     password_service_(auth_service_) {
-    addResource(&all_pgn_, "/pgn/all.pgn");
+    //addResource(&all_pgn_, "/pgn/all.pgn");
     addResource(&pgn_, "/pgn/");
     addResource(&swfstore_, "/swfstore.swf");
     addResource(&storage_whitelist_, "/storage-whitelist.xml");
