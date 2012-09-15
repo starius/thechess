@@ -208,10 +208,12 @@ private:
             Users users = s.find<User>().resultList();
             BOOST_FOREACH (UserPtr user, users) {
                 user.modify()->games_stat().reset();
+                user.purge();
             }
             Games games = s.find<Game>().orderBy("ended").resultList();
             BOOST_FOREACH (GamePtr game, games) {
                 game.modify()->stat_change();
+                game.purge();
             }
         }
         {
@@ -219,11 +221,13 @@ private:
             Users users = s.find<User>().resultList();
             BOOST_FOREACH (UserPtr user, users) {
                 user.modify()->competitions_stat().reset();
+                user.purge();
             }
             Competitions ccc = s.find<Competition>()
                                .orderBy("ended").resultList();
             BOOST_FOREACH (CompetitionPtr c, ccc) {
                 c.modify()->stat_change();
+                c.purge();
             }
         }
         {
@@ -231,6 +235,7 @@ private:
             GPs gps = s.find<GP>().resultList();
             BOOST_FOREACH (GPPtr gp, gps) {
                 gp.modify()->set_games_size(gp->games().size());
+                gp.purge();
             }
         }
         {
@@ -238,6 +243,7 @@ private:
             CPs cps = s.find<CP>().resultList();
             BOOST_FOREACH (CPPtr cp, cps) {
                 cp.modify()->set_competitions_size(cp->competitions().size());
+                cp.purge();
             }
         }
         // comments
@@ -256,6 +262,7 @@ private:
             BOOST_FOREACH (CommentPtr comment, comments) {
                 comment.modify()->set_depth();
                 comment.modify()->set_index();
+                comment.purge();
             }
         }
     }
