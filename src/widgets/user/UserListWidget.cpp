@@ -106,6 +106,7 @@ private:
         }
         if (not_removed_) {
             q.where("rights != ?").bind(NONE);
+            q.where("vacation_until is null");
         }
         if (only_online_) {
             q.where("sessions != 0");

@@ -304,3 +304,4 @@ CREATE INDEX "user_games_stat_fails" ON "thechess_user" ("games_stat_fails");
 CREATE INDEX "user_classification" ON "thechess_user" ("classification");
 CREATE INDEX "user_online_time" ON "thechess_user" ("online_time");
 CREATE INDEX "user_registration_date" ON "thechess_user" ("registration_date");
+CREATE INDEX "user_vacation_until" ON "thechess_user" ("vacation_until");

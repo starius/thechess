@@ -258,6 +258,9 @@ void User::login() {
         last_enter_ = now();
     }
     sessions_ += 1;
+    if (vacation_until_.isValid() && vacation_until_ < now()) {
+        vacation_until_ = Wt::WDateTime();
+    }
 }
 
 void User::logout() {
