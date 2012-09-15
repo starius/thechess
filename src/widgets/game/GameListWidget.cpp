@@ -17,6 +17,7 @@
 #include <Wt/Dbo/ptr_tuple>
 #include <Wt/Dbo/ptr>
 #include <Wt/Wc/Pager.hpp>
+#include <Wt/Wc/util.hpp>
 
 #include <Wt/WCheckBox>
 #include <Wt/WPushButton>
@@ -196,6 +197,7 @@ public:
         table_view_->setColumnWidth(GameListModel::STARTED_COLUMN, 70);
         table_view_->setColumnWidth(GameListModel::MOVES_SIZE_COLUMN, 40);
         table_view_->setColumnWidth(GameListModel::COMMENT_COLUMN, 120);
+        Wt::Wc::scroll_to_last(table_view_);
     }
 
 private:

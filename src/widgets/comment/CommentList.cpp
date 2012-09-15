@@ -16,6 +16,7 @@
 #include <Wt/WText>
 #include <Wt/WAnchor>
 #include <Wt/Wc/Pager.hpp>
+#include <Wt/Wc/util.hpp>
 
 #include "widgets/comment/CommentList.hpp"
 #include "widgets/comment/CommentModel.hpp"
@@ -109,6 +110,7 @@ public:
             int column = CommentModel::CONTENTS_COLUMN;
             // FIXME http://redmine.emweb.be/issues/1380
             // scrollTo(model()->index(row, column));
+            Wt::Wc::scroll_to_last(this);
         }
     }
 

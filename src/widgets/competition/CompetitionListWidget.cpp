@@ -17,6 +17,7 @@
 #include <Wt/WComboBox>
 #include <Wt/WEnvironment>
 #include <Wt/Wc/Pager.hpp>
+#include <Wt/Wc/util.hpp>
 
 #include "widgets/competition/CompetitionListWidget.hpp"
 #include "model/all.hpp"
@@ -200,6 +201,7 @@ public:
         setColumnWidth(CompetitionListModel::ENDED_COLUMN, 70);
         setRowHeaderCount(1); // fixed id_columns when scrolling
         setSortingEnabled(false);
+        Wt::Wc::scroll_to_last(this);
     }
 
 protected:
