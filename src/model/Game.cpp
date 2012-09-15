@@ -105,8 +105,6 @@ void Game::stat_change() {
     if (!real_rating()) {
         return;
     }
-    white_.reread();
-    black_.reread();
     if (is_win()) {
         EloPlayer& other_stat = other_user(winner_).modify()->games_stat();
         winner_.modify()->games_stat().win(&other_stat);
