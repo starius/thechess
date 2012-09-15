@@ -47,7 +47,7 @@ public:
                 tApp->user()->vacation_until() < now()) {
             print_vacation();
         }
-        print_recalculation();
+        //print_recalculation();
     }
 
 private:
