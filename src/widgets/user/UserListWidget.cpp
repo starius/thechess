@@ -58,7 +58,6 @@ public:
         addColumn("games_stat_elo", tr("tc.user.games_stat_elo"));
         addColumn("online_time", tr("tc.user.Online_time").arg("")); // dummy
         addColumn("registration_date", tr("tc.user.Registration_date").arg(""));
-        sort(RATING_COLUMN, Wt::DescendingOrder);
     }
 
     bool only_online() const {
@@ -112,6 +111,7 @@ private:
         if (only_online_) {
             q.where("sessions != 0");
         }
+        q.orderBy("games_stat_elo desc");
         setQuery(q, /* keep_columns */ true);
     }
 
