@@ -31,14 +31,14 @@
 namespace thechess {
 
 const int COMMENT_WIDTH = 770;
-const int COMMENT_HEIGHT = 450;
+const int COMMENT_HEIGHT = 700;
 const int ID_WIDTH = 40;
 const int CHAT_TIME_WIDTH = 50;
 const int LOG_TIME_WIDTH = 145;
 const int POST_TIME_WIDTH = 145;
 const int INIT_WIDTH = 60;
-const int COMMENT_ROW_HEIGHT_FORUM = 200;
-const int ALL_COMMENTS_ROW_HEIGHT = 40;
+const int COMMENT_ROW_HEIGHT_FORUM = 65;
+const int ALL_COMMENTS_ROW_HEIGHT = 35;
 const int COMMENT_CHAT_LENGTH = 80;
 const int TOPIC_LENGTH = 80;
 const int POST_LENGTH = 80;
