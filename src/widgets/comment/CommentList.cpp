@@ -32,7 +32,7 @@ namespace thechess {
 const int COMMENT_WIDTH = 770;
 const int COMMENT_HEIGHT = 450;
 const int ID_WIDTH = 40;
-const int CHAT_TIME_WIDTH = 40;
+const int CHAT_TIME_WIDTH = 50;
 const int LOG_TIME_WIDTH = 145;
 const int POST_TIME_WIDTH = 145;
 const int INIT_WIDTH = 60;
