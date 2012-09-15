@@ -32,7 +32,7 @@ namespace thechess {
 
 namespace GLP {
 typedef Wt::WString S;
-typedef boost::tuple<GamePtr, S, S, S> Result;
+typedef boost::tuple<GamePtr> Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 
@@ -60,10 +60,10 @@ public:
         row_count_(0) {
         set_query();
         addColumn("G.id", tr("tc.common.number"));
-        addColumn("Wh.username", tr("tc.game.white"));
-        addColumn("B.username", tr("tc.game.black"));
+        addColumn("G.id", tr("tc.game.white")); // dummy
+        addColumn("G.id", tr("tc.game.black")); // dummy
         addColumn("G.state", tr("tc.game.State")); // dummy
-        addColumn("Wi.username", tr("tc.common.winner"));
+        addColumn("G.id", tr("tc.common.winner")); // dummy
         addColumn("G.started", tr("tc.game.started"));
         addColumn("G.id", tr("tc.game.moves_size")); // dummy
         addColumn("G.name", tr("tc.game.comment"));
@@ -74,7 +74,13 @@ public:
         dbo::Transaction t(tApp->session());
         const GamePtr& game = resultRow(index.row()).get<GLP::GAME_IN_TUPLE>();
         if (role == Wt::DisplayRole) {
-            if (index.column() == STATE_COLUMN) {
+            if (index.column() == WHITE_COLUMN) {
+                return game->white() ? game->white()->safe_username() : "";
+            } else if (index.column() == BLACK_COLUMN) {
+                return game->black() ? game->black()->safe_username() : "";
+            } else if (index.column() == WINNER_COLUMN) {
+                return game->winner() ? game->winner()->safe_username() : "";
+            } else if (index.column() == STATE_COLUMN) {
                 return game->str_state();
             } else if (index.column() == MOVES_SIZE_COLUMN) {
                 return game->moves_number();
@@ -96,6 +102,15 @@ public:
         }
         t.commit();
         return GLP::BaseQM::data(index, role);
+    }
+
+    Wt::WFlags<Wt::ItemFlag> flags(const Wt::WModelIndex& i) const {
+        Wt::WFlags<Wt::ItemFlag> f = GLP::BaseQM::flags(i);
+        if (i.column() == WHITE_COLUMN || i.column() == BLACK_COLUMN ||
+                i.column() == WINNER_COLUMN) {
+            f |= Wt::ItemIsXHTMLText;
+        }
+        return f;
     }
 
     int rowCount(const Wt::WModelIndex& parent = Wt::WModelIndex()) const {
@@ -123,11 +138,7 @@ public:
         row_count_ = q_size.resultValue();
         //
         GLP::Q q = tApp->session().query<GLP::Result>(
-                       "select G, Wh.username, B.username, Wi.username "
-                       "from thechess_game G "
-                       "left join thechess_user Wh on G.white_id=Wh.id "
-                       "left join thechess_user B on G.black_id=B.id "
-                       "left join thechess_user Wi on G.winner_game_id=Wi.id ");
+                       "select G from thechess_game G");
         if (only_my_ && tApp->user()) {
             int id = tApp->user()->id();
             q.where("G.white_id = ? or G.black_id = ? or G.init_id = ?")
