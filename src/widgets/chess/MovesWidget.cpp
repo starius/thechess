@@ -24,7 +24,6 @@
 #include <Wt/WString>
 #include <Wt/WTableView>
 #include <Wt/Wc/Pager.hpp>
-#include <Wt/Wc/util.hpp>
 
 #include "widgets/chess/MovesWidget.hpp"
 #include "widgets/chess/LinksDialog.hpp"
@@ -410,8 +409,7 @@ private:
         //FIXME - wrong row is shown
         Wt::WModelIndex index = moves_model_->n2index(current_move_);
         // FIXME http://redmine.emweb.be/issues/1380
-        // moves_table_view_->scrollTo(index);
-        Wt::Wc::scroll_to_last(moves_table_view_);
+        moves_table_view_->scrollTo(index);
         if (current_move_ > -1) {
             moves_table_view_->select(index);
         } else {
