@@ -7,10 +7,10 @@
 
 #include <boost/bind.hpp>
 
+#include <Wt/WEnvironment>
 #include <Wt/WTableView>
 #include <Wt/WCheckBox>
 #include <Wt/WPushButton>
-#include <Wt/WEnvironment>
 #include <Wt/Dbo/QueryModel>
 #include <Wt/Wc/Pager.hpp>
 
@@ -65,9 +65,11 @@ public:
     }
 
     void set_only_online(bool only_online) {
-        only_online_ = only_online;
-        User::set_s(SWITCH_ONLY_ONLINE_USERS, only_online);
-        set_query();
+        if (only_online != only_online_) {
+            only_online_ = only_online;
+            User::set_s(SWITCH_ONLY_ONLINE_USERS, only_online);
+            set_query();
+        }
     }
 
     bool not_removed() const {
@@ -75,9 +77,11 @@ public:
     }
 
     void set_not_removed(bool not_removed) {
-        not_removed_ = not_removed;
-        User::set_s(SWITCH_ONLY_NOT_REMOVED_USERS, not_removed);
-        set_query();
+        if (not_removed != not_removed_) {
+            not_removed_ = not_removed;
+            User::set_s(SWITCH_ONLY_NOT_REMOVED_USERS, not_removed);
+            set_query();
+        }
     }
 
     bool only_blocked() const {
@@ -85,8 +89,10 @@ public:
     }
 
     void set_only_blocked(bool only_blocked) {
-        only_blocked_ = only_blocked;
-        set_query();
+        if (only_blocked != only_blocked_) {
+            only_blocked_ = only_blocked;
+            set_query();
+        }
     }
 
 private:
@@ -187,26 +193,32 @@ protected:
 };
 
 UserListWidget::UserListWidget(Wt::WContainerWidget* parent) :
-    WContainerWidget(parent) {
-    UserListModel* m = new UserListModel(this);
-    Wt::WCheckBox* oo = new Wt::WCheckBox(tr("tc.user.Only_online"), this);
-    oo->setChecked(m->only_online());
-    oo->changed().connect(
-        boost::bind(&UserListModel::set_only_online, m,
-                    boost::bind(&Wt::WAbstractToggleButton::isChecked, oo)));
-    Wt::WCheckBox* nr = new Wt::WCheckBox(tr("tc.user.Not_removed"), this);
-    nr->setChecked(m->not_removed());
-    nr->changed().connect(
-        boost::bind(&UserListModel::set_not_removed, m,
-                    boost::bind(&Wt::WAbstractToggleButton::isChecked, nr)));
+    WContainerWidget(parent), b_(0) {
+    m_ = new UserListModel(this);
+    oo_ = new Wt::WCheckBox(tr("tc.user.Only_online"), this);
+    oo_->setChecked(m_->only_online());
+    oo_->changed().connect(this, &UserListWidget::apply);
+    nr_ = new Wt::WCheckBox(tr("tc.user.Not_removed"), this);
+    nr_->setChecked(m_->not_removed());
+    nr_->changed().connect(this, &UserListWidget::apply);
     if (tApp->user()) {
-        Wt::WCheckBox* b = new Wt::WCheckBox(tr("tc.user.My_blocklist"), this);
-        b->setChecked(m->only_blocked());
-        b->changed().connect(
-            boost::bind(&UserListModel::set_only_blocked, m,
-                        boost::bind(&Wt::WAbstractToggleButton::isChecked, b)));
+        b_ = new Wt::WCheckBox(tr("tc.user.My_blocklist"), this);
+        b_->setChecked(m_->only_blocked());
+        b_->changed().connect(this, &UserListWidget::apply);
     }
-    UserListView* view = new UserListView(m, this);
+    if (!wApp->environment().ajax()) {
+        Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Apply"), this);
+        b->clicked().connect(this, &UserListWidget::apply);
+    }
+    UserListView* view = new UserListView(m_, this);
+}
+
+void UserListWidget::apply() {
+    m_->set_only_online(oo_->isChecked());
+    m_->set_not_removed(nr_->isChecked());
+    if (b_) {
+        m_->set_only_blocked(b_->isChecked());
+    }
 }
 
 }

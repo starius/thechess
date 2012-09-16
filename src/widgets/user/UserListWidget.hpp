@@ -12,11 +12,21 @@
 
 namespace thechess {
 
+class UserListModel;
+
 /** List of users */
 class UserListWidget : public Wt::WContainerWidget {
 public:
     /** Constructor */
     UserListWidget(Wt::WContainerWidget* parent = 0);
+
+private:
+    Wt::WCheckBox* oo_;
+    Wt::WCheckBox* nr_;
+    Wt::WCheckBox* b_;
+    UserListModel* m_;
+
+    void apply();
 };
 
 }
