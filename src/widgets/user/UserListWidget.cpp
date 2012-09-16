@@ -10,6 +10,7 @@
 #include <Wt/WEnvironment>
 #include <Wt/WTableView>
 #include <Wt/WCheckBox>
+#include <Wt/WLineEdit>
 #include <Wt/WPushButton>
 #include <Wt/Dbo/QueryModel>
 #include <Wt/Wc/Pager.hpp>
@@ -95,8 +96,16 @@ public:
         }
     }
 
+    void set_name_like(const Wt::WString& name_like) {
+        if (name_like != name_like_) {
+            name_like_ = name_like;
+            set_query();
+        }
+    }
+
 private:
     bool only_online_, not_removed_, only_blocked_;
+    Wt::WString name_like_;
 
     void set_query() {
         dbo::Transaction t(tApp->session());
@@ -116,6 +125,9 @@ private:
         }
         if (only_online_) {
             q.where("sessions != 0");
+        }
+        if (!name_like_.empty()) {
+            q.where("username like ?").bind("%" + name_like_ + "%");
         }
         q.orderBy("games_stat_elo desc");
         setQuery(q, /* keep_columns */ true);
@@ -209,6 +221,9 @@ UserListWidget::UserListWidget(Wt::WContainerWidget* parent) :
         b_->setChecked(m_->only_blocked());
         b_->changed().connect(this, &UserListWidget::apply);
     }
+    name_ = new Wt::WLineEdit(this);
+    name_->setEmptyText(tr("tc.common.Name"));
+    name_->enterPressed().connect(this, &UserListWidget::apply);
     if (!wApp->environment().ajax()) {
         Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Apply"), this);
         b->clicked().connect(this, &UserListWidget::apply);
@@ -222,6 +237,7 @@ void UserListWidget::apply() {
     if (b_) {
         m_->set_only_blocked(b_->isChecked());
     }
+    m_->set_name_like(name_->text());
 }
 
 }

@@ -8,6 +8,7 @@
 #ifndef THECHESS_WIDGETS_USERLISTWIDGET_HPP_
 #define THECHESS_WIDGETS_USERLISTWIDGET_HPP_
 
+#include <Wt/WGlobal>
 #include <Wt/WContainerWidget>
 
 namespace thechess {
@@ -24,6 +25,7 @@ private:
     Wt::WCheckBox* oo_;
     Wt::WCheckBox* nr_;
     Wt::WCheckBox* b_;
+    Wt::WLineEdit* name_;
     UserListModel* m_;
 
     void apply();
