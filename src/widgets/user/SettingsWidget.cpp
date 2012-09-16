@@ -256,7 +256,7 @@ private:
         }
         {
             dbo::Transaction t(s);
-            Comments comments = tApp->session().find<Comment>()
+            Comments comments = s.find<Comment>()
                                 .where("type = ?").bind(Comment::FORUM_COMMENT)
                                 .orderBy("id");
             BOOST_FOREACH (CommentPtr comment, comments) {
