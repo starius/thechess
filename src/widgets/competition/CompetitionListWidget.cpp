@@ -229,14 +229,15 @@ CompetitionListWidget::CompetitionListWidget(const UserPtr& user,
 void CompetitionListWidget::initialize() {
     manager();
     model_ = new CompetitionListModel(user_, this);
+    view_ = new CompetitionListView(model_, this);
     apply();
-    new CompetitionListView(model_, this);
 }
 
 void CompetitionListWidget::apply() {
     bool only_my = only_my_->isChecked() && tApp->user();
     User::set_s(SWITCH_ONLY_MY_COMPETITIONS, only_my);
     model_->set_query(only_my, user_, state_->state());
+    Wt::Wc::scroll_to_last(view_);
 }
 
 void CompetitionListWidget::manager() {

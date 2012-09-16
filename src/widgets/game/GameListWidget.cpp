@@ -234,6 +234,7 @@ private:
         User::set_s(SWITCH_ONLY_COMMENTED_GAMES, only_commented_->isChecked());
         model_->set_only_my(only_my_->isChecked());
         model_->set_only_commented(only_commented_->isChecked());
+        Wt::Wc::scroll_to_last(table_view_);
     }
 
 };

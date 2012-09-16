@@ -30,6 +30,7 @@ public:
 private:
     CompetitionStateSelect* state_;
     CompetitionListModel* model_;
+    CompetitionListView* view_;
     Wt::WCheckBox* only_my_;
     UserPtr user_;
 
