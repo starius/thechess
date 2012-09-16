@@ -5,6 +5,8 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <algorithm>
+
 #include "widgets/comment/CommentModel.hpp"
 #include "widgets/comment/forum_comment_text.hpp"
 #include "Application.hpp"
@@ -122,7 +124,7 @@ const char* const COMMENT_INDENT = "<table><tr><td width='{1}'>{2}</td>"
 
 Wt::WString CommentModel::contents(const CommentPtr& comment) const {
     if (type() == Comment::FORUM_COMMENT) {
-        int depth = comment->depth() - 2;
+        int depth = std::max(0, comment->depth() - 2);
         int width = depth * 10 + 1;
         std::string spacer(depth, '-');
         return Wt::WString(COMMENT_INDENT)
