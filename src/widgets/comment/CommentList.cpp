@@ -53,6 +53,7 @@ public:
         Comment::Type type = model->type();
         int comment_width = COMMENT_WIDTH - 40;
         resize(COMMENT_WIDTH, COMMENT_HEIGHT);
+        setSelectable(true);
         setColumnWidth(CommentModel::ID_COL, ID_WIDTH);
         setColumnWidth(CommentModel::INIT_COL, INIT_WIDTH);
         if (type == Comment::PRIVATE_MESSAGE) {
