@@ -85,6 +85,10 @@ public:
             } else if (index.column() == MOVES_SIZE_COLUMN) {
                 return game->moves_number();
             }
+        } else if (role == Wt::StyleClassRole) {
+            if (index.column() == STARTED_COLUMN) {
+                return "thechess-datetime";
+            }
         } else if (role == Wt::LinkRole) {
             UserPtr user;
             if (index.column() == N_COLUMN) {

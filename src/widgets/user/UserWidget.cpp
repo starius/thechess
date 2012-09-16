@@ -36,6 +36,7 @@ class UserWidget::UserWidgetImpl : public Wt::WContainerWidget {
 public:
     UserWidgetImpl(const UserPtr& user) :
         Wt::WContainerWidget(), user_(user) {
+        Wt::WText* tmp;
         dbo::Transaction t(tApp->session());
         user_.reread();
         new Header(user_->username(), this);
@@ -49,8 +50,9 @@ public:
         if (user_->online()) {
             new Wt::WText(tr("tc.user.Online"), this);
         } else {
-            new Wt::WText(tr("tc.user.Last_enter")
-                          .arg(user_->last_enter().toString()), this);
+            tmp = new Wt::WText(tr("tc.user.Last_enter")
+                                .arg(user_->last_enter().toString()), this);
+            tmp->setStyleClass("thechess-datetime");
         }
         if (user_->removed()) {
             new Wt::WBreak(this);
@@ -75,16 +77,19 @@ public:
             b->clicked().connect(this, &UserWidgetImpl::inverse_confirmed);
         }
         new Wt::WBreak(this);
-        new Wt::WText(tr("tc.user.Online_time")
-                      .arg(td2str(user_->online_time())), this);
+        tmp = new Wt::WText(tr("tc.user.Online_time")
+                            .arg(td2str(user_->online_time())), this);
+        tmp->setStyleClass("thechess-datetime");
         new Wt::WBreak(this);
-        new Wt::WText(tr("tc.user.Registration_date")
-                      .arg(user_->registration_date().toString()), this);
+        tmp = new Wt::WText(tr("tc.user.Registration_date")
+                            .arg(user_->registration_date().toString()), this);
+        tmp->setStyleClass("thechess-datetime");
         if (user_->vacation_until().isValid() &&
                 user_->vacation_until() > now()) {
             new Wt::WBreak(this);
-            new Wt::WText(tr("tc.user.Vacation_until")
-                          .arg(user_->vacation_until().toString()), this);
+            tmp = new Wt::WText(tr("tc.user.Vacation_until")
+                                .arg(user_->vacation_until().toString()), this);
+            tmp->setStyleClass("thechess-datetime");
         }
         new Wt::WBreak(this);
         if (tApp->user() && tApp->user() != user_ && !user_->removed()) {

@@ -116,6 +116,11 @@ a.thechess-proposed {
     color: #00008B; /* darkBlue */
 }
 
+.thechess-datetime {
+    color: purple !important;
+    font-style: italic !important;
+}
+
 .Wt-tableview .Wt-plaintable td {
     overflow-x: hidden !important;
 }

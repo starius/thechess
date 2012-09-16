@@ -110,7 +110,10 @@
     </message>
     <message id="tc.competition.widget_template">
         <h1>Турнір № ${id} ${name}</h1>
-        Турнір створаны ${created}, стартаваў ${started}, быў зачынены ${ended}.
+        Турнір
+        створаны <span class="thechess-datetime">${created}</span>,
+        стартаваў <span class="thechess-datetime">${started}</span>,
+        быў зачынены <span class="thechess-datetime">${ended}</span>.
         <br /> Тып турніру: ${type}.
         <br /> Статут турніру: ${state}.
         <br /> Апісанне: ${description}
@@ -134,7 +137,7 @@
     <message id="tc.forum.topic_posts">пасты тэматыкі {1}</message>
     <message id="tc.forum.topics">тэматыкі</message>
     <message id="tc.forum.comment_template">
-        Ад {1}, {2} пісаў(а):
+        Ад <span class="thechess-datetime">{1}</span>, {2} пісаў(а):
         <br />
         {3}
     </message>

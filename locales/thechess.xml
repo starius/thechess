@@ -588,7 +588,10 @@ TheChess.
     </message>
     <message id='tc.competition.widget_template'>
         <h1>Competition # ${id} ${name}</h1>
-        The competition was created ${created}, started ${started}, closed ${ended}.
+        The competition was
+        created <span class="thechess-datetime">${created}</span>,
+        started <span class="thechess-datetime">${started}</span>,
+        closed <span class="thechess-datetime">${ended}</span>.
         <br /> Competition type: ${type}.
         <br /> Competition state: ${state}.
         <br /> Description: ${description}
@@ -612,7 +615,7 @@ TheChess.
     <message id='tc.forum.topic_posts'>posts of topic {1}</message>
     <message id='tc.forum.topics'>topics</message>
     <message id='tc.forum.comment_template'>
-        On {1}, {2} wrote:
+        On <span class="thechess-datetime">{1}</span>, {2} wrote(а):
         <br />
         {3}
     </message>

@@ -111,7 +111,10 @@
     </message>
     <message id="tc.competition.widget_template">
         <h1>Турнір № ${id} ${name}</h1>
-        Турнір створено ${created}, стартував ${started}, закінчено ${ended}.
+        Турнір
+        створено <span class="thechess-datetime">${created}</span>,
+        стартував <span class="thechess-datetime">${started}</span>,
+        закінчено <span class="thechess-datetime">${ended}</span>.
         <br/>Тип турніру: ${type}.
         <br/>Статус турніру: ${state}.
         <br/>Опис: ${description}
@@ -135,7 +138,7 @@
     <message id='tc.forum.topic_posts'>пости теми {1}</message>
     <message id='tc.forum.topics'>теми</message>
     <message id='tc.forum.comment_template'>
-        Від {1}, {2} писав(ла):
+        Від <span class="thechess-datetime">{1}</span>, {2} писав(ла):
         <br />
         {3}
     </message>

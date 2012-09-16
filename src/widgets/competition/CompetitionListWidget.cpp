@@ -111,6 +111,11 @@ public:
             } else if (index.column() == MEMBERS_COLUMN) {
                 return resultRow(index.row()).get<2>();
             }
+        } else if (role == Wt::StyleClassRole) {
+            if (index.column() == STARTED_COLUMN ||
+                    index.column() == ENDED_COLUMN) {
+                return "thechess-datetime";
+            }
         } else if (role == Wt::LinkRole && index.column() == N_COLUMN) {
             return tApp->path().competition_view()->get_link(o.id());
         }
