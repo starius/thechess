@@ -111,7 +111,7 @@ public:
     Wt::WFlags<Wt::ItemFlag> flags(const Wt::WModelIndex& i) const {
         Wt::WFlags<Wt::ItemFlag> f = GLP::BaseQM::flags(i);
         if (i.column() == WHITE_COLUMN || i.column() == BLACK_COLUMN ||
-                i.column() == WINNER_COLUMN) {
+                i.column() == WINNER_COLUMN || i.column() == COMMENT_COLUMN) {
             f |= Wt::ItemIsXHTMLText;
         }
         return f;
