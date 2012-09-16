@@ -22,6 +22,9 @@ static void add_emotions_and_image(Wt::WTextEdit* e) {
         ",numlist,bullist,|,emotions";
     e->setExtraPlugins("emotions");
     e->setConfigurationSetting("theme_advanced_buttons1", std::string(buttons));
+    e->setConfigurationSetting("force_br_newlines", true);
+    e->setConfigurationSetting("force_p_newlines", false);
+    e->setConfigurationSetting("forced_root_block", std::string());
 }
 
 void patch_text_edit(Wt::WTextEdit* text_edit) {
