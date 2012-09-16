@@ -186,6 +186,7 @@ void CommentList::set_ip(const std::string ip) {
         return;
     }
     comment_model()->set_ip(ip);
+    Wt::Wc::scroll_to_last(view_);
 }
 
 CommentModel* CommentList::comment_model() const {
