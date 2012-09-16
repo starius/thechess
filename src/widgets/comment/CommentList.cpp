@@ -181,6 +181,13 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     }
 }
 
+void CommentList::set_ip(const std::string ip) {
+    if (!tApp->user() || !tApp->user()->has_permission(REGISTRATION_BANNER)) {
+        return;
+    }
+    comment_model()->set_ip(ip);
+}
+
 CommentModel* CommentList::comment_model() const {
     return view_->comment_model();
 }

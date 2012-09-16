@@ -286,6 +286,9 @@ void MainWidget::banned_ip(const std::string& ip) {
     Wt::WContainerWidget* c = new Wt::WContainerWidget();
     c->addWidget(new IpBanList(ip));
     c->addWidget(new IpList(ip));
+    CommentList* comments = new CommentList(Comment::NO_TYPE);
+    comments->set_ip(ip);
+    c->addWidget(comments);
     set_contents(c);
     wApp->setTitle(tr("tc.title.IpBanList"));
 }

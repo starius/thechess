@@ -171,6 +171,9 @@ CommentModel::Query CommentModel::get_query() const {
     if (only_ok_) {
         result.where("state = ?").bind(Comment::OK);
     }
+    if (!ip_.empty()) {
+        result.where("ip = ?").bind(ip_);
+    }
     if (type_ == Comment::FORUM_COMMENT) {
         result.orderBy("show_index");
     } else {
@@ -191,6 +194,13 @@ void CommentModel::set_only_my(bool only_my) {
     if (only_my != only_my_) {
         only_my_ = only_my;
         User::set_s(SWITCH_ONLY_MY_COMMENTS, only_my);
+        setQuery(get_query(), /* keep_columns */ true);
+    }
+}
+
+void CommentModel::set_ip(const std::string ip) {
+    if (ip != ip_) {
+        ip_ = ip;
         setQuery(get_query(), /* keep_columns */ true);
     }
 }

@@ -89,12 +89,21 @@ public:
     /** Set if only my comments are shown */
     void set_only_my(bool only_my = true);
 
+    /** Get filter by ip of author */
+    const std::string ip() const {
+        return ip_;
+    }
+
+    /** Set filter by ip of author */
+    void set_ip(const std::string ip);
+
 private:
     Comment::Type type_;
     CommentPtr root_;
     UserPtr init_;
     bool only_ok_;
     bool only_my_;
+    std::string ip_;
 };
 
 }

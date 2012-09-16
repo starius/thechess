@@ -26,6 +26,11 @@ public:
                 const UserPtr& init = UserPtr(),
                 Wt::WContainerWidget* parent = 0);
 
+    /** Set filter by ip of author.
+    Current user must have REGISTRATION_BANNER.
+    */
+    void set_ip(const std::string ip);
+
 private:
     class CommentView;
 
