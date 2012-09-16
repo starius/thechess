@@ -161,6 +161,14 @@ FIXME http://redmine.emweb.be/issues/1144
     white-space: normal !important;
 }
 
+.thechess-forum-comments tbody .Wt-tv-c {
+    height: auto !important;
+}
+
+.thechess-forum-comments {
+    height: auto !important;
+}
+
 .Wt-auth-login * {
     width: auto !important;
 }
