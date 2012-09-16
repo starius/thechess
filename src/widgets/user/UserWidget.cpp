@@ -116,7 +116,8 @@ public:
             b = new Wt::WPushButton(tr("tc.user.Edit_rights"), this);
             b->clicked().connect(this, &UserWidgetImpl::edit_rights);
         }
-        if (tApp->user() && tApp->user()->can_remove(user)) {
+        if (tApp->user() && tApp->user()->can_remove(user) &&
+                !user->vacation_until().isValid()) {
             Wt::WPushButton* b = new Wt::WPushButton(this);
             b->clicked().connect(this, &UserWidgetImpl::inverse_removed);
             if (user->removed()) {
