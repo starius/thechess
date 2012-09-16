@@ -150,6 +150,9 @@ private:
                 return "thechess-games-draws";
             } else if (index.column() == RATING_COLUMN) {
                 return "thechess-games-rating";
+            } else if (index.column() == ONLINE_TIME ||
+                       index.column() == REGISTRATION_DATE) {
+                return "thechess-datetime";
             }
         }
         t.commit();
