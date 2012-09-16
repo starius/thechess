@@ -63,7 +63,7 @@ public:
         }
         if (type == Comment::FORUM_TOPIC) {
             setAlternatingRowColors(true);
-            comment_width -= ID_WIDTH;
+            setColumnHidden(CommentModel::ID_COL, true);
             setColumnHidden(CommentModel::TIME_COL, true);
             setColumnHidden(CommentModel::INIT_COL, true);
         } else if (type == Comment::FORUM_POST) {

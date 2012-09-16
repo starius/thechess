@@ -90,6 +90,10 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
     } else if (role == Wt::LinkRole && index.column() == ID_COL) {
         const CommentPtr& o = resultRow(index.row());
         return comment_page(o);
+    } else if (role == Wt::LinkRole && index.column() == CONTENTS_COLUMN &&
+               type() == Comment::FORUM_TOPIC) {
+        const CommentPtr& o = resultRow(index.row());
+        return comment_page(o);
     } else if (role == Wt::LinkRole && index.column() == INIT_COL) {
         const CommentPtr& o = resultRow(index.row());
         UserPtr user = o->init();
