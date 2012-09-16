@@ -255,7 +255,7 @@ enum UserRights {
     /** Right to (un)remove comments, create topic and approve drafts */
     COMMENTS_REMOVER = BOOST_BINARY(00010000 00000000 00000000),
 
-    /** Right to confirm user classification */
+    /** Right to confirm or change user classification */
     CLASSIFICATION_CONFIRMER = BOOST_BINARY(00100000 00000000 00000000),
 
     /** Right to change or cancel competition or kick users from them */

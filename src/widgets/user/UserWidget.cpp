@@ -20,6 +20,7 @@
 #include "widgets/user/Gravatar.hpp"
 #include "widgets/user/RatingChanges.hpp"
 #include "widgets/user/RightsEdit.hpp"
+#include "widgets/user/ClassificationWidget.hpp"
 #include "widgets/game/GameCreateWidget.hpp"
 #include "widgets/user/user_anchor.hpp"
 #include "widgets/user/awards.hpp"
@@ -75,6 +76,15 @@ public:
                 b->setText(tr("tc.common.Confirm"));
             }
             b->clicked().connect(this, &UserWidgetImpl::inverse_confirmed);
+        }
+        if (tApp->user() &&
+                tApp->user()->has_permission(CLASSIFICATION_CONFIRMER)) {
+            class_ = new ClassificationWidget(NO_CLASSIFICATION,
+                                              user->classification(),
+                                              SUPER_GRANDMASTER, this);
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(tr("tc.common.Save"), this);
+            b->clicked().connect(this, &UserWidgetImpl::set_classification);
         }
         new Wt::WBreak(this);
         tmp = new Wt::WText(tr("tc.user.Online_time")
@@ -161,6 +171,7 @@ public:
 
 private:
     UserPtr user_;
+    ClassificationWidget* class_;
     Wt::WPushButton* start_button_;
     Wt::WPushButton* rating_button_;
     Wt::WPushButton* rating_and_me_button_;
@@ -201,6 +212,19 @@ private:
         }
         t.commit();
         tNot->emit(new Object(USER, user_.id()));
+        tApp->path().open(tApp->internalPath());
+    }
+
+    void set_classification() {
+        dbo::Transaction t(tApp->session());
+        if (!tApp->user() ||
+                !tApp->user()->has_permission(CLASSIFICATION_CONFIRMER)) {
+            return;
+        }
+        user_.reread();
+        user_.modify()->set_classification(class_->value());
+        admin_log("Change classification of " + user_a(user_.id()));
+        t.commit();
         tApp->path().open(tApp->internalPath());
     }
 
