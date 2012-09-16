@@ -79,8 +79,10 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
         } else if (index.column() == TIME_COL) {
             if (type() == Comment::CHAT_MESSAGE) {
                 return o->created().toString("HH:mm");
-            } else {
+            } else if (type() == Comment::LOG_ENTRY) {
                 return o->created().toString();
+            } else {
+                return o->created().toString("ddd MMM d yyyy");
             }
         }
     } else if (role == Wt::LinkRole && index.column() == ID_COL) {
