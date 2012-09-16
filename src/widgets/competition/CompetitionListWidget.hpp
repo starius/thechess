@@ -10,8 +10,8 @@
 
 #include <boost/tuple/tuple.hpp>
 
+#include <Wt/WGlobal>
 #include <Wt/WContainerWidget>
-#include <Wt/WCheckBox>
 
 #include "model/global.hpp"
 
@@ -32,6 +32,7 @@ private:
     CompetitionListModel* model_;
     CompetitionListView* view_;
     Wt::WCheckBox* only_my_;
+    Wt::WLineEdit* name_like_;
     UserPtr user_;
 
     void initialize();

@@ -13,6 +13,8 @@
 #include <Wt/Dbo/Query>
 #include <Wt/Dbo/QueryModel>
 #include <Wt/WString>
+#include <Wt/WCheckBox>
+#include <Wt/WLineEdit>
 #include <Wt/WPushButton>
 #include <Wt/WComboBox>
 #include <Wt/WEnvironment>
@@ -127,7 +129,8 @@ public:
     }
 
     void set_query(bool only_my = false, const UserPtr& user = UserPtr(),
-                   State state = CompetitionStateSelect::ALL) {
+                   State state = CompetitionStateSelect::ALL,
+                   const Wt::WString& name_like = Wt::WString::Empty) {
         DatabaseType t = tApp->server().options().database_type();
         std::stringstream sql;
         sql << "select C, ";
@@ -174,6 +177,9 @@ public:
         if (state != CompetitionStateSelect::ALL) {
             sql << "where C.state = ? ";
         }
+        if (!name_like.empty()) {
+            sql << "where C.name like ? ";
+        }
         CLP::Q q = tApp->session().query<CLP::Result>(sql.str());
         q.groupBy("C, CP.type");
         if (user) {
@@ -184,6 +190,9 @@ public:
         }
         if (state != CompetitionStateSelect::ALL) {
             q.bind(CompetitionStateSelect::state(state));
+        }
+        if (!name_like.empty()) {
+            q.bind("%" + name_like + "%");
         }
         setQuery(q, /* keep_columns */ true);
     }
@@ -236,7 +245,7 @@ void CompetitionListWidget::initialize() {
 void CompetitionListWidget::apply() {
     bool only_my = only_my_->isChecked() && tApp->user();
     User::set_s(SWITCH_ONLY_MY_COMPETITIONS, only_my);
-    model_->set_query(only_my, user_, state_->state());
+    model_->set_query(only_my, user_, state_->state(), name_like_->text());
     Wt::Wc::scroll_to_last(view_);
 }
 
@@ -249,6 +258,9 @@ void CompetitionListWidget::manager() {
     }
     state_ = new CompetitionStateSelect(this);
     state_->changed().connect(this, &CompetitionListWidget::apply);
+    name_like_ = new Wt::WLineEdit(this);
+    name_like_->setEmptyText(tr("tc.common.Name"));
+    name_like_->enterPressed().connect(this, &CompetitionListWidget::apply);
     if (!tApp->environment().ajax()) {
         Wt::WPushButton* apply_button =
             new Wt::WPushButton(tr("tc.common.Apply"), this);
