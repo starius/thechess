@@ -32,12 +32,16 @@ private:
     CommentView* view_;
     Wt::WFormWidget* edit_;
     Wt::WTextEdit* post_text_;
+    Wt::WCheckBox* only_ok_;
+    Wt::WCheckBox* only_my_;
 
     CommentModel* comment_model() const;
 
     void print_header();
     void print_post();
     void print_edits();
+
+    void apply();
 
     void add_comment(const CommentPtr& parent);
 };

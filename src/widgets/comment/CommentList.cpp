@@ -132,7 +132,7 @@ protected:
 CommentList::CommentList(Comment::Type type, const CommentPtr& root,
                          const UserPtr& init, Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent),
-    edit_(0) {
+    edit_(0), only_ok_(0), only_my_(0) {
     dbo::Transaction t(tApp->session());
     if (type == Comment::LOG_ENTRY) {
         if (!tApp->user() || !tApp->user()->has_permission(LOGS_READER)) {
@@ -152,20 +152,18 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     if (type == Comment::FORUM_COMMENT && root) {
         print_post();
     }
-    Wt::WCheckBox* only_ok = new Wt::WCheckBox(tr("tc.forum.Only_ok"), this);
-    only_ok->setChecked(model->only_ok());
-    only_ok->changed().connect(
-        boost::bind(&CommentModel::set_only_ok, model,
-                    boost::bind(&Wt::WAbstractToggleButton::isChecked,
-                                only_ok)));
+    only_ok_ = new Wt::WCheckBox(tr("tc.forum.Only_ok"), this);
+    only_ok_->setChecked(model->only_ok());
+    only_ok_->changed().connect(this, &CommentList::apply);
     if (tApp->user() && !init) {
-        Wt::WCheckBox* only_my = new Wt::WCheckBox(this);
-        only_my->setChecked(model->only_my());
-        only_my->setText(tr("tc.common.Only_my"));
-        only_my->changed().connect(
-            boost::bind(&CommentModel::set_only_my, model,
-                        boost::bind(&Wt::WAbstractToggleButton::isChecked,
-                                    only_my)));
+        only_my_ = new Wt::WCheckBox(this);
+        only_my_->setChecked(model->only_my());
+        only_my_->setText(tr("tc.common.Only_my"));
+        only_my_->changed().connect(this, &CommentList::apply);
+    }
+    if (!wApp->environment().ajax()) {
+        Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Apply"), this);
+        b->clicked().connect(this, &CommentList::apply);
     }
     addWidget(view_);
     if (Comment::can_create(tApp->user(), type, root)) {
@@ -262,6 +260,16 @@ void CommentList::print_post() {
     }
     new Wt::WBreak(this);
     new Wt::WBreak(this);
+}
+
+void CommentList::apply() {
+    if (only_my_) {
+        comment_model()->set_only_my(only_my_->isChecked());
+    }
+    if (only_ok_) {
+        comment_model()->set_only_ok(only_ok_->isChecked());
+    }
+    view_->show_last();
 }
 
 void CommentList::add_comment(const CommentPtr& parent) {

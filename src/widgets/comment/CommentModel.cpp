@@ -176,15 +176,19 @@ CommentModel::Query CommentModel::get_query() const {
 }
 
 void CommentModel::set_only_ok(bool only_ok) {
-    only_ok_ = only_ok;
-    User::set_s(SWITCH_ONLY_OK_COMMENTS, only_ok);
-    setQuery(get_query(), /* keep_columns */ true);
+    if (only_ok != only_ok_) {
+        only_ok_ = only_ok;
+        User::set_s(SWITCH_ONLY_OK_COMMENTS, only_ok);
+        setQuery(get_query(), /* keep_columns */ true);
+    }
 }
 
 void CommentModel::set_only_my(bool only_my) {
-    only_my_ = only_my;
-    User::set_s(SWITCH_ONLY_MY_COMMENTS, only_my);
-    setQuery(get_query(), /* keep_columns */ true);
+    if (only_my != only_my_) {
+        only_my_ = only_my;
+        User::set_s(SWITCH_ONLY_MY_COMMENTS, only_my);
+        setQuery(get_query(), /* keep_columns */ true);
+    }
 }
 
 }
