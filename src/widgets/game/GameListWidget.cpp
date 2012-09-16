@@ -40,6 +40,43 @@ typedef dbo::QueryModel<Result> BaseQM;
 const int GAME_IN_TUPLE = 0;
 }
 
+class GameStateSelect : public Wt::WComboBox {
+public:
+    enum State {
+        ALL,
+        NOTSTARTED,
+        ACTIVE,
+        PAUSE,
+        ENDED,
+        CANCELLED
+    };
+
+    GameStateSelect(Wt::WContainerWidget* parent = 0):
+        WComboBox(parent) {
+        addItem(tr("tc.common.all"));
+        addItem(tr("tc.common.not_started"));
+        addItem(tr(Game::state2str_id(Game::ACTIVE)));
+        addItem(tr(Game::state2str_id(Game::PAUSE)));
+        addItem(tr("tc.game.ended"));
+        addItem(tr(Game::state2str_id(Game::CANCELLED)));
+    }
+
+    State state() const {
+        return State(currentIndex());
+    }
+
+    static Game::State state(State s) {
+        if (s == ACTIVE) {
+            return Game::ACTIVE;
+        } else if (s == PAUSE) {
+            return Game::PAUSE;
+        } else if (s == CANCELLED) {
+            return Game::CANCELLED;
+        }
+        return Game::CANCELLED; // unknown state
+    }
+};
+
 class GameListModel : public GLP::BaseQM {
 public:
     enum {
@@ -57,7 +94,8 @@ public:
         GLP::BaseQM(parent),
         only_my_(false),
         only_commented_(false),
-        user_(user) {
+        user_(user),
+        state_(GameStateSelect::ALL) {
         set_query();
         addColumn("G.id", tr("tc.common.number"));
         addColumn("G.id", tr("tc.game.white")); // dummy
@@ -134,6 +172,13 @@ public:
             q.where("G.white_id = ? or G.black_id = ? or G.init_id = ?")
             .bind(id).bind(id).bind(id);
         }
+        if (state_ == GameStateSelect::NOTSTARTED) {
+            q.where("G.state < ?").bind(Game::ACTIVE);
+        } else if (state_ == GameStateSelect::ENDED) {
+            q.where("G.state >= ?").bind(Game::MIN_ENDED);
+        } else if (state_ != GameStateSelect::ALL) {
+            q.where("G.state = ?").bind(GameStateSelect::state(state_));
+        }
         q.orderBy("G.id");
         setQuery(q, /* keep_columns */ true);
         t.commit();
@@ -157,10 +202,18 @@ public:
         }
     }
 
+    void set_state(GameStateSelect::State state) {
+        if (state != state_) {
+            state_ = state;
+            set_query();
+        }
+    }
+
 private:
     bool only_my_;
     bool only_commented_;
     UserPtr user_;
+    GameStateSelect::State state_;
 };
 
 class GameTableView : public Wt::WTableView {
@@ -209,6 +262,7 @@ private:
     Wt::WTableView* table_view_;
     Wt::WCheckBox* only_my_;
     Wt::WCheckBox* only_commented_;
+    GameStateSelect* state_;
 
     void manager() {
         only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"), this);
@@ -222,6 +276,8 @@ private:
         only_commented_->setChecked(User::has_s(SWITCH_ONLY_COMMENTED_GAMES));
         model_->set_only_commented(User::has_s(SWITCH_ONLY_COMMENTED_GAMES));
         only_commented_->changed().connect(this, &GameListWidgetImpl::apply);
+        state_ = new GameStateSelect(this);
+        state_->changed().connect(this, &GameListWidgetImpl::apply);
         if (!tApp->environment().ajax()) {
             Wt::WPushButton* apply_button =
                 new Wt::WPushButton(tr("tc.common.Apply"), this);
@@ -234,6 +290,7 @@ private:
         User::set_s(SWITCH_ONLY_COMMENTED_GAMES, only_commented_->isChecked());
         model_->set_only_my(only_my_->isChecked());
         model_->set_only_commented(only_commented_->isChecked());
+        model_->set_state(state_->state());
         Wt::Wc::scroll_to_last(table_view_);
     }
 

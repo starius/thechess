@@ -35,6 +35,7 @@
     <message id="tc.common.Moves">Хады</message>
     <message id="tc.common.Name">Назва</message>
     <message id="tc.common.no_params_error">не выбраны параметры</message>
+    <message id='tc.common.not_started'>неначатые</message>
     <message id="tc.common.number">№</message>
     <message id="tc.common.Only_my">Толькі мае</message>
     <message id="tc.common.Refresh">Аднавіць</message>

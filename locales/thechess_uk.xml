@@ -36,6 +36,7 @@
     <message id="tc.common.Moves">Ходи</message>
     <message id="tc.common.Name">Назва</message>
     <message id="tc.common.no_params_error">не вибрані параметри</message>
+    <message id='tc.common.not_started'>неначатые</message>
     <message id="tc.common.number">№</message>
     <message id="tc.common.Only_my">Тільки мої</message>
     <message id="tc.common.Refresh">Поновити</message>

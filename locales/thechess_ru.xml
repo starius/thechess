@@ -43,6 +43,7 @@
     <message id='tc.common.Moves'>Ходы</message>
     <message id='tc.common.Name'>Имя</message>
     <message id='tc.common.no_params_error'>не выбраны параметры</message>
+    <message id='tc.common.not_started'>неначатые</message>
     <message id='tc.common.number'>№</message>
     <message id='tc.common.Only_my'>Только мои</message>
     <message id='tc.common.Refresh'>Обновить</message>

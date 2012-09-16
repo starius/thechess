@@ -510,6 +510,7 @@ TheChess.
     <message id='tc.common.Moves'>Moves</message>
     <message id='tc.common.Name'>Name</message>
     <message id='tc.common.no_params_error'>parameters aren't selected</message>
+    <message id='tc.common.not_started'>not started</message>
     <message id='tc.common.number'>#</message>
     <message id='tc.common.Only_my'>Only my</message>
     <message id='tc.common.Refresh'>Refresh</message>
