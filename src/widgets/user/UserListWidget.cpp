@@ -27,13 +27,14 @@ typedef UserPtr Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 
-const int WIDTH = 750;
+const int WIDTH = 780;
 const int HEIGHT = 500;
 }
 
 class UserListModel : public ULP::BaseQM {
 public:
     enum {
+        NUMBER_COL,
         NAME_COLUMN,
         CLASSIFICATION_COLUMN,
         ALL_COLUMN,
@@ -51,6 +52,7 @@ public:
         only_online_ = User::has_s(SWITCH_ONLY_ONLINE_USERS);
         not_removed_ = User::has_s(SWITCH_ONLY_NOT_REMOVED_USERS);
         set_query();
+        addColumn("id", tr("tc.common.number")); // dummy
         addColumn("username", tr("tc.common.Name")); // dummy
         addColumn("classification", tr("tc.user.classification")); // dummy
         addColumn("games_stat_all", tr("tc.user.games_stat_all"));
@@ -141,7 +143,9 @@ private:
         dbo::Transaction t(tApp->session());
         const UserPtr& o = resultRow(index.row());
         if (role == Wt::DisplayRole) {
-            if (index.column() == NAME_COLUMN) {
+            if (index.column() == NUMBER_COL) {
+                return index.row() + 1;
+            } else if (index.column() == NAME_COLUMN) {
                 return o->safe_username();
             } else if (index.column() == CLASSIFICATION_COLUMN) {
                 return o->classification_str();
@@ -193,13 +197,14 @@ public:
         Wt::WTableView(p) {
         setModel(model);
         resize(ULP::WIDTH, ULP::HEIGHT);
+        setColumnWidth(UserListModel::NUMBER_COL, 40);
         setColumnWidth(UserListModel::NAME_COLUMN, 170);
         setColumnWidth(UserListModel::CLASSIFICATION_COLUMN, 150);
         setColumnWidth(UserListModel::ALL_COLUMN, 40);
         setColumnWidth(UserListModel::WINS_COLUMN, 40);
         setColumnWidth(UserListModel::DRAWS_COLUMN, 30);
         setColumnWidth(UserListModel::FAILS_COLUMN, 40);
-        setColumnWidth(UserListModel::RATING_COLUMN, 50);
+        setColumnWidth(UserListModel::RATING_COLUMN, 40);
         setColumnWidth(UserListModel::ONLINE_TIME, 85);
         setColumnWidth(UserListModel::REGISTRATION_DATE, 75);
     }
