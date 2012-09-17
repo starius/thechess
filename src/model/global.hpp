@@ -397,6 +397,7 @@ class UserPair;
 class StagedCompetition;
 class Record;
 class Object;
+class NewMessage;
 class EloPlayer;
 
 template<typename T> struct WhiteBlack;

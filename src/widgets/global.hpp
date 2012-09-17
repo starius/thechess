@@ -10,6 +10,9 @@
 
 namespace thechess {
 
+struct Awards;
+
+class AllPgnResource;
 class AuthWidget;
 class BoardWidget;
 class ChatCommentWidget;
