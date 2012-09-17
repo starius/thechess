@@ -14,6 +14,7 @@
 #include <Wt/Dbo/QueryModel>
 
 #include "model/all.hpp"
+#include "widgets/global.hpp"
 
 namespace thechess {
 
@@ -48,6 +49,7 @@ private:
     CPListModel* model_;
     CPListView* view_;
     Wt::WCheckBox* only_my_;
+    CompetitionTypeWidget* type_;
     Wt::WLineEdit* name_like_;
 
     void apply();

@@ -20,6 +20,7 @@
 #include <Wt/Wc/util.hpp>
 
 #include "widgets/cp/CPListWidget.hpp"
+#include "widgets/cp/CompetitionTypeWidget.hpp"
 #include "Application.hpp"
 
 namespace thechess {
@@ -77,8 +78,17 @@ public:
     }
 
     void set_only_my(bool only_my) {
-        only_my_ = only_my;
-        set_query();
+        if (only_my != only_my_) {
+            only_my_ = only_my;
+            set_query();
+        }
+    }
+
+    void set_type(CompetitionType type) {
+        if (type != type_) {
+            type_ = type;
+            set_query();
+        }
     }
 
     void set_name_like(const Wt::WString& name_like) {
@@ -93,16 +103,19 @@ public:
         if (only_my_) {
             q.where("init_id = ?").bind(tApp->user());
         }
-        if (cp_) {
-            q.orderBy("id = " + TO_S(cp_.id()) +
-                      " desc, competitions_size desc");
-        } else {
-            q.orderBy("competitions_size desc");
+        if (type_ != NO_COMPETITION_TYPE) {
+            q.where("type = ?").bind(type_);
         }
         if (!name_like_.empty()) {
             q.where("(name like ? or id = ?)");
             q.bind("%" + name_like_ + "%");
             q.bind(Wt::Wc::str2int(name_like_.toUTF8()));
+        }
+        if (cp_) {
+            q.orderBy("id = " + TO_S(cp_.id()) +
+                      " desc, competitions_size desc");
+        } else {
+            q.orderBy("competitions_size desc");
         }
         setQuery(q, /* keep_columns */ true);
     }
@@ -115,6 +128,7 @@ public:
 private:
     bool only_my_;
     CPPtr cp_;
+    CompetitionType type_;
     Wt::WString name_like_;
 };
 
@@ -171,6 +185,7 @@ void CPListWidget::apply() {
     bool only_my = only_my_->isChecked() && tApp->user();
     User::set_s(SWITCH_ONLY_MY_CP, only_my);
     model_->set_only_my(only_my);
+    model_->set_type(type_->value());
     model_->set_name_like(name_like_->text());
     view_->setCurrentPage(0);
 }
@@ -182,6 +197,8 @@ void CPListWidget::manager() {
     if (!tApp->user()) {
         only_my_->setEnabled(false);
     }
+    type_ = new CompetitionTypeWidget(/* with_all */ true, this);
+    type_->changed().connect(this, &CPListWidget::apply);
     name_like_ = new Wt::WLineEdit(this);
     name_like_->setEmptyText(tr("tc.common.Name"));
     name_like_->enterPressed().connect(this, &CPListWidget::apply);
