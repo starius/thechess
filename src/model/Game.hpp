@@ -207,6 +207,9 @@ public:
         return pause_until_;
     }
 
+    /** Force paused game to be active */
+    void discard_pause();
+
     /** Return datetime when pause has been started */
     Wt::WDateTime pause_started() const;
 

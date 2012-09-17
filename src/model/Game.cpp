@@ -458,6 +458,13 @@ bool Game::is_pause_proposed() const {
     return pause_proposer() && pause_proposed_td() != TD_NULL;
 }
 
+void Game::discard_pause() {
+    state_ = ACTIVE;
+    lastmove_ = now();
+    pause_proposed_td_ = TD_NULL;
+    pause_until_ = Wt::WDateTime();
+}
+
 Wt::WDateTime Game::pause_started() const {
     return pause_until() - pause_proposed_td();
 }
