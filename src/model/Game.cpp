@@ -465,10 +465,8 @@ bool Game::admin_can_pause_discard(const UserPtr& user) const {
 
 void Game::admin_pause_discard(const UserPtr& user) {
     if (admin_can_pause_discard(user)) {
-        state_ = ACTIVE;
-        lastmove_ = now();
-        pause_proposed_td_ = TD_NULL;
-        pause_until_ = Wt::WDateTime();
+        pause_proposed_td_ -= pause_until_ - now();
+        stop_pause();
     }
 }
 
