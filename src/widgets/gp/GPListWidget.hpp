@@ -48,6 +48,7 @@ private:
     GPListModel* model_;
     GPListView* view_;
     Wt::WCheckBox* only_my_;
+    Wt::WLineEdit* name_like_;
 
     void apply();
     void manager();

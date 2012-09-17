@@ -14,6 +14,7 @@
 #include <Wt/WString>
 #include <Wt/WPushButton>
 #include <Wt/WCheckBox>
+#include <Wt/WLineEdit>
 #include <Wt/WEnvironment>
 #include <Wt/Wc/Pager.hpp>
 #include <Wt/Wc/util.hpp>
@@ -71,8 +72,17 @@ public:
     }
 
     void set_only_my(bool only_my) {
-        only_my_ = only_my;
-        set_query();
+        if (only_my != only_my_) {
+            only_my_ = only_my;
+            set_query();
+        }
+    }
+
+    void set_name_like(const Wt::WString& name_like) {
+        if (name_like != name_like_) {
+            name_like_ = name_like;
+            set_query();
+        }
     }
 
     void set_query() {
@@ -85,6 +95,11 @@ public:
         } else {
             q.orderBy("games_size desc");
         }
+        if (!name_like_.empty()) {
+            q.where("(name like ? or id = ?)");
+            q.bind("%" + name_like_ + "%");
+            q.bind(Wt::Wc::str2int(name_like_.toUTF8()));
+        }
         setQuery(q, /* keep_columns */ true);
     }
 
@@ -96,6 +111,7 @@ public:
 private:
     bool only_my_;
     GPPtr gp_;
+    Wt::WString name_like_;
 };
 
 class GPListView : public Wt::WTableView {
@@ -151,6 +167,7 @@ void GPListWidget::apply() {
     bool only_my = only_my_->isChecked() && tApp->user();
     User::set_s(SWITCH_ONLY_MY_GP, only_my);
     model_->set_only_my(only_my);
+    model_->set_name_like(name_like_->text());
     view_->setCurrentPage(0);
 }
 
@@ -161,6 +178,9 @@ void GPListWidget::manager() {
     if (!tApp->user()) {
         only_my_->setEnabled(false);
     }
+    name_like_ = new Wt::WLineEdit(this);
+    name_like_->setEmptyText(tr("tc.common.Name"));
+    name_like_->enterPressed().connect(this, &GPListWidget::apply);
     if (!tApp->environment().ajax()) {
         Wt::WPushButton* apply_button =
             new Wt::WPushButton(tr("tc.common.Apply"), this);
