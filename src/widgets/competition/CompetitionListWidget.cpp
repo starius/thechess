@@ -164,21 +164,42 @@ public:
         sql << "left join members_competitions M "
             "on M.thechess_competition_id=C.id ";
         sql << "left join thechess_cp CP on C.cp_id=CP.id ";
+        bool where = false;
         if (user) {
-            sql << "where U.thechess_user_id = ? ";
+            if (!where) {
+                where = true;
+                sql << "where ";
+            } else {
+                sql << "and ";
+            }
+            sql << "U.thechess_user_id = ? ";
         }
         if (only_my) {
-            if (user) {
-                sql << "and I.thechess_user_id = ? ";
+            if (!where) {
+                where = true;
+                sql << "where ";
             } else {
-                sql << "where I.thechess_user_id = ? ";
+                sql << "and ";
             }
+            sql << "I.thechess_user_id = ? ";
         }
         if (state != CompetitionStateSelect::ALL) {
-            sql << "where C.state = ? ";
+            if (!where) {
+                where = true;
+                sql << "where ";
+            } else {
+                sql << "and ";
+            }
+            sql << "C.state = ? ";
         }
         if (!name_like.empty()) {
-            sql << "where C.name like ? ";
+            if (!where) {
+                where = true;
+                sql << "where ";
+            } else {
+                sql << "and ";
+            }
+            sql << "C.name like ? ";
         }
         CLP::Q q = tApp->session().query<CLP::Result>(sql.str());
         q.groupBy("C, CP.type");
