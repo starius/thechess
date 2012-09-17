@@ -283,6 +283,7 @@ private:
     void print_manager() {
         dbo::Transaction t(tApp->session());
         manager_->clear();
+        print_refresh_button();
         print_analysis_button();
         if (tApp->user()) {
             if (game_->state() < Game::ACTIVE) {
@@ -297,6 +298,14 @@ private:
             if (game_->is_ended()) {
                 print_ended_buttons();
             }
+        }
+    }
+
+    void print_refresh_button() {
+        if (!wApp->environment().ajax()) {
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(tr("tc.common.Refresh"), manager_);
+            b->clicked().connect(this, &GameWidgetImpl::status_and_manager);
         }
     }
 
