@@ -199,7 +199,7 @@ public:
             } else {
                 sql << "and ";
             }
-            sql << "C.name like ? ";
+            sql << "(C.name like ? or C.id = ?)";
         }
         CLP::Q q = tApp->session().query<CLP::Result>(sql.str());
         q.groupBy("C, CP.type");
@@ -214,6 +214,7 @@ public:
         }
         if (!name_like.empty()) {
             q.bind("%" + name_like + "%");
+            q.bind(Wt::Wc::str2int(name_like.toUTF8()));
         }
         setQuery(q, /* keep_columns */ true);
     }
