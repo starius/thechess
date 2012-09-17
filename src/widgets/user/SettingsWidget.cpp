@@ -132,10 +132,12 @@ private:
     }
 
     void print_recalculation() {
-        new Wt::WBreak(this);
-        Wt::WPushButton* b;
-        b = new Wt::WPushButton(tr("tc.user.Recalculation"), this);
-        b->clicked().connect(this, &SettingsWidgetImpl::recalculation);
+        if (tApp->user()->has_permission(VIRTUALS_VIEWER)) {
+            new Wt::WBreak(this);
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(tr("tc.user.Recalculation"), this);
+            b->clicked().connect(this, &SettingsWidgetImpl::recalculation);
+        }
     }
 
     void save_classification() {
