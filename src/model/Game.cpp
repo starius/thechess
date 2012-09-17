@@ -458,20 +458,20 @@ bool Game::is_pause_proposed() const {
     return pause_proposer() && pause_proposed_td() != TD_NULL;
 }
 
-void Game::discard_pause() {
+void Game::admin_pause_discard() {
     state_ = ACTIVE;
     lastmove_ = now();
     pause_proposed_td_ = TD_NULL;
     pause_until_ = Wt::WDateTime();
 }
 
-bool Game::can_pause(const UserPtr& user) const {
+bool Game::admin_can_pause(const UserPtr& user) const {
     return state() == ACTIVE && user && !is_member(user) &&
            user->has_permission(TIME_WIZARD);
 }
 
-void Game::pause(const UserPtr& user, const Td& td) {
-    if (can_pause(user)) {
+void Game::admin_pause(const UserPtr& user, const Td& td) {
+    if (admin_can_pause(user)) {
         pause_proposer_.reset();
         pause_proposed_td_ = td;
         state_ = PAUSE;

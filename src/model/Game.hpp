@@ -210,13 +210,13 @@ public:
     /** Force paused game to be active (for admin)
     No checks are performed here, including check of permissions.
     */
-    void discard_pause();
+    void admin_pause_discard();
 
     /** Force active game to be paused (for admin) */
-    bool can_pause(const UserPtr& user) const;
+    bool admin_can_pause(const UserPtr& user) const;
 
     /** Try to force active game to be paused (for admin) */
-    void pause(const UserPtr& user, const Td& td);
+    void admin_pause(const UserPtr& user, const Td& td);
 
     /** Return datetime when pause has been started */
     Wt::WDateTime pause_started() const;

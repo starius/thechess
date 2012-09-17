@@ -170,7 +170,7 @@ private:
             return;
         }
         if (tApp->user() && tApp->user()->has_permission(TIME_WIZARD)) {
-            game_.modify()->discard_pause();
+            game_.modify()->admin_pause_discard();
             admin_log("Discard pause of " + game_a(game_.id()));
         }
         t.commit();
@@ -348,7 +348,7 @@ private:
     }
 
     void print_pause_buttons() {
-        if (game_->can_pause(tApp->user())) {
+        if (game_->admin_can_pause(tApp->user())) {
             new Wt::WBreak(manager_);
             Td max = config::max::PAUSE_LIMIT_INIT;
             Td d = game_->pause_limit();
@@ -481,7 +481,8 @@ private:
     void pause(Wt::Wc::TimeDurationWidget* pause_duration) {
         dbo::Transaction t(tApp->session());
         game_.reread();
-        game_.modify()->pause(tApp->user(), pause_duration->corrected_value());
+        game_.modify()->admin_pause(tApp->user(),
+                                    pause_duration->corrected_value());
         t.commit();
         tNot->emit(new Object(GAME, game_.id()));
     }
