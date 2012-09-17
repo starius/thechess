@@ -156,6 +156,11 @@ private:
         }
         std::string email = email_->text().toUTF8();
         if (email.length() < 3 || email.find('@') == std::string::npos) {
+            email_->setText(tr("Wt.Auth.email-invalid"));
+            return;
+        }
+        if (tApp->session().user_database().findWithEmail(email).isValid()) {
+            email_->setText(tr("Wt.Auth.email-exists"));
             return;
         }
         delete sender();
