@@ -619,6 +619,7 @@ TheChess.
         On <span class="thechess-datetime">{1}</span>, {2} wrote(а):
         <br />
         {3}
+        <br /><br />
     </message>
 
     <message id='tc.game.Analysis'>Analysis</message>
