@@ -36,6 +36,7 @@
 #include "chess/Piece.hpp"
 #include "notify.hpp"
 #include "log.hpp"
+#include "config.hpp"
 
 namespace thechess {
 
@@ -338,18 +339,16 @@ private:
     }
 
     void print_pause_buttons() {
-        if (game_->is_pause_proposed()) {
+        if (game_->can_pause(tApp->user())) {
             new Wt::WBreak(manager_);
-            new Wt::WText(tr("tc.game.Pause_proposal")
-                          .arg(game_->pause_proposer()->safe_username())
-                          .arg(td2str(game_->pause_proposed_td())),
-                          manager_);
-            if (game_->can_pause_agree(tApp->user())) {
-                but<&Game::pause_agree>("tc.common.Agree");
-            }
-            if (game_->can_pause_discard(tApp->user())) {
-                but<&Game::pause_discard>("tc.common.Discard");
-            }
+            Td max = config::max::PAUSE_LIMIT_INIT;
+            Td d = game_->pause_limit();
+            Wt::Wc::TimeDurationWidget* pause_duration =
+                new Wt::Wc::TimeDurationWidget(TD_NULL, d, max, manager_);
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(tr("tc.game.Pause_propose"), manager_);
+            b->clicked().connect(boost::bind(&GameWidgetImpl::pause,
+                                             this, pause_duration));
         } else if (game_->can_pause_propose(tApp->user())) {
             new Wt::WBreak(manager_);
             Td max = game_->pause_limit();
@@ -362,6 +361,18 @@ private:
             b->clicked().connect(boost::bind(
                                      &GameWidgetImpl::pause_propose,
                                      this, pause_duration));
+        } else if (game_->is_pause_proposed()) {
+            new Wt::WBreak(manager_);
+            new Wt::WText(tr("tc.game.Pause_proposal")
+                          .arg(game_->pause_proposer()->safe_username())
+                          .arg(td2str(game_->pause_proposed_td())),
+                          manager_);
+            if (game_->can_pause_agree(tApp->user())) {
+                but<&Game::pause_agree>("tc.common.Agree");
+            }
+            if (game_->can_pause_discard(tApp->user())) {
+                but<&Game::pause_discard>("tc.common.Discard");
+            }
         }
     }
 
@@ -454,6 +465,14 @@ private:
         game_.reread();
         game_.modify()
         ->pause_propose(tApp->user(), pause_duration->corrected_value());
+        t.commit();
+        tNot->emit(new Object(GAME, game_.id()));
+    }
+
+    void pause(Wt::Wc::TimeDurationWidget* pause_duration) {
+        dbo::Transaction t(tApp->session());
+        game_.reread();
+        game_.modify()->pause(tApp->user(), pause_duration->corrected_value());
         t.commit();
         tNot->emit(new Object(GAME, game_.id()));
     }

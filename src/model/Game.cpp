@@ -465,6 +465,21 @@ void Game::discard_pause() {
     pause_until_ = Wt::WDateTime();
 }
 
+bool Game::can_pause(const UserPtr& user) const {
+    return state() == ACTIVE && user && !is_member(user) &&
+           user->has_permission(TIME_WIZARD);
+}
+
+void Game::pause(const UserPtr& user, const Td& td) {
+    if (can_pause(user)) {
+        pause_proposer_.reset();
+        pause_proposed_td_ = td;
+        state_ = PAUSE;
+        pause_until_ = now() + pause_proposed_td();
+        pause_limit_ = std::max(TD_NULL, pause_limit_ - pause_proposed_td());
+    }
+}
+
 Wt::WDateTime Game::pause_started() const {
     return pause_until() - pause_proposed_td();
 }
