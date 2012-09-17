@@ -14,6 +14,7 @@
 namespace thechess {
 
 class UserListModel;
+class UserListView;
 
 /** List of users */
 class UserListWidget : public Wt::WContainerWidget {
@@ -27,6 +28,7 @@ private:
     Wt::WCheckBox* b_;
     Wt::WLineEdit* name_;
     UserListModel* m_;
+    UserListView* view_;
 
     void apply();
 };

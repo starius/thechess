@@ -228,7 +228,7 @@ UserListWidget::UserListWidget(Wt::WContainerWidget* parent) :
         Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Apply"), this);
         b->clicked().connect(this, &UserListWidget::apply);
     }
-    UserListView* view = new UserListView(m_, this);
+    view_ = new UserListView(m_, this);
 }
 
 void UserListWidget::apply() {
@@ -238,6 +238,7 @@ void UserListWidget::apply() {
         m_->set_only_blocked(b_->isChecked());
     }
     m_->set_name_like(name_->text());
+    view_->setCurrentPage(0);
 }
 
 }
