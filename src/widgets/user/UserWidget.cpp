@@ -100,6 +100,11 @@ public:
             tmp = new Wt::WText(tr("tc.user.Vacation_until")
                                 .arg(user_->vacation_until().toString()), this);
             tmp->setStyleClass("thechess-datetime");
+            Wt::WPushButton* b;
+            if (tApp->user() && tApp->user()->has_permission(TIME_WIZARD)) {
+                b = new Wt::WPushButton(tr("tc.common.Discard"), this);
+                b->clicked().connect(this, &UserWidgetImpl::discard_vacation);
+            }
         }
         new Wt::WBreak(this);
         if (tApp->user() && tApp->user() != user_ && !user_->removed()) {
@@ -180,6 +185,17 @@ private:
     void game_form() {
         start_button_->hide();
         new GameCreateWidget(user_, this);
+    }
+
+    void discard_vacation() {
+        dbo::Transaction t(tApp->session());
+        if (tApp->user() && tApp->user()->has_permission(TIME_WIZARD)) {
+            user_.reread();
+            user_.modify()->set_vacation_until(Wt::WDateTime());
+            admin_log("Discard vacation of " + user_a(user_.id()));
+        }
+        t.commit();
+        tApp->path().open(tApp->internalPath());
     }
 
     void rating_changes() {
