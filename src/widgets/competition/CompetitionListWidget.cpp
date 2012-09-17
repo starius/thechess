@@ -22,6 +22,7 @@
 #include <Wt/Wc/util.hpp>
 
 #include "widgets/competition/CompetitionListWidget.hpp"
+#include "widgets/cp/CompetitionTypeWidget.hpp"
 #include "model/all.hpp"
 #include "thechess-global.hpp"
 #include "Application.hpp"
@@ -130,6 +131,7 @@ public:
 
     void set_query(bool only_my = false, const UserPtr& user = UserPtr(),
                    State state = CompetitionStateSelect::ALL,
+                   CompetitionType type = NO_COMPETITION_TYPE,
                    const Wt::WString& name_like = Wt::WString::Empty) {
         DatabaseType t = tApp->server().options().database_type();
         std::stringstream sql;
@@ -192,6 +194,15 @@ public:
             }
             sql << "C.state = ? ";
         }
+        if (type != NO_COMPETITION_TYPE) {
+            if (!where) {
+                where = true;
+                sql << "where ";
+            } else {
+                sql << "and ";
+            }
+            sql << "CP.type = ? ";
+        }
         if (!name_like.empty()) {
             if (!where) {
                 where = true;
@@ -211,6 +222,9 @@ public:
         }
         if (state != CompetitionStateSelect::ALL) {
             q.bind(CompetitionStateSelect::state(state));
+        }
+        if (type != NO_COMPETITION_TYPE) {
+            q.bind(type);
         }
         if (!name_like.empty()) {
             q.bind("%" + name_like + "%");
@@ -267,7 +281,8 @@ void CompetitionListWidget::initialize() {
 void CompetitionListWidget::apply() {
     bool only_my = only_my_->isChecked() && tApp->user();
     User::set_s(SWITCH_ONLY_MY_COMPETITIONS, only_my);
-    model_->set_query(only_my, user_, state_->state(), name_like_->text());
+    model_->set_query(only_my, user_, state_->state(), type_->value(),
+                      name_like_->text());
     Wt::Wc::scroll_to_last(view_);
 }
 
@@ -280,6 +295,8 @@ void CompetitionListWidget::manager() {
     }
     state_ = new CompetitionStateSelect(this);
     state_->changed().connect(this, &CompetitionListWidget::apply);
+    type_ = new CompetitionTypeWidget(/* with_all */ true, this);
+    type_->changed().connect(this, &CompetitionListWidget::apply);
     name_like_ = new Wt::WLineEdit(this);
     name_like_->setEmptyText(tr("tc.common.Name"));
     name_like_->enterPressed().connect(this, &CompetitionListWidget::apply);

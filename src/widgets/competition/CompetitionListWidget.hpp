@@ -14,6 +14,7 @@
 #include <Wt/WContainerWidget>
 
 #include "model/global.hpp"
+#include "widgets/global.hpp"
 
 namespace thechess {
 
@@ -29,6 +30,7 @@ public:
 
 private:
     CompetitionStateSelect* state_;
+    CompetitionTypeWidget* type_;
     CompetitionListModel* model_;
     CompetitionListView* view_;
     Wt::WCheckBox* only_my_;
