@@ -357,7 +357,7 @@ static void reset_countup(Wt::Wc::Countdown* countup) {
     countup->set_since(midnight);
     countup->set_format("HM");
     Wt::WDateTime next_midnight = midnight.addDays(1);
-    Td wait = next_midnight - now() + SECOND;
+    Td wait = std::min(next_midnight - now() + SECOND, 15 * MINUTE);
     Wt::Wc::schedule_action(wait, Wt::Wc::bound_post(boost::bind(reset_countup,
                             countup)));
     Wt::Wc::updates_trigger();
