@@ -252,6 +252,9 @@ enum UserRights {
                    CLASSIFICATION_CHANGER |
                    AVATAR_NONDEFAULT,
 
+    /** Right unpause games, add pause limit or return user from vacation */
+    TIME_WIZARD = BOOST_BINARY(00001000 00000000 00000000),
+
     /** Right to (un)remove comments, create topic and approve drafts */
     COMMENTS_REMOVER = BOOST_BINARY(00010000 00000000 00000000),
 
@@ -284,7 +287,8 @@ enum UserRights {
     LOGS_READER = BOOST_BINARY(00100000 00000000 00000000 00000000),
 
     /** Special rights */
-    SUPER_RIGHTS = COMMENTS_REMOVER |
+    SUPER_RIGHTS = TIME_WIZARD |
+                   COMMENTS_REMOVER |
                    CLASSIFICATION_CONFIRMER |
                    COMPETITION_CHANGER |
                    USER_REMOVER |

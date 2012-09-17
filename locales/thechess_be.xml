@@ -413,6 +413,7 @@
     <message id="tc.user.Start_game">Пачаць гульню</message>
     <message id="tc.user.super_rights_changer">змяняць адмысловыя правы</message>
     <message id="tc.user.This_ip_banned">Гэты IP-адрас заблакіраваны</message>
+    <message id='tc.user.time_wizard'>магия времени</message>
     <message id="tc.user.Unblock">Разблакіраваць</message>
     <message id="tc.user.Undelete">Аднавіць</message>
     <message id="tc.user.unknown_right">невядомае права</message>

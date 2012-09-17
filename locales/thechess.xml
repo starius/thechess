@@ -890,6 +890,7 @@ TheChess.
     <message id='tc.user.Start_game'>Start a game</message>
     <message id='tc.user.super_rights_changer'>change super rights</message>
     <message id='tc.user.This_ip_banned'>This IP is banned</message>
+    <message id='tc.user.time_wizard'>time wizard</message>
     <message id='tc.user.Unblock'>Unblock</message>
     <message id='tc.user.Undelete'>Undelete</message>
     <message id='tc.user.unknown_right'>unknown right</message>
