@@ -218,14 +218,16 @@ protected:
 };
 
 UserListWidget::UserListWidget(Wt::WContainerWidget* parent) :
-    WContainerWidget(parent), b_(0) {
+    WContainerWidget(parent), nr_(0), b_(0) {
     m_ = new UserListModel(this);
     oo_ = new Wt::WCheckBox(tr("tc.user.Only_online"), this);
     oo_->setChecked(m_->only_online());
     oo_->changed().connect(this, &UserListWidget::apply);
-    nr_ = new Wt::WCheckBox(tr("tc.user.Not_removed"), this);
-    nr_->setChecked(m_->not_removed());
-    nr_->changed().connect(this, &UserListWidget::apply);
+    if (tApp->user() && tApp->user()->has_permission(USER_REMOVER)) {
+        nr_ = new Wt::WCheckBox(tr("tc.user.Not_removed"), this);
+        nr_->setChecked(m_->not_removed());
+        nr_->changed().connect(this, &UserListWidget::apply);
+    }
     if (tApp->user()) {
         b_ = new Wt::WCheckBox(tr("tc.user.My_blocklist"), this);
         b_->setChecked(m_->only_blocked());
@@ -243,7 +245,9 @@ UserListWidget::UserListWidget(Wt::WContainerWidget* parent) :
 
 void UserListWidget::apply() {
     m_->set_only_online(oo_->isChecked());
-    m_->set_not_removed(nr_->isChecked());
+    if (nr_) {
+        m_->set_not_removed(nr_->isChecked());
+    }
     if (b_) {
         m_->set_only_blocked(b_->isChecked());
     }
