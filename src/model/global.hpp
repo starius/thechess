@@ -145,6 +145,7 @@ namespace thechess {
 
 /** Competition type */
 enum CompetitionType {
+    NO_COMPETITION_TYPE = 0, /**< Not a real type. Not in database */
     CLASSICAL = 10, /**< Classical competition */
     STAGED = 20, /**< Staged competition */
     TEAM = 30 /**< Team competition */

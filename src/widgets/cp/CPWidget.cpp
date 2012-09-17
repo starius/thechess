@@ -6,7 +6,6 @@
  */
 
 #include <Wt/WPushButton>
-#include <Wt/WComboBox>
 #include <Wt/WEnvironment>
 #include <Wt/WApplication>
 #include <Wt/Wc/TableForm.hpp>
@@ -15,6 +14,7 @@
 #include <Wt/Wc/IntervalWidget.hpp>
 
 #include "widgets/cp/CPWidget.hpp"
+#include "widgets/cp/CompetitionTypeWidget.hpp"
 #include "widgets/gp/GPSelector.hpp"
 #include "widgets/Header.hpp"
 #include "widgets/user/ClassificationWidget.hpp"
@@ -34,10 +34,7 @@ CPWidget::CPWidget(const CP* cp, bool allow_change_type,
     form_ = new Wt::Wc::TableForm(this);
     Wt::Wc::IntervalWidget* interval;
     Wt::WContainerWidget* cell;
-    type_ = new Wt::WComboBox();
-    type_->addItem(Competition::type2str(CLASSICAL));
-    type_->addItem(Competition::type2str(STAGED));
-    // TODO type_->addItem(Competition::type2str(TEAM));
+    type_ = new CompetitionTypeWidget(/* with_all */ false);
     cell = form_->item(tr("tc.competition.Type"), "", type_, type_);
     set_type(cp->type());
     if (allow_change_type) {
@@ -205,27 +202,11 @@ void CPWidget::type_handler() {
 }
 
 void CPWidget::set_type(CompetitionType t) {
-    if (t == CLASSICAL) {
-        type_->setCurrentIndex(0);
-    } else if (t == STAGED) {
-        type_->setCurrentIndex(1);
-    } else if (t == TEAM) {
-        // TODO type_->setCurrentIndex(2);
-    }
+    type_->set_value(t);
 }
 
 CompetitionType CPWidget::get_type() const {
-    using namespace config::competition; // defaults
-    CompetitionType t = defaults::COMPETITION_TYPE;
-    int index = type_->currentIndex();
-    if (index == 0) {
-        t = CLASSICAL;
-    } else if (index == 1) {
-        t = STAGED;
-    } else if (index == 2) {
-        t = TEAM;
-    }
-    return t;
+    return type_->value();
 }
 
 }

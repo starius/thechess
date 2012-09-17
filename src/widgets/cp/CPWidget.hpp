@@ -36,7 +36,7 @@ private:
     Wt::Wc::TableForm* form_;
     GPSelector* gp_selector_;
 
-    Wt::WComboBox* type_;
+    CompetitionTypeWidget* type_;
     Wt::Wc::ConstrainedSpinBox* min_rating_;
     Wt::Wc::ConstrainedSpinBox* max_rating_;
     ClassificationWidget* min_classification_;

@@ -21,6 +21,7 @@ class TopBlock;
 class Footer;
 class CompetitionCreateWidget;
 class CompetitionListWidget;
+class CompetitionTypeWidget;
 class CompetitionWidget;
 class CPWidget;
 class CPListWidget;
