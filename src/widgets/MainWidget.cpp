@@ -364,7 +364,8 @@ static void reset_countup(Wt::Wc::Countdown* countup) {
 }
 
 void MainWidget::show_countup() {
-    Wt::Wc::Countdown* countup = new Wt::Wc::Countdown(clock_and_locale_);
+    Wt::Wc::Countdown* countup = new Wt::Wc::Countdown(clock_and_locale_,
+            /* load javascript */ false);
     countup->setInline(true);
     reset_countup(countup);
 }

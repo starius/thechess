@@ -26,8 +26,8 @@ public:
         user_(user) {
         dbo::Transaction t(tApp->session());
         bindWidget("name", anchor());
-        bindWidget("limit_private", new Wt::Wc::Countdown());
-        bindWidget("limit_std", new Wt::Wc::Countdown());
+        bindWidget("limit_private", new Wt::Wc::Countdown(0, false)); // do not
+        bindWidget("limit_std", new Wt::Wc::Countdown(0, false)); // load JS
         reread();
     }
 
