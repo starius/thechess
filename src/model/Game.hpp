@@ -207,10 +207,11 @@ public:
         return pause_until_;
     }
 
-    /** Force paused game to be active (for admin)
-    No checks are performed here, including check of permissions.
-    */
-    void admin_pause_discard();
+    /** Force paused game to be active (for admin) */
+    bool admin_can_pause_discard(const UserPtr& user) const;
+
+    /** Force paused game to be active (for admin) */
+    void admin_pause_discard(const UserPtr& user);
 
     /** Force active game to be paused (for admin) */
     bool admin_can_pause(const UserPtr& user) const;
