@@ -14,6 +14,7 @@
 #include <Wt/WPushButton>
 #include <Wt/Dbo/QueryModel>
 #include <Wt/Wc/Pager.hpp>
+#include <Wt/Wc/util.hpp>
 
 #include "widgets/user/UserListWidget.hpp"
 #include "Application.hpp"
@@ -127,7 +128,9 @@ private:
             q.where("sessions != 0");
         }
         if (!name_like_.empty()) {
-            q.where("username like ?").bind("%" + name_like_ + "%");
+            q.where("(username like ? or id = ?)");
+            q.bind("%" + name_like_ + "%");
+            q.bind(Wt::Wc::str2int(name_like_.toUTF8()));
         }
         q.orderBy("games_stat_elo desc");
         setQuery(q, /* keep_columns */ true);
