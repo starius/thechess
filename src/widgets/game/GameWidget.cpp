@@ -72,7 +72,7 @@ protected:
         time(game_->confirmed(), "tc.game.confirmed", result);
         time(game_->started(), "tc.game.started", result);
         time(game_->lastmove(), "tc.game.lastmove", result);
-        print_pause_until(result);
+        time(game_->pause_until(), "tc.game.pause_until", result);
         time(game_->ended(), "tc.game.ended", result);
         const GPPtr& gp = game_->gp();
         if (game_->is_ended()) {
@@ -147,35 +147,6 @@ private:
     void bool_item(const bool value, const char* true_id, const char* false_id,
                    Wt::WContainerWidget* r) {
         item(tr(value ? true_id : false_id), r);
-    }
-
-    void print_pause_until(Wt::WContainerWidget* result) {
-        if (game_->state() != Game::PAUSE || !game_->pause_until().isValid()) {
-            return;
-        }
-        Wt::WContainerWidget* li = new Wt::WContainerWidget(result);
-        new Wt::WText(tr("tc.common.kw").arg(tr("tc.game.pause_until"))
-                      .arg(game_->pause_until().toString()), li);
-        if (tApp->user() && tApp->user()->has_permission(TIME_WIZARD)) {
-            Wt::WPushButton* b;
-            b = new Wt::WPushButton(tr("tc.common.Discard"), li);
-            b->clicked().connect(this, &GameStatus::discard_pause);
-        }
-    }
-
-    void discard_pause() {
-        dbo::Transaction t(tApp->session());
-        game_.reread();
-        if (game_->state() != Game::PAUSE || !game_->pause_until().isValid()) {
-            return;
-        }
-        if (tApp->user() && tApp->user()->has_permission(TIME_WIZARD)) {
-            game_.modify()->admin_pause_discard();
-            admin_log("Discard pause of " + game_a(game_.id()));
-        }
-        t.commit();
-        tNot->emit(new Object(GAME, game_.id()));
-        tApp->server().planning().add(new Object(GAME, game_.id()), now());
     }
 };
 
@@ -348,7 +319,13 @@ private:
     }
 
     void print_pause_buttons() {
-        if (game_->admin_can_pause(tApp->user())) {
+        if (game_->state() == Game::PAUSE && game_->pause_until().isValid() &&
+                tApp->user() && tApp->user()->has_permission(TIME_WIZARD)) {
+            new Wt::WBreak(manager_);
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(tr("tc.game.Stop_pause"), manager_);
+            b->clicked().connect(this, &GameWidgetImpl::discard_pause);
+        } else if (game_->admin_can_pause(tApp->user())) {
             new Wt::WBreak(manager_);
             Td max = config::max::PAUSE_LIMIT_INIT;
             Td d = game_->pause_limit();
@@ -485,6 +462,21 @@ private:
                                     pause_duration->corrected_value());
         t.commit();
         tNot->emit(new Object(GAME, game_.id()));
+    }
+
+    void discard_pause() {
+        dbo::Transaction t(tApp->session());
+        game_.reread();
+        if (game_->state() != Game::PAUSE || !game_->pause_until().isValid()) {
+            return;
+        }
+        if (tApp->user() && tApp->user()->has_permission(TIME_WIZARD)) {
+            game_.modify()->admin_pause_discard();
+            admin_log("Discard pause of " + game_a(game_.id()));
+        }
+        t.commit();
+        tNot->emit(new Object(GAME, game_.id()));
+        tApp->server().planning().add(new Object(GAME, game_.id()), now());
     }
 
     void mistake_propose() {

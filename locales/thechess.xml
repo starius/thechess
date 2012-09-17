@@ -698,6 +698,7 @@ TheChess.
     <message id='tc.game.State_state'>Undefined state</message>
     <message id='tc.game.State_surrendered'>Surrendered</message>
     <message id='tc.game.State_timeout'>Timeout</message>
+    <message id='tc.game.Stop_pause'>Stop pause</message>
     <message id='tc.game.Surrender'>Surrender</message>
     <message id='tc.game.white'>white</message>
     <message id='tc.game.your_color'>your color</message>

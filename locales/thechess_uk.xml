@@ -221,6 +221,7 @@
     <message id="tc.game.State_state">Невідомий стан</message>
     <message id="tc.game.State_surrendered">Здана</message>
     <message id="tc.game.State_timeout">Прострочена</message>
+    <message id='tc.game.Stop_pause'>Остановить паузу</message>
     <message id="tc.game.Surrender">Здатися</message>
     <message id="tc.game.white">білий</message>
     <message id="tc.game.your_color">колір ваших фігур</message>
