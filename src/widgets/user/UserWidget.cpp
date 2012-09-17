@@ -107,6 +107,8 @@ public:
             }
         }
         new Wt::WBreak(this);
+        new Wt::WText(tr("tc.user.ID").arg(user_.id()), this);
+        new Wt::WBreak(this);
         if (tApp->user() && tApp->user() != user_ && !user_->removed()) {
             start_button_ = new Wt::WPushButton(
                 Wt::WString::tr("tc.user.Start_game"), this);

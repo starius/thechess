@@ -383,6 +383,7 @@
     <message id="tc.user.games_stat_fails">паражэнні</message>
     <message id="tc.user.games_stat_wins">перамогі</message>
     <message id="tc.user.gp_creator">стварыць параметры гульні</message>
+    <message id='tc.user.ID'>Регистрационный номер пользователя: {1}</message>
     <message id="tc.user.ip">ip-адрас</message>
     <message id="tc.user.IpBanList">Спіс банаў па IP</message>
     <message id="tc.user.IpList">Спіс IP</message>
