@@ -459,8 +459,10 @@ private:
         game_.reread();
         game_.modify()->admin_pause(tApp->user(),
                                     pause_duration->corrected_value());
+        admin_log("Pause " + game_a(game_.id()));
         t.commit();
         tNot->emit(new Object(GAME, game_.id()));
+        tApp->server().planning().add(new Object(GAME, game_.id()), now());
     }
 
     void discard_pause() {
