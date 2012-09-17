@@ -110,7 +110,7 @@ public:
     void forum_all_posts();
 
     /** View post */
-    void forum_post(const CommentPtr& post);
+    void forum_post(const CommentPtr& post_or_text);
 
     /** View post comment */
     void forum_post_comment(const CommentPtr& comment);
