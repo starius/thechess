@@ -11,6 +11,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WTableView>
 #include <Wt/WAnchor>
+#include <Wt/WLineEdit>
 #include <Wt/Dbo/Transaction>
 #include <Wt/Dbo/Query>
 #include <Wt/Dbo/QueryModel>
@@ -179,6 +180,11 @@ public:
         } else if (state_ != GameStateSelect::ALL) {
             q.where("G.state = ?").bind(GameStateSelect::state(state_));
         }
+        if (!name_like_.empty()) {
+            q.where("(G.name like ? or G.id = ?)");
+            q.bind("%" + name_like_ + "%");
+            q.bind(Wt::Wc::str2int(name_like_.toUTF8()));
+        }
         q.orderBy("G.id");
         setQuery(q, /* keep_columns */ true);
         t.commit();
@@ -209,11 +215,19 @@ public:
         }
     }
 
+    void set_name_like(const Wt::WString& name_like) {
+        if (name_like != name_like_) {
+            name_like_ = name_like;
+            set_query();
+        }
+    }
+
 private:
     bool only_my_;
     bool only_commented_;
     UserPtr user_;
     GameStateSelect::State state_;
+    Wt::WString name_like_;
 };
 
 class GameTableView : public Wt::WTableView {
@@ -263,6 +277,7 @@ private:
     Wt::WCheckBox* only_my_;
     Wt::WCheckBox* only_commented_;
     GameStateSelect* state_;
+    Wt::WLineEdit* name_like_;
 
     void manager() {
         only_my_ = new Wt::WCheckBox(tr("tc.common.Only_my"), this);
@@ -278,6 +293,9 @@ private:
         only_commented_->changed().connect(this, &GameListWidgetImpl::apply);
         state_ = new GameStateSelect(this);
         state_->changed().connect(this, &GameListWidgetImpl::apply);
+        name_like_ = new Wt::WLineEdit(this);
+        name_like_->setEmptyText(tr("tc.game.comment"));
+        name_like_->enterPressed().connect(this, &GameListWidgetImpl::apply);
         if (!tApp->environment().ajax()) {
             Wt::WPushButton* apply_button =
                 new Wt::WPushButton(tr("tc.common.Apply"), this);
@@ -291,6 +309,7 @@ private:
         model_->set_only_my(only_my_->isChecked());
         model_->set_only_commented(only_commented_->isChecked());
         model_->set_state(state_->state());
+        model_->set_name_like(name_like_->text());
         Wt::Wc::scroll_to_last(table_view_);
     }
 
