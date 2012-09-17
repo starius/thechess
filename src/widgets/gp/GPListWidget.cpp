@@ -125,9 +125,9 @@ GPListWidget::GPListWidget(Wt::WContainerWidget* p):
     Wt::WContainerWidget(p) {
     manager();
     model_ = new GPListModel(this);
-    apply();
     view_ = new GPListView(model_, this);
     view_->setSelectionMode(Wt::SingleSelection);
+    apply();
     select_first();
 }
 
@@ -151,6 +151,7 @@ void GPListWidget::apply() {
     bool only_my = only_my_->isChecked() && tApp->user();
     User::set_s(SWITCH_ONLY_MY_GP, only_my);
     model_->set_only_my(only_my);
+    view_->setCurrentPage(0);
 }
 
 void GPListWidget::manager() {

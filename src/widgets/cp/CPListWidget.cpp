@@ -131,9 +131,9 @@ CPListWidget::CPListWidget(Wt::WContainerWidget* p):
     Wt::WContainerWidget(p) {
     manager();
     model_ = new CPListModel(this);
-    apply();
     view_ = new CPListView(model_, this);
     view_->setSelectionMode(Wt::SingleSelection);
+    apply();
     select_first();
 }
 
@@ -157,6 +157,7 @@ void CPListWidget::apply() {
     bool only_my = only_my_->isChecked() && tApp->user();
     User::set_s(SWITCH_ONLY_MY_CP, only_my);
     model_->set_only_my(only_my);
+    view_->setCurrentPage(0);
 }
 
 void CPListWidget::manager() {
