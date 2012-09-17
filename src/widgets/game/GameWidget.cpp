@@ -35,6 +35,7 @@
 #include "chess/Moves.hpp"
 #include "chess/Piece.hpp"
 #include "notify.hpp"
+#include "log.hpp"
 
 namespace thechess {
 
@@ -70,7 +71,7 @@ protected:
         time(game_->confirmed(), "tc.game.confirmed", result);
         time(game_->started(), "tc.game.started", result);
         time(game_->lastmove(), "tc.game.lastmove", result);
-        time(game_->pause_until(), "tc.game.pause_until", result);
+        print_pause_until(result);
         time(game_->ended(), "tc.game.ended", result);
         const GPPtr& gp = game_->gp();
         if (game_->is_ended()) {
@@ -145,6 +146,35 @@ private:
     void bool_item(const bool value, const char* true_id, const char* false_id,
                    Wt::WContainerWidget* r) {
         item(tr(value ? true_id : false_id), r);
+    }
+
+    void print_pause_until(Wt::WContainerWidget* result) {
+        if (game_->state() != Game::PAUSE || !game_->pause_until().isValid()) {
+            return;
+        }
+        Wt::WContainerWidget* li = new Wt::WContainerWidget(result);
+        new Wt::WText(tr("tc.common.kw").arg(tr("tc.game.pause_until"))
+                      .arg(game_->pause_until().toString()), li);
+        if (tApp->user() && tApp->user()->has_permission(TIME_WIZARD)) {
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(tr("tc.common.Discard"), li);
+            b->clicked().connect(this, &GameStatus::discard_pause);
+        }
+    }
+
+    void discard_pause() {
+        dbo::Transaction t(tApp->session());
+        game_.reread();
+        if (game_->state() != Game::PAUSE || !game_->pause_until().isValid()) {
+            return;
+        }
+        if (tApp->user() && tApp->user()->has_permission(TIME_WIZARD)) {
+            game_.modify()->discard_pause();
+            admin_log("Discard pause of " + game_a(game_.id()));
+        }
+        t.commit();
+        tNot->emit(new Object(GAME, game_.id()));
+        tApp->server().planning().add(new Object(GAME, game_.id()), now());
     }
 };
 
