@@ -207,6 +207,8 @@ public:
         setColumnWidth(UserListModel::RATING_COLUMN, 40);
         setColumnWidth(UserListModel::ONLINE_TIME, 85);
         setColumnWidth(UserListModel::REGISTRATION_DATE, 75);
+        setSortingEnabled(UserListModel::NUMBER_COL, false);
+        setSortingEnabled(UserListModel::DRAWS_COLUMN, false);
     }
 
 protected:
