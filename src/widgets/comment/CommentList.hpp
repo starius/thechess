@@ -39,6 +39,7 @@ private:
     Wt::WTextEdit* post_text_;
     Wt::WCheckBox* only_ok_;
     Wt::WCheckBox* only_my_;
+    Wt::WLineEdit* text_like_;
 
     CommentModel* comment_model() const;
 

@@ -162,6 +162,9 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
         only_my_->setText(tr("tc.common.Only_my"));
         only_my_->changed().connect(this, &CommentList::apply);
     }
+    text_like_ = new Wt::WLineEdit(this);
+    text_like_->setEmptyText(tr("tc.comment.Text"));
+    text_like_->enterPressed().connect(this, &CommentList::apply);
     if (!wApp->environment().ajax()) {
         Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Apply"), this);
         b->clicked().connect(this, &CommentList::apply);
@@ -278,6 +281,7 @@ void CommentList::apply() {
     if (only_ok_) {
         comment_model()->set_only_ok(only_ok_->isChecked());
     }
+    comment_model()->set_text_like(text_like_->text());
     view_->show_last();
 }
 

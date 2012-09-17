@@ -17,6 +17,7 @@
     <message id='tc.comment.Global_chat'>Общий чат</message>
     <message id='tc.comment.private_messages'>личные сообщения</message>
     <message id='tc.comment.Remove'>Удалить</message>
+    <message id='tc.comment.Text'>Текст</message>
 
     <message id='tc.common.Agree'>Согласиться</message>
     <message id='tc.common.all'>все</message>

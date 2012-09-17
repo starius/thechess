@@ -174,6 +174,11 @@ CommentModel::Query CommentModel::get_query() const {
     if (!ip_.empty()) {
         result.where("ip = ?").bind(ip_);
     }
+    if (!text_like_.empty()) {
+        result.where("(text like ? or id = ?)");
+        result.bind("%" + text_like_ + "%");
+        result.bind(Wt::Wc::str2int(text_like_.toUTF8()));
+    }
     if (type_ == Comment::FORUM_COMMENT) {
         result.orderBy("show_index");
     } else {
@@ -201,6 +206,13 @@ void CommentModel::set_only_my(bool only_my) {
 void CommentModel::set_ip(const std::string ip) {
     if (ip != ip_) {
         ip_ = ip;
+        setQuery(get_query(), /* keep_columns */ true);
+    }
+}
+
+void CommentModel::set_text_like(const Wt::WString& text_like) {
+    if (text_like != text_like_) {
+        text_like_ = text_like;
         setQuery(get_query(), /* keep_columns */ true);
     }
 }

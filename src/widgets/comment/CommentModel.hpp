@@ -97,6 +97,14 @@ public:
     /** Set filter by ip of author */
     void set_ip(const std::string ip);
 
+    /** Get filter by text of ID */
+    const Wt::WString& text_like() const {
+        return text_like_;
+    }
+
+    /** Set filter by text of ID */
+    void set_text_like(const Wt::WString& text_like);
+
 private:
     Comment::Type type_;
     CommentPtr root_;
@@ -104,6 +112,7 @@ private:
     bool only_ok_;
     bool only_my_;
     std::string ip_;
+    Wt::WString text_like_;
 };
 
 }

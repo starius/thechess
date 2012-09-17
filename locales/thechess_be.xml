@@ -10,6 +10,7 @@
     <message id='tc.comment.Global_chat'>Агульны чат</message>
     <message id="tc.comment.private_messages">асабістыя паведамленні</message>
     <message id="tc.comment.Remove">Выдаліць</message>
+    <message id='tc.comment.Text'>Тэкст</message>
 
     <message id="tc.common.Agree">Пагадзіцца</message>
     <message id='tc.common.all'>ўсё</message>
