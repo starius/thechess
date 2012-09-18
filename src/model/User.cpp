@@ -63,6 +63,8 @@ bool User::removed() const {
 void User::set_removed(bool removed) {
     if (removed) {
         set_rights(NONE);
+    } else {
+        set_rights(Options::instance()->regular_user_rights());
     }
     if (!auth_info()) {
         return;
