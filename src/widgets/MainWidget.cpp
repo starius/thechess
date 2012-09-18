@@ -251,7 +251,7 @@ void MainWidget::forum_all_posts() {
 void MainWidget::forum_post(const CommentPtr& post_or_text) {
     CommentPtr post = post_or_text->type() == Comment::FORUM_POST ?
                       post_or_text : post_or_text->parent();
-    if (post->children().size()) {
+    if (post && post->children().size()) {
         CommentPtr post_text = post->children().front();
         set_contents(new CommentList(Comment::FORUM_COMMENT, post_text));
         wApp->setTitle(tr("tc.title.CommentList_post").arg(post->text()));
