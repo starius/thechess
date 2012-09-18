@@ -178,8 +178,10 @@ public:
         comment_container_ = new Wt::WContainerWidget(this);
         print_comment();
         game_status_ = new GameStatus(game_, this);
-        new Wt::WAnchor(str(boost::format("/pgn/?game=%i") % game.id()),
-                        tr("tc.game.Download_pgn"), this);
+        if (game->is_ended()) {
+            new Wt::WAnchor(str(boost::format("/pgn/?game=%i") % game.id()),
+                            tr("tc.game.Download_pgn"), this);
+        }
         print_comment_list();
         status_and_manager();
         countdown_print();

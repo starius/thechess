@@ -55,6 +55,11 @@ void PgnResource::handleRequest(const Wt::Http::Request& request,
         response.out() << "No such game" << std::endl;
         return;
     }
+    if (!g->is_ended()) {
+        suggestFileName("none.pgn");
+        response.out() << "Game is not ended" << std::endl;
+        return;
+    }
     g->pgn(response.out());
 }
 
@@ -80,7 +85,8 @@ void AllPgnResource::handleRequest(const Wt::Http::Request& request,
         last_rebuild_ = now();
         std::ofstream file_stream(fileName().c_str());
         dbo::Transaction t(session_);
-        Games games = session_.find<Game>();
+        Games games = session_.find<Game>()
+                      .where("state >= ?").bind(Game::MIN_ENDED);
         BOOST_FOREACH (GamePtr g, games) {
             g->pgn(file_stream);
             file_stream << std::endl;
