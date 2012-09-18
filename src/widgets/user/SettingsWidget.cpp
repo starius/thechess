@@ -5,6 +5,7 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <vector>
 #include <boost/foreach.hpp>
 
 #include <Wt/WContainerWidget>
@@ -201,6 +202,7 @@ private:
     void save_vacation() {
         dbo::Transaction t(tApp->session());
         tApp->user().reread();
+        std::vector<int> game_ids;
         if (!tApp->user()->vacation_until().isValid() ||
                 tApp->user()->vacation_until() < now()) {
             Td duration = vacation_duration_->corrected_value();
@@ -209,11 +211,15 @@ private:
             Games games = tApp->user()->games().resultList();
             BOOST_FOREACH (GamePtr g, games) {
                 g.modify()->take_vacation_pause(duration);
-                tApp->server().planning().add(new Object(GAME, g.id()), now());
+                game_ids.push_back(g.id());
             }
-            tApp->server().planning().add(new Object(USER, tApp->user().id()),
-                                          now());
         }
+        t.commit();
+        BOOST_FOREACH (int g_id, game_ids) {
+            tApp->server().planning().add(new Object(GAME, g_id), now());
+        }
+        int id = tApp->user().id();
+        tApp->server().planning().add(new Object(USER, id), now());
     }
 
     void recalculation() {
