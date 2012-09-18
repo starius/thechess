@@ -7,6 +7,9 @@
 
 #include <Wt/WContainerWidget>
 #include <Wt/WText>
+#include <Wt/WAnchor>
+#include <Wt/WTemplate>
+#include <Wt/WBreak>
 #include <Wt/Auth/AuthModel>
 #include <Wt/Auth/RegistrationModel>
 #include <Wt/Auth/RegistrationWidget>
@@ -14,6 +17,7 @@
 
 #include "widgets/user/AuthWidget.hpp"
 #include "Application.hpp"
+#include "Options.hpp"
 
 namespace thechess {
 
@@ -85,6 +89,16 @@ Wt::WWidget* AuthWidget::createRegistrationView(const Wt::Auth::Identity& id) {
     RegistrationWidget* w = new RegistrationWidget(this);
     w->setModel(model_);
     result->addWidget(w);
+    int terms_id = Options::instance()->user_agreement_id();
+    if (terms_id != -1) {
+        Wt::WAnchor* terms_a = new Wt::WAnchor();
+        terms_a->setLink(tApp->path().post()->get_link(terms_id));
+        terms_a->setText(tr("tc.user.Terms_of_use"));
+        Wt::WTemplate* terms = new Wt::WTemplate(tr("tc.user.Terms_template"));
+        terms->bindWidget("a", terms_a);
+        result->addWidget(terms);
+        result->addWidget(new Wt::WBreak());
+    }
     result->addWidget(new Wt::WText(tr("tc.user.Password_example")));
     result->addWidget(new Wt::WText(Wt::Wc::good_password()));
     return result;

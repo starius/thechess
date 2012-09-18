@@ -31,7 +31,8 @@ Options::Options(const Wt::WServer& server):
     default_settings_(config::defaults::DEFAULT_SETTINGS),
     pgn_site_(config::defaults::PGN_SITE),
     champion_id_(config::defaults::CHAMPION_ID),
-    best_players_shown_(config::defaults::BEST_PLAYERS_SHOWN) {
+    best_players_shown_(config::defaults::BEST_PLAYERS_SHOWN),
+    user_agreement_id_(config::defaults::USER_AGREEMENT_ID) {
     std::string value;
     if (server.readConfigurationProperty("database_type", value)) {
         BOOST_ASSERT(value == "postgres" ||
@@ -59,6 +60,7 @@ Options::Options(const Wt::WServer& server):
     server.readConfigurationProperty("pgn_site", pgn_site_);
     read_int_value("champion_id", champion_id_);
     read_int_value("best_players_shown", best_players_shown_);
+    read_int_value("user_agreement_id", user_agreement_id_);
 }
 
 Options* Options::instance() {

@@ -141,6 +141,9 @@ const int CHAMPION_ID = -1;
 /** Number of best players shown as main page */
 const int BEST_PLAYERS_SHOWN = 3;
 
+/** ID of user agreement comment */
+const int USER_AGREEMENT_ID = -1;
+
 }
 
 /** The namespace for max allowed values of parameters */

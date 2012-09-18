@@ -414,6 +414,7 @@
     <message id="tc.user.Settings">Налады</message>
     <message id="tc.user.Start_game">Пачаць гульню</message>
     <message id="tc.user.super_rights_changer">змяняць адмысловыя правы</message>
+    <message id='tc.user.Terms_of_use'>Пользовательским соглашением</message>
     <message id="tc.user.This_ip_banned">Гэты IP-адрас заблакіраваны</message>
     <message id='tc.user.time_wizard'>магия времени</message>
     <message id="tc.user.Unblock">Разблакіраваць</message>
@@ -445,6 +446,9 @@
     </message>
     <message id='tc.user.Online'>
         <font style="background:Lightsteelblue;">На сайце</font>
+    </message>
+    <message id='tc.user.Terms_template'>
+        Регистрируясь, Вы подтверждаете согласие с ${a}
     </message>
 
 </messages>

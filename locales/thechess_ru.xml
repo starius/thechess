@@ -422,6 +422,7 @@
     <message id='tc.user.Settings'>Настройки</message>
     <message id='tc.user.Start_game'>Начать игру</message>
     <message id='tc.user.super_rights_changer'>изменять особые права</message>
+    <message id='tc.user.Terms_of_use'>Пользовательским соглашением</message>
     <message id='tc.user.This_ip_banned'>Этот IP-адрес заблокирован</message>
     <message id='tc.user.time_wizard'>магия времени</message>
     <message id='tc.user.Unblock'>Разблокировать</message>
@@ -453,6 +454,9 @@
     </message>
     <message id='tc.user.Online'>
         <font style="background:Lightsteelblue;">На сайте</font>
+    </message>
+    <message id='tc.user.Terms_template'>
+        Регистрируясь, Вы подтверждаете согласие с ${a}
     </message>
 
 </messages>

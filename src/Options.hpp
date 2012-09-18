@@ -102,6 +102,11 @@ public:
         return best_players_shown_;
     }
 
+    /** ID of comment with user agreement (or -1) */
+    int user_agreement_id() const {
+        return user_agreement_id_;
+    }
+
     /** Return options used in current application */
     static Options* instance();
 
@@ -122,6 +127,7 @@ private:
     std::string pgn_site_;
     int champion_id_;
     int best_players_shown_;
+    int user_agreement_id_;
 
     bool read_int_value(const std::string& name, int& value);
 };
