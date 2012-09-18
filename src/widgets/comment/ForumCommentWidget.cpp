@@ -25,6 +25,7 @@ namespace thechess {
 static void add_comment(CommentPtr comment, Wt::WTextEdit* edit) {
     dbo::Transaction t(tApp->session());
     comment.reread();
+    tApp->user().reread();
     if (!Comment::can_create(tApp->user(), Comment::FORUM_COMMENT, comment)) {
         return;
     }

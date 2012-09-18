@@ -425,6 +425,7 @@ private:
     void action() {
         dbo::Transaction t(tApp->session());
         game_.reread();
+        tApp->user().reread();
         Game::State state_before = game_->state();
         (game_.modify()->*method)(tApp->user());
         Game::State state_after = game_->state();

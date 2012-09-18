@@ -311,6 +311,7 @@ void CommentList::add_comment(const CommentPtr& parent) {
         return;
     }
     dbo::Transaction t(tApp->session());
+    tApp->user().reread();
     if (!Comment::can_create(tApp->user(), comment_model()->type(), parent)) {
         return;
     }

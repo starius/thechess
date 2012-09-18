@@ -40,6 +40,7 @@ public:
         Wt::WText* tmp;
         dbo::Transaction t(tApp->session());
         user_.reread();
+        tApp->user().reread();
         new Header(user_->username(), this);
         new Wt::WBreak(this);
         new Gravatar(user_, this);
@@ -354,6 +355,7 @@ private:
     }
 
     void send(Wt::WLineEdit* m) {
+        tApp->user().reread();
         dbo::Transaction t(tApp->session());
         if (tApp->user() && tApp->user()->can_send_message(user_)) {
             CommentPtr base = user_->comment_base();

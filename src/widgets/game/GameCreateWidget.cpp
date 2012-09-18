@@ -26,6 +26,7 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
                                    Wt::WContainerWidget* p) :
     Wt::WContainerWidget(p), with_user_(true), user_(user) {
     dbo::Transaction t(tApp->session());
+    tApp->user().reread();
     new Header(tr("tc.game.Competitor")
                .arg(user->username()), this);
     if (User::is_blocked(tApp->user(), user_)) {
@@ -39,7 +40,9 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
 
 GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :
     Wt::WContainerWidget(p), with_user_(false) {
+    dbo::Transaction t(tApp->session());
     new Header(tr("tc.game.Challenge"), this);
+    tApp->user().reread();
     if (tApp->user() && tApp->user()->has_permission(GAME_CREATOR)) {
         print();
     }
@@ -65,6 +68,10 @@ void GameCreateWidget::button_handler() {
     GPPtr gp = selector_->gp();
     if (!gp) {
         error_message_->setText(tr("tc.common.no_params_error"));
+        return;
+    }
+    tApp->user().reread();
+    if (!tApp->user() || tApp->user()->has_permission(GAME_CREATOR)) {
         return;
     }
     error_message_->setText("");
