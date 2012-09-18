@@ -169,6 +169,10 @@ FIXME http://redmine.emweb.be/issues/1144
     height: auto !important;
 }
 
+.jp-audio {
+    visibility: hidden;
+}
+
 .Wt-auth-login * {
     width: auto !important;
 }
