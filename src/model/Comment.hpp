@@ -148,10 +148,10 @@ public:
         return root_;
     }
 
-    /** Set the root comment */
-    void set_root(const CommentPtr& root) {
-        root_ = root;
-    }
+    /** Set the root comment.
+    This method set index, if parent is set.
+    */
+    void set_root(const CommentPtr& root);
 
     /** Get the parent comment */
     const CommentPtr& parent() const {
@@ -159,10 +159,9 @@ public:
     }
 
     /** Set the parent comment.
-    \param set_index If the index should be also set (using set_index()).
-    This method also sets depth().
+    This method also sets depth() and set index, if root is set.
     */
-    void set_parent(const CommentPtr& parent, bool set_index = true);
+    void set_parent(const CommentPtr& parent);
 
     /** Get creation time.
     For FORUM_POST this means the time of last comment.

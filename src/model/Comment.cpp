@@ -127,7 +127,10 @@ bool Comment::can_edit(const UserPtr& user) const {
 void Comment::set_index() {
     typedef dbo::Query<CommentPtr> Query;
     Query family_desc = session()->find<Comment>();
-    CommentPtr r = root() ? : parent_->root() ? : parent_;
+    CommentPtr r = root();
+    if (!r || !parent_) {
+        return;
+    }
     family_desc.where("root_id = ?").bind(r);
     family_desc.where("id <> ?").bind(id()); // except me
     family_desc.orderBy("show_index desc");
@@ -219,15 +222,18 @@ void Comment::set_init(const UserPtr& init) {
     set_state(state_of_new(this->init(), this->type(), this->parent()));
 }
 
-void Comment::set_parent(const CommentPtr& parent, bool set_index) {
+void Comment::set_root(const CommentPtr& root) {
+    root_ = root;
+    set_index();
+}
+
+void Comment::set_parent(const CommentPtr& parent) {
     if (!parent) {
         return;
     }
     parent_ = parent;
     set_depth();
-    if (set_index) {
-        this->set_index();
-    }
+    set_index();
     set_state(state_of_new(this->init(), this->type(), this->parent()));
 }
 
