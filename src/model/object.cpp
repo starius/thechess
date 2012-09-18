@@ -36,7 +36,6 @@ void Object::process(Wt::Wc::notify::TaskPtr task,
     Session session(planning->server().pool());
     try {
         dbo::Transaction t(session);
-        Wt::WDateTime result;
         if (type == GAME) {
             GamePtr game = session.load<Game>(id, /* reread */ true);
             game.modify()->check(task, planning);
