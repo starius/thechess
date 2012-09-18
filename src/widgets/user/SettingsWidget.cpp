@@ -149,6 +149,8 @@ private:
         if (tApp->user()->has_permission(CLASSIFICATION_CHANGER)) {
             tApp->user().modify()->set_classification(class_->value());
         }
+        t.commit();
+        tNot->emit(new Object(USER, tApp->user().id()));
     }
 
     void save_email() {
@@ -192,6 +194,8 @@ private:
         tApp->user().reread();
         Wt::WString description = patch_text_edit_text(description_->text());
         tApp->user().modify()->set_description(description);
+        t.commit();
+        tNot->emit(new Object(USER, tApp->user().id()));
     }
 
     void save_vacation() {
@@ -205,7 +209,10 @@ private:
             Games games = tApp->user()->games().resultList();
             BOOST_FOREACH (GamePtr g, games) {
                 g.modify()->take_vacation_pause(duration);
+                tApp->server().planning().add(new Object(GAME, g.id()), now());
             }
+            tApp->server().planning().add(new Object(USER, tApp->user().id()),
+                                          now());
         }
     }
 

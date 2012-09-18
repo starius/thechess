@@ -45,7 +45,10 @@ void Object::process(Wt::Wc::notify::TaskPtr task,
             CompetitionPtr c = session.load<Competition>(id, /* reread */ true);
             c.modify()->check(task, planning);
         }
-        // FIXME: USER, COMPETITION
+        if (type == USER) {
+            UserPtr user = session.load<User>(id, /* reread */ true);
+            user.modify()->check(task, planning);
+        }
         t.commit();
     } catch (dbo::ObjectNotFoundException e) {
         std::cerr << e.what() << std::endl;

@@ -70,6 +70,10 @@ void Session::reconsider(Server& server) {
     BOOST_FOREACH (const CompetitionPtr& c, cs) {
         planning->add(new Object(COMPETITION, c.id()), now());
     }
+    Users users = find<User>().where("vacation_until is not null");
+    BOOST_FOREACH (const UserPtr& user, users) {
+        planning->add(new Object(USER, user.id()), now());
+    }
     t2.commit();
 }
 

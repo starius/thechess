@@ -33,10 +33,13 @@
 
 namespace thechess {
 
-class UserWidget::UserWidgetImpl : public Wt::WContainerWidget {
+class UserWidget::UserWidgetImpl : public Wt::WContainerWidget,
+    public Notifiable {
 public:
     UserWidgetImpl(const UserPtr& user) :
-        Wt::WContainerWidget(), user_(user) {
+        Wt::WContainerWidget(),
+        Notifiable(Object(USER, user.id()), tNot),
+        user_(user) {
         Wt::WText* tmp;
         dbo::Transaction t(tApp->session());
         user_.reread();
@@ -179,6 +182,10 @@ public:
         }
     }
 
+    void notify(EventPtr) {
+        tApp->path().open(tApp->internalPath());
+    }
+
 private:
     UserPtr user_;
     ClassificationWidget* class_;
@@ -200,7 +207,7 @@ private:
             admin_log("Discard vacation of " + user_a(user_.id()));
         }
         t.commit();
-        tApp->path().open(tApp->internalPath());
+        tNot->emit(new Object(USER, user_.id()));
     }
 
     void rating_changes() {
@@ -233,7 +240,6 @@ private:
         }
         t.commit();
         tNot->emit(new Object(USER, user_.id()));
-        tApp->path().open(tApp->internalPath());
     }
 
     void set_classification() {
@@ -246,7 +252,7 @@ private:
         user_.modify()->set_classification(class_->value());
         admin_log("Change classification of " + user_a(user_.id()));
         t.commit();
-        tApp->path().open(tApp->internalPath());
+        tNot->emit(new Object(USER, user_.id()));
     }
 
     void inverse_confirmed() {
@@ -260,7 +266,7 @@ private:
             admin_log("Confirm classification of " + user_a(user_.id()));
         }
         t.commit();
-        tApp->path().open(tApp->internalPath());
+        tNot->emit(new Object(USER, user_.id()));
     }
 
     void print_right(User::Rights right, Wt::WContainerWidget* p) {
@@ -389,7 +395,7 @@ private:
             }
         }
         t.commit();
-        tApp->path().open(tApp->internalPath());
+        tNot->emit(new Object(USER, user_.id()));
     }
 };
 

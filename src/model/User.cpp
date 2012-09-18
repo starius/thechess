@@ -263,9 +263,7 @@ void User::login() {
         last_enter_ = now();
     }
     sessions_ += 1;
-    if (vacation_until_.isValid() && vacation_until_ < now()) {
-        vacation_until_ = Wt::WDateTime();
-    }
+    check_vacation();
 }
 
 void User::logout() {
@@ -438,6 +436,19 @@ bool User::can_send_message(const UserPtr& to) const {
            online_time() >= to->filter_min_online() &&
            Comment::can_create(self(), Comment::PRIVATE_MESSAGE) &&
            !is_blocked(self(), to);
+}
+
+void User::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
+    check_vacation();
+    if (vacation_until_.isValid() && vacation_until_ > now()) {
+        planning->add(task, vacation_until_, false);
+    }
+}
+
+void User::check_vacation() {
+    if (vacation_until_.isValid() && vacation_until_ < now()) {
+        vacation_until_ = Wt::WDateTime();
+    }
 }
 
 }

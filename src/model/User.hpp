@@ -379,6 +379,11 @@ public:
     /** Return if this user can send message to another user */
     bool can_send_message(const UserPtr& to) const;
 
+    /** Run self-checks for planned action.
+    User who can return from vacation, will be returned.
+    */
+    void check(Wt::Wc::notify::TaskPtr task, Planning* planning);
+
 private:
     Wt::WString username_;
     Rights rights_; // default constructor: 0
@@ -420,6 +425,8 @@ private:
 
     GPs gps_;
     CPs cps_;
+
+    void check_vacation();
 };
 
 }
