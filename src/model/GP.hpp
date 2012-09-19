@@ -97,10 +97,10 @@ public:
         pause_limit_init_ = pause_limit_init;
     }
 
-    /** Get first half-move allowed to be draw or surrender */
-    int first_draw() const {
-        return first_draw_;
-    }
+    /** Get first half-move allowed to be draw or surrender.
+    \see Options::min_first_draw()
+    */
+    int first_draw() const;
 
     /** Set first half-move allowed to be draw or surrender */
     void set_first_draw(int first_draw) {

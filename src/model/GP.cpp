@@ -5,7 +5,10 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <algorithm>
+
 #include "model/all.hpp"
+#include "Options.hpp"
 #include "config.hpp"
 
 DBO_INSTANTIATE_TEMPLATES(thechess::GP);
@@ -23,6 +26,11 @@ GP::GP(bool):
     norating_(config::defaults::NORATING),
     first_draw_(config::defaults::FIRST_DRAW),
     games_size_(0) {
+}
+
+int GP::first_draw() const {
+    int min_first_draw = Options::instance()->min_first_draw();
+    return std::max(first_draw_, min_first_draw);
 }
 
 void GP::set_no_draw() {

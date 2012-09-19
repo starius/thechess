@@ -14,6 +14,7 @@
 
 #include "widgets/gp/GPWidget.hpp"
 #include "widgets/chess/MovesWidget.hpp"
+#include "Options.hpp"
 #include "config.hpp"
 
 namespace thechess {
@@ -50,8 +51,9 @@ GPWidget::GPWidget(const GP* gp,
     norating_ = new Wt::WCheckBox();
     item(tr("tc.game.norating"), "", norating_, norating_);
     norating_->setCheckState(gp->norating() ? Wt::Checked : Wt::Unchecked);
+    int min_first_draw = Options::instance()->min_first_draw();
     first_draw_ = new ConstrainedSpinBox();
-    first_draw_->setRange(min::FIRST_DRAW / 2, max::FIRST_DRAW / 2);
+    first_draw_->setRange(min_first_draw / 2, max::FIRST_DRAW / 2);
     first_draw_->setValue(gp->first_draw() / 2);
     item(tr("tc.game.first_draw"), "", first_draw_, first_draw_);
     add_record_inputs(gp, this);

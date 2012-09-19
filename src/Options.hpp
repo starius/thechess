@@ -115,6 +115,13 @@ public:
         return game_max_preactive_;
     }
 
+    /** Get min value of first_draw.
+    It affects all GP, even created before.
+    */
+    int min_first_draw() const {
+        return min_first_draw_;
+    }
+
     /** Return options used in current application */
     static Options* instance();
 
@@ -137,6 +144,7 @@ private:
     int best_players_shown_;
     int user_agreement_id_;
     Td game_max_preactive_;
+    int min_first_draw_;
 
     bool read_int_value(const std::string& name, int& value);
 };

@@ -46,6 +46,7 @@ Other options:
     int best_players_shown
     int user_agreement_id
     int game_max_preactive_seconds
+    int min_first_draw
 
 Dependencies:
  * witty library (>=3.2.1)
