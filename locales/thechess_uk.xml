@@ -67,6 +67,7 @@
     <message id="tc.competition.competition">турнір</message>
     <message id="tc.competition.Create_welcome">Створити новий турнір</message>
     <message id="tc.competition.Ended">Завершено</message>
+    <message id='tc.competition.Force_start'>Форсований старт</message>
     <message id="tc.competition.Force_start_delay">Форсований старт партії</message>
     <message id="tc.competition.Games_factor">Множник партій</message>
     <message id="tc.competition.Games_list">Перелік ігор</message>

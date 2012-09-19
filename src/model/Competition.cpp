@@ -14,6 +14,7 @@
 #include <Wt/Wc/rand.hpp>
 
 #include "model/all.hpp"
+#include "Planning.hpp"
 #include "config.hpp"
 
 DBO_INSTANTIATE_TEMPLATES(thechess::Competition);
@@ -301,6 +302,23 @@ bool Competition::can_cancel(const UserPtr& user) const {
 void Competition::cancel(const UserPtr& user) {
     if (can_cancel(user)) {
         cancel_impl();
+    }
+}
+
+bool Competition::can_force_start(const UserPtr& user) const {
+    namespace ccm = config::competition::min;
+    return state_ == RECRUITING &&
+           user &&
+           (user == init() || user->has_permission(COMPETITION_CHANGER)) &&
+           int(members_.size()) >= ccm::MIN_USERS &&
+           now() - created() >= ccm::MIN_RECRUITING_TIME &&
+           (virtual_allower_ || !has_virtuals());
+}
+
+void Competition::force_start(const UserPtr& user) {
+    if (can_force_start(user)) {
+        start(Planning::instance());
+        Planning::instance()->add(new Object(COMPETITION, id()), now(), false);
     }
 }
 

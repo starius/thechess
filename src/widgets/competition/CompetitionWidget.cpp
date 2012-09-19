@@ -378,6 +378,9 @@ public:
             if (c->can_cancel(tApp->user())) {
                 button<&Competition::cancel>("tc.common.Cancel");
             }
+            if (c->can_force_start(tApp->user())) {
+                button<&Competition::force_start>("tc.competition.Force_start");
+            }
         }
         if (c->has_virtuals()) {
             new Wt::WBreak(this);

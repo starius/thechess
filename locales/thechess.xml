@@ -542,6 +542,7 @@ TheChess.
     <message id='tc.competition.Create_welcome'>Create new competition</message>
     <message id='tc.competition.dash'>&mdash;</message>
     <message id='tc.competition.Ended'>Ended</message>
+    <message id='tc.competition.Force_start'>Forced start</message>
     <message id='tc.competition.Force_start_delay'>Forced start of game</message>
     <message id='tc.competition.Games_factor'>Games factor</message>
     <message id='tc.competition.Games_list'>Games list</message>

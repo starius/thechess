@@ -242,6 +242,12 @@ public:
     /** Try to cancel the competition by the user */
     void cancel(const UserPtr& user);
 
+    /** Return if the user can force start the competition */
+    bool can_force_start(const UserPtr& user) const;
+
+    /** Try to force start the competition */
+    void force_start(const UserPtr& user);
+
     /** Return if the user can allow virtuals in the competitions */
     bool can_allow_virtuals(const UserPtr& user) const;
 
