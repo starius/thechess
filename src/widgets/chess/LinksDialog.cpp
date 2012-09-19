@@ -7,6 +7,7 @@
 
 #include <Wt/WLineEdit>
 #include <Wt/WTextArea>
+#include <Wt/WAnchor>
 #include <Wt/Wc/TableForm.hpp>
 
 #include "widgets/chess/LinksDialog.hpp"
@@ -23,16 +24,14 @@ LinksDialog::LinksDialog():
 void LinksDialog::add_board(const Board& board) {
     url::StringNode* board_node = tApp->path().board();
     board_node->set_string(board.to_string());
-    add_url(tApp->makeAbsoluteUrl(board_node->full_path()),
-            tr("tc.common.Board"));
+    add_url(board_node->full_path(), tr("tc.common.Board"));
     // TODO bit.ly
 }
 
 void LinksDialog::add_moves(const Moves& moves) {
     url::StringNode* moves_node = tApp->path().moves();
     moves_node->set_string(moves.to_string());
-    add_url(tApp->makeAbsoluteUrl(moves_node->full_path()),
-            tr("tc.common.Moves"));
+    add_url(moves_node->full_path(), tr("tc.common.Moves"));
     // TODO bit.ly
 }
 
@@ -45,8 +44,10 @@ void LinksDialog::add_game(int game) {
     f_->item(tr("tc.common.Game"), "", t, t);
 }
 
-void LinksDialog::add_url(const std::string& url, const Wt::WString& name) {
-    Wt::WLineEdit* l = new Wt::WLineEdit(url);
+void LinksDialog::add_url(const std::string& path, const Wt::WString& name) {
+    std::string url = tApp->makeAbsoluteUrl(path);
+    Wt::WContainerWidget* c = new Wt::WContainerWidget();
+    Wt::WLineEdit* l = new Wt::WLineEdit(url, c);
     l->setTextSize(40);
     l->focussed().connect("function(o, e) {"
                           "$(o).select();"
@@ -57,7 +58,10 @@ void LinksDialog::add_url(const std::string& url, const Wt::WString& name) {
                           "return false;"
                           "});"
                           "}");
-    f_->item(name, "", l, l);
+    Wt::WAnchor* open = new Wt::WAnchor(c);
+    open->setText(tr("tc.common.Open"));
+    open->setRefInternalPath(path);
+    f_->item(name, "", l, c);
 }
 
 }

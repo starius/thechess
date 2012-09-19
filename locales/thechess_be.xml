@@ -39,6 +39,7 @@
     <message id='tc.common.not_started'>неначатые</message>
     <message id="tc.common.number">№</message>
     <message id="tc.common.Only_my">Толькі мае</message>
+    <message id='tc.common.Open'>Открыть</message>
     <message id="tc.common.Refresh">Аднавіць</message>
     <message id="tc.common.Reset">Скід</message>
     <message id="tc.common.Save">Захаваць</message>
