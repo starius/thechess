@@ -313,6 +313,7 @@ private:
             his_stat = user_->games_stat();
             his_stat.draw(&my_stat);
             int if_draw = my_stat.elo() - my_orig.elo();
+            new Wt::WBreak(this);
             new Wt::WText(tr("tc.user.Games_stat_changes")
                           .arg(if_win).arg(if_fail).arg(if_draw), this);
         }
