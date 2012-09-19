@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include <boost/format.hpp>
 
 #include <Wt/WAbstractTableModel>
@@ -281,6 +282,14 @@ public:
         board_widget_->set_links_handler(links_handler);
     }
 
+    // -1 means start position
+    void goto_move(int n = -1) {
+        n = std::min(n, cached_moves_.size() - 1);
+        current_move_ = n;
+        move_select();
+        history_select();
+    }
+
 private:
     BoardWidget* board_widget_;
     MovesModel* moves_model_;
@@ -361,13 +370,6 @@ private:
             current_move_ = n;
             move_select();
         }
-    }
-
-    // -1 means start position
-    void goto_move(int n = -1) {
-        current_move_ = n;
-        move_select();
-        history_select();
     }
 
     void goto_first() {
@@ -470,6 +472,10 @@ void MovesWidget::set_active(bool active) {
 
 int MovesWidget::current_move() const {
     return impl_->current_move();
+}
+
+void MovesWidget::set_half_move(int half_move_index) {
+    impl_->goto_move(half_move_index);
 }
 
 bool MovesWidget::move_confirmation() const {

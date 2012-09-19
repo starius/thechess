@@ -28,6 +28,9 @@ public:
     /** Add links to moves */
     void add_moves(const Moves& moves);
 
+    /** Add link to game/move */
+    void add_game_move(int game, int move_n);
+
     /** Add links to game */
     void add_game(int game);
 

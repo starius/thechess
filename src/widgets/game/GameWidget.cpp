@@ -217,6 +217,10 @@ public:
         print_comment();
     }
 
+    void set_half_move(int half_move_index) {
+        moves_widget_->set_half_move(half_move_index);
+    }
+
 private:
     GamePtr game_;
     MovesWidget* moves_widget_;
@@ -583,6 +587,8 @@ private:
     void links(LinksDialog* dialog) {
         dbo::Transaction t(tApp->session());
         dialog->add_moves(game_->moves());
+        int move_n = Moves::move_number(moves_widget_->current_move());
+        dialog->add_game_move(game_.id(), move_n);
         dialog->add_game(game_.id());
     }
 };
@@ -591,6 +597,10 @@ GameWidget::GameWidget(const GamePtr& game, Wt::WContainerWidget* parent) :
     WCompositeWidget(parent) {
     impl_ = new GameWidgetImpl(game);
     setImplementation(impl_);
+}
+
+void GameWidget::set_half_move(int half_move_index) {
+    impl_->set_half_move(half_move_index);
 }
 
 }

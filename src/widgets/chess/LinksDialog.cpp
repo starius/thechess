@@ -35,6 +35,14 @@ void LinksDialog::add_moves(const Moves& moves) {
     // TODO bit.ly
 }
 
+void LinksDialog::add_game_move(int game, int move_n) {
+    tApp->path().game_view()->set_integer_value(game);
+    url::IntegerNode* move_node = tApp->path().game_move_view();
+    move_node->set_integer_value(move_n);
+    add_url(move_node->full_path(),
+            tr("tc.common.Game") + " + " + tr("tc.common.Moves"));
+}
+
 void LinksDialog::add_game(int game) {
     Wt::WString format("/thechess.js?type=game&game={1}&div=thechess_game_{1}");
     std::string url = tApp->makeAbsoluteUrl(format.arg(game).toUTF8());

@@ -19,6 +19,10 @@ namespace thechess {
 class GameWidget : public Wt::WCompositeWidget {
 public:
     GameWidget(const GamePtr& game, Wt::WContainerWidget* parent = 0);
+
+    /* Show half-move with given index */
+    void set_half_move(int half_move_index);
+
 private:
     class GameWidgetImpl;
 

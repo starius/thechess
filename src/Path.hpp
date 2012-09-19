@@ -78,6 +78,11 @@ public:
         return game_view_;
     }
 
+    /** View the particular move of game */
+    url::IntegerNode* game_move_view() const {
+        return game_move_view_;
+    }
+
     /** Create new game */
     url::PredefinedNode* game_new() const {
         return game_new_;
@@ -233,6 +238,7 @@ private:
     url::PredefinedNode* settings_page_;
     url::PredefinedNode* game_list_;
     url::IntegerNode* game_view_;
+    url::IntegerNode* game_move_view_;
     url::PredefinedNode* game_new_;
     url::PredefinedNode* gp_list_;
     url::IntegerNode* gp_view_;
@@ -268,6 +274,7 @@ private:
     void open_games_of_user();
     void open_competitions_of_user();
     void open_game();
+    void open_game_move();
     void open_gp();
     void open_competition();
     void open_board();

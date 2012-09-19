@@ -42,6 +42,9 @@
 #include "widgets/comment/ForumCommentWidget.hpp"
 #include "widgets/comment/ForumEdit.hpp"
 #include "widgets/comment/ChatCommentWidget.hpp"
+#include "chess/Moves.hpp"
+#include "chess/Board.hpp"
+#include "chess/Piece.hpp"
 #include "log.hpp"
 
 namespace thechess {
@@ -176,6 +179,13 @@ void MainWidget::update_password() {
 
 void MainWidget::game_view(const GamePtr& game) {
     set_contents(new GameWidget(game));
+    wApp->setTitle(tr("tc.title.GameWidget").arg(game.id()));
+}
+
+void MainWidget::game_view(const GamePtr& game, int move_number) {
+    GameWidget* widget = new GameWidget(game);
+    widget->set_half_move(Moves::half_move_index(move_number, Piece::WHITE));
+    set_contents(widget);
     wApp->setTitle(tr("tc.title.GameWidget").arg(game.id()));
 }
 

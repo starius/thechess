@@ -73,6 +73,9 @@ public:
     /** View the game */
     void game_view(const GamePtr& game);
 
+    /** View the game */
+    void game_view(const GamePtr& game, int move_number);
+
     /** Create new game */
     void game_new();
 

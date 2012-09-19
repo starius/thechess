@@ -28,6 +28,8 @@ Path::Path(Wt::WObject* parent):
     settings_page_ = new PredefinedNode("settings", user_list_);
     game_list_ = new PredefinedNode("game", this);
     game_view_ = new IntegerNode(game_list_);
+    PredefinedNode* game_moves = new PredefinedNode("moves", game_view_);
+    game_move_view_ = new IntegerNode(game_moves);
     game_new_ = new PredefinedNode("new", game_list_);
     gp_list_ = new PredefinedNode("parameters", game_list_);
     gp_view_ = new IntegerNode(gp_list_);
@@ -78,6 +80,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(settings_page_, boost::bind(&MainWidget::settings_page, mw));
     connect(game_list_, boost::bind(&MainWidget::game_list, mw));
     connect(game_view_, boost::bind(&Path::open_game, this));
+    connect(game_move_view_, boost::bind(&Path::open_game_move, this));
     connect(game_new_, boost::bind(&MainWidget::game_new, mw));
     connect(gp_list_, boost::bind(&MainWidget::gp_list, mw));
     connect(gp_view_, boost::bind(&Path::open_gp, this));
@@ -151,6 +154,17 @@ void Path::open_game() {
     dbo::Transaction t(tApp->session());
     try {
         main_widget_->game_view(tApp->session().load<Game>(id));
+    } catch (dbo::ObjectNotFoundException)
+    { }
+}
+
+void Path::open_game_move() {
+    BOOST_ASSERT(main_widget_);
+    long long id = game_view_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        int move_n = game_move_view_->integer();
+        main_widget_->game_view(tApp->session().load<Game>(id), move_n);
     } catch (dbo::ObjectNotFoundException)
     { }
 }

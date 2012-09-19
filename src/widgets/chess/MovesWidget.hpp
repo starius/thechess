@@ -35,6 +35,9 @@ public:
     Wt::Signal<HalfMove>& half_move();
     int current_move() const;
 
+    /* Show half-move with given index */
+    void set_half_move(int half_move_index);
+
     void add_move(const HalfMove& half_move);
     void bottom_set(Piece::Color bottom);
     void reset();
