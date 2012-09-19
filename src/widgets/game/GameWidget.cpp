@@ -299,8 +299,11 @@ private:
             UserPtr competitor = game_->other_user(tApp->user());
             if (game_->state() == Game::PROPOSED &&
                     game_->has_competition_confirmed(competitor)) {
-                new Wt::WText(tr("tc.game.Competition_other_proposed")
-                              .arg(competitor->safe_username()), manager_);
+                Wt::WText* p;
+                p = new Wt::WText(tr("tc.game.Competition_other_proposed")
+                                  .arg(competitor->safe_username()));
+                manager_->addWidget(p);
+                p->setStyleClass("thechess-proposal");
                 new Wt::WBreak(manager_);
             }
             if (game_->can_competition_confirm(tApp->user())) {
@@ -354,10 +357,12 @@ private:
                                      this, pause_duration));
         } else if (game_->is_pause_proposed()) {
             new Wt::WBreak(manager_);
-            new Wt::WText(tr("tc.game.Pause_proposal")
-                          .arg(game_->pause_proposer()->safe_username())
-                          .arg(td2str(game_->pause_proposed_td())),
-                          manager_);
+            Wt::WText* p;
+            p = new Wt::WText(tr("tc.game.Pause_proposal")
+                              .arg(game_->pause_proposer()->safe_username())
+                              .arg(td2str(game_->pause_proposed_td())),
+                              manager_);
+            p->setStyleClass("thechess-proposal");
             if (game_->can_pause_agree(tApp->user())) {
                 but<&Game::pause_agree>("tc.common.Agree");
             }
@@ -371,11 +376,13 @@ private:
         if (game_->is_mistake_proposed()) {
             new Wt::WBreak(manager_);
             bool w = Moves::order(game_->mistake_move()) == Piece::WHITE;
-            new Wt::WText(tr("tc.game.Mistake_proposal")
-                          .arg(game_->mistake_proposer()->safe_username())
-                          .arg(Moves::move_number(game_->mistake_move()))
-                          .arg(tr(w ? "tc.game.of_white" : "tc.game.of_black")),
-                          manager_);
+            Wt::WText* p;
+            p = new Wt::WText(tr("tc.game.Mistake_proposal")
+                              .arg(game_->mistake_proposer()->safe_username())
+                              .arg(Moves::move_number(game_->mistake_move()))
+                              .arg(tr(w ? "tc.game.of_white" : "tc.game.of_black")),
+                              manager_);
+            p->setStyleClass("thechess-proposal");
             if (game_->can_mistake_agree(tApp->user())) {
                 but<&Game::mistake_agree>("tc.common.Agree");
             }
@@ -395,9 +402,11 @@ private:
     void print_draw_buttons() {
         new Wt::WBreak(manager_);
         if (game_->is_draw_proposed()) {
-            new Wt::WText(tr("tc.game.Draw_proposal")
-                          .arg(game_->draw_proposer()->safe_username()),
-                          manager_);
+            Wt::WText* p;
+            p = new Wt::WText(tr("tc.game.Draw_proposal")
+                              .arg(game_->draw_proposer()->safe_username()),
+                              manager_);
+            p->setStyleClass("thechess-proposal");
             if (game_->can_draw_agree(tApp->user())) {
                 but<&Game::draw_agree>("tc.common.Agree");
             }

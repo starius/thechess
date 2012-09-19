@@ -116,6 +116,10 @@ a.thechess-proposed {
     color: #00008B; /* darkBlue */
 }
 
+.thechess-proposal {
+    background-color: yellow;
+}
+
 .thechess-datetime {
     color: purple !important;
     font-style: italic !important;
