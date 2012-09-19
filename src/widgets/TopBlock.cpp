@@ -17,7 +17,8 @@ TopBlock::TopBlock(Wt::WContainerWidget* parent):
     if (comment_id > 0) {
         dbo::Transaction t(tApp->session());
         try {
-            CommentPtr comment = tApp->session().load<Comment>(comment_id);
+            CommentPtr comment = tApp->session().load<Comment>(comment_id,
+                                 /* forceReread */ true);
             setText(comment->text());
         } catch (...)
         { }

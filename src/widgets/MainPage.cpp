@@ -23,7 +23,8 @@ MainPage::MainPage(Wt::WContainerWidget* parent):
     int comment_id = Options::instance()->main_page_content_id();
     if (comment_id > 0) {
         try {
-            CommentPtr comment = tApp->session().load<Comment>(comment_id);
+            CommentPtr comment = tApp->session().load<Comment>(comment_id,
+                                 /* forceReread */ true);
             setTemplateText(comment->text());
         } catch (...)
         { }
