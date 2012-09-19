@@ -431,7 +431,7 @@
     <message id="tc.user.Virtuals_list">Перелік клонів</message>
     <message id="tc.user.virtuals_viewer">дивитись клонів</message>
     <message id="tc.user.Competitions_stat">
-        <h2>Турнірна статистика:</h2>
+        <h2>Статистика турнірів:</h2>
     </message>
     <message id="tc.user.Filter_min_online">
         Мінімальний час знаходження користувача на сайті,

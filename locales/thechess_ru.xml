@@ -438,7 +438,7 @@
     <message id='tc.user.Virtuals_list'>Список клонов</message>
     <message id='tc.user.virtuals_viewer'>смотреть клонов</message>
     <message id='tc.user.Competitions_stat'>
-        <h2>Турнирная статистика:</h2>
+        <h2>Статистика турниров:</h2>
     </message>
     <message id='tc.user.Filter_min_online'>
         Минимальное время, проведенное пользователем на сайте,
