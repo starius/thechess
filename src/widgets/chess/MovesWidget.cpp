@@ -285,6 +285,7 @@ public:
     // -1 means start position
     void goto_move(int n = -1) {
         n = std::min(n, cached_moves_.size() - 1);
+        n = std::max(n, -1);
         current_move_ = n;
         move_select();
         history_select();
