@@ -71,7 +71,7 @@ void GameCreateWidget::button_handler() {
         return;
     }
     tApp->user().reread();
-    if (!tApp->user() || tApp->user()->has_permission(GAME_CREATOR)) {
+    if (!tApp->user() || !tApp->user()->has_permission(GAME_CREATOR)) {
         return;
     }
     error_message_->setText("");
