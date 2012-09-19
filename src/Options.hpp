@@ -107,6 +107,14 @@ public:
         return user_agreement_id_;
     }
 
+    /** Max time non-competition game can be proposed or confirmed.
+    After that time game will be cancelled.
+    When game is confirmed, thislimit is "renewed".
+    */
+    const Td& game_max_preactive() const {
+        return game_max_preactive_;
+    }
+
     /** Return options used in current application */
     static Options* instance();
 
@@ -128,6 +136,7 @@ private:
     int champion_id_;
     int best_players_shown_;
     int user_agreement_id_;
+    Td game_max_preactive_;
 
     bool read_int_value(const std::string& name, int& value);
 };

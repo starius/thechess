@@ -32,7 +32,8 @@ Options::Options(const Wt::WServer& server):
     pgn_site_(config::defaults::PGN_SITE),
     champion_id_(config::defaults::CHAMPION_ID),
     best_players_shown_(config::defaults::BEST_PLAYERS_SHOWN),
-    user_agreement_id_(config::defaults::USER_AGREEMENT_ID) {
+    user_agreement_id_(config::defaults::USER_AGREEMENT_ID),
+    game_max_preactive_(config::defaults::GAME_MAX_PREACTIVE) {
     std::string value;
     if (server.readConfigurationProperty("database_type", value)) {
         BOOST_ASSERT(value == "postgres" ||
@@ -51,16 +52,18 @@ Options::Options(const Wt::WServer& server):
     read_int_value("main_page_content_id", main_page_content_id_);
     read_int_value("footer_content_id", footer_content_id_);
     read_int_value("top_logged_in_content_id", top_logged_in_content_id_);
-    int away_timeout_seconds = -1;
-    read_int_value("away_timeout_seconds", away_timeout_seconds);
-    if (away_timeout_seconds) {
-        away_timeout_ = away_timeout_seconds * SECOND;
+    int seconds = -1;
+    if (read_int_value("away_timeout_seconds", seconds)) {
+        away_timeout_ = seconds * SECOND;
     }
     read_int_value("default_settings", (int&)(default_settings_));
     server.readConfigurationProperty("pgn_site", pgn_site_);
     read_int_value("champion_id", champion_id_);
     read_int_value("best_players_shown", best_players_shown_);
     read_int_value("user_agreement_id", user_agreement_id_);
+    if (read_int_value("game_max_preactive_seconds", seconds)) {
+        game_max_preactive_ = seconds * SECOND;
+    }
 }
 
 Options* Options::instance() {

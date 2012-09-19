@@ -147,6 +147,15 @@ UserPtr Game::other_user(const UserPtr& user) const {
 }
 
 void Game::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
+    Td game_max_preactive = Options::instance()->game_max_preactive();
+    if (state() == PROPOSED && !competition() &&
+            now() - created() > game_max_preactive) {
+        finish(CANCELLED);
+    }
+    if (state() == CONFIRMED && !competition() &&
+            now() - confirmed_ > game_max_preactive) {
+        finish(CANCELLED);
+    }
     if (state() == PROPOSED &&
             competition() && competition()->type() == STAGED &&
             now() - created() > competition()->cp()->relax_time()) {
@@ -221,11 +230,16 @@ Td Game::limit_std_now(const UserPtr& user) const {
 }
 
 Wt::WDateTime Game::next_check() const {
+    Td game_max_preactive = Options::instance()->game_max_preactive();
     Wt::WDateTime result;
     if (state() == ACTIVE) {
         result = lastmove() + gp_->limit_std() +
                  std::min(limit_private(Piece::WHITE),
                           limit_private(Piece::BLACK));
+    } else if (state() == PROPOSED && !competition()) {
+        result = created() + game_max_preactive;
+    } else if (state() == CONFIRMED && !competition()) {
+        result = confirmed_ + game_max_preactive;
     } else if (state() == PROPOSED &&
                competition() && competition()->type() == STAGED) {
         result = created() + competition()->cp()->relax_time();

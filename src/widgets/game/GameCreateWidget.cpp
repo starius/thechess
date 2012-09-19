@@ -89,6 +89,7 @@ void GameCreateWidget::button_handler() {
     }
     tApp->path().game_view()->set_integer_value(game.id());
     tApp->path().game_view()->open(/* change path */ true);
+    tApp->server().planning().add(new Object(GAME, game.id()), now());
 }
 
 Piece::Color GameCreateWidget::selected_color() const {
