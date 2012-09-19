@@ -581,7 +581,7 @@ TheChess.
     <message id='tc.competition.Type_team'>Team</message>
     <message id='tc.competition.user_pair'>{1} - {2}</message>
     <message id='tc.competition.Users'>Number of users</message>
-    <message id='tc.competition.Virtuals_allowed_by'>Virtuals_allowed_by&nbsp;</message>
+    <message id='tc.competition.Virtuals_allowed_by'>Virtuals allowed by&nbsp;</message>
     <message id='tc.competition.Winner'>Winner</message>
     <message id='tc.competition.Winners'>Winners</message>
     <message id='tc.competition.Virtuals'>
