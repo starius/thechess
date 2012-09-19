@@ -414,6 +414,7 @@ private:
     void action() {
         dbo::Transaction t(tApp->session());
         c_.reread();
+        tApp->user().reread();
         (c_.modify()->*method)(tApp->user());
         if (method == &Competition::cancel) {
             admin_log("Cancel " + comp_a(c_.id()));
