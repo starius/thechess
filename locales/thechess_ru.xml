@@ -420,6 +420,7 @@
     <message id='tc.user.Registration_date'>Дата регистрации: {1}</message>
     <message id='tc.user.regular_rights_changer'>изменять обычные права</message>
     <message id='tc.user.Removed_message'><b>[Удаленный пользователь]</b></message>
+    <message id='tc.user.Set_motd'>Выставить номер комментария, показанного сверху</message>
     <message id='tc.user.Settings'>Настройки</message>
     <message id='tc.user.Start_game'>Начать игру</message>
     <message id='tc.user.super_rights_changer'>изменять особые права</message>

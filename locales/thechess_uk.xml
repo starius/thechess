@@ -413,6 +413,7 @@
     <message id="tc.user.Registration_date">Дата реєстрації: {1}</message>
     <message id="tc.user.regular_rights_changer">змінювати звичайні права</message>
     <message id="tc.user.Removed_message"><b>[Віддаленний користувач]</b></message>
+    <message id='tc.user.Set_motd'>Выставить номер комментария, показанного сверху</message>
     <message id="tc.user.Settings">Налаштування</message>
     <message id="tc.user.Start_game">Розпочати гру</message>
     <message id="tc.user.super_rights_changer">змінювати особливі права</message>

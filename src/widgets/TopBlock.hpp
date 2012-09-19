@@ -11,13 +11,21 @@
 #include <Wt/WGlobal>
 #include <Wt/WText>
 
+#include "notify.hpp"
+
 namespace thechess {
 
 /** Widget shown right to AuthWidget when user ias logged in */
-class TopBlock : public Wt::WText {
+class TopBlock : public Wt::WText, public Notifiable {
 public:
     /** Constructor */
     TopBlock(Wt::WContainerWidget* parent = 0);
+
+    /** Update contents */
+    void notify(EventPtr);
+
+private:
+    void update_contents();
 };
 
 }

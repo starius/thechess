@@ -16,12 +16,14 @@
 #include <Wt/WCheckBox>
 #include <Wt/WBreak>
 #include <Wt/Wc/TimeDurationWidget.hpp>
+#include <Wt/Wc/util.hpp>
 
 #include "widgets/user/SettingsWidget.hpp"
 #include "widgets/user/ClassificationWidget.hpp"
 #include "widgets/Header.hpp"
 #include "Application.hpp"
 #include "Server.hpp"
+#include "Options.hpp"
 #include "model/all.hpp"
 #include "utils/text_edit.hpp"
 
@@ -49,11 +51,13 @@ public:
             print_vacation();
         }
         //print_recalculation();
+        print_set_motd();
     }
 
 private:
     ClassificationWidget* class_;
     Wt::WLineEdit* email_;
+    Wt::WLineEdit* motd_;
     Wt::WCheckBox* public_email_;
     Wt::WCheckBox* names_in_mymenu_;
     Wt::WTextEdit* description_;
@@ -138,6 +142,17 @@ private:
             Wt::WPushButton* b;
             b = new Wt::WPushButton(tr("tc.user.Recalculation"), this);
             b->clicked().connect(this, &SettingsWidgetImpl::recalculation);
+        }
+    }
+
+    void print_set_motd() {
+        if (tApp->user()->has_permission(USER_REMOVER)) {
+            new Wt::WBreak(this);
+            int id = Options::instance()->top_logged_in_content_id();
+            motd_ = new Wt::WLineEdit(TO_S(id), this);
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(tr("tc.user.Set_motd"), this);
+            b->clicked().connect(this, &SettingsWidgetImpl::set_motd);
         }
     }
 
@@ -285,6 +300,14 @@ private:
                 comment.modify()->set_index();
                 comment.purge();
             }
+        }
+    }
+
+    void set_motd() {
+        if (tApp->user() && tApp->user()->has_permission(USER_REMOVER)) {
+            int id = Wt::Wc::str2int(motd_->text().toUTF8());
+            Options::instance()->set_top_logged_in_content_id(id);
+            tNot->emit("motd");
         }
     }
 };

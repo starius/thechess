@@ -77,6 +77,11 @@ public:
         return top_logged_in_content_id_;
     }
 
+    /** Set Id of comment, which text is shown right to AuthWidget */
+    void set_top_logged_in_content_id(int id) {
+        top_logged_in_content_id_ = id;
+    }
+
     /** Time of inactivity after which user is considered offline */
     const Td& away_timeout() const {
         return away_timeout_;
