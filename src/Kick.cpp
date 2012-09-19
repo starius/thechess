@@ -15,7 +15,7 @@
 namespace thechess {
 
 Kick::Kick():
-    Notifiable(Object(USER, tApp->user().id()), tNot)
+    Notifiable("kick-" + TO_S(tApp->user().id()), tNot)
 { }
 
 static void logout_app() {
@@ -24,13 +24,7 @@ static void logout_app() {
 }
 
 void Kick::notify(EventPtr) {
-    if (!tApp->user()) {
-        return;
-    }
-    dbo::Transaction t(tApp->session());
-    tApp->user().reread();
-    tApp->user()->auth_info().reread();
-    if (!tApp->user() || tApp->user()->removed()) {
+    if (tApp->user()) {
         Wt::Wc::bound_post(logout_app)();
     }
 }
