@@ -57,7 +57,7 @@ void User::set_email(const std::string& email) {
 }
 
 bool User::removed() const {
-    return rights() == NONE;
+    return rights_ == NONE;
 }
 
 void User::set_removed(bool removed) {
