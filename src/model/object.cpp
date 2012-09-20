@@ -114,8 +114,16 @@ void t_task(TaskPtr task, const Wt::WDateTime& when) {
     t_planning()->add(task, when);
 }
 
+void t_task(Task* task, const Wt::WDateTime& when) {
+    t_task(TaskPtr(task), now());
+}
+
 void t_task(TaskPtr task) {
     t_task(task, now());
+}
+
+void t_task(Task* task) {
+    t_task(TaskPtr(task), now());
 }
 
 void t_task(ObjectType type, int id, const Wt::WDateTime& when) {

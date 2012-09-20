@@ -131,8 +131,14 @@ void t_emit(const std::string& key);
 /** Add task to planning server (when = now()) */
 void t_task(TaskPtr task);
 
+/** Add task to planning server (when = now()) */
+void t_task(Task* task);
+
 /** Add task to planning server */
 void t_task(TaskPtr task, const Wt::WDateTime& when);
+
+/** Add task to planning server */
+void t_task(Task* task, const Wt::WDateTime& when);
 
 /** Add task to planning server (when = now()) */
 void t_task(ObjectType type, int id);
