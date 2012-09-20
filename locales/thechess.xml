@@ -773,7 +773,7 @@ TheChess.
     <message id='tc.title.CommentList_my_messages'>My messages « TheChess</message>
     <message id='tc.title.GameCreateWidget'>Create « Game « TheChess</message>
     <message id='tc.title.GameListWidget'>List « Game « TheChess</message>
-    <message id='tc.title.GameWidget'>#{1} « Game « TheChess</message>
+    <message id='tc.title.GameWidget'>{1} « Game « TheChess</message>
     <message id='tc.title.IpBanList'>List of IP bans « TheChess</message>
     <message id='tc.title.MainPage'>TheChess</message>
     <message id='tc.title.MovesWidget'>Board « TheChess</message>
@@ -814,7 +814,7 @@ TheChess.
         With {1} « Competition « TheChess
     </message>
     <message id='tc.title.CompetitionWidget'>
-        #{1} « Competition « TheChess
+        {1} « Competition « TheChess
     </message>
     <message id='tc.title.GameListWidget_of'>
         With {1} « Game « TheChess

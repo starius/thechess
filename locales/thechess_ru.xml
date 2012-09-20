@@ -294,7 +294,7 @@
     <message id='tc.title.CommentList_my_messages'>Мои сообщения « TheChess</message>
     <message id='tc.title.GameCreateWidget'>Create « Игра « TheChess</message>
     <message id='tc.title.GameListWidget'>Список « Игра « TheChess</message>
-    <message id='tc.title.GameWidget'>№{1} « Игра « TheChess</message>
+    <message id='tc.title.GameWidget'>{1} « Игра « TheChess</message>
     <message id='tc.title.IpBanList'>Список банов по IP « TheChess</message>
     <message id='tc.title.MainPage'>TheChess</message>
     <message id='tc.title.MovesWidget'>Доска « TheChess</message>
@@ -335,7 +335,7 @@
         С {1} « Турнир « TheChess
     </message>
     <message id='tc.title.CompetitionWidget'>
-        №{1} « Турнир « TheChess
+        {1} « Турнир « TheChess
     </message>
     <message id='tc.title.GameListWidget_of'>
         С {1} « Игра « TheChess

@@ -179,7 +179,11 @@ void MainWidget::update_password() {
 
 void MainWidget::game_view(const GamePtr& game) {
     set_contents(new GameWidget(game));
-    wApp->setTitle(tr("tc.title.GameWidget").arg(game.id()));
+    if (game->name().empty()) {
+        wApp->setTitle(tr("tc.title.GameWidget").arg(game.id()));
+    } else {
+        wApp->setTitle(tr("tc.title.GameWidget").arg(game->name()));
+    }
 }
 
 void MainWidget::game_view(const GamePtr& game, int move_number) {
@@ -209,9 +213,13 @@ void MainWidget::gp_view(const GPPtr& gp) {
     wApp->setTitle(tr("tc.title.GPWidget").arg(gp.id()));
 }
 
-void MainWidget::competition_view(const CompetitionPtr& competition) {
-    set_contents(new CompetitionWidget(competition));
-    wApp->setTitle(tr("tc.title.CompetitionWidget").arg(competition.id()));
+void MainWidget::competition_view(const CompetitionPtr& c) {
+    set_contents(new CompetitionWidget(c));
+    if (c->name().empty()) {
+        wApp->setTitle(tr("tc.title.CompetitionWidget").arg(c.id()));
+    } else {
+        wApp->setTitle(tr("tc.title.CompetitionWidget").arg(c->name()));
+    }
 }
 
 void MainWidget::competition_list() {
