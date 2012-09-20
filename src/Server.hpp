@@ -39,16 +39,24 @@ public:
     Server(int argc, char** argv);
 
     /** Get application options */
-    const Options& options() const;
+    const Options& options() const {
+        return options_;
+    }
 
     /** Get application options */
-    Options& options();
+    Options& options() {
+        return options_;
+    }
 
     /** Get sql connection pool */
-    dbo::FixedSqlConnectionPool& pool();
+    dbo::FixedSqlConnectionPool& pool() {
+        return pool_;
+    }
 
     /** Get notification server */
-    Notifier& notifier();
+    Notifier& notifier() {
+        return notifier_;
+    }
 
     /** Get planning server */
     Planning& planning() {

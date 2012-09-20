@@ -67,22 +67,6 @@ Server::Server(int argc, char** argv):
     session.reconsider(*this);
 }
 
-const Options& Server::options() const {
-    return options_;
-}
-
-Options& Server::options() {
-    return options_;
-}
-
-dbo::FixedSqlConnectionPool& Server::pool() {
-    return pool_;
-}
-
-Notifier& Server::notifier() {
-    return notifier_;
-}
-
 Server* Server::instance() {
     return DOWNCAST<Server*>(WServer::instance());
 }
