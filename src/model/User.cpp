@@ -15,6 +15,7 @@
 #include "config.hpp"
 #include "Application.hpp" // FIXME
 #include "Options.hpp" // FIXME
+#include "Planning.hpp" // FIXME
 
 DBO_INSTANTIATE_TEMPLATES(thechess::User);
 
@@ -261,6 +262,8 @@ dbo::Query<GamePtr> User::games() const {
 void User::login() {
     if (sessions_ == 0) {
         last_enter_ = now();
+        // FIXME use notification instead
+        Planning::instance()->add(new Object(USER, id()), now());
     }
     sessions_ += 1;
     check_vacation();
@@ -273,6 +276,8 @@ void User::logout() {
     }
     if (sessions_ == 0) {
         online_time_ += now() - last_enter_;
+        // FIXME use notification instead
+        Planning::instance()->add(new Object(USER, id()), now());
     }
 }
 
