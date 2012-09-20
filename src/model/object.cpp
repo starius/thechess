@@ -29,23 +29,11 @@ Td rand_td(const std::pair<Td, Td>& range) {
     return rand_range(range.first, range.second);
 }
 
-void Object::process(TaskPtr task, Planning*) const {
-    std::cerr << "Check object: " << key() << std::endl;
+void TryAgainTask::process(TaskPtr task, Planning* server) const {
     Session session(Server::instance()->pool());
     try {
         dbo::Transaction t(session);
-        if (type == GAME) {
-            GamePtr game = session.load<Game>(id, /* reread */ true);
-            game.modify()->check(task);
-        }
-        if (type == COMPETITION) {
-            CompetitionPtr c = session.load<Competition>(id, /* reread */ true);
-            c.modify()->check(task);
-        }
-        if (type == USER) {
-            UserPtr user = session.load<User>(id, /* reread */ true);
-            user.modify()->check(task);
-        }
+        process_impl(task, session);
         t.commit();
     } catch (dbo::ObjectNotFoundException e) {
         std::cerr << e.what() << std::endl;
@@ -59,6 +47,26 @@ void Object::process(TaskPtr task, Planning*) const {
         t_task(task, now() + delay);
     } catch (...)
     { }
+}
+
+std::string TryAgainTask::key() const {
+    return "";
+}
+
+void Object::process_impl(TaskPtr task, Session& session) const {
+    std::cerr << "Check object: " << key() << std::endl;
+    if (type == GAME) {
+        GamePtr game = session.load<Game>(id, /* reread */ true);
+        game.modify()->check(task);
+    }
+    if (type == COMPETITION) {
+        CompetitionPtr c = session.load<Competition>(id, /* reread */ true);
+        c.modify()->check(task);
+    }
+    if (type == USER) {
+        UserPtr user = session.load<User>(id, /* reread */ true);
+        user.modify()->check(task);
+    }
 }
 
 std::string Object::key() const {

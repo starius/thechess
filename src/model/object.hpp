@@ -16,6 +16,7 @@
 #include <Wt/Wc/Planning.hpp>
 
 #include "model/global.hpp"
+#include "thechess-global.hpp"
 
 namespace dbo = Wt::Dbo;
 
@@ -39,11 +40,31 @@ typedef Wt::Wc::notify::Task Task;
 /** Shared pointer to Task */
 typedef Wt::Wc::notify::TaskPtr TaskPtr;
 
+/** Task which will re-add itself to planning server on exception thrown */
+struct TryAgainTask : public Task {
+    /** Apply the action.
+    Calls process_impl(task).
+    On exception (except non-found and unknown) re-adds itself to planning
+    in random duration.
+    */
+    void process(TaskPtr task, Planning* server) const;
+
+    /** Get event key (dummy) */
+    std::string key() const;
+
+    /** Apply the action (implementation).
+    This method could throw exceptions.
+    Use session passed acess database objects.
+    Transaction is already opened.
+    */
+    virtual void process_impl(TaskPtr task, Session& session) const = 0;
+};
+
 /** Struct referencing any instance of any changable model.
 
 \ingroup model
 */
-struct Object : public Task {
+struct Object : public TryAgainTask {
     /** Constructor */
     Object(ObjectType ot, int i);
 
@@ -59,7 +80,7 @@ struct Object : public Task {
     int user_id;
 
     /** Run checks for planned task */
-    void process(TaskPtr task, Planning* server) const;
+    void process_impl(TaskPtr task, Session& session) const;
 
     /** Get event key */
     std::string key() const;
