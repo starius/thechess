@@ -923,8 +923,20 @@ TheChess.
             <li>if case of draw: {3}</li>
         </ul>
     </message>
+    <message id='tc.user.Kicked_text'>
+        You were kicked by a moderator!
+        Have a minute thinking about the reasons and enter site again.
+    </message>
     <message id='tc.user.Online'>
         <font style="background:Lightsteelblue;">Online</font>
+    </message>
+    <message id='tc.user.Removed_text'>
+        You were removed by a moderator!
+        Probably you understand the reason why.
+        As a guest, you can view the site pages and maybe write
+        pre-moderated messages.
+        Contact moderators by e-mail for questions about recovery
+        of removed account.
     </message>
     <message id='tc.user.Terms_template'>
         By registering, you agree to ${a}
