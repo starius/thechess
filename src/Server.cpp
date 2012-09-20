@@ -49,6 +49,7 @@ Server::Server(int argc, char** argv):
     notifier_(this), planning_(&ioService()), pgn_(*this), all_pgn_(*this),
     swfstore_("application/x-shockwave-flash", swfstore),
     password_service_(auth_service_) {
+    notifier_.set_direct_to_this(this);
     planning_.set_delay(config::tracker::DELAY);
     planning_.set_notification_server(&notifier_);
     //addResource(&all_pgn_, "/pgn/all.pgn");

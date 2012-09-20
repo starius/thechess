@@ -9,6 +9,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 
+#include <Wt/WApplication>
+#include <Wt/WEnvironment>
 #include <Wt/Dbo/Transaction>
 #include <Wt/Wc/util.hpp>
 
@@ -112,6 +114,9 @@ Planning* t_planning() {
 
 void t_task(TaskPtr task, const Wt::WDateTime& when) {
     t_planning()->add(task, when);
+    if (wApp && !wApp->environment().ajax()) {
+        t_emit(task);
+    }
 }
 
 void t_task(Task* task, const Wt::WDateTime& when) {
