@@ -9,14 +9,13 @@
 
 #include "widgets/user/MessagesAnchor.hpp"
 #include "model/all.hpp"
-#include "notify.hpp"
 
 namespace thechess {
 
 class MessagesAnchorImpl : public Wt::WAnchor, public Notifiable {
 public:
     MessagesAnchorImpl():
-        Notifiable(NewMessage(tApp->user().id()), tNot) {
+        Notifiable(NewMessage(tApp->user().id())) {
         setText(tr("tc.menu.private_messages"));
         setLink(tApp->path().my_messages()->link());
         clicked().connect(this, &MessagesAnchorImpl::normal_style);

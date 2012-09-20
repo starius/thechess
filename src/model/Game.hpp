@@ -122,9 +122,9 @@ public:
      - \ref ACTIVE into \ref TIMEOUT, if time is over
 
     In the latter case, if the game is attributed to the competition,
-    the competition is added to \p planning.
+    the competition is added to planning server.
     */
-    void check(Wt::Wc::notify::TaskPtr task, Planning* planning);
+    void check(Wt::Wc::notify::TaskPtr task);
 
     /** Return the datetime of next expected check */
     Wt::WDateTime next_check() const;

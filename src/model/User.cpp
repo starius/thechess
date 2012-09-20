@@ -15,7 +15,6 @@
 #include "config.hpp"
 #include "Application.hpp" // FIXME
 #include "Options.hpp" // FIXME
-#include "Planning.hpp" // FIXME
 
 DBO_INSTANTIATE_TEMPLATES(thechess::User);
 
@@ -263,7 +262,7 @@ void User::login() {
     if (sessions_ == 0) {
         last_enter_ = now();
         // FIXME use notification instead
-        Planning::instance()->add(new Object(USER, id()), now());
+        t_task(USER, id());
     }
     sessions_ += 1;
     check_vacation();
@@ -277,7 +276,7 @@ void User::logout() {
     if (sessions_ == 0) {
         online_time_ += now() - last_enter_;
         // FIXME use notification instead
-        Planning::instance()->add(new Object(USER, id()), now());
+        t_task(USER, id());
     }
 }
 
@@ -443,10 +442,10 @@ bool User::can_send_message(const UserPtr& to) const {
            !is_blocked(self(), to);
 }
 
-void User::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
+void User::check(Wt::Wc::notify::TaskPtr task) {
     check_vacation();
     if (vacation_until_.isValid() && vacation_until_ > now()) {
-        planning->add(task, vacation_until_, false);
+        t_task(task, vacation_until_);
     }
 }
 

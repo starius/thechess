@@ -166,7 +166,7 @@ private:
             tApp->user().modify()->set_classification(class_->value());
         }
         t.commit();
-        tNot->emit(new Object(USER, tApp->user().id()));
+        t_emit(USER, tApp->user().id());
     }
 
     void save_email() {
@@ -211,7 +211,7 @@ private:
         Wt::WString description = patch_text_edit_text(description_->text());
         tApp->user().modify()->set_description(description);
         t.commit();
-        tNot->emit(new Object(USER, tApp->user().id()));
+        t_emit(USER, tApp->user().id());
     }
 
     void save_vacation() {
@@ -231,10 +231,10 @@ private:
         }
         t.commit();
         BOOST_FOREACH (int g_id, game_ids) {
-            tApp->server().planning().add(new Object(GAME, g_id), now());
+            t_task(GAME, g_id);
         }
         int id = tApp->user().id();
-        tApp->server().planning().add(new Object(USER, id), now());
+        t_task(USER, id);
     }
 
     void recalculation() {
@@ -307,7 +307,7 @@ private:
         if (tApp->user() && tApp->user()->has_permission(USER_REMOVER)) {
             int id = Wt::Wc::str2int(motd_->text().toUTF8());
             Options::instance()->set_top_logged_in_content_id(id);
-            tNot->emit("motd");
+            t_emit("motd");
         }
     }
 };

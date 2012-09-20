@@ -26,7 +26,6 @@
 #include "model/global.hpp"
 #include "Application.hpp"
 #include "utils/text_edit.hpp"
-#include "notify.hpp"
 
 namespace thechess {
 
@@ -48,7 +47,7 @@ class CommentList::CommentView : public Wt::WTableView, public Notifiable {
 public:
     CommentView(CommentModel* model, Wt::WContainerWidget* p = 0):
         Wt::WTableView(p),
-        Notifiable(Object(COMMENT, model->root().id()), tNot) {
+        Notifiable(Object(COMMENT, model->root().id())) {
         setModel(model);
         Comment::Type type = model->type();
         int comment_width = COMMENT_WIDTH - 40;
@@ -342,7 +341,7 @@ void CommentList::add_comment(const CommentPtr& parent) {
     if (type == Comment::FORUM_POST) {
         post_text_->setValueText("");
     }
-    tNot->emit(new Object(COMMENT, root.id()));
+    t_emit(COMMENT, root.id());
     if (!wApp->environment().ajax()) {
         comment_model()->reload();
     }

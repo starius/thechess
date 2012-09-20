@@ -17,7 +17,6 @@
 #include "widgets/game/MyGamesList.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
-#include "notify.hpp"
 
 namespace thechess {
 
@@ -30,7 +29,7 @@ class MyGamesListImp;
 class MyGameAnchor : public Wt::WAnchor, public Notifiable {
 public:
     MyGameAnchor(const GamePtr& game, MyGamesListImp* list):
-        Notifiable(Object(GAME, game.id()), tNot),
+        Notifiable(Object(GAME, game.id())),
         game_id_(game.id()), list_(list) {
         if (!User::has_s(SWITCH_NAMES_IN_MYMENU) ||
                 !game->other_user(tApp->user())) {
@@ -113,7 +112,7 @@ typedef std::map<int, MyGameAnchor*> Anchors;
 class MyGamesListImp : public Wt::WContainerWidget, public Notifiable {
 public:
     MyGamesListImp(const UserPtr& user):
-        Notifiable(Object(USER, user.id()), tNot),
+        Notifiable(Object(USER, user.id())),
         user_(user),
         last_clicked_(0) {
         sound_ = new Wt::WSound("/sound/glass.mp3", this);

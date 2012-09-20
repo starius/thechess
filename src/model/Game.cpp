@@ -17,7 +17,6 @@
 #include "chess/Board.hpp"
 #include "chess/CachedMoves.hpp"
 #include "log.hpp"
-#include "Planning.hpp"
 #include "Options.hpp"
 
 DBO_INSTANTIATE_TEMPLATES(thechess::Game);
@@ -146,7 +145,7 @@ UserPtr Game::other_user(const UserPtr& user) const {
     return user_of(Piece::other_color(color_of(user)));
 }
 
-void Game::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
+void Game::check(Wt::Wc::notify::TaskPtr task) {
     Td game_max_preactive = Options::instance()->game_max_preactive();
     if (state() == PROPOSED && !competition() &&
             now() - created() > game_max_preactive) {
@@ -174,10 +173,9 @@ void Game::check(Wt::Wc::notify::TaskPtr task, Planning* planning) {
         finish(TIMEOUT, winner);
     }
     if (is_ended() && competition()) {
-        Object* c = new Object(COMPETITION, competition().id());
-        planning->add(c, now(), false);
+        t_task(COMPETITION, competition().id());
     }
-    planning->add(task, next_check(), false);
+    t_task(task, next_check());
 }
 
 Td Game::limit_private(Piece::Color color) const {
@@ -547,8 +545,7 @@ void Game::take_vacation_pause(Td duration) {
         pause_until_ += addition;
         pause_proposed_td_ += addition;
     }
-    Planning::instance()->add(new Object(GAME, id()), now(),
-                              /* immediately */ false);
+    t_task(GAME, id());
 }
 
 bool Game::can_mistake_propose(const UserPtr& user) const {

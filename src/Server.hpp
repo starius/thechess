@@ -14,10 +14,9 @@
 #include <Wt/Auth/AuthService>
 #include <Wt/Auth/PasswordService>
 
-#include "notify.hpp"
 #include "Options.hpp"
 #include "Session.hpp"
-#include "Planning.hpp"
+#include "model/object.hpp"
 #include "widgets/game/PgnResource.hpp"
 
 namespace dbo = Wt::Dbo;
@@ -53,16 +52,6 @@ public:
         return pool_;
     }
 
-    /** Get notification server */
-    Notifier& notifier() {
-        return notifier_;
-    }
-
-    /** Get planning server */
-    Planning& planning() {
-        return planning_;
-    }
-
     /** Get authentication service */
     const Wt::Auth::AuthService& auth_service() const {
         return auth_service_;
@@ -89,6 +78,9 @@ private:
     Wt::Auth::PasswordService password_service_;
 
     void auth_init();
+
+    friend Notifier* t_notifier();
+    friend Planning* t_planning();
 };
 
 }

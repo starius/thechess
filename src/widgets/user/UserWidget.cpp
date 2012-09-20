@@ -29,7 +29,6 @@
 #include "Application.hpp"
 #include "model/all.hpp"
 #include "utils/time_intervals.hpp"
-#include "notify.hpp"
 #include "log.hpp"
 
 namespace thechess {
@@ -39,7 +38,7 @@ class UserWidget::UserWidgetImpl : public Wt::WContainerWidget,
 public:
     UserWidgetImpl(const UserPtr& user) :
         Wt::WContainerWidget(),
-        Notifiable(Object(USER, user.id()), tNot),
+        Notifiable(Object(USER, user.id())),
         user_(user) {
         Wt::WText* tmp;
         dbo::Transaction t(tApp->session());
@@ -212,7 +211,7 @@ private:
             admin_log("Discard vacation of " + user_a(user_.id()));
         }
         t.commit();
-        tNot->emit(new Object(USER, user_.id()));
+        t_emit(USER, user_.id());
     }
 
     void rating_changes() {
@@ -244,14 +243,14 @@ private:
             admin_log("Unremove user " + user_a(user_.id()));
         }
         t.commit();
-        tNot->emit(new Object(USER, user_.id()));
-        tNot->emit("kick-" + TO_S(user_.id()));
+        t_emit(USER, user_.id());
+        t_emit("kick-" + TO_S(user_.id()));
     }
 
     void kick() {
         dbo::Transaction t(tApp->session());
-        tNot->emit("kick-" + TO_S(user_.id()));
-        tNot->emit(new Object(USER, user_.id()));
+        t_emit(USER, user_.id());
+        t_emit("kick-" + TO_S(user_.id()));
         admin_log("Kick user " + user_a(user_.id()));
     }
 
@@ -265,7 +264,7 @@ private:
         user_.modify()->set_classification(class_->value());
         admin_log("Change classification of " + user_a(user_.id()));
         t.commit();
-        tNot->emit(new Object(USER, user_.id()));
+        t_emit(USER, user_.id());
     }
 
     void inverse_confirmed() {
@@ -279,7 +278,7 @@ private:
             admin_log("Confirm classification of " + user_a(user_.id()));
         }
         t.commit();
-        tNot->emit(new Object(USER, user_.id()));
+        t_emit(USER, user_.id());
     }
 
     void print_right(User::Rights right, Wt::WContainerWidget* p) {
@@ -393,8 +392,8 @@ private:
             t.commit();
             m->setText("");
             message_sent_->show();
-            tNot->emit(new Object(COMMENT, base.id()));
-            tNot->emit(new NewMessage(user_.id()));
+            t_emit(COMMENT, base.id());
+            t_emit(new NewMessage(user_.id()));
         }
     }
 
@@ -409,7 +408,7 @@ private:
             }
         }
         t.commit();
-        tNot->emit(new Object(USER, user_.id()));
+        t_emit(USER, user_.id());
     }
 };
 

@@ -25,13 +25,13 @@ StagedCompetition::StagedCompetition(const Competition* competition):
     read_paires();
 }
 
-void StagedCompetition::process(Competition* competition, Planning* planning) {
+void StagedCompetition::process(Competition* competition) {
     BOOST_ASSERT(competition->id() == competition_->id());
     if (games_.empty() && competition->state() == Competition::ACTIVE) {
         start_competition();
     }
     join_users();
-    create_games(competition, planning);
+    create_games(competition);
 }
 
 typedef std::pair<UserPtr, bool> FU; // bool means user, not winner place
@@ -221,8 +221,7 @@ void StagedCompetition::join_users() {
     }
 }
 
-void StagedCompetition::create_games(Competition* competition,
-                                     Planning* planning) {
+void StagedCompetition::create_games(Competition* competition) {
     BOOST_FOREACH (Paires::value_type& stage_and_pair, paires_) {
         int stage = stage_and_pair.first;
         UserPair pair = stage_and_pair.second;
@@ -237,10 +236,10 @@ void StagedCompetition::create_games(Competition* competition,
                 GamePtr game = competition->create_game(white, black,
                                                         stage, no_draw);
                 games_[pair].push_back(game);
-                planning->add(new Object(GAME, game.id()), now(), false);
+                t_task(GAME, game.id());
             }
-            planning->add(new Object(USER, pair.first().id()), now(), false);
-            planning->add(new Object(USER, pair.second().id()), now(), false);
+            t_task(USER, pair.first().id());
+            t_task(USER, pair.second().id());
         }
     }
 }

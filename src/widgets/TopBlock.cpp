@@ -12,7 +12,7 @@
 namespace thechess {
 
 TopBlock::TopBlock(Wt::WContainerWidget* parent):
-    WText(parent), Notifiable("motd", tNot) {
+    WText(parent), Notifiable("motd") {
     update_contents();
 }
 

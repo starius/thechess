@@ -155,7 +155,7 @@ void Application::login_handler() {
                 boost::function<void()> f = Wt::Wc::bound_post(boost::bind(
                                                 &Application::gather_init,
                                                 this));
-                server_.planning().schedule(10 * SECOND, f);
+                Wt::Wc::schedule_action(10 * SECOND, f);
             }
             kick_ = new Kick();
             if (!user()->locale().empty()) {
@@ -168,7 +168,7 @@ void Application::login_handler() {
     }
     t.commit();
     BOOST_FOREACH (GamePtr game, games_vector) {
-        server_.planning().add(new Object(GAME, game.id()), now());
+        t_task(GAME, game.id());
     }
     main_widget_->main_menu()->show_user_items(session_.login().loggedIn());
     main_widget_->set_top_block_shown(session_.login().loggedIn());

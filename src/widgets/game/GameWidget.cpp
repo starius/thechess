@@ -34,7 +34,6 @@
 #include "config.hpp"
 #include "chess/Moves.hpp"
 #include "chess/Piece.hpp"
-#include "notify.hpp"
 #include "log.hpp"
 #include "config.hpp"
 
@@ -155,7 +154,7 @@ class GameWidget::GameWidgetImpl :
 public:
     GameWidgetImpl(const GamePtr& game) :
         Wt::WContainerWidget(),
-        Notifiable(Object(GAME, game.id()), tNot),
+        Notifiable(Object(GAME, game.id())),
         game_(game),
         analysis_(0) {
         dbo::Transaction t(tApp->session());
@@ -241,9 +240,9 @@ private:
         }
         bool game_ended = game_->is_ended();
         t.commit();
-        tNot->emit(new Object(GAME, game_.id()));
+        t_emit(GAME, game_.id());
         if (game_ended) {
-            tApp->server().planning().add(new Object(GAME, game_.id()), now());
+            t_task(GAME, game_.id());
         }
     }
 
@@ -445,12 +444,12 @@ private:
         (game_.modify()->*method)(tApp->user());
         Game::State state_after = game_->state();
         t.commit();
-        tNot->emit(new Object(GAME, game_.id()));
+        t_emit(GAME, game_.id());
         if (state_after != state_before) {
-            tApp->server().planning().add(new Object(GAME, game_.id()), now());
+            t_task(GAME, game_.id());
         }
         if (method == &Game::join) {
-            tNot->emit(new Object(USER, tApp->user().id()));
+            t_emit(USER, tApp->user().id());
         }
     }
 
@@ -467,7 +466,7 @@ private:
         game_.modify()
         ->pause_propose(tApp->user(), pause_duration->corrected_value());
         t.commit();
-        tNot->emit(new Object(GAME, game_.id()));
+        t_emit(GAME, game_.id());
     }
 
     void pause(Wt::Wc::TimeDurationWidget* pause_duration) {
@@ -477,8 +476,7 @@ private:
                                     pause_duration->corrected_value());
         admin_log("Pause " + game_a(game_.id()));
         t.commit();
-        tNot->emit(new Object(GAME, game_.id()));
-        tApp->server().planning().add(new Object(GAME, game_.id()), now());
+        t_task(GAME, game_.id());
     }
 
     void discard_pause() {
@@ -487,8 +485,7 @@ private:
         game_.modify()->admin_pause_discard(tApp->user());
         admin_log("Discard pause of " + game_a(game_.id()));
         t.commit();
-        tNot->emit(new Object(GAME, game_.id()));
-        tApp->server().planning().add(new Object(GAME, game_.id()), now());
+        t_task(GAME, game_.id());
     }
 
     void mistake_propose() {
@@ -497,7 +494,7 @@ private:
         game_.modify()
         ->mistake_propose(tApp->user(), moves_widget_->current_move());
         t.commit();
-        tNot->emit(new Object(GAME, game_.id()));
+        t_emit(GAME, game_.id());
     }
 
     void show_analysis() {
@@ -549,7 +546,7 @@ private:
         game_.reread();
         game_.modify()->set_comment(tApp->user(), text);
         t.commit();
-        tNot->emit(new Object(GAME, game_.id()));
+        t_emit(GAME, game_.id());
     }
 
     void print_comment() {

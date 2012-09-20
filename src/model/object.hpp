@@ -21,11 +21,29 @@ namespace dbo = Wt::Dbo;
 
 namespace thechess {
 
+/** Notifier class */
+typedef Wt::Wc::notify::Server Notifier;
+
+/** Planning class */
+typedef Wt::Wc::notify::PlanningServer Planning;
+
+/** Event for notifications */
+typedef Wt::Wc::notify::Event Event;
+
+/** Shared pointer to Event */
+typedef Wt::Wc::notify::EventPtr EventPtr;
+
+/** Task for planning */
+typedef Wt::Wc::notify::Task Task;
+
+/** Shared pointer to Task */
+typedef Wt::Wc::notify::TaskPtr TaskPtr;
+
 /** Struct referencing any instance of any changable model.
 
 \ingroup model
 */
-struct Object : public Wt::Wc::notify::Task {
+struct Object : public Task {
     /** Constructor */
     Object(ObjectType ot, int i);
 
@@ -51,15 +69,14 @@ struct Object : public Wt::Wc::notify::Task {
     }
 
     /** Run checks for planned task */
-    void process(Wt::Wc::notify::TaskPtr task,
-                 Wt::Wc::notify::PlanningServer* server) const;
+    void process(TaskPtr task, Planning* server) const;
 
     /** Get event key */
     std::string key() const;
 };
 
 /** Event emited when private messge is sent */
-class NewMessage : public Wt::Wc::notify::Event {
+class NewMessage : public Event {
 public:
     /** Constructor */
     NewMessage(int reader_id);
@@ -80,6 +97,37 @@ public:
     /** Get event key */
     std::string key() const;
 };
+
+/** Notifiable widget */
+class Notifiable : public Wt::Wc::notify::Widget {
+public:
+    /** Constructor */
+    Notifiable(const std::string& key);
+};
+
+/** Notify listening widgets */
+void t_emit(EventPtr event);
+
+/** Notify listening widgets */
+void t_emit(Event* event);
+
+/** Notify listening widgets */
+void t_emit(ObjectType type, int id);
+
+/** Notify listening widgets */
+void t_emit(const std::string& key);
+
+/** Add task to planning server (when = now()) */
+void t_task(TaskPtr task);
+
+/** Add task to planning server */
+void t_task(TaskPtr task, const Wt::WDateTime& when);
+
+/** Add task to planning server (when = now()) */
+void t_task(ObjectType type, int id);
+
+/** Add task to planning server */
+void t_task(ObjectType type, int id, const Wt::WDateTime& when);
 
 }
 

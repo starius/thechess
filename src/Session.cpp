@@ -16,7 +16,6 @@
 #include "Session.hpp"
 #include "Options.hpp"
 #include "Server.hpp"
-#include "Planning.hpp"
 #include "model/all.hpp"
 #include "utils/utils.hpp"
 
@@ -39,7 +38,6 @@ Session::Session(dbo::FixedSqlConnectionPool& pool):
 }
 
 void Session::reconsider(Server& server) {
-    Planning* planning = &server.planning();
     try {
         dbo::Transaction t(*this);
         createTables();
@@ -63,16 +61,16 @@ void Session::reconsider(Server& server) {
     dbo::Transaction t2(*this);
     Games games = find<Game>().where("state < ?").bind(Game::MIN_ENDED);
     BOOST_FOREACH (const GamePtr& game, games) {
-        planning->add(new Object(GAME, game.id()), now());
+        t_task(GAME, game.id());
     }
     Competitions cs = find<Competition>()
                       .where("state < ?").bind(Competition::ENDED);
     BOOST_FOREACH (const CompetitionPtr& c, cs) {
-        planning->add(new Object(COMPETITION, c.id()), now());
+        t_task(COMPETITION, c.id());
     }
     Users users = find<User>().where("vacation_until is not null");
     BOOST_FOREACH (const UserPtr& user, users) {
-        planning->add(new Object(USER, user.id()), now());
+        t_task(USER, user.id());
     }
     t2.commit();
 }

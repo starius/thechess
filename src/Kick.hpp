@@ -8,8 +8,6 @@
 #ifndef THECHESS_KICK_HPP_
 #define THECHESS_KICK_HPP_
 
-#include "notify.hpp"
-
 namespace thechess {
 
 /** Object, kicking removed users.

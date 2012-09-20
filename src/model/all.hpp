@@ -23,7 +23,6 @@
 #include "model/staged_competition.hpp"
 #include "model/user_pair.hpp"
 #include "Session.hpp"
-#include "Planning.hpp"
 
 namespace thechess {
 

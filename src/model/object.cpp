@@ -7,13 +7,13 @@
 
 #include <boost/assert.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/make_shared.hpp>
 
 #include <Wt/Dbo/Transaction>
 #include <Wt/Wc/util.hpp>
 
 #include "model/all.hpp"
 #include "Session.hpp"
-#include "Planning.hpp"
 #include "Server.hpp"
 #include "Application.hpp" // FIXME
 #include "config.hpp"
@@ -29,24 +29,22 @@ Td rand_td(const std::pair<Td, Td>& range) {
     return rand_range(range.first, range.second);
 }
 
-void Object::process(Wt::Wc::notify::TaskPtr task,
-                     Wt::Wc::notify::PlanningServer* server) const {
+void Object::process(TaskPtr task, Planning*) const {
     std::cerr << "Check object: " << key() << std::endl;
-    Planning* planning = downcast<Planning*>(server);
-    Session session(planning->server().pool());
+    Session session(Server::instance()->pool());
     try {
         dbo::Transaction t(session);
         if (type == GAME) {
             GamePtr game = session.load<Game>(id, /* reread */ true);
-            game.modify()->check(task, planning);
+            game.modify()->check(task);
         }
         if (type == COMPETITION) {
             CompetitionPtr c = session.load<Competition>(id, /* reread */ true);
-            c.modify()->check(task, planning);
+            c.modify()->check(task);
         }
         if (type == USER) {
             UserPtr user = session.load<User>(id, /* reread */ true);
-            user.modify()->check(task, planning);
+            user.modify()->check(task);
         }
         t.commit();
     } catch (dbo::ObjectNotFoundException e) {
@@ -54,11 +52,11 @@ void Object::process(Wt::Wc::notify::TaskPtr task,
     } catch (dbo::StaleObjectException& e) {
         std::cerr << e.what() << std::endl;
         Td delay = rand_td(config::tracker::STALE_OBJECT_DELAY);
-        planning->add(task, now() + delay, false);
+        t_task(task, now() + delay);
     } catch (std::exception& e) { // database locked?
         std::cerr << e.what() << std::endl;
         Td delay = rand_td(config::tracker::UNKNOWN_ERROR_DELAY);
-        planning->add(task, now() + delay, false);
+        t_task(task, now() + delay);
     } catch (...)
     { }
 }
@@ -74,6 +72,50 @@ NewMessage::NewMessage(int r):
 
 std::string NewMessage::key() const {
     return TO_S(reader_id);
+}
+
+Notifier* t_notifier() {
+    return &Server::instance()->notifier_;
+}
+
+Notifiable::Notifiable(const std::string& key):
+    Wt::Wc::notify::Widget(key, t_notifier())
+{ }
+
+void t_emit(EventPtr event) {
+    t_notifier()->emit(event);
+}
+
+void t_emit(Event* event) {
+    t_notifier()->emit(event);
+}
+
+void t_emit(ObjectType type, int id) {
+    t_notifier()->emit(boost::make_shared<Object>(type, id));
+}
+
+void t_emit(const std::string& key) {
+    t_notifier()->emit(key);
+}
+
+Planning* t_planning() {
+    return &Server::instance()->planning_;
+}
+
+void t_task(TaskPtr task, const Wt::WDateTime& when) {
+    t_planning()->add(task, when);
+}
+
+void t_task(TaskPtr task) {
+    t_task(task, now());
+}
+
+void t_task(ObjectType type, int id, const Wt::WDateTime& when) {
+    t_task(boost::make_shared<Object>(type, id), when);
+}
+
+void t_task(ObjectType type, int id) {
+    t_task(type, id, now());
 }
 
 }

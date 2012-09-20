@@ -382,7 +382,7 @@ public:
     /** Run self-checks for planned action.
     User who can return from vacation, will be returned.
     */
-    void check(Wt::Wc::notify::TaskPtr task, Planning* planning);
+    void check(Wt::Wc::notify::TaskPtr task);
 
 private:
     Wt::WString username_;

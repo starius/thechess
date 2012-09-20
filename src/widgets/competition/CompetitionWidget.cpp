@@ -29,7 +29,6 @@
 #include "widgets/comment/CommentList.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
-#include "notify.hpp"
 #include "config.hpp"
 #include "log.hpp"
 
@@ -61,7 +60,7 @@ private:
         c_.modify()->kick(tApp->user(), user);
         admin_log("Kick " + user_a(user.id()) + " from " + comp_a(c_.id()));
         t.commit();
-        tNot->emit(new Object(COMPETITION, c_.id()));
+        t_emit(COMPETITION, c_.id());
     }
 };
 
@@ -422,7 +421,7 @@ private:
             admin_log("Allow virtuals in " + comp_a(c_.id()));
         }
         t.commit();
-        tApp->server().planning().add(new Object(COMPETITION, c_.id()), now());
+        t_task(COMPETITION, c_.id());
     }
 
     template <CompetitionMethod method>
@@ -476,7 +475,7 @@ private:
 CompetitionWidget::CompetitionWidget(const CompetitionPtr& competition,
                                      Wt::WContainerWidget* p):
     Wt::WTemplate(tr("tc.competition.widget_template"), p),
-    Notifiable(Object(COMPETITION, competition.id()), tNot),
+    Notifiable(Object(COMPETITION, competition.id())),
     c(competition) {
     reprint();
 }

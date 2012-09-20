@@ -15,7 +15,7 @@
 namespace thechess {
 
 Kick::Kick():
-    Notifiable("kick-" + TO_S(tApp->user().id()), tNot)
+    Notifiable("kick-" + TO_S(tApp->user().id()))
 { }
 
 static void logout_app() {

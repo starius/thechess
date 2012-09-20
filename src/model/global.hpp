@@ -392,7 +392,6 @@ typedef Wt::Auth::Dbo::UserDatabase<AuthInfo> UserDatabase;
 
 namespace thechess {
 
-class Planning;
 class UserPair;
 class StagedCompetition;
 class Record;

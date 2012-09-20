@@ -18,7 +18,6 @@
 #include "widgets/Header.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
-#include "notify.hpp"
 
 namespace thechess {
 
@@ -83,13 +82,13 @@ void GameCreateWidget::button_handler() {
         game.modify()->propose_challenge(tApp->user(), color);
     }
     t.commit();
-    tNot->emit(new Object(USER, tApp->user().id()));
+    t_emit(USER, tApp->user().id());
     if (with_user_) {
-        tNot->emit(new Object(USER, user_.id()));
+        t_emit(USER, user_.id());
     }
     tApp->path().game_view()->set_integer_value(game.id());
     tApp->path().game_view()->open(/* change path */ true);
-    tApp->server().planning().add(new Object(GAME, game.id()), now());
+    t_task(GAME, game.id());
 }
 
 Piece::Color GameCreateWidget::selected_color() const {
