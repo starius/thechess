@@ -149,8 +149,10 @@ public:
             } else {
                 b->setText(tr("tc.user.Delete"));
             }
-            b = new Wt::WPushButton(tr("tc.common.Kick"), this);
-            b->clicked().connect(this, &UserWidgetImpl::kick);
+            if (user->online()) {
+                b = new Wt::WPushButton(tr("tc.common.Kick"), this);
+                b->clicked().connect(this, &UserWidgetImpl::kick);
+            }
         }
         new Wt::WBreak(this);
         tApp->path().user_view()->set_integer_value(user.id());
@@ -249,6 +251,7 @@ private:
     void kick() {
         dbo::Transaction t(tApp->session());
         tNot->emit("kick-" + TO_S(user_.id()));
+        tNot->emit(new Object(USER, user_.id()));
         admin_log("Kick user " + user_a(user_.id()));
     }
 
