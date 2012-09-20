@@ -14,6 +14,7 @@
 #include <Wt/WAnchor>
 #include <Wt/WBreak>
 #include <Wt/WText>
+#include <Wt/WTemplate>
 #include <Wt/WPanel>
 #include <Wt/Wc/util.hpp>
 
@@ -308,9 +309,7 @@ private:
         addWidget(awards_widget(user_));
         const EloPlayer& stat = user_->games_stat();
         new Wt::WText(tr("tc.user.Games_stat"), this);
-        new Wt::WText(tr("tc.common.Stat").arg(stat.all()).arg(stat.wins())
-                      .arg(stat.draws()).arg(stat.fails()).arg(stat.elo()),
-                      this);
+        print_stat(stat);
         if (tApp->user() && tApp->user() != user_) {
             EloPlayer my_stat = tApp->user()->games_stat();
             EloPlayer my_orig = my_stat;
@@ -334,9 +333,18 @@ private:
     void print_competition_stat() {
         const EloPlayer& stat = user_->competitions_stat();
         new Wt::WText(tr("tc.user.Competitions_stat"), this);
-        new Wt::WText(tr("tc.common.Stat").arg(stat.all()).arg(stat.wins())
-                      .arg(stat.draws()).arg(stat.fails()).arg(stat.elo()),
-                      this);
+        print_stat(stat);
+    }
+
+    void print_stat(const EloPlayer& stat) {
+        Wt::WTemplate* count;
+        count = new Wt::WTemplate(tr("tc.common.Stat_template"), this);
+        count->addFunction("tr", &Wt::WTemplate::Functions::tr);
+        count->bindInt("all", stat.all());
+        count->bindInt("wins", stat.wins());
+        count->bindInt("draws", stat.draws());
+        count->bindInt("fails", stat.fails());
+        count->bindInt("elo", stat.elo());
     }
 
     void print_description() {

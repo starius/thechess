@@ -13,7 +13,7 @@
     <message id='tc.comment.Text'>Текст</message>
 
     <message id="tc.common.Agree">Погодитись</message>
-    <message id='tc.common.all'>всі</message>
+    <message id="tc.common.all">всі</message>
     <message id="tc.common.Allow">Дозволити</message>
     <message id="tc.common.Apply">Застосувати</message>
     <message id="tc.common.Board">Дошка</message>
@@ -25,8 +25,10 @@
     <message id="tc.common.creator">автор</message>
     <message id="tc.common.Description">Опис</message>
     <message id="tc.common.Discard">Відмовитись</message>
+    <message id="tc.common.Draws">Нічиїх</message>
     <message id="tc.common.duration">тривалість</message>
     <message id="tc.common.enabled">увімкнено</message>
+    <message id="tc.common.Fails">Поразок</message>
     <message id="tc.common.Game">Гра</message>
     <message id="tc.common.interval">від {1} до {2}</message>
     <message id="tc.common.Join">Приєднатися</message>
@@ -37,10 +39,11 @@
     <message id="tc.common.Moves">Ходи</message>
     <message id="tc.common.Name">Назва</message>
     <message id="tc.common.no_params_error">не вибрані параметри</message>
-    <message id='tc.common.not_started'>неначатые</message>
+    <message id="tc.common.not_started">неначатые</message>
     <message id="tc.common.number">№</message>
     <message id="tc.common.Only_my">Тільки мої</message>
-    <message id='tc.common.Open'>Открыть</message>
+    <message id="tc.common.Open">Открыть</message>
+    <message id="tc.common.Rating">Рейтинг</message>
     <message id="tc.common.Refresh">Поновити</message>
     <message id="tc.common.Reset">Скидання</message>
     <message id="tc.common.Save">Зберегти</message>
@@ -48,17 +51,15 @@
     <message id="tc.common.Send">Відправити</message>
     <message id="tc.common.start">початок</message>
     <message id="tc.common.stop">кінець</message>
+    <message id="tc.common.Total_played">Всього зіграно</message>
     <message id="tc.common.winner">переможець</message>
+    <message id="tc.common.Wins">Перемог</message>
     <message id="tc.common.Select_or_create">
         Будь ласка, виберіть існуючий запис (клікнувши на нього)
         або створіть свій особистий.
         Щоб створити новий запис з цитуванням того, що існує,
         спочатку клікніть на існуючий запис,
         а затим перейдіть на другу вкладку для внесення змін.
-    </message>
-    <message id="tc.common.Stat">
-        Всього зіграно: {1}. Перемог: {2}. Нічиїх: {3}. Поразок: {4}.
-        Рейтинг: {5}.
     </message>
 
     <message id="tc.competition.Cant_change">Ви не можете змінювати цей турнір</message>

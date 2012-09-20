@@ -32,8 +32,10 @@
     <message id='tc.common.creator'>создатель</message>
     <message id='tc.common.Description'>Описание</message>
     <message id='tc.common.Discard'>Отказаться</message>
+    <message id='tc.common.Draws'>Ничьих</message>
     <message id='tc.common.duration'>продолжительность</message>
     <message id='tc.common.enabled'>включено</message>
+    <message id='tc.common.Fails'>Поражений</message>
     <message id='tc.common.Game'>Игра</message>
     <message id='tc.common.interval'>от {1} до {2}</message>
     <message id='tc.common.Join'>Присоединиться</message>
@@ -48,6 +50,7 @@
     <message id='tc.common.number'>№</message>
     <message id='tc.common.Only_my'>Только мои</message>
     <message id='tc.common.Open'>Открыть</message>
+    <message id='tc.common.Rating'>Рейтинг</message>
     <message id='tc.common.Refresh'>Обновить</message>
     <message id='tc.common.Reset'>Сброс</message>
     <message id='tc.common.Save'>Сохранить</message>
@@ -55,17 +58,15 @@
     <message id='tc.common.Send'>Отправить</message>
     <message id='tc.common.start'>начало</message>
     <message id='tc.common.stop'>конец</message>
+    <message id='tc.common.Total_played'>Всего сыграно</message>
     <message id='tc.common.winner'>победитель</message>
+    <message id='tc.common.Wins'>Побед</message>
     <message id='tc.common.Select_or_create'>
         Пожалуйста, выберите существующую запись (кликнув на неё)
         или создайте свою собственную.
         Чтобы создать унаследовать новую запись от существующей,
         сначала кликните на существующую запись,
         а потом пройдите во вторую вкладку для внесения изменений.
-    </message>
-    <message id='tc.common.Stat'>
-        Всего сыграно: {1}. Побед: {2}. Ничьих: {3}. Поражений: {4}.
-        Рейтинг: {5}.
     </message>
 
     <message id='tc.competition.Cant_change'>Вы не можете изменять этот турнир</message>

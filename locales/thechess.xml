@@ -498,8 +498,10 @@ TheChess.
     <message id='tc.common.creator'>creator</message>
     <message id='tc.common.Description'>Description</message>
     <message id='tc.common.Discard'>Discard</message>
+    <message id='tc.common.Draws'>Draws</message>
     <message id='tc.common.duration'>duration</message>
     <message id='tc.common.enabled'>enabled</message>
+    <message id='tc.common.Fails'>Fails</message>
     <message id='tc.common.Game'>Game</message>
     <message id='tc.common.interval'>from {1} to {2}</message>
     <message id='tc.common.Join'>Join</message>
@@ -514,6 +516,7 @@ TheChess.
     <message id='tc.common.number'>#</message>
     <message id='tc.common.Only_my'>Only my</message>
     <message id='tc.common.Open'>Open</message>
+    <message id='tc.common.Rating'>Rating</message>
     <message id='tc.common.Refresh'>Refresh</message>
     <message id='tc.common.Reset'>Reset</message>
     <message id='tc.common.Save'>Save</message>
@@ -521,7 +524,9 @@ TheChess.
     <message id='tc.common.Send'>Send</message>
     <message id='tc.common.start'>start</message>
     <message id='tc.common.stop'>stop</message>
+    <message id='tc.common.Total_played'>Total played</message>
     <message id='tc.common.winner'>winner</message>
+    <message id='tc.common.Wins'>Wins</message>
     <message id='tc.common.Logo'>
         <font style='font-size: 50px; color:#2A7D4F;'>TheChess</font>
     </message>
@@ -531,8 +536,12 @@ TheChess.
         To create a derivative, first click on existing item
         and then go to the second tab and change it.
     </message>
-    <message id='tc.common.Stat'>
-        Total played: {1}. Wins: {2}. Draws: {3}. Fails: {4}. Rating: {5}.
+    <message id='tc.common.Stat_template'>
+        ${tr:tc.common.Total_played}: <span class="thechess-games-all">${all}</span>.
+        ${tr:tc.common.Wins}: <span class="thechess-games-wins">${wins}</span>.
+        ${tr:tc.common.Fails}: <span class="thechess-games-fails">${fails}</span>.
+        ${tr:tc.common.Draws}: <span class="thechess-games-draws">${draws}</span>.
+        ${tr:tc.common.Rating}: <span class="thechess-games-rating">${elo}</span>.
     </message>
 
     <message id='tc.competition.Cant_change'>You have no permission to change this competition</message>
