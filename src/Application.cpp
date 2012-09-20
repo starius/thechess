@@ -75,8 +75,6 @@ Application::Application(bool, const Wt::WEnvironment& env, Server& server):
                                 "locales/wt");
     // FIXME Wt::Auth translations in separate file do not work
     setCssTheme("polished");
-    // TODO require-dependent widgets.
-    // http://redmine.emweb.be/issues/1429
     init_widget_mode();
 }
 

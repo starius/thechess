@@ -706,6 +706,9 @@ TheChess.
     <message id='tc.game.your_color'>your color</message>
     <message id='tc.game.external_code'>
 <div id="thechess_game_{1}"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
+    type="text/javascript"></script>
+<script src="{3}" type="text/javascript"></script>
 <script src="{2}" type="text/javascript"></script>
     </message>
     <message id='tc.game.First_draw'>

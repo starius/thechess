@@ -28,7 +28,7 @@ void init_widget_mode() {
                 int id = boost::lexical_cast<int>(*env.getParameter("game"));
                 dbo::Transaction t(tApp->session());
                 GamePtr game = tApp->session().load<Game>(id);
-                tApp->bindWidget(new MovesWidget(game->moves()),
+                tApp->bindWidget(new GameWidget(game),
                                  *env.getParameter("div"));
                 return;
             }
