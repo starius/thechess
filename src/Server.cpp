@@ -23,10 +23,6 @@
 
 namespace thechess {
 
-Wt::WApplication* createDefault(const Wt::WEnvironment& env) {
-    return new Wt::WApplication(env);
-}
-
 Wt::WApplication* createApplication(Server* server,
                                     const Wt::WEnvironment& env) {
     return new thechess::Application(env, *server);
@@ -59,7 +55,6 @@ Server::Server(int argc, char** argv):
     addResource(&pgn_, "/pgn/");
     addResource(&swfstore_, "/swfstore.swf");
     addResource(&storage_whitelist_, "/storage-whitelist.xml");
-    addEntryPoint(Wt::WidgetSet, createDefault, "/default.js", "/favicon.ico");
     addEntryPoint(Wt::WidgetSet, boost::bind(createWidgetSet, this, _1),
                   "/thechess.js", "/favicon.ico");
     addEntryPoint(Wt::Application, boost::bind(createApplication, this, _1),
