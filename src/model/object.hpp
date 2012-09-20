@@ -58,16 +58,6 @@ struct Object : public Task {
     */
     int user_id;
 
-    /** Comparison operator */
-    bool operator<(const Object& b) const {
-        return id < b.id || (id == b.id && type < b.type);
-    }
-
-    /** Comparison operator */
-    bool operator==(const Object& b) const {
-        return id == b.id && type == b.type;
-    }
-
     /** Run checks for planned task */
     void process(TaskPtr task, Planning* server) const;
 
