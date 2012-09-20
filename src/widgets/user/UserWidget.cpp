@@ -242,6 +242,7 @@ private:
             admin_log("Unremove user " + user_a(user_.id()));
         }
         t.commit();
+        tNot->emit(new Object(USER, user_.id()));
         tNot->emit("kick-" + TO_S(user_.id()));
     }
 
