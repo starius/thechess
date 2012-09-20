@@ -156,7 +156,8 @@ public:
         Wt::WContainerWidget(),
         Notifiable(Object(GAME, game.id())),
         game_(game),
-        analysis_(0) {
+        analysis_(0),
+        comments_shown_(false) {
         dbo::Transaction t(tApp->session());
         game_.reread();
         new Header(tr("tc.game.Header").arg((int)game.id()), this);
@@ -214,6 +215,9 @@ public:
         }
         status_and_manager();
         print_comment();
+        if (!comments_shown_ && game_->has_comment_base()) {
+            tApp->path().open(wApp->internalPath());
+        }
     }
 
     void set_half_move(int half_move_index) {
@@ -228,6 +232,7 @@ private:
     GameCountdown* countdown_;
     Wt::WContainerWidget* comment_container_;
     Wt::WDialog* analysis_;
+    bool comments_shown_;
 
     void move_handler(const HalfMove& half_move) {
         dbo::Transaction t(tApp->session());
@@ -583,11 +588,16 @@ private:
     void print_comment_list_impl() {
         dbo::Transaction t(tApp->session());
         CommentPtr comment_base = game_->comment_base();
+        bool notify = !comment_base;
         if (!comment_base) {
             game_.reread();
             comment_base = game_.modify()->comment_base();
+            t.commit();
+            t_emit(GAME, game_.id());
+        } else {
+            comments_shown_ = true;
+            addWidget(new CommentList(Comment::CHAT_MESSAGE, comment_base));
         }
-        addWidget(new CommentList(Comment::CHAT_MESSAGE, comment_base));
     }
 
     void links(LinksDialog* dialog) {

@@ -464,11 +464,15 @@ private:
     void print_comment_list_impl() {
         dbo::Transaction t(tApp->session());
         CommentPtr comment_base = c_->comment_base();
+        bool notify = !comment_base;
         if (!comment_base) {
             c_.reread();
             comment_base = c_.modify()->comment_base();
+            t.commit();
+            t_emit(COMPETITION, c_.id());
+        } else {
+            addWidget(new CommentList(Comment::CHAT_MESSAGE, comment_base));
         }
-        addWidget(new CommentList(Comment::CHAT_MESSAGE, comment_base));
     }
 };
 
