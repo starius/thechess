@@ -86,7 +86,7 @@ Application::~Application() {
         dbo::Transaction t(session());
         user().reread();
         if (user() && online_) {
-            user().modify()->logout();
+            user().modify()->try_again_logout();
         }
     } catch (std::exception& e) {
         log("warning") << e.what();
@@ -132,13 +132,13 @@ void Application::login_handler() {
             delete kick_;
             kick_ = 0;
             if (online_) {
-                prev_user_.modify()->logout();
+                prev_user_.modify()->try_again_logout();
             }
             prev_user_.flush();
         }
         user().reread();
         if (user()) {
-            user().modify()->login();
+            user().modify()->try_again_login();
             online_ = true;
             Wt::Wc::bound_post(check_session_number)();
             {
@@ -244,7 +244,7 @@ void Application::user_action() {
         online_ = true;
         user().reread();
         if (user()) {
-            user().modify()->login();
+            user().modify()->try_again_login();
         }
     }
     if (now() > next_check_) {
@@ -265,7 +265,7 @@ void Application::online_check() {
             user().reread();
             if (user()) {
                 online_ = false;
-                user().modify()->logout();
+                user().modify()->try_again_logout();
             }
         }
     } else {

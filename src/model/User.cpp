@@ -261,11 +261,23 @@ dbo::Query<GamePtr> User::games() const {
 void User::login() {
     if (sessions_ == 0) {
         last_enter_ = now();
-        // FIXME use notification instead
-        t_task(USER, id());
     }
     sessions_ += 1;
     check_vacation();
+}
+
+struct UserLogin : public Object {
+    UserLogin(int user_id):
+        Object(USER, user_id)
+    { }
+
+    void process_impl(TaskPtr task, Session& session) const {
+        session.load<User>(id).modify()->login();
+    }
+};
+
+void User::try_again_login() {
+    t_task(new UserLogin(id()));
 }
 
 void User::logout() {
@@ -275,9 +287,21 @@ void User::logout() {
     }
     if (sessions_ == 0) {
         online_time_ += now() - last_enter_;
-        // FIXME use notification instead
-        t_task(USER, id());
     }
+}
+
+struct UserLogout : public Object {
+    UserLogout(int user_id):
+        Object(USER, user_id)
+    { }
+
+    void process_impl(TaskPtr task, Session& session) const {
+        session.load<User>(id).modify()->logout();
+    }
+};
+
+void User::try_again_logout() {
+    t_task(new UserLogout(id()));
 }
 
 void User::set_classification(Classification classification) {

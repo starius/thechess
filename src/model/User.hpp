@@ -164,8 +164,14 @@ public:
     /** Run this when user is logging in */
     void login();
 
+    /** Run this when user is logging in (as TryAgainTask) */
+    void try_again_login();
+
     /** Run this when user is logging out */
     void logout();
+
+    /** Run this when user is logging out (as TryAgainTask) */
+    void try_again_logout();
 
     /** Return if the user is online */
     bool online() const {
