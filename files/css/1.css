@@ -109,11 +109,12 @@ a.thechess-proposed {
 }
 
 .thechess-games-draws {
-    color: black;
+    color: #FFA500; /* Orange */
 }
 
 .thechess-games-rating {
-    color: #00008B; /* darkBlue */
+    color: #A52A2A; /* brown */
+    font-weight: bold;
 }
 
 .thechess-proposal {
