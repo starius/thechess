@@ -35,11 +35,13 @@ static void add_comment(CommentPtr comment, Wt::WTextEdit* edit) {
     c.modify()->set_text(patch_text_edit_text(edit->valueText()));
     c.modify()->set_init(tApp->user());
     c.modify()->set_root(comment->root());
+    int root_id = comment->root().id();
     CommentPtr post_text = comment->root();
     CommentPtr post = post_text->parent();
     post.reread();
     post.modify()->post_comment_added();
     t.commit();
+    t_emit(COMMENT, root_id);
     tApp->path().post()->set_integer_value(post.id());
     tApp->path().post()->open();
 }
