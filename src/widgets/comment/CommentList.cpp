@@ -120,7 +120,9 @@ public:
 
     void notify(EventPtr) {
         comment_model()->reload();
-        show_last();
+        if (comment_model()->type() != Comment::FORUM_COMMENT) {
+            show_last();
+        }
     }
 
 protected:
