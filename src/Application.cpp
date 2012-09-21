@@ -121,7 +121,6 @@ static void check_session_number() {
 }
 
 void Application::login_handler() {
-    GamesVector games_vector;
     dbo::Transaction t(session());
     user_ = session().user();
     if (prev_user_ != user()) {
@@ -139,11 +138,6 @@ void Application::login_handler() {
             user().modify()->try_again_login();
             online_ = true;
             Wt::Wc::bound_post(check_session_number)();
-            {
-                Games games = user()->games().where("state = ?")
-                              .bind(Game::CONFIRMED);
-                games_vector.assign(games.begin(), games.end());
-            }
             if (gather_) {
                 gather_->explore_all();
             }
@@ -163,9 +157,6 @@ void Application::login_handler() {
         path_.open(internalPath());
     }
     t.commit();
-    BOOST_FOREACH (GamePtr game, games_vector) {
-        t_task(GAME, game.id());
-    }
     main_widget_->main_menu()->show_user_items(session_.login().loggedIn());
     main_widget_->set_top_block_shown(session_.login().loggedIn());
     main_widget_->update_my_games();

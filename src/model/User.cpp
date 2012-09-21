@@ -261,6 +261,10 @@ dbo::Query<GamePtr> User::games() const {
 void User::login() {
     if (sessions_ == 0) {
         last_enter_ = now();
+        Games games = this->games().where("state = ?").bind(Game::CONFIRMED);
+        BOOST_FOREACH (GamePtr game, games) {
+            t_task(GAME, game.id());
+        }
     }
     sessions_ += 1;
     check_vacation();
