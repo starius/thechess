@@ -155,8 +155,7 @@ void Game::check(Wt::Wc::notify::TaskPtr task) {
             now() - confirmed_ > game_max_preactive) {
         finish(CANCELLED);
     }
-    if (state() == PROPOSED &&
-            competition() && competition()->type() == STAGED &&
+    if (state() == PROPOSED && competition() && created().isValid() &&
             now() - created() > competition()->cp()->relax_time()) {
         confirm();
     }
@@ -238,8 +237,7 @@ Wt::WDateTime Game::next_check() const {
         result = created() + game_max_preactive;
     } else if (state() == CONFIRMED && !competition()) {
         result = confirmed_ + game_max_preactive;
-    } else if (state() == PROPOSED &&
-               competition() && competition()->type() == STAGED) {
+    } else if (state() == PROPOSED && competition()) {
         result = created() + competition()->cp()->relax_time();
     } else if (state() == CONFIRMED && competition()) {
         result = confirmed_ + competition()->cp()->force_start_delay();
@@ -279,6 +277,10 @@ void Game::make_competition_game(const UserPtr& white, const UserPtr& black,
     }
     competition_ = competition;
     competition_stage_ = competition_stage;
+    if (competition->type() == CLASSICAL) {
+        // will be set in propose_by_competition()
+        set_created(Wt::WDateTime());
+    }
 }
 
 void Game::set_random(const UserPtr& user1, const UserPtr& user2) {
@@ -337,9 +339,9 @@ void Game::confirm(const UserPtr& user) {
     }
 }
 
-void Game::confirm_by_competition() {
+void Game::propose_by_competition() {
     if (competition()) {
-        confirm();
+        set_created(now());
     }
 }
 

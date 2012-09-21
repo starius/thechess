@@ -59,6 +59,11 @@ public:
         return created_;
     }
 
+    /** Set creation datetime */
+    void set_created(const Wt::WDateTime& created) {
+        created_ = created;
+    }
+
     /** Get the creator */
     const UserPtr& init() const {
         return init_;

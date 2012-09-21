@@ -584,9 +584,9 @@ public:
     void competition_discard(const UserPtr& user);
 
     /** Method should be called only from competition processing code.
-    On success the game changes its state to \ref CONFIRMED
+    On success the game changes its creates from null to now.
     */
-    void confirm_by_competition();
+    void propose_by_competition();
 
     /* @} */
 

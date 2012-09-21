@@ -107,8 +107,8 @@ public:
                cp->max_simultaneous_games());
             kw("tc.competition.Games_factor", cp->games_factor());
         }
+        kw("tc.competition.Relax_time", td2str(cp->relax_time()));
         if (c->type() == STAGED) {
-            kw("tc.competition.Relax_time", td2str(cp->relax_time()));
             kw("tc.competition.Min_substages", cp->min_substages());
             kw("tc.competition.Increment_substages", cp->increment_substages());
         }

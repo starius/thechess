@@ -101,6 +101,10 @@ CPWidget::CPWidget(const CP* cp, bool allow_change_type,
             max_recruiting_time_);
     form_->item(tr("tc.competition.Recruiting_time"), "",
                 min_recruiting_time_->form_widget(), recruiting_time_);
+    relax_time_ = new Wt::Wc::TimeDurationWidget(min::RELAX_TIME,
+            cp->relax_time(), max::RELAX_TIME);
+    form_->item(tr("tc.competition.Relax_time"), "",
+                relax_time_->form_widget(), relax_time_);
     max_simultaneous_games_ = new Wt::Wc::ConstrainedSpinBox();
     max_simultaneous_games_->setRange(min::MAX_SIMULTANEOUS_GAMES,
                                       max::MAX_SIMULTANEOUS_GAMES);
@@ -112,10 +116,6 @@ CPWidget::CPWidget(const CP* cp, bool allow_change_type,
     games_factor_->setValue(cp->games_factor());
     form_->item(tr("tc.competition.Games_factor"), "",
                 games_factor_, games_factor_);
-    relax_time_ = new Wt::Wc::TimeDurationWidget(min::RELAX_TIME,
-            cp->relax_time(), max::RELAX_TIME);
-    form_->item(tr("tc.competition.Relax_time"), "",
-                relax_time_->form_widget(), relax_time_);
     min_substages_ = new Wt::Wc::ConstrainedSpinBox();
     min_substages_->setRange(min::MIN_SUBSTAGES, max::MIN_SUBSTAGES);
     min_substages_->setValue(cp->min_substages());
@@ -156,11 +156,9 @@ void CPWidget::apply_parameters(CP* cp) {
         cp->set_max_simultaneous_games(max_simultaneous_games);
         cp->set_games_factor(games_factor_->corrected_value());
     }
-    if (t == STAGED) {
-        cp->set_relax_time(relax_time_->corrected_value());
-        cp->set_min_substages(min_substages_->corrected_value());
-        cp->set_increment_substages(increment_substages_->corrected_value());
-    }
+    cp->set_relax_time(relax_time_->corrected_value());
+    cp->set_min_substages(min_substages_->corrected_value());
+    cp->set_increment_substages(increment_substages_->corrected_value());
     if (cp->min_rating() > cp->max_rating()) {
         cp->set_max_rating(cp->min_rating());
     }
@@ -183,7 +181,6 @@ void CPWidget::type_handler() {
     form_->hide(recruiting_time_);
     form_->hide(max_simultaneous_games_);
     form_->hide(games_factor_);
-    form_->hide(relax_time_);
     form_->hide(min_substages_);
     form_->hide(increment_substages_);
     if (t == CLASSICAL || t == STAGED) {
@@ -195,7 +192,6 @@ void CPWidget::type_handler() {
         form_->show(games_factor_);
     }
     if (t == STAGED) {
-        form_->show(relax_time_);
         form_->show(min_substages_);
         form_->show(increment_substages_);
     }

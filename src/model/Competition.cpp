@@ -440,7 +440,7 @@ void Competition::process_classical() {
     BOOST_FOREACH (const GamePtr& g, proposed) {
         if (used[g->white()] < cp_->max_simultaneous_games() &&
                 used[g->black()] < cp_->max_simultaneous_games()) {
-            g.modify()->confirm_by_competition();
+            g.modify()->propose_by_competition();
             t_task(GAME, g.id());
             used[g->white()] += 1;
             used[g->black()] += 1;
