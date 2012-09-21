@@ -140,10 +140,8 @@ void Application::login_handler() {
             online_ = true;
             Wt::Wc::bound_post(check_session_number)();
             {
-                Games games = user()->games().where("state in (?,?,?)")
-                              .bind(Game::CONFIRMED)
-                              .bind(Game::ACTIVE)
-                              .bind(Game::PAUSE);
+                Games games = user()->games().where("state = ?")
+                              .bind(Game::CONFIRMED);
                 games_vector.assign(games.begin(), games.end());
             }
             if (gather_) {
