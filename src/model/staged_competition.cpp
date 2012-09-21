@@ -79,6 +79,8 @@ void StagedCompetition::dot(std::ostream& out) const {
         s2f[stage].insert(std::make_pair(pair.second(), true));
         s2f[stage + 1].insert(winner);
     }
+    FUS& s2f0 = s2f[0];
+    U2FU& s2u0 = s2u[0];
     BOOST_FOREACH (const Stages::value_type& user_and_stage, stages_) {
         const UserPtr& user = user_and_stage.first;
         int stage = user_and_stage.second;
@@ -86,9 +88,9 @@ void StagedCompetition::dot(std::ostream& out) const {
             s2f[stage].insert(std::make_pair(user, true));
         }
         FU u(user, true);
-        if (s2f[0].find(u) == s2f[0].end()) {
-            s2f[0].insert(u);
-            s2u[0][user] = u;
+        if (s2f0.find(u) == s2f0.end()) {
+            s2f0.insert(u);
+            s2u0[user] = u;
         }
     }
     out << "digraph competition_" << competition_->id() << " {" << std::endl;
