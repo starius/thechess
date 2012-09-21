@@ -62,6 +62,12 @@ void write_user_label(std::ostream& out, const FU& fu) {
     out << "\"]";
 }
 
+static struct CompareFu {
+    bool operator()(const FU& a, const FU& b) {
+        return a.first.id() < b.first.id();
+    }
+} compare_fu;
+
 void StagedCompetition::dot(std::ostream& out) const {
     Competitiors comp = competitors();
     S2F s2f;
@@ -99,9 +105,11 @@ void StagedCompetition::dot(std::ostream& out) const {
         int stage = stage_and_fus.first;
         int stage_number = stage + 1;
         const FUS& fus = stage_and_fus.second;
+        std::vector<FU> fus_copy(fus.begin(), fus.end());
+        std::sort(fus_copy.begin(), fus_copy.end(), compare_fu);
         out << "subgraph cluster_" << stage_number << " {" << std::endl;
         out << "label = \"" << "Stage " << stage_number << "\"" << std::endl;
-        BOOST_FOREACH (const FU& fu, fus) {
+        BOOST_FOREACH (const FU& fu, fus_copy) {
             write_user(out, stage_number, fu);
             write_user_label(out, fu);
             out << std::endl;
