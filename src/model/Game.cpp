@@ -347,6 +347,9 @@ void Game::propose_by_competition() {
 
 void Game::confirm() {
     confirmed_ = now();
+    if (!created().isValid()) {
+        set_created(now());
+    }
     state_ = CONFIRMED;
 }
 
