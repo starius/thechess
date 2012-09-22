@@ -8,6 +8,9 @@
 #include <boost/lexical_cast.hpp>
 
 #include <Wt/WEnvironment>
+#include <Wt/WContainerWidget>
+#include <Wt/WAnchor>
+#include <Wt/WString>
 
 #include "widget-set.hpp"
 #include "widgets/chess/MovesWidget.hpp"
@@ -28,8 +31,12 @@ void init_widget_mode() {
                 int id = boost::lexical_cast<int>(*env.getParameter("game"));
                 dbo::Transaction t(tApp->session());
                 GamePtr game = tApp->session().load<Game>(id);
-                tApp->bindWidget(new GameWidget(game),
-                                 *env.getParameter("div"));
+                Wt::WContainerWidget* div = new Wt::WContainerWidget;
+                div->addWidget(new GameWidget(game));
+                Wt::WAnchor* a = new Wt::WAnchor(div);
+                a->setText(Wt::WString::tr("tc.game.Header").arg(game.id()));
+                a->setLink(tApp->path().game_view()->get_link(game.id()));
+                tApp->bindWidget(div, *env.getParameter("div"));
                 return;
             }
         } catch (...)
