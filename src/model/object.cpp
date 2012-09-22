@@ -76,6 +76,13 @@ std::string Object::key() const {
            boost::lexical_cast<std::string>(id);
 }
 
+NotifyTask::NotifyTask(ObjectType ot, int i):
+    Object(ot, i)
+{ }
+
+void NotifyTask::process(TaskPtr task, Planning* server) const
+{ }
+
 NewMessage::NewMessage(int r):
     reader_id(r)
 { }
@@ -137,6 +144,10 @@ void t_task(ObjectType type, int id, const Wt::WDateTime& when) {
 
 void t_task(ObjectType type, int id) {
     t_task(type, id, now());
+}
+
+void t_emit_after(ObjectType type, int id) {
+    t_task(boost::make_shared<NotifyTask>(type, id), now());
 }
 
 }
