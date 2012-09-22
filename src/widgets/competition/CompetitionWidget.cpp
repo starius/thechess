@@ -391,6 +391,12 @@ public:
                 button<&Competition::allow_virtuals>("tc.common.Allow");
             }
         }
+        if (c->state() != Competition::RECRUITING) {
+            new Wt::WBreak(this);
+            Wt::WAnchor* a = new Wt::WAnchor(this);
+            a->setLink(tApp->path().games_of_competition()->link());
+            a->setText(tr("tc.game.List"));
+        }
     }
 
     bool is_editing() const {
