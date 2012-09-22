@@ -104,8 +104,10 @@ public:
     }
 
     void set_gp(const GPPtr& gp) {
-        gp_ = gp;
-        set_query();
+        if (gp != gp_) {
+            gp_ = gp;
+            set_query();
+        }
     }
 
 private:
