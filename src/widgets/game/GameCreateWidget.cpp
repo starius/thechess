@@ -37,6 +37,16 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
     }
 }
 
+GameCreateWidget::GameCreateWidget(const GPPtr& gp, Wt::WContainerWidget* p):
+    Wt::WContainerWidget(p), with_user_(false), gp_(gp) {
+    dbo::Transaction t(tApp->session());
+    new Header(tr("tc.game.Challenge"), this);
+    tApp->user().reread();
+    if (tApp->user() && tApp->user()->has_permission(GAME_CREATOR)) {
+        print();
+    }
+}
+
 GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :
     Wt::WContainerWidget(p), with_user_(false) {
     dbo::Transaction t(tApp->session());
@@ -49,6 +59,7 @@ GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :
 
 void GameCreateWidget::print() {
     selector_ = new GPSelector(this);
+    selector_->set_gp(gp_);
     Wt::Wc::TableForm* form = new Wt::Wc::TableForm(this);
     color_ = new Wt::WComboBox();
     color_->addItem(tr("tc.game.random"));
