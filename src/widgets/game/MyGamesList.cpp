@@ -30,37 +30,39 @@ class MyGameAnchor : public Wt::WAnchor, public Notifiable {
 public:
     MyGameAnchor(const GamePtr& game, MyGamesListImp* list):
         Notifiable(Object(GAME, game.id())),
-        game_id_(game.id()), list_(list) {
+        game_(game), list_(list) {
         if (!User::has_s(SWITCH_NAMES_IN_MYMENU) ||
                 !game->other_user(tApp->user())) {
-            setText(boost::lexical_cast<std::string>(game_id_));
+            setText(boost::lexical_cast<std::string>(game_.id()));
         } else {
             setText(game->other_user(tApp->user())->safe_username());
         }
-        setLink(tApp->path().game_view()->get_link(game_id_));
+        setLink(tApp->path().game_view()->get_link(game_.id()));
         setInline(false);
-        UserPtr user = tApp->user();
-        if (game->can_confirm(user)) {
-            excite();
-        } else if (game->can_competition_confirm(user)) {
-            excite();
-        } else if (game->can_pause_agree(user)) {
-            excite();
-        } else if (game->can_mistake_agree(user)) {
-            excite();
-        } else if (game->can_draw_agree(user)) {
-            excite();
-        } else if (game->can_move(user)) {
-            excite();
-        }
+        excite_or_unexcite();
         deselect();
         style_by_state(game->state());
     }
 
     virtual void notify(EventPtr);
 
+    bool can_i_do_smth() {
+        dbo::Transaction t(tApp->session());
+        UserPtr user = tApp->user();
+        return game_->can_confirm(user) ||
+               game_->can_competition_confirm(user) ||
+               game_->can_pause_agree(user) ||
+               game_->can_mistake_agree(user) ||
+               game_->can_draw_agree(user) ||
+               game_->can_move(user);
+    }
+
+    const GamePtr& game() const {
+        return game_;
+    }
+
     int game_id() const {
-        return game_id_;
+        return game_.id();
     }
 
     void select() {
@@ -71,6 +73,14 @@ public:
     void deselect() {
         removeStyleClass("thechess-selected");
         addStyleClass("thechess-deselected");
+    }
+
+    void excite_or_unexcite() {
+        if (can_i_do_smth()) {
+            excite();
+        } else {
+            unexcite();
+        }
     }
 
     void excite() {
@@ -103,7 +113,7 @@ public:
     }
 
 private:
-    int game_id_;
+    GamePtr game_;
     MyGamesListImp* list_;
 };
 
@@ -180,17 +190,28 @@ private:
     void anchor_notify_handler(MyGameAnchor* a, EventPtr e) {
         const Object* o = DOWNCAST<const Object*>(e.get());
         if (o->user_id != user_.id()) {
-            a->excite();
+            MyGameAnchor* last_clicked_a = 0;
+            if (last_clicked_) {
+                Anchors::iterator it = anchors_.find(last_clicked_);
+                if (it != anchors_.end()) {
+                    last_clicked_a = it->second;
+                }
+            }
+            if (a != last_clicked_a) {
+                a->excite();
+            }
             sound_->stop();
             sound_->play();
+        } else {
+            a->excite_or_unexcite();
         }
         dbo::Transaction t(tApp->session());
-        int game_id = a->game_id();
-        GamePtr game = tApp->session().load<Game>(game_id, /* reread */ true);
+        GamePtr game = a->game();
+        game.reread();
         if (game->state() > Game::MIN_ENDED) {
             Wt::Wc::schedule_action(MINUTE, Wt::Wc::bound_post(boost::bind(
                                         &MyGamesListImp::remove_anchor,
-                                        this, a, game_id)));
+                                        this, a, game.id())));
         } else if (state_of(a) != game->state()) {
             extract_anchor(a);
             insert_anchor(a, game->state());
@@ -214,12 +235,12 @@ private:
             if (it != anchors_.end()) {
                 MyGameAnchor* a = it->second;
                 a->deselect();
-                a->unexcite();
+                a->excite_or_unexcite();
             }
         }
         last_clicked_ = target->game_id();
         target->select();
-        target->unexcite();
+        target->excite_or_unexcite();
     }
 
     friend class MyGameAnchor;
