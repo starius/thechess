@@ -98,6 +98,11 @@ public:
         return gp_view_;
     }
 
+    /** Start challenge with the GP */
+    url::PredefinedNode* gp_challenge() const {
+        return gp_challenge_;
+    }
+
     /** Create new GP */
     url::PredefinedNode* gp_new() const {
         return gp_new_;
@@ -247,6 +252,7 @@ private:
     url::PredefinedNode* game_new_;
     url::PredefinedNode* gp_list_;
     url::IntegerNode* gp_view_;
+    url::PredefinedNode* gp_challenge_;
     url::PredefinedNode* gp_new_;
     url::PredefinedNode* competition_list_;
     url::IntegerNode* competition_view_;
@@ -282,6 +288,7 @@ private:
     void open_game();
     void open_game_move();
     void open_gp();
+    void open_gp_challenge();
     void open_competition();
     void open_games_of_competition();
     void open_board();

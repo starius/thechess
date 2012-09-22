@@ -85,6 +85,9 @@ public:
     /** View the gp */
     void gp_view(const GPPtr& gp);
 
+    /** Game challenge with this GP */
+    void gp_challenge(const GPPtr& gp);
+
     /** List of competitions */
     void competition_list();
 

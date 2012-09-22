@@ -33,6 +33,7 @@ Path::Path(Wt::WObject* parent):
     game_new_ = new PredefinedNode("new", game_list_);
     gp_list_ = new PredefinedNode("parameters", game_list_);
     gp_view_ = new IntegerNode(gp_list_);
+    gp_challenge_ = new PredefinedNode("challenge", gp_view_);
     gp_new_ = new PredefinedNode("new", gp_list_);
     competition_list_ = new PredefinedNode("competition", this);
     competition_view_ = new IntegerNode(competition_list_);
@@ -85,6 +86,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(game_new_, boost::bind(&MainWidget::game_new, mw));
     connect(gp_list_, boost::bind(&MainWidget::gp_list, mw));
     connect(gp_view_, boost::bind(&Path::open_gp, this));
+    connect(gp_challenge_, boost::bind(&Path::open_gp_challenge, this));
     connect(competition_list_, boost::bind(&MainWidget::competition_list, mw));
     connect(competition_view_, boost::bind(&Path::open_competition, this));
     connect(games_of_competition_,
@@ -178,6 +180,16 @@ void Path::open_gp() {
     dbo::Transaction t(tApp->session());
     try {
         main_widget_->gp_view(tApp->session().load<GP>(id));
+    } catch (dbo::ObjectNotFoundException)
+    { }
+}
+
+void Path::open_gp_challenge() {
+    BOOST_ASSERT(main_widget_);
+    long long id = gp_view_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        main_widget_->gp_challenge(tApp->session().load<GP>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
 }

@@ -229,6 +229,11 @@ void MainWidget::gp_view(const GPPtr& gp) {
     wApp->setTitle(tr("tc.title.GPWidget").arg(gp.id()));
 }
 
+void MainWidget::gp_challenge(const GPPtr& gp) {
+    set_contents(new GameCreateWidget(gp));
+    wApp->setTitle(tr("tc.title.GameCreateWidget"));
+}
+
 void MainWidget::competition_view(const CompetitionPtr& c) {
     set_contents(new CompetitionWidget(c));
     if (c->name().empty()) {
