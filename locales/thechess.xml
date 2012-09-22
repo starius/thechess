@@ -944,6 +944,10 @@ TheChess.
     <message id='tc.user.Online'>
         <font style="background:Lightsteelblue;">Online</font>
     </message>
+    <message id='tc.user.Our_games_stat'>
+        You have played {1} with {5}, {2} of them were your wins,
+        {3} were won by {5} and {4} were draws.
+    </message>
     <message id='tc.user.Removed_text'>
         You were removed by a moderator!
         Probably you understand the reason why.

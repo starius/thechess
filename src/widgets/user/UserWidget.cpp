@@ -311,8 +311,31 @@ private:
         new Wt::WText(tr("tc.user.Games_stat"), this);
         print_stat(stat);
         if (tApp->user() && tApp->user() != user_) {
+            print_our_stat();
             print_expectations();
         }
+    }
+
+    void print_our_stat() {
+        typedef dbo::Query<int> Q;
+        Q base_q = tApp->session().query<int>(
+                       "select count(1) from thechess_game where "
+                       "winner_game_id = ? and (white_id = ? or black_id = ?)");
+        int my = Q(base_q).bind(tApp->user()).bind(user_).bind(user_);
+        int his = Q(base_q).bind(user_).bind(tApp->user()).bind(tApp->user());
+        Q draws_q = tApp->session().query<int>(
+                        "select count(1) from thechess_game "
+                        "where state >= ? and state <= ? and "
+                        "(white_id = ? or white_id = ?) and "
+                        "(black_id = ? or black_id = ?)");
+        int draws = Q(draws_q).bind(Game::MIN_DRAW).bind(Game::MAX_DRAW)
+                    .bind(tApp->user()).bind(user_)
+                    .bind(tApp->user()).bind(user_);
+        int all = my + his + draws;
+        new Wt::WBreak(this);
+        new Wt::WText(tr("tc.user.Our_games_stat")
+                      .arg(all).arg(my).arg(his).arg(draws)
+                      .arg(user_->safe_username()), this);
     }
 
     void print_expectations() {
