@@ -26,12 +26,16 @@ public:
         PAUSE = 30, /**< is paused until predefined time, clock is paused */
 #ifndef DOXYGEN_ONLY
         MIN_ENDED = 50,
+        MIN_DRAW = 50,
 #endif
         DRAW_STALEMATE = 50, /**< ended with stalemate */
         DRAW_AGREED = 51, /**< ended with draw by agreement */
         DRAW_50 = 52, /**< ended because of 50 without pawn or takes */
         DRAW_3 = 53, /**< ended because same position repeated thrice */
         DRAW_2_KINGS = 54, /**< ended with low material draw */
+#ifndef DOXYGEN_ONLY
+        MAX_DRAW = 55,
+#endif
         SURRENDERED = 61, /**< ended because one of users surrendered */
         TIMEOUT = 62, /**< ended because of timeout */
         CANCELLED = 63, /**< ended because user cancelled it */
