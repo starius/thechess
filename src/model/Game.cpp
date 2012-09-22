@@ -147,27 +147,35 @@ UserPtr Game::other_user(const UserPtr& user) const {
 
 void Game::check(Wt::Wc::notify::TaskPtr task) {
     Td game_max_preactive = Options::instance()->game_max_preactive();
+    task->set_notify_needed(false);
     if (state() == PROPOSED && !competition() &&
             now() - created() > game_max_preactive) {
+        task->set_notify_needed(true);
         finish(CANCELLED);
     }
     if (state() == CONFIRMED && !competition() &&
             now() - confirmed_ > game_max_preactive) {
+        task->set_notify_needed(true);
         finish(CANCELLED);
     }
     if (state() == PROPOSED && competition() && created().isValid() &&
             now() - created() > competition()->cp()->relax_time()) {
+        task->set_notify_needed(true);
         confirm();
     }
     if (state() == CONFIRMED && white()->online() && black()->online()) {
+        task->set_notify_needed(true);
         start();
     } else if (state() == CONFIRMED && competition()) {
         if (now() - confirmed_ > competition()->cp()->force_start_delay()) {
+            task->set_notify_needed(true);
             start();
         }
     } else if (state() == PAUSE && now() > pause_until()) {
+        task->set_notify_needed(true);
         stop_pause();
     } else if (state() == ACTIVE && total_limit_now(order_user()) < TD_NULL) {
+        task->set_notify_needed(true);
         const UserPtr& winner = user_of(Piece::other_color(order_color()));
         finish(TIMEOUT, winner);
     }
