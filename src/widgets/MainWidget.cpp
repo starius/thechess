@@ -47,6 +47,8 @@
 #include "chess/Board.hpp"
 #include "chess/Piece.hpp"
 #include "log.hpp"
+#include "Path.hpp" // FIXME
+#include "Application.hpp" // FIXME
 
 namespace thechess {
 
@@ -225,6 +227,11 @@ void MainWidget::gp_view(const GPPtr& gp) {
     // FIXME
     c->addWidget(new Header(tr("tc.game.Parameters") + " " + TO_S(gp.id())));
     c->addWidget(new GPWidget(gp.get()));
+    // FIXME
+    Wt::WAnchor* challenge = new Wt::WAnchor(c);
+    tApp->path().gp_view()->set_integer_value(gp.id());
+    challenge->setLink(tApp->path().gp_challenge()->link());
+    challenge->setText(tr("tc.game.Challenge"));
     set_contents(c);
     wApp->setTitle(tr("tc.title.GPWidget").arg(gp.id()));
 }
