@@ -47,6 +47,7 @@ Other options:
     int user_agreement_id
     int game_max_preactive_seconds
     int min_first_draw
+    int max_sessions
 
 Dependencies:
  * witty library (>=3.2.1)

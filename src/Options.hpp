@@ -127,6 +127,11 @@ public:
         return min_first_draw_;
     }
 
+    /** Get max sessions number allowed from one IP */
+    int max_sessions() const {
+        return max_sessions_;
+    }
+
     /** Return options used in current application */
     static Options* instance();
 
@@ -150,6 +155,7 @@ private:
     int user_agreement_id_;
     Td game_max_preactive_;
     int min_first_draw_;
+    int max_sessions_;
 
     bool read_int_value(const std::string& name, int& value);
 };

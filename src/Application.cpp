@@ -198,7 +198,7 @@ bool Application::check_ip() {
     boost::mutex::scoped_lock lock(sessions_per_ip_mutex_);
     int& count = sessions_per_ip_[environment().clientAddress()];
     count += 1;
-    if (count > 10) {
+    if (count > Options::instance()->max_sessions()) {
         new Wt::WText(Wt::WString::tr("tc.user.Many_sessions"), root());
         quit();
         return false;

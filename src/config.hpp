@@ -147,6 +147,9 @@ const int USER_AGREEMENT_ID = -1;
 /** Max time non-competition game can be proposed or confirmed */
 const Td GAME_MAX_PREACTIVE = DAY;
 
+/** Max number of sessions allowed from one IP */
+const int MAX_SESSIONS = 10;
+
 }
 
 /** The namespace for max allowed values of parameters */

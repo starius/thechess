@@ -34,7 +34,8 @@ Options::Options(const Wt::WServer& server):
     best_players_shown_(config::defaults::BEST_PLAYERS_SHOWN),
     user_agreement_id_(config::defaults::USER_AGREEMENT_ID),
     game_max_preactive_(config::defaults::GAME_MAX_PREACTIVE),
-    min_first_draw_(config::min::FIRST_DRAW) {
+    min_first_draw_(config::min::FIRST_DRAW),
+    max_sessions_(config::defaults::MAX_SESSIONS) {
     std::string value;
     if (server.readConfigurationProperty("database_type", value)) {
         BOOST_ASSERT(value == "postgres" ||
@@ -66,6 +67,7 @@ Options::Options(const Wt::WServer& server):
         game_max_preactive_ = seconds * SECOND;
     }
     read_int_value("min_first_draw", min_first_draw_);
+    read_int_value("max_sessions", max_sessions_);
 }
 
 Options* Options::instance() {
