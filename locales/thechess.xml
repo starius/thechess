@@ -819,7 +819,7 @@ TheChess.
         {1} « Competition « TheChess
     </message>
     <message id='tc.title.GameListWidget_of'>
-        With {1} « Game « TheChess
+        Of {1} « Game « TheChess
     </message>
     <message id='tc.title.GPListWidget'>
         List « Parameters « Game « TheChess

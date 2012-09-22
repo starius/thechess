@@ -233,6 +233,15 @@ void MainWidget::competition_view(const CompetitionPtr& c) {
     }
 }
 
+void MainWidget::games_of_competition(const CompetitionPtr& c) {
+    set_contents(new GameListWidget(c));
+    if (c->name().empty()) {
+        wApp->setTitle(tr("tc.title.GameListWidget_of").arg(c.id()));
+    } else {
+        wApp->setTitle(tr("tc.title.GameListWidget_of").arg(c->name()));
+    }
+}
+
 void MainWidget::competition_list() {
     set_contents(new CompetitionListWidget());
     wApp->setTitle(tr("tc.title.CompetitionListWidget"));

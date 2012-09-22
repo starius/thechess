@@ -113,6 +113,11 @@ public:
         return competition_view_;
     }
 
+    /** List games of competition */
+    url::PredefinedNode* games_of_competition() const {
+        return games_of_competition_;
+    }
+
     /** Create new competition */
     url::PredefinedNode* competition_new() const {
         return competition_new_;
@@ -245,6 +250,7 @@ private:
     url::PredefinedNode* gp_new_;
     url::PredefinedNode* competition_list_;
     url::IntegerNode* competition_view_;
+    url::PredefinedNode* games_of_competition_;
     url::PredefinedNode* competition_new_;
     url::PredefinedNode* cp_list_;
     url::IntegerNode* cp_view_;
@@ -277,6 +283,7 @@ private:
     void open_game_move();
     void open_gp();
     void open_competition();
+    void open_games_of_competition();
     void open_board();
     void open_moves();
     void open_forum_topic_posts();

@@ -340,7 +340,7 @@
         {1} « Турнир « TheChess
     </message>
     <message id='tc.title.GameListWidget_of'>
-        С {1} « Игра « TheChess
+        {1} « Игра « TheChess
     </message>
     <message id='tc.title.GPListWidget'>
         Список « Параметры « Игра « TheChess

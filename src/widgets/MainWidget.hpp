@@ -91,6 +91,9 @@ public:
     /** View the competition */
     void competition_view(const CompetitionPtr& competition);
 
+    /** List games of competition */
+    void games_of_competition(const CompetitionPtr& c);
+
     /** Create new competition */
     void competition_new();
 
