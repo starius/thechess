@@ -8,10 +8,12 @@
 #include <cstdlib>
 #include <stdexcept>
 #include <vector>
+#include <map>
 #include <utility>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/assert.hpp>
+#include <boost/thread/mutex.hpp>
 
 #include <Wt/WEnvironment>
 #include <Wt/Dbo/Exception>
@@ -31,10 +33,17 @@
 
 namespace thechess {
 
+typedef std::map<std::string, int> Ip2Int;
+static Ip2Int sessions_per_ip_;
+static boost::mutex sessions_per_ip_mutex_;
+
 Application::Application(const Wt::WEnvironment& env, Server& server) :
     Wt::WApplication(env), server_(server), session_(server.pool()),
     gather_(0), kick_(0),
     online_(true), last_user_event_(now()), next_check_(now()) {
+    if (!check_ip()) {
+        return;
+    }
     main_widget_ = new MainWidget(root());
     main_widget_->add_locale_setters(boost::bind(
                                          &Application::set_locale_by_user,
@@ -65,6 +74,9 @@ Application::Application(bool, const Wt::WEnvironment& env, Server& server):
     Wt::WApplication(env), server_(server), session_(server.pool()),
     gather_(0), kick_(0),
     online_(true), last_user_event_(now()), next_check_(now()) {
+    if (!check_ip()) {
+        return;
+    }
     enableUpdates(true);
     useStyleSheet("css/1.css");
     messageResourceBundle().use(Wt::WApplication::appRoot() +
@@ -79,6 +91,7 @@ Application::Application(bool, const Wt::WEnvironment& env, Server& server):
 }
 
 Application::~Application() {
+    decrease_sessions_counter();
     delete kick_;
     try {
         dbo::Transaction t(session());
@@ -111,15 +124,6 @@ void Application::set_locale_by_user(const std::string& locale) {
     }
 }
 
-static void check_session_number() {
-    dbo::Transaction t(tApp->session());
-    if (tApp && tApp->user() && tApp->user()->sessions() > 10) {
-        tApp->root()->clear();
-        new Wt::WText(Wt::WString::tr("tc.user.Many_sessions"), tApp->root());
-        tApp->quit();
-    }
-}
-
 void Application::login_handler() {
     dbo::Transaction t(session());
     user_ = session().user();
@@ -137,7 +141,6 @@ void Application::login_handler() {
         if (user()) {
             user().modify()->try_again_login();
             online_ = true;
-            Wt::Wc::bound_post(check_session_number)();
             if (gather_) {
                 gather_->explore_all();
             }
@@ -189,6 +192,30 @@ void Application::notify(const Wt::WEvent& e) {
 
 Application* Application::instance() {
     return downcast<Application*>(Wt::WApplication::instance());
+}
+
+bool Application::check_ip() {
+    boost::mutex::scoped_lock lock(sessions_per_ip_mutex_);
+    int& count = sessions_per_ip_[environment().clientAddress()];
+    count += 1;
+    if (count > 10) {
+        new Wt::WText(Wt::WString::tr("tc.user.Many_sessions"), root());
+        quit();
+        return false;
+    } else {
+        return true;
+    }
+}
+
+void Application::decrease_sessions_counter() {
+    boost::mutex::scoped_lock lock(sessions_per_ip_mutex_);
+    Ip2Int::iterator it = sessions_per_ip_.find(environment().clientAddress());
+    if (it != sessions_per_ip_.end()) {
+        it->second -= 1;
+        if (it->second <= 0) {
+            sessions_per_ip_.erase(it);
+        }
+    }
 }
 
 void Application::set_auth_widget() {

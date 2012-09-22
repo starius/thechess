@@ -108,6 +108,9 @@ private:
     Wt::WDateTime next_check_;
     UserPtr user_;
 
+    bool check_ip();
+    void decrease_sessions_counter();
+
     void set_auth_widget();
     void login_handler();
     void gather_init();
