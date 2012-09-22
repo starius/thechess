@@ -220,17 +220,20 @@ private:
         } else {
             a->excite_or_unexcite();
         }
-        dbo::Transaction t(tApp->session());
-        GamePtr game = a->game();
-        game.reread();
-        if (game->state() > Game::MIN_ENDED) {
-            Wt::Wc::schedule_action(MINUTE, Wt::Wc::bound_post(boost::bind(
-                                        &MyGamesListImp::remove_anchor,
-                                        this, a, game.id())));
-        } else if (state_of(a) != game->state()) {
-            extract_anchor(a);
-            insert_anchor(a, game->state());
-            a->style_by_state(game->state());
+        if (o->user_id == 0) {
+            // this event was initiated by Planning
+            dbo::Transaction t(tApp->session());
+            GamePtr game = a->game();
+            game.reread();
+            if (game->state() > Game::MIN_ENDED) {
+                Wt::Wc::schedule_action(MINUTE, Wt::Wc::bound_post(boost::bind(
+                                            &MyGamesListImp::remove_anchor,
+                                            this, a, game.id())));
+            } else if (state_of(a) != game->state()) {
+                extract_anchor(a);
+                insert_anchor(a, game->state());
+                a->style_by_state(game->state());
+            }
         }
     }
 
