@@ -179,6 +179,9 @@ public:
             q.where("G.white_id = ? or G.black_id = ? or G.init_id = ?")
             .bind(id).bind(id).bind(id);
         }
+        if (competition_) {
+            q.where("G.competition_id = ?").bind(competition_);
+        }
         if (state_ == GameStateSelect::NOTSTARTED) {
             q.where("G.state < ?").bind(Game::ACTIVE);
         } else if (state_ == GameStateSelect::ENDED) {
@@ -237,10 +240,18 @@ public:
         }
     }
 
+    void set_competition(const CompetitionPtr& competition) {
+        if (competition != competition_) {
+            competition_ = competition;
+            set_query();
+        }
+    }
+
 private:
     bool only_my_;
     bool only_commented_;
     UserPtr user_;
+    CompetitionPtr competition_;
     GameStateSelect::State state_;
     Wt::WString name_like_;
 };
@@ -267,8 +278,17 @@ public:
         initialize(user);
     }
 
-    void initialize(const UserPtr& user = UserPtr()) {
+    GameListWidgetImpl(const CompetitionPtr& competition) :
+        Wt::WContainerWidget() {
+        initialize(UserPtr(), competition);
+    }
+
+    void initialize(const UserPtr& user = UserPtr(),
+                    const CompetitionPtr& c = CompetitionPtr()) {
         model_ = new GameListModel(user, this);
+        if (c) {
+            model_->set_competition(c);
+        }
         manager();
         table_view_ = new GameTableView();
         addWidget(table_view_);
@@ -341,6 +361,13 @@ GameListWidget::GameListWidget(const UserPtr& user, Wt::WContainerWidget* p):
     WContainerWidget(p) {
     addWidget(new Header(tr("tc.game.List")));
     addWidget(new GameListWidgetImpl(user));
+}
+
+GameListWidget::GameListWidget(const CompetitionPtr& competition,
+                               Wt::WContainerWidget* p):
+    WContainerWidget(p) {
+    addWidget(new Header(tr("tc.game.List")));
+    addWidget(new GameListWidgetImpl(competition));
 }
 
 }
