@@ -20,6 +20,7 @@
 
 #include "widgets/comment/CommentList.hpp"
 #include "widgets/comment/CommentModel.hpp"
+#include "widgets/comment/comment_base.hpp"
 #include "widgets/comment/remover_buttons.hpp"
 #include "widgets/user/user_anchor.hpp"
 #include "widgets/Header.hpp"
@@ -344,6 +345,10 @@ void CommentList::add_comment(const CommentPtr& parent) {
         post_text_->setValueText("");
     }
     t_emit(COMMENT, root.id());
+    Object base = comment_base(comment);
+    if (base.type == GAME) {
+        t_emit(GAME, base.id);
+    }
     if (!wApp->environment().ajax()) {
         comment_model()->reload();
     }
