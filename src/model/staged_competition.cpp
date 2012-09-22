@@ -251,8 +251,8 @@ void StagedCompetition::create_games(Competition* competition) {
                 games_[pair].push_back(game);
                 t_task(GAME, game.id());
             }
-            t_task(USER, pair.first().id());
-            t_task(USER, pair.second().id());
+            t_emit_after(USER, pair.first().id());
+            t_emit_after(USER, pair.second().id());
         }
     }
 }

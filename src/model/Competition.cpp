@@ -399,7 +399,7 @@ void Competition::create_games_classical() {
             N[black][white] += 1;
             create_game(white, black);
         }
-        t_task(USER, white.id());
+        t_emit_after(USER, white.id());
     }
 }
 
