@@ -110,6 +110,10 @@ public:
         }
     }
 
+    void check_state();
+
+    void check_ended();
+
 private:
     GamePtr game_;
     MyGamesListImp* list_;
@@ -141,6 +145,7 @@ public:
                 MyGameAnchor* a = last_it->second;
                 a->deselect();
                 a->excite_or_unexcite();
+                a->check_state();
             }
         }
         Anchors::iterator it = anchors_.find(game.id());
@@ -149,6 +154,7 @@ public:
             last_clicked_ = target->game_id();
             target->select();
             target->excite_or_unexcite();
+            target->check_state();
         }
     }
 
@@ -225,15 +231,7 @@ private:
             dbo::Transaction t(tApp->session());
             GamePtr game = a->game();
             game.reread();
-            if (game->state() > Game::MIN_ENDED) {
-                Wt::Wc::schedule_action(MINUTE, Wt::Wc::bound_post(boost::bind(
-                                            &MyGamesListImp::remove_anchor,
-                                            this, a, game.id())));
-            } else if (state_of(a) != game->state()) {
-                extract_anchor(a);
-                insert_anchor(a, game->state());
-                a->style_by_state(game->state());
-            }
+            a->check_state();
         }
     }
 
@@ -251,6 +249,24 @@ private:
 
 void MyGameAnchor::notify(EventPtr e) {
     list_->anchor_notify_handler(this, e);
+}
+
+void MyGameAnchor::check_state() {
+    dbo::Transaction t(tApp->session());
+    if (list_->state_of(this) != game_->state()) {
+        list_->extract_anchor(this);
+        list_->insert_anchor(this, game_->state());
+        style_by_state(game_->state());
+    }
+}
+
+void MyGameAnchor::check_ended() {
+    dbo::Transaction t(tApp->session());
+    if (game_->state() > Game::MIN_ENDED) {
+        Wt::Wc::schedule_action(MINUTE, Wt::Wc::bound_post(boost::bind(
+                                    &MyGamesListImp::remove_anchor,
+                                    list_, this, game_.id())));
+    }
 }
 
 MyGamesList::MyGamesList(const UserPtr& user, Wt::WContainerWidget* p):
