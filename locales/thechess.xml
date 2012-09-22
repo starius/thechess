@@ -636,6 +636,7 @@ TheChess.
     <message id='tc.game.Analysis'>Analysis</message>
     <message id='tc.game.Analysis_title'>Analysis of game # {1}</message>
     <message id='tc.game.black'>black</message>
+    <message id='tc.game.Black_won'>Black won</message>
     <message id='tc.game.Call_auto_judge'>Call auto judge</message>
     <message id='tc.game.Challenge'>Challenge</message>
     <message id='tc.game.colors'>colors</message>
@@ -712,6 +713,7 @@ TheChess.
     <message id='tc.game.Stop_pause'>Stop pause</message>
     <message id='tc.game.Surrender'>Surrender</message>
     <message id='tc.game.white'>white</message>
+    <message id='tc.game.White_won'>White won</message>
     <message id='tc.game.your_color'>your color</message>
     <message id='tc.game.external_code'>
 <div id="thechess_game_{1}"></div>

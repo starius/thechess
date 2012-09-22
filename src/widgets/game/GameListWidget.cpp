@@ -49,6 +49,9 @@ public:
         ACTIVE,
         PAUSE,
         ENDED,
+        WHITE_WON,
+        BLACK_WON,
+        DRAW,
         CANCELLED
     };
 
@@ -59,6 +62,9 @@ public:
         addItem(tr(Game::state2str_id(Game::ACTIVE)));
         addItem(tr(Game::state2str_id(Game::PAUSE)));
         addItem(tr("tc.game.ended"));
+        addItem(tr("tc.game.White_won"));
+        addItem(tr("tc.game.Black_won"));
+        addItem(tr("tc.common.Draws"));
         addItem(tr(Game::state2str_id(Game::CANCELLED)));
     }
 
@@ -177,6 +183,15 @@ public:
             q.where("G.state < ?").bind(Game::ACTIVE);
         } else if (state_ == GameStateSelect::ENDED) {
             q.where("G.state >= ?").bind(Game::MIN_ENDED);
+        } else if (state_ == GameStateSelect::WHITE_WON) {
+            q.where("G.state >= ?").bind(Game::MIN_ENDED);
+            q.where("G.white_id = G.winner_game_id");
+        } else if (state_ == GameStateSelect::BLACK_WON) {
+            q.where("G.state >= ?").bind(Game::MIN_ENDED);
+            q.where("G.black_id = G.winner_game_id");
+        } else if (state_ == GameStateSelect::DRAW) {
+            q.where("G.state >= ? and G.state <= ?");
+            q.bind(Game::MIN_DRAW).bind(Game::MAX_DRAW);
         } else if (state_ != GameStateSelect::ALL) {
             q.where("G.state = ?").bind(GameStateSelect::state(state_));
         }
