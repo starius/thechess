@@ -471,15 +471,18 @@ bool User::can_send_message(const UserPtr& to) const {
 }
 
 void User::check(Wt::Wc::notify::TaskPtr task) {
-    check_vacation();
+    task->set_notify_needed(check_vacation());
     if (vacation_until_.isValid() && vacation_until_ > now()) {
         t_task(task, vacation_until_);
     }
 }
 
-void User::check_vacation() {
+bool User::check_vacation() {
     if (vacation_until_.isValid() && vacation_until_ < now()) {
         vacation_until_ = Wt::WDateTime();
+        return true;
+    } else {
+        return false;
     }
 }
 

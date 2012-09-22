@@ -432,7 +432,7 @@ private:
     GPs gps_;
     CPs cps_;
 
-    void check_vacation();
+    bool check_vacation();
 };
 
 }
