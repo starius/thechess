@@ -15,9 +15,17 @@
 
 namespace thechess {
 
+class MyGamesListImp;
+
 class MyGamesList : public Wt::WCompositeWidget {
 public:
     MyGamesList(const UserPtr& user, Wt::WContainerWidget* p = 0);
+
+    /** Select game */
+    void select_game(const GamePtr& game);
+
+private:
+    MyGamesListImp* impl_;
 };
 
 }

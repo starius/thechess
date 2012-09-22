@@ -180,6 +180,7 @@ private:
     Wt::WContainerWidget* contents_place_;
     Wt::WContainerWidget* mygames_place_;
     Wt::WContainerWidget* bottom_place_;
+    MyGamesList* mymenu_;
 
     void set_contents(WWidget* widget);
     void show_countup();

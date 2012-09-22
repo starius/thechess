@@ -62,7 +62,8 @@ enum {
 };
 
 MainWidget::MainWidget(Wt::WContainerWidget* parent):
-    Wt::WContainerWidget(parent) {
+    Wt::WContainerWidget(parent),
+    mymenu_(0) {
     Wt::WTable* top = new Wt::WTable(this);
     Wt::WAnchor* logo = new Wt::WAnchor();
     logo->setText(tr("tc.common.Logo"));
@@ -115,8 +116,10 @@ MainMenu* MainWidget::main_menu() {
 
 void MainWidget::update_my_games() {
     mygames_place_->clear();
+    mymenu_ = 0;
     if (tApp->user()) {
-        mygames_place_->addWidget(new MyGamesList(tApp->user()));
+        mymenu_ = new MyGamesList(tApp->user());
+        mygames_place_->addWidget(mymenu_);
     }
 }
 
@@ -184,6 +187,10 @@ void MainWidget::game_view(const GamePtr& game) {
     } else {
         wApp->setTitle(tr("tc.title.GameWidget").arg(game->name()));
     }
+    if (mymenu_) {
+        // do this after GameWidget reread game
+        mymenu_->select_game(game);
+    }
 }
 
 void MainWidget::game_view(const GamePtr& game, int move_number) {
@@ -191,6 +198,10 @@ void MainWidget::game_view(const GamePtr& game, int move_number) {
     widget->set_half_move(Moves::half_move_index(move_number, Piece::WHITE));
     set_contents(widget);
     wApp->setTitle(tr("tc.title.GameWidget").arg(game.id()));
+    if (mymenu_) {
+        // do this after GameWidget reread game
+        mymenu_->select_game(game);
+    }
 }
 
 void MainWidget::game_list() {

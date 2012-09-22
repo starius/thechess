@@ -24,8 +24,6 @@ const int ORDER_OF_STATES_SIZE = 4;
 const Game::State ORDER_OF_STATES[ORDER_OF_STATES_SIZE] =
 {Game::ACTIVE, Game::PAUSE, Game::CONFIRMED, Game::PROPOSED};
 
-class MyGamesListImp;
-
 class MyGameAnchor : public Wt::WAnchor, public Notifiable {
 public:
     MyGameAnchor(const GamePtr& game, MyGamesListImp* list):
@@ -136,6 +134,24 @@ public:
         update_games_list();
     }
 
+    void select_game(const GamePtr& game) {
+        if (last_clicked_) {
+            Anchors::iterator last_it = anchors_.find(last_clicked_);
+            if (last_it != anchors_.end()) {
+                MyGameAnchor* a = last_it->second;
+                a->deselect();
+                a->excite_or_unexcite();
+            }
+        }
+        Anchors::iterator it = anchors_.find(game.id());
+        if (it != anchors_.end()) {
+            MyGameAnchor* target = it->second;
+            last_clicked_ = target->game_id();
+            target->select();
+            target->excite_or_unexcite();
+        }
+    }
+
 private:
     UserPtr user_;
     Anchors anchors_;
@@ -150,7 +166,6 @@ private:
         BOOST_FOREACH (GamePtr game, games) {
             if (anchors_.find(game.id()) == anchors_.end()) {
                 MyGameAnchor* a = new MyGameAnchor(game, this);
-                a->clicked().connect(this, &MyGamesListImp::click_handler);
                 insert_anchor(a, game->state());
                 anchors_[game.id()] = a;
             }
@@ -228,21 +243,6 @@ private:
         }
     }
 
-    void click_handler() {
-        MyGameAnchor* target = downcast<MyGameAnchor*>(sender());
-        if (last_clicked_) {
-            Anchors::iterator it = anchors_.find(last_clicked_);
-            if (it != anchors_.end()) {
-                MyGameAnchor* a = it->second;
-                a->deselect();
-                a->excite_or_unexcite();
-            }
-        }
-        last_clicked_ = target->game_id();
-        target->select();
-        target->excite_or_unexcite();
-    }
-
     friend class MyGameAnchor;
 };
 
@@ -252,7 +252,12 @@ void MyGameAnchor::notify(EventPtr e) {
 
 MyGamesList::MyGamesList(const UserPtr& user, Wt::WContainerWidget* p):
     Wt::WCompositeWidget(p) {
-    setImplementation(new MyGamesListImp(user));
+    impl_ = new MyGamesListImp(user);
+    setImplementation(impl_);
+}
+
+void MyGamesList::select_game(const GamePtr& game) {
+    impl_->select_game(game);
 }
 
 }
