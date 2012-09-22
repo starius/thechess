@@ -19,6 +19,7 @@
 #include "widgets/MainPage.hpp"
 #include "widgets/Footer.hpp"
 #include "widgets/TopBlock.hpp"
+#include "widgets/Header.hpp" // FIXME
 #include "widgets/user/AuthWidget.hpp"
 #include "widgets/game/MyGamesList.hpp"
 #include "widgets/chess/BoardWidget.hpp"
@@ -220,7 +221,11 @@ void MainWidget::gp_list() {
 }
 
 void MainWidget::gp_view(const GPPtr& gp) {
-    set_contents(new GPWidget(gp.get()));
+    Wt::WContainerWidget* c = new Wt::WContainerWidget();
+    // FIXME
+    c->addWidget(new Header(tr("tc.game.Parameters") + " " + TO_S(gp.id())));
+    c->addWidget(new GPWidget(gp.get()));
+    set_contents(c);
     wApp->setTitle(tr("tc.title.GPWidget").arg(gp.id()));
 }
 
