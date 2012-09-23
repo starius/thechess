@@ -80,6 +80,7 @@ void GameCreateWidget::button_handler() {
         error_message_->setText(tr("tc.common.no_params_error"));
         return;
     }
+    gp.reread();
     tApp->user().reread();
     if (!tApp->user() || !tApp->user()->has_permission(GAME_CREATOR)) {
         return;
