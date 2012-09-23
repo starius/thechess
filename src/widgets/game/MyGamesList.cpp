@@ -138,7 +138,7 @@ public:
         update_games_list();
     }
 
-    void select_game(const GamePtr& game) {
+    void select_game(int game_id) {
         if (last_clicked_) {
             Anchors::iterator last_it = anchors_.find(last_clicked_);
             if (last_it != anchors_.end()) {
@@ -148,7 +148,7 @@ public:
                 a->check_state();
             }
         }
-        Anchors::iterator it = anchors_.find(game.id());
+        Anchors::iterator it = anchors_.find(game_id);
         if (it != anchors_.end()) {
             MyGameAnchor* target = it->second;
             last_clicked_ = target->game_id();
@@ -176,6 +176,11 @@ private:
                 anchors_[game.id()] = a;
             }
         }
+        try {
+            int game_id = tApp->path().game_view()->integer();
+            select_game(game_id);
+        } catch (...)
+        { }
     }
 
     Game::State state_of(MyGameAnchor* a) const {
@@ -276,7 +281,7 @@ MyGamesList::MyGamesList(const UserPtr& user, Wt::WContainerWidget* p):
 }
 
 void MyGamesList::select_game(const GamePtr& game) {
-    impl_->select_game(game);
+    impl_->select_game(game.id());
 }
 
 }
