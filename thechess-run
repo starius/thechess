@@ -4,5 +4,5 @@
 # See the LICENSE file for terms of use.
 
 ./src/thechess.wt --http-address=127.0.0.1 --http-port=19022 \
-    --docroot="./files/;/resources,/img,/js,/css,/tinymce,/sound,/favicon.ico"
+    --docroot="./files/;/resources,/img,/js,/css,/tinymce,/sound,/html,/favicon.ico"
 

@@ -199,7 +199,7 @@ bool Application::check_ip() {
     int& count = sessions_per_ip_[environment().clientAddress()];
     count += 1;
     if (count > Options::instance()->max_sessions()) {
-        new Wt::WText(Wt::WString::tr("tc.user.Many_sessions"), root());
+        redirect("/html/too_many_sessions.html");
         quit();
         return false;
     } else {

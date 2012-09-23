@@ -883,7 +883,6 @@ TheChess.
     <message id='tc.user.Last_enter'>Last enter: {1}</message>
     <message id='tc.user.List_rights'>List of rights</message>
     <message id='tc.user.logs_reader'>logs reader</message>
-    <message id='tc.user.Many_sessions'>Too many sessions</message>
     <message id='tc.user.Message_sent'>Message sent</message>
     <message id='tc.user.My_blocklist'>In my blocklist</message>
     <message id='tc.user.Names_in_menu'>Show usernames in game menu</message>

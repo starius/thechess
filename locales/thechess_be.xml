@@ -395,7 +395,6 @@
     <message id="tc.user.Last_enter">Апошні ўваход: {1}</message>
     <message id="tc.user.List_rights">Спіс правоў</message>
     <message id="tc.user.logs_reader">чытаць журнал адміністратара</message>
-    <message id="tc.user.Many_sessions">Занадта шмат сесій</message>
     <message id='tc.user.Message_sent'>Паведамленне адпраўлена</message>
     <message id='tc.user.My_blocklist'>У маім чорным спісе</message>
     <message id="tc.user.Names_in_menu">Паказваць імя карыстальніка ў меню з гульнямі</message>
