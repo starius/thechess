@@ -259,8 +259,10 @@ void MyGameAnchor::notify(EventPtr e) {
 void MyGameAnchor::check_state() {
     dbo::Transaction t(tApp->session());
     if (list_->state_of(this) != game_->state()) {
-        list_->extract_anchor(this);
-        list_->insert_anchor(this, game_->state());
+        if (!game_->is_ended()) {
+            list_->extract_anchor(this);
+            list_->insert_anchor(this, game_->state());
+        }
         style_by_state(game_->state());
     }
 }
