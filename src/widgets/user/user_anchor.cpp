@@ -16,20 +16,42 @@
 
 namespace thechess {
 
-Wt::WWidget* user_anchor(const UserPtr& user, Wt::WContainerWidget* parent) {
-    dbo::Transaction t(tApp->session());
-    Wt::WContainerWidget* result = new Wt::WContainerWidget(parent);
-    result->setInline(true);
-    Gravatar* gravatar = new Gravatar(user, result);
-    gravatar->set_size(15);
-    result->addWidget(gravatar);
-    Wt::WAnchor* anchor = new Wt::WAnchor(result);
-    anchor->setLink(tApp->path().user_view()->get_link(user.id()));
-    anchor->setText(user->safe_username());
-    if (user->online()) {
-        result->addWidget(new Wt::WText(Wt::WString::tr("tc.user.Online")));
+class UserAnchor : public Wt::WContainerWidget, public Notifiable {
+public:
+    UserAnchor(const UserPtr& user, Wt::WContainerWidget* parent):
+        Wt::WContainerWidget(parent),
+        Notifiable(Object(USER, user.id())),
+        user_(user) {
+        setInline(true);
+        reprint();
     }
-    return result;
+
+    void notify(EventPtr) {
+        dbo::Transaction t(tApp->session());
+        user_.reread();
+        reprint();
+    }
+
+    void reprint() {
+        dbo::Transaction t(tApp->session());
+        clear();
+        Gravatar* gravatar = new Gravatar(user_, this);
+        gravatar->set_size(15);
+        addWidget(gravatar);
+        Wt::WAnchor* anchor = new Wt::WAnchor(this);
+        anchor->setLink(tApp->path().user_view()->get_link(user_.id()));
+        anchor->setText(user_->safe_username());
+        if (user_->online()) {
+            addWidget(new Wt::WText(Wt::WString::tr("tc.user.Online")));
+        }
+    }
+
+private:
+    UserPtr user_;
+};
+
+Wt::WWidget* user_anchor(const UserPtr& user, Wt::WContainerWidget* parent) {
+    return new UserAnchor(user, parent);
 }
 
 }
