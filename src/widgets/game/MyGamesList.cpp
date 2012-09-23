@@ -189,7 +189,7 @@ private:
             if (index >= first_of_state_[i]) {
                 return ORDER_OF_STATES[i];
             }
-        return Game::MIN_ENDED;
+        throw std::logic_error("MyGamesListImp: bad anchor state");
     }
 
     void insert_anchor(MyGameAnchor* a, Game::State state) {
