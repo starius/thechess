@@ -73,7 +73,8 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
             return o->init() ?
                    o->init()->safe_username() :
                    Wt::WString::tr("tc.user.Anonymous");
-        } else if (index.column() == DESTINATION_COL) {
+        } else if (index.column() == DESTINATION_COL &&
+                   type() == Comment::PRIVATE_MESSAGE) {
             UserPtr user = destination_user(o);
             if (user) {
                 return user->safe_username();
@@ -100,7 +101,8 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
         if (user) {
             return tApp->path().user_view()->get_link(user.id());
         }
-    } else if (role == Wt::LinkRole && index.column() == DESTINATION_COL) {
+    } else if (role == Wt::LinkRole && index.column() == DESTINATION_COL &&
+               type() == Comment::PRIVATE_MESSAGE) {
         const CommentPtr& o = resultRow(index.row());
         UserPtr user = destination_user(o);
         if (user) {
