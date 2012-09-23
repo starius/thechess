@@ -180,7 +180,6 @@ void Comment::set_depth() {
 
 void Comment::set_type(Type type) {
     type_ = type;
-    set_state(state_of_new(this->init(), this->type(), this->parent()));
 }
 
 Wt::WString Comment::text_or_removed(const UserPtr& viewer) const {
@@ -219,7 +218,6 @@ void Comment::set_text(const Wt::WString& text) {
 
 void Comment::set_init(const UserPtr& init) {
     init_ = init;
-    set_state(state_of_new(this->init(), this->type(), this->parent()));
 }
 
 void Comment::set_root(const CommentPtr& root) {
@@ -234,7 +232,6 @@ void Comment::set_parent(const CommentPtr& parent) {
     parent_ = parent;
     set_depth();
     set_index();
-    set_state(state_of_new(this->init(), this->type(), this->parent()));
 }
 
 void Comment::post_comment_added() {

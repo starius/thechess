@@ -314,7 +314,9 @@ void CommentList::add_comment(const CommentPtr& parent) {
     }
     dbo::Transaction t(tApp->session());
     tApp->user().reread();
-    if (!Comment::can_create(tApp->user(), comment_model()->type(), parent)) {
+    Comment::State state = Comment::state_of_new(tApp->user(),
+                           comment_model()->type(), parent);
+    if (state == Comment::DELETED) {
         return;
     }
     CommentPtr comment = tApp->session().add(new Comment(true));
@@ -322,6 +324,7 @@ void CommentList::add_comment(const CommentPtr& parent) {
     comment.modify()->set_type(type);
     comment.modify()->set_text(text);
     comment.modify()->set_init(tApp->user());
+    comment.modify()->set_state(state);
     CommentPtr root = comment_model()->root();
     comment.modify()->set_root(root);
     if (type == Comment::FORUM_POST) {
@@ -332,6 +335,7 @@ void CommentList::add_comment(const CommentPtr& parent) {
         Wt::WString description = post_text_->valueText();
         post_text.modify()->set_text(patch_text_edit_text(description));
         post_text.modify()->set_init(tApp->user());
+        post_text.modify()->set_state(state);
     }
     if (type == Comment::FORUM_COMMENT) {
         // FORUM_POST's creation time is the time of last comment

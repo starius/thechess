@@ -26,7 +26,9 @@ static void add_comment(CommentPtr comment, Wt::WTextEdit* edit) {
     dbo::Transaction t(tApp->session());
     comment.reread();
     tApp->user().reread();
-    if (!Comment::can_create(tApp->user(), Comment::FORUM_COMMENT, comment)) {
+    Comment::State state = Comment::state_of_new(tApp->user(),
+                           Comment::FORUM_COMMENT, comment);
+    if (state == Comment::DELETED) {
         return;
     }
     CommentPtr c = tApp->session().add(new Comment(true));
@@ -35,6 +37,7 @@ static void add_comment(CommentPtr comment, Wt::WTextEdit* edit) {
     c.modify()->set_text(patch_text_edit_text(edit->valueText()));
     c.modify()->set_init(tApp->user());
     c.modify()->set_root(comment->root());
+    c.modify()->set_state(state);
     int root_id = comment->root().id();
     CommentPtr post_text = comment->root();
     CommentPtr post = post_text->parent();
