@@ -30,9 +30,9 @@ static void logout_app() {
     tApp->session().login().logout();
     wApp->root()->clear();
     if (removed) {
-        new Wt::WText(Wt::WString::tr("tc.user.Removed_text"), wApp->root());
+        wApp->redirect("/html/removed.html");
     } else {
-        new Wt::WText(Wt::WString::tr("tc.user.Kicked_text"), wApp->root());
+        wApp->redirect("/html/kicked.html");
     }
     wApp->triggerUpdate();
     wApp->quit();
