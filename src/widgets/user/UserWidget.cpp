@@ -244,15 +244,15 @@ private:
             admin_log("Unremove user " + user_a(user_.id()));
         }
         t.commit();
-        t_emit(USER, user_.id());
+        t_emit_after(USER, user_.id());
         t_emit("kick-" + TO_S(user_.id()));
     }
 
     void kick() {
         dbo::Transaction t(tApp->session());
-        t_emit(USER, user_.id());
-        t_emit("kick-" + TO_S(user_.id()));
         admin_log("Kick user " + user_a(user_.id()));
+        t.commit();
+        t_emit("kick-" + TO_S(user_.id()));
     }
 
     void set_classification() {
