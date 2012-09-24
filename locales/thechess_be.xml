@@ -84,7 +84,7 @@
     <message id="tc.competition.min_rating">мінімальны рэйтынг</message>
     <message id="tc.competition.Min_substages">Падраундаў у першым раўндзе</message>
     <message id="tc.competition.Online_time">Час, праведзены ўдзельнікамі анлайн</message>
-    <message id="tc.competition.Parameters">Параметры турніру</message>
+    <message id="tc.competition.Parameters">Турнирные параметры</message>
     <message id="tc.competition.Rating">Рэйтынг удзельнікаў</message>
     <message id="tc.competition.Recruiting_time">Час на зборы</message>
     <message id="tc.competition.Relax_time">Час на адпачынак</message>
@@ -196,7 +196,7 @@
     <message id="tc.game.Only_commented">Толькі пракаментаваныя</message>
     <message id="tc.game.order_user">ходзіць</message>
     <message id="tc.game.Overturn_board">Перавярнуць</message>
-    <message id="tc.game.Parameters">Параметры партыі</message>
+    <message id="tc.game.Parameters">Игровые параметры</message>
     <message id="tc.game.pause_limit">запас часу на паўзы</message>
     <message id="tc.game.Pause_proposal">Перапынак прапанаваны, прапанаваў{1}, працягласць: {2}</message>
     <message id="tc.game.Pause_propose">Прапанаваць перапынак</message>
@@ -267,7 +267,7 @@
     <message id="tc.menu.competitions_list">спіс турніраў</message>
     <message id="tc.menu.forum">форум</message>
     <message id="tc.menu.game">гульня</message>
-    <message id="tc.menu.game_parameters">параметры гульні</message>
+    <message id="tc.menu.game_parameters">игровые параметры</message>
     <message id="tc.menu.games_list">спіс гульняў</message>
     <message id="tc.menu.global_chat">агульны чат</message>
     <message id="tc.menu.my_page">мая старонка</message>
