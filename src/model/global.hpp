@@ -362,6 +362,7 @@ enum UserSettings {
     /** Default value of settings of new user or Anonymous */
     SWITCH_DEFAULT = SWITCH_LASTMOVE |
                      SWITCH_ONLY_NOT_REMOVED_USERS |
+                     SWITCH_ONLY_OK_COMMENTS |
                      SWITCH_PUBLIC_EMAIL
 };
 
