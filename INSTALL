@@ -50,7 +50,7 @@ Other options:
     int max_sessions
 
 Dependencies:
- * witty library (>=3.2.1)
+ * witty library (>=3.2.1) (git b50f9b97f49054abb0fe3 + patches from wt-patch/)
  * wt-classes library (https://bitbucket.org/starius/wt-classes/)
  * dot command (graphviz lib)
  * Boost library >= 1.44

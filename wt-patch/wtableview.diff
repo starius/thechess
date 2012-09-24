@@ -1,0 +1,26 @@
+diff --git a/src/Wt/WAbstractItemView.C b/src/Wt/WAbstractItemView.C
+index e353c3d..5860be3 100644
+--- a/src/Wt/WAbstractItemView.C
++++ b/src/Wt/WAbstractItemView.C
+@@ -265,7 +265,7 @@ WAbstractItemView::WAbstractItemView(WContainerWidget *parent)
+ 
+   SizeHandle::loadJavaScript(app);
+ 
+-  if (!app->environment().ajax()) {
++  if (true) { //!app->environment().ajax()) {
+     clickedMapper_ = new WSignalMapper<WModelIndex, WMouseEvent>(this);
+     clickedMapper_->mapped().connect(this, &Self::handleClick);
+ 
+diff --git a/src/Wt/WTableView.C b/src/Wt/WTableView.C
+index ceea79b..a55e436 100644
+--- a/src/Wt/WTableView.C
++++ b/src/Wt/WTableView.C
+@@ -59,7 +59,7 @@ WTableView::WTableView(WContainerWidget *parent)
+ 
+   WApplication *app = WApplication::instance();
+ 
+-  if (app->environment().ajax()) {
++  if (false) { //app->environment().ajax()) {
+     impl_->setPositionScheme(Relative);
+ 
+     headers_ = new WContainerWidget();
