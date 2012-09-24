@@ -182,14 +182,26 @@ void Comment::set_type(Type type) {
     type_ = type;
 }
 
-Wt::WString Comment::text_or_removed(const UserPtr& viewer) const {
+bool Comment::can_read_chat_logs(const UserPtr& viewer) const {
+    if (type() != PRIVATE_MESSAGE && type() != LOG_ENTRY) {
+        return true;
+    }
     if (type() == LOG_ENTRY && (!viewer ||
                                 !viewer->has_permission(LOGS_READER))) {
-        return "";
+        return false;
     }
     if (type() == PRIVATE_MESSAGE && viewer != init()) {
         if (!parent() || !viewer || !viewer->has_comment_base() ||
                 viewer->comment_base() != parent()) {
+            return false;
+        }
+    }
+    return true;
+}
+
+Wt::WString Comment::text_or_removed(const UserPtr& viewer) const {
+    if (type() == PRIVATE_MESSAGE || type() == LOG_ENTRY) {
+        if (!can_read_chat_logs(viewer)) {
             return "";
         }
     }

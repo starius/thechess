@@ -123,6 +123,11 @@ public:
         return text_;
     }
 
+    /** Return if the user can read this chat or log message.
+    If this message is not chat or log, returns true.
+    */
+    bool can_read_chat_logs(const UserPtr& viewer) const;
+
     /** Get text or text that a comment was deleted.
     If viewer has permissions to view removed comments,
     a removed comment will be shown, but with message,
