@@ -835,7 +835,14 @@ void Game::pgn_additional(std::ostream& out) const {
 
 // see http://cfajohnson.com/chess/SAN/SAN_DOC/Standard
 void Game::pgn(std::ostream& out, bool reduced) const {
-    std::string event = competition_ ? competition_->name().toUTF8() : "?";
+    std::string event = boost::lexical_cast<std::string>(id());
+    if (competition_) {
+        event += ", competition ";
+        event += boost::lexical_cast<std::string>(competition_.id());
+        if (!competition_->name().empty()) {
+            event += " " + competition_->name().toUTF8();
+        }
+    }
     const std::string& site = Options::instance()->pgn_site();
     std::string date = started_.isValid() ?
                        started_.toString("yyyy.MM.dd").toUTF8() :
