@@ -128,7 +128,7 @@ public:
     }
 };
 
-void game_reference_(const GamePtr& game, Wt::WContainerWidget* c) {
+void game_reference(const GamePtr& game, Wt::WContainerWidget* c) {
     if (c->count()) {
         new Wt::WText(", ", c);
     }
@@ -217,10 +217,10 @@ private:
                                   "/" + TO_S(wins[ucol]), cell);
                 } else {
                     BOOST_FOREACH (const GamePtr& game, gt_[ucol][urow]) {
-                        game_reference_(game, cell);
+                        game_reference(game, cell);
                     }
                     BOOST_FOREACH (const GamePtr& game, gt_[urow][ucol]) {
-                        game_reference_(game, cell);
+                        game_reference(game, cell);
                     }
                 }
             }
@@ -337,7 +337,7 @@ private:
         StagedCompetition::Games::const_iterator g = sc_.games().find(pair);
         if (g != sc_.games().end()) {
             BOOST_FOREACH (const GamePtr& game, g->second) {
-                game_reference_(game, games);
+                game_reference(game, games);
             }
         }
         n->setColumnWidget(GAMES_COLUMN, games);
