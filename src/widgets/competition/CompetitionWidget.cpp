@@ -148,7 +148,7 @@ const int TOP_SHIFT = 2;
 class ClassicalView : public Wt::WContainerWidget {
 public:
     ClassicalView(const CompetitionPtr& c):
-        show_wins_(true) {
+        show_wins_(!User::has_s(SWITCH_GAME_NUMBERS_IN_TABLE)) {
         gt_ = c->games_table();
         table_ = new Wt::WTable(this);
         table_->setStyleClass("thechess-table-border");
@@ -202,6 +202,7 @@ private:
 
     void change_fill_type() {
         show_wins_ = !show_wins_;
+        User::set_s(SWITCH_GAME_NUMBERS_IN_TABLE, !show_wins_);
         fill_table();
     }
 
