@@ -75,7 +75,7 @@
     <message id='tc.competition.Change_welcome'>Изменить турнир № {1}</message>
     <message id='tc.competition.competition'>турнир</message>
     <message id='tc.competition.Create_welcome'>Создать новый турнир</message>
-    <message id='tc.competition.Ended'>Завершен</message>
+    <message id='tc.competition.Ended'>Завершён</message>
     <message id='tc.competition.Force_start'>Форсированный старт</message>
     <message id='tc.competition.Force_start_delay'>Форсированный старт партии</message>
     <message id='tc.competition.Games_factor'>Множитель партий</message>
@@ -91,7 +91,7 @@
     <message id='tc.competition.min_classification'>минимальный разряд</message>
     <message id='tc.competition.min_rating'>минимальный рейтинг</message>
     <message id='tc.competition.Min_substages'>Подраундов в первом раунде</message>
-    <message id='tc.competition.Online_time'>Время, проведенное участниками ондайн</message>
+    <message id='tc.competition.Online_time'>Время, проведённое участниками ондайн</message>
     <message id='tc.competition.Parameters'>Турнирные параметры</message>
     <message id='tc.competition.Rating'>Рейтинг участников</message>
     <message id='tc.competition.Recruiting_time'>Время на сборы</message>
@@ -104,8 +104,8 @@
     <message id='tc.competition.Started'>Начат</message>
     <message id='tc.competition.State'>Статус</message>
     <message id='tc.competition.state_active'>активный</message>
-    <message id='tc.competition.state_cancelled'>отмененный</message>
-    <message id='tc.competition.state_ended'>завершенный</message>
+    <message id='tc.competition.state_cancelled'>отменённый</message>
+    <message id='tc.competition.state_ended'>завершённый</message>
     <message id='tc.competition.state_recruiting'>набирающийся</message>
     <message id='tc.competition.Tree'>Дерево</message>
     <message id='tc.competition.Type'>Тип</message>
@@ -143,7 +143,7 @@
     <message id='tc.forum.Comment'>Страница комментария</message>
     <message id='tc.forum.Edit'>Правка</message>
     <message id='tc.forum.Goto_parent'>Открыть родительский комментарий #{1}</message>
-    <message id='tc.forum.Only_ok'>Показывать только подтвержденные записи</message>
+    <message id='tc.forum.Only_ok'>Показывать только подтверждённые записи</message>
     <message id='tc.forum.Post_edited'>Заголовок поста отредактирован {1}</message>
     <message id='tc.forum.post_header'>пост {1}: {2}</message>
     <message id='tc.forum.Post_text_edited'>Пост отредактирован {1}</message>
@@ -158,8 +158,8 @@
 
     <message id='tc.game.Analysis'>Анализ</message>
     <message id='tc.game.Analysis_title'>Анализ игры № {1}</message>
-    <message id='tc.game.black'>черный</message>
-    <message id='tc.game.Black_won'>Черные победили</message>
+    <message id='tc.game.black'>чёрный</message>
+    <message id='tc.game.Black_won'>Чёрные победили</message>
     <message id='tc.game.Call_auto_judge'>Вызвать автоматического судью</message>
     <message id='tc.game.Challenge'>Вызов</message>
     <message id='tc.game.colors'>цвета</message>
@@ -199,7 +199,7 @@
     <message id='tc.game.norating'>нерейтинговая</message>
     <message id='tc.game.norating_false'>результат игры повлияет на рейтинг участников</message>
     <message id='tc.game.norating_true'>результат игры не повлияет на рейтинг участников</message>
-    <message id='tc.game.of_black'>черных</message>
+    <message id='tc.game.of_black'>чёрных</message>
     <message id='tc.game.of_white'>белых</message>
     <message id='tc.game.Only_commented'>Только прокомментированные</message>
     <message id='tc.game.order_user'>ходит</message>
@@ -219,14 +219,14 @@
     <message id='tc.game.State'>Состояние</message>
     <message id='tc.game.State_active'>Активная</message>
     <message id='tc.game.State_cancelled'>Отменена</message>
-    <message id='tc.game.State_confirmed'>Подтвержденная</message>
+    <message id='tc.game.State_confirmed'>Подтверждённая</message>
     <message id='tc.game.State_draw_2_kings'>Ничья ввиду невозможности поставить мат</message>
     <message id='tc.game.State_draw_3'>Трехкратное повторение позиции</message>
     <message id='tc.game.State_draw_50'>Ничья: 50 ходов не брались фигуры и не ходила пешка</message>
     <message id='tc.game.State_draw_agreed'>Ничья по соглашению</message>
     <message id='tc.game.State_draw_stalemate'>Пат</message>
     <message id='tc.game.State_mate'>Мат</message>
-    <message id='tc.game.State_no_draw_stalemate'>Ничья в игре без ничьих, побеждают черные</message>
+    <message id='tc.game.State_no_draw_stalemate'>Ничья в игре без ничьих, побеждают чёрные</message>
     <message id='tc.game.State_pause'>Приостановленная</message>
     <message id='tc.game.State_proposed'>Предложенная</message>
     <message id='tc.game.State_state'>Неизвестное состояние</message>
@@ -240,15 +240,15 @@
     <message id='tc.game.First_draw'>
         <plural case="0">
             Капитуляция или ничья может быть совершена, когда будет сделан {1} ход,
-            не считая предопределенные ходы
+            не считая предопределённые ходы
         </plural>
         <plural case="1">
             Капитуляция или ничья может быть совершена, когда будут сделаны {1} хода,
-            не считая предопределенные ходы
+            не считая предопределённые ходы
         </plural>
         <plural case="2">
             Капитуляция или ничья может быть совершена, когда будут сделаны {1} ходов,
-            не считая предопределенные ходы
+            не считая предопределённые ходы
         </plural>
     </message>
     <message id='tc.game.Mistake_welcome'>
@@ -408,8 +408,8 @@
     <message id='tc.user.Names_in_menu'>Показывать имя пользователя в меню с играми</message>
     <message id='tc.user.New_ban'>Новый бан</message>
     <message id='tc.user.not_confirmed'>, не подтверждено</message>
-    <message id='tc.user.Not_removed'>Не удаленные</message>
-    <message id='tc.user.Online_time'>Время, проведенное на сайте: {1}</message>
+    <message id='tc.user.Not_removed'>Не удалённые</message>
+    <message id='tc.user.Online_time'>Время, проведённое на сайте: {1}</message>
     <message id='tc.user.Only_online'>Только на сайте</message>
     <message id='tc.user.Password_example'>Пример пароля:&nbsp;</message>
     <message id='tc.user.private_writer'>написать личное сообщение</message>
@@ -422,7 +422,7 @@
     <message id='tc.user.registration_banner'>банить IP</message>
     <message id='tc.user.Registration_date'>Дата регистрации: {1}</message>
     <message id='tc.user.regular_rights_changer'>изменять обычные права</message>
-    <message id='tc.user.Removed_message'><b>[Удаленный пользователь]</b></message>
+    <message id='tc.user.Removed_message'><b>[Удалённый пользователь]</b></message>
     <message id='tc.user.Set_motd'>Выставить номер комментария, показанного сверху</message>
     <message id='tc.user.Settings'>Настройки</message>
     <message id='tc.user.Start_game'>Начать игру</message>
@@ -443,7 +443,7 @@
         <h2>Статистика турниров:</h2>
     </message>
     <message id='tc.user.Filter_min_online'>
-        Минимальное время, проведенное пользователем на сайте,
+        Минимальное время, проведённое пользователем на сайте,
         чтобы он мог отправлять Вам сообщение
     </message>
     <message id='tc.user.Games_stat'>
