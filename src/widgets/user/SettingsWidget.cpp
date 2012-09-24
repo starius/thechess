@@ -248,6 +248,9 @@ private:
             }
             Games games = s.find<Game>().orderBy("ended").resultList();
             BOOST_FOREACH (GamePtr game, games) {
+                if (game.id() % 1000 == 0) {
+                    std::cerr << "Recalc. game " << game.id() << std::endl;
+                }
                 game.modify()->stat_change();
                 game.purge();
             }
