@@ -300,7 +300,7 @@ public:
             int stage = stage_and_pair.first;
             const UserPair& pair = stage_and_pair.second;
             if (sc_.winners().find(pair) == sc_.winners().end()) {
-                print_pair_(stage, pair, r);
+                print_pair(stage, pair, r);
             }
         }
         typedef StagedCompetition::States::value_type UAS;
@@ -318,8 +318,8 @@ private:
     const StagedCompetition& sc_;
     std::map<int, std::map<UserPtr, UserPtr> > competitors_;
 
-    void print_pair_(int stage, const UserPair& pair,
-                     Wt::WTreeTableNode* parent) {
+    void print_pair(int stage, const UserPair& pair,
+                    Wt::WTreeTableNode* parent) {
         Wt::WString title;
         typedef StagedCompetition::Winners::const_iterator It;
         It winner = sc_.winners().find(pair);
@@ -347,8 +347,8 @@ private:
         }
     }
 
-    void print_user_(int stage, const UserPtr& user,
-                     Wt::WTreeTableNode* parent) {
+    void print_user(int stage, const UserPtr& user,
+                    Wt::WTreeTableNode* parent) {
         Wt::WTreeTableNode* n;
         n = new Wt::WTreeTableNode(user->safe_username(), 0, parent);
         n->setColumnWidget(STAGE_COLUMN,
@@ -361,9 +361,9 @@ private:
     void print(int stage, const UserPtr& user, Wt::WTreeTableNode* parent) {
         const UserPtr& competitor = competitors_[stage][user];
         if (competitor) {
-            print_pair_(stage, UserPair(user, competitor), parent);
+            print_pair(stage, UserPair(user, competitor), parent);
         } else {
-            print_user_(stage, user, parent);
+            print_user(stage, user, parent);
         }
     }
 };
