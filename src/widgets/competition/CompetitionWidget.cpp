@@ -19,6 +19,7 @@
 #include <Wt/WCompositeWidget>
 #include <Wt/WPushButton>
 #include <Wt/WBreak>
+#include <Wt/WViewWidget>
 #include <Wt/Dbo/Transaction>
 #include <Wt/Wc/util.hpp>
 
@@ -145,10 +146,10 @@ const int N_ROW = 0;
 const int LEFT_SHIFT = 1;
 const int TOP_SHIFT = 2;
 
-class ClassicalView : public Wt::WContainerWidget {
+class ClassicalViewImpl : public Wt::WContainerWidget {
 public:
-    ClassicalView(const CompetitionPtr& c):
-        show_wins_(!User::has_s(SWITCH_GAME_NUMBERS_IN_TABLE)) {
+    ClassicalViewImpl(const CompetitionPtr& c, bool show_wins):
+        show_wins_(show_wins) {
         gt_ = c->games_table();
         table_ = new Wt::WTable(this);
         table_->setStyleClass("thechess-table-border");
@@ -156,8 +157,6 @@ public:
         score_column_ = members.size() + TOP_SHIFT;
         headers();
         scores_(c);
-        fill_button_ = new Wt::WPushButton(this);
-        fill_button_->clicked().connect(this, &ClassicalView::change_fill_type);
         fill_table();
     }
 
@@ -167,7 +166,6 @@ private:
     UsersVector members;
     int score_column_;
     bool show_wins_;
-    Wt::WPushButton* fill_button_;
 
     void headers() {
         table_->elementAt(0, 0)->setColumnSpan(2);
@@ -200,18 +198,7 @@ private:
         }
     }
 
-    void change_fill_type() {
-        show_wins_ = !show_wins_;
-        User::set_s(SWITCH_GAME_NUMBERS_IN_TABLE, !show_wins_);
-        fill_table();
-    }
-
     void fill_table() {
-        if (show_wins_) {
-            fill_button_->setText(tr("tc.competition.Show_games"));
-        } else {
-            fill_button_->setText(tr("tc.competition.Show_wins"));
-        }
         int members_size = members.size();
         for (int row = 0; row < members_size; ++row) {
             const UserPtr& urow = members[row];
@@ -237,6 +224,59 @@ private:
                     }
                 }
             }
+        }
+    }
+};
+
+class ClassicalViewView : public Wt::WViewWidget {
+public:
+    ClassicalViewView(const CompetitionPtr& c, bool show_wins):
+        c_(c), show_wins_(show_wins)
+    { }
+
+    void set_show_wins(bool show_wins) {
+        show_wins_ = show_wins;
+        update();
+    }
+
+    virtual Wt::WWidget* renderView() {
+        dbo::Transaction t(tApp->session());
+        return new ClassicalViewImpl(c_, show_wins_);
+    }
+
+private:
+    CompetitionPtr c_;
+    bool show_wins_;
+};
+
+class ClassicalView : public Wt::WContainerWidget {
+public:
+    ClassicalView(const CompetitionPtr& c):
+        show_wins_(!User::has_s(SWITCH_GAME_NUMBERS_IN_TABLE)) {
+        view_ = new ClassicalViewView(c, show_wins_);
+        addWidget(view_);
+        fill_button_ = new Wt::WPushButton(this);
+        fill_button_->clicked().connect(this, &ClassicalView::change_fill_type);
+        update_button_text();
+    }
+
+private:
+    ClassicalViewView* view_;
+    Wt::WPushButton* fill_button_;
+    bool show_wins_;
+
+    void change_fill_type() {
+        show_wins_ = !show_wins_;
+        User::set_s(SWITCH_GAME_NUMBERS_IN_TABLE, !show_wins_);
+        view_->set_show_wins(show_wins_);
+        update_button_text();
+    }
+
+    void update_button_text() {
+        if (show_wins_) {
+            fill_button_->setText(tr("tc.competition.Show_games"));
+        } else {
+            fill_button_->setText(tr("tc.competition.Show_wins"));
         }
     }
 };
