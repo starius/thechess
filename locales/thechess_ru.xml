@@ -91,7 +91,7 @@
     <message id='tc.competition.min_classification'>минимальный разряд</message>
     <message id='tc.competition.min_rating'>минимальный рейтинг</message>
     <message id='tc.competition.Min_substages'>Подраундов в первом раунде</message>
-    <message id='tc.competition.Online_time'>Время, проведённое участниками ондайн</message>
+    <message id='tc.competition.Online_time'>Время, проведённое участниками онлайн</message>
     <message id='tc.competition.Parameters'>Турнирные параметры</message>
     <message id='tc.competition.Rating'>Рейтинг участников</message>
     <message id='tc.competition.Recruiting_time'>Время на сборы</message>
