@@ -17,42 +17,50 @@
 
 namespace thechess {
 
-static void edit_comment(CommentPtr post_or_text, Wt::WFormWidget* edit) {
+static void edit_comment(CommentPtr c, Wt::WFormWidget* edit) {
     dbo::Transaction t(tApp->session());
-    post_or_text.reread();
-    if (!post_or_text->can_edit(tApp->user())) {
+    c.reread();
+    if (!c->can_edit(tApp->user())) {
         return;
     }
     if (edit->valueText().empty()) {
         return;
     }
-    post_or_text.modify()->set_text(patch_text_edit_text(edit->valueText()));
-    post_or_text.modify()->set_state(Comment::state_of_new(tApp->user(),
-                                     Comment::FORUM_COMMENT, post_or_text));
-    CommentPtr post = post_or_text->type() == Comment::FORUM_POST ?
-                      post_or_text : post_or_text->parent();
+    c.modify()->set_text(patch_text_edit_text(edit->valueText()));
+    c.modify()->set_state(Comment::state_of_new(tApp->user(),
+                          c->type(), c));
+    std::string url;
+    if (c->type() == Comment::FORUM_POST) {
+        url = tApp->path().post()->get_full_path(c.id());
+    } else if (c->type() == Comment::FORUM_POST_TEXT) {
+        url = tApp->path().post()->get_full_path(c->parent().id());
+    } else if (c->type() == Comment::FORUM_COMMENT) {
+        url = tApp->path().post()->get_full_path(c->root()->parent().id());
+    } else if (c->type() == Comment::FORUM_TOPIC) {
+        url = tApp->path().topic_posts()->get_full_path(c.id());
+    }
     t.commit();
-    tApp->path().post()->set_integer_value(post.id());
-    tApp->path().post()->open();
+    tApp->setInternalPath(url, /* emit */ true);
 }
 
-ForumEdit::ForumEdit(const CommentPtr& post_or_text, Wt::WContainerWidget* p):
+ForumEdit::ForumEdit(const CommentPtr& c, Wt::WContainerWidget* p):
     Wt::WContainerWidget(p) {
     dbo::Transaction t(tApp->session());
-    if (!post_or_text->can_edit(tApp->user())) {
+    if (!c->can_edit(tApp->user())) {
         return;
     }
     Wt::WFormWidget* edit;
-    if (post_or_text->type() == Comment::FORUM_POST) {
+    if (c->type() == Comment::FORUM_POST ||
+            c->type() == Comment::FORUM_TOPIC) {
         edit = new Wt::WLineEdit(this);
     } else {
         Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
         patch_text_edit(text_edit);
         edit = text_edit;
     }
-    edit->setValueText(post_or_text->text());
+    edit->setValueText(c->text());
     Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
-    b->clicked().connect(boost::bind(edit_comment, post_or_text, edit));
+    b->clicked().connect(boost::bind(edit_comment, c, edit));
 }
 
 }

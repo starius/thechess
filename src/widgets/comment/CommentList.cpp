@@ -152,6 +152,15 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     CommentModel* model = new CommentModel(type, root, init, this);
     view_ = new CommentView(model); // do it here to provide comment_model()
     print_header();
+    if (type == Comment::FORUM_POST && root) {
+        // edit this topic
+        if (root->can_edit(tApp->user())) {
+            Wt::WAnchor* e = new Wt::WAnchor(this);
+            e->setLink(tApp->path().forum_edit()->get_link(root.id()));
+            e->setText(tr("tc.forum.Edit"));
+            new Wt::WBreak(this);
+        }
+    }
     if (type == Comment::FORUM_COMMENT && root) {
         print_post();
     }

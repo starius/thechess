@@ -113,7 +113,8 @@ bool Comment::can_create(const UserPtr& user, Type type,
 }
 
 bool Comment::can_edit(const UserPtr& user) const {
-    if (type() != FORUM_POST && type() != FORUM_POST_TEXT) {
+    if (type() != FORUM_POST && type() != FORUM_POST_TEXT &&
+            type() != FORUM_COMMENT && type() != FORUM_TOPIC) {
         return false;
     }
     if (!user || init() != user) {

@@ -75,6 +75,12 @@ ForumCommentWidget::ForumCommentWidget(const CommentPtr& comment) {
         g->setLink(tApp->path().post_comment()->get_link(parent.id()));
         g->setText(tr("tc.forum.Goto_parent").arg(parent.id()));
     }
+    if (comment->can_edit(tApp->user())) {
+        new Wt::WBreak(this);
+        Wt::WAnchor* e = new Wt::WAnchor(this);
+        e->setLink(tApp->path().forum_edit()->get_link(comment.id()));
+        e->setText(tr("tc.forum.Edit"));
+    }
     Wt::WTextEdit* edit = new Wt::WTextEdit(this);
     patch_text_edit(edit);
     new Wt::WBreak(this);

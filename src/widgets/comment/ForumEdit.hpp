@@ -14,7 +14,7 @@
 
 namespace thechess {
 
-/** Widget for editing my FORUM_POST or FORUM_POST_TEXT comments */
+/** Widget for editing my comments */
 class ForumEdit : public Wt::WContainerWidget {
 public:
     /** Constructor */
