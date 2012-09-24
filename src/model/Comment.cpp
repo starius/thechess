@@ -183,11 +183,12 @@ void Comment::set_type(Type type) {
 }
 
 Wt::WString Comment::text_or_removed(const UserPtr& viewer) const {
-    if (type() == LOG_ENTRY && !viewer->has_permission(LOGS_READER)) {
+    if (type() == LOG_ENTRY && (!viewer ||
+                                !viewer->has_permission(LOGS_READER))) {
         return "";
     }
     if (type() == PRIVATE_MESSAGE && viewer != init()) {
-        if (!parent() || !viewer->has_comment_base() ||
+        if (!parent() || !viewer || !viewer->has_comment_base() ||
                 viewer->comment_base() != parent()) {
             return "";
         }
