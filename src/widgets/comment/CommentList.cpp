@@ -135,7 +135,7 @@ protected:
 CommentList::CommentList(Comment::Type type, const CommentPtr& root,
                          const UserPtr& init, Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent),
-    edit_(0), only_ok_(0), only_my_(0) {
+    edit_(0), only_ok_(0), only_draft_(0), only_my_(0) {
     dbo::Transaction t(tApp->session());
     if (type == Comment::LOG_ENTRY) {
         if (!tApp->user() || !tApp->user()->has_permission(LOGS_READER)) {
@@ -167,6 +167,11 @@ CommentList::CommentList(Comment::Type type, const CommentPtr& root,
     only_ok_ = new Wt::WCheckBox(tr("tc.forum.Only_ok"), this);
     only_ok_->setChecked(model->only_ok());
     only_ok_->changed().connect(this, &CommentList::apply);
+    if (tApp->user() && tApp->user()->has_permission(COMMENTS_REMOVER)) {
+        only_draft_ = new Wt::WCheckBox(tr("tc.comment.draft_message"), this);
+        only_draft_->setChecked(model->only_draft());
+        only_draft_->changed().connect(this, &CommentList::apply);
+    }
     if (tApp->user() && !init) {
         only_my_ = new Wt::WCheckBox(this);
         only_my_->setChecked(model->only_my());
@@ -291,6 +296,9 @@ void CommentList::apply() {
     }
     if (only_ok_) {
         comment_model()->set_only_ok(only_ok_->isChecked());
+    }
+    if (only_draft_) {
+        comment_model()->set_only_draft(only_draft_->isChecked());
     }
     comment_model()->set_text_like(text_like_->text());
     view_->show_last();

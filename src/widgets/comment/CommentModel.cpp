@@ -25,6 +25,7 @@ CommentModel::CommentModel(Comment::Type type, const CommentPtr& root,
         }
     }
     only_ok_ = User::has_s(SWITCH_ONLY_OK_COMMENTS);
+    only_draft_ = User::has_s(SWITCH_ONLY_DRAFT_COMMENTS);
     only_my_ = User::has_s(SWITCH_ONLY_MY_COMMENTS);
     setQuery(get_query());
     addColumn("id");
@@ -172,6 +173,8 @@ CommentModel::Query CommentModel::get_query() const {
     }
     if (only_ok_) {
         result.where("state = ?").bind(Comment::OK);
+    } else if (only_draft_) {
+        result.where("state = ?").bind(Comment::DRAFT);
     }
     if (!ip_.empty()) {
         result.where("ip = ?").bind(ip_);
@@ -193,6 +196,14 @@ void CommentModel::set_only_ok(bool only_ok) {
     if (only_ok != only_ok_) {
         only_ok_ = only_ok;
         User::set_s(SWITCH_ONLY_OK_COMMENTS, only_ok);
+        setQuery(get_query(), /* keep_columns */ true);
+    }
+}
+
+void CommentModel::set_only_draft(bool only_draft) {
+    if (only_draft != only_draft_) {
+        only_draft_ = only_draft;
+        User::set_s(SWITCH_ONLY_DRAFT_COMMENTS, only_draft);
         setQuery(get_query(), /* keep_columns */ true);
     }
 }

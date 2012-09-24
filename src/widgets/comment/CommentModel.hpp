@@ -81,6 +81,14 @@ public:
     /** Set if only Comment's with state=OK are filtered */
     void set_only_ok(bool only_ok = true);
 
+    /** Get if only Comment's with state=DRAFT are filtered */
+    bool only_draft() const {
+        return only_draft_;
+    }
+
+    /** Set if only Comment's with state=DRAFT are filtered */
+    void set_only_draft(bool only_draft = true);
+
     /** Get if only my comments are shown */
     bool only_my() const {
         return only_my_;
@@ -110,6 +118,7 @@ private:
     CommentPtr root_;
     UserPtr init_;
     bool only_ok_;
+    bool only_draft_;
     bool only_my_;
     std::string ip_;
     Wt::WString text_like_;

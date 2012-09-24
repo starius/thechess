@@ -38,6 +38,7 @@ private:
     Wt::WFormWidget* edit_;
     Wt::WTextEdit* post_text_;
     Wt::WCheckBox* only_ok_;
+    Wt::WCheckBox* only_draft_;
     Wt::WCheckBox* only_my_;
     Wt::WLineEdit* text_like_;
 

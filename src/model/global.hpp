@@ -359,6 +359,9 @@ enum UserSettings {
     /** Show game numbers (nstead of score) in classical competition table */
     SWITCH_GAME_NUMBERS_IN_TABLE = BOOST_BINARY(01000000 00000000),
 
+    /** Show only draft comments (for moder) */
+    SWITCH_ONLY_DRAFT_COMMENTS = BOOST_BINARY(10000000 00000000),
+
     /** Default value of settings of new user or Anonymous */
     SWITCH_DEFAULT = SWITCH_LASTMOVE |
                      SWITCH_ONLY_NOT_REMOVED_USERS |
