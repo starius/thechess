@@ -26,6 +26,9 @@ ChatCommentWidget::ChatCommentWidget(const CommentPtr& comment) {
             comment->type() != Comment::PRIVATE_MESSAGE) {
         return;
     }
+    if (!comment->can_read_chat_logs(tApp->user())) {
+        return;
+    }
     new Header(tr("tc.forum.Comment"), this);
     new Wt::WText(forum_comment_text(comment), this);
     UserPtr user = comment->init();
