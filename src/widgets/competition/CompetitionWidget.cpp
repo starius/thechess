@@ -284,16 +284,15 @@ private:
 const int STAGE_COLUMN = 1;
 const int GAMES_COLUMN = 2;
 
-class StagedView : public Wt::WTreeTable {
+class StagedTree : public Wt::WTreeTable {
 public:
-    StagedView(const StagedCompetition* s):
+    StagedTree(const StagedCompetition* s):
         sc_(*s), competitors_(sc_.competitors()) {
         resize(650, 300);
         addColumn(tr("tc.competition.Stage"), 100);
         addColumn(tr("tc.competition.Games_list"), 300);
         Wt::WTreeTableNode* r;
         r = new Wt::WTreeTableNode(tr("tc.competition.Tree"));
-        r->expand();
         setTreeRoot(r, tr("tc.competition.Winner"));
         typedef StagedCompetition::Paires::value_type SAP;
         BOOST_FOREACH (const SAP& stage_and_pair, sc_.paires()) {
@@ -312,6 +311,7 @@ public:
                 print(sc_.stages().find(user)->second - 1, user, r);
             }
         }
+        r->expand();
     }
 
 private:
@@ -345,6 +345,7 @@ private:
             print(stage - 1, pair.first(), n);
             print(stage - 1, pair.second(), n);
         }
+        n->expand();
     }
 
     void print_user(int stage, const UserPtr& user,
@@ -356,6 +357,7 @@ private:
         if (stage > 0) {
             print(stage - 1, user, n);
         }
+        n->expand();
     }
 
     void print(int stage, const UserPtr& user, Wt::WTreeTableNode* parent) {
@@ -368,11 +370,30 @@ private:
     }
 };
 
+class StagedTreeView : public Wt::WViewWidget {
+public:
+    StagedTreeView(const StagedCompetition* sc):
+        sc_(sc)
+    { }
+
+    virtual Wt::WWidget* renderView() {
+        return new StagedTree(sc_);
+    }
+
+private:
+    const StagedCompetition* sc_;
+};
+
 class StagedWidget : public Wt::WContainerWidget {
 public:
     StagedWidget(const CompetitionPtr& c):
         sc_(c.get()) {
-        addWidget(new StagedView(&sc_));
+        if (wApp->environment().ajax()) {
+            addWidget(new StagedTreeView(&sc_));
+        } else {
+            // FIXME expand doesn't work in both, but in JS it is pre-learned
+            addWidget(new StagedTree(&sc_));
+        }
         addWidget(new Wt::WImage(new StagedCompetitionGraph(&sc_, this)));
         // FIXME parent of graph http://redmine.emweb.be/issues/1126
     }
