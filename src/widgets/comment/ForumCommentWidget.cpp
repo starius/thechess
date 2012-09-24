@@ -22,7 +22,8 @@
 
 namespace thechess {
 
-static void add_comment(CommentPtr comment, Wt::WTextEdit* edit) {
+static void add_comment(CommentPtr comment, Wt::WTextEdit* edit,
+                        ForumCommentWidget* widget) {
     dbo::Transaction t(tApp->session());
     comment.reread();
     tApp->user().reread();
@@ -45,8 +46,14 @@ static void add_comment(CommentPtr comment, Wt::WTextEdit* edit) {
     post.modify()->post_comment_added();
     t.commit();
     t_emit(COMMENT, root_id);
-    tApp->path().post()->set_integer_value(post.id());
-    tApp->path().post()->open();
+    if (state == Comment::DRAFT) {
+        widget->clear();
+        widget->addWidget(new Wt::WText(Wt::WString::tr(
+                                            "tc.comment.draft_message")));
+    } else {
+        tApp->path().post()->set_integer_value(post.id());
+        tApp->path().post()->open();
+    }
 }
 
 ForumCommentWidget::ForumCommentWidget(const CommentPtr& comment) {
@@ -86,7 +93,7 @@ ForumCommentWidget::ForumCommentWidget(const CommentPtr& comment) {
     new Wt::WBreak(this);
     if (Comment::can_create(tApp->user(), Comment::FORUM_COMMENT, comment)) {
         Wt::WPushButton* add = new Wt::WPushButton(tr("tc.comment.Add"), this);
-        add->clicked().connect(boost::bind(add_comment, comment, edit));
+        add->clicked().connect(boost::bind(add_comment, comment, edit, this));
     }
     add_remover_buttons(comment, this);
 }

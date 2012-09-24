@@ -362,7 +362,10 @@ void CommentList::add_comment(const CommentPtr& parent) {
     if (base.type == GAME) {
         t_emit(GAME, base.id);
     }
-    if (!wApp->environment().ajax()) {
+    if (state == Comment::DRAFT) {
+        clear();
+        addWidget(new Wt::WText(tr("tc.comment.draft_message")));
+    } else if (!wApp->environment().ajax()) {
         comment_model()->reload();
     }
 }
