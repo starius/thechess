@@ -88,6 +88,11 @@ public:
     /** Return some string representation, usable in URL's */
     std::string to_string() const;
 
+    /** Return 32-bit integer which can be used as hash or as key in map.
+    \note There can be collisions.
+    */
+    uint32_t to_int() const;
+
     /** Comparison operator to use Board as key in std::map */
     bool operator<(const Board& other) const;
 

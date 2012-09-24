@@ -138,6 +138,15 @@ std::string Board::to_string() const {
     return result;
 }
 
+uint32_t Board::to_int() const {
+    const uint32_t* data = reinterpret_cast<const uint32_t*>(pieces_);
+    uint32_t result = 0;
+    for (int i = 0; i < sizeof(pieces_) / sizeof(uint32_t); i++) {
+        result ^= data[i];
+    }
+    return result;
+}
+
 bool Board::operator<(const Board& other) const {
     for (int i = 0; i < PIECES_SIZE; i++) {
         if (pieces_[i] < other.pieces_[i]) {
