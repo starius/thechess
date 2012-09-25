@@ -9,6 +9,7 @@
 
 #include <Wt/WPushButton>
 #include <Wt/WAnchor>
+#include <Wt/WLineEdit>
 #include <Wt/WBreak>
 #include <Wt/Wc/util.hpp>
 
@@ -37,6 +38,25 @@ static void change_state(CommentPtr comment, Comment::State state) {
     tApp->path().open(tApp->internalPath());
 }
 
+static void change_topic(CommentPtr post, Wt::WLineEdit* topic) {
+    dbo::Transaction t(tApp->session());
+    post.reread();
+    if (tApp->user() && tApp->user()->has_permission(COMMENTS_REMOVER)) {
+        int topic_id = Wt::Wc::str2int(topic->text().toUTF8());
+        try {
+            CommentPtr t = tApp->session().load<Comment>(topic_id);
+            if (t->type() == Comment::FORUM_TOPIC) {
+                post.modify()->set_parent(t);
+                // admin log
+                admin_log("Change topic of " + comm_a(post.id()));
+            }
+        } catch (...)
+        { }
+    }
+    t.commit();
+    tApp->path().open(tApp->internalPath());
+}
+
 static void show_new_ban(Wt::WPushButton* b, CommentPtr c) {
     dbo::Transaction t(tApp->session());
     Wt::WContainerWidget* parent = DOWNCAST<Wt::WContainerWidget*>(b->parent());
@@ -58,6 +78,13 @@ void add_remover_buttons(const CommentPtr& comment, Wt::WContainerWidget* p) {
             b = new Wt::WPushButton(Wt::WString::tr("tc.comment.Remove"), p);
             b->clicked().connect(boost::bind(change_state,
                                              comment, Comment::DELETED));
+        }
+        if (comment->type() == Comment::FORUM_POST_TEXT) {
+            Wt::WLineEdit* new_topic = new Wt::WLineEdit(p);
+            b = new Wt::WPushButton(Wt::WString::tr("tc.forum.Change_topic"));
+            p->addWidget(b);
+            CommentPtr post = comment->parent();
+            b->clicked().connect(boost::bind(change_topic, post, new_topic));
         }
     }
     if (tApp->user() && tApp->user()->has_permission(REGISTRATION_BANNER)) {

@@ -133,6 +133,7 @@
 
     <message id='tc.forum.all_comments'>усі коментарі</message>
     <message id='tc.forum.all_posts'>усі пости</message>
+    <message id='tc.forum.Change_topic'>Изменить тематику</message>
     <message id='tc.forum.Comment'>Сторінка коментаря</message>
     <message id='tc.forum.Edit'>Правка</message>
     <message id='tc.forum.Goto_parent'>Відкрити батьківський коментар #{1}</message>

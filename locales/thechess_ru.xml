@@ -140,6 +140,7 @@
 
     <message id='tc.forum.all_comments'>все комментарии</message>
     <message id='tc.forum.all_posts'>все посты</message>
+    <message id='tc.forum.Change_topic'>Изменить тематику</message>
     <message id='tc.forum.Comment'>Страница комментария</message>
     <message id='tc.forum.Edit'>Правка</message>
     <message id='tc.forum.Goto_parent'>Открыть родительский комментарий #{1}</message>

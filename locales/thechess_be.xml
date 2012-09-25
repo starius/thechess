@@ -132,6 +132,7 @@
 
     <message id="tc.forum.all_comments">усе каментарыі</message>
     <message id="tc.forum.all_posts">усе пасты</message>
+    <message id='tc.forum.Change_topic'>Изменить тематику</message>
     <message id="tc.forum.Comment">Старонка каментарыя</message>
     <message id="tc.forum.Edit">Праўка</message>
     <message id="tc.forum.Goto_parent">Адкрыць бацькоўскі каментарый #{1}</message>
