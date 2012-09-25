@@ -39,6 +39,11 @@ Moves::Moves(const std::string& data, bool check) {
     std::string moves = base64_decode(data1);
     svuc_.assign(moves.begin(), moves.end());
     if (check) {
+        if (svuc_.size() % 3 == 2) {
+            // only first half-move of move done
+            // last 4 bits of last byte are random
+            svuc_.back() &= 0xF0;
+        }
         int bad_move = this->check();
         if (bad_move != -1) {
             pop(size() - bad_move);
