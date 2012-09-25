@@ -29,6 +29,9 @@ static void add_emotions_and_image(Wt::WTextEdit* e) {
 
 void patch_text_edit(Wt::WTextEdit* text_edit) {
     add_emotions_and_image(text_edit);
+    text_edit->resize(600, 300);
+    text_edit->setRows(20);
+    text_edit->setColumns(80);
     Wt::Wc::fix_text_edit(text_edit);
 }
 
