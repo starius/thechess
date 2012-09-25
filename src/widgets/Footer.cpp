@@ -19,7 +19,10 @@ Footer::Footer(Wt::WContainerWidget* parent):
         try {
             CommentPtr comment = tApp->session().load<Comment>(comment_id,
                                  /* forceReread */ true);
-            setText(comment->text());
+            if (comment->type() == Comment::FORUM_COMMENT ||
+                    comment->type() == Comment::FORUM_POST_TEXT) {
+                setText(comment->text());
+            }
         } catch (...)
         { }
     }

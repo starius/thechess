@@ -25,7 +25,10 @@ MainPage::MainPage(Wt::WContainerWidget* parent):
         try {
             CommentPtr comment = tApp->session().load<Comment>(comment_id,
                                  /* forceReread */ true);
-            setTemplateText(comment->text());
+            if (comment->type() == Comment::FORUM_COMMENT ||
+                    comment->type() == Comment::FORUM_POST_TEXT) {
+                setTemplateText(comment->text());
+            }
         } catch (...)
         { }
     }
