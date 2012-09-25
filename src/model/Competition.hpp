@@ -179,6 +179,9 @@ public:
     /** Return if there are virtuals among competition members */
     bool has_virtuals() const;
 
+    /** Return list of virtuals involved in this competition */
+    UsersVector virtuals() const;
+
     /** Update competittions stats of members.
     This is called automaticaly when game is finished.
     If you call this manually, you should call this method of

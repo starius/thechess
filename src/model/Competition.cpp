@@ -200,10 +200,11 @@ GamesTable Competition::games_table() const {
     return result;
 }
 
-bool Competition::has_virtuals() const {
+static void competition_virtuals_scores(const Competition* c,
+                                        BD::Scores& scores) {
     std::stringstream ids_stream;
     bool first = true;
-    BOOST_FOREACH (UserPtr user, members_vector()) {
+    BOOST_FOREACH (UserPtr user, c->members_vector()) {
         if (!first) {
             ids_stream << ",";
         }
@@ -212,14 +213,26 @@ bool Competition::has_virtuals() const {
     }
     std::string ids = ids_stream.str();
     if (ids.empty()) {
-        return false; // no members => no virtuals
+        return; // no members => no virtuals
     }
-    dbo::Query<BD::BDPair> pairs = BD::pairs(*session());
+    dbo::Query<BD::BDPair> pairs = BD::pairs(*c->session());
     pairs.where("U.user_id in (" + ids + ") and V.user_id in (" + ids + ")");
-    BD::Scores scores;
     BD::scores(pairs, scores);
     BD::filter(scores);
+}
+
+bool Competition::has_virtuals() const {
+    BD::Scores scores;
+    competition_virtuals_scores(this, scores);
     return !scores.empty();
+}
+
+UsersVector Competition::virtuals() const {
+    BD::Scores scores;
+    competition_virtuals_scores(this, scores);
+    std::set<UserPtr> users;
+    BD::add_users(scores, users);
+    return UsersVector(users.begin(), users.end());
 }
 
 void Competition::stat_change() {

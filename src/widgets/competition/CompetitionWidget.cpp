@@ -446,7 +446,12 @@ public:
         if (c->has_virtuals()) {
             new Wt::WBreak(this);
             new Wt::WText(tr("tc.competition.Virtuals"), this);
-            if (c->virtual_allower()) {
+            if (tApp->user() && tApp->user()->has_permission(VIRTUALS_VIEWER)) {
+                BOOST_FOREACH (UserPtr user, c->virtuals()) {
+                    user_anchor(user, this);
+                }
+            }
+            if (c->can_allow_virtuals(tApp->user())) {
                 new Wt::WText(tr("tc.competition.Virtuals_allowed_by"), this);
                 user_anchor(c->virtual_allower(), this);
             } else if (c->can_allow_virtuals(tApp->user())) {
