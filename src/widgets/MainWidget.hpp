@@ -106,6 +106,9 @@ public:
     /** View the moves */
     void moves_view(const std::string& data);
 
+    /** Challenge with the moves */
+    void moves_challenge(const std::string& data);
+
     /** View MovesWidget */
     void moves_widget();
 

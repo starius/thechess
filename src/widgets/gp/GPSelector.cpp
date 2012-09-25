@@ -59,6 +59,15 @@ void GPSelector::set_gp(const GPPtr& gp) {
     list_->set_gp(gp);
 }
 
+void GPSelector::set_moves(const Moves& moves) {
+    tab_->setCurrentIndex(GP_SELECTOR_NEW_TAB);
+    new_cont_->clear();
+    GP* gp = new GP(true);
+    gp->set_moves(moves);
+    new_ = new GPWidget(gp, new_cont_);
+    delete gp;
+}
+
 void GPSelector::tab_handler(int tab_index) {
     if (tab_index == GP_SELECTOR_NEW_TAB && list_->gp()) {
         new_cont_->clear();

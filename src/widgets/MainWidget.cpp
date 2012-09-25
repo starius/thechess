@@ -283,6 +283,13 @@ void MainWidget::moves_view(const std::string& m) {
     wApp->setTitle(tr("tc.title.MovesWidget_moves"));
 }
 
+void MainWidget::moves_challenge(const std::string& data) {
+    GameCreateWidget* gcw = new GameCreateWidget();
+    gcw->set_moves(Moves(data));
+    set_contents(gcw);
+    wApp->setTitle(tr("tc.title.GameCreateWidget"));
+}
+
 void MainWidget::moves_widget() {
     set_contents(new MovesWidget(Moves(), /* big */ false, /* active */ true));
     wApp->setTitle(tr("tc.title.MovesWidget"));

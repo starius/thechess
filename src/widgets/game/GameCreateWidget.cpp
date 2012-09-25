@@ -57,6 +57,10 @@ GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :
     }
 }
 
+void GameCreateWidget::set_moves(const Moves& moves) {
+    selector_->set_moves(moves);
+}
+
 void GameCreateWidget::print() {
     selector_ = new GPSelector(this);
     selector_->set_gp(gp_);

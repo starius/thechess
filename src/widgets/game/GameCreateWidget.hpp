@@ -26,6 +26,8 @@ public:
 
     GameCreateWidget(Wt::WContainerWidget* p = 0);
 
+    void set_moves(const Moves& moves);
+
 private:
     GPSelector* selector_;
     bool with_user_;

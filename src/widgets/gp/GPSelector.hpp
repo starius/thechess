@@ -28,6 +28,9 @@ public:
     /** Select the gp */
     void set_gp(const GPPtr& gp);
 
+    /** Set init moves */
+    void set_moves(const Moves& moves);
+
 private:
     GPListWidget* list_;
     GPWidget* new_;
