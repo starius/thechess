@@ -332,10 +332,12 @@ private:
                     .bind(tApp->user()).bind(user_)
                     .bind(tApp->user()).bind(user_);
         int all = my + his + draws;
-        new Wt::WBreak(this);
-        new Wt::WText(tr("tc.user.Our_games_stat")
-                      .arg(all).arg(my).arg(his).arg(draws)
-                      .arg(user_->safe_username()), this);
+        if (all > 0) {
+            new Wt::WBreak(this);
+            new Wt::WText(tr("tc.user.Our_games_stat")
+                          .arg(all).arg(my).arg(his).arg(draws)
+                          .arg(user_->safe_username()), this);
+        }
     }
 
     void print_expectations() {
