@@ -24,6 +24,19 @@ namespace thechess {
 Moves::Moves()
 { }
 
+Moves::Moves(const Moves& other, int size) {
+    if (size == -1) {
+        size = other.size();
+    }
+    int bytes_size = (size * 3 + 1) / 2;
+    svuc_.assign(other.svuc_.begin(), other.svuc_.begin() + bytes_size);
+    if (svuc_.size() % 3 == 2) {
+        // only first half-move of move done
+        // last 4 bits of last byte are random
+        svuc_.back() &= 0xF0;
+    }
+}
+
 Moves::Moves(HalfMove moves[], int size) :
     svuc_(size, '\0') {
     for (int i = 0; i < size; i++) {

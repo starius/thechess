@@ -46,6 +46,12 @@ public:
     */
     Moves();
 
+    /** Copy constructor.
+    \param other Other moves.
+    \param size Size of new moves. -1 means size of source moves.
+    */
+    Moves(const Moves& other, int size = -1);
+
     /** Constructor.
     Fills container with size half-moves from array moves.
     */
