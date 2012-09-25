@@ -536,11 +536,16 @@ TheChess.
         To create a derivative, first click on existing item
         and then go to the second tab and change it.
     </message>
-    <message id='tc.common.Stat_template'>
+    <message id='tc.common.Stat_draws_template'>
         ${tr:tc.common.Total_played}: <span class="thechess-games-all">${all}</span>.
         ${tr:tc.common.Wins}: <span class="thechess-games-wins">${wins}</span>.
         ${tr:tc.common.Fails}: <span class="thechess-games-fails">${fails}</span>.
         ${tr:tc.common.Draws}: <span class="thechess-games-draws">${draws}</span>.
+        ${tr:tc.common.Rating}: <span class="thechess-games-rating">${elo}</span>.
+    </message>
+    <message id='tc.common.Stat_template'>
+        ${tr:tc.common.Total_played}: <span class="thechess-games-all">${all}</span>.
+        ${tr:tc.common.Wins}: <span class="thechess-games-wins">${wins}</span>.
         ${tr:tc.common.Rating}: <span class="thechess-games-rating">${elo}</span>.
     </message>
 
