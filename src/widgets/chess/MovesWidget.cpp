@@ -425,7 +425,9 @@ private:
     }
 
     void links(LinksDialog* dialog) {
-        dialog->add_moves(Moves(cached_moves_, current_move_ + 1));
+        if (current_move_ + 1 > 0) {
+            dialog->add_moves(Moves(cached_moves_, current_move_ + 1));
+        }
     }
 };
 
