@@ -279,13 +279,14 @@ void MainWidget::board_view(const std::string& data) {
 }
 
 void MainWidget::moves_view(const std::string& m) {
-    set_contents(new MovesWidget(Moves(m), /* big */ false, /* active */ true));
+    set_contents(new MovesWidget(Moves(m, /* check */ true),
+                 /* big */ false, /* active */ true));
     wApp->setTitle(tr("tc.title.MovesWidget_moves"));
 }
 
 void MainWidget::moves_challenge(const std::string& data) {
     GameCreateWidget* gcw = new GameCreateWidget();
-    gcw->set_moves(Moves(data));
+    gcw->set_moves(Moves(data, /* check */ true));
     set_contents(gcw);
     wApp->setTitle(tr("tc.title.GameCreateWidget"));
 }

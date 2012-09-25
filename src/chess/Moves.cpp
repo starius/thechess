@@ -31,13 +31,19 @@ Moves::Moves(HalfMove moves[], int size) :
     }
 }
 
-Moves::Moves(const std::string& data) {
+Moves::Moves(const std::string& data, bool check) {
     std::string data1(data);
     boost::algorithm::replace_all(data1, "-", "+");
     boost::algorithm::replace_all(data1, ".", "/");
     data1 += std::string((4 - data1.size() % 4) % 4, '=');
     std::string moves = base64_decode(data1);
     svuc_.assign(moves.begin(), moves.end());
+    if (check) {
+        int bad_move = this->check();
+        if (bad_move != -1) {
+            pop(size() - bad_move);
+        }
+    }
 }
 
 std::string Moves::to_string() const {

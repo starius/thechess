@@ -52,7 +52,7 @@ public:
     Moves(HalfMove moves[], int size);
 
     /** Construct moves from a string returned by to_string() */
-    Moves(const std::string& data);
+    Moves(const std::string& data, bool check = false);
 
     /** Return some string representation, usable in URL's */
     std::string to_string() const;
