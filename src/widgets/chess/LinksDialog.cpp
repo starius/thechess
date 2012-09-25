@@ -32,6 +32,8 @@ void LinksDialog::add_moves(const Moves& moves) {
     url::StringNode* moves_node = tApp->path().moves();
     moves_node->set_string(moves.to_string());
     add_url(moves_node->full_path(), tr("tc.common.Moves"));
+    add_url(tApp->path().moves_challenge()->full_path(),
+            tr("tc.game.Challenge"));
     // TODO bit.ly
 }
 
