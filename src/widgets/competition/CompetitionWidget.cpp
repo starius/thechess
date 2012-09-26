@@ -153,8 +153,8 @@ public:
         gt_ = c->games_table();
         table_ = new Wt::WTable(this);
         table_->setStyleClass("thechess-table-border");
-        members = c->members_vector();
-        score_column_ = members.size() + TOP_SHIFT;
+        members_ = c->members_vector();
+        score_column_ = members_.size() + TOP_SHIFT;
         headers();
         scores(c);
         fill_table();
@@ -163,14 +163,14 @@ public:
 private:
     Wt::WTable* table_;
     GamesTable gt_;
-    UsersVector members;
+    UsersVector members_;
     int score_column_;
     bool show_wins_;
 
     void headers() {
         table_->elementAt(0, 0)->setColumnSpan(2);
         int i = 0;
-        BOOST_FOREACH (const UserPtr& user, members) {
+        BOOST_FOREACH (const UserPtr& user, members_) {
             std::string i_str = TO_S(i + 1);
             table_->elementAt(i + LEFT_SHIFT, NAME_COLUMN)
             ->setStyleClass("thechess-td-right");
@@ -190,7 +190,7 @@ private:
         std::map<UserPtr, float> wins;
         Competition::wins_number(c->games_vector(), wins);
         int i = 0;
-        BOOST_FOREACH (const UserPtr& user, members) {
+        BOOST_FOREACH (const UserPtr& user, members_) {
             int row = i + LEFT_SHIFT;
             Wt::WTableCell* c = table_->elementAt(row, score_column_);
             c->addWidget(new Wt::WText(TO_S(wins[user])));
@@ -199,11 +199,11 @@ private:
     }
 
     void fill_table() {
-        int members_size = members.size();
+        int members_size = members_.size();
         for (int row = 0; row < members_size; ++row) {
-            const UserPtr& urow = members[row];
+            const UserPtr& urow = members_[row];
             for (int col = 0; col < members_size; ++col) {
-                const UserPtr& ucol = members[col];
+                const UserPtr& ucol = members_[col];
                 Wt::WTableCell* cell = table_->elementAt(row + LEFT_SHIFT,
                                        col + TOP_SHIFT);
                 cell->clear();
