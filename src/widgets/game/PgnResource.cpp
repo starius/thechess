@@ -88,7 +88,9 @@ void AllPgnResource::handleRequest(const Wt::Http::Request& request,
         last_rebuild_ = now();
         std::ofstream file_stream(fileName().c_str());
         dbo::Transaction t(s);
-        Games games = s.find<Game>().where("state >= ?").bind(Game::MIN_ENDED);
+        Games games = s.find<Game>()
+                      .where("state >= ?").bind(Game::MIN_ENDED)
+                      .orderBy("id");
         BOOST_FOREACH (GamePtr g, games) {
             g->pgn(file_stream);
             file_stream << std::endl;
