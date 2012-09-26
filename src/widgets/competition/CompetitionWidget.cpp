@@ -191,8 +191,8 @@ private:
         Competition::wins_number(c->games_vector(), wins);
         int i = 0;
         BOOST_FOREACH (const UserPtr& user, members) {
-            int col = i + LEFT_SHIFT;
-            Wt::WTableCell* c = table_->elementAt(col, score_column_);
+            int row = i + LEFT_SHIFT;
+            Wt::WTableCell* c = table_->elementAt(row, score_column_);
             c->addWidget(new Wt::WText(TO_S(wins[user])));
             i++;
         }
