@@ -27,8 +27,6 @@ static void logout_app() {
             removed = false;
         }
     }
-    tApp->session().login().logout();
-    wApp->root()->clear();
     if (removed) {
         wApp->redirect("/html/removed.html");
     } else {
