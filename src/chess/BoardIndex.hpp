@@ -25,7 +25,9 @@ public:
     /* Constructor */
     BoardIndex();
 
-    /** Remove all added mappings */
+    /** Remove all added mappings.
+    \warning clear() must be run after reindex() and before adding.
+    */
     void clear();
 
     /** Return max allowed number of games per board.
@@ -36,7 +38,9 @@ public:
         return max_games_;
     }
 
-    /** Set max allowed number of games per board */
+    /** Set max allowed number of games per board.
+    Call this before reindex().
+    */
     void set_max_games(int max_games) {
         max_games_ = max_games;
     }
