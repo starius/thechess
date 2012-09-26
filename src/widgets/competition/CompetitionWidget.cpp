@@ -156,7 +156,7 @@ public:
         members = c->members_vector();
         score_column_ = members.size() + TOP_SHIFT;
         headers();
-        scores_(c);
+        scores(c);
         fill_table();
     }
 
@@ -184,7 +184,7 @@ private:
         }
     }
 
-    void scores_(const CompetitionPtr& c) {
+    void scores(const CompetitionPtr& c) {
         table_->elementAt(0, score_column_)
         ->addWidget(new Wt::WText(tr("tc.competition.Score")));
         std::map<UserPtr, float> wins;
