@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <boost/foreach.hpp>
+#include <boost/scoped_ptr.hpp>
 
 #include <Wt/WContainerWidget>
 #include <Wt/WPushButton>
@@ -238,7 +239,9 @@ private:
     }
 
     void recalculation() {
-        Session s(Server::instance()->pool());
+        dbo::SqlConnection* con = Session::new_connection(*Options::instance());
+        boost::scoped_ptr<dbo::SqlConnection> ptr(con);
+        Session s(*con);
         {
             dbo::Transaction t(s);
             Users users = s.find<User>().resultList();
