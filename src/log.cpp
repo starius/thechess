@@ -54,6 +54,10 @@ Wt::WString comm_a(int comment_id) {
         node = tApp->path().chat_comment();
         text = "chat message {1}";
         id = comment.id();
+    } else if (comment->type() == Comment::FORUM_POST) {
+        node = tApp->path().post();
+        text = "forum post {1}";
+        id = comment.id();
     } else if (comment->type() == Comment::FORUM_POST_TEXT) {
         node = tApp->path().post();
         text = "forum post {1}";
