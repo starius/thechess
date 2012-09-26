@@ -24,17 +24,13 @@ namespace thechess {
 Session::Session(dbo::FixedSqlConnectionPool& pool):
     user_database_(*this) {
     setConnectionPool(pool);
-    mapClass<User>("thechess_user");
-    mapClass<GP>("thechess_gp");
-    mapClass<Game>("thechess_game");
-    mapClass<CP>("thechess_cp");
-    mapClass<Competition>("thechess_competition");
-    mapClass<Comment>("thechess_comment");
-    mapClass<BD>("thechess_bd");
-    mapClass<IpBan>("thechess_ip_ban");
-    mapClass<AuthInfo>("auth_info");
-    mapClass<AuthInfo::AuthIdentityType>("auth_identity");
-    mapClass<AuthInfo::AuthTokenType>("auth_token");
+    map_classes();
+}
+
+Session::Session(dbo::SqlConnection& connection):
+    user_database_(*this) {
+    setConnection(connection);
+    map_classes();
 }
 
 void Session::reconsider(Server& server) {
@@ -103,6 +99,20 @@ UserPtr Session::user() {
     }
     t.commit();
     return user;
+}
+
+void Session::map_classes() {
+    mapClass<User>("thechess_user");
+    mapClass<GP>("thechess_gp");
+    mapClass<Game>("thechess_game");
+    mapClass<CP>("thechess_cp");
+    mapClass<Competition>("thechess_competition");
+    mapClass<Comment>("thechess_comment");
+    mapClass<BD>("thechess_bd");
+    mapClass<IpBan>("thechess_ip_ban");
+    mapClass<AuthInfo>("auth_info");
+    mapClass<AuthInfo::AuthIdentityType>("auth_identity");
+    mapClass<AuthInfo::AuthTokenType>("auth_token");
 }
 
 UserPtr Session::add_user(const Server& server, const Wt::WString& name,

@@ -31,6 +31,9 @@ public:
     /** Constructor */
     Session(dbo::FixedSqlConnectionPool& pool);
 
+    /** Constructor */
+    Session(dbo::SqlConnection& connection);
+
     /** Create tables and initial objects, add objects to planning server */
     void reconsider(Server& server);
 
@@ -53,6 +56,8 @@ public:
 private:
     UserDatabase user_database_;
     Wt::Auth::Login login_;
+
+    void map_classes();
 
     UserPtr add_user(const Server& server, const Wt::WString& name,
                      const Wt::WString& password);
