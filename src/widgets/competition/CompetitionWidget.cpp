@@ -6,6 +6,7 @@
  */
 
 #include <sstream>
+#include <algorithm>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
@@ -153,7 +154,10 @@ public:
         gt_ = c->games_table();
         table_ = new Wt::WTable(this);
         table_->setStyleClass("thechess-table-border");
+        Competition::wins_number(c->games_vector(), wins_);
         members_ = c->members_vector();
+        std::sort(members_.begin(), members_.end(),
+                  boost::bind(&ClassicalViewImpl::compare_users, this, _1, _2));
         score_column_ = members_.size() + TOP_SHIFT;
         headers();
         scores(c);
@@ -166,6 +170,11 @@ private:
     UsersVector members_;
     int score_column_;
     bool show_wins_;
+    mutable std::map<UserPtr, float> wins_;
+
+    bool compare_users(const UserPtr& a, const UserPtr& b) const {
+        return wins_[a] > wins_[b];
+    }
 
     void headers() {
         table_->elementAt(0, 0)->setColumnSpan(2);
@@ -187,13 +196,11 @@ private:
     void scores(const CompetitionPtr& c) {
         table_->elementAt(0, score_column_)
         ->addWidget(new Wt::WText(tr("tc.competition.Score")));
-        std::map<UserPtr, float> wins;
-        Competition::wins_number(c->games_vector(), wins);
         int i = 0;
         BOOST_FOREACH (const UserPtr& user, members_) {
             int row = i + LEFT_SHIFT;
             Wt::WTableCell* c = table_->elementAt(row, score_column_);
-            c->addWidget(new Wt::WText(TO_S(wins[user])));
+            c->addWidget(new Wt::WText(TO_S(wins_[user])));
             i++;
         }
     }
