@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <iterator>
+#include <boost/foreach.hpp>
 
 #include "chess/BoardIndex.hpp"
 #include "chess/Board.hpp"
@@ -48,9 +49,17 @@ void BoardIndex::add_moves(int game, const Moves& moves) {
 }
 
 template <class Item>
-static struct ItemCompare {
+struct ItemCompare {
     bool operator()(const Item& a, const Item& b) const {
         return a.board < b.board;
+    }
+
+    bool operator()(const int32_t& a, const Item& b) const {
+        return a < b.board;
+    }
+
+    bool operator()(const Item& a, const int32_t& b) const {
+        return a.board < b;
     }
 };
 
@@ -71,7 +80,7 @@ void BoardIndex::reindex() {
             std::sort(games.begin(), games.end());
             games.erase(std::unique(games.begin(), games.end()), games.end());
             if (games.size() == 1) {
-                arr1_[insert_index] = games[0];
+                arr1_[insert_index] = arr1_[i - 1];
                 insert_index++;
             } else if (2 <= games.size() && games.size() <= 5) {
                 Item5 item;
@@ -109,7 +118,7 @@ void BoardIndex::reindex() {
                 arrN_.push_back(item);
             }
         } else {
-            arr1_[insert_index] = arr1_[i].board; // insert_index may be eq i
+            arr1_[insert_index] = arr1_[i]; // insert_index may be eq i
             insert_index++;
         }
     }
@@ -126,29 +135,29 @@ void BoardIndex::reindex() {
 
 void BoardIndex::find_games(const Board& board, std::vector<int>& games) {
     int32_t board_hash = board.to_int();
-    const Item1& item1 = std::lower_bound(arr1_.begin(), arr1_.end(),
-                                          board_hash, ItemCompare<Item1>());
+    const Item1& item1 = *std::lower_bound(arr1_.begin(), arr1_.end(),
+                                           board_hash, ItemCompare<Item1>());
     if (item1.board == board_hash) {
         games.push_back(item1.game0);
         return;
     }
-    const Item2& item2 = std::lower_bound(arr2_.begin(), arr2_.end(),
-                                          board_hash, ItemCompare<Item2>());
+    const Item2& item2 = *std::lower_bound(arr2_.begin(), arr2_.end(),
+                                           board_hash, ItemCompare<Item2>());
     if (item2.board == board_hash) {
         games.push_back(item2.game0);
         games.push_back(item2.game1);
         return;
     }
-    const Item3& item3 = std::lower_bound(arr3_.begin(), arr3_.end(),
-                                          board_hash, ItemCompare<Item3>());
+    const Item3& item3 = *std::lower_bound(arr3_.begin(), arr3_.end(),
+                                           board_hash, ItemCompare<Item3>());
     if (item3.board == board_hash) {
         games.push_back(item3.game0);
         games.push_back(item3.game1);
         games.push_back(item3.game2);
         return;
     }
-    const Item4& item4 = std::lower_bound(arr4_.begin(), arr4_.end(),
-                                          board_hash, ItemCompare<Item4>());
+    const Item4& item4 = *std::lower_bound(arr4_.begin(), arr4_.end(),
+                                           board_hash, ItemCompare<Item4>());
     if (item4.board == board_hash) {
         games.push_back(item4.game0);
         games.push_back(item4.game1);
@@ -156,8 +165,8 @@ void BoardIndex::find_games(const Board& board, std::vector<int>& games) {
         games.push_back(item4.game3);
         return;
     }
-    const Item5& item5 = std::lower_bound(arr5_.begin(), arr5_.end(),
-                                          board_hash, ItemCompare<Item5>());
+    const Item5& item5 = *std::lower_bound(arr5_.begin(), arr5_.end(),
+                                           board_hash, ItemCompare<Item5>());
     if (item5.board == board_hash) {
         games.push_back(item5.game0);
         games.push_back(item5.game1);
@@ -166,8 +175,8 @@ void BoardIndex::find_games(const Board& board, std::vector<int>& games) {
         games.push_back(item5.game4);
         return;
     }
-    const ItemN& itemN = std::lower_bound(arrN_.begin(), arrN_.end(),
-                                          board_hash, ItemCompare<ItemN>());
+    const ItemN& itemN = *std::lower_bound(arrN_.begin(), arrN_.end(),
+                                           board_hash, ItemCompare<ItemN>());
     if (itemN.board == board_hash) {
         games.insert(games.end(), itemN.games, itemN.games + itemN.size);
         return;
