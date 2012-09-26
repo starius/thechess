@@ -82,6 +82,7 @@ void AllPgnResource::handleRequest(const Wt::Http::Request& request,
         setFileName(Wt::Wc::unique_filename());
     }
     if (!last_rebuild_.isValid() || now() - last_rebuild_ > REBUILD_FREQ) {
+        boost::mutex::scoped_lock lock(mutex_);
         dbo::SqlConnection* con = Session::new_connection(*Options::instance());
         boost::scoped_ptr<dbo::SqlConnection> ptr(con);
         Session s(*con);

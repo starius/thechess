@@ -8,6 +8,8 @@
 #ifndef THECHESS_WIDGETS_PGN_RESOURCE_HPP_
 #define THECHESS_WIDGETS_PGN_RESOURCE_HPP_
 
+#include <boost/thread/mutex.hpp>
+
 #include <Wt/WResource>
 #include <Wt/WFileResource>
 
@@ -42,6 +44,7 @@ public:
 private:
     Wt::WDateTime last_rebuild_;
     int last_game_id_;
+    boost::mutex mutex_;
 };
 
 }
