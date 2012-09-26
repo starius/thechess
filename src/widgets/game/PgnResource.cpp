@@ -64,7 +64,7 @@ void PgnResource::handleRequest(const Wt::Http::Request& request,
 }
 
 AllPgnResource::AllPgnResource(Server& server, Wt::WObject* p):
-    Wt::WFileResource(p), session_(server.pool()) {
+    Wt::WFileResource(p) {
     setMimeType("application/x-chess-pgn");
     suggestFileName("all.pgn");
 }
@@ -82,11 +82,13 @@ void AllPgnResource::handleRequest(const Wt::Http::Request& request,
         setFileName(Wt::Wc::unique_filename());
     }
     if (!last_rebuild_.isValid() || now() - last_rebuild_ > REBUILD_FREQ) {
+        dbo::SqlConnection* con = Session::new_connection(*Options::instance());
+        boost::scoped_ptr<dbo::SqlConnection> ptr(con);
+        Session s(*con);
         last_rebuild_ = now();
         std::ofstream file_stream(fileName().c_str());
-        dbo::Transaction t(session_);
-        Games games = session_.find<Game>()
-                      .where("state >= ?").bind(Game::MIN_ENDED);
+        dbo::Transaction t(s);
+        Games games = s.find<Game>().where("state >= ?").bind(Game::MIN_ENDED);
         BOOST_FOREACH (GamePtr g, games) {
             g->pgn(file_stream);
             file_stream << std::endl;

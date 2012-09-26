@@ -41,7 +41,6 @@ public:
 
 private:
     Wt::WDateTime last_rebuild_;
-    Session session_;
 };
 
 }
