@@ -25,9 +25,6 @@ public:
     /* Constructor */
     BoardIndex();
 
-    /* Destructor */
-    virtual ~BoardIndex();
-
     /** Remove all added mappings */
     void clear();
 
@@ -108,6 +105,7 @@ private:
     };
 
     typedef std::vector<ItemN> ArrN;
+    typedef std::vector<int> Games;
 
 private:
     int max_games_;
@@ -117,6 +115,7 @@ private:
     Arr4 arr4_;
     Arr5 arr5_;
     ArrN arrN_;
+    Games gamesN_;
 };
 
 }

@@ -7,7 +7,6 @@
 
 #include <algorithm>
 #include <iterator>
-#include <boost/foreach.hpp>
 
 #include "chess/BoardIndex.hpp"
 #include "chess/Board.hpp"
@@ -19,20 +18,14 @@ BoardIndex::BoardIndex():
     max_games_(500)
 { }
 
-BoardIndex::~BoardIndex() {
-    clear();
-}
-
 void BoardIndex::clear() {
     arr1_.clear();
     arr2_.clear();
     arr3_.clear();
     arr4_.clear();
     arr5_.clear();
-    BOOST_FOREACH (const ItemN& item, arrN_) {
-        delete[] item.games;
-    }
     arrN_.clear();
+    gamesN_.clear();
 }
 
 void BoardIndex::add_board(int game, const Board& board) {
@@ -113,8 +106,8 @@ void BoardIndex::reindex() {
                 ItemN item;
                 item.board = board;
                 item.size = games.size();
-                item.games = new int[games.size()];
-                std::copy(games.begin(), games.end(), item.games);
+                item.games = &(*gamesN_.end());
+                gamesN_.insert(gamesN_.end(), games.begin(), games.end());
                 arrN_.push_back(item);
             }
         } else {
@@ -131,6 +124,7 @@ void BoardIndex::reindex() {
     Arr4(arr4_).swap(arr4_);
     Arr5(arr5_).swap(arr5_);
     ArrN(arrN_).swap(arrN_);
+    Games(gamesN_).swap(gamesN_);
 }
 
 void BoardIndex::find_games(const Board& board, std::vector<int>& games) {
