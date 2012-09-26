@@ -140,12 +140,13 @@ void game_reference(const GamePtr& game, Wt::WContainerWidget* c) {
 
 enum {
     NAME_COLUMN,
+    SCORE_COLUMN,
     N_COLUMN
 };
 
 const int N_ROW = 0;
-const int LEFT_SHIFT = 1;
-const int TOP_SHIFT = 2;
+const int LEFT_SHIFT = N_COLUMN + 1;
+const int TOP_SHIFT = 1;
 
 class ClassicalViewImpl : public Wt::WContainerWidget {
 public:
@@ -158,7 +159,6 @@ public:
         members_ = c->members_vector();
         std::sort(members_.begin(), members_.end(),
                   boost::bind(&ClassicalViewImpl::compare_users, this, _1, _2));
-        score_column_ = members_.size() + TOP_SHIFT;
         headers();
         scores(c);
         fill_table();
@@ -168,7 +168,6 @@ private:
     Wt::WTable* table_;
     GamesTable gt_;
     UsersVector members_;
-    int score_column_;
     bool show_wins_;
     mutable std::map<UserPtr, float> wins_;
 
@@ -181,26 +180,30 @@ private:
         int i = 0;
         BOOST_FOREACH (const UserPtr& user, members_) {
             std::string i_str = TO_S(i + 1);
-            table_->elementAt(i + LEFT_SHIFT, NAME_COLUMN)
+            table_->elementAt(i + TOP_SHIFT, NAME_COLUMN)
             ->setStyleClass("thechess-td-right");
-            table_->elementAt(i + LEFT_SHIFT, NAME_COLUMN)
+            table_->elementAt(i + TOP_SHIFT, NAME_COLUMN)
             ->addWidget(new Wt::WText(user->safe_username()));
-            table_->elementAt(i + LEFT_SHIFT, N_COLUMN)
+            table_->elementAt(i + TOP_SHIFT, N_COLUMN)
             ->addWidget(new Wt::WText(i_str));
-            table_->elementAt(N_ROW, i + TOP_SHIFT)
+            table_->elementAt(N_ROW, i + LEFT_SHIFT)
             ->addWidget(new Wt::WText(i_str));
             i++;
         }
     }
 
     void scores(const CompetitionPtr& c) {
-        table_->elementAt(0, score_column_)
+        int score_right = members_.size() + LEFT_SHIFT;
+        table_->elementAt(0, score_right)
+        ->addWidget(new Wt::WText(tr("tc.competition.Score")));
+        table_->elementAt(0, SCORE_COLUMN)
         ->addWidget(new Wt::WText(tr("tc.competition.Score")));
         int i = 0;
         BOOST_FOREACH (const UserPtr& user, members_) {
-            int row = i + LEFT_SHIFT;
-            Wt::WTableCell* c = table_->elementAt(row, score_column_);
-            c->addWidget(new Wt::WText(TO_S(wins_[user])));
+            int row = i + TOP_SHIFT;
+            std::string w = TO_S(wins_[user]);
+            table_->elementAt(row, score_right)->addWidget(new Wt::WText(w));
+            table_->elementAt(row, SCORE_COLUMN)->addWidget(new Wt::WText(w));
             i++;
         }
     }
@@ -211,8 +214,8 @@ private:
             const UserPtr& urow = members_[row];
             for (int col = 0; col < members_size; ++col) {
                 const UserPtr& ucol = members_[col];
-                Wt::WTableCell* cell = table_->elementAt(row + LEFT_SHIFT,
-                                       col + TOP_SHIFT);
+                Wt::WTableCell* cell = table_->elementAt(row + TOP_SHIFT,
+                                       col + LEFT_SHIFT);
                 cell->clear();
                 if (row == col) {
                     new Wt::WText(tr("tc.competition.dash"), cell);
