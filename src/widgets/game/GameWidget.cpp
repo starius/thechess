@@ -382,10 +382,11 @@ private:
             new Wt::WBreak(manager_);
             bool w = Moves::order(game_->mistake_move()) == Piece::WHITE;
             Wt::WText* p;
+            const char* color = w ? "tc.game.of_white" : "tc.game.of_black";
             p = new Wt::WText(tr("tc.game.Mistake_proposal")
                               .arg(game_->mistake_proposer()->safe_username())
                               .arg(Moves::move_number(game_->mistake_move()))
-                              .arg(tr(w ? "tc.game.of_white" : "tc.game.of_black")),
+                              .arg(tr(color)),
                               manager_);
             p->setStyleClass("thechess-proposal");
             if (game_->can_mistake_agree(tApp->user())) {
