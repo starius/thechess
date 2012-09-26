@@ -242,71 +242,11 @@ private:
         dbo::SqlConnection* con = Session::new_connection(*Options::instance());
         boost::scoped_ptr<dbo::SqlConnection> ptr(con);
         Session s(*con);
-        {
-            dbo::Transaction t(s);
-            Users users = s.find<User>().resultList();
-            BOOST_FOREACH (UserPtr user, users) {
-                user.modify()->games_stat().reset();
-                user.purge();
-            }
-            Games games = s.find<Game>().orderBy("ended").resultList();
-            BOOST_FOREACH (GamePtr game, games) {
-                if (game.id() % 1000 == 0) {
-                    std::cerr << "Recalc. game " << game.id() << std::endl;
-                }
-                game.modify()->stat_change();
-                game.purge();
-            }
-        }
-        {
-            dbo::Transaction t(s);
-            Users users = s.find<User>().resultList();
-            BOOST_FOREACH (UserPtr user, users) {
-                user.modify()->competitions_stat().reset();
-                user.purge();
-            }
-            Competitions ccc = s.find<Competition>()
-                               .orderBy("ended").resultList();
-            BOOST_FOREACH (CompetitionPtr c, ccc) {
-                c.modify()->stat_change();
-                c.purge();
-            }
-        }
-        {
-            dbo::Transaction t(s);
-            GPs gps = s.find<GP>().resultList();
-            BOOST_FOREACH (GPPtr gp, gps) {
-                gp.modify()->set_games_size(gp->games().size());
-                gp.purge();
-            }
-        }
-        {
-            dbo::Transaction t(s);
-            CPs cps = s.find<CP>().resultList();
-            BOOST_FOREACH (CPPtr cp, cps) {
-                cp.modify()->set_competitions_size(cp->competitions().size());
-                cp.purge();
-            }
-        }
-        // comments
-        {
-            dbo::Transaction t(s);
-            s.execute("update thechess_comment set show_index = 1, depth = 1 "
-                      "where type = ?").bind(Comment::FORUM_POST_TEXT);
-            s.execute("update thechess_comment set show_index = 0, depth = 0 "
-                      "where type = ?").bind(Comment::FORUM_COMMENT);
-        }
-        {
-            dbo::Transaction t(s);
-            Comments comments = s.find<Comment>()
-                                .where("type = ?").bind(Comment::FORUM_COMMENT)
-                                .orderBy("id");
-            BOOST_FOREACH (CommentPtr comment, comments) {
-                comment.modify()->set_depth();
-                comment.modify()->set_index();
-                comment.purge();
-            }
-        }
+        s.recalculate_game_rating();
+        s.recalculate_competition_rating();
+        s.recalculate_gp_games_size();
+        s.recalculate_cp_competitions_size();
+        s.recalculate_comments();
     }
 
     void set_motd() {

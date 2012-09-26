@@ -101,6 +101,75 @@ UserPtr Session::user() {
     return user;
 }
 
+void Session::recalculate_game_rating() {
+    dbo::Transaction t(*this);
+    Users users = find<User>().resultList();
+    BOOST_FOREACH (UserPtr user, users) {
+        user.modify()->games_stat().reset();
+        user.purge();
+    }
+    Games games = find<Game>().orderBy("ended").resultList();
+    BOOST_FOREACH (GamePtr game, games) {
+        if (game.id() % 1000 == 0) {
+            std::cerr << "Recalc. game " << game.id() << std::endl;
+        }
+        game.modify()->stat_change();
+        game.purge();
+    }
+}
+
+void Session::recalculate_competition_rating() {
+    dbo::Transaction t(*this);
+    Users users = find<User>().resultList();
+    BOOST_FOREACH (UserPtr user, users) {
+        user.modify()->competitions_stat().reset();
+        user.purge();
+    }
+    Competitions ccc = find<Competition>()
+                       .orderBy("ended").resultList();
+    BOOST_FOREACH (CompetitionPtr c, ccc) {
+        c.modify()->stat_change();
+        c.purge();
+    }
+}
+
+void Session::recalculate_gp_games_size() {
+    dbo::Transaction t(*this);
+    GPs gps = find<GP>().resultList();
+    BOOST_FOREACH (GPPtr gp, gps) {
+        gp.modify()->set_games_size(gp->games().size());
+        gp.purge();
+    }
+}
+
+void Session::recalculate_cp_competitions_size() {
+    dbo::Transaction t(*this);
+    CPs cps = find<CP>().resultList();
+    BOOST_FOREACH (CPPtr cp, cps) {
+        cp.modify()->set_competitions_size(cp->competitions().size());
+        cp.purge();
+    }
+}
+
+void Session::recalculate_comments() {
+    dbo::Transaction t(*this);
+    execute("update thechess_comment set show_index = 1, depth = 1 "
+            "where type = ?").bind(Comment::FORUM_POST_TEXT);
+    execute("update thechess_comment set show_index = 0, depth = 0 "
+            "where type = ?").bind(Comment::FORUM_COMMENT);
+    t.commit();
+    dbo::Transaction t2(*this);
+    Comments comments = find<Comment>()
+                        .where("type = ?").bind(Comment::FORUM_COMMENT)
+                        .orderBy("id");
+    BOOST_FOREACH (CommentPtr comment, comments) {
+        comment.modify()->set_depth();
+        comment.modify()->set_index();
+        comment.purge();
+    }
+    t2.commit();
+}
+
 void Session::map_classes() {
     mapClass<User>("thechess_user");
     mapClass<GP>("thechess_gp");

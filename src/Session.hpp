@@ -53,6 +53,31 @@ public:
     /** Return user */
     UserPtr user();
 
+    /** Iterate through all games and recalculate user ratings.
+    \warning Do not open a transaction before calling this!
+    */
+    void recalculate_game_rating();
+
+    /** Iterate through all competitions and recalculate user ratings.
+    \warning Do not open a transaction before calling this!
+    */
+    void recalculate_competition_rating();
+
+    /** Iterate through all gp and set number of games referring it.
+    \warning Do not open a transaction before calling this!
+    */
+    void recalculate_gp_games_size();
+
+    /** Iterate through all cp and set number of competitions referring it.
+    \warning Do not open a transaction before calling this!
+    */
+    void recalculate_cp_competitions_size();
+
+    /** Iterate through all comments and set depth and index.
+    \warning Do not open a transaction before calling this!
+    */
+    void recalculate_comments();
+
 private:
     UserDatabase user_database_;
     Wt::Auth::Login login_;
