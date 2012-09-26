@@ -41,6 +41,7 @@ public:
 
 private:
     Wt::WDateTime last_rebuild_;
+    int last_game_id_;
 };
 
 }
