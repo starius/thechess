@@ -23,7 +23,6 @@
 #include "widgets/user/ClassificationWidget.hpp"
 #include "widgets/Header.hpp"
 #include "Application.hpp"
-#include "Server.hpp"
 #include "Options.hpp"
 #include "model/all.hpp"
 #include "utils/text_edit.hpp"

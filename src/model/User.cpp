@@ -14,6 +14,7 @@
 #include "model/all.hpp"
 #include "config.hpp"
 #include "Application.hpp" // FIXME
+#include "Server.hpp" // FIXME
 #include "Options.hpp" // FIXME
 
 DBO_INSTANTIATE_TEMPLATES(thechess::User);

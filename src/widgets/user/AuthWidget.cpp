@@ -17,6 +17,7 @@
 
 #include "widgets/user/AuthWidget.hpp"
 #include "Application.hpp"
+#include "Server.hpp"
 #include "Options.hpp"
 
 namespace thechess {

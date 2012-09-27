@@ -24,6 +24,7 @@
 #include <Wt/Wc/Gather.hpp>
 
 #include "Application.hpp"
+#include "Server.hpp"
 #include "config.hpp"
 #include "Kick.hpp"
 #include "model/all.hpp"

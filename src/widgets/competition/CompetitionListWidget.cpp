@@ -26,6 +26,7 @@
 #include "model/all.hpp"
 #include "thechess-global.hpp"
 #include "Application.hpp"
+#include "Options.hpp"
 
 namespace thechess {
 
@@ -133,7 +134,7 @@ public:
                    State state = CompetitionStateSelect::ALL,
                    CompetitionType type = NO_COMPETITION_TYPE,
                    const Wt::WString& name_like = Wt::WString::Empty) {
-        DatabaseType t = tApp->server().options().database_type();
+        DatabaseType t = Options::instance()->database_type();
         std::stringstream sql;
         sql << "select C, ";
         if (t == POSTGRES) {

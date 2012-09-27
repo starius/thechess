@@ -17,7 +17,6 @@
 #include <Wt/Wc/Gather.hpp>
 
 #include "model/all.hpp"
-#include "Server.hpp"
 #include "Session.hpp"
 #include "Path.hpp"
 
