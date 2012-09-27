@@ -136,6 +136,7 @@ public:
         Wt::WPushButton* links = new Wt::WPushButton(tr("tc.common.Links"));
         turn_button_place_->addWidget(links);
         links->clicked().connect(this, &BoardWidgetImpl::show_links);
+        set_links_handler(boost::bind(&BoardWidgetImpl::links, this, _1));
         Wt::WPushButton* turn_button = new Wt::WPushButton(turn_button_place_);
         turn_button->setText(tr("tc.game.Overturn_board"));
         turn_button->clicked().connect(this, &BoardWidgetImpl::turn);
@@ -232,6 +233,10 @@ public:
 
     void set_links_handler(const LinksHandler& links_handler) {
         links_handler_ = links_handler;
+    }
+
+    void links(LinksDialog* dialog) {
+        dialog->add_board(board_);
     }
 
 private:
@@ -493,7 +498,6 @@ private:
             return;
         }
         dialog_ = new LinksDialog();
-        dialog_->add_board(board_);
         if (!links_handler_.empty()) {
             links_handler_(dialog_);
         }
@@ -578,6 +582,10 @@ void BoardWidget::show_lastmove_checkbox(bool show) {
 
 void BoardWidget::set_links_handler(const LinksHandler& links_handler) {
     impl_->set_links_handler(links_handler);
+}
+
+void BoardWidget::links(LinksDialog* dialog) {
+    impl_->links(dialog);
 }
 
 }

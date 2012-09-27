@@ -292,6 +292,7 @@ public:
     }
 
     void links(LinksDialog* dialog) {
+        board_widget_->links(dialog);
         if (current_move_ + 1 > 0) {
             dialog->add_moves(Moves(cached_moves_, current_move_ + 1));
         }

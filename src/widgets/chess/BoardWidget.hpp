@@ -77,6 +77,9 @@ public:
     */
     void set_links_handler(const LinksHandler& links_handler);
 
+    /** Add BoardWidget specific things to LinksDialog */
+    void links(LinksDialog* dialog);
+
 private:
     BoardWidgetImpl* impl_;
 };
