@@ -184,25 +184,32 @@ void BoardIndex::search_moves(const Moves& moves, std::vector<int>& games,
     max_boards = std::min(max_boards, moves.size());
     int step = moves.size() / max_boards;
     int min_move = moves.size() - step * (max_boards - 1);
-    Games result;
+    typedef std::vector<Board> Boards;
+    Boards boards;
     for (Moves::const_iterator it = moves.begin(); it != moves.end(); ++it) {
         if (it.n() >= min_move && (it.n() - min_move) % step == 0) {
-            if (result.empty()) {
-                search_board(it.board(), result);
-            } else {
-                Games new_games;
-                search_board(it.board(), new_games);
-                if (!new_games.empty()) {
-                    Games intersection;
-                    std::set_intersection(result.begin(), result.end(),
-                                          new_games.begin(), new_games.end(),
-                                          std::back_inserter(intersection));
-                    result.swap(intersection);
-                }
+            boards.push_back(it.board());
+        }
+    }
+    Games result;
+    for (Boards::const_reverse_iterator it = boards.rbegin();
+            it != boards.rend(); ++it) {
+        const Board& board = *it;
+        if (result.empty()) {
+            search_board(board, result);
+        } else {
+            Games new_games;
+            search_board(board, new_games);
+            if (!new_games.empty()) {
+                Games intersection;
+                std::set_intersection(result.begin(), result.end(),
+                                      new_games.begin(), new_games.end(),
+                                      std::back_inserter(intersection));
+                result.swap(intersection);
             }
-            if (!result.empty() && result.size() <= stop_games) {
-                break;
-            }
+        }
+        if (!result.empty() && result.size() <= stop_games) {
+            break;
         }
     }
     games.insert(games.end(), result.begin(), result.end());
