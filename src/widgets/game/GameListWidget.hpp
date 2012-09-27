@@ -8,8 +8,11 @@
 #ifndef THECHESS_WIDGETS_GAMELISTWIDGET_HPP_
 #define THECHESS_WIDGETS_GAMELISTWIDGET_HPP_
 
+#include <vector>
+
 #include <Wt/WContainerWidget>
 
+#include "chess/global.hpp"
 #include "model/global.hpp"
 
 namespace thechess {
@@ -21,6 +24,13 @@ public:
     GameListWidget(const UserPtr& user, Wt::WContainerWidget* parent = 0);
 
     GameListWidget(const CompetitionPtr& c, Wt::WContainerWidget* parent = 0);
+
+    GameListWidget(const std::vector<int>& games,
+                   Wt::WContainerWidget* parent = 0);
+
+    GameListWidget(const Board& board, Wt::WContainerWidget* parent = 0);
+
+    GameListWidget(const Moves& moves, Wt::WContainerWidget* parent = 0);
 };
 
 }

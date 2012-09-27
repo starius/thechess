@@ -5,6 +5,7 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <sstream>
 #include <boost/format.hpp>
 #include <boost/tuple/tuple.hpp>
 
@@ -29,6 +30,7 @@
 #include "widgets/game/GameListWidget.hpp"
 #include "widgets/Header.hpp"
 #include "Application.hpp"
+#include "SharedBoardIndex.hpp"
 #include "model/all.hpp"
 
 namespace thechess {
@@ -183,6 +185,18 @@ public:
         if (competition_) {
             q.where("G.competition_id = ?").bind(competition_);
         }
+        if (!games_.empty()) {
+            std::stringstream ids;
+            ids << "G.id in (";
+            for (int i = 0; i < games_.size(); i++) {
+                if (i != 0) {
+                    ids << ',';
+                }
+                ids << games_[i];
+            }
+            ids << ')';
+            q.where(ids.str());
+        }
         if (state_ == GameStateSelect::NOTSTARTED) {
             q.where("G.state < ?").bind(Game::ACTIVE);
         } else if (state_ == GameStateSelect::ENDED) {
@@ -248,11 +262,17 @@ public:
         }
     }
 
+    void set_games(const std::vector<int>& games) {
+        games_ = games;
+        set_query();
+    }
+
 private:
     bool only_my_;
     bool only_commented_;
     UserPtr user_;
     CompetitionPtr competition_;
+    std::vector<int> games_;
     GameStateSelect::State state_;
     Wt::WString name_like_;
 };
@@ -266,6 +286,8 @@ protected:
         return pager;
     }
 };
+
+static const std::vector<int> NO_GAMES(1, -1);
 
 class GameListWidgetImpl : public Wt::WContainerWidget {
 public:
@@ -281,11 +303,34 @@ public:
         initialize(UserPtr(), competition);
     }
 
+    GameListWidgetImpl(const std::vector<int>& games) {
+        const std::vector<int>& g = games.empty() ? NO_GAMES : games;
+        initialize(UserPtr(), CompetitionPtr(), g);
+    }
+
+    GameListWidgetImpl(const Board& b) {
+        std::vector<int> games;
+        SharedBoardIndex::instance()->search_board(tApp->session(), b, games);
+        const std::vector<int>& g = games.empty() ? NO_GAMES : games;
+        initialize(UserPtr(), CompetitionPtr(), g);
+    }
+
+    GameListWidgetImpl(const Moves& m) {
+        std::vector<int> games;
+        SharedBoardIndex::instance()->search_moves(tApp->session(), m, games);
+        const std::vector<int>& g = games.empty() ? NO_GAMES : games;
+        initialize(UserPtr(), CompetitionPtr(), g);
+    }
+
     void initialize(const UserPtr& user = UserPtr(),
-                    const CompetitionPtr& c = CompetitionPtr()) {
+                    const CompetitionPtr& c = CompetitionPtr(),
+                    const std::vector<int>& games = std::vector<int>()) {
         model_ = new GameListModel(user, this);
         if (c) {
             model_->set_competition(c);
+        }
+        if (!games.empty()) {
+            model_->set_games(games);
         }
         manager();
         table_view_ = new GameTableView();
@@ -366,6 +411,25 @@ GameListWidget::GameListWidget(const CompetitionPtr& competition,
     WContainerWidget(p) {
     addWidget(new Header(tr("tc.game.List")));
     addWidget(new GameListWidgetImpl(competition));
+}
+
+GameListWidget::GameListWidget(const std::vector<int>& games,
+                               Wt::WContainerWidget* p):
+    WContainerWidget(p) {
+    addWidget(new Header(tr("tc.game.List")));
+    addWidget(new GameListWidgetImpl(games));
+}
+
+GameListWidget::GameListWidget(const Board& board, Wt::WContainerWidget* p):
+    WContainerWidget(p) {
+    addWidget(new Header(tr("tc.game.List")));
+    addWidget(new GameListWidgetImpl(board));
+}
+
+GameListWidget::GameListWidget(const Moves& moves, Wt::WContainerWidget* p):
+    WContainerWidget(p) {
+    addWidget(new Header(tr("tc.game.List")));
+    addWidget(new GameListWidgetImpl(moves));
 }
 
 }
