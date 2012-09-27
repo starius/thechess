@@ -9,6 +9,7 @@
 
 #include "SharedBoardIndex.hpp"
 #include "Session.hpp"
+#include "Server.hpp"
 #include "model/all.hpp"
 
 namespace thechess {
@@ -61,6 +62,10 @@ void SharedBoardIndex::search_moves(Session& session, const Moves& moves,
             }
         }
     }
+}
+
+SharedBoardIndex* SharedBoardIndex::instance() {
+    return &Server::instance()->shared_board_index();
 }
 
 }

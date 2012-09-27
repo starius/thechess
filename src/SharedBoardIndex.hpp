@@ -45,6 +45,9 @@ public:
                       std::vector<int>& games,
                       int max_boards = 20, int stop_games = 5);
 
+    /** Return global instance of SharedBoardIndex */
+    static SharedBoardIndex* instance();
+
 private:
     BoardIndex index_;
     boost::shared_mutex mutex_;
