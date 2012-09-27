@@ -64,15 +64,15 @@ public:
     May produce False Positives.
     \warning reindex() must be run between adding and searchig.
     */
-    void find_games(const Board& board, std::vector<int>& games);
+    void search_board(const Board& board, std::vector<int>& games);
 
     /** Find games starting from this moves.
     May produce False Positives.
     max_moves indicates max number of board states searched.
     \warning reindex() must be run between adding and searchig.
     */
-    void find_games(const Moves& moves, std::vector<int>& games,
-                    int max_moves = 20);
+    void search_moves(const Moves& moves, std::vector<int>& games,
+                      int max_moves = 20);
 
 private:
     struct Item1 {
