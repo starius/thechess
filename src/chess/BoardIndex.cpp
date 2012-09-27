@@ -200,7 +200,7 @@ void BoardIndex::search_moves(const Moves& moves, std::vector<int>& games,
                     result.swap(intersection);
                 }
             }
-            if (result.size() <= stop_games) {
+            if (!result.empty() && result.size() <= stop_games) {
                 break;
             }
         }
