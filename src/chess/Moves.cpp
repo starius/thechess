@@ -212,7 +212,7 @@ void Moves::fen(std::ostream& out) const {
             halfmove_clock += 1;
         }
     }
-    int fullmove_number = Moves::moves_number(size());
+    int fullmove_number = Moves::moves_number(size() + 1);
     const Board& board = i.board();
     board.fen(out, halfmove_clock, fullmove_number);
 }
