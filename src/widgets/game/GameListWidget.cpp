@@ -11,6 +11,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WTableView>
 #include <Wt/WAnchor>
+#include <Wt/WComboBox>
 #include <Wt/WLineEdit>
 #include <Wt/Dbo/Transaction>
 #include <Wt/Dbo/Query>

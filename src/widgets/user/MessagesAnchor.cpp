@@ -8,6 +8,7 @@
 #include <Wt/WAnchor>
 
 #include "widgets/user/MessagesAnchor.hpp"
+#include "Application.hpp"
 #include "model/all.hpp"
 
 namespace thechess {

@@ -11,6 +11,7 @@
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 
+#include <Wt/WEnvironment>
 #include <Wt/WText>
 #include <Wt/WTable>
 #include <Wt/WTreeTable>

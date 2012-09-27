@@ -8,6 +8,8 @@
 #ifndef THECHESS_BOARD_INDEX_HPP_
 #define THECHESS_BOARD_INDEX_HPP_
 
+#include <vector>
+
 #include "chess/global.hpp"
 
 namespace thechess {

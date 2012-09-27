@@ -11,6 +11,8 @@
 #include <Wt/WGlobal>
 #include <Wt/WText>
 
+#include "model/object.hpp"
+
 namespace thechess {
 
 /** Widget shown right to AuthWidget when user ias logged in */

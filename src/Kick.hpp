@@ -8,6 +8,8 @@
 #ifndef THECHESS_KICK_HPP_
 #define THECHESS_KICK_HPP_
 
+#include "model/object.hpp"
+
 namespace thechess {
 
 /** Object, kicking removed users.

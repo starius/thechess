@@ -7,6 +7,7 @@
 
 #include <boost/foreach.hpp>
 
+#include <Wt/WContainerWidget>
 #include <Wt/WBreak>
 #include <Wt/Wc/util.hpp>
 
