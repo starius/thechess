@@ -5,6 +5,8 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <sstream>
+
 #include <Wt/WLineEdit>
 #include <Wt/WTextArea>
 #include <Wt/WAnchor>
@@ -21,11 +23,18 @@ LinksDialog::LinksDialog():
     setClosable(true);
 }
 
-void LinksDialog::add_board(const Board& board) {
+void LinksDialog::add_board(const Board& board, const Moves* moves) {
     url::StringNode* board_node = tApp->path().board();
     board_node->set_string(board.to_string());
     add_url(board_node->full_path(), tr("tc.common.Board"));
     add_url(tApp->path().board_games()->full_path(), tr("tc.game.With_board"));
+    std::stringstream fen;
+    if (moves) {
+        moves->fen(fen);
+    } else {
+        board.fen(fen, 0, 0);
+    }
+    add_text(fen.str(), tr("tc.game.FEN"));
     // TODO bit.ly
 }
 
@@ -58,10 +67,10 @@ void LinksDialog::add_game(int game) {
     f_->item(tr("tc.common.Game"), "", t, t);
 }
 
-void LinksDialog::add_url(const std::string& path, const Wt::WString& name) {
-    std::string url = tApp->makeAbsoluteUrl(path);
+void LinksDialog::add_text(const std::string& text, const Wt::WString& name,
+                           const std::string& internal_path) {
     Wt::WContainerWidget* c = new Wt::WContainerWidget();
-    Wt::WLineEdit* l = new Wt::WLineEdit(url, c);
+    Wt::WLineEdit* l = new Wt::WLineEdit(text, c);
     l->setTextSize(40);
     l->focussed().connect("function(o, e) {"
                           "$(o).select();"
@@ -72,10 +81,17 @@ void LinksDialog::add_url(const std::string& path, const Wt::WString& name) {
                           "return false;"
                           "});"
                           "}");
-    Wt::WAnchor* open = new Wt::WAnchor(c);
-    open->setText(tr("tc.common.Open"));
-    open->setRefInternalPath(path);
+    if (!internal_path.empty()) {
+        Wt::WAnchor* open = new Wt::WAnchor(c);
+        open->setText(tr("tc.common.Open"));
+        open->setRefInternalPath(internal_path);
+    }
     f_->item(name, "", l, c);
+}
+
+void LinksDialog::add_url(const std::string& path, const Wt::WString& name) {
+    std::string url = tApp->makeAbsoluteUrl(path);
+    add_text(url, name, path);
 }
 
 }

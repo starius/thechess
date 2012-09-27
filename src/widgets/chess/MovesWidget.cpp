@@ -292,9 +292,11 @@ public:
     }
 
     void links(LinksDialog* dialog) {
-        board_widget_->links(dialog);
+        const Board& board = cached_moves_.board(current_move_ + 1);
+        Moves slice_of_moves(cached_moves_, current_move_ + 1);
+        dialog->add_board(board, &slice_of_moves);
         if (current_move_ + 1 > 0) {
-            dialog->add_moves(Moves(cached_moves_, current_move_ + 1));
+            dialog->add_moves(slice_of_moves);
         }
     }
 

@@ -22,8 +22,8 @@ public:
     /** Constructor */
     LinksDialog();
 
-    /** Add links to board */
-    void add_board(const Board& board);
+    /** Add links to board (moves can be provided for FEN) */
+    void add_board(const Board& board, const Moves* moves = 0);
 
     /** Add links to moves */
     void add_moves(const Moves& moves);
@@ -36,6 +36,9 @@ public:
 
 private:
     Wt::Wc::TableForm* f_;
+
+    void add_text(const std::string& text, const Wt::WString& name,
+                  const std::string& internal_path = "");
 
     void add_url(const std::string& url, const Wt::WString& name);
 };
