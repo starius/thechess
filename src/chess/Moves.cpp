@@ -57,10 +57,7 @@ Moves::Moves(const std::string& data, bool check) {
             // last 4 bits of last byte are random
             svuc_.back() &= 0xF0;
         }
-        int bad_move = this->check();
-        if (bad_move != -1) {
-            pop(size() - bad_move);
-        }
+        check_and_fix();
     }
 }
 
@@ -192,6 +189,14 @@ int Moves::check() const {
         }
     }
     return -1;
+}
+
+bool Moves::check_and_fix() {
+    int bad_move = check();
+    if (bad_move != -1) {
+        pop(size() - bad_move);
+    }
+    return bad_move != -1;
 }
 
 void Moves::pgn(std::ostream& out, const std::string& result,

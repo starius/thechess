@@ -157,6 +157,12 @@ public:
     */
     int check() const;
 
+    /** Test correctness.
+    Return if there is a wrong move in the moves.
+    Removes all moves starring from first wrong move.
+    */
+    bool check_and_fix();
+
     /** Write (PGN) movetext to stream.
     \param out     Output stream.
     \param result  The value of Result tag (see PGN description).
