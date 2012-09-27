@@ -51,9 +51,10 @@ public:
     void add_board(int game, const Board& board);
 
     /** Add all board states (except start) occured in the moves.
+    First \c skip_half_moves half-moves are skipped.
     \warning reindex() must be run between adding and searchig.
     */
-    void add_moves(int game, const Moves& moves);
+    void add_moves(int game, const Moves& moves, int skip_half_moves = 5);
 
     /** Reindex internal data.
     \warning reindex() must be run between adding and searchig.
