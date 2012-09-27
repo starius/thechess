@@ -23,6 +23,7 @@
 #include "widgets/user/ClassificationWidget.hpp"
 #include "widgets/Header.hpp"
 #include "Application.hpp"
+#include "SharedBoardIndex.hpp"
 #include "Options.hpp"
 #include "model/all.hpp"
 #include "utils/text_edit.hpp"
@@ -241,6 +242,7 @@ private:
         dbo::SqlConnection* con = Session::new_connection(*Options::instance());
         boost::scoped_ptr<dbo::SqlConnection> ptr(con);
         Session s(*con);
+        SharedBoardIndex::instance()->rebuild(s);
         s.recalculate_game_rating();
         s.recalculate_competition_rating();
         s.recalculate_gp_games_size();
