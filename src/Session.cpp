@@ -108,13 +108,17 @@ void Session::recalculate_game_rating() {
         user.modify()->games_stat().reset();
         user.purge();
     }
-    Games games = find<Game>().orderBy("ended").resultList();
-    BOOST_FOREACH (GamePtr game, games) {
-        if (game.id() % 1000 == 0) {
-            std::cerr << "Recalc. game " << game.id() << std::endl;
+    int games_size = find<Game>().resultList().size();
+    const int STEP = 1000;
+    for (int offset = 0; offset < games_size; offset += STEP) {
+        Games games = find<Game>().orderBy("ended").limit(STEP).offset(offset);
+        BOOST_FOREACH (GamePtr game, games) {
+            if (game.id() % 1000 == 0) {
+                std::cerr << "Recalc. game " << game.id() << std::endl;
+            }
+            game.modify()->stat_change();
+            game.purge();
         }
-        game.modify()->stat_change();
-        game.purge();
     }
 }
 

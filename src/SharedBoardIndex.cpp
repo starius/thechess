@@ -20,12 +20,17 @@ void SharedBoardIndex::rebuild(Session& session) {
     boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(lock);
     index_.clear();
     dbo::Transaction t(session);
-    Games games = session.find<Game>();
-    BOOST_FOREACH (GamePtr game, games) {
-        if (game.id() % 1000 == 0) {
-            std::cerr << "Index game: " << game.id() << std::endl;
+    int games_size = session.find<Game>().resultList().size();
+    const int STEP = 1000;
+    for (int offset = 0; offset < games_size; offset += STEP) {
+        Games games = session.find<Game>().orderBy("id")
+                      .limit(STEP).offset(offset);
+        BOOST_FOREACH (GamePtr game, games) {
+            if (game.id() % 1000 == 0) {
+                std::cerr << "Index game: " << game.id() << std::endl;
+            }
+            index_.add_moves(game.id(), game->moves());
         }
-        index_.add_moves(game.id(), game->moves());
     }
     index_.reindex();
 }
