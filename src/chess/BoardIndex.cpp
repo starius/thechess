@@ -178,10 +178,10 @@ void BoardIndex::search_board(const Board& board, std::vector<int>& games) {
 }
 
 void BoardIndex::search_moves(const Moves& moves, std::vector<int>& games,
-                              int max_moves) {
-    max_moves = std::min(max_moves, moves.size());
-    int step = moves.size() / max_moves;
-    int min_move = moves.size() - step * (max_moves - 1);
+                              int max_boards) {
+    max_boards = std::min(max_boards, moves.size());
+    int step = moves.size() / max_boards;
+    int min_move = moves.size() - step * (max_boards - 1);
     Games result;
     for (Moves::const_iterator it = moves.begin(); it != moves.end(); ++it) {
         if (it.n() >= min_move && (it.n() - min_move) % step == 0) {

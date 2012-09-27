@@ -68,11 +68,11 @@ public:
 
     /** Find games starting from this moves.
     May produce False Positives.
-    max_moves indicates max number of board states searched.
+    max_boards indicates max number of board states (or half-moves) searched.
     \warning reindex() must be run between adding and searchig.
     */
     void search_moves(const Moves& moves, std::vector<int>& games,
-                      int max_moves = 20);
+                      int max_boards = 20);
 
 private:
     struct Item1 {
