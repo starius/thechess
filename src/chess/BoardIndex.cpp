@@ -192,11 +192,13 @@ void BoardIndex::search_moves(const Moves& moves, std::vector<int>& games,
             } else {
                 Games new_games;
                 search_board(it.board(), new_games);
-                Games intersection;
-                std::set_intersection(result.begin(), result.end(),
-                                      new_games.begin(), new_games.end(),
-                                      std::back_inserter(intersection));
-                result.swap(intersection);
+                if (!new_games.empty()) {
+                    Games intersection;
+                    std::set_intersection(result.begin(), result.end(),
+                                          new_games.begin(), new_games.end(),
+                                          std::back_inserter(intersection));
+                    result.swap(intersection);
+                }
             }
             if (result.size() <= stop_games) {
                 break;
