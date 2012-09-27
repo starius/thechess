@@ -247,8 +247,8 @@ bool Moves::starts_with(const Moves& beginning) const {
             Moves::half_move(last_half_move)) {
         return false;
     }
-    int count3 = svuc_.size() / 3;
-    int count4 = svuc_.size() / sizeof(int);
+    int count3 = beginning.svuc_.size() / 3;
+    int count4 = beginning.svuc_.size() / sizeof(int);
     for (int i = count4 * sizeof(int); i < count3 * 3; i++) {
         if (beginning.svuc_[i] != svuc_[i]) {
             return false;
