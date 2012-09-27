@@ -11,6 +11,7 @@
 namespace thechess {
 
 class Board;
+class BoardIndex;
 class CachedMoves;
 class HalfMove;
 class Moves;
