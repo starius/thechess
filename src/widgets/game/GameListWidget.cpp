@@ -269,18 +269,15 @@ protected:
 
 class GameListWidgetImpl : public Wt::WContainerWidget {
 public:
-    GameListWidgetImpl() :
-        Wt::WContainerWidget() {
+    GameListWidgetImpl() {
         initialize();
     }
 
-    GameListWidgetImpl(const UserPtr& user) :
-        Wt::WContainerWidget() {
+    GameListWidgetImpl(const UserPtr& user) {
         initialize(user);
     }
 
-    GameListWidgetImpl(const CompetitionPtr& competition) :
-        Wt::WContainerWidget() {
+    GameListWidgetImpl(const CompetitionPtr& competition) {
         initialize(UserPtr(), competition);
     }
 
