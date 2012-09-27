@@ -5,6 +5,7 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <sstream>
 #include <boost/foreach.hpp>
 
 #include "SharedBoardIndex.hpp"
@@ -53,10 +54,21 @@ void SharedBoardIndex::search_moves(Session& session, const Moves& moves,
         dbo::Transaction t(session);
         std::vector<int> candidates;
         index_.search_moves(moves, candidates);
-        BOOST_FOREACH (int game_id, candidates) {
-            GamePtr game = session.load<Game>(game_id);
-            if (game->moves().starts_with(moves)) {
-                games.push_back(game_id);
+        if (!candidates.empty()) {
+            std::stringstream ids;
+            ids << "id in (";
+            for (int i = 0; i < candidates.size(); i++) {
+                if (i != 0) {
+                    ids << ',';
+                }
+                ids << candidates[i];
+            }
+            ids << ')';
+            Games games_col = session.find<Game>().where(ids.str());
+            BOOST_FOREACH (GamePtr game, games_col) {
+                if (game->moves().starts_with(moves)) {
+                    games.push_back(game.id());
+                }
             }
         }
     }
