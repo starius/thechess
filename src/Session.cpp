@@ -103,14 +103,14 @@ UserPtr Session::user() {
 
 void Session::recalculate_game_rating() {
     dbo::Transaction t(*this);
-    Users users = find<User>().resultList();
-    BOOST_FOREACH (UserPtr user, users) {
-        user.modify()->games_stat().reset();
-        user.purge();
-    }
+    execute("update thechess_user set games_stat_elo = ?, games_stat_all = 0, "
+            "games_stat_wins = 0, games_stat_fails = 0")
+    .bind(EloPlayer(true).elo());
     int games_size = find<Game>().resultList().size();
+    t.commit();
     const int STEP = 1000;
     for (int offset = 0; offset < games_size; offset += STEP) {
+        dbo::Transaction t2(*this);
         Games games = find<Game>().orderBy("ended").limit(STEP).offset(offset);
         BOOST_FOREACH (GamePtr game, games) {
             if (game.id() % 1000 == 0) {
