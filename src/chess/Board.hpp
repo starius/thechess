@@ -217,6 +217,11 @@ public:
 
     /* @} */
 
+    /** Start position.
+    The same as Board().
+    */
+    static const Board start_position;
+
 private:
     typedef unsigned char byte;
     static const int PIECES_SIZE = 34;

@@ -23,6 +23,8 @@ namespace thechess {
 const int ORDER_BYTE = 32;
 const int CASTLING_BYTE = 33;
 
+const Board Board::start_position = Board();
+
 typedef Board::PieceStat PieceStat;
 typedef Board::TakenPieceStat TakenPieceStat;
 
@@ -71,7 +73,7 @@ bool PieceStat::is_material_draw() const {
     return false;
 }
 
-const PieceStat full_stat = PieceStat(Board());
+const PieceStat full_stat = PieceStat(Board::start_position);
 
 TakenPieceStat::TakenPieceStat(const Board& board):
     PieceStat(board) {
@@ -126,7 +128,7 @@ Board::Board(const std::string& data) {
         memcpy(pieces_, pieces.c_str(), sizeof(pieces_));
     } else {
         // TODO log error
-        *this = Board();
+        *this = start_position;
     }
 }
 
