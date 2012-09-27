@@ -55,6 +55,9 @@ public:
     */
     void set_links_handler(const LinksHandler& links_handler);
 
+    /** Add MovesWidget specific things to LinksDialog */
+    void links(LinksDialog* dialog);
+
 private:
     class MovesWidgetImpl;
 

@@ -605,7 +605,7 @@ private:
 
     void links(LinksDialog* dialog) {
         dbo::Transaction t(tApp->session());
-        dialog->add_moves(game_->moves());
+        moves_widget_->links(dialog);
         int move_n = Moves::move_number(moves_widget_->current_move());
         dialog->add_game_move(game_.id(), move_n);
         dialog->add_game(game_.id());

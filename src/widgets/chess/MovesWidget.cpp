@@ -291,6 +291,12 @@ public:
         history_select();
     }
 
+    void links(LinksDialog* dialog) {
+        if (current_move_ + 1 > 0) {
+            dialog->add_moves(Moves(cached_moves_, current_move_ + 1));
+        }
+    }
+
 private:
     BoardWidget* board_widget_;
     MovesModel* moves_model_;
@@ -423,12 +429,6 @@ private:
     void move_confirmation_changed() {
         User::set_s(SWITCH_MOVE_CONFIRMATION, move_confirmation_->isChecked());
     }
-
-    void links(LinksDialog* dialog) {
-        if (current_move_ + 1 > 0) {
-            dialog->add_moves(Moves(cached_moves_, current_move_ + 1));
-        }
-    }
 };
 
 MovesWidget::MovesWidget(const Moves& moves,
@@ -491,6 +491,10 @@ void MovesWidget::set_move_confirmation(bool needed) {
 
 void MovesWidget::set_links_handler(const LinksHandler& links_handler) {
     impl_->set_links_handler(links_handler);
+}
+
+void MovesWidget::links(LinksDialog* dialog) {
+    impl_->links(dialog);
 }
 
 }
