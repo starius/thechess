@@ -803,8 +803,7 @@ void Game::pgn_init_moves(std::ostream& out) const {
             halfmove_clock += 1;
         }
     }
-    ++i;
-    int fullmove_number = Moves::moves_number(init_moves().size() + 1);
+    int fullmove_number = Moves::moves_number(init_moves().size());
     out << "[FEN \"";
     const Board& board = i.board();
     board.fen(out, halfmove_clock, fullmove_number);
