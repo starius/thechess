@@ -44,9 +44,11 @@ Path::Path(Wt::WObject* parent):
     cp_new_ = new PredefinedNode("new", cp_list_);
     board_root_ = new PredefinedNode("board", this);
     board_ = new StringNode(board_root_);
+    board_games_ = new PredefinedNode("games", board_);
     moves_root_ = new PredefinedNode("moves", this);
     moves_ = new StringNode(moves_root_);
     moves_challenge_ = new PredefinedNode("challenge", moves_);
+    moves_games_ = new PredefinedNode("games", moves_);
     PredefinedNode* forum = new PredefinedNode("forum", this);
     topics_ = new PredefinedNode("topic", forum);
     topic_posts_ = new IntegerNode(topics_);
@@ -94,8 +96,10 @@ void Path::connect_main_widget(MainWidget* mw) {
             boost::bind(&Path::open_games_of_competition, this));
     connect(competition_new_, boost::bind(&MainWidget::competition_new, mw));
     connect(board_, boost::bind(&Path::open_board, this));
+    connect(board_games_, boost::bind(&Path::open_board_games, this));
     connect(moves_, boost::bind(&Path::open_moves, this));
     connect(moves_challenge_, boost::bind(&Path::open_moves_challenge, this));
+    connect(moves_games_, boost::bind(&Path::open_moves_games, this));
     connect(board_root_, boost::bind(&MainWidget::moves_widget, mw));
     connect(moves_root_, boost::bind(&MainWidget::moves_widget, mw));
     connect(topics_, boost::bind(&MainWidget::forum_topics, mw));
@@ -221,12 +225,20 @@ void Path::open_board() {
     main_widget_->board_view(board_->string());
 }
 
+void Path::open_board_games() {
+    main_widget_->board_games(board_->string());
+}
+
 void Path::open_moves() {
     main_widget_->moves_view(moves_->string());
 }
 
 void Path::open_moves_challenge() {
     main_widget_->moves_challenge(moves_->string());
+}
+
+void Path::open_moves_games() {
+    main_widget_->moves_games(moves_->string());
 }
 
 void Path::open_forum_topic_posts() {

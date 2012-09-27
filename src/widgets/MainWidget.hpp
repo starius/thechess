@@ -103,8 +103,14 @@ public:
     /** View the board */
     void board_view(const std::string& data);
 
+    /** List games with the board */
+    void board_games(const std::string& data);
+
     /** View the moves */
     void moves_view(const std::string& data);
+
+    /** List games starting with the moves */
+    void moves_games(const std::string& data);
 
     /** Challenge with the moves */
     void moves_challenge(const std::string& data);

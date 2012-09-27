@@ -278,10 +278,20 @@ void MainWidget::board_view(const std::string& data) {
     wApp->setTitle(tr("tc.title.BoardWidget"));
 }
 
+void MainWidget::board_games(const std::string& data) {
+    set_contents(new GameListWidget(Board(data)));
+    wApp->setTitle(tr("tc.title.GameListWidget"));
+}
+
 void MainWidget::moves_view(const std::string& m) {
     set_contents(new MovesWidget(Moves(m, /* check */ true),
                                  /* big */ false, /* active */ true));
     wApp->setTitle(tr("tc.title.MovesWidget_moves"));
+}
+
+void MainWidget::moves_games(const std::string& data) {
+    set_contents(new GameListWidget(Moves(data, /* check */ true)));
+    wApp->setTitle(tr("tc.title.GameListWidget"));
 }
 
 void MainWidget::moves_challenge(const std::string& data) {

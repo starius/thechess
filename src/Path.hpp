@@ -155,6 +155,11 @@ public:
         return board_;
     }
 
+    /** List games with the board */
+    url::PredefinedNode* board_games() const {
+        return board_games_;
+    }
+
     /** Moves URL.
     Parameter: Moves::to_string()
     */
@@ -165,6 +170,11 @@ public:
     /** Challenge with the moves */
     url::PredefinedNode* moves_challenge() const {
         return moves_challenge_;
+    }
+
+    /** List games starting with the moves */
+    url::PredefinedNode* moves_games() const {
+        return moves_games_;
     }
 
     /** Forum topics */
@@ -268,9 +278,11 @@ private:
     url::PredefinedNode* cp_new_;
     url::PredefinedNode* board_root_;
     url::StringNode* board_;
+    url::PredefinedNode* board_games_;
     url::PredefinedNode* moves_root_;
     url::StringNode* moves_;
     url::PredefinedNode* moves_challenge_;
+    url::PredefinedNode* moves_games_;
     url::PredefinedNode* topics_;
     url::IntegerNode* topic_posts_;
     url::PredefinedNode* all_posts_;
@@ -298,8 +310,10 @@ private:
     void open_competition();
     void open_games_of_competition();
     void open_board();
+    void open_board_games();
     void open_moves();
     void open_moves_challenge();
+    void open_moves_games();
     void open_forum_topic_posts();
     void open_forum_post();
     void open_forum_post_comment();
