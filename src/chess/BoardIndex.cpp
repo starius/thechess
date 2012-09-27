@@ -108,7 +108,7 @@ void BoardIndex::reindex() {
                 ItemN item;
                 item.board = board;
                 item.size = games.size();
-                item.games = &(*gamesN_.end());
+                item.index = gamesN_.size();
                 gamesN_.insert(gamesN_.end(), games.begin(), games.end());
                 arrN_.push_back(item);
             }
@@ -169,12 +169,14 @@ void BoardIndex::search_board(const Board& board, std::vector<int>& games) {
         games.push_back(item5->game2);
         games.push_back(item5->game3);
         games.push_back(item5->game4);
+        std::cout << "search_board.arr5_" << std::endl;
         return;
     }
     ArrN::const_iterator itemN = std::lower_bound(arrN_.begin(), arrN_.end(),
                                  board_hash, ItemCompare<ItemN>());
     if (itemN != arrN_.end() && itemN->board == board_hash) {
-        games.insert(games.end(), itemN->games, itemN->games + itemN->size);
+        games.insert(games.end(), &gamesN_[itemN->index],
+                     &gamesN_[itemN->index + itemN->size]);
         return;
     }
 }

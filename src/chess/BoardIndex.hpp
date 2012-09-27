@@ -109,7 +109,7 @@ private:
     struct ItemN {
         int32_t board;
         int size;
-        int* games;
+        int index;
     };
 
     typedef std::vector<ItemN> ArrN;
