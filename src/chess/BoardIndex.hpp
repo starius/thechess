@@ -68,12 +68,13 @@ public:
     void search_board(const Board& board, std::vector<int>& games);
 
     /** Find games starting from this moves.
+    \param max_boards Max number of board states (or half-moves) searched.
+    \param stop_games Stop filtering candidate games if its size <= stop_games.
     May produce False Positives.
-    max_boards indicates max number of board states (or half-moves) searched.
     \warning reindex() must be run between adding and searchig.
     */
     void search_moves(const Moves& moves, std::vector<int>& games,
-                      int max_boards = 20);
+                      int max_boards = 20, int stop_games = 5);
 
 private:
     struct Item1 {

@@ -180,7 +180,7 @@ void BoardIndex::search_board(const Board& board, std::vector<int>& games) {
 }
 
 void BoardIndex::search_moves(const Moves& moves, std::vector<int>& games,
-                              int max_boards) {
+                              int max_boards, int stop_games) {
     max_boards = std::min(max_boards, moves.size());
     int step = moves.size() / max_boards;
     int min_move = moves.size() - step * (max_boards - 1);
@@ -198,7 +198,7 @@ void BoardIndex::search_moves(const Moves& moves, std::vector<int>& games,
                                       std::back_inserter(intersection));
                 result.swap(intersection);
             }
-            if (result.empty()) {
+            if (result.size() <= stop_games) {
                 break;
             }
         }
