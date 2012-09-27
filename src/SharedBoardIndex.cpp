@@ -26,6 +26,7 @@ void SharedBoardIndex::rebuild(Session& session) {
         }
         index_.add_moves(game.id(), game->moves());
     }
+    index_.reindex();
 }
 
 void SharedBoardIndex::search_board(Session& session, const Board& board,
