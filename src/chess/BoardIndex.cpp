@@ -179,6 +179,29 @@ void BoardIndex::find_games(const Board& board, std::vector<int>& games) {
 
 void BoardIndex::find_games(const Moves& moves, std::vector<int>& games,
                             int max_moves) {
+    max_moves = std::min(max_moves, moves.size());
+    int step = moves.size() / max_moves;
+    int min_move = moves.size() - step * (max_moves - 1);
+    Games result;
+    for (Moves::const_iterator it = moves.begin(); it != moves.end(); ++it) {
+        if (it.n() >= min_move && (it.n() - min_move) % step == 0) {
+            if (result.empty()) {
+                find_games(it.board(), result);
+            } else {
+                Games new_games;
+                find_games(it.board(), new_games);
+                Games intersection;
+                std::set_intersection(result.begin(), result.end(),
+                                      new_games.begin(), new_games.end(),
+                                      std::back_inserter(intersection));
+                result.swap(intersection);
+            }
+            if (result.empty()) {
+                break;
+            }
+        }
+    }
+    games.insert(games.end(), result.begin(), result.end());
 }
 
 }
