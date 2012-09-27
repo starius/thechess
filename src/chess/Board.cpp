@@ -160,6 +160,12 @@ bool Board::operator<(const Board& other) const {
     return false;
 }
 
+bool Board::operator==(const Board& other) const {
+    return std::memcmp(reinterpret_cast<const void*>(pieces_),
+                       reinterpret_cast<const void*>(other.pieces_),
+                       PIECES_SIZE) == 0;
+}
+
 Board::byte Board::q(Square square) const {
     int i = square.i();
     byte b = pieces_[i / 2];

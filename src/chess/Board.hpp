@@ -96,6 +96,9 @@ public:
     /** Comparison operator to use Board as key in std::map */
     bool operator<(const Board& other) const;
 
+    /** Comparison operator */
+    bool operator==(const Board& other) const;
+
     /** Apply the half-move to the board.
     The validness of half-move is not tested.
     */
