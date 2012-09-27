@@ -24,12 +24,11 @@ are allowed.
 class SharedBoardIndex {
 public:
     /** Rebuild BoardIndex.
-    Does not require active transaction.
     */
-    void rebuild();
+    void rebuild(Session& session);
 
     /** Find all games including this board state.
-    Requires tApp (for session and transaction).
+    May not produce false positives.
     If called while rebuild(), empty result is returned.
     */
     void search_board(Session& session, const Board& board,

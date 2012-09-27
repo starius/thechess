@@ -14,15 +14,12 @@
 
 namespace thechess {
 
-void SharedBoardIndex::rebuild() {
+void SharedBoardIndex::rebuild(Session& session) {
     boost::upgrade_lock<boost::shared_mutex> lock(mutex_);
     boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(lock);
     index_.clear();
-    dbo::SqlConnection* con = Session::new_connection(*Options::instance());
-    boost::scoped_ptr<dbo::SqlConnection> ptr(con);
-    Session s(*con);
-    dbo::Transaction t(s);
-    Games games = s.find<Game>();
+    dbo::Transaction t(session);
+    Games games = session.find<Game>();
     BOOST_FOREACH (GamePtr game, games) {
         if (game.id() % 1000 == 0) {
             std::cerr << "Index game: " << game.id() << std::endl;
