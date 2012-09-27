@@ -15,6 +15,7 @@
 #include <Wt/Auth/PasswordService>
 
 #include "Options.hpp"
+#include "SharedBoardIndex.hpp"
 #include "Session.hpp"
 #include "model/object.hpp"
 #include "widgets/game/PgnResource.hpp"
@@ -47,6 +48,11 @@ public:
         return options_;
     }
 
+    /** Get board index */
+    SharedBoardIndex& shared_board_index() {
+        return shared_board_index_;
+    }
+
     /** Get sql connection pool */
     dbo::FixedSqlConnectionPool& pool() {
         return pool_;
@@ -67,6 +73,7 @@ public:
 
 private:
     Options options_;
+    SharedBoardIndex shared_board_index_;
     dbo::FixedSqlConnectionPool pool_;
     Notifier notifier_;
     Planning planning_;
