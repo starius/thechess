@@ -25,6 +25,7 @@ void LinksDialog::add_board(const Board& board) {
     url::StringNode* board_node = tApp->path().board();
     board_node->set_string(board.to_string());
     add_url(board_node->full_path(), tr("tc.common.Board"));
+    add_url(tApp->path().board_games()->full_path(), tr("tc.game.With_board"));
     // TODO bit.ly
 }
 
@@ -34,6 +35,8 @@ void LinksDialog::add_moves(const Moves& moves) {
     add_url(moves_node->full_path(), tr("tc.common.Moves"));
     add_url(tApp->path().moves_challenge()->full_path(),
             tr("tc.game.Challenge"));
+    add_url(tApp->path().moves_games()->full_path(),
+            tr("tc.game.Started_with"));
     // TODO bit.ly
 }
 

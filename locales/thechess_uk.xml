@@ -210,6 +210,7 @@
     <message id="tc.game.Select_gp">Вибір параметрів партії</message>
     <message id="tc.game.Start_position">Початкова позиція</message>
     <message id="tc.game.started">розпочата</message>
+    <message id='tc.game.Started_with'>Искать игры, начатые этими ходами</message>
     <message id="tc.game.State">Стан</message>
     <message id="tc.game.State_active">Активна</message>
     <message id="tc.game.State_cancelled">Скасована</message>
@@ -230,6 +231,7 @@
     <message id="tc.game.Surrender">Здатися</message>
     <message id="tc.game.white">білий</message>
     <message id='tc.game.White_won'>Белые победили</message>
+    <message id='tc.game.With_board'>Искать игры с этим состоянием доски</message>
     <message id="tc.game.your_color">колір ваших фігур</message>
     <message id="tc.game.First_draw">
         <plural case="0">

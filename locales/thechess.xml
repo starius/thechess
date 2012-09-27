@@ -700,6 +700,7 @@ TheChess.
     <message id='tc.game.Select_gp'>Select game parameters</message>
     <message id='tc.game.Start_position'>Start position</message>
     <message id='tc.game.started'>started</message>
+    <message id='tc.game.Started_with'>Search games started with moves</message>
     <message id='tc.game.State'>State</message>
     <message id='tc.game.State_active'>Active</message>
     <message id='tc.game.State_cancelled'>Cancelled</message>
@@ -720,6 +721,7 @@ TheChess.
     <message id='tc.game.Surrender'>Surrender</message>
     <message id='tc.game.white'>white</message>
     <message id='tc.game.White_won'>White won</message>
+    <message id='tc.game.With_board'>Search games with the board</message>
     <message id='tc.game.your_color'>your color</message>
     <message id='tc.game.external_code'>
 <div id="thechess_game_{1}"></div>
