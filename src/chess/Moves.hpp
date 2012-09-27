@@ -163,6 +163,9 @@ public:
     */
     bool check_and_fix();
 
+    /** Return FEN notation of the board, produced by this moves */
+    void fen(std::ostream& out) const;
+
     /** Write (PGN) movetext to stream.
     \param out     Output stream.
     \param result  The value of Result tag (see PGN description).

@@ -790,23 +790,8 @@ const char* Game::pgn_termination() const {
 
 void Game::pgn_init_moves(std::ostream& out) const {
     out << "[SetUp \"" << "1" << "\"]" << std::endl;
-    int halfmove_clock = 0;
-    Moves::const_iterator i = moves_.begin();
-    Moves::const_iterator e = moves_.iter(init_moves().size());
-    for (; i < e; ++i) {
-        HalfMove half_move = *i;
-        const Board& board = i.board();
-        if (board.letter(half_move.from()) == Piece::PAWN ||
-                board.test_takes(half_move)) {
-            halfmove_clock = 0;
-        } else {
-            halfmove_clock += 1;
-        }
-    }
-    int fullmove_number = Moves::moves_number(init_moves().size());
     out << "[FEN \"";
-    const Board& board = i.board();
-    board.fen(out, halfmove_clock, fullmove_number);
+    init_moves().fen(out);
     out << "\"]" << std::endl;
 }
 

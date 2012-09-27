@@ -199,6 +199,24 @@ bool Moves::check_and_fix() {
     return bad_move != -1;
 }
 
+void Moves::fen(std::ostream& out) const {
+    int halfmove_clock = 0;
+    const_iterator i = begin();
+    for (; i < end(); ++i) {
+        HalfMove half_move = *i;
+        const Board& board = i.board();
+        if (board.letter(half_move.from()) == Piece::PAWN ||
+                board.test_takes(half_move)) {
+            halfmove_clock = 0;
+        } else {
+            halfmove_clock += 1;
+        }
+    }
+    int fullmove_number = Moves::moves_number(size());
+    const Board& board = i.board();
+    board.fen(out, halfmove_clock, fullmove_number);
+}
+
 void Moves::pgn(std::ostream& out, const std::string& result,
                 bool /*reduced*/) const {
     Wt::Wc::PlainTextWritter ptw(out);
