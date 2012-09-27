@@ -174,6 +174,16 @@ public:
     void foreach(void* func(HalfMove half_move, const Board& board),
                  int from = 0, int to = -1) const;
 
+    /** Return if the moves includes this board state.
+    Return true if board == Board::start_position.
+    */
+    bool has_board(const Board& board) const;
+
+    /** Return if the moves starts with the beginning.
+    Return true if moves.size() == 0.
+    */
+    bool starts_with(const Moves& beginning) const;
+
 protected:
     /** Base const itarator */
     class base_iterator :

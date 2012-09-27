@@ -225,6 +225,48 @@ void Moves::foreach(void* func(HalfMove half_move, const Board& board),
     }
 }
 
+bool Moves::has_board(const Board& board) const {
+    if (board == Board::start_position) {
+        return true;
+    }
+    for (Moves::const_iterator it = begin(); it != end(); ++it) {
+        if (it.board() == board) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Moves::starts_with(const Moves& beginning) const {
+    if (beginning.size() == 0) {
+        return true;
+    }
+    if (beginning.size() > size()) {
+        return false;
+    }
+    int last_half_move = beginning.size() - 1;
+    if (last_half_move % 2 == 1 && // odd half-move
+            beginning.Moves::half_move(last_half_move) !=
+            Moves::half_move(last_half_move)) {
+        return false;
+    }
+    int count3 = svuc_.size() / 3;
+    int count4 = svuc_.size() / sizeof(int);
+    for (int i = count4 * sizeof(int); i < count3 * 3; i++) {
+        if (beginning.svuc_[i] != svuc_[i]) {
+            return false;
+        }
+    }
+    const int* beginning_r = reinterpret_cast<const int*>(&beginning.svuc_[0]);
+    const int* r = reinterpret_cast<const int*>(&svuc_[0]);
+    for (int i = count4 - 1; i >= 0; i--) {
+        if (beginning_r[i] != r[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 int Moves::move_number(int move_n) {
     return (move_n + 2) / 2;
 }
