@@ -27,6 +27,7 @@ class Path;
 class Server;
 class Session;
 class Kick;
+class SharedBoardIndex;
 
 /** Wt::Dbo backend type */
 enum DatabaseType {
