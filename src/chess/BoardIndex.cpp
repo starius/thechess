@@ -36,7 +36,7 @@ void BoardIndex::add_board(int game, const Board& board) {
 }
 
 void BoardIndex::add_moves(int game, const Moves& moves, int skip_half_moves) {
-    for (Moves::const_iterator it = moves.begin(); it != moves.end(); ++it) {
+    for (Moves::const_iterator it = moves.begin(); it <= moves.end(); ++it) {
         if (it.n() >= skip_half_moves) {
             add_board(game, it.board());
         }

@@ -226,10 +226,7 @@ void Moves::foreach(void* func(HalfMove half_move, const Board& board),
 }
 
 bool Moves::has_board(const Board& board) const {
-    if (board == Board::start_position) {
-        return true;
-    }
-    for (Moves::const_iterator it = begin(); it != end(); ++it) {
+    for (Moves::const_iterator it = begin(); it <= end(); ++it) {
         if (it.board() == board) {
             return true;
         }
