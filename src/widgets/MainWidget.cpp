@@ -280,7 +280,7 @@ void MainWidget::board_view(const std::string& data) {
 
 void MainWidget::moves_view(const std::string& m) {
     set_contents(new MovesWidget(Moves(m, /* check */ true),
-                 /* big */ false, /* active */ true));
+                                 /* big */ false, /* active */ true));
     wApp->setTitle(tr("tc.title.MovesWidget_moves"));
 }
 
