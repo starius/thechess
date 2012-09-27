@@ -144,7 +144,7 @@ int32_t Board::to_int() const {
     const int32_t* data = reinterpret_cast<const int32_t*>(pieces_);
     int32_t result = 0;
     for (int i = 0; i < sizeof(pieces_) / sizeof(int32_t); i++) {
-        result ^= data[i];
+        result = (result << 1) ^ (data[i]);
     }
     return result;
 }
