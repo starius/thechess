@@ -177,7 +177,6 @@ private:
     }
 
     void headers() {
-        table_->elementAt(0, 0)->setColumnSpan(2);
         int i = 0;
         BOOST_FOREACH (const UserPtr& user, members_) {
             std::string i_str = TO_S(i + 1);
