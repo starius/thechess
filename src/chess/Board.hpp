@@ -83,7 +83,7 @@ public:
     Board();
 
     /** Construct a board from a string returned by to_string() */
-    Board(const std::string& data);
+    Board(const std::string& data, bool check = false);
 
     /** Return some string representation, usable in URL's */
     std::string to_string() const;

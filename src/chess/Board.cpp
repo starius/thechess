@@ -118,7 +118,7 @@ Board::Board() {
     long_pawn(false);
 }
 
-Board::Board(const std::string& data) {
+Board::Board(const std::string& data, bool check) {
     std::string data1(data);
     boost::algorithm::replace_all(data1, "-", "+");
     boost::algorithm::replace_all(data1, ".", "/");
@@ -129,6 +129,9 @@ Board::Board(const std::string& data) {
     } else {
         // TODO log error
         *this = start_position;
+    }
+    if (check) {
+        fix();
     }
 }
 
