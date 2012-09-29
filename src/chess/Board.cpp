@@ -711,5 +711,44 @@ void Board::fen(std::ostream& out, int halfmove, int fullmove) const {
     out << fullmove;
 }
 
+bool Board::valid() const {
+    PieceStat s(*this);
+    for (int c = 0; c < 2; c++) {
+        int turned_pawns = 0;
+        for (int l = 0; l < Piece::LETTER_COUNT; l++) {
+            int taken = full_stat.stat[c][l] - s.stat[c][l];
+            if (taken < 0) {
+                turned_pawns += abs(taken);
+            }
+        }
+        if (turned_pawns + s.stat[c][Piece::PAWN] > 8) {
+            return false;
+        }
+        if (s.stat[c][Piece::KING] != 1) {
+            return false;
+        }
+    }
+    THECHESS_FILE_FOREACH (file) {
+        if (piece(Square(file, Square::RANK_1)) ==
+                Piece(Piece::WHITE, Piece::PAWN)) {
+            return false;
+        }
+        if (piece(Square(file, Square::RANK_8)) ==
+                Piece(Piece::BLACK, Piece::PAWN)) {
+            return false;
+        }
+    }
+    if (test_shah(Piece::other_color(order()))) {
+        return false;
+    }
+    return true;
+}
+
+void Board::fix() {
+    if (!valid()) {
+        *this = start_position;
+    }
+}
+
 }
 

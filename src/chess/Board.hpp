@@ -113,6 +113,12 @@ public:
     */
     void fen(std::ostream& out, int halfmove, int fullmove) const;
 
+    /** Return if the board seems to be valid */
+    bool valid() const;
+
+    /** If the board is invalid, replace it with start position */
+    void fix();
+
     /** \name Low level methods */
     /* @{ */
 
