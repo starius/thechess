@@ -40,7 +40,7 @@ MainPage::MainPage(Wt::WContainerWidget* parent):
     Users best_users = tApp->session().find<User>()
                        .where("rights <> 0")
                        .where("vacation_until is null")
-                       .where("last_enter > ?").bind(now() - 10 * WEEK)
+                       .where("last_online > ?").bind(now() - 10 * WEEK)
                        .orderBy("games_stat_elo desc")
                        .limit(best_players_shown);
     Wt::WContainerWidget* best_players = new Wt::WContainerWidget();

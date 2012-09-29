@@ -39,8 +39,7 @@ public:
     void persist(Action& a) {
         dbo::field(a, username_, "username");
         dbo::field(a, rights_, "rights");
-        dbo::field(a, sessions_, "sessions");
-        dbo::field(a, last_enter_, "last_enter");
+        dbo::field(a, last_online_, "last_online");
         dbo::field(a, online_time_, "online_time");
         dbo::field(a, classification_, "classification");
         dbo::belongsTo(a, classification_confirmer_,
@@ -161,32 +160,16 @@ public:
     /** Return if it is a super right */
     static bool is_super_right(Rights right);
 
-    /** Run this when user is logging in */
-    void login();
-
-    /** Run this when user is logging in (as TryAgainTask) */
-    void try_again_login();
-
-    /** Run this when user is logging out */
-    void logout();
-
-    /** Run this when user is logging out (as TryAgainTask) */
-    void try_again_logout();
-
     /** Return if the user is online */
-    bool online() const {
-        return sessions_ != 0;
+    bool online() const;
+
+    /** Return date time of last online action */
+    const Wt::WDateTime& last_online() const {
+        return last_online_;
     }
 
-    /** Return number of sessions, opened by the user */
-    int sessions() const {
-        return sessions_;
-    }
-
-    /** Return date time of last enter */
-    const Wt::WDateTime& last_enter() const {
-        return last_enter_;
-    }
+    /** Set last online time to now, update online_time */
+    void update_last_online();
 
     /** Get total time spent online */
     const Td& online_time() const {
@@ -393,8 +376,7 @@ public:
 private:
     Wt::WString username_;
     Rights rights_; // default constructor: 0
-    int sessions_;
-    Wt::WDateTime last_enter_;
+    Wt::WDateTime last_online_;
     Td online_time_;
 
     Games white_games_;

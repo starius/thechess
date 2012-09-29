@@ -18,6 +18,7 @@
 
 #include "widgets/user/UserListWidget.hpp"
 #include "Application.hpp"
+#include "Options.hpp"
 #include "model/all.hpp"
 
 namespace thechess {
@@ -124,10 +125,11 @@ private:
         if (not_removed_) {
             q.where("rights != ?").bind(NONE);
             q.where("vacation_until is null");
-            q.where("last_enter > ?").bind(now() - 10 * WEEK);
+            q.where("last_online > ?").bind(now() - 10 * WEEK);
         }
         if (only_online_) {
-            q.where("sessions != 0");
+            q.where("last_online >= ?");
+            q.bind(now() - Options::instance()->away_timeout());
         }
         if (!name_like_.empty()) {
             q.where("(username like ? or id = ?)");

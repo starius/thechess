@@ -56,8 +56,8 @@ public:
         if (user_->online()) {
             new Wt::WText(tr("tc.user.Online"), this);
         } else {
-            tmp = new Wt::WText(tr("tc.user.Last_enter")
-                                .arg(user_->last_enter().toString()), this);
+            tmp = new Wt::WText(tr("tc.user.Last_online")
+                                .arg(user_->last_online().toString()), this);
             tmp->setStyleClass("thechess-datetime");
         }
         if (user_->removed()) {
@@ -149,10 +149,8 @@ public:
             } else {
                 b->setText(tr("tc.user.Delete"));
             }
-            if (user->online()) {
-                b = new Wt::WPushButton(tr("tc.common.Kick"), this);
-                b->clicked().connect(this, &UserWidgetImpl::kick);
-            }
+            b = new Wt::WPushButton(tr("tc.common.Kick"), this);
+            b->clicked().connect(this, &UserWidgetImpl::kick);
         }
         new Wt::WBreak(this);
         tApp->path().user_view()->set_integer_value(user.id());

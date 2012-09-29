@@ -25,7 +25,7 @@ namespace thechess {
 User::User(const Wt::WString& username):
     username_(username),
     rights_(NONE),
-    sessions_(0),
+    last_online_(now()),
     classification_(NO_CLASSIFICATION),
     games_stat_(true),
     competitions_stat_(true),
@@ -254,60 +254,21 @@ bool User::is_super_right(Rights right) {
     return (right & SUPER_RIGHTS) == right;
 }
 
+bool User::online() const {
+    return (now() - last_online_) < Options::instance()->away_timeout();
+}
+
+void User::update_last_online() {
+    if (online()) {
+        online_time_ += (now() - last_online_);
+    }
+    last_online_ = now();
+}
+
 dbo::Query<GamePtr> User::games() const {
     return session()->find<Game>()
            .where("white_id = ? or black_id = ? or init_id = ?")
            .bind(id()).bind(id()).bind(id());
-}
-
-void User::login() {
-    if (sessions_ == 0) {
-        last_enter_ = now();
-        Games games = this->games().where("state = ?").bind(Game::CONFIRMED);
-        BOOST_FOREACH (GamePtr game, games) {
-            t_task(GAME, game.id());
-        }
-    }
-    sessions_ += 1;
-    check_vacation();
-}
-
-struct UserLogin : public Object {
-    UserLogin(int user_id):
-        Object(USER, user_id)
-    { }
-
-    void process_impl(TaskPtr task, Session& session) const {
-        session.load<User>(id).modify()->login();
-    }
-};
-
-void User::try_again_login() {
-    t_task(new UserLogin(id()));
-}
-
-void User::logout() {
-    sessions_ -= 1;
-    if (sessions_ < 0) {
-        sessions_ = 0;
-    }
-    if (sessions_ == 0) {
-        online_time_ += now() - last_enter_;
-    }
-}
-
-struct UserLogout : public Object {
-    UserLogout(int user_id):
-        Object(USER, user_id)
-    { }
-
-    void process_impl(TaskPtr task, Session& session) const {
-        session.load<User>(id).modify()->logout();
-    }
-};
-
-void User::try_again_logout() {
-    t_task(new UserLogout(id()));
 }
 
 void User::set_classification(Classification classification) {

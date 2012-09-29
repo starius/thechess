@@ -161,8 +161,7 @@ CREATE TABLE "thechess_user" (
   "version" integer not null,
   "username" text not null,
   "rights" integer not null,
-  "sessions" integer not null,
-  "last_enter" timestamp,
+  "last_online" timestamp,
   "online_time" interval,
   "classification" integer not null,
   "classification_confirmer_id" bigint,
@@ -296,7 +295,6 @@ CREATE INDEX "ip_start" ON "thechess_ip_ban" ("start");
 CREATE INDEX "ip_stop" ON "thechess_ip_ban" ("stop");
 CREATE INDEX "ip_reason" ON "thechess_ip_ban" ("reason");
 CREATE INDEX "user_username" ON "thechess_user" ("username");
-CREATE INDEX "user_sessions" ON "thechess_user" ("sessions");
 CREATE INDEX "user_games_stat_elo" ON "thechess_user" ("games_stat_elo");
 CREATE INDEX "user_games_stat_all" ON "thechess_user" ("games_stat_all");
 CREATE INDEX "user_games_stat_wins" ON "thechess_user" ("games_stat_wins");
@@ -305,4 +303,4 @@ CREATE INDEX "user_classification" ON "thechess_user" ("classification");
 CREATE INDEX "user_online_time" ON "thechess_user" ("online_time");
 CREATE INDEX "user_registration_date" ON "thechess_user" ("registration_date");
 CREATE INDEX "user_vacation_until" ON "thechess_user" ("vacation_until");
-CREATE INDEX "user_last_enter" ON "thechess_user" ("last_enter");
+CREATE INDEX "user_last_online" ON "thechess_user" ("last_online");

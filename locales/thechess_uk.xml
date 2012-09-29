@@ -396,7 +396,7 @@
     <message id="tc.user.ip">ip-адрес</message>
     <message id="tc.user.IpBanList">Перелік банів по IP</message>
     <message id="tc.user.IpList">Перелік IP</message>
-    <message id="tc.user.Last_enter">Останній вхід: {1}</message>
+    <message id='tc.user.Last_online'>Последний раз на сайте: {1}</message>
     <message id="tc.user.List_rights">Перелік прав</message>
     <message id="tc.user.logs_reader">читати журнал адміністратора</message>
     <message id='tc.user.Message_sent'>Повідомлення відправлено</message>

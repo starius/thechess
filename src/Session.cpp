@@ -51,9 +51,6 @@ void Session::reconsider(Server& server) {
         }
         add_user(server, "user", "123");
     }
-    dbo::Transaction t(*this);
-    execute("update thechess_user set sessions = ?").bind(0);
-    t.commit();
     dbo::Transaction t2(*this);
     Games games = find<Game>().where("state < ?").bind(Game::MIN_ENDED);
     BOOST_FOREACH (const GamePtr& game, games) {

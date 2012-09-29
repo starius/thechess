@@ -8,6 +8,8 @@ alter table "thechess_gp" add column
     "games_size" integer not null default 0;
 CREATE INDEX "cp_competitions_size" ON "thechess_cp" ("competitions_size");
 CREATE INDEX "gp_games_size" ON "thechess_gp" ("games_size");
+ALTER TABLE thechess_user RENAME COLUMN last_enter TO last_online;
+ALTER TABLE thechess_user DROP COLUMN sessions;
 
 
 3.0.8 to 3.0.9

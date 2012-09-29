@@ -40,8 +40,7 @@ static boost::mutex sessions_per_ip_mutex_;
 
 Application::Application(const Wt::WEnvironment& env, Server& server) :
     Wt::WApplication(env), server_(server), session_(server.pool()),
-    gather_(0), kick_(0),
-    online_(true), last_user_event_(now()), next_check_(now()) {
+    gather_(0), kick_(0) {
     if (!check_ip()) {
         return;
     }
@@ -68,13 +67,12 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     session().login().changed().connect(this, &Application::login_handler);
     login_handler();
     path_.open(internalPath());
-    //internalPathChanged().connect(this, &Application::user_action);
+    internalPathChanged().connect(this, &Application::user_action);
 }
 
 Application::Application(bool, const Wt::WEnvironment& env, Server& server):
     Wt::WApplication(env), server_(server), session_(server.pool()),
-    gather_(0), kick_(0),
-    online_(true), last_user_event_(now()), next_check_(now()) {
+    gather_(0), kick_(0) {
     if (!check_ip()) {
         return;
     }
@@ -94,15 +92,6 @@ Application::Application(bool, const Wt::WEnvironment& env, Server& server):
 Application::~Application() {
     decrease_sessions_counter();
     delete kick_;
-    try {
-        dbo::Transaction t(session());
-        user().reread();
-        if (user() && online_) {
-            user().modify()->try_again_logout();
-        }
-    } catch (std::exception& e) {
-        log("warning") << e.what();
-    }
 }
 
 void Application::update_password() {
@@ -130,18 +119,8 @@ void Application::login_handler() {
     user_ = session().user();
     if (prev_user_ != user()) {
         prev_user_.reread();
-        if (prev_user_) {
-            delete kick_;
-            kick_ = 0;
-            if (online_) {
-                prev_user_.modify()->try_again_logout();
-            }
-            prev_user_.flush();
-        }
         user().reread();
         if (user()) {
-            user().modify()->try_again_login();
-            online_ = true;
             if (gather_) {
                 gather_->explore_all();
             }
@@ -172,7 +151,7 @@ void Application::notify(const Wt::WEvent& e) {
         Wt::WApplication::notify(e);
         if (e_type == Wt::UserEvent) {
             // FIXME this does not work
-            //user_action();
+            user_action();
         }
         // } catch (dbo::StaleObjectException e) {
         //     log("notice") << e.what();
@@ -252,42 +231,12 @@ void Application::gather_explorer(Wt::Wc::Gather::DataType type,
 }
 
 void Application::user_action() {
-    // this never called
-    last_user_event_ = now();
-    if (!online_) {
-        dbo::Transaction t(session());
-        online_ = true;
+    dbo::Transaction t(session());
+    if (user() && !user()->online()) {
         user().reread();
-        if (user()) {
-            user().modify()->try_again_login();
+        if (!user()->online()) {
+            user().modify()->update_last_online();
         }
-    }
-    if (now() > next_check_) {
-        Td timeout = Options::instance()->away_timeout();
-        Td td = timeout + SECOND;
-        next_check_ = now() + td;
-        Wt::Wc::schedule_action(td, Wt::Wc::bound_post(boost::bind(
-                                    &Application::online_check, this)));
-    }
-}
-
-void Application::online_check() {
-    // this never called
-    Td timeout = Options::instance()->away_timeout();
-    if (now() - last_user_event_ > timeout) {
-        if (online_) {
-            dbo::Transaction t(session());
-            user().reread();
-            if (user()) {
-                online_ = false;
-                user().modify()->try_again_logout();
-            }
-        }
-    } else {
-        next_check_ = last_user_event_ + timeout + SECOND;
-        Td td = next_check_ - now();
-        Wt::Wc::schedule_action(td, Wt::Wc::bound_post(boost::bind(
-                                    &Application::online_check, this)));
     }
 }
 

@@ -889,7 +889,7 @@ TheChess.
     <message id='tc.user.ip'>ip-address</message>
     <message id='tc.user.IpBanList'>List of IP bans</message>
     <message id='tc.user.IpList'>List of IP</message>
-    <message id='tc.user.Last_enter'>Last enter: {1}</message>
+    <message id='tc.user.Last_online'>Last online: {1}</message>
     <message id='tc.user.List_rights'>List of rights</message>
     <message id='tc.user.logs_reader'>logs reader</message>
     <message id='tc.user.Message_sent'>Message sent</message>
