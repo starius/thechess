@@ -272,14 +272,14 @@ void MainWidget::competition_new() {
 void MainWidget::board_view(const std::string& data) {
     BoardWidget* b;
     b = new BoardWidget(/* big */ false, /* active */ true,
-                                  /* bottom */ Piece::WHITE, Board(data));
+                                  /* bottom */ Piece::WHITE, Board(data, true));
     b->show_lastmove_checkbox(false);
     set_contents(b);
     wApp->setTitle(tr("tc.title.BoardWidget"));
 }
 
 void MainWidget::board_games(const std::string& data) {
-    set_contents(new GameListWidget(Board(data)));
+    set_contents(new GameListWidget(Board(data, true)));
     wApp->setTitle(tr("tc.title.GameListWidget"));
 }
 
