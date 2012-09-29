@@ -518,8 +518,11 @@ private:
         bool append_only = false;
         Piece::Color bottom = game_->color_of(tApp->user());
         const Moves& moves = game_->moves();
-        new MovesWidget(moves, big, active, max_moves,
-                        append_only, bottom, analysis_->contents());
+        MovesWidget* analysis_moves = new MovesWidget(moves,
+                big, active, max_moves,
+                append_only, bottom, analysis_->contents());
+        analysis_moves->set_links_handler(boost::bind(&GameWidgetImpl::links,
+                                          this, _1));
         analysis_->setClosable(true);
         analysis_->finished()
         .connect(this, &GameWidgetImpl::close_analysis);
@@ -605,7 +608,9 @@ private:
 
     void links(LinksDialog* dialog) {
         dbo::Transaction t(tApp->session());
-        moves_widget_->links(dialog);
+        if (game_->is_ended()) {
+            moves_widget_->links(dialog);
+        }
         int move_n = Moves::move_number(moves_widget_->current_move());
         dialog->add_game_move(game_.id(), move_n);
         dialog->add_game(game_.id());
