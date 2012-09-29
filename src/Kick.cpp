@@ -33,7 +33,6 @@ static void logout_app() {
         wApp->redirect("/html/kicked.html");
     }
     wApp->triggerUpdate();
-    wApp->quit();
 }
 
 void Kick::notify(EventPtr) {
