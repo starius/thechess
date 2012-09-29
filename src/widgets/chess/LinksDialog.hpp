@@ -40,7 +40,11 @@ private:
     void add_text(const std::string& text, const Wt::WString& name,
                   const std::string& internal_path = "");
 
+    void add_textarea(const Wt::WString& text, const Wt::WString& name);
+
     void add_url(const std::string& url, const Wt::WString& name);
+
+    void add_san(const Moves& moves);
 };
 
 }

@@ -46,6 +46,7 @@ void LinksDialog::add_moves(const Moves& moves) {
             tr("tc.game.Challenge"));
     add_url(tApp->path().moves_games()->full_path(),
             tr("tc.game.Started_with"));
+    add_san(moves);
     // TODO bit.ly
 }
 
@@ -61,10 +62,8 @@ void LinksDialog::add_game(int game) {
     Wt::WString format("/thechess.js?type=game&game={1}&div=thechess_game_{1}");
     std::string url = tApp->makeAbsoluteUrl(format.arg(game).toUTF8());
     std::string c_url = tApp->makeAbsoluteUrl("js/jquery.countdown.min.js");
-    Wt::WTextArea* t = new Wt::WTextArea(tr("tc.game.external_code")
-                                         .arg(game).arg(url).arg(c_url));
-    t->setColumns(60);
-    f_->item(tr("tc.common.Game"), "", t, t);
+    add_textarea(tr("tc.game.external_code").arg(game).arg(url).arg(c_url),
+                 tr("tc.common.Game"));
 }
 
 void LinksDialog::add_text(const std::string& text, const Wt::WString& name,
@@ -89,9 +88,22 @@ void LinksDialog::add_text(const std::string& text, const Wt::WString& name,
     f_->item(name, "", l, c);
 }
 
+void LinksDialog::add_textarea(const Wt::WString& text,
+                               const Wt::WString& name) {
+    Wt::WTextArea* t = new Wt::WTextArea(text);
+    t->setColumns(80);
+    f_->item(name, "", t, t);
+}
+
 void LinksDialog::add_url(const std::string& path, const Wt::WString& name) {
     std::string url = tApp->makeAbsoluteUrl(path);
     add_text(url, name, path);
+}
+
+void LinksDialog::add_san(const Moves& moves) {
+    std::stringstream san;
+    moves.pgn(san, /* result */ "");
+    add_textarea(san.str(), tr("tc.game.SAN"));
 }
 
 }

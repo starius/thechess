@@ -698,6 +698,7 @@ TheChess.
     <message id='tc.game.real_rating'>rating</message>
     <message id='tc.game.real_rating_false'>game result does not affect members' rating</message>
     <message id='tc.game.real_rating_true'>game result affects members' rating</message>
+    <message id='tc.game.SAN'>SAN</message>
     <message id='tc.game.Select_gp'>Select game parameters</message>
     <message id='tc.game.Start_position'>Start position</message>
     <message id='tc.game.started'>started</message>
