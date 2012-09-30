@@ -787,7 +787,7 @@ TheChess.
     <message id='tc.title.GameListWidget'>List « Game « TheChess</message>
     <message id='tc.title.GameWidget'>{1} « Game « TheChess</message>
     <message id='tc.title.IpBanList'>List of IP bans « TheChess</message>
-    <message id='tc.title.MainPage'>TheChess</message>
+    <message id='tc.title.MainPage'>TheChess: chess games online</message>
     <message id='tc.title.MovesWidget'>Board « TheChess</message>
     <message id='tc.title.MovesWidget_moves'>Moves « TheChess</message>
     <message id='tc.title.NewIpBan'>New ban « TheChess</message>

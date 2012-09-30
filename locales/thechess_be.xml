@@ -293,7 +293,7 @@
     <message id="tc.title.GameListWidget">Спіс « Гульня « TheChess</message>
     <message id="tc.title.GameWidget">{1} « Гульня « TheChess</message>
     <message id="tc.title.IpBanList">Спіс банаў па IP « TheChess</message>
-    <message id="tc.title.MainPage">TheChess</message>
+    <message id='tc.title.MainPage'>TheChess: игровой шахматный сайт</message>
     <message id="tc.title.MovesWidget">Дошка « TheChess</message>
     <message id="tc.title.MovesWidget_moves">Хады « TheChess</message>
     <message id="tc.title.NewIpBan">Новы бан « TheChess</message>
