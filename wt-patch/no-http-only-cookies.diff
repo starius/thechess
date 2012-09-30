@@ -1,0 +1,15 @@
+diff --git a/src/web/WebRenderer.C b/src/web/WebRenderer.C
+index 31586da..505695b 100644
+--- a/src/web/WebRenderer.C
++++ b/src/web/WebRenderer.C
+@@ -496,8 +500,8 @@ void WebRenderer::setHeaders(WebResponse& response, const std::string mimeType)
+       header << " Path=" << cookie.path << ';';
+ 
+     // a httponly cookie cannot be set using JavaScript
+-    if (!response.isWebSocketMessage())
+-      header << " httponly;";
++    //if (!response.isWebSocketMessage())
++    //  header << " httponly;";
+ 
+     if (cookie.secure)
+       header << " secure;";
