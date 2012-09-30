@@ -521,8 +521,10 @@ private:
         MovesWidget* analysis_moves = new MovesWidget(moves,
                 big, active, max_moves,
                 append_only, bottom, analysis_->contents());
-        analysis_moves->set_links_handler(boost::bind(&GameWidgetImpl::links,
-                                          this, _1));
+        if (!game_->is_ended()) {
+            analysis_moves->set_links_handler(
+                boost::bind(&GameWidgetImpl::links, this, _1));
+        }
         analysis_->setClosable(true);
         analysis_->finished()
         .connect(this, &GameWidgetImpl::close_analysis);
