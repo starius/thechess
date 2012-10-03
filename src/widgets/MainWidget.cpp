@@ -39,6 +39,7 @@
 #include "widgets/user/IpList.hpp"
 #include "widgets/user/IpBanList.hpp"
 #include "widgets/user/NewIpBan.hpp"
+#include "widgets/user/EditIpBan.hpp"
 #include "widgets/comment/CommentList.hpp"
 #include "widgets/comment/ForumCommentWidget.hpp"
 #include "widgets/comment/ForumEdit.hpp"
@@ -367,6 +368,11 @@ void MainWidget::banned_ip(const std::string& ip) {
     comments->set_ip(ip);
     c->addWidget(comments);
     set_contents(c);
+    wApp->setTitle(tr("tc.title.IpBanList"));
+}
+
+void MainWidget::edit_banned_ip(const IpBanPtr& ban) {
+    set_contents(new EditIpBan(ban));
     wApp->setTitle(tr("tc.title.IpBanList"));
 }
 

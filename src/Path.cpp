@@ -64,7 +64,9 @@ Path::Path(Wt::WObject* parent):
     PredefinedNode* admin = new PredefinedNode("admin", this);
     admin_log_ = new PredefinedNode("log", admin);
     all_banned_ip_ = new PredefinedNode("ip", user_list_);
+    PredefinedNode* edit = new PredefinedNode("edit", all_banned_ip_);
     banned_ip_ = new StringNode(all_banned_ip_);
+    edit_banned_ip_ = new IntegerNode(edit);
     new_ip_ban_ = new StringNode(ip_of_user_);
     all_comments_ = new PredefinedNode("comments", this);
     my_messages_ = new PredefinedNode("messages", this);
@@ -114,6 +116,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(admin_log_, boost::bind(&MainWidget::admin_log, mw));
     connect(all_banned_ip_, boost::bind(&MainWidget::all_banned_ip, mw));
     connect(banned_ip_, boost::bind(&Path::open_banned_ip, this));
+    connect(edit_banned_ip_, boost::bind(&Path::open_edit_banned_ip, this));
     connect(new_ip_ban_, boost::bind(&Path::open_new_ip_ban, this));
     connect(all_comments_, boost::bind(&MainWidget::all_comments, mw));
     connect(my_messages_, boost::bind(&MainWidget::my_messages, mw));
@@ -306,6 +309,16 @@ void Path::open_chat_comment() {
 void Path::open_banned_ip() {
     BOOST_ASSERT(main_widget_);
     main_widget_->banned_ip(banned_ip_->string());
+}
+
+void Path::open_edit_banned_ip() {
+    BOOST_ASSERT(main_widget_);
+    long long id = edit_banned_ip_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        main_widget_->edit_banned_ip(tApp->session().load<IpBan>(id));
+    } catch (dbo::ObjectNotFoundException)
+    { }
 }
 
 void Path::open_new_ip_ban() {

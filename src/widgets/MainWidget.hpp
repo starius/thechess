@@ -151,6 +151,9 @@ public:
     /** View bans of the IP */
     void banned_ip(const std::string& ip);
 
+    /** Edit banned IP */
+    void edit_banned_ip(const IpBanPtr& ban);
+
     /** New IP ban of user */
     void new_ip_ban(const std::string& ip, const UserPtr& user);
 

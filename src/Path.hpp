@@ -232,6 +232,11 @@ public:
         return banned_ip_;
     }
 
+    /** Edit this ban */
+    url::IntegerNode* edit_banned_ip() const {
+        return edit_banned_ip_;
+    }
+
     /** New ban of user with this IP */
     url::StringNode* new_ip_ban() const {
         return new_ip_ban_;
@@ -299,6 +304,7 @@ private:
     url::PredefinedNode* admin_log_;
     url::PredefinedNode* all_banned_ip_;
     url::StringNode* banned_ip_;
+    url::IntegerNode* edit_banned_ip_;
     url::StringNode* new_ip_ban_;
     url::PredefinedNode* all_comments_;
     url::PredefinedNode* my_messages_;
@@ -327,6 +333,7 @@ private:
     void open_forum_edit();
     void open_chat_comment();
     void open_banned_ip();
+    void open_edit_banned_ip();
     void open_new_ip_ban();
     void open_user_comments();
 };

@@ -70,7 +70,9 @@ private:
                 return o->creator()->username();
             }
         } else if (role == Wt::LinkRole) {
-            if (index.column() == IP) {
+            if (index.column() == ENABLED) {
+                return tApp->path().edit_banned_ip()->get_link(o.id());
+            } else if (index.column() == IP) {
                 return tApp->path().banned_ip()->get_link(o->ip());
             } else if (index.column() == CREATOR) {
                 return tApp->path().user_view()->get_link(o->creator().id());
@@ -83,9 +85,6 @@ private:
         Wt::WFlags<Wt::ItemFlag> f = BLP::BaseQM::flags(i);
         if (i.column() == REASON) {
             f |= Wt::ItemIsXHTMLText;
-        }
-        if (i.column() == ENABLED) {
-            f |= Wt::ItemIsEditable;
         }
         return f;
     }
