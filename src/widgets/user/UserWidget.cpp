@@ -161,6 +161,10 @@ public:
             a->setLink(tApp->path().virtuals_of_user()->link());
             a->setText(tr("tc.user.Virtuals_list"));
             new Wt::WBreak(this);
+            a = new Wt::WAnchor(this);
+            a->setLink(tApp->path().ip_of_user()->link());
+            a->setText(tr("tc.user.IpList"));
+            new Wt::WBreak(this);
         }
         a = new Wt::WAnchor(this);
         a->setLink(tApp->path().games_of_user()->link());

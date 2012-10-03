@@ -52,6 +52,9 @@ public:
     /** View user's virtuals */
     void virtuals_of_user(const UserPtr& user);
 
+    /** View user's IP address(es) */
+    void ip_of_user(const UserPtr& user);
+
     /** View user's games */
     void games_of_user(const UserPtr& user);
 

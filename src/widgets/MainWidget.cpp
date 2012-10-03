@@ -137,10 +137,12 @@ void MainWidget::user_view(const UserPtr& user) {
 }
 
 void MainWidget::virtuals_of_user(const UserPtr& user) {
-    Wt::WContainerWidget* c = new Wt::WContainerWidget();
-    c->addWidget(new VirtualsWidget(user));
-    c->addWidget(new IpList(user));
-    set_contents(c);
+    set_contents(new VirtualsWidget(user));
+    wApp->setTitle(tr("tc.title.VirtualsWidget_of").arg(user->username20()));
+}
+
+void MainWidget::ip_of_user(const UserPtr& user) {
+    set_contents(new IpList(user));
     wApp->setTitle(tr("tc.title.VirtualsWidget_of").arg(user->username20()));
 }
 

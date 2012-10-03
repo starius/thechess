@@ -22,6 +22,7 @@ Path::Path(Wt::WObject* parent):
     user_list_ = new PredefinedNode("user", this);
     user_view_ = new IntegerNode(user_list_);
     virtuals_of_user_ = new PredefinedNode("virtuals", user_view_);
+    ip_of_user_ = new PredefinedNode("ip", user_view_);
     games_of_user_ = new PredefinedNode("games", user_view_);
     competitions_of_user_ = new PredefinedNode("competitions", user_view_);
     all_virtuals_ = new PredefinedNode("virtuals", user_list_);
@@ -64,7 +65,7 @@ Path::Path(Wt::WObject* parent):
     admin_log_ = new PredefinedNode("log", admin);
     all_banned_ip_ = new PredefinedNode("ip", user_list_);
     banned_ip_ = new StringNode(all_banned_ip_);
-    new_ip_ban_ = new StringNode(virtuals_of_user_);
+    new_ip_ban_ = new StringNode(ip_of_user_);
     all_comments_ = new PredefinedNode("comments", this);
     my_messages_ = new PredefinedNode("messages", this);
     user_comments_ = new PredefinedNode("comments", user_view_);
@@ -78,6 +79,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(user_list_, boost::bind(&MainWidget::user_list, mw));
     connect(user_view_, boost::bind(&Path::open_user, this));
     connect(virtuals_of_user_, boost::bind(&Path::open_virtuals_of_user, this));
+    connect(ip_of_user_, boost::bind(&Path::open_ip_of_user, this));
     connect(games_of_user_, boost::bind(&Path::open_games_of_user, this));
     connect(competitions_of_user_, boost::bind(&Path::open_competitions_of_user,
             this));
@@ -135,6 +137,16 @@ void Path::open_virtuals_of_user() {
     dbo::Transaction t(tApp->session());
     try {
         main_widget_->virtuals_of_user(tApp->session().load<User>(id));
+    } catch (dbo::ObjectNotFoundException)
+    { }
+}
+
+void Path::open_ip_of_user() {
+    BOOST_ASSERT(main_widget_);
+    long long id = user_view_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        main_widget_->ip_of_user(tApp->session().load<User>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
 }
