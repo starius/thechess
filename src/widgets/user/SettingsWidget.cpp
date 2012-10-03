@@ -143,6 +143,8 @@ private:
             Wt::WPushButton* b;
             b = new Wt::WPushButton(tr("tc.user.Recalculation"), this);
             b->clicked().connect(this, &SettingsWidgetImpl::recalculation);
+            b = new Wt::WPushButton(tr("tc.game.Rebuild_index"), this);
+            b->clicked().connect(this, &SettingsWidgetImpl::rebuild_index);
         }
     }
 
@@ -238,11 +240,17 @@ private:
         t_task(USER, id);
     }
 
-    void recalculation() {
+    void rebuild_index() {
         dbo::SqlConnection* con = Session::new_connection(*Options::instance());
         boost::scoped_ptr<dbo::SqlConnection> ptr(con);
         Session s(*con);
         SharedBoardIndex::instance()->rebuild(s);
+    }
+
+    void recalculation() {
+        dbo::SqlConnection* con = Session::new_connection(*Options::instance());
+        boost::scoped_ptr<dbo::SqlConnection> ptr(con);
+        Session s(*con);
         s.recalculate_game_rating();
         s.recalculate_competition_rating();
         s.recalculate_gp_games_size();

@@ -214,6 +214,7 @@
     <message id='tc.game.real_rating'>рейтинговая</message>
     <message id='tc.game.real_rating_false'>результат игры не влияет на рейтинг участников</message>
     <message id='tc.game.real_rating_true'>результат игры влияет на рейтинг участников</message>
+    <message id='tc.game.Rebuild_index'>Пересчитать индекс игр</message>
     <message id='tc.game.Select_gp'>Выбор параметров партии</message>
     <message id='tc.game.Start_position'>Исходная позиция</message>
     <message id='tc.game.started'>начата</message>
