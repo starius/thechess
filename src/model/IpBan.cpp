@@ -12,6 +12,7 @@
 
 #include "model/all.hpp"
 #include "Application.hpp"
+#include "Options.hpp"
 
 DBO_INSTANTIATE_TEMPLATES(thechess::IpBan);
 
@@ -29,8 +30,10 @@ bool IpBan::is_banned(const std::string& ip) {
         return false;
     }
     dbo::Transaction t(tApp->session());
+    const char* where_ip = Options::instance()->database_type() == POSTGRES ?
+                           "inet(text(?)) <<= inet(ip)" : "ip = ?";
     IpBans bans = tApp->session().find<IpBan>()
-                  .where("ip = ?").bind(ip)
+                  .where(where_ip).bind(ip)
                   .where("enabled = ?").bind(true)
                   .resultList();
     BOOST_FOREACH (IpBanPtr ban, bans) {

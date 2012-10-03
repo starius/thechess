@@ -24,7 +24,7 @@ public:
              Wt::WContainerWidget* parent = 0);
 
 private:
-    std::string ip_;
+    Wt::WLineEdit* ip_;
     Wt::Wc::TimeDurationWidget* duration_;
     Wt::WTextArea* reason_;
 

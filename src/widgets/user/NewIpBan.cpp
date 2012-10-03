@@ -6,6 +6,7 @@
  */
 
 #include <Wt/WTextArea>
+#include <Wt/WLineEdit>
 #include <Wt/WText>
 #include <Wt/WPushButton>
 #include <Wt/Wc/TableForm.hpp>
@@ -20,7 +21,7 @@ namespace thechess {
 
 NewIpBan::NewIpBan(const std::string& ip, const Wt::WString& reason,
                    Wt::WContainerWidget* parent):
-    WContainerWidget(parent), ip_(ip) {
+    WContainerWidget(parent) {
     dbo::Transaction t(tApp->session());
     if (!tApp->user() || !tApp->user()->has_permission(REGISTRATION_BANNER)) {
         return;
@@ -30,7 +31,8 @@ NewIpBan::NewIpBan(const std::string& ip, const Wt::WString& reason,
         return;
     }
     Wt::Wc::TableForm* f = new Wt::Wc::TableForm(this);
-    f->item(tr("tc.user.ip"), "", 0, new Wt::WText(Wt::WString::fromUTF8(ip)));
+    ip_ = new Wt::WLineEdit(Wt::WString::fromUTF8(ip));
+    f->item(tr("tc.user.ip"), "", 0, ip_);
     duration_ = new Wt::Wc::TimeDurationWidget(MINUTE, 3 * DAY, WEEK);
     f->item(tr("tc.common.duration"), "", duration_->form_widget(), duration_);
     reason_ = new Wt::WTextArea(reason);
@@ -45,12 +47,13 @@ void NewIpBan::add() {
         return;
     }
     IpBanPtr ban = tApp->session().add(new IpBan(true));
-    ban.modify()->set_ip(ip_);
+    std::string ip = ip_->text().toUTF8();
+    ban.modify()->set_ip(ip);
     ban.modify()->set_start(now());
     ban.modify()->set_stop(now() + duration_->corrected_value());
     ban.modify()->set_reason(reason_->text());
     ban.modify()->set_creator(tApp->user());
-    Wt::WString a = html_a(tApp->path().banned_ip()->get_full_path(ip_), ip_);
+    Wt::WString a = html_a(tApp->path().banned_ip()->get_full_path(ip), ip);
     admin_log("Ban " + a);
     t.commit();
     delete this; // TODO go to page with ban list
