@@ -6,12 +6,15 @@
  */
 
 #include <Wt/WTableView>
+#include <Wt/WPushButton>
 #include <Wt/Dbo/QueryModel>
+#include <Wt/Wc/TimeDurationWidget.hpp>
 #include <Wt/Wc/Pager.hpp>
 
 #include "widgets/user/IpList.hpp"
 #include "widgets/Header.hpp"
 #include "Application.hpp"
+#include "config.hpp"
 
 namespace thechess {
 
@@ -43,11 +46,20 @@ public:
         initialize();
     }
 
+    void set_last_used(const Td& last_used) {
+        if (last_used != last_used_) {
+            last_used_ = last_used;
+            set_query();
+        }
+    }
+
 private:
     UserPtr user_;
     std::string ip_;
+    Td last_used_;
 
     void initialize() {
+        last_used_ = 4 * WEEK;
         set_query();
         addColumn("type", tr("tc.user.user")); // dummy
         addColumn("value", tr("tc.user.ip"));
@@ -65,6 +77,7 @@ private:
         } else {
             q.where("value = ?").bind(ip_);
         }
+        q.where("used > ?").bind(now() - last_used_);
         setQuery(q, /* keep_columns */ true);
     }
 
@@ -119,9 +132,8 @@ IpList::IpList(const UserPtr& user, Wt::WContainerWidget* parent):
     if (!tApp->user() || !tApp->user()->has_permission(REGISTRATION_BANNER)) {
         return;
     }
-    addWidget(new Header(tr("tc.user.IpList")));
-    IpListModel* m = new IpListModel(user, this);
-    IpListView* view = new IpListView(m, this);
+    model_ = new IpListModel(user, this);
+    initialize();
 }
 
 IpList::IpList(const std::string& ip, Wt::WContainerWidget* parent):
@@ -129,9 +141,24 @@ IpList::IpList(const std::string& ip, Wt::WContainerWidget* parent):
     if (!tApp->user() || !tApp->user()->has_permission(REGISTRATION_BANNER)) {
         return;
     }
+    model_ = new IpListModel(ip, this);
+    initialize();
+}
+
+void IpList::initialize() {
     addWidget(new Header(tr("tc.user.IpList")));
-    IpListModel* m = new IpListModel(ip, this);
-    IpListView* view = new IpListView(m, this);
+    last_used_ = new Wt::Wc::TimeDurationWidget(
+        config::min::IP_LAST_USED,
+        config::defaults::IP_LAST_USED,
+        config::max::IP_LAST_USED,
+        this);
+    Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Apply"), this);
+    b->clicked().connect(this, &IpList::apply);
+    IpListView* view = new IpListView(model_, this);
+}
+
+void IpList::apply() {
+    model_->set_last_used(last_used_->corrected_value());
 }
 
 }

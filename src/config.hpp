@@ -49,6 +49,9 @@ const Td PAUSE_LIMIT_INIT = TD_NULL;
 /** Min move number for draw */
 const int FIRST_DRAW = 2;
 
+/** Last used time for IP list view */
+const Td IP_LAST_USED = TD_NULL;
+
 }
 
 /** The namespace for default values of parameters.
@@ -150,6 +153,9 @@ const Td GAME_MAX_PREACTIVE = DAY;
 /** Max number of sessions allowed from one IP */
 const int MAX_SESSIONS = 10;
 
+/** Last used time for IP list view */
+const Td IP_LAST_USED = 4 * WEEK;
+
 }
 
 /** The namespace for max allowed values of parameters */
@@ -171,6 +177,9 @@ const Td PAUSE_LIMIT_INIT = WEEK;
 
 /** Max move number for draw */
 const int FIRST_DRAW = 5000 * 2;
+
+/** Last used time for IP list view */
+const Td IP_LAST_USED = 100 * WEEK;
 
 }
 
