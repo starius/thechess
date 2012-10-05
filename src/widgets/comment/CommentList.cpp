@@ -268,7 +268,7 @@ void CommentList::print_post() {
         new Wt::WText(" ", this);
         user_anchor(user, this);
     }
-    if (post->edited() != post->created()) {
+    if (post->edited() != post_text->created()) {
         new Wt::WBreak(this);
         new Wt::WText(tr("tc.forum.Post_edited")
                       .arg(post->edited().toString()), this);
