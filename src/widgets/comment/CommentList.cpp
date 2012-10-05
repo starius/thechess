@@ -262,6 +262,8 @@ void CommentList::print_post() {
         e->setText(tr("tc.forum.Edit"));
         new Wt::WText(" ", this);
     }
+    new Wt::WBreak(this);
+    new Wt::WBreak(this);
     new Wt::WText(post_text->created().toString(), this);
     UserPtr user = post_text->init();
     if (user) {
