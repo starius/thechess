@@ -175,12 +175,22 @@ public:
         return created_;
     }
 
+    /** Set creation time */
+    void set_created(const Wt::WDateTime& created) {
+        created_ = created;
+    }
+
     /** Update creation time of post when a comment it added */
     void post_comment_added();
 
     /** Get last edition (including creation) time */
     const Wt::WDateTime& edited() const {
         return edited_;
+    }
+
+    /** Set last edition time */
+    void set_edited(const Wt::WDateTime& edited) {
+        edited_ = edited;
     }
 
     /** Return IP address from which this comment was created */

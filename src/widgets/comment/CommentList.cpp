@@ -347,6 +347,8 @@ void CommentList::add_comment(const CommentPtr& parent) {
     if (type == Comment::FORUM_POST) {
         comment.flush();
         CommentPtr post_text = tApp->session().add(new Comment(true));
+        post_text.modify()->set_created(comment->created());
+        post_text.modify()->set_edited(comment->created());
         post_text.modify()->set_type(Comment::FORUM_POST_TEXT);
         post_text.modify()->set_parent(comment);
         Wt::WString description = post_text_->valueText();
