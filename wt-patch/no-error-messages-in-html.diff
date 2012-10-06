@@ -1,0 +1,14 @@
+diff --git a/src/web/WebController.C b/src/web/WebController.C
+index 03bacb1..787d41f 100644
+--- a/src/web/WebController.C
++++ b/src/web/WebController.C
+@@ -486,7 +486,8 @@ void WebController::handleRequest(WebRequest *request)
+     request->out()
+       << "<title>Error occurred.</title>"
+       << "<h2>Error occurred.</h2>"
+-         "Error parsing CGI request: " << e.what() << std::endl;
++         //"Error parsing CGI request: " << e.what()
++         << std::endl;
+ 
+     request->flush(WebResponse::ResponseDone);
+     return;
