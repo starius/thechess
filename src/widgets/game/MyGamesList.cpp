@@ -231,8 +231,11 @@ private:
     }
 
     void anchor_notify_handler(MyGameAnchor* a, EventPtr e) {
+        dbo::Transaction t(tApp->session());
         const Object* o = DOWNCAST<const Object*>(e.get());
         if (o->user_id != user_.id()) {
+            GamePtr game = a->game();
+            game.reread();
             MyGameAnchor* last_clicked_a = 0;
             if (last_clicked_) {
                 Anchors::iterator it = anchors_.find(last_clicked_);
@@ -245,15 +248,9 @@ private:
             }
             sound_->stop();
             sound_->play();
+            a->check_state();
         } else {
             a->excite_or_unexcite();
-        }
-        if (o->user_id == 0) {
-            // this event was initiated by Planning
-            dbo::Transaction t(tApp->session());
-            GamePtr game = a->game();
-            game.reread();
-            a->check_state();
         }
         a->update_countdown();
     }
