@@ -362,6 +362,7 @@ void MainWidget::all_banned_ip() {
 
 void MainWidget::banned_ip(const std::string& ip) {
     Wt::WContainerWidget* c = new Wt::WContainerWidget();
+    c->addWidget(new NewIpBan(ip, ""));
     c->addWidget(new IpBanList(ip));
     c->addWidget(new IpList(ip));
     CommentList* comments = new CommentList(Comment::NO_TYPE);
