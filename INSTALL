@@ -48,6 +48,8 @@ Other options:
     int game_max_preactive_seconds
     int min_first_draw
     int max_sessions
+    int whitelist
+    int whitelist_max_sessions
 
 Dependencies:
  * witty library (>=3.2.1) (git b50f9b97f49054abb0fe3 + patches from wt-patch/)

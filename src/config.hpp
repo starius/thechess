@@ -153,6 +153,12 @@ const Td GAME_MAX_PREACTIVE = DAY;
 /** Max number of sessions allowed from one IP */
 const int MAX_SESSIONS = 10;
 
+/** Max number of sessions allowed from one IP from whitelist */
+const int WHITELIST_MAX_SESSIONS = 100;
+
+/** IP whitelist */
+const char* const WHITELIST = "127.0.0.1";
+
 /** Last used time for IP list view */
 const Td IP_LAST_USED = 4 * WEEK;
 

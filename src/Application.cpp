@@ -176,9 +176,13 @@ Application* Application::instance() {
 
 bool Application::check_ip() {
     boost::mutex::scoped_lock lock(sessions_per_ip_mutex_);
-    int& count = sessions_per_ip_[environment().clientAddress()];
+    const std::string& ip = environment().clientAddress();
+    int& count = sessions_per_ip_[ip];
     count += 1;
-    if (count > Options::instance()->max_sessions()) {
+    const Options* o = Options::instance();
+    bool white = o->ip_in_whitelist(ip);
+    int max_s = white ? o->whitelist_max_sessions() : o->max_sessions();
+    if (count > max_s) {
         redirect("/html/too_many_sessions.html");
         quit();
         return false;

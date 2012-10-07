@@ -6,9 +6,12 @@
  */
 
 #include <cstdlib>
+#include <algorithm>
 #include <string>
 #include <set>
 #include <boost/assert.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/classification.hpp>
 
 #include "Options.hpp"
 #include "Server.hpp"
@@ -35,7 +38,8 @@ Options::Options(const Wt::WServer& server):
     user_agreement_id_(config::defaults::USER_AGREEMENT_ID),
     game_max_preactive_(config::defaults::GAME_MAX_PREACTIVE),
     min_first_draw_(config::min::FIRST_DRAW),
-    max_sessions_(config::defaults::MAX_SESSIONS) {
+    max_sessions_(config::defaults::MAX_SESSIONS),
+    whitelist_max_sessions_(config::defaults::WHITELIST_MAX_SESSIONS) {
     std::string value;
     if (server.readConfigurationProperty("database_type", value)) {
         BOOST_ASSERT(value == "postgres" ||
@@ -68,7 +72,18 @@ Options::Options(const Wt::WServer& server):
     }
     read_int_value("min_first_draw", min_first_draw_);
     read_int_value("max_sessions", max_sessions_);
+    read_int_value("whitelist_max_sessions", whitelist_max_sessions_);
+    std::string whitelist_str(config::defaults::WHITELIST);
+    server.readConfigurationProperty("whitelist", whitelist_str);
+    using namespace boost::algorithm;
+    split(whitelist_, whitelist_str, is_any_of(" "));
+    std::sort(whitelist_.begin(), whitelist_.end());
+    std::vector<std::string>(whitelist_).swap(whitelist_); // reduce capacity
     server_ = 0; // should not be used latter
+}
+
+bool Options::ip_in_whitelist(const std::string& ip) const {
+    return std::binary_search(whitelist_.begin(), whitelist_.end(), ip);
 }
 
 Options* Options::instance() {

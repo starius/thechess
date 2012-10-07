@@ -132,6 +132,14 @@ public:
         return max_sessions_;
     }
 
+    /** Get max sessions number allowed from one IP from whitelist */
+    int whitelist_max_sessions() const {
+        return whitelist_max_sessions_;
+    }
+
+    /** return if the IP is in whitelist */
+    bool ip_in_whitelist(const std::string& ip) const;
+
     /** Return options used in current application */
     static Options* instance();
 
@@ -156,6 +164,8 @@ private:
     Td game_max_preactive_;
     int min_first_draw_;
     int max_sessions_;
+    std::vector<std::string> whitelist_; // sorted
+    int whitelist_max_sessions_;
 
     bool read_int_value(const std::string& name, int& value);
 };
