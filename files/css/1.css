@@ -51,7 +51,7 @@ td {
     text-align: right !important;
 }
 
-a.thechess-selected {
+.thechess-selected {
     border-right-color: #000000;
     border-right-style: solid;
     border-right-width: 1px;
@@ -65,35 +65,39 @@ a.thechess-selected {
     padding: 1px 5px;
 }
 
-a.thechess-deselected {
+.thechess-deselected {
     border-left-color: #000000;
     border-left-style: solid;
     border-left-width: 1px;
     padding: 2px 5px;
 }
 
-a.thechess-excited {
+.thechess-excited a {
     font-weight: bolder;
     color: Firebrick;
 }
 
-a.thechess-unexcited {
+.thechess-unexcited a {
 }
 
-a.thechess-active {
+.thechess-active {
     background-color: #90EE90;
 }
 
-a.thechess-pause {
+.thechess-pause {
     background-color: #90EED4;
 }
 
-a.thechess-confirmed {
+.thechess-confirmed {
     background-color: #EEE990;
 }
 
-a.thechess-proposed {
+.thechess-proposed {
     background-color: white;
+}
+
+.thechess-my-games-countdown {
+    white-space: nowrap;
 }
 
 .thechess-games-all {

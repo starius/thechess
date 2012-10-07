@@ -12,6 +12,7 @@
 #include <Wt/WAnchor>
 #include <Wt/WContainerWidget>
 #include <Wt/Dbo/Transaction>
+#include <Wt/Wc/Countdown.hpp>
 #include <Wt/Wc/util.hpp>
 
 #include "widgets/game/MyGamesList.hpp"
@@ -24,20 +25,24 @@ const int ORDER_OF_STATES_SIZE = 4;
 const Game::State ORDER_OF_STATES[ORDER_OF_STATES_SIZE] =
 {Game::ACTIVE, Game::PAUSE, Game::CONFIRMED, Game::PROPOSED};
 
-class MyGameAnchor : public Wt::WAnchor, public Notifiable {
+class MyGameAnchor : public Wt::WContainerWidget, public Notifiable {
 public:
     MyGameAnchor(const GamePtr& game, MyGamesListImp* list):
         Notifiable(Object(GAME, game.id())),
         game_(game), list_(list) {
+        anchor_ = new Wt::WAnchor(this);
         if (!User::has_s(SWITCH_NAMES_IN_MYMENU) ||
                 !game->other_user(tApp->user())) {
-            setText(boost::lexical_cast<std::string>(game_.id()));
+            anchor_->setText(boost::lexical_cast<std::string>(game_.id()));
         } else {
-            setText(game->other_user(tApp->user())->safe_username());
+            anchor_->setText(game->other_user(tApp->user())->safe_username());
         }
-        setLink(tApp->path().game_view()->get_link(game_.id()));
-        setInline(false);
+        anchor_->setLink(tApp->path().game_view()->get_link(game_.id()));
+        countdown_ = new Wt::Wc::Countdown(this, /* load JS */ false);
+        countdown_->addStyleClass("thechess-my-games-countdown");
+        countdown_->setMargin(5, Wt::Left | Wt::Right);
         excite_or_unexcite();
+        update_countdown();
         deselect();
         style_by_state(game->state());
     }
@@ -81,6 +86,16 @@ public:
         }
     }
 
+    void update_countdown() {
+        dbo::Transaction t(tApp->session());
+        countdown_->pause();
+        countdown_->set_until(game_->total_limit_now(tApp->user()));
+        if (game_->state() == Game::ACTIVE &&
+                tApp->user() == game_->order_user()) {
+            countdown_->resume();
+        }
+    }
+
     void excite() {
         addStyleClass("thechess-excited");
         removeStyleClass("thechess-unexcited");
@@ -117,6 +132,8 @@ public:
 private:
     GamePtr game_;
     MyGamesListImp* list_;
+    Wt::WAnchor* anchor_;
+    Wt::Wc::Countdown* countdown_;
 };
 
 typedef std::map<int, MyGameAnchor*> Anchors;
@@ -238,6 +255,7 @@ private:
             game.reread();
             a->check_state();
         }
+        a->update_countdown();
     }
 
     void remove_anchor(MyGameAnchor* a, int game_id) {
