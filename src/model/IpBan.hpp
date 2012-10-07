@@ -100,6 +100,11 @@ public:
     */
     static bool am_i_banned();
 
+    /** Run self-checks for planned action.
+    Old bans will be disabled.
+    */
+    void check(Wt::Wc::notify::TaskPtr task);
+
     /** Wt::Dbo persist implementation */
     template<class Action>
     void persist(Action& a) {

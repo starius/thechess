@@ -69,6 +69,10 @@ void Object::process_impl(TaskPtr task, Session& session) const {
         UserPtr user = session.load<User>(id, /* reread */ true);
         user.modify()->check(task);
     }
+    if (type == IP_BAN) {
+        IpBanPtr ip_ban = session.load<IpBan>(id, /* reread */ true);
+        ip_ban.modify()->check(task);
+    }
 }
 
 std::string Object::key() const {

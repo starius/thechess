@@ -56,6 +56,7 @@ void NewIpBan::add() {
     Wt::WString a = html_a(tApp->path().banned_ip()->get_full_path(ip), ip);
     admin_log("Ban " + a);
     t.commit();
+    t_task(IP_BAN, ban.id());
     delete this; // TODO go to page with ban list
 }
 

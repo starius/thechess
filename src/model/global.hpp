@@ -195,7 +195,8 @@ enum ObjectType {
     GAME,
     USER,
     COMMENT,
-    COMPETITION
+    COMPETITION,
+    IP_BAN
 };
 
 /** Rights */

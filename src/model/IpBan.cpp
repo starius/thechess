@@ -52,5 +52,13 @@ bool IpBan::am_i_banned() {
     return is_banned(ip);
 }
 
+void IpBan::check(Wt::Wc::notify::TaskPtr task) {
+    if (now() > stop()) {
+        set_enabled(false);
+    } else if (enabled()) {
+        t_task(task, stop());
+    }
+}
+
 }
 

@@ -65,6 +65,10 @@ void Session::reconsider(Server& server) {
     BOOST_FOREACH (const UserPtr& user, users) {
         t_task(USER, user.id());
     }
+    IpBans ip_bans = find<IpBan>();
+    BOOST_FOREACH (const IpBanPtr& ban, ip_bans) {
+        t_task(IP_BAN, ban.id());
+    }
     t2.commit();
 }
 

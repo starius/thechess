@@ -39,6 +39,7 @@ void EditIpBan::save() {
         ban_.modify()->set_enabled(!ban_->enabled());
         admin_log("Change ban of # " + TO_S(ban_.id()) + " of " + ban_->ip());
         t.commit();
+        t_task(IP_BAN, ban_.id());
         delete this; // TODO go to page with ban list
     } catch (dbo::StaleObjectException e) {
         ban_.reread();
