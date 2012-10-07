@@ -17,7 +17,7 @@
 namespace thechess {
 
 Options::Options(const Wt::WServer& server):
-    server_(server),
+    server_(&server),
     database_type_(config::defaults::DATABASE_TYPE),
     database_value_(config::defaults::DATABASE_VALUE),
     connections_in_pool_(config::defaults::CONNECTIONS_IN_POOL),
@@ -68,6 +68,7 @@ Options::Options(const Wt::WServer& server):
     }
     read_int_value("min_first_draw", min_first_draw_);
     read_int_value("max_sessions", max_sessions_);
+    server_ = 0; // should not be used latter
 }
 
 Options* Options::instance() {
@@ -76,7 +77,7 @@ Options* Options::instance() {
 
 bool Options::read_int_value(const std::string& name, int& value) {
     std::string value_str;
-    bool result = server_.readConfigurationProperty(name, value_str);
+    bool result = server_->readConfigurationProperty(name, value_str);
     if (result) {
         value = atoi(value_str.c_str());
     }

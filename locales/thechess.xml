@@ -914,6 +914,7 @@ TheChess.
     <message id='tc.user.Registration_date'>Registration date: {1}</message>
     <message id='tc.user.regular_rights_changer'>change regular rights</message>
     <message id='tc.user.Removed_message'><b>[Removed user]</b></message>
+    <message id='tc.user.Reread_options'>Reread options</message>
     <message id='tc.user.Set_motd'>Set id of comment shown in the top of page</message>
     <message id='tc.user.Settings'>Settings</message>
     <message id='tc.user.Start_game'>Start a game</message>

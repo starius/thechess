@@ -8,7 +8,11 @@
 #ifndef THECHESS_SERVER_HPP_
 #define THECHESS_SERVER_HPP_
 
+// FIXME nasty public morozov
+#define private friend class thechess::Server; private
 #include <Wt/WServer>
+#undef private
+
 #include <Wt/WFileResource>
 #include <Wt/Dbo/FixedSqlConnectionPool>
 #include <Wt/Auth/AuthService>
@@ -48,6 +52,9 @@ public:
         return options_;
     }
 
+    /** Reread options from config file */
+    void reread_options();
+
     /** Get board index */
     SharedBoardIndex& shared_board_index() {
         return shared_board_index_;
@@ -69,7 +76,9 @@ public:
     }
 
     /** Return current server */
-    static Server* instance();
+    static Server* instance() {
+        return instance_;
+    }
 
 private:
     Options options_;
@@ -83,6 +92,10 @@ private:
     Wt::WFileResource storage_whitelist_; // 404 Not Found
     Wt::Auth::AuthService auth_service_;
     Wt::Auth::PasswordService password_service_;
+    int argc_;
+    char** argv_;
+
+    static Server* instance_;
 
     void auth_init();
 

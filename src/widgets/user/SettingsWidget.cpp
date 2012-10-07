@@ -145,6 +145,8 @@ private:
             b->clicked().connect(this, &SettingsWidgetImpl::recalculation);
             b = new Wt::WPushButton(tr("tc.game.Rebuild_index"), this);
             b->clicked().connect(this, &SettingsWidgetImpl::rebuild_index);
+            b = new Wt::WPushButton(tr("tc.user.Reread_options"), this);
+            b->clicked().connect(this, &SettingsWidgetImpl::reread_options);
         }
     }
 
@@ -245,6 +247,10 @@ private:
         boost::scoped_ptr<dbo::SqlConnection> ptr(con);
         Session s(*con);
         SharedBoardIndex::instance()->rebuild(s);
+    }
+
+    void reread_options() {
+        Server::instance()->reread_options();
     }
 
     void recalculation() {

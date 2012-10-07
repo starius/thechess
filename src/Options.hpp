@@ -10,7 +10,7 @@
 
 #include <string>
 
-#include <Wt/WServer>
+#include <Wt/WGlobal>
 
 #include "thechess-global.hpp"
 #include "model/global.hpp"
@@ -136,7 +136,7 @@ public:
     static Options* instance();
 
 private:
-    const Wt::WServer& server_;
+    const Wt::WServer* server_; // should not be used after construction!
 
     DatabaseType database_type_;
     std::string database_value_;

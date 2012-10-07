@@ -5,7 +5,6 @@
  * See the LICENSE file for terms of use.
  */
 
-#include <Wt/WServer>
 #include <Wt/WIOService>
 
 #include "Server.hpp"

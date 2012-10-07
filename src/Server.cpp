@@ -40,6 +40,8 @@ Session* session_creator(Server* server) {
 // FIXME Debian hardcode!!
 const char* swfstore = "/usr/share/javascript/yui/swfstore/swfstore.swf";
 
+Server* Server::instance_ = 0;
+
 Server::Server(int argc, char** argv):
     Wt::WServer(argv[0], first_file(config::WT_CONFIG_FILES,
                                     config::WT_CONFIG_FILES_SIZE)),
@@ -48,7 +50,9 @@ Server::Server(int argc, char** argv):
     pool_(Session::new_connection(options_), options_.connections_in_pool()),
     notifier_(this), planning_(&ioService()), pgn_(*this), all_pgn_(*this),
     swfstore_("application/x-shockwave-flash", swfstore),
-    password_service_(auth_service_) {
+    password_service_(auth_service_),
+    argc_(argc), argv_(argv) {
+    instance_ = this;
     notifier_.set_direct_to_this(this);
     planning_.set_delay(config::tracker::DELAY);
     planning_.set_notification_server(&notifier_);
@@ -65,8 +69,19 @@ Server::Server(int argc, char** argv):
     session.reconsider(*this);
 }
 
-Server* Server::instance() {
-    return DOWNCAST<Server*>(WServer::instance());
+void Server::reread_options() {
+    {
+        Wt::WServer server_copy(argv_[0], first_file(config::WT_CONFIG_FILES,
+                                config::WT_CONFIG_FILES_SIZE));
+        // FIXME races
+        Wt::WServer::instance_ = this;
+        server_copy.setServerConfiguration(argc_, argv_);
+        // FIXME races
+        Wt::WServer::instance_ = this;
+        options_ = Options(server_copy);
+    }
+    // FIXME races
+    Wt::WServer::instance_ = this;
 }
 
 void Server::auth_init() {
