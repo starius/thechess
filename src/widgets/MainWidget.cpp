@@ -454,7 +454,10 @@ void MainWidget::show_countup() {
 void MainWidget::show_is_banned() {
     if (IpBan::am_i_banned()) {
         menu_place_->addWidget(new Wt::WBreak());
-        menu_place_->addWidget(new Wt::WText(tr("tc.user.This_ip_banned")));
+        Wt::WAnchor* ban = new Wt::WAnchor;
+        ban->setText(tr("tc.user.This_ip_banned"));
+        ban->setRef("/html/banned.html");
+        menu_place_->addWidget(ban);
     }
 }
 
