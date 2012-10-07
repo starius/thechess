@@ -121,6 +121,7 @@ void Application::login_handler() {
         prev_user_.reread();
         user().reread();
         if (user()) {
+            check_my_games();
             if (gather_) {
                 gather_->explore_all();
             }
@@ -239,7 +240,21 @@ void Application::user_action() {
     if (user() && !user()->online()) {
         user().reread();
         if (!user()->online()) {
+            if (now() - user()->last_online() >
+                    2 * Options::instance()->away_timeout()) {
+                check_my_games();
+            }
             user().modify()->update_last_online();
+        }
+    }
+}
+
+void Application::check_my_games() {
+    dbo::Transaction t(session());
+    if (user()) {
+        Games games = user()->games().where("state = ?").bind(Game::CONFIRMED);
+        BOOST_FOREACH (GamePtr game, games) {
+            t_task(GAME, game.id());
         }
     }
 }

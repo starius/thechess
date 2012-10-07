@@ -113,6 +113,7 @@ private:
     void gather_explorer(Wt::Wc::Gather::DataType type,
                          const std::string& value);
     void user_action();
+    void check_my_games();
 };
 
 }
