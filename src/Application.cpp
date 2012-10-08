@@ -121,6 +121,7 @@ void Application::login_handler() {
         prev_user_.reread();
         user().reread();
         if (user()) {
+            user_action();
             check_my_games();
             if (gather_) {
                 gather_->explore_all();
