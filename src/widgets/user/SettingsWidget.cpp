@@ -61,6 +61,7 @@ private:
     Wt::WLineEdit* motd_;
     Wt::WCheckBox* public_email_;
     Wt::WCheckBox* names_in_mymenu_;
+    Wt::WCheckBox* hide_paused_games_;
     Wt::WTextEdit* description_;
     Wt::Wc::TimeDurationWidget* vacation_duration_;
     Wt::Wc::TimeDurationWidget* filter_min_online_;
@@ -106,6 +107,9 @@ private:
         new Wt::WBreak(this);
         names_in_mymenu_ = new Wt::WCheckBox(tr("tc.user.Names_in_menu"), this);
         names_in_mymenu_->setChecked(User::has_s(SWITCH_NAMES_IN_MYMENU));
+        new Wt::WBreak(this);
+        hide_paused_games_ = new Wt::WCheckBox(tr("tc.user.Hide_paused"), this);
+        hide_paused_games_->setChecked(User::has_s(SWITCH_HIDE_PAUSED_GAMES));
         Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
         b->clicked().connect(this, &SettingsWidgetImpl::save_settings);
     }
@@ -197,8 +201,11 @@ private:
     void save_settings() {
         User::set_s(SWITCH_PUBLIC_EMAIL, public_email_->isChecked());
         bool names_in_mymenu = User::has_s(SWITCH_NAMES_IN_MYMENU);
+        bool hide_paused_games = User::has_s(SWITCH_HIDE_PAUSED_GAMES);
         User::set_s(SWITCH_NAMES_IN_MYMENU, names_in_mymenu_->isChecked());
-        if (names_in_mymenu != User::has_s(SWITCH_NAMES_IN_MYMENU)) {
+        User::set_s(SWITCH_HIDE_PAUSED_GAMES, hide_paused_games_->isChecked());
+        if (names_in_mymenu != User::has_s(SWITCH_NAMES_IN_MYMENU) ||
+                hide_paused_games != User::has_s(SWITCH_HIDE_PAUSED_GAMES)) {
             tApp->update_my_games();
         }
     }

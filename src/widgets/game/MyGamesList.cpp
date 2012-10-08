@@ -111,11 +111,15 @@ public:
         removeStyleClass("thechess-pause");
         removeStyleClass("thechess-proposed");
         removeStyleClass("thechess-confirmed");
+        show();
         if (state == Game::ACTIVE) {
             addStyleClass("thechess-active");
         }
         if (state == Game::PAUSE) {
             addStyleClass("thechess-pause");
+            if (User::has_s(SWITCH_HIDE_PAUSED_GAMES)) {
+                hide();
+            }
         }
         if (state == Game::PROPOSED) {
             addStyleClass("thechess-proposed");

@@ -369,6 +369,9 @@ enum UserSettings {
     /** Show only draft comments (for moder) */
     SWITCH_ONLY_DRAFT_COMMENTS = BOOST_BINARY(10000000 00000000),
 
+    /** Hide paused games */
+    SWITCH_HIDE_PAUSED_GAMES = BOOST_BINARY(00000001 00000000 00000000),
+
     /** Default value of settings of new user or Anonymous */
     SWITCH_DEFAULT = SWITCH_LASTMOVE |
                      SWITCH_ONLY_NOT_REMOVED_USERS |

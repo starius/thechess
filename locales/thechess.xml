@@ -888,6 +888,7 @@ TheChess.
     <message id='tc.user.games_stat_fails'>fails</message>
     <message id='tc.user.games_stat_wins'>wins</message>
     <message id='tc.user.gp_creator'>create game parameters</message>
+    <message id='tc.user.Hide_paused'>Hide paused games</message>
     <message id='tc.user.ID'>Registration number of this user: {1}</message>
     <message id='tc.user.ip'>ip-address</message>
     <message id='tc.user.IpBanList'>List of IP bans</message>
