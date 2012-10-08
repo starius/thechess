@@ -46,6 +46,13 @@ public:
         user_.reread();
         tApp->user().reread();
         new Header(user_->username(), this);
+        if (user_->has_permission(SUPER_RIGHTS_CHANGER)) {
+            new Wt::WText(tr("tc.user.Admin"), this);
+            new Wt::WBreak(this);
+        } else if (user_->admin_rights()) {
+            new Wt::WText(tr("tc.user.Moder"), this);
+            new Wt::WBreak(this);
+        }
         new Wt::WBreak(this);
         new Gravatar(user_, this);
         if (tApp->user() && user_->has_setting(SWITCH_PUBLIC_EMAIL)) {

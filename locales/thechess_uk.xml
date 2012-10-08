@@ -349,6 +349,7 @@
         Клони {1} « Користувач « TheChess
     </message>
 
+    <message id='tc.user.Admin'><u>Администратор</u></message>
     <message id="tc.user.Already_banned">Вже забанений</message>
     <message id="tc.user.Anonymous">Анонімус</message>
     <message id="tc.user.avatar_nondefault">аватар не за замовчуванням</message>
@@ -401,6 +402,7 @@
     <message id="tc.user.List_rights">Перелік прав</message>
     <message id="tc.user.logs_reader">читати журнал адміністратора</message>
     <message id='tc.user.Message_sent'>Повідомлення відправлено</message>
+    <message id='tc.user.Moder'><u>Модератор</u></message>
     <message id='tc.user.My_blocklist'>В моєму чорному списку</message>
     <message id="tc.user.Names_in_menu">Показувати ім’я користувача в меню з іграми</message>
     <message id="tc.user.New_ban">Новий бан</message>
