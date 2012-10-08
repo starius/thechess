@@ -10,6 +10,7 @@
 #include <Wt/Wc/util.hpp>
 
 #include "widgets/user/EditIpBan.hpp"
+#include "widgets/user/user_anchor.hpp"
 #include "Application.hpp"
 #include "log.hpp"
 
@@ -21,6 +22,14 @@ EditIpBan::EditIpBan(const IpBanPtr& ban, Wt::WContainerWidget* parent):
     if (!tApp->user() || !tApp->user()->has_permission(REGISTRATION_BANNER)) {
         return;
     }
+    new Wt::WText(ban_->ip(), this);
+    new Wt::WBreak(this);
+    new Wt::WText(ban_->reason(), this);
+    new Wt::WBreak(this);
+    new Wt::WText(ban_->stop().toString(), this);
+    new Wt::WBreak(this);
+    user_anchor(ban_->creator(), this);
+    new Wt::WBreak(this);
     Wt::WPushButton* b = new Wt::WPushButton(this);
     b->clicked().connect(this, &EditIpBan::save);
     if (ban_->enabled()) {
