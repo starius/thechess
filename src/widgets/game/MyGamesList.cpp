@@ -38,9 +38,10 @@ public:
             anchor_->setText(game->other_user(tApp->user())->safe_username());
         }
         anchor_->setLink(tApp->path().game_view()->get_link(game_.id()));
+        online_ = new Wt::WText(tr("tc.user.Online"), this);
+        online_->setMargin(5, Wt::Left | Wt::Right);
+        online_->addStyleClass("no-wrap");
         countdown_ = new Wt::Wc::Countdown(this, /* load JS */ false);
-        countdown_->addStyleClass("thechess-my-games-countdown");
-        countdown_->setMargin(5, Wt::Left | Wt::Right);
         countdown_->addStyleClass("no-wrap");
         excite_or_unexcite();
         update_countdown();
@@ -85,6 +86,12 @@ public:
         } else {
             unexcite();
         }
+        update_online();
+    }
+
+    void update_online() {
+        UserPtr competitor = game_->other_user(tApp->user());
+        online_->setHidden(!competitor || !competitor->online());
     }
 
     void update_countdown() {
@@ -138,6 +145,7 @@ private:
     GamePtr game_;
     MyGamesListImp* list_;
     Wt::WAnchor* anchor_;
+    Wt::WText* online_;
     Wt::Wc::Countdown* countdown_;
 };
 
@@ -258,6 +266,7 @@ private:
             a->excite_or_unexcite();
         }
         a->update_countdown();
+        a->update_online();
     }
 
     void remove_anchor(MyGameAnchor* a, int game_id) {
