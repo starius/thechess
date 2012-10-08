@@ -25,6 +25,7 @@ namespace thechess {
 User::User(const Wt::WString& username):
     username_(username),
     rights_(NONE),
+    admin_rights_(NO_ADMIN_RIGHTS),
     last_online_(now()),
     classification_(NO_CLASSIFICATION),
     games_stat_(true),
@@ -107,6 +108,10 @@ bool User::has_permission(Rights perm) const {
     return has_permission(perm, rights());
 }
 
+bool User::has_permission(AdminRights perm) const {
+    return has_permission(perm, admin_rights());
+}
+
 UserRights User::rights() const {
     Rights result = rights_;
     if (vacation_until_.isValid() && vacation_until_ > now()) {
@@ -116,6 +121,10 @@ UserRights User::rights() const {
 }
 
 bool User::has_permission(Rights perm, Rights rights) {
+    return (rights & perm) == perm;
+}
+
+bool User::has_permission(AdminRights perm, AdminRights rights) {
     return (rights & perm) == perm;
 }
 
@@ -129,27 +138,45 @@ void User::set_permission(Rights perm, bool can) {
     set_rights(r);
 }
 
+void User::set_permission(AdminRights perm, bool can) {
+    AdminRights r = admin_rights();
+    if (can) {
+        r = AdminRights(r | perm);
+    } else {
+        r = AdminRights(r & (~perm));
+    }
+    set_rights(r);
+}
+
 bool User::can_change_right(Rights r, const UserPtr& who) const {
     if (!who || who->removed() || removed()) {
         return false;
     }
-    if (who != self()) {
-        if (is_regular_right(r) && has_permission(REGULAR_RIGHTS_CHANGER)) {
-            return false;
-        } else if (is_super_right(r) && has_permission(SUPER_RIGHTS_CHANGER)) {
-            return false;
-        }
+    if (who != self() && admin_rights()) {
+        return false;
     }
-    if (is_regular_right(r) && who->has_permission(REGULAR_RIGHTS_CHANGER)) {
-        return true;
-    } else if (is_super_right(r) && who->has_permission(SUPER_RIGHTS_CHANGER)) {
-        return true;
+    return who->has_permission(REGULAR_RIGHTS_CHANGER);
+}
+
+bool User::can_change_right(AdminRights r, const UserPtr& who) const {
+    if (!who || who->removed() || removed()) {
+        return false;
     }
-    return false;
+    if (who != self() && has_permission(SUPER_RIGHTS_CHANGER)) {
+        return false;
+    }
+    return who->has_permission(SUPER_RIGHTS_CHANGER);
 }
 
 static void rights_check(bool& result, const User* me,
                          User::Rights r, const UserPtr& who) {
+    if (me->can_change_right(r, who)) {
+        result = true;
+    }
+}
+
+static void admin_rights_check(bool& result, const User* me,
+                               AdminRights r, const UserPtr& who) {
     if (me->can_change_right(r, who)) {
         result = true;
     }
@@ -165,6 +192,8 @@ bool User::can_change_right(const UserPtr& who) const {
     }
     bool result = false;
     for_each_right(boost::bind(rights_check, boost::ref(result), this,
+                               _1, who));
+    for_each_admin(boost::bind(admin_rights_check, boost::ref(result), this,
                                _1, who));
     return result;
 }
@@ -194,7 +223,12 @@ const char* User::right_to_str(Rights right) {
         return "tc.user.classification_changer";
     } else if (right == AVATAR_NONDEFAULT) {
         return "tc.user.avatar_nondefault";
-    } else if (right == TIME_WIZARD) {
+    }
+    return "tc.user.unknown_right";
+}
+
+const char* User::right_to_str(AdminRights right) {
+    if (right == TIME_WIZARD) {
         return "tc.user.time_wizard";
     } else if (right == COMMENTS_REMOVER) {
         return "tc.user.comments_remover";
@@ -233,6 +267,9 @@ void User::for_each_right(const boost::function<void(Rights)> f) {
     f(COMPETITION_JOINER);
     f(CLASSIFICATION_CHANGER);
     f(AVATAR_NONDEFAULT);
+}
+
+void User::for_each_admin(const boost::function<void(AdminRights)> f) {
     f(TIME_WIZARD);
     f(COMMENTS_REMOVER);
     f(CLASSIFICATION_CONFIRMER);
@@ -244,14 +281,6 @@ void User::for_each_right(const boost::function<void(Rights)> f) {
     f(RECORDS_EDITOR);
     f(LOGS_READER);
     f(SUPER_RIGHTS_CHANGER);
-}
-
-bool User::is_regular_right(Rights right) {
-    return (right & REGULAR_USER) == right;
-}
-
-bool User::is_super_right(Rights right) {
-    return (right & SUPER_RIGHTS) == right;
 }
 
 bool User::online() const {

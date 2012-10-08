@@ -25,6 +25,7 @@ RightsEdit::RightsEdit(const UserPtr& user, Wt::WContainerWidget* parent):
         return;
     }
     User::for_each_right(boost::bind(&RightsEdit::add_item, this, _1));
+    User::for_each_admin(boost::bind(&RightsEdit::add_admin_item, this, _1));
     Wt::WPushButton* save = new Wt::WPushButton(tr("tc.common.Save"), this);
     save->clicked().connect(this, &RightsEdit::save);
 }
@@ -39,11 +40,26 @@ void RightsEdit::add_item(User::Rights right) {
     }
 }
 
+void RightsEdit::add_admin_item(AdminRights right) {
+    if (user_->can_change_right(right, tApp->user())) {
+        Wt::WCheckBox* box = new Wt::WCheckBox(tr(User::right_to_str(right)));
+        box->setChecked(user_->has_permission(right));
+        admin_items_[right] = box;
+        addWidget(box);
+        new Wt::WBreak(this);
+    }
+}
+
 void RightsEdit::save() {
     dbo::Transaction t(tApp->session());
     user_.reread();
     BOOST_FOREACH (const Items::value_type& it, items_) {
         User::Rights right = it.first;
+        Wt::WCheckBox* box = it.second;
+        user_.modify()->set_permission(right, box->isChecked());
+    }
+    BOOST_FOREACH (const AdminItems::value_type& it, admin_items_) {
+        AdminRights right = it.first;
         Wt::WCheckBox* box = it.second;
         user_.modify()->set_permission(right, box->isChecked());
     }

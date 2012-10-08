@@ -181,7 +181,8 @@ CREATE TABLE "thechess_user" (
   "filter_min_online" interval,
   "description" text not null,
   "locale" varchar(5) not null,
-  "vacation_until" timestamp
+  "vacation_until" timestamp,
+  "admin_rights" integer not null
 );
 CREATE TABLE "winners_competition" (
   "thechess_user_id" bigint not null,

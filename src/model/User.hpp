@@ -69,6 +69,7 @@ public:
         dbo::field(a, description_, "description");
         dbo::field(a, locale_, "locale", /* size */ 5);
         dbo::field(a, vacation_until_, "vacation_until");
+        dbo::field(a, admin_rights_, "admin_rights");
         dbo::hasMany(a, i_blocked_them_, dbo::ManyToMany,
                      "thechess_message_filter", "good_id");
         dbo::hasMany(a, they_blocked_me_, dbo::ManyToMany,
@@ -130,13 +131,25 @@ public:
     bool has_permission(Rights perm) const;
 
     /** Return if the user has the permission */
+    bool has_permission(AdminRights perm) const;
+
+    /** Return if the user has the permission */
     static bool has_permission(Rights perm, Rights rights);
+
+    /** Return if the user has the permission */
+    static bool has_permission(AdminRights perm, AdminRights rights);
 
     /** Set user's permission */
     void set_permission(Rights perm, bool can = true);
 
+    /** Set user's permission */
+    void set_permission(AdminRights perm, bool can = true);
+
     /* Return if \p who can change the right of this user */
     bool can_change_right(Rights perm, const UserPtr& who) const;
+
+    /* Return if \p who can change the right of this user */
+    bool can_change_right(AdminRights perm, const UserPtr& who) const;
 
     /* Return if \p who can change some right of this user */
     bool can_change_right(const UserPtr& who) const;
@@ -146,19 +159,31 @@ public:
         rights_ = rights;
     }
 
+    /** Return admin rights */
+    AdminRights admin_rights() const {
+        return admin_rights_;
+    }
+
+    /** Set admin rights */
+    void set_rights(AdminRights admin_rights) {
+        admin_rights_ = admin_rights;
+    }
+
     /** Return translation id for this right */
     static const char* right_to_str(Rights right);
+
+    /** Return translation id for this right */
+    static const char* right_to_str(AdminRights right);
 
     /** Apply function f to each possible right.
     \note Groups of rights, such as REGULAR_USER, are not iterated.
     */
     static void for_each_right(const boost::function<void(Rights)> f);
 
-    /** Return if it is a regular right */
-    static bool is_regular_right(Rights right);
-
-    /** Return if it is a super right */
-    static bool is_super_right(Rights right);
+    /** Apply function f to each possible right.
+    \note Groups of rights, such as REGULAR_USER, are not iterated.
+    */
+    static void for_each_admin(const boost::function<void(AdminRights)> f);
 
     /** Return if the user is online */
     bool online() const;
@@ -405,6 +430,7 @@ private:
     Wt::WString description_;
     std::string locale_;
     Wt::WDateTime vacation_until_;
+    AdminRights admin_rights_;
 
     Users i_blocked_them_;
     Users they_blocked_me_;

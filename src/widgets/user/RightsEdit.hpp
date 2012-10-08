@@ -28,10 +28,14 @@ public:
 
 private:
     typedef std::map<User::Rights, Wt::WCheckBox*> Items;
+    typedef std::map<AdminRights, Wt::WCheckBox*> AdminItems;
+
     Items items_;
+    AdminItems admin_items_;
     UserPtr user_;
 
     void add_item(User::Rights right);
+    void add_admin_item(AdminRights right);
     void save();
 };
 

@@ -252,7 +252,13 @@ enum UserRights {
                    CP_CREATOR |
                    COMPETITION_JOINER |
                    CLASSIFICATION_CHANGER |
-                   AVATAR_NONDEFAULT,
+                   AVATAR_NONDEFAULT
+};
+
+/** Rights */
+enum AdminRights {
+    /** No permissions */
+    NO_ADMIN_RIGHTS = 0,
 
     /** Right (un)pause games and return user from vacation */
     TIME_WIZARD = BOOST_BINARY(00001000 00000000 00000000),
@@ -301,7 +307,7 @@ enum UserRights {
                    LOGS_READER,
 
     /** Modeator */
-    MODERATOR = REGULAR_USER | SUPER_RIGHTS,
+    MODERATOR = SUPER_RIGHTS,
 
     /** Right to change rights that are part of SUPER_RIGHTS */
     SUPER_RIGHTS_CHANGER = BOOST_BINARY(1000000 00000000 00000000 00000000),

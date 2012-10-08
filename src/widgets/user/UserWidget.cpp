@@ -291,6 +291,13 @@ private:
         }
     }
 
+    void print_admin_right(AdminRights right, Wt::WContainerWidget* p) {
+        if (user_->has_permission(right)) {
+            Wt::WContainerWidget* item = new Wt::WContainerWidget(p);
+            item->addWidget(new Wt::WText(tr(User::right_to_str(right))));
+        }
+    }
+
     void print_rights() {
         if (user_->rights() == NONE) {
             return;
@@ -304,6 +311,8 @@ private:
         p->setList(true);
         panel->setCentralWidget(p);
         User::for_each_right(boost::bind(&UserWidgetImpl::print_right,
+                                         this, _1, p));
+        User::for_each_admin(boost::bind(&UserWidgetImpl::print_admin_right,
                                          this, _1, p));
     }
 
