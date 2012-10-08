@@ -237,14 +237,15 @@ void Application::gather_explorer(Wt::Wc::Gather::DataType type,
 
 void Application::user_action() {
     dbo::Transaction t(session());
-    if (user() && !user()->online()) {
+    if (user()) {
         user().reread();
-        if (!user()->online()) {
-            if (now() - user()->last_online() >
-                    2 * Options::instance()->away_timeout()) {
-                check_my_games();
-            }
+        Td away = now() - user()->last_online();
+        float away_ratio = away / Options::instance()->away_timeout();
+        if (away_ratio > 0.5) {
             user().modify()->update_last_online();
+        }
+        if (away_ratio > 2) {
+            check_my_games();
         }
     }
 }
