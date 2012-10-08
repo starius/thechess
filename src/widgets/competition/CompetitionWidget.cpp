@@ -461,7 +461,7 @@ public:
                     user_anchor(user, this);
                 }
             }
-            if (c->can_allow_virtuals(tApp->user())) {
+            if (c->virtual_allower()) {
                 new Wt::WText(tr("tc.competition.Virtuals_allowed_by"), this);
                 user_anchor(c->virtual_allower(), this);
             } else if (c->can_allow_virtuals(tApp->user())) {
