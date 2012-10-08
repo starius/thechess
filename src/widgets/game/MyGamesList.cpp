@@ -41,6 +41,7 @@ public:
         countdown_ = new Wt::Wc::Countdown(this, /* load JS */ false);
         countdown_->addStyleClass("thechess-my-games-countdown");
         countdown_->setMargin(5, Wt::Left | Wt::Right);
+        countdown_->addStyleClass("no-wrap");
         excite_or_unexcite();
         update_countdown();
         deselect();

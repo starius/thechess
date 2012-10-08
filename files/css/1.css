@@ -98,10 +98,6 @@ a.thechess-excited {
     background-color: white;
 }
 
-.thechess-my-games-countdown {
-    white-space: nowrap;
-}
-
 .thechess-games-all {
     color: black;
 }
@@ -152,7 +148,7 @@ h2 {
     margin-left: -15px;
 }
 
-.thechess-flags {
+.no-wrap {
     white-space: nowrap;
 }
 

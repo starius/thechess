@@ -80,7 +80,7 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
                    Wt::WLength::Auto);
     menu_place_ = middle->elementAt(0, MENU_IN_MIDDLE);
     clock_and_locale_ = new Wt::WContainerWidget(menu_place_);
-    clock_and_locale_->setStyleClass("thechess-flags");
+    clock_and_locale_->setStyleClass("no-wrap");
     contents_place_ = middle->elementAt(0, CONTENTS_IN_MIDDLE);
     contents_place_->resize(Wt::WLength(80, Wt::WLength::Percentage),
                             Wt::WLength::Auto);
