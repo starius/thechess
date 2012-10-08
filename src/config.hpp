@@ -162,6 +162,9 @@ const char* const WHITELIST = "127.0.0.1";
 /** Last used time for IP list view */
 const Td IP_LAST_USED = 4 * WEEK;
 
+/** Vacation taken when kick */
+const Td KICK_VACATION = MINUTE;
+
 }
 
 /** The namespace for max allowed values of parameters */

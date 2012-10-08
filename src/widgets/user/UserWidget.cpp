@@ -259,6 +259,8 @@ private:
 
     void kick() {
         dbo::Transaction t(tApp->session());
+        Wt::WDateTime d = now() + config::defaults::KICK_VACATION;
+        user_.modify()->set_vacation_until(d);
         admin_log("Kick user " + user_a(user_.id()));
         t.commit();
         t_emit("kick-" + TO_S(user_.id()));
