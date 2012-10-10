@@ -179,6 +179,7 @@ public:
                 a->deselect();
                 a->excite_or_unexcite();
                 a->check_state();
+                a->check_ended();
             }
         }
         Anchors::iterator it = anchors_.find(game_id);
@@ -277,7 +278,6 @@ private:
             extract_anchor(a);
             anchors_.erase(game_id);
             delete a;
-            Wt::Wc::updates_trigger();
         }
     }
 
@@ -302,9 +302,7 @@ void MyGameAnchor::check_state() {
 void MyGameAnchor::check_ended() {
     dbo::Transaction t(tApp->session());
     if (game_->state() > Game::MIN_ENDED) {
-        Wt::Wc::schedule_action(MINUTE, Wt::Wc::bound_post(boost::bind(
-                                    &MyGamesListImp::remove_anchor,
-                                    list_, this, game_.id())));
+        list_->remove_anchor(this, game_.id());
     }
 }
 
