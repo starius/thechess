@@ -60,6 +60,9 @@ void GPSelector::set_gp(const GPPtr& gp) {
 }
 
 void GPSelector::set_moves(const Moves& moves) {
+    if (GP_SELECTOR_NEW_TAB >= tab_->count()) {
+        return;
+    }
     tab_->setCurrentIndex(GP_SELECTOR_NEW_TAB);
     new_cont_->clear();
     GP* gp = new GP(true);

@@ -23,7 +23,8 @@ namespace thechess {
 
 GameCreateWidget::GameCreateWidget(const UserPtr& user,
                                    Wt::WContainerWidget* p) :
-    Wt::WContainerWidget(p), with_user_(true), user_(user) {
+    Wt::WContainerWidget(p),
+    selector_(0), with_user_(true), user_(user), color_(0) {
     dbo::Transaction t(tApp->session());
     tApp->user().reread();
     new Header(tr("tc.game.Competitor")
@@ -38,7 +39,8 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
 }
 
 GameCreateWidget::GameCreateWidget(const GPPtr& gp, Wt::WContainerWidget* p):
-    Wt::WContainerWidget(p), with_user_(false), gp_(gp) {
+    Wt::WContainerWidget(p),
+    selector_(0), with_user_(false), gp_(gp), color_(0) {
     dbo::Transaction t(tApp->session());
     new Header(tr("tc.game.Challenge"), this);
     tApp->user().reread();
@@ -48,7 +50,7 @@ GameCreateWidget::GameCreateWidget(const GPPtr& gp, Wt::WContainerWidget* p):
 }
 
 GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :
-    Wt::WContainerWidget(p), with_user_(false) {
+    Wt::WContainerWidget(p), selector_(0), with_user_(false), color_(0) {
     dbo::Transaction t(tApp->session());
     new Header(tr("tc.game.Challenge"), this);
     tApp->user().reread();
@@ -58,7 +60,9 @@ GameCreateWidget::GameCreateWidget(Wt::WContainerWidget* p) :
 }
 
 void GameCreateWidget::set_moves(const Moves& moves) {
-    selector_->set_moves(moves);
+    if (selector_) {
+        selector_->set_moves(moves);
+    }
 }
 
 void GameCreateWidget::print() {
@@ -109,10 +113,12 @@ void GameCreateWidget::button_handler() {
 
 Piece::Color GameCreateWidget::selected_color() const {
     Piece::Color color = Piece::COLOR_NULL;
-    if (color_->currentIndex() == 1) {
-        color = Piece::WHITE;
-    } else if (color_->currentIndex() == 2) {
-        color = Piece::BLACK;
+    if (color_) {
+        if (color_->currentIndex() == 1) {
+            color = Piece::WHITE;
+        } else if (color_->currentIndex() == 2) {
+            color = Piece::BLACK;
+        }
     }
     return color;
 }
