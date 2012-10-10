@@ -118,6 +118,9 @@ const UserRights BANNED_IP_USER_RIGHTS = NONE;
 /** Rights of Anonymous */
 const UserRights ANONYMOUS_RIGHTS = REGULAR_USER;
 
+/** Rights of user at vacation */
+const UserRights VACATION_RIGHTS = PRIVATE_WRITER;
+
 /** Comment id for main page */
 const int MAIN_PAGE_CONTENT_ID = -1;
 

@@ -27,6 +27,7 @@ Options::Options(const Wt::WServer& server):
     regular_user_rights_(config::defaults::REGULAR_USER_RIGHTS),
     banned_ip_user_rights_(config::defaults::BANNED_IP_USER_RIGHTS),
     anonymous_rights_(config::defaults::ANONYMOUS_RIGHTS),
+    vacation_rights_(config::defaults::VACATION_RIGHTS),
     main_page_content_id_(config::defaults::MAIN_PAGE_CONTENT_ID),
     footer_content_id_(config::defaults::FOOTER_CONTENT_ID),
     top_logged_in_content_id_(config::defaults::TOP_LOGGED_IN_CONTENT_ID),
@@ -55,6 +56,7 @@ Options::Options(const Wt::WServer& server):
     read_int_value("regular_user_rights", (int&)(regular_user_rights_));
     read_int_value("banned_ip_user_rights", (int&)(banned_ip_user_rights_));
     read_int_value("anonymous_rights", (int&)(anonymous_rights_));
+    read_int_value("vacation_rights", (int&)(vacation_rights_));
     read_int_value("main_page_content_id", main_page_content_id_);
     read_int_value("footer_content_id", footer_content_id_);
     read_int_value("top_logged_in_content_id", top_logged_in_content_id_);

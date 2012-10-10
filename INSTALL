@@ -37,6 +37,7 @@ Other options:
     int regular_user_rights (see examples in database)
     int banned_ip_user_rights
     int anonymous_rights
+    int vacation_rights
     int main_page_content_id
     int footer_content_id
     int top_logged_in_content_id

@@ -115,7 +115,7 @@ bool User::has_permission(AdminRights perm) const {
 UserRights User::rights() const {
     Rights result = rights_;
     if (vacation_until_.isValid() && vacation_until_ > now()) {
-        result = Rights(result & ~REGULAR_USER);
+        result = Rights(result & Options::instance()->vacation_rights());
     }
     return result;
 }

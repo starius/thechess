@@ -62,6 +62,11 @@ public:
         return anonymous_rights_;
     }
 
+    /** Mask of rights of vacation user */
+    UserRights vacation_rights() const {
+        return vacation_rights_;
+    }
+
     /** Id of comment, which text is used as main page contents */
     int main_page_content_id() const {
         return main_page_content_id_;
@@ -152,6 +157,7 @@ private:
     UserRights regular_user_rights_;
     UserRights banned_ip_user_rights_;
     UserRights anonymous_rights_;
+    UserRights vacation_rights_;
     int main_page_content_id_;
     int footer_content_id_;
     int top_logged_in_content_id_;
