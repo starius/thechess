@@ -97,7 +97,10 @@ public:
     void update_countdown() {
         dbo::Transaction t(tApp->session());
         countdown_->pause();
-        countdown_->set_until(game_->total_limit_now(tApp->user()));
+        Td duration = game_->total_limit_now(tApp->user());
+        if (duration > TD_NULL) {
+            countdown_->set_until(duration);
+        }
         if (game_->state() == Game::ACTIVE &&
                 tApp->user() == game_->order_user()) {
             countdown_->resume();
