@@ -889,6 +889,7 @@ TheChess.
     <message id='tc.user.games_stat_wins'>wins</message>
     <message id='tc.user.gp_creator'>create game parameters</message>
     <message id='tc.user.Hide_paused'>Hide paused games</message>
+    <message id='tc.user.I_blocked_them'>Number of blocked user: {1}</message>
     <message id='tc.user.ID'>Registration number of this user: {1}</message>
     <message id='tc.user.ip'>ip-address</message>
     <message id='tc.user.IpBanList'>List of IP bans</message>
@@ -923,6 +924,7 @@ TheChess.
     <message id='tc.user.Start_game'>Start a game</message>
     <message id='tc.user.super_rights_changer'>change super rights</message>
     <message id='tc.user.Terms_of_use'>User agreement</message>
+    <message id='tc.user.They_blocked_me'>Number of users who blocked this user: {1}</message>
     <message id='tc.user.This_ip_banned'>This IP is banned</message>
     <message id='tc.user.time_wizard'>time wizard</message>
     <message id='tc.user.Unblock'>Unblock</message>

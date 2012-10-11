@@ -395,6 +395,7 @@
     <message id="tc.user.games_stat_wins">перемоги</message>
     <message id="tc.user.gp_creator">задати параметри гри</message>
     <message id='tc.user.Hide_paused'>Спрятать приостановленные игры</message>
+    <message id='tc.user.I_blocked_them'>Число заблокированных пользователей: {1}</message>
     <message id='tc.user.ID'>Регистрационный номер пользователя: {1}</message>
     <message id="tc.user.ip">ip-адрес</message>
     <message id="tc.user.IpBanList">Перелік банів по IP</message>
@@ -428,6 +429,7 @@
     <message id="tc.user.Start_game">Розпочати гру</message>
     <message id="tc.user.super_rights_changer">змінювати особливі права</message>
     <message id='tc.user.Terms_of_use'>Пользовательским соглашением</message>
+    <message id='tc.user.They_blocked_me'>Число заблокировавших этого пользователя: {1}</message>
     <message id="tc.user.This_ip_banned">Ця IP-адреса заблокована</message>
     <message id='tc.user.time_wizard'>магия времени</message>
     <message id="tc.user.Unblock">Розблокувати</message>

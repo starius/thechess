@@ -435,6 +435,18 @@ private:
         } else {
             b->setText(tr("tc.user.Block"));
         }
+        int i_blocked_them_size = user_->i_blocked_them().size();
+        if (i_blocked_them_size) {
+            new Wt::WBreak(this);
+            new Wt::WText(tr("tc.user.I_blocked_them")
+                          .arg(i_blocked_them_size), this);
+        }
+        int they_blocked_me_size = user_->they_blocked_me().size();
+        if (they_blocked_me_size) {
+            new Wt::WBreak(this);
+            new Wt::WText(tr("tc.user.They_blocked_me")
+                          .arg(they_blocked_me_size), this);
+        }
     }
 
     void send(Wt::WLineEdit* m) {
