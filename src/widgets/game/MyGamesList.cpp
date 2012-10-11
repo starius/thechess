@@ -38,11 +38,12 @@ public:
             anchor_->setText(game->other_user(tApp->user())->safe_username());
         }
         anchor_->setLink(tApp->path().game_view()->get_link(game_.id()));
+        anchor_->setMargin(5, Wt::Left | Wt::Right);
         online_ = new Wt::WText(tr("tc.user.Online"), this);
-        online_->setMargin(5, Wt::Left | Wt::Right);
         online_->addStyleClass("no-wrap");
         countdown_ = new Wt::Wc::Countdown(this, /* load JS */ false);
         countdown_->addStyleClass("no-wrap");
+        countdown_->setMargin(5, Wt::Left | Wt::Right);
         excite_or_unexcite();
         update_countdown();
         deselect();
