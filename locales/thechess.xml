@@ -754,6 +754,9 @@ TheChess.
         <h2>Best players:</h2>
         <br />
         ${best_players}
+        <h2>Moderators:</h2>
+        <br />
+        ${moders}
     </message>
 
     <message id='tc.menu.admin_log'>admin log</message>

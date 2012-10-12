@@ -62,6 +62,13 @@ MainPage::MainPage(Wt::WContainerWidget* parent):
     if (!champion_bound) {
         bindString("champion", "");
     }
+    Users moders_q = tApp->session().find<User>().where("admin_rights <> 0");
+    Wt::WContainerWidget* moders = new Wt::WContainerWidget();
+    BOOST_FOREACH (UserPtr user, moders_q) {
+        moders->addWidget(user_anchor(user));
+        moders->addWidget(new Wt::WBreak());
+    }
+    bindWidget("moders", moders);
 }
 
 }

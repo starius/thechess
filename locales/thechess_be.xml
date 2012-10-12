@@ -260,6 +260,9 @@
         <h2>Лепшыя ігракі:</h2>
         <br />
         ${best_players}
+        <h2>Модераторы:</h2>
+        <br />
+        ${moders}
     </message>
 
     <message id="tc.menu.admin_log">адміністрацыйны журнал</message>
