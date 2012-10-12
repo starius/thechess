@@ -256,14 +256,14 @@
     <message id='tc.main.main_template'>
         <h1>Ласкаво просимо!</h1>
         <h2>Чемпіон:</h2>
-        <br />
         ${champion}
+        <br />
         <h2>Кращі гравці:</h2>
-        <br />
         ${best_players}
-        <h2>Модераторы:</h2>
         <br />
+        <h2>Модераторы:</h2>
         ${moders}
+        <br />
     </message>
 
     <message id='tc.menu.admin_log'>адміністративний журнал</message>

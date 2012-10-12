@@ -255,14 +255,14 @@
     <message id="tc.main.main_template">
         <h1>Калі ласка!</h1>
         <h2>Чэмпіён:</h2>
-        <br />
         ${champion}
+        <br />
         <h2>Лепшыя ігракі:</h2>
-        <br />
         ${best_players}
-        <h2>Модераторы:</h2>
         <br />
+        <h2>Модераторы:</h2>
         ${moders}
+        <br />
     </message>
 
     <message id="tc.menu.admin_log">адміністрацыйны журнал</message>

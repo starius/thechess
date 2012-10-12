@@ -749,14 +749,14 @@ TheChess.
     <message id='tc.main.main_template'>
         <h1>Welcome!</h1>
         <h2>Champion:</h2>
-        <br />
         ${champion}
+        <br />
         <h2>Best players:</h2>
-        <br />
         ${best_players}
-        <h2>Moderators:</h2>
         <br />
+        <h2>Moderators:</h2>
         ${moders}
+        <br />
     </message>
 
     <message id='tc.menu.admin_log'>admin log</message>
