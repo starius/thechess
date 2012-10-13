@@ -8,6 +8,7 @@ set(VERSION_MINOR 0)
 set(VERSION_PATCH 9)
 
 set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
+set(ADMIN_EMAIL thechess2008@gmail.com CACHE STRING "email of admin")
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/ubuntu-gcc.cmake)
 
