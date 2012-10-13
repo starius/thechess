@@ -40,7 +40,7 @@ AuthWidget::AuthWidget(Wt::WContainerWidget* parent):
     m->addPasswordAuth(&Server::instance()->password_service());
     setModel(m);
 #endif
-    setRegistrationEnabled(true);
+    setRegistrationEnabled(IpBan::am_i_banned() < NO_REGISTRATION);
     try {
         processEnvironment();
     } catch (std::exception& e) {
