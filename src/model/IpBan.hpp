@@ -26,6 +26,9 @@ public:
     /** Create instance to be added to database */
     IpBan(bool);
 
+    /** Return translation id for ban state */
+    static const char* state2str(BanState state);
+
     /** Get IP address */
     const std::string& ip() const {
         return ip_;
@@ -36,16 +39,16 @@ public:
         ip_ = ip;
     }
 
-    /** Get if this ban is enabled.
-    Enabled by default.
+    /** Get state of the ban.
+    Defaults to LIMITED_NEW.
     */
-    bool enabled() const {
-        return enabled_;
+    BanState state() const {
+        return state_;
     }
 
-    /** Set if this ban is enabled */
-    void set_enabled(bool enabled) {
-        enabled_ = enabled;
+    /** Set ban state */
+    void set_state(BanState state) {
+        state_ = state;
     }
 
     /** Get start time.
@@ -93,12 +96,12 @@ public:
     /** Return if IP is banned.
     \warning If tApp is not set, false is returned.
     */
-    static bool is_banned(const std::string& ip);
+    static BanState is_banned(const std::string& ip);
 
     /** Return if current wApp is banned.
     \warning If tApp is not set, false is returned.
     */
-    static bool am_i_banned();
+    static BanState am_i_banned();
 
     /** Run self-checks for planned action.
     Old bans will be disabled.
@@ -109,20 +112,20 @@ public:
     template<class Action>
     void persist(Action& a) {
         dbo::field(a, ip_, "ip");
-        dbo::field(a, enabled_, "enabled");
         dbo::field(a, start_, "start");
         dbo::field(a, stop_, "stop");
         dbo::field(a, reason_, "reason");
         dbo::belongsTo(a, creator_, "creator");
+        dbo::field(a, state_, "state");
     }
 
 private:
     std::string ip_;
-    bool enabled_;
     Wt::WDateTime start_;
     Wt::WDateTime stop_;
     Wt::WString reason_;
     UserPtr creator_;
+    BanState state_;
 };
 
 }

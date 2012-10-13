@@ -40,7 +40,7 @@ public:
         BLP::BaseQM(parent),
         ip_(ip) {
         set_query();
-        addColumn("enabled", tr("tc.common.enabled"));
+        addColumn("id", tr("tc.common.enabled")); // dummy
         addColumn("ip", tr("tc.user.ip"));
         addColumn("start", tr("tc.common.start"));
         addColumn("stop", tr("tc.common.stop"));
@@ -66,7 +66,9 @@ private:
         dbo::Transaction t(tApp->session());
         const IpBanPtr& o = resultRow(index.row());
         if (role == Wt::DisplayRole) {
-            if (index.column() == CREATOR) {
+            if (index.column() == ENABLED) {
+                return tr(IpBan::state2str(o->state()));
+            } else if (index.column() == CREATOR) {
                 return o->creator()->username();
             }
         } else if (role == Wt::LinkRole) {

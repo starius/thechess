@@ -379,6 +379,21 @@ enum UserSettings {
                      SWITCH_PUBLIC_EMAIL
 };
 
+/** Ban state */
+enum BanState {
+    /** Ban disabled */
+    BAN_DISABLED = 0,
+
+    /** Limited rights of new users and anonymous */
+    LIMITED_NEW = 10,
+
+    /** Limited rights of new users and limited rights of anonymous */
+    NO_REGISTRATION = 20,
+
+    /** Can not create Application (redirect) */
+    ABSOLUTE_BAN = 30
+};
+
 }
 
 /* @} */

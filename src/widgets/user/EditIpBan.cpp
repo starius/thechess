@@ -30,22 +30,25 @@ EditIpBan::EditIpBan(const IpBanPtr& ban, Wt::WContainerWidget* parent):
     new Wt::WBreak(this);
     user_anchor(ban_->creator(), this);
     new Wt::WBreak(this);
-    Wt::WPushButton* b = new Wt::WPushButton(this);
-    b->clicked().connect(this, &EditIpBan::save);
-    if (ban_->enabled()) {
-        b->setText(tr("tc.common.Discard"));
-    } else {
-        b->setText(tr("tc.common.Confirm"));
-    }
+    button(BAN_DISABLED);
+    button(LIMITED_NEW);
+    button(NO_REGISTRATION);
+    button(ABSOLUTE_BAN);
 }
 
-void EditIpBan::save() {
+void EditIpBan::button(BanState state) {
+    Wt::WPushButton* b = new Wt::WPushButton(this);
+    b->clicked().connect(boost::bind(&EditIpBan::save, this, state));
+    b->setText(tr(IpBan::state2str(state)));
+}
+
+void EditIpBan::save(BanState state) {
     dbo::Transaction t(tApp->session());
     if (!tApp->user() || !tApp->user()->has_permission(REGISTRATION_BANNER)) {
         return;
     }
     try {
-        ban_.modify()->set_enabled(!ban_->enabled());
+        ban_.modify()->set_state(state);
         admin_log("Change ban of # " + TO_S(ban_.id()) + " of " + ban_->ip());
         t.commit();
         t_task(IP_BAN, ban_.id());

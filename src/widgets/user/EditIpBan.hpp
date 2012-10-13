@@ -27,7 +27,8 @@ public:
 private:
     IpBanPtr ban_;
 
-    void save();
+    void button(BanState state);
+    void save(BanState state);
 };
 
 }

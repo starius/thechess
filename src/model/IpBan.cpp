@@ -5,6 +5,7 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <algorithm>
 #include <boost/foreach.hpp>
 
 #include <Wt/WApplication>
@@ -22,31 +23,46 @@ IpBan::IpBan()
 { }
 
 IpBan::IpBan(bool):
-    enabled_(true), start_(now())
+    start_(now()), state_(LIMITED_NEW)
 { }
 
-bool IpBan::is_banned(const std::string& ip) {
+const char* IpBan::state2str(BanState state) {
+    if (state == BAN_DISABLED) {
+        return "tc.user.Ban_disabled";
+    } else if (state == LIMITED_NEW) {
+        return "tc.user.Limited_new";
+    } else if (state == NO_REGISTRATION) {
+        return "tc.user.No_registration";
+    } else if (state == ABSOLUTE_BAN) {
+        return "tc.user.Absolute_ban";
+    } else {
+        return "";
+    }
+}
+
+BanState IpBan::is_banned(const std::string& ip) {
     if (!tApp) {
-        return false;
+        return BAN_DISABLED;
     }
     dbo::Transaction t(tApp->session());
     const char* where_ip = Options::instance()->database_type() == POSTGRES ?
                            "inet(text(?)) <<= inet(ip)" : "ip = ?";
     IpBans bans = tApp->session().find<IpBan>()
                   .where(where_ip).bind(ip)
-                  .where("enabled = ?").bind(true)
+                  .where("state <> ?").bind(BAN_DISABLED)
                   .resultList();
+    BanState result = BAN_DISABLED;
     BOOST_FOREACH (IpBanPtr ban, bans) {
         if (ban->start() <= now() && now() <= ban->stop()) {
-            return true;
+            result = std::max(result, ban->state());
         }
     }
-    return false;
+    return result;
 }
 
-bool IpBan::am_i_banned() {
+BanState IpBan::am_i_banned() {
     if (!tApp) {
-        return false;
+        return BAN_DISABLED;
     }
     std::string ip = wApp->environment().clientAddress();
     return is_banned(ip);
@@ -54,8 +70,8 @@ bool IpBan::am_i_banned() {
 
 void IpBan::check(Wt::Wc::notify::TaskPtr task) {
     if (now() > stop()) {
-        set_enabled(false);
-    } else if (enabled()) {
+        set_state(BAN_DISABLED);
+    } else if (state()) {
         t_task(task, stop());
     }
 }
