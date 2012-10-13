@@ -87,7 +87,8 @@ void add_remover_buttons(const CommentPtr& comment, Wt::WContainerWidget* p) {
             b->clicked().connect(boost::bind(change_topic, post, new_topic));
         }
     }
-    if (tApp->user() && tApp->user()->has_permission(REGISTRATION_BANNER)) {
+    if (tApp->user() && tApp->user()->has_permission(REGISTRATION_BANNER) &&
+            !comment->ip().empty()) {
         p->addWidget(new Wt::WBreak());
         Wt::WAnchor* a = new Wt::WAnchor();
         a->setText(comment->ip());
