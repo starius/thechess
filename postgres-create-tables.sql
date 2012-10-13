@@ -150,11 +150,11 @@ CREATE TABLE "thechess_ip_ban" (
   "id" serial primary key,
   "version" integer not null,
   "ip" text not null,
-  "enabled" boolean not null,
   "start" timestamp,
   "stop" timestamp,
   "reason" text not null,
-  "creator_id" bigint
+  "creator_id" bigint,
+  "state" integer not null
 );
 CREATE TABLE "thechess_user" (
   "id" serial primary key,
@@ -291,7 +291,7 @@ CREATE INDEX "gp_first_draw" ON "thechess_gp" ("first_draw");
 CREATE INDEX "gp_norating" ON "thechess_gp" ("norating");
 CREATE INDEX "gp_games_size" ON "thechess_gp" ("games_size");
 CREATE INDEX "ip_ip" ON "thechess_ip_ban" ("ip");
-CREATE INDEX "ip_enabled" ON "thechess_ip_ban" ("enabled");
+CREATE INDEX "ip_state" ON "thechess_ip_ban" ("state");
 CREATE INDEX "ip_start" ON "thechess_ip_ban" ("start");
 CREATE INDEX "ip_stop" ON "thechess_ip_ban" ("stop");
 CREATE INDEX "ip_reason" ON "thechess_ip_ban" ("reason");

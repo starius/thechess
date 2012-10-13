@@ -11,6 +11,8 @@ CREATE INDEX "gp_games_size" ON "thechess_gp" ("games_size");
 ALTER TABLE thechess_user RENAME COLUMN last_enter TO last_online;
 ALTER TABLE thechess_user DROP COLUMN sessions;
 ALTER TABLE thechess_user ADD COLUMN admin_rights integer not null default 0;
+ALTER TABLE thechess_ip_ban DROP COLUMN enabled;
+ALTER TABLE thechess_ip_ban ADD COLUMN state integer not null default 10;
 
 
 3.0.8 to 3.0.9
