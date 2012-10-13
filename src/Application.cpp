@@ -36,6 +36,7 @@ namespace thechess {
 
 typedef std::map<std::string, int> Ip2Int;
 static Ip2Int sessions_per_ip_;
+static std::set<Application*> app_set_;
 static boost::mutex sessions_per_ip_mutex_;
 
 Application::Application(const Wt::WEnvironment& env, Server& server) :
@@ -92,6 +93,14 @@ Application::Application(bool, const Wt::WEnvironment& env, Server& server):
 Application::~Application() {
     decrease_sessions_counter();
     delete kick_;
+}
+
+const std::set<Application*>& Application::all_sessions() {
+    return app_set_;
+}
+
+boost::mutex& Application::all_sessions_mutex() {
+    return sessions_per_ip_mutex_;
 }
 
 void Application::update_password() {
@@ -186,6 +195,7 @@ bool Application::check_ip() {
         const std::string& ip = environment().clientAddress();
         int& count = sessions_per_ip_[ip];
         count += 1;
+        app_set_.insert(this);
         const Options* o = Options::instance();
         bool white = o->ip_in_whitelist(ip);
         int max_s = white ? o->whitelist_max_sessions() : o->max_sessions();
@@ -213,6 +223,7 @@ void Application::decrease_sessions_counter() {
             sessions_per_ip_.erase(it);
         }
     }
+    app_set_.erase(this);
 }
 
 void Application::set_auth_widget() {

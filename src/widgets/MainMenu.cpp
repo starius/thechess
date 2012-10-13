@@ -67,6 +67,7 @@ private:
             }
             if (tApp->user()->has_permission(REGISTRATION_BANNER)) {
                 add_button("tc.menu.banned_ip", path_->all_banned_ip());
+                add_button("tc.menu.all_sessions", path_->all_sessions());
             }
         }
         add_section("tc.menu.forum");

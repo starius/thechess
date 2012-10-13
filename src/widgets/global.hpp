@@ -13,6 +13,7 @@ namespace thechess {
 struct Awards;
 
 class AllPgnResource;
+class AllSessions;
 class AuthWidget;
 class BoardWidget;
 class ChatCommentWidget;

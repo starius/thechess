@@ -38,6 +38,11 @@ public:
         return user_list_;
     }
 
+    /** List of sessions */
+    url::PredefinedNode* all_sessions() const {
+        return all_sessions_;
+    }
+
     /** View the user */
     url::IntegerNode* user_view() const {
         return user_view_;
@@ -265,6 +270,7 @@ public:
 private:
     MainWidget* main_widget_;
     url::PredefinedNode* user_list_;
+    url::PredefinedNode* all_sessions_;
     url::IntegerNode* user_view_;
     url::PredefinedNode* virtuals_of_user_;
     url::PredefinedNode* ip_of_user_;

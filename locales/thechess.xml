@@ -761,6 +761,7 @@ TheChess.
     <message id='tc.menu.admin_log'>admin log</message>
     <message id='tc.menu.all_comments'>all comments</message>
     <message id='tc.menu.all_posts'>all posts</message>
+    <message id='tc.menu.all_sessions'>all sessions</message>
     <message id='tc.menu.banned_ip'>banned ip</message>
     <message id='tc.menu.challenge'>challenge</message>
     <message id='tc.menu.competition'>competition</message>
@@ -780,6 +781,7 @@ TheChess.
     <message id='tc.menu.users_list'>list of users</message>
     <message id='tc.menu.virtuals_list'>list of virtuals</message>
 
+    <message id='tc.title.AllSessions'>All sessions « TheChess</message>
     <message id='tc.title.BoardWidget'>Board « TheChess</message>
     <message id='tc.title.ChatCommentWidget'>Chat message « TheChess</message>
     <message id='tc.title.CommentList_admin_log'>Admin log « TheChess</message>

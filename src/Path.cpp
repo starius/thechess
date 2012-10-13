@@ -20,6 +20,7 @@ using namespace Wt::Wc::url;
 Path::Path(Wt::WObject* parent):
     Parser(parent), main_widget_(0) {
     user_list_ = new PredefinedNode("user", this);
+    all_sessions_ = new PredefinedNode("sessions", user_list_);
     user_view_ = new IntegerNode(user_list_);
     virtuals_of_user_ = new PredefinedNode("virtuals", user_view_);
     ip_of_user_ = new PredefinedNode("ip", user_view_);
@@ -79,6 +80,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     main_widget_ = mw;
     connect(this, boost::bind(&MainWidget::main_page, mw));
     connect(user_list_, boost::bind(&MainWidget::user_list, mw));
+    connect(all_sessions_, boost::bind(&MainWidget::all_sessions, mw));
     connect(user_view_, boost::bind(&Path::open_user, this));
     connect(virtuals_of_user_, boost::bind(&Path::open_virtuals_of_user, this));
     connect(ip_of_user_, boost::bind(&Path::open_ip_of_user, this));

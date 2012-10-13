@@ -37,6 +37,7 @@
 #include "widgets/user/VirtualsWidget.hpp"
 #include "widgets/user/SettingsWidget.hpp"
 #include "widgets/user/IpList.hpp"
+#include "widgets/user/AllSessions.hpp"
 #include "widgets/user/IpBanList.hpp"
 #include "widgets/user/NewIpBan.hpp"
 #include "widgets/user/EditIpBan.hpp"
@@ -358,6 +359,11 @@ void MainWidget::admin_log() {
 void MainWidget::all_banned_ip() {
     set_contents(new IpBanList());
     wApp->setTitle(tr("tc.title.IpBanList"));
+}
+
+void MainWidget::all_sessions() {
+    set_contents(new AllSessions());
+    wApp->setTitle(tr("tc.title.AllSessions"));
 }
 
 void MainWidget::banned_ip(const std::string& ip) {

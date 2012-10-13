@@ -23,6 +23,10 @@
 /** Macro for Application::instance(), same as wApp */
 #define tApp thechess::Application::instance()
 
+namespace boost {
+class mutex;
+}
+
 namespace thechess {
 
 /** Descendant of Wt::WApplication.
@@ -80,6 +84,12 @@ public:
     const Td& server_usage() const {
         return server_usage_;
     }
+
+    /** Return list of all applications */
+    static const std::set<Application*>& all_sessions();
+
+    /** Return mutex for all_sessions() */
+    static boost::mutex& all_sessions_mutex();
 
     /** Show Update Password dialog */
     void update_password();

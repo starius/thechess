@@ -148,6 +148,9 @@ public:
     /** View all banned IPs */
     void all_banned_ip();
 
+    /** View all sessions */
+    void all_sessions();
+
     /** View bans of the IP */
     void banned_ip(const std::string& ip);
 
