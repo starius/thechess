@@ -62,7 +62,9 @@ void LinksDialog::add_game(int game) {
     Wt::WString format("/thechess.js?type=game&game={1}&div=thechess_game_{1}");
     std::string url = tApp->makeAbsoluteUrl(format.arg(game).toUTF8());
     std::string c_url = tApp->makeAbsoluteUrl("js/jquery.countdown.min.js");
-    add_textarea(tr("tc.game.external_code").arg(game).arg(url).arg(c_url),
+    std::string j_url = tApp->makeAbsoluteUrl("js/jquery.min.js");
+    add_textarea(tr("tc.game.external_code")
+                 .arg(game).arg(url).arg(c_url).arg(j_url),
                  tr("tc.common.Game"));
 }
 

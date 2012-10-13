@@ -13,3 +13,8 @@ file(DOWNLOAD
     ${CMAKE_CURRENT_BINARY_DIR}/js/jquery.countdown.min.js
 )
 
+file(DOWNLOAD
+    https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
+    ${CMAKE_CURRENT_BINARY_DIR}/js/jquery.min.js
+)
+

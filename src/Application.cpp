@@ -61,8 +61,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     messageResourceBundle().use(Wt::WApplication::appRoot() +
                                 "locales/wt");
     setCssTheme("polished");
-    require("https://ajax.googleapis.com/ajax/libs/"
-            "jquery/1.7.2/jquery.min.js", "jQuery");
+    require("/js/jquery.min.js");
     require("/js/jquery.countdown.min.js");
     session().login().changed().connect(this, &Application::login_handler);
     login_handler();
