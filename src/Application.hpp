@@ -71,6 +71,16 @@ public:
         return user_;
     }
 
+    /** Return datetime of session creation */
+    const Wt::WDateTime& created() const {
+        return created_;
+    }
+
+    /** Return server time spent for this session */
+    const Td& server_usage() const {
+        return server_usage_;
+    }
+
     /** Show Update Password dialog */
     void update_password();
 
@@ -103,6 +113,8 @@ private:
     Wt::Wc::Gather* gather_;
     Kick* kick_;
     UserPtr user_;
+    Wt::WDateTime created_;
+    Td server_usage_;
 
     bool check_ip();
     void decrease_sessions_counter();

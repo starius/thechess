@@ -40,7 +40,7 @@ static boost::mutex sessions_per_ip_mutex_;
 
 Application::Application(const Wt::WEnvironment& env, Server& server) :
     Wt::WApplication(env), server_(server), session_(server.pool()),
-    gather_(0), kick_(0) {
+    gather_(0), kick_(0), created_(now()) {
     if (!check_ip()) {
         return;
     }
@@ -72,7 +72,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
 
 Application::Application(bool, const Wt::WEnvironment& env, Server& server):
     Wt::WApplication(env), server_(server), session_(server.pool()),
-    gather_(0), kick_(0) {
+    gather_(0), kick_(0), created_(now()) {
     if (!check_ip()) {
         return;
     }
@@ -150,7 +150,10 @@ void Application::login_handler() {
 void Application::notify(const Wt::WEvent& e) {
     try {
         Wt::EventType e_type = e.eventType();
+        Wt::WDateTime start = now();
         Wt::WApplication::notify(e);
+        Wt::WDateTime stop = now();
+        server_usage_ += stop - start;
         if (e_type == Wt::UserEvent) {
             // FIXME this does not work
             user_action();
