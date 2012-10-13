@@ -51,7 +51,11 @@ private:
 };
 
 Wt::WWidget* user_anchor(const UserPtr& user, Wt::WContainerWidget* parent) {
-    return new UserAnchor(user, parent);
+    if (user) {
+        return new UserAnchor(user, parent);
+    } else {
+        return new Wt::WText();
+    }
 }
 
 }
