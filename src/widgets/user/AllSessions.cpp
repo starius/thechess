@@ -33,9 +33,12 @@ AllSessions::AllSessions() {
     boost::mutex::scoped_lock lock(Application::all_sessions_mutex());
     int row = 0;
     BOOST_FOREACH (Application* app, Application::all_sessions()) {
+        const std::string& ip = app->environment().clientAddress();
+        Wt::WAnchor* a = new Wt::WAnchor;
+        a->setText(ip);
+        a->setLink(tApp->path().banned_ip()->get_link(ip));
+        elementAt(row, SESSION_IP)->addWidget(a);
         Wt::WText* t;
-        t = new Wt::WText(app->environment().clientAddress());
-        elementAt(row, SESSION_IP)->addWidget(t);
         elementAt(row, SESSION_USER)->addWidget(user_anchor(app->user()));
         t = new Wt::WText(app->created().toString());
         elementAt(row, SESSION_CREATED)->addWidget(t);
