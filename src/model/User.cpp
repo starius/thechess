@@ -34,9 +34,9 @@ User::User(const Wt::WString& username):
     karma_(0),
     registration_date_(now()) {
     if (IpBan::am_i_banned() == BAN_DISABLED) {
-        set_rights(Options::instance()->banned_ip_user_rights());
-    } else {
         set_rights(Options::instance()->regular_user_rights());
+    } else {
+        set_rights(Options::instance()->banned_ip_user_rights());
     }
 }
 
