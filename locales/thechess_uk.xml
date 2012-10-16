@@ -95,6 +95,7 @@
     <message id="tc.competition.Show_games">Показати номери партій</message>
     <message id="tc.competition.Show_wins">Показати число перемог</message>
     <message id="tc.competition.Stage">Раунд</message>
+    <message id='tc.competition.stage_is'>, раунд {1}</message>
     <message id="tc.competition.Started">Розпочато</message>
     <message id="tc.competition.State">Статус</message>
     <message id="tc.competition.state_active">активний</message>

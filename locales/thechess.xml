@@ -583,6 +583,7 @@ TheChess.
     <message id='tc.competition.Show_games'>Show games</message>
     <message id='tc.competition.Show_wins'>Show numbers of victories</message>
     <message id='tc.competition.Stage'>Stage</message>
+    <message id='tc.competition.stage_is'>, stage {1}</message>
     <message id='tc.competition.Started'>Started</message>
     <message id='tc.competition.State'>State</message>
     <message id='tc.competition.state_active'>active</message>

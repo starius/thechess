@@ -104,6 +104,10 @@ protected:
             text += c->name().empty() ? TO_S(c.id()) : c->name();
             a->setText(text);
             a->setLink(tApp->path().competition_view()->get_link(c.id()));
+            int stage = game_->competition_stage() + 1;
+            if (stage != 0) {
+                new  Wt::WText(tr("tc.competition.stage_is").arg(stage), li);
+            }
         }
         if (game_->state() == Game::CONFIRMED && c) {
             time(game_->confirmed() + c->cp()->force_start_delay(),
