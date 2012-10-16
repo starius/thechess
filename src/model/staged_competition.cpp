@@ -5,6 +5,7 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <cmath>
 #include <set>
 #include <algorithm>
 #include <boost/assert.hpp>
@@ -195,7 +196,7 @@ void StagedCompetition::start_competition() {
     std::random_shuffle(members.begin(), members.end(),
                         Wt::Wc::rand_for_shuffle);
     int members_size = members.size();
-    int max_pow2 = pow(2, int(log2(members_size) + 0.5)) + 0.5;
+    int max_pow2 = pow(2.0, floor(log2(members_size))) + 0.5;
     int pairs = (members_size - max_pow2) ? : (members_size / 2);
     for (int i = 0; i < pairs; i++) {
         const UserPtr& first = members[2 * i];
