@@ -19,8 +19,9 @@ static void add_emotions_and_image(Wt::WTextEdit* e) {
         "fontselect,|,bold,italic,underline,|"
         ",fontsizeselect,|,forecolor,backcolor,|"
         ",justifyleft,justifycenter,justifyright,justifyfull,|,link,image,|"
+        ",insertdate,inserttime,|"
         ",numlist,bullist,|,emotions";
-    e->setExtraPlugins("emotions,inlinepopups");
+    e->setExtraPlugins("emotions,inlinepopups,insertdatetime");
     e->setConfigurationSetting("theme_advanced_buttons1", std::string(buttons));
     e->setConfigurationSetting("force_br_newlines", true);
     e->setConfigurationSetting("force_p_newlines", false);
