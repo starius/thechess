@@ -549,6 +549,7 @@ TheChess.
         ${tr:tc.common.Rating}: <span class="thechess-games-rating">${elo}</span>.
     </message>
 
+    <message id='tc.competition.c'>(c)</message>
     <message id='tc.competition.Cant_change'>You have no permission to change this competition</message>
     <message id='tc.competition.Cant_create'>You have no permission to create competition</message>
     <message id='tc.competition.Change'>Change parameters</message>

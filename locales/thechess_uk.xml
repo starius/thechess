@@ -62,6 +62,7 @@
         а затим перейдіть на другу вкладку для внесення змін.
     </message>
 
+    <message id='tc.competition.c'>(т)</message>
     <message id="tc.competition.Cant_change">Ви не можете змінювати цей турнір</message>
     <message id="tc.competition.Cant_create">Ви не можете створювати турніри</message>
     <message id="tc.competition.Change">Змінити параметри</message>

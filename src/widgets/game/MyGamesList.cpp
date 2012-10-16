@@ -44,6 +44,9 @@ public:
         countdown_ = new Wt::Wc::Countdown(this, /* load JS */ false);
         countdown_->addStyleClass("no-wrap");
         countdown_->setMargin(5, Wt::Left | Wt::Right);
+        if (game_->competition()) {
+            new Wt::WText(tr("tc.competition.c"), this);
+        }
         excite_or_unexcite();
         update_countdown();
         deselect();
