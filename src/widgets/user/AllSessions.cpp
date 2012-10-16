@@ -39,7 +39,9 @@ AllSessions::AllSessions() {
         a->setLink(tApp->path().banned_ip()->get_link(ip));
         elementAt(row, SESSION_IP)->addWidget(a);
         Wt::WText* t;
-        elementAt(row, SESSION_USER)->addWidget(user_anchor(app->user()));
+        UserPtr u = app->user();
+        UserPtr user = u ? tApp->session().load<User>(u.id()) : UserPtr();
+        elementAt(row, SESSION_USER)->addWidget(user_anchor(u));
         t = new Wt::WText(app->created().toString());
         elementAt(row, SESSION_CREATED)->addWidget(t);
         t = new Wt::WText(td2str(app->server_usage()));
