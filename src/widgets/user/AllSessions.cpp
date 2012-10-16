@@ -19,10 +19,12 @@
 namespace thechess {
 
 enum {
-    SESSION_IP,
     SESSION_USER,
     SESSION_CREATED,
-    SESSION_SERVER_USAGE
+    SESSION_SERVER_USAGE,
+    SESSION_IP,
+    SESSION_COOKIE,
+    SESSION_AGENT
 };
 
 AllSessions::AllSessions() {
@@ -46,6 +48,14 @@ AllSessions::AllSessions() {
         elementAt(row, SESSION_CREATED)->addWidget(t);
         t = new Wt::WText(td2str(app->server_usage()));
         elementAt(row, SESSION_SERVER_USAGE)->addWidget(t);
+        const std::string* cookie = app->environment().getCookieValue("userid");
+        if (cookie) {
+            t = new Wt::WText(*cookie);
+            elementAt(row, SESSION_COOKIE)->addWidget(t);
+        }
+        const std::string& agent = app->environment().userAgent();
+        t = new Wt::WText(agent);
+        elementAt(row, SESSION_AGENT)->addWidget(t);
         row += 1;
     }
     setStyleClass("thechess-table-border");
