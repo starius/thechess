@@ -18,7 +18,7 @@ static void add_emotions_and_image(Wt::WTextEdit* e) {
     const char* const buttons =
         "fontselect,|,bold,italic,underline,|"
         ",fontsizeselect,|,forecolor,backcolor,|"
-        ",justifyleft,justifycenter,justifyright,justifyfull,|,anchor,image,|"
+        ",justifyleft,justifycenter,justifyright,justifyfull,|,link,image,|"
         ",numlist,bullist,|,emotions";
     e->setExtraPlugins("emotions");
     e->setConfigurationSetting("theme_advanced_buttons1", std::string(buttons));
