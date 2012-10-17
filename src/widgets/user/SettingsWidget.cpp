@@ -134,6 +134,7 @@ private:
     void print_filter_min_online() {
         new Wt::WBreak(this);
         new Wt::WText(tr("tc.user.Filter_min_online"), this);
+        new Wt::WBreak(this);
         filter_min_online_ = new Wt::Wc::TimeDurationWidget(TD_NULL,
                 tApp->user()->filter_min_online(), 100 * WEEK,
                 this);
