@@ -14,6 +14,7 @@
 #include "widgets/user/IpList.hpp"
 #include "widgets/Header.hpp"
 #include "Application.hpp"
+#include "log.hpp"
 #include "config.hpp"
 
 namespace thechess {
@@ -133,6 +134,7 @@ IpList::IpList(const UserPtr& user, Wt::WContainerWidget* parent):
         return;
     }
     model_ = new IpListModel(user, this);
+    admin_log("List IP of " + user_a(user.id()), true);
     initialize();
 }
 
@@ -142,6 +144,7 @@ IpList::IpList(const std::string& ip, Wt::WContainerWidget* parent):
         return;
     }
     model_ = new IpListModel(ip, this);
+    admin_log("List users of IP " + ip_a(ip), true);
     initialize();
 }
 

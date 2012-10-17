@@ -13,6 +13,7 @@
 #include "widgets/user/IpBanList.hpp"
 #include "widgets/Header.hpp"
 #include "Application.hpp"
+#include "log.hpp"
 
 namespace thechess {
 
@@ -122,6 +123,7 @@ IpBanList::IpBanList(const std::string& ip, Wt::WContainerWidget* parent):
     addWidget(new Header(tr("tc.user.IpBanList")));
     IpBanListModel* m = new IpBanListModel(ip, this);
     IpBanListView* view = new IpBanListView(m, this);
+    admin_log("List IP bans of IP " + ip_a(ip), true);
 }
 
 IpBanList::IpBanList(Wt::WContainerWidget* parent):
@@ -132,6 +134,7 @@ IpBanList::IpBanList(Wt::WContainerWidget* parent):
     addWidget(new Header(tr("tc.user.IpBanList")));
     IpBanListModel* m = new IpBanListModel("", this);
     IpBanListView* view = new IpBanListView(m, this);
+    admin_log("List IP bans", true);
 }
 
 }

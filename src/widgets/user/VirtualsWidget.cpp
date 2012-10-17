@@ -19,6 +19,7 @@
 #include "widgets/user/VirtualsWidget.hpp"
 #include "widgets/user/user_anchor.hpp"
 #include "Application.hpp"
+#include "log.hpp"
 
 namespace thechess {
 
@@ -116,6 +117,7 @@ VirtualsWidget::VirtualsWidget(const dbo::Query<BD::BDPair>& pairs,
                                Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent) {
     initialize(pairs);
+    admin_log("List virtuals (paires provided)", true);
 }
 
 VirtualsWidget::VirtualsWidget(const UserPtr& user, Wt::WContainerWidget* p):
@@ -123,6 +125,7 @@ VirtualsWidget::VirtualsWidget(const UserPtr& user, Wt::WContainerWidget* p):
     dbo::Transaction t(tApp->session());
     dbo::Query<BD::BDPair> pairs = BD::pairs(tApp->session());
     pairs.where("U.user_id = ? or V.user_id = ?").bind(user).bind(user);
+    admin_log("List virtuals of user " + user_a(user.id()), true);
     initialize(pairs);
 }
 
@@ -130,6 +133,7 @@ VirtualsWidget::VirtualsWidget(Wt::WContainerWidget* p):
     Wt::WContainerWidget(p) {
     dbo::Transaction t(tApp->session());
     dbo::Query<BD::BDPair> pairs = BD::pairs(tApp->session());
+    admin_log("List all virtuals", true);
     initialize(pairs);
 }
 
