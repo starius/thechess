@@ -8,6 +8,11 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory
     ${CMAKE_CURRENT_BINARY_DIR}/resources/tiny_mce
 )
 
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    ${CMAKE_CURRENT_SOURCE_DIR}/js/tiny_mce_src.js
+    ${CMAKE_CURRENT_BINARY_DIR}/resources/tiny_mce/tiny_mce.js
+)
+
 subdirs(css)
 subdirs(js)
 subdirs(sound)
