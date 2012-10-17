@@ -15,8 +15,9 @@ namespace thechess {
 
 /** Log admin/moder action.
 \warning tApp must be available.
+draft=true is for actions of non-admins or for read-only actions of admins.
 */
-void admin_log(const Wt::WString& message);
+void admin_log(const Wt::WString& message, bool draft = false);
 
 /** Return HTML anchor */
 Wt::WString html_a(const Wt::WString& path, const Wt::WString& text);
