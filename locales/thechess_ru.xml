@@ -396,6 +396,7 @@
     <message id='tc.user.cp_creator'>создать параметры турнира</message>
     <message id='tc.user.Delete'>Удалить</message>
     <message id='tc.user.Edit_rights'>Редактировать права</message>
+    <message id='tc.user.Formatting_chat'>Форматирование в чате</message>
     <message id='tc.user.forum_comment_creator'>комментировать форум</message>
     <message id='tc.user.forum_post_creator'>создавать пост</message>
     <message id='tc.user.game_creator'>создавать игру</message>
@@ -406,6 +407,8 @@
     <message id='tc.user.games_stat_fails'>поражения</message>
     <message id='tc.user.games_stat_wins'>победы</message>
     <message id='tc.user.gp_creator'>создавать параметры игры</message>
+    <message id='tc.user.Hide_countdown_mygames'>Убрать время из меню игр</message>
+    <message id='tc.user.Hide_online_mygames'>Убрать надпись На сайте из меню игр</message>
     <message id='tc.user.Hide_paused'>Спрятать приостановленные игры</message>
     <message id='tc.user.I_blocked_them'>Число заблокированных пользователей: {1}</message>
     <message id='tc.user.ID'>Регистрационный номер пользователя: {1}</message>

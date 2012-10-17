@@ -388,6 +388,7 @@
     <message id="tc.user.cp_creator">стварыць параметры турніру</message>
     <message id="tc.user.Delete">Выдаліць</message>
     <message id="tc.user.Edit_rights">Рэдактаваць правы</message>
+    <message id='tc.user.Formatting_chat'>Форматирование в чате</message>
     <message id="tc.user.forum_comment_creator">каментыраваць форум</message>
     <message id="tc.user.forum_post_creator">ствараць пост</message>
     <message id="tc.user.game_creator">ствараць гульню</message>
@@ -398,6 +399,8 @@
     <message id="tc.user.games_stat_fails">паражэнні</message>
     <message id="tc.user.games_stat_wins">перамогі</message>
     <message id="tc.user.gp_creator">стварыць параметры гульні</message>
+    <message id='tc.user.Hide_countdown_mygames'>Убрать время из меню игр</message>
+    <message id='tc.user.Hide_online_mygames'>Убрать надпись На сайте из меню игр</message>
     <message id='tc.user.Hide_paused'>Спрятать приостановленные игры</message>
     <message id='tc.user.I_blocked_them'>Число заблокированных пользователей: {1}</message>
     <message id='tc.user.ID'>Регистрационный номер пользователя: {1}</message>

@@ -886,6 +886,7 @@ TheChess.
     <message id='tc.user.Delete'>Delete</message>
     <message id='tc.user.Edit_rights'>Edit rights</message>
     <message id='tc.user.Email'>E-mail</message>
+    <message id='tc.user.Formatting_chat'>Formatting in chat</message>
     <message id='tc.user.forum_comment_creator'>comment forum</message>
     <message id='tc.user.forum_post_creator'>post forum</message>
     <message id='tc.user.game_creator'>create game</message>
@@ -896,6 +897,8 @@ TheChess.
     <message id='tc.user.games_stat_fails'>fails</message>
     <message id='tc.user.games_stat_wins'>wins</message>
     <message id='tc.user.gp_creator'>create game parameters</message>
+    <message id='tc.user.Hide_countdown_mygames'>Hide countdown from game menu</message>
+    <message id='tc.user.Hide_online_mygames'>Hide Online label from game menu</message>
     <message id='tc.user.Hide_paused'>Hide paused games</message>
     <message id='tc.user.I_blocked_them'>Number of blocked user: {1}</message>
     <message id='tc.user.ID'>Registration number of this user: {1}</message>

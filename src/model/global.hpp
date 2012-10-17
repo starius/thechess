@@ -372,6 +372,15 @@ enum UserSettings {
     /** Hide paused games */
     SWITCH_HIDE_PAUSED_GAMES = BOOST_BINARY(00000001 00000000 00000000),
 
+    /** Hide Online label from games menu */
+    SWITCH_HIDE_ONLINE = BOOST_BINARY(00000010 00000000 00000000),
+
+    /** Hide Countdown from games menu */
+    SWITCH_HIDE_COUNTDOWN = BOOST_BINARY(00000100 00000000 00000000),
+
+    /** Formatting in chat */
+    SWITCH_FORMATTING_CHAT = BOOST_BINARY(00001000 00000000 00000000),
+
     /** Default value of settings of new user or Anonymous */
     SWITCH_DEFAULT = SWITCH_LASTMOVE |
                      SWITCH_ONLY_NOT_REMOVED_USERS |
