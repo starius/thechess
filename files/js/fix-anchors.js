@@ -7,6 +7,7 @@ setInterval(function() {
             if (!a.attr("href").match(/^mailto\:/) && external) {
                 a.attr('target','_blank');
             } else if (!external) {
+                a.attr("onclick", "$.noop()");
                 a.click(function() {
                     var e = event || window.event, o = this;
                     var WT = Wt.WT;
