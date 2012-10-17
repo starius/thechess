@@ -27,6 +27,7 @@
 #include "Options.hpp"
 #include "model/all.hpp"
 #include "utils/text_edit.hpp"
+#include "log.hpp"
 
 namespace thechess {
 
@@ -274,6 +275,7 @@ private:
     }
 
     void rebuild_index() {
+        admin_log("Rebuild games index", true);
         dbo::SqlConnection* con = Session::new_connection(*Options::instance());
         boost::scoped_ptr<dbo::SqlConnection> ptr(con);
         Session s(*con);
@@ -281,10 +283,12 @@ private:
     }
 
     void reread_options() {
+        admin_log("Reread options", true);
         Server::instance()->reread_options();
     }
 
     void recalculation() {
+        admin_log("Recalculate", true);
         dbo::SqlConnection* con = Session::new_connection(*Options::instance());
         boost::scoped_ptr<dbo::SqlConnection> ptr(con);
         Session s(*con);
