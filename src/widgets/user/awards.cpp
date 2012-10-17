@@ -42,7 +42,7 @@ static void add_award(Wt::WContainerWidget* c, int awards, const char* path) {
             c->addWidget(new Wt::WText(TO_S(awards)));
         }
         Wt::WImage* im = new Wt::WImage(path);
-        im->setHeight(30);
+        im->setHeight(60);
         c->addWidget(im);
     }
 }
