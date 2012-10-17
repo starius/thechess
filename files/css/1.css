@@ -176,6 +176,10 @@ FIXME http://redmine.emweb.be/issues/1144
     height: auto !important;
 }
 
+.thechess-chat tbody .Wt-tv-c * {
+    vertical-align: middle !important;
+}
+
 .jp-audio {
     visibility: hidden;
 }
