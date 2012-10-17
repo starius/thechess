@@ -8603,7 +8603,7 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 				n = DOM.add(tr, 'td');
 
 				n = DOM.add(n, 'a', {
-					href : 'javascript:;',
+					href : (tinymce.isOpera ? '' : 'javascript:;'),
 					style : {
 						backgroundColor : '#' + c
 					},
