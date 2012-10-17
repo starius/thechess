@@ -39,7 +39,7 @@ const int POST_TIME_WIDTH = 130;
 const int INIT_WIDTH = 60;
 const int COMMENT_ROW_HEIGHT_FORUM = 65;
 const int ALL_COMMENTS_ROW_HEIGHT = 35;
-const int COMMENT_CHAT_LENGTH = 80;
+const int COMMENT_CHAT_LENGTH = 10000;
 const int TOPIC_LENGTH = 80;
 const int POST_LENGTH = 80;
 const int LOG_LENGTH = 1000;
@@ -312,7 +312,7 @@ void CommentList::add_comment(const CommentPtr& parent) {
     }
     Comment::Type type = comment_model()->type();
     Wt::WString text = edit_->valueText();
-    if (type == Comment::FORUM_COMMENT) {
+    if (Wt::Wc::isinstance<Wt::WTextEdit>(edit_)) {
         text = patch_text_edit_text(text);
     }
     if (text.empty()) {
@@ -399,12 +399,19 @@ void CommentList::print_edits() {
         patch_text_edit(post_text_);
         new Wt::WBreak(this);
     } else if (type == Comment::CHAT_MESSAGE) {
-        Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
-        edit_ = line_edit;
-        edit_->enterPressed().connect(boost::bind(&CommentList::add_comment,
-                                      this, root));
-        line_edit->setTextSize(80);
-        line_edit->setMaxLength(COMMENT_CHAT_LENGTH);
+        if (!User::has_s(SWITCH_FORMATTING_CHAT)) {
+            Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
+            edit_ = line_edit;
+            edit_->enterPressed().connect(boost::bind(&CommentList::add_comment,
+                                          this, root));
+            line_edit->setTextSize(80);
+            line_edit->setMaxLength(COMMENT_CHAT_LENGTH);
+        } else {
+            Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
+            patch_text_edit(text_edit);
+            new Wt::WBreak(this);
+            edit_ = text_edit;
+        }
     } else if (type == Comment::FORUM_COMMENT) {
         Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
         patch_text_edit(text_edit);
