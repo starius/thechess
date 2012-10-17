@@ -15,6 +15,7 @@
 #include "widgets/user/AllSessions.hpp"
 #include "widgets/user/user_anchor.hpp"
 #include "Application.hpp"
+#include "log.hpp"
 
 namespace thechess {
 
@@ -32,6 +33,7 @@ AllSessions::AllSessions() {
     if (!tApp->user() || !tApp->user()->has_permission(REGISTRATION_BANNER)) {
         return;
     }
+    admin_log("List sessions", true);
     boost::mutex::scoped_lock lock(Application::all_sessions_mutex());
     int row = 0;
     BOOST_FOREACH (Application* app, Application::all_sessions()) {
