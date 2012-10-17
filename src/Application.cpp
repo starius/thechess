@@ -208,7 +208,7 @@ bool Application::check_ip() {
         try {
             admin_log("Too many sessions from IP " +
                       ip_a(environment().clientAddress()), true);
-        } catch(...)
+        } catch (...)
         { }
         return false;
     } else if (IpBan::am_i_banned() >= ABSOLUTE_BAN) {
@@ -217,7 +217,7 @@ bool Application::check_ip() {
         try {
             admin_log("Attempt to enter from banned IP " +
                       ip_a(environment().clientAddress()), true);
-        } catch(...)
+        } catch (...)
         { }
         return false;
     } else {
