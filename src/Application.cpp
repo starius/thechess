@@ -31,6 +31,7 @@
 #include "widgets/MainWidget.hpp"
 #include "widgets/MainMenu.hpp"
 #include "widget-set.hpp"
+#include "log.hpp"
 
 namespace thechess {
 
@@ -204,10 +205,20 @@ bool Application::check_ip() {
     if (byu) {
         redirect("/html/too_many_sessions.html");
         quit();
+        try {
+            admin_log("Too many sessions from IP " +
+                      ip_a(environment().clientAddress()), true);
+        } catch(...)
+        { }
         return false;
     } else if (IpBan::am_i_banned() >= ABSOLUTE_BAN) {
         redirect("/html/banned.html");
         quit();
+        try {
+            admin_log("Attempt to enter from banned IP " +
+                      ip_a(environment().clientAddress()), true);
+        } catch(...)
+        { }
         return false;
     } else {
         return true;
