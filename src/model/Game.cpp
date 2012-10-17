@@ -380,7 +380,7 @@ void Game::stop_pause() {
 }
 
 bool Game::can_cancel(const UserPtr& user) const {
-    return is_member(user) && user != init() && is_creation();
+    return is_member(user) && state() == PROPOSED && !competition();
 }
 
 void Game::cancel(const UserPtr& user) {
