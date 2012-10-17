@@ -28,6 +28,9 @@ public:
     /** Select the gp */
     void set_gp(const GPPtr& gp);
 
+    /** Select first gp */
+    void select_first();
+
     /** Set init moves */
     void set_moves(const Moves& moves);
 

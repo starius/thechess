@@ -44,6 +44,9 @@ public:
     /** Set selected gp */
     void set_gp(const GPPtr& gp);
 
+    /** Select first gp */
+    void select_first();
+
 private:
     GPListModel* model_;
     GPListView* view_;
@@ -52,7 +55,6 @@ private:
 
     void apply();
     void manager();
-    void select_first();
 };
 
 }

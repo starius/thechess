@@ -59,6 +59,10 @@ void GPSelector::set_gp(const GPPtr& gp) {
     list_->set_gp(gp);
 }
 
+void GPSelector::select_first() {
+    list_->select_first();
+}
+
 void GPSelector::set_moves(const Moves& moves) {
     if (GP_SELECTOR_NEW_TAB >= tab_->count()) {
         return;

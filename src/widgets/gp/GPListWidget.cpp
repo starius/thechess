@@ -146,7 +146,6 @@ GPListWidget::GPListWidget(Wt::WContainerWidget* p):
     view_ = new GPListView(model_, this);
     view_->setSelectionMode(Wt::SingleSelection);
     apply();
-    select_first();
 }
 
 GPPtr GPListWidget::gp() const {

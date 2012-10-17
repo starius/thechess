@@ -67,6 +67,7 @@ void GameCreateWidget::set_moves(const Moves& moves) {
 
 void GameCreateWidget::print() {
     selector_ = new GPSelector(this);
+    selector_->select_first();
     selector_->set_gp(gp_);
     Wt::Wc::TableForm* form = new Wt::Wc::TableForm(this);
     color_ = new Wt::WComboBox();
