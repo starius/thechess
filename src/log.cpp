@@ -83,5 +83,9 @@ Wt::WString game_a(int id) {
     return html_a(tApp->path().game_view(), id, t);
 }
 
+Wt::WString ip_a(const std::string& ip) {
+    return html_a(tApp->path().banned_ip()->get_full_path(ip), ip);
+}
+
 }
 

@@ -49,7 +49,8 @@ void EditIpBan::save(BanState state) {
     }
     try {
         ban_.modify()->set_state(state);
-        admin_log("Change ban of # " + TO_S(ban_.id()) + " of " + ban_->ip());
+        admin_log("Change ban of # " + TO_S(ban_.id()) +
+                  " of " + ip_a(ban_->ip()));
         t.commit();
         t_task(IP_BAN, ban_.id());
         delete this; // TODO go to page with ban list

@@ -37,6 +37,9 @@ Wt::WString comm_a(int id);
 /** Return HTML anchor to this game */
 Wt::WString game_a(int id);
 
+/** Return HTML anchor for this IP */
+Wt::WString ip_a(const std::string& ip);
+
 }
 
 #endif

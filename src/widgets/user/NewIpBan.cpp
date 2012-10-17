@@ -53,8 +53,7 @@ void NewIpBan::add() {
     ban.modify()->set_stop(now() + duration_->corrected_value());
     ban.modify()->set_reason(reason_->text());
     ban.modify()->set_creator(tApp->user());
-    Wt::WString a = html_a(tApp->path().banned_ip()->get_full_path(ip), ip);
-    admin_log("Ban " + a);
+    admin_log("Ban " + ip_a(ip));
     t.commit();
     t_task(IP_BAN, ban.id());
     delete this; // TODO go to page with ban list
