@@ -51,7 +51,7 @@ static void add_award(Wt::WContainerWidget* c, int awards, const char* path) {
 Wt::WWidget* awards_widget(const UserPtr& user) {
     Wt::WContainerWidget* result = new Wt::WContainerWidget();
     Awards awards = awards_of(user);
-    add_award(result, awards.competitions, "img/awards/competition.gif");
+    add_award(result, awards.competitions, "img/awards/competition.png");
     add_award(result, awards.game_1, "img/awards/game-1.gif");
     add_award(result, awards.game_2, "img/awards/game-2.gif");
     add_award(result, awards.game_3, "img/awards/game-3.gif");
