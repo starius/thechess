@@ -489,6 +489,7 @@ GamePtr Competition::create_game(const UserPtr& white, const UserPtr& black,
     GamePtr game = session()->add(new Game(gp_ptr));
     bool random = no_draw;
     game.modify()->make_competition_game(white, black, self(), stage, random);
+    game.flush();
     return game;
 }
 
