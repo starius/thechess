@@ -29,7 +29,8 @@ class MyGameAnchor : public Wt::WContainerWidget, public Notifiable {
 public:
     MyGameAnchor(const GamePtr& game, MyGamesListImp* list):
         Notifiable(Object(GAME, game.id())),
-        game_(game), list_(list) {
+        game_(game), list_(list),
+        online_(0), countdown_(0) {
         anchor_ = new Wt::WAnchor(this);
         if (!User::has_s(SWITCH_NAMES_IN_MYMENU) ||
                 !game->other_user(tApp->user())) {
@@ -40,8 +41,10 @@ public:
         anchor_->setLink(tApp->path().game_view()->get_link(game_.id()));
         anchor_->setMargin(5, Wt::Left | Wt::Right);
         anchor_->addStyleClass("no-wrap");
-        online_ = new Wt::WText(tr("tc.user.Online"), this);
-        online_->addStyleClass("no-wrap");
+        if (!User::has_s(SWITCH_HIDE_ONLINE)) {
+            online_ = new Wt::WText(tr("tc.user.Online"), this);
+            online_->addStyleClass("no-wrap");
+        }
         if (game_->competition()) {
             new Wt::WText(tr("tc.competition.c"), this);
         }
@@ -53,9 +56,11 @@ public:
     }
 
     void add_countdown() {
-        countdown_ = new Wt::Wc::Countdown(this, /* load JS */ false);
-        countdown_->addStyleClass("no-wrap");
-        countdown_->setMargin(5, Wt::Left | Wt::Right);
+        if (!User::has_s(SWITCH_HIDE_COUNTDOWN)) {
+            countdown_ = new Wt::Wc::Countdown(this, /* load JS */ false);
+            countdown_->addStyleClass("no-wrap");
+            countdown_->setMargin(5, Wt::Left | Wt::Right);
+        }
     }
 
     virtual void notify(EventPtr);
@@ -99,20 +104,24 @@ public:
     }
 
     void update_online() {
-        UserPtr competitor = game_->other_user(tApp->user());
-        online_->setHidden(!competitor || !competitor->online());
+        if (online_) {
+            UserPtr competitor = game_->other_user(tApp->user());
+            online_->setHidden(!competitor || !competitor->online());
+        }
     }
 
     void update_countdown() {
-        dbo::Transaction t(tApp->session());
-        countdown_->pause();
-        Td duration = game_->total_limit_now(tApp->user());
-        if (duration > TD_NULL) {
-            countdown_->set_until(duration);
-        }
-        if (game_->state() == Game::ACTIVE &&
-                tApp->user() == game_->order_user()) {
-            countdown_->resume();
+        if (countdown_) {
+            dbo::Transaction t(tApp->session());
+            countdown_->pause();
+            Td duration = game_->total_limit_now(tApp->user());
+            if (duration > TD_NULL) {
+                countdown_->set_until(duration);
+            }
+            if (game_->state() == Game::ACTIVE &&
+                    tApp->user() == game_->order_user()) {
+                countdown_->resume();
+            }
         }
     }
 
