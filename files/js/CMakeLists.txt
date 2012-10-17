@@ -1,8 +1,3 @@
-execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_BINARY_DIR}
-)
-
 file(DOWNLOAD
     https://raw.github.com/starius/wt-classes/gh-pages/jquery.countdown.min.js
     ${CMAKE_CURRENT_BINARY_DIR}/jquery.countdown.min.js
