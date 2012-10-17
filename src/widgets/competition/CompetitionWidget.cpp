@@ -108,7 +108,8 @@ public:
         if (c->type() == CLASSICAL) {
             kw("tc.competition.Max_simultaneous_games",
                cp->max_simultaneous_games());
-            kw("tc.competition.Games_factor", cp->games_factor());
+            boost::format f("%.3f");
+            kw("tc.competition.Games_factor", str(f % cp->games_factor()));
         }
         kw("tc.competition.Relax_time", td2str(cp->relax_time()));
         if (c->type() == STAGED) {
