@@ -503,6 +503,8 @@ private:
             admin_log("Cancel " + comp_a(c_.id()));
         } else if (method == &Competition::allow_virtuals) {
             admin_log("Allow virtuals in " + comp_a(c_.id()));
+        } else if (method == &Competition::force_start) {
+            admin_log("Force start " + comp_a(c_.id()));
         }
         t.commit();
         t_task(COMPETITION, c_.id());
