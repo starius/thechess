@@ -27,6 +27,9 @@ public:
     */
     void rebuild(Session& session);
 
+    /** Rebuild BoardIndex */
+    void clear();
+
     /** Find all games including this board state.
     May not produce false positives.
     If called while rebuild(), empty result is returned.

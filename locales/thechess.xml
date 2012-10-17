@@ -647,6 +647,7 @@ TheChess.
     <message id='tc.game.Black_won'>Black won</message>
     <message id='tc.game.Call_auto_judge'>Call auto judge</message>
     <message id='tc.game.Challenge'>Challenge</message>
+    <message id='tc.game.Clear_index'>Clear game index</message>
     <message id='tc.game.colors'>colors</message>
     <message id='tc.game.colors_not_random'>predetermined</message>
     <message id='tc.game.colors_random'>determined by chance</message>

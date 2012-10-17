@@ -35,6 +35,12 @@ void SharedBoardIndex::rebuild(Session& session) {
     index_.reindex();
 }
 
+void SharedBoardIndex::clear() {
+    boost::upgrade_lock<boost::shared_mutex> lock(mutex_);
+    boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(lock);
+    index_.clear();
+}
+
 void SharedBoardIndex::search_board(Session& session, const Board& board,
                                     std::vector<int>& games) {
     boost::shared_lock<boost::shared_mutex> lock(mutex_, boost::try_to_lock);
