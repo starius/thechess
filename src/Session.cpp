@@ -12,6 +12,8 @@
 #include <Wt/Dbo/backend/Sqlite3>
 #include <Wt/Dbo/backend/Postgres>
 #include <Wt/Auth/Identity>
+#include <Wt/WApplication>
+#include <Wt/WEnvironment>
 
 #include "Session.hpp"
 #include "Options.hpp"
@@ -210,6 +212,10 @@ UserPtr Session::auth_info_to_user(const AuthInfoPtr& auth_info) {
         Wt::WString name = auth_info->identity(Wt::Auth::Identity::LoginName);
         user = add(new User(name));
         auth_info.modify()->setUser(user);
+        if (IpBan::am_i_banned()) {
+            admin_log("Register from banned IP " +
+                      ip_a(wApp->environment().clientAddress()), user, true);
+        }
     }
     return user;
 }
