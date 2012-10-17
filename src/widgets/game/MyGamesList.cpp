@@ -39,18 +39,23 @@ public:
         }
         anchor_->setLink(tApp->path().game_view()->get_link(game_.id()));
         anchor_->setMargin(5, Wt::Left | Wt::Right);
+        anchor_->addStyleClass("no-wrap");
         online_ = new Wt::WText(tr("tc.user.Online"), this);
         online_->addStyleClass("no-wrap");
-        countdown_ = new Wt::Wc::Countdown(this, /* load JS */ false);
-        countdown_->addStyleClass("no-wrap");
-        countdown_->setMargin(5, Wt::Left | Wt::Right);
         if (game_->competition()) {
             new Wt::WText(tr("tc.competition.c"), this);
         }
+        add_countdown();
         excite_or_unexcite();
         update_countdown();
         deselect();
         style_by_state(game->state());
+    }
+
+    void add_countdown() {
+        countdown_ = new Wt::Wc::Countdown(this, /* load JS */ false);
+        countdown_->addStyleClass("no-wrap");
+        countdown_->setMargin(5, Wt::Left | Wt::Right);
     }
 
     virtual void notify(EventPtr);
@@ -298,6 +303,8 @@ void MyGameAnchor::check_state() {
         if (!game_->is_ended()) {
             list_->extract_anchor(this);
             list_->insert_anchor(this, game_->state());
+            delete countdown_;
+            add_countdown();
         }
         style_by_state(game_->state());
     }
