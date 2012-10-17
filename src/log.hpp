@@ -14,8 +14,16 @@
 namespace thechess {
 
 /** Log admin/moder action.
-\warning tApp must be available.
 draft=true is for actions of non-admins or for read-only actions of admins.
+
+user is the source of the message.
+*/
+void admin_log(const Wt::WString& message, UserPtr user, bool draft = false);
+
+/** Log admin/moder action.
+\warning tApp must be available.
+
+Overloaded function. tApp->user() is used.
 */
 void admin_log(const Wt::WString& message, bool draft = false);
 

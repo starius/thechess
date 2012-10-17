@@ -14,13 +14,17 @@
 
 namespace thechess {
 
-void admin_log(const Wt::WString& message, bool draft) {
+void admin_log(const Wt::WString& message, UserPtr user, bool draft) {
     dbo::Transaction t(tApp->session());
     CommentPtr comment = tApp->session().add(new Comment(true));
     comment.modify()->set_type(Comment::LOG_ENTRY);
-    comment.modify()->set_init(tApp->user());
+    comment.modify()->set_init(user);
     comment.modify()->set_text(message);
     comment.modify()->set_state(draft ? Comment::DRAFT : Comment::OK);
+}
+
+void admin_log(const Wt::WString& message, bool draft) {
+    admin_log(message, tApp->user(), draft);
 }
 
 Wt::WString html_a(const Wt::WString& path, const Wt::WString& text) {
