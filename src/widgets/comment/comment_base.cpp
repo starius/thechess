@@ -38,7 +38,7 @@ Object comment_base(const CommentPtr& comment) {
 
 Wt::WAnchor* anchor_to_host(const CommentPtr& comment) {
     dbo::Transaction t(tApp->session());
-    if (comment->type() == Comment::CHAT_MESSAGE && comment->root()) {
+    if (comment->type() == Comment::CHAT_MESSAGE && !comment->root()) {
         Wt::WAnchor* a = new Wt::WAnchor();
         a->setText(Wt::WString::tr("tc.comment.Global_chat"));
         a->setLink(tApp->path().global_chat()->link());
