@@ -78,7 +78,8 @@ protected:
             bool_item(game_->real_rating(), "tc.game.real_rating_true",
                       "tc.game.real_rating_false", result);
         } else {
-            bool_item(gp->norating(), "tc.game.norating_true",
+            bool_item((gp->norating() || game_->norating()),
+                      "tc.game.norating_true",
                       "tc.game.norating_false", result);
         }
         if (!game_->is_ended()) {
