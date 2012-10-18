@@ -148,7 +148,12 @@ private:
             if (index.column() == NUMBER_COL) {
                 return index.row() + 1;
             } else if (index.column() == NAME_COLUMN) {
-                return o->safe_username();
+                Wt::WString name;
+                if (o->online()) {
+                    name += tr("tc.user.Online");
+                }
+                name += o->safe_username();
+                return name;
             } else if (index.column() == CLASSIFICATION_COLUMN) {
                 return o->classification_str();
             } else if (index.column() == DRAWS_COLUMN) {
