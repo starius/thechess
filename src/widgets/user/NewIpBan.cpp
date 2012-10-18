@@ -33,7 +33,7 @@ NewIpBan::NewIpBan(const std::string& ip, const Wt::WString& reason,
     Wt::Wc::TableForm* f = new Wt::Wc::TableForm(this);
     ip_ = new Wt::WLineEdit(Wt::WString::fromUTF8(ip));
     f->item(tr("tc.user.ip"), "", 0, ip_);
-    duration_ = new Wt::Wc::TimeDurationWidget(MINUTE, 3 * DAY, WEEK);
+    duration_ = new Wt::Wc::TimeDurationWidget(MINUTE, 3 * DAY, 999 * WEEK);
     f->item(tr("tc.common.duration"), "", duration_->form_widget(), duration_);
     reason_ = new Wt::WTextArea(reason);
     f->item(tr("tc.user.ban_reason"), "", reason_, reason_);
