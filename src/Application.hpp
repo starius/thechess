@@ -125,6 +125,7 @@ private:
     UserPtr user_;
     Wt::WDateTime created_;
     Td server_usage_;
+    std::string ip_;
 
     bool check_ip();
     void decrease_sessions_counter();

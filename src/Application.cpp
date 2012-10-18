@@ -190,15 +190,15 @@ Application* Application::instance() {
 }
 
 bool Application::check_ip() {
+    ip_ = environment().clientAddress();
     bool byu;
     {
         boost::mutex::scoped_lock lock(sessions_per_ip_mutex_);
-        const std::string& ip = environment().clientAddress();
-        int& count = sessions_per_ip_[ip];
+        int& count = sessions_per_ip_[ip_];
         count += 1;
         app_set_.insert(this);
         const Options* o = Options::instance();
-        bool white = o->ip_in_whitelist(ip);
+        bool white = o->ip_in_whitelist(ip_);
         int max_s = white ? o->whitelist_max_sessions() : o->max_sessions();
         byu = count > max_s;
     }
@@ -206,8 +206,7 @@ bool Application::check_ip() {
         redirect("/html/too_many_sessions.html");
         quit();
         try {
-            admin_log("Too many sessions from IP " +
-                      ip_a(environment().clientAddress()), true);
+            admin_log("Too many sessions from IP " + ip_a(ip_), true);
         } catch (...)
         { }
         return false;
@@ -215,8 +214,7 @@ bool Application::check_ip() {
         redirect("/html/banned.html");
         quit();
         try {
-            admin_log("Attempt to enter from banned IP " +
-                      ip_a(environment().clientAddress()), true);
+            admin_log("Attempt to enter from banned IP " + ip_a(ip_), true);
         } catch (...)
         { }
         return false;
@@ -227,7 +225,7 @@ bool Application::check_ip() {
 
 void Application::decrease_sessions_counter() {
     boost::mutex::scoped_lock lock(sessions_per_ip_mutex_);
-    Ip2Int::iterator it = sessions_per_ip_.find(environment().clientAddress());
+    Ip2Int::iterator it = sessions_per_ip_.find(ip_);
     if (it != sessions_per_ip_.end()) {
         it->second -= 1;
         if (it->second <= 0) {
