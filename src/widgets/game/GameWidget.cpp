@@ -163,6 +163,7 @@ public:
         Notifiable(Object(GAME, game.id())),
         game_status_(0),
         game_(game),
+        comment_container_(0),
         analysis_(0),
         comments_shown_(false) {
         dbo::Transaction t(tApp->session());
@@ -182,7 +183,10 @@ public:
         .connect(this, &GameWidgetImpl::move_handler);
         countdown_ = new GameCountdown(game_, this);
         manager_ = new Wt::WContainerWidget(this);
-        comment_container_ = new Wt::WContainerWidget(this);
+        if (game_->can_comment(tApp->user()) ||
+                !game_->comment().empty()) {
+            comment_container_ = new Wt::WContainerWidget(this);
+        }
         print_comment();
         if (!User::has_s(SWITCH_LESS_GAME_INFO)) {
             game_status_ = new GameStatus(game_, this);
@@ -573,6 +577,9 @@ private:
     }
 
     void print_comment() {
+        if (!comment_container_) {
+            return;
+        }
         dbo::Transaction t(tApp->session());
         comment_container_->clear();
         new Wt::WText(tr("tc.game.comment"), comment_container_);
