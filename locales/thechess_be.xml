@@ -419,6 +419,7 @@
     <message id="tc.user.New_ban">Новы бан</message>
     <message id="tc.user.not_confirmed">, не пацверджана</message>
     <message id="tc.user.Not_removed">Не выдаленыя</message>
+    <message id='tc.user.Online'>&nbsp;<font style="background:Lightsteelblue;">На сайте</font>&nbsp;</message>
     <message id="tc.user.Online_time">Час, праведзены на сайце: {1}</message>
     <message id="tc.user.Only_online">Толькі на сайце</message>
     <message id="tc.user.Password_example">Прыклад пароля:&nbsp;</message>
@@ -467,9 +468,6 @@
             <li>у выпадку паражэння: {2}</li>
             <li>у выпадку нічыёй: {3}</li>
         </ul>
-    </message>
-    <message id='tc.user.Online'>
-        <font style="background:Lightsteelblue;">На сайце</font>
     </message>
     <message id='tc.user.Our_games_stat'>
         Вы сыграли {1} игр с {5}, в {2} из которых Вы победили,

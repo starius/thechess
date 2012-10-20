@@ -427,6 +427,7 @@
     <message id='tc.user.New_ban'>Новый бан</message>
     <message id='tc.user.not_confirmed'>, не подтверждено</message>
     <message id='tc.user.Not_removed'>Не удалённые</message>
+    <message id='tc.user.Online'>&nbsp;<font style="background:Lightsteelblue;">На сайте</font>&nbsp;</message>
     <message id='tc.user.Online_time'>Время, проведённое на сайте: {1}</message>
     <message id='tc.user.Only_online'>Только на сайте</message>
     <message id='tc.user.Password_example'>Пример пароля:&nbsp;</message>
@@ -475,9 +476,6 @@
             <li>в случае поражения: {2}</li>
             <li>в случае ничьей: {3}</li>
         </ul>
-    </message>
-    <message id='tc.user.Online'>
-        <font style="background:Lightsteelblue;">На сайте</font>
     </message>
     <message id='tc.user.Our_games_stat'>
         Вы сыграли {1} игр с {5}, в {2} из которых Вы победили,

@@ -420,6 +420,7 @@
     <message id="tc.user.New_ban">Новий бан</message>
     <message id="tc.user.not_confirmed">, не підтверджено</message>
     <message id="tc.user.Not_removed">Не видалені</message>
+    <message id='tc.user.Online'>&nbsp;<font style="background:Lightsteelblue;">На сайті</font>&nbsp;</message>
     <message id="tc.user.Online_time">Час, що проведено на сайті: {1}</message>
     <message id="tc.user.Only_online">Тільки на сайті</message>
     <message id="tc.user.Password_example">Приклад пароля:&nbsp;</message>
@@ -468,9 +469,6 @@
             <li>у випадку поразки: {2}</li>
             <li>у випадку нічиєї: {3}</li>
         </ul>
-    </message>
-    <message id='tc.user.Online'>
-        <font style="background:Lightsteelblue;">На сайті</font>
     </message>
     <message id='tc.user.Our_games_stat'>
         Вы сыграли {1} игр с {5}, в {2} из которых Вы победили,

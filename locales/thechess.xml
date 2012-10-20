@@ -920,6 +920,7 @@ TheChess.
     <message id='tc.user.No_registration'>No registration</message>
     <message id='tc.user.not_confirmed'>, not confirmed</message>
     <message id='tc.user.Not_removed'>Not removed</message>
+    <message id='tc.user.Online'>&nbsp;<font style="background:Lightsteelblue;">Online</font>&nbsp;</message>
     <message id='tc.user.Online_time'>Spent online {1}</message>
     <message id='tc.user.Only_online'>Only online</message>
     <message id='tc.user.Password_example'>Password example:&nbsp;</message>
@@ -968,9 +969,6 @@ TheChess.
             <li>if case of fail: {2}</li>
             <li>if case of draw: {3}</li>
         </ul>
-    </message>
-    <message id='tc.user.Online'>
-        <font style="background:Lightsteelblue;">Online</font>
     </message>
     <message id='tc.user.Our_games_stat'>
         You have played {1} with {5}, {2} of them were your wins,
