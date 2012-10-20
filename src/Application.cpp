@@ -65,6 +65,8 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     setCssTheme("polished");
     require("/js/jquery.min.js");
     require("/js/jquery.countdown.min.js");
+    // FIXME http://redmine.emweb.be/issues/1491
+    doJavaScript("window.alert = $.noop;");
     Wt::Wc::fix_plain_anchors(/* external_blank */ true);
     session().login().changed().connect(this, &Application::login_handler);
     login_handler();
@@ -88,6 +90,8 @@ Application::Application(bool, const Wt::WEnvironment& env, Server& server):
                                 "locales/wt");
     // FIXME Wt::Auth translations in separate file do not work
     setCssTheme("polished");
+    // FIXME http://redmine.emweb.be/issues/1491
+    doJavaScript("window.alert = $.noop;");
     init_widget_mode();
 }
 
