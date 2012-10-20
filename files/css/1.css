@@ -181,6 +181,11 @@ FIXME http://redmine.emweb.be/issues/1144
     margin: 0px;
 }
 
+.thechess-dangerous {
+    background: black;
+    color: white;
+}
+
 .jp-audio {
     visibility: hidden;
 }

@@ -434,6 +434,7 @@ private:
             b->setText(tr("tc.user.Unblock"));
         } else {
             b->setText(tr("tc.user.Block"));
+            b->addStyleClass("thechess-dangerous");
         }
         int i_blocked_them_size = user_->i_blocked_them().size();
         if (i_blocked_them_size) {
