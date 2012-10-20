@@ -178,6 +178,7 @@ FIXME http://redmine.emweb.be/issues/1144
 
 .thechess-chat tbody .Wt-tv-c * {
     vertical-align: middle !important;
+    margin: 0px;
 }
 
 .jp-audio {
