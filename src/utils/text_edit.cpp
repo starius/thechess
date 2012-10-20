@@ -11,19 +11,29 @@
 #include <Wt/Wc/util.hpp>
 
 #include "utils/text_edit.hpp"
+#include "model/all.hpp"
 
 namespace thechess {
 
 static void add_emotions_and_image(Wt::WTextEdit* e) {
-    const char* const buttons =
+    const char* const b1 =
         "fontselect,|,bold,italic,underline,|"
         ",fontsizeselect,|,forecolor,backcolor,|"
         ",justifyleft,justifycenter,justifyright,justifyfull,|"
-        ",link,image,table,|"
-        ",insertdate,inserttime,|"
+        ",link,image,|"
         ",numlist,bullist,|,emotions";
-    e->setExtraPlugins("emotions,inlinepopups,insertdatetime,table");
-    e->setConfigurationSetting("theme_advanced_buttons1", std::string(buttons));
+    e->setConfigurationSetting("theme_advanced_buttons1", std::string(b1));
+    if (User::has_s(SWITCH_MORE_FORMATTING)) {
+        const char* const b2 =
+            "insertdate,inserttime,|,tablecontrols,|,"
+            "hr,removeformat,|,formatselect,sub,sup,strikethrough,styleprops,|,"
+            "fullscreen";
+        e->setConfigurationSetting("theme_advanced_buttons2", std::string(b2));
+        e->setExtraPlugins("emotions,inlinepopups,insertdatetime,"
+                           "table,fullscreen,style");
+    } else {
+        e->setExtraPlugins("emotions,inlinepopups");
+    }
     e->setConfigurationSetting("force_br_newlines", true);
     e->setConfigurationSetting("force_p_newlines", false);
     e->setConfigurationSetting("forced_root_block", std::string());

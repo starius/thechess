@@ -161,6 +161,7 @@ public:
     GameWidgetImpl(const GamePtr& game) :
         Wt::WContainerWidget(),
         Notifiable(Object(GAME, game.id())),
+        game_status_(0),
         game_(game),
         analysis_(0),
         comments_shown_(false) {
@@ -183,10 +184,12 @@ public:
         manager_ = new Wt::WContainerWidget(this);
         comment_container_ = new Wt::WContainerWidget(this);
         print_comment();
-        game_status_ = new GameStatus(game_, this);
-        if (game->is_ended()) {
-            new Wt::WAnchor(str(boost::format("/pgn/?game=%i") % game.id()),
-                            tr("tc.game.Download_pgn"), this);
+        if (!User::has_s(SWITCH_LESS_GAME_INFO)) {
+            game_status_ = new GameStatus(game_, this);
+            if (game->is_ended()) {
+                new Wt::WAnchor(str(boost::format("/pgn/?game=%i") % game.id()),
+                                tr("tc.game.Download_pgn"), this);
+            }
         }
         print_comment_list();
         status_and_manager();
@@ -443,7 +446,9 @@ private:
     }
 
     void print_status() {
-        game_status_->update();
+        if (game_status_) {
+            game_status_->update();
+        }
     }
 
     typedef void (Game::*GameMember)(const UserPtr&);

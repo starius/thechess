@@ -416,10 +416,12 @@
     <message id='tc.user.IpBanList'>Список банов по IP</message>
     <message id='tc.user.IpList'>Список IP</message>
     <message id='tc.user.Last_online'>Последний раз на сайте: {1}</message>
+    <message id='tc.user.Less_game_info'>Меньше информации на странице партии</message>
     <message id='tc.user.List_rights'>Список прав</message>
     <message id='tc.user.logs_reader'>читать журнал администратора</message>
     <message id='tc.user.Message_sent'>Сообщение отправлено</message>
     <message id='tc.user.Moder'><u>Модератор</u></message>
+    <message id='tc.user.More_formatting'>Больше возможностей при редактировании</message>
     <message id='tc.user.My_blocklist'>В моём чёрном списке</message>
     <message id='tc.user.Names_in_menu'>Показывать имя пользователя в меню с играми</message>
     <message id='tc.user.New_ban'>Новый бан</message>
