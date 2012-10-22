@@ -286,7 +286,7 @@
     <message id="tc.menu.testing_board">дошка для спроб</message>
     <message id="tc.menu.topics">тэматыкі</message>
     <message id="tc.menu.user">карыстальнік</message>
-    <message id="tc.menu.users_list">спіс карыстанікаў</message>
+    <message id="tc.menu.users_list">спіс карыстальнікаў</message>
     <message id="tc.menu.virtuals_list">спіс клонаў</message>
 
     <message id="tc.title.BoardWidget">Дошка « TheChess</message>
