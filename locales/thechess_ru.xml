@@ -274,6 +274,8 @@
         <h2>Модераторы:</h2>
         ${moders}
         <br />
+        Пользователей на сайте: ${all_sessions}.
+        Активных пользователей: ${online}.
     </message>
 
     <message id='tc.menu.admin_log'>административный журнал</message>

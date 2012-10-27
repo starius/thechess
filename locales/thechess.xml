@@ -760,6 +760,7 @@ TheChess.
         <h2>Moderators:</h2>
         ${moders}
         <br />
+        Online users: ${all_sessions}. Active users: ${online}.
     </message>
 
     <message id='tc.menu.admin_log'>admin log</message>

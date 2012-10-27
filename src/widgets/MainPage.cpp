@@ -69,6 +69,12 @@ MainPage::MainPage(Wt::WContainerWidget* parent):
         moders->addWidget(new Wt::WBreak());
     }
     bindWidget("moders", moders);
+    bindInt("all_sessions", Application::sessions_number());
+    int online = tApp->session().find<User>()
+                 .where("last_online >= ?")
+                 .bind(now() - Options::instance()->away_timeout())
+                 .resultList().size();
+    bindInt("online", online);
 }
 
 }
