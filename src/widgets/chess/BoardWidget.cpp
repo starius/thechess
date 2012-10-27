@@ -115,6 +115,7 @@ public:
                     const Board& board) :
         Wt::WContainerWidget(), board_(board), bottom_(bottom),
         active_(active), activated_(false),
+        taken_pieces_(0),
         select_turn_into_flag_(false),
         dialog_(0) {
         Wt::WPushButton* b;
@@ -140,7 +141,9 @@ public:
         Wt::WPushButton* turn_button = new Wt::WPushButton(turn_button_place_);
         turn_button->setText(tr("tc.game.Overturn_board"));
         turn_button->clicked().connect(this, &BoardWidgetImpl::turn);
-        taken_pieces_ = new TakenPieces(board_, this);
+        if (!User::has_s(SWITCH_LESS_GAME_INFO)) {
+            taken_pieces_ = new TakenPieces(board_, this);
+        }
         lastmove_box_ = new Wt::WCheckBox(this);
         lastmove_box_->setText(tr("tc.game.Highlight_lastmove"));
         lastmove_box_->setChecked(lastmove_show_);
@@ -190,7 +193,9 @@ public:
         color_noactive_undo();
         lastmove_ = lastmove;
         board_ = board;
-        taken_pieces_->update();
+        if (taken_pieces_) {
+            taken_pieces_->update();
+        }
         if (board_.test_shah()) {
             shah_square_ = board_.find_king(board_.order());
         } else {
