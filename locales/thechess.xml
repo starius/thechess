@@ -978,6 +978,18 @@ TheChess.
     <message id='tc.user.Terms_template'>
         By registering, you agree to ${a}
     </message>
+    <message id='tc.user.User_template'>
+        <table>
+            <tr>
+                <td><img width="80" src="{3}" /></td>
+                <td>
+                    <a href="{1}" class="thechess-user-anchor">{2}</a>
+                    <br />
+                    {4}
+                </td>
+            </tr>
+        </table>
+    </message>
 
 </messages>
 

@@ -148,22 +148,17 @@ private:
             if (index.column() == NUMBER_COL) {
                 return index.row() + 1;
             } else if (index.column() == NAME_COLUMN) {
-                Wt::WString name;
-                if (o->online()) {
-                    name += tr("tc.user.Online");
-                }
-                name += o->safe_username();
-                return name;
+                return tr("tc.user.User_template")
+                       .arg(o.id())
+                       .arg(o->safe_username())
+                       .arg(Gravatar::path(o))
+                       .arg(o->online() ? tr("tc.user.Online") : "");
             } else if (index.column() == CLASSIFICATION_COLUMN) {
                 return o->classification_str();
             } else if (index.column() == DRAWS_COLUMN) {
                 return o->games_stat().draws();
             } else if (index.column() == ONLINE_TIME) {
                 return td2str(o->online_time());
-            }
-        } else if (role == Wt::LinkRole) {
-            if (index.column() == NAME_COLUMN) {
-                return tApp->path().user_view()->get_link(o.id());
             }
         } else if (role == Wt::StyleClassRole) {
             if (index.column() == NAME_COLUMN) {
@@ -218,6 +213,7 @@ public:
         setColumnWidth(UserListModel::REGISTRATION_DATE, 75);
         setSortingEnabled(UserListModel::NUMBER_COL, false);
         setSortingEnabled(UserListModel::DRAWS_COLUMN, false);
+        addStyleClass("thechess-user-list");
     }
 
 protected:
