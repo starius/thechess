@@ -215,6 +215,9 @@ public:
             b->clicked().connect(this,
                                  &MovesWidgetImpl::move_confirmation_changed);
         }
+        if (User::has_s(SWITCH_LESS_GAME_INFO)) {
+            move_confirmation_->hide();
+        }
     }
 
     ~MovesWidgetImpl() {

@@ -117,6 +117,7 @@ public:
         active_(active), activated_(false),
         taken_pieces_(0),
         select_turn_into_flag_(false),
+        big_box_(0),
         dialog_(0) {
         Wt::WPushButton* b;
         lastmove_show_ = User::has_s(SWITCH_LASTMOVE);
@@ -160,13 +161,18 @@ public:
                                 lastmove_box_)));
         }
         new Wt::WBreak(this);
-        big_box_ = new Wt::WCheckBox(this);
-        big_box_->setText(tr("tc.game.Enlarged_images"));
-        big_box_->setChecked(big_);
-        big_box_->changed().connect(this, &BoardWidgetImpl::big_changed);
-        if (!wApp->environment().ajax()) {
-            b = new Wt::WPushButton(tr("tc.common.Apply"), this);
-            b->clicked().connect(this, &BoardWidgetImpl::big_changed);
+        if (!User::has_s(SWITCH_LESS_GAME_INFO)) {
+            big_box_ = new Wt::WCheckBox(this);
+            big_box_->setText(tr("tc.game.Enlarged_images"));
+            big_box_->setChecked(big_);
+            big_box_->changed().connect(this, &BoardWidgetImpl::big_changed);
+            if (!wApp->environment().ajax()) {
+                b = new Wt::WPushButton(tr("tc.common.Apply"), this);
+                b->clicked().connect(this, &BoardWidgetImpl::big_changed);
+            }
+        }
+        if (User::has_s(SWITCH_LESS_GAME_INFO)) {
+            show_lastmove_checkbox(false);
         }
     }
 
@@ -493,9 +499,11 @@ private:
     }
 
     void big_changed() {
-        big_ = big_box_->isChecked();
-        User::set_s(SWITCH_BIG, big_);
-        board_build();
+        if (big_box_) {
+            big_ = big_box_->isChecked();
+            User::set_s(SWITCH_BIG, big_);
+            board_build();
+        }
     }
 
     void show_links() {
