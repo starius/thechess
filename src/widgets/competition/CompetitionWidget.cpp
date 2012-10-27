@@ -73,7 +73,7 @@ public:
         setList(true);
         BOOST_FOREACH (const UserPtr& user, c->winners_vector()) {
             Wt::WContainerWidget* item = new Wt::WContainerWidget(this);
-            new Wt::WText(user->safe_username(), item);
+            user_anchor(user, item);
         }
     }
 };
