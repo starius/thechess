@@ -141,16 +141,16 @@
     </message>
 
     <message id='tc.forum.all_comments'>все комментарии</message>
-    <message id='tc.forum.all_posts'>все посты</message>
+    <message id='tc.forum.all_posts'>все темы</message>
     <message id='tc.forum.Change_topic'>Изменить тематику</message>
     <message id='tc.forum.Comment'>Страница комментария</message>
     <message id='tc.forum.Edit'>Правка</message>
     <message id='tc.forum.Goto_parent'>Открыть родительский комментарий #{1}</message>
     <message id='tc.forum.Only_ok'>Показывать только подтверждённые записи</message>
-    <message id='tc.forum.Post_edited'>Заголовок поста отредактирован {1}</message>
-    <message id='tc.forum.post_header'>пост {1}: {2}</message>
+    <message id='tc.forum.Post_edited'>Заголовок темы отредактирован {1}</message>
+    <message id='tc.forum.post_header'>тема {1}: {2}</message>
     <message id='tc.forum.Post_text_edited'>Пост отредактирован {1}</message>
-    <message id='tc.forum.topic_posts'>посты тематики {1}</message>
+    <message id='tc.forum.topic_posts'>темы тематики {1}</message>
     <message id='tc.forum.topics'>тематики</message>
     <message id='tc.forum.comment_template'>
         От <span class="thechess-datetime">{1}</span>, {2} писал(а):
@@ -277,7 +277,7 @@
 
     <message id='tc.menu.admin_log'>административный журнал</message>
     <message id='tc.menu.all_comments'>все комментарии</message>
-    <message id='tc.menu.all_posts'>все посты</message>
+    <message id='tc.menu.all_posts'>все темы</message>
     <message id='tc.menu.banned_ip'>забаненные IP</message>
     <message id='tc.menu.challenge'>вызов</message>
     <message id='tc.menu.competition'>турнир</message>
@@ -398,7 +398,7 @@
     <message id='tc.user.Edit_rights'>Редактировать права</message>
     <message id='tc.user.Formatting_chat'>Форматирование в чате</message>
     <message id='tc.user.forum_comment_creator'>комментировать форум</message>
-    <message id='tc.user.forum_post_creator'>создавать пост</message>
+    <message id='tc.user.forum_post_creator'>создавать тему</message>
     <message id='tc.user.game_creator'>создавать игру</message>
     <message id='tc.user.game_joiner'>присоединяться к игре</message>
     <message id='tc.user.games_stat_all'>все игры</message>

@@ -134,16 +134,16 @@
     </message>
 
     <message id='tc.forum.all_comments'>усі коментарі</message>
-    <message id='tc.forum.all_posts'>усі пости</message>
+    <message id='tc.forum.all_posts'>усі темы</message>
     <message id='tc.forum.Change_topic'>Изменить тематику</message>
     <message id='tc.forum.Comment'>Сторінка коментаря</message>
     <message id='tc.forum.Edit'>Правка</message>
     <message id='tc.forum.Goto_parent'>Відкрити батьківський коментар #{1}</message>
     <message id='tc.forum.Only_ok'>Показувати тільки підтверджені записи</message>
-    <message id='tc.forum.Post_edited'>Назву поста відредаговано {1}</message>
-    <message id='tc.forum.post_header'>пост {1}: {2}</message>
-    <message id='tc.forum.Post_text_edited'>Пост відредаговано {1}</message>
-    <message id='tc.forum.topic_posts'>пости теми {1}</message>
+    <message id='tc.forum.Post_edited'>Назву темы відредаговано {1}</message>
+    <message id='tc.forum.post_header'>тема {1}: {2}</message>
+    <message id='tc.forum.Post_text_edited'>Тема відредагована {1}</message>
+    <message id='tc.forum.topic_posts'>темы теми {1}</message>
     <message id='tc.forum.topics'>теми</message>
     <message id='tc.forum.comment_template'>
         Від <span class="thechess-datetime">{1}</span>, {2} писав(ла):
@@ -270,7 +270,7 @@
 
     <message id='tc.menu.admin_log'>адміністративний журнал</message>
     <message id='tc.menu.all_comments'>всі коментарі</message>
-    <message id='tc.menu.all_posts'>всі пости</message>
+    <message id='tc.menu.all_posts'>всі темы</message>
     <message id='tc.menu.banned_ip'>забанені IP</message>
     <message id='tc.menu.challenge'>виклик</message>
     <message id='tc.menu.competition'>турнір</message>
@@ -315,10 +315,10 @@
         Коментар #{1} « Форум « TheChess
     </message>
     <message id='tc.title.CommentList_post'>
-        Пост {1} « Форум « TheChess
+        Тема {1} « Форум « TheChess
     </message>
     <message id='tc.title.CommentList_posts'>
-        Пости « Форум « TheChess
+        Темы « Форум « TheChess
     </message>
     <message id='tc.title.CommentList_topic'>
         Тема {1} « Форум « TheChess
@@ -391,7 +391,7 @@
     <message id="tc.user.Edit_rights">Редагувати права</message>
     <message id='tc.user.Formatting_chat'>Форматирование в чате</message>
     <message id="tc.user.forum_comment_creator">коментувати форум</message>
-    <message id="tc.user.forum_post_creator">створювати пост</message>
+    <message id="tc.user.forum_post_creator">створювати тему</message>
     <message id="tc.user.game_creator">створювати гру</message>
     <message id="tc.user.game_joiner">приєднуватися до гри</message>
     <message id="tc.user.games_stat_all">всі ігри</message>
