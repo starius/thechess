@@ -21,6 +21,7 @@
 #include <Wt/WText>
 #include <Wt/Wc/util.hpp>
 #include <Wt/Wc/SWFStore.hpp>
+#include <Wt/Wc/LocalStore.hpp>
 #include <Wt/Wc/Gather.hpp>
 
 #include "Application.hpp"
@@ -245,10 +246,10 @@ void Application::set_auth_widget() {
 
 void Application::gather_init() {
     if (!gather_) {
-        main_widget_->set_swfstore(new Wt::Wc::SWFStore());
         gather_ = new Wt::Wc::Gather(boost::bind(&Application::gather_explorer,
                                      this, _1, _2), this);
-        gather_->set_swfstore(main_widget_->swf_store());
+        gather_->set_swfstore(new Wt::Wc::SWFStore(root()));
+        gather_->set_localstore(new Wt::Wc::LocalStore(root()));
         triggerUpdate();
     }
 }

@@ -185,12 +185,6 @@ public:
     */
     Wt::Wc::SWFStore* swf_store();
 
-    /** Set swf store.
-    Ownership of the swf store is transferred.
-    Do not call this method twice.
-    */
-    void set_swfstore(Wt::Wc::SWFStore* swfstore);
-
     /** Set if top block (right to AuthWidget) is shown.
     This block (TopBlock) is shown if user is logged in.
     */
@@ -203,7 +197,6 @@ private:
     Wt::WContainerWidget* clock_and_locale_;
     Wt::WContainerWidget* contents_place_;
     Wt::WContainerWidget* mygames_place_;
-    Wt::WContainerWidget* bottom_place_;
     MyGamesList* mymenu_;
 
     void set_contents(WWidget* widget);

@@ -86,7 +86,6 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
     contents_place_->resize(Wt::WLength(80, Wt::WLength::Percentage),
                             Wt::WLength::Auto);
     mygames_place_ = middle->elementAt(0, GAME_LIST_IN_MIDDLE);
-    bottom_place_ = new Wt::WContainerWidget(this);
     addWidget(new Footer());
     show_countup();
     show_is_banned();
@@ -416,16 +415,6 @@ Wt::Auth::AuthWidget* MainWidget::auth_widget() {
 void MainWidget::set_auth_widget() {
     auth_place_->clear();
     auth_place_->addWidget(new AuthWidget());
-}
-
-Wt::Wc::SWFStore* MainWidget::swf_store() {
-    return downcast<Wt::Wc::SWFStore*>(bottom_place_->widget(0));
-}
-
-void MainWidget::set_swfstore(Wt::Wc::SWFStore* swfstore) {
-    swfstore->setMaximumSize(1, 1);
-    bottom_place_->clear();
-    bottom_place_->addWidget(swfstore);
 }
 
 void MainWidget::set_top_block_shown(bool shown) {
