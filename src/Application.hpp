@@ -23,11 +23,16 @@
 /** Macro for Application::instance(), same as wApp */
 #define tApp thechess::Application::instance()
 
-namespace boost {
-class mutex;
-}
-
 namespace thechess {
+
+struct App {
+    UserPtr user;
+    Wt::WDateTime created;
+    Td server_usage;
+    std::string ip;
+    std::string cookie;
+    std::string agent;
+};
 
 /** Descendant of Wt::WApplication.
 \ingroup server
@@ -75,21 +80,11 @@ public:
         return user_;
     }
 
-    /** Return datetime of session creation */
-    const Wt::WDateTime& created() const {
-        return created_;
-    }
-
-    /** Return server time spent for this session */
-    const Td& server_usage() const {
-        return server_usage_;
-    }
-
     /** Return list of all applications */
-    static const std::set<Application*>& all_sessions();
+    static std::vector<App> all_sessions();
 
-    /** Return mutex for all_sessions() */
-    static boost::mutex& all_sessions_mutex();
+    /** Return number of all applications */
+    static int sessions_number();
 
     /** Show Update Password dialog */
     void update_password();
@@ -123,9 +118,8 @@ private:
     Wt::Wc::Gather* gather_;
     Kick* kick_;
     UserPtr user_;
-    Wt::WDateTime created_;
-    Td server_usage_;
     std::string ip_;
+    Td* server_usage_;
 
     bool check_ip();
     void decrease_sessions_counter();

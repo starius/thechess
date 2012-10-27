@@ -38,12 +38,14 @@ namespace thechess {
 
 typedef std::map<std::string, int> Ip2Int;
 static Ip2Int sessions_per_ip_;
-static std::set<Application*> app_set_;
+typedef std::map<Application*, App> AppMap;
+static AppMap app_map_;
 static boost::mutex sessions_per_ip_mutex_;
 
 Application::Application(const Wt::WEnvironment& env, Server& server) :
     Wt::WApplication(env), server_(server), session_(server.pool()),
-    gather_(0), kick_(0), created_(now()) {
+    gather_(0), kick_(0),
+    server_usage_(0) {
     if (!check_ip()) {
         return;
     }
@@ -77,7 +79,8 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
 
 Application::Application(bool, const Wt::WEnvironment& env, Server& server):
     Wt::WApplication(env), server_(server), session_(server.pool()),
-    gather_(0), kick_(0), created_(now()) {
+    gather_(0), kick_(0),
+    server_usage_(0) {
     if (!check_ip()) {
         return;
     }
@@ -101,12 +104,18 @@ Application::~Application() {
     delete kick_;
 }
 
-const std::set<Application*>& Application::all_sessions() {
-    return app_set_;
+std::vector<App> Application::all_sessions() {
+    boost::mutex::scoped_lock lock(sessions_per_ip_mutex_);
+    std::vector<App> result;
+    BOOST_FOREACH (const AppMap::value_type& id_and_app, app_map_) {
+        result.push_back(id_and_app.second);
+    }
+    return result;
 }
 
-boost::mutex& Application::all_sessions_mutex() {
-    return sessions_per_ip_mutex_;
+int Application::sessions_number() {
+    boost::mutex::scoped_lock lock(sessions_per_ip_mutex_);
+    return app_map_.size();
 }
 
 void Application::update_password() {
@@ -132,6 +141,10 @@ void Application::set_locale_by_user(const std::string& locale) {
 void Application::login_handler() {
     dbo::Transaction t(session());
     user_ = session().user();
+    {
+        boost::mutex::scoped_lock lock(sessions_per_ip_mutex_);
+        app_map_[this].user = user_;
+    }
     if (prev_user_ != user()) {
         prev_user_.reread();
         user().reread();
@@ -168,7 +181,9 @@ void Application::notify(const Wt::WEvent& e) {
         Wt::WDateTime start = now();
         Wt::WApplication::notify(e);
         Wt::WDateTime stop = now();
-        server_usage_ += stop - start;
+        if (server_usage_) {
+            *server_usage_ += stop - start;
+        }
         if (e_type == Wt::UserEvent) {
             // FIXME this does not work
             user_action();
@@ -201,7 +216,16 @@ bool Application::check_ip() {
         boost::mutex::scoped_lock lock(sessions_per_ip_mutex_);
         int& count = sessions_per_ip_[ip_];
         count += 1;
-        app_set_.insert(this);
+        App& app = app_map_[this];
+        app.created = now();
+        app.server_usage = TD_NULL;
+        server_usage_ = &app.server_usage;
+        app.ip = ip_;
+        const std::string* cookie = environment().getCookieValue("userid");
+        if (cookie) {
+            app.cookie = *cookie;
+        }
+        app.agent = environment().userAgent();
         const Options* o = Options::instance();
         bool white = o->ip_in_whitelist(ip_);
         int max_s = white ? o->whitelist_max_sessions() : o->max_sessions();
@@ -237,7 +261,8 @@ void Application::decrease_sessions_counter() {
             sessions_per_ip_.erase(it);
         }
     }
-    app_set_.erase(this);
+    app_map_.erase(this);
+    server_usage_ = 0;
 }
 
 void Application::set_auth_widget() {
