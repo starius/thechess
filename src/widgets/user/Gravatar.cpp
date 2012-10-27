@@ -23,5 +23,13 @@ Gravatar::Gravatar(const UserPtr& user, Wt::WContainerWidget* parent):
     set_force_default(!user->has_permission(AVATAR_NONDEFAULT));
 }
 
+std::string Gravatar::path(const UserPtr& user, int size) {
+    if (!user) {
+        return "";
+    }
+    bool ok = user->has_permission(AVATAR_NONDEFAULT);
+    return url(user->email(), size, !ok, ok ? user->avatar_path() : "wavatar");
+}
+
 }
 

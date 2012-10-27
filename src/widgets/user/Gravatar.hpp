@@ -20,6 +20,9 @@ class Gravatar : public Wt::Wc::GravatarImage {
 public:
     /** Constructor */
     Gravatar(const UserPtr& user, Wt::WContainerWidget* parent = 0);
+
+    /** Get URL of avatar of user */
+    static std::string path(const UserPtr& user, int size = 80);
 };
 
 }
