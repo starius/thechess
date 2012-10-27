@@ -984,7 +984,7 @@ TheChess.
             <tr>
                 <td><img width="80" src="{3}" /></td>
                 <td>
-                    <a href="{1}" class="thechess-user-anchor">{2}</a>
+                    <a href="/user/{1}" class="thechess-user-anchor">{2}</a>
                     <br />
                     {4}
                 </td>
