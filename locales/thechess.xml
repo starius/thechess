@@ -901,7 +901,7 @@ TheChess.
     <message id='tc.user.Hide_countdown_mygames'>Hide countdown from game menu</message>
     <message id='tc.user.Hide_online_mygames'>Hide Online label from game menu</message>
     <message id='tc.user.Hide_paused'>Hide paused games</message>
-    <message id='tc.user.I_blocked_them'>Number of blocked user: {1}</message>
+    <message id='tc.user.I_blocked_them'>Number of blocked users: {1}</message>
     <message id='tc.user.ID'>Registration number of this user: {1}</message>
     <message id='tc.user.ip'>ip-address</message>
     <message id='tc.user.IpBanList'>List of IP bans</message>
