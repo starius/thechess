@@ -193,6 +193,18 @@ FIXME http://redmine.emweb.be/issues/1144
     width: 100% !important;
 }
 
+.thechess-forum-comments {
+    width: 100% !important;
+}
+
+.thechess-forum-comments table {
+    width: 100% !important;
+}
+
+.thechess-forum-comments thead th:last-child {
+    width: 100% !important;
+}
+
 .thechess-dangerous {
     background: black;
     color: white;
