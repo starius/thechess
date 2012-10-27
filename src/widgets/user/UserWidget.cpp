@@ -263,6 +263,7 @@ private:
         user_.modify()->set_vacation_until(d);
         admin_log("Kick user " + user_a(user_.id()));
         t.commit();
+        t_task(USER, user_.id());
         t_emit("kick-" + TO_S(user_.id()));
     }
 
