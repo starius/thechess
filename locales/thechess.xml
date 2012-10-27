@@ -635,7 +635,8 @@ TheChess.
     <message id='tc.forum.topic_posts'>posts of topic {1}</message>
     <message id='tc.forum.topics'>topics</message>
     <message id='tc.forum.comment_template'>
-        On <span class="thechess-datetime">{1}</span>, {2} wrote(а):
+        On <span class="thechess-datetime">{1}</span>,
+        <a href="/user/{4}" class="thechess-user-anchor">{2}</a> wrote:
         <br />
         {3}
         <br /><br />

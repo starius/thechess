@@ -23,7 +23,8 @@ Wt::WString forum_comment_text(const CommentPtr& comment) {
     return Wt::WString::tr("tc.forum.comment_template")
            .arg(comment->created().toString())
            .arg(username)
-           .arg(text);
+           .arg(text)
+           .arg(comment->init().id());
 }
 
 }

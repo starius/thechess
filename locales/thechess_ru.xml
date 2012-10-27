@@ -153,7 +153,8 @@
     <message id='tc.forum.topic_posts'>темы тематики {1}</message>
     <message id='tc.forum.topics'>тематики</message>
     <message id='tc.forum.comment_template'>
-        От <span class="thechess-datetime">{1}</span>, {2} писал(а):
+        От <span class="thechess-datetime">{1}</span>,
+        <a href="/user/{4}" class="thechess-user-anchor">{2}</a> писал(а):
         <br />
         {3}
         <br /><br />

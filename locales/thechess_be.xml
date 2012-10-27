@@ -145,7 +145,8 @@
     <message id="tc.forum.topic_posts">тэмы тэматыкі {1}</message>
     <message id="tc.forum.topics">тэматыкі</message>
     <message id="tc.forum.comment_template">
-        Ад <span class="thechess-datetime">{1}</span>, {2} пісаў(а):
+        Ад <span class="thechess-datetime">{1}</span>,
+        <a href="/user/{4}" class="thechess-user-anchor">{2}</a> пісаў(а):
         <br />
         {3}
         <br /><br />
