@@ -238,9 +238,8 @@ Wt::WDateTime Game::next_check() const {
     Td game_max_preactive = Options::instance()->game_max_preactive();
     Wt::WDateTime result;
     if (state() == ACTIVE) {
-        result = lastmove() + gp_->limit_std() +
-                 std::min(limit_private(Piece::WHITE),
-                          limit_private(Piece::BLACK));
+        result = now() + std::min(total_limit_now(white()),
+                                  total_limit_now(black()));
     } else if (state() == PROPOSED && !competition()) {
         result = created() + game_max_preactive;
     } else if (state() == CONFIRMED && !competition()) {
