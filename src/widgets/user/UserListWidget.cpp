@@ -166,7 +166,9 @@ private:
                 return tApp->path().user_view()->get_link(o.id());
             }
         } else if (role == Wt::StyleClassRole) {
-            if (index.column() == ALL_COLUMN) {
+            if (index.column() == NAME_COLUMN) {
+                return "thechess-user-anchor";
+            } else if (index.column() == ALL_COLUMN) {
                 return "thechess-games-all";
             } else if (index.column() == WINS_COLUMN) {
                 return "thechess-games-wins";

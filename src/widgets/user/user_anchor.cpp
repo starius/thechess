@@ -41,6 +41,7 @@ public:
         Wt::WAnchor* anchor = new Wt::WAnchor(this);
         anchor->setLink(tApp->path().user_view()->get_link(user_.id()));
         anchor->setText(user_->safe_username());
+        anchor->addStyleClass("thechess-user-anchor");
         if (user_->online()) {
             addWidget(new Wt::WText(Wt::WString::tr("tc.user.Online")));
         }

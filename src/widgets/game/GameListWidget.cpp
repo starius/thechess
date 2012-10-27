@@ -134,7 +134,11 @@ public:
                 return game->moves_number();
             }
         } else if (role == Wt::StyleClassRole) {
-            if (index.column() == STARTED_COLUMN) {
+            if (index.column() == WHITE_COLUMN ||
+                    index.column() == BLACK_COLUMN ||
+                    index.column() == WINNER_COLUMN) {
+                return "thechess-user-anchor";
+            } else if (index.column() == STARTED_COLUMN) {
                 return "thechess-datetime";
             }
         } else if (role == Wt::LinkRole) {
