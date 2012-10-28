@@ -45,7 +45,7 @@ static boost::mutex sessions_per_ip_mutex_;
 Application::Application(const Wt::WEnvironment& env, Server& server) :
     Wt::WApplication(env), server_(server), session_(server.pool()),
     gather_(0), kick_(0),
-    server_usage_(0) {
+    server_usage_(0), timezone_signal_(root(), "timezone") {
     if (!check_ip()) {
         return;
     }
@@ -75,12 +75,13 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     login_handler();
     path_.open(internalPath());
     internalPathChanged().connect(this, &Application::user_action);
+    explore_timezone();
 }
 
 Application::Application(bool, const Wt::WEnvironment& env, Server& server):
     Wt::WApplication(env), server_(server), session_(server.pool()),
     gather_(0), kick_(0),
-    server_usage_(0) {
+    server_usage_(0), timezone_signal_(root(), "timezone") {
     if (!check_ip()) {
         return;
     }
@@ -97,6 +98,7 @@ Application::Application(bool, const Wt::WEnvironment& env, Server& server):
     // FIXME http://redmine.emweb.be/issues/1491
     doJavaScript("window.alert = $.noop;");
     init_widget_mode();
+    explore_timezone();
 }
 
 Application::~Application() {
@@ -221,6 +223,18 @@ void Application::notify(const Wt::WEvent& e) {
 
 Application* Application::instance() {
     return downcast<Application*>(Wt::WApplication::instance());
+}
+
+void Application::explore_timezone() {
+    timezone_signal_.connect(this, &Application::set_timezone_diff);
+    doJavaScript(timezone_signal_.createCall(
+                     "(new Date()).getTimezoneOffset()"));
+}
+
+void Application::set_timezone_diff(int shift) {
+    shift = Wt::Wc::constrained_value(-24*60, shift, 24*60);
+    timezone_diff_ = -shift * MINUTE;
+    path().open(internalPath());
 }
 
 bool Application::check_ip() {

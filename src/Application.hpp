@@ -14,6 +14,7 @@
 
 #include <Wt/WGlobal>
 #include <Wt/WApplication>
+#include <Wt/WJavaScript>
 #include <Wt/Wc/Gather.hpp>
 
 #include "model/all.hpp"
@@ -126,6 +127,10 @@ private:
     std::string ip_;
     Td* server_usage_;
     Td timezone_diff_;
+    Wt::JSignal<int> timezone_signal_;
+
+    void explore_timezone();
+    void set_timezone_diff(int shift);
 
     bool check_ip();
     void decrease_sessions_counter();
