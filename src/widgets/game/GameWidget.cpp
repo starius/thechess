@@ -181,6 +181,10 @@ public:
                                          this, _1));
         moves_widget_->half_move().connect(this, &GameWidgetImpl::move_handler);
         moves_widget_->set_move_confirmation(true);
+        if (User::has_s(SWITCH_LESS_GAME_INFO)) {
+            moves_widget_->show_taken(false);
+            moves_widget_->show_moves(false);
+        }
         countdown_ = new GameCountdown(game_, this);
         manager_ = new Wt::WContainerWidget(this);
         if (game_->can_comment(tApp->user()) ||

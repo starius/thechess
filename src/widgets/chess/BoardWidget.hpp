@@ -71,6 +71,11 @@ public:
     */
     void show_lastmove_checkbox(bool show = true);
 
+    /** Show or hide taken pieces.
+    By default, taken pieces are shown.
+    */
+    void show_taken(bool show = true);
+
     /** Set links handler.
     This handler will be called with LinksDialog already with board link
     and should add another links.

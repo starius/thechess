@@ -308,6 +308,14 @@ public:
         }
     }
 
+    void show_taken(bool show) {
+        board_widget_->show_taken(show);
+    }
+
+    void show_moves(bool show) {
+        moves_table_view_->setHidden(!show);
+    }
+
 private:
     BoardWidget* board_widget_;
     MovesModel* moves_model_;
@@ -503,6 +511,14 @@ void MovesWidget::set_links_handler(const LinksHandler& links_handler) {
 
 void MovesWidget::links(LinksDialog* dialog) {
     impl_->links(dialog);
+}
+
+void MovesWidget::show_taken(bool show) {
+    impl_->show_taken(show);
+}
+
+void MovesWidget::show_moves(bool show) {
+    impl_->show_moves(show);
 }
 
 }

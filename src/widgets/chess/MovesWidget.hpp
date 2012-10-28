@@ -57,6 +57,16 @@ public:
     /** Add MovesWidget specific things to LinksDialog */
     void links(LinksDialog* dialog);
 
+    /** Show or hide taken pieces.
+    By default, taken pieces are shown.
+    */
+    void show_taken(bool show = true);
+
+    /** Show or hide moves.
+    By default, moves are shown.
+    */
+    void show_moves(bool show = true);
+
 private:
     class MovesWidgetImpl;
 
