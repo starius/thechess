@@ -142,6 +142,11 @@ public:
         return whitelist_max_sessions_;
     }
 
+    /** Time difference from UTC */
+    const Td& time_diff() {
+        return time_diff_;
+    }
+
     /** return if the IP is in whitelist */
     bool ip_in_whitelist(const std::string& ip) const;
 
@@ -172,6 +177,7 @@ private:
     int max_sessions_;
     std::vector<std::string> whitelist_; // sorted
     int whitelist_max_sessions_;
+    Td time_diff_;
 
     bool read_int_value(const std::string& name, int& value);
 };

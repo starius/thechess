@@ -45,7 +45,9 @@ static boost::mutex sessions_per_ip_mutex_;
 Application::Application(const Wt::WEnvironment& env, Server& server) :
     Wt::WApplication(env), server_(server), session_(server.pool()),
     gather_(0), kick_(0),
-    server_usage_(0), timezone_signal_(root(), "timezone") {
+    server_usage_(0),
+    timezone_diff_(Options::instance()->time_diff()),
+    timezone_signal_(root(), "timezone") {
     if (!check_ip()) {
         return;
     }
@@ -81,7 +83,9 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
 Application::Application(bool, const Wt::WEnvironment& env, Server& server):
     Wt::WApplication(env), server_(server), session_(server.pool()),
     gather_(0), kick_(0),
-    server_usage_(0), timezone_signal_(root(), "timezone") {
+    server_usage_(0),
+    timezone_diff_(Options::instance()->time_diff()),
+    timezone_signal_(root(), "timezone") {
     if (!check_ip()) {
         return;
     }

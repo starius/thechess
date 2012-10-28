@@ -40,7 +40,8 @@ Options::Options(const Wt::WServer& server):
     game_max_preactive_(config::defaults::GAME_MAX_PREACTIVE),
     min_first_draw_(config::min::FIRST_DRAW),
     max_sessions_(config::defaults::MAX_SESSIONS),
-    whitelist_max_sessions_(config::defaults::WHITELIST_MAX_SESSIONS) {
+    whitelist_max_sessions_(config::defaults::WHITELIST_MAX_SESSIONS),
+    time_diff_(config::defaults::TIME_DIFF) {
     std::string value;
     if (server.readConfigurationProperty("database_type", value)) {
         BOOST_ASSERT(value == "postgres" ||
@@ -81,6 +82,9 @@ Options::Options(const Wt::WServer& server):
     split(whitelist_, whitelist_str, is_any_of(" "));
     std::sort(whitelist_.begin(), whitelist_.end());
     std::vector<std::string>(whitelist_).swap(whitelist_); // reduce capacity
+    if (read_int_value("time_diff", seconds)) {
+        time_diff_ = seconds * SECOND;
+    }
     server_ = 0; // should not be used latter
 }
 

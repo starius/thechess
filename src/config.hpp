@@ -168,6 +168,9 @@ const Td IP_LAST_USED = 4 * WEEK;
 /** Vacation taken when kick */
 const Td KICK_VACATION = MINUTE;
 
+/** Time difference from UTC */
+const Td TIME_DIFF = TD_NULL;
+
 }
 
 /** The namespace for max allowed values of parameters */
