@@ -154,6 +154,8 @@ private:
 
     void print_description_changer() {
         new Wt::WBreak(this);
+        new Wt::WText(tr("tc.common.Description"), this);
+        new Wt::WBreak(this);
         description_ = new Wt::WTextEdit(tApp->user()->description(), this);
         patch_text_edit(description_);
         Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
