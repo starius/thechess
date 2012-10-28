@@ -179,8 +179,7 @@ public:
                                         append_only, bottom, this);
         moves_widget_->set_links_handler(boost::bind(&GameWidgetImpl::links,
                                          this, _1));
-        moves_widget_->half_move()
-        .connect(this, &GameWidgetImpl::move_handler);
+        moves_widget_->half_move().connect(this, &GameWidgetImpl::move_handler);
         countdown_ = new GameCountdown(game_, this);
         manager_ = new Wt::WContainerWidget(this);
         if (game_->can_comment(tApp->user()) ||
