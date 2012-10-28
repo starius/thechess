@@ -316,6 +316,7 @@ private:
         tApp->user().reread();
         tApp->user()->auth_info().reread();
         tApp->user().modify()->set_removed(true);
+        admin_log("Deletes himself", true);
         t.commit();
         wApp->redirect("/");
     }
