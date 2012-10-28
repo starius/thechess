@@ -165,7 +165,8 @@ public:
         Wt::WContainerWidget(), box_(0), cached_moves_(moves),
         current_move_(moves.size() - 1), max_moves_(max_moves),
         used_moves_(0), append_only_(append_only),
-        active_(active), activated_(false) {
+        active_(active), activated_(false),
+        move_confirmation_needed_(false) {
         Wt::WPushButton* b;
         Wt::WTable* columns = new Wt::WTable(this);
         board_widget_ = new BoardWidget(big, this->active(), bottom);
@@ -206,7 +207,6 @@ public:
         moves_table_view_->setSelectionMode(Wt::SingleSelection);
         moves_table_view_->clicked().connect(this, &MovesWidgetImpl::onselect);
         goto_move(current_move_); // last half_move
-        move_confirmation_->setHidden(!active_);
         move_confirmation_->setChecked(User::has_s(SWITCH_MOVE_CONFIRMATION));
         move_confirmation_->changed()
         .connect(this, &MovesWidgetImpl::move_confirmation_changed);
@@ -215,9 +215,7 @@ public:
             b->clicked().connect(this,
                                  &MovesWidgetImpl::move_confirmation_changed);
         }
-        if (User::has_s(SWITCH_LESS_GAME_INFO)) {
-            move_confirmation_->hide();
-        }
+        update_confirmation_checkbox();
     }
 
     ~MovesWidgetImpl() {
@@ -270,15 +268,22 @@ public:
         active_ = active;
         check_activate();
         move_select();
-        move_confirmation_->setHidden(!active_);
+        update_confirmation_checkbox();
     }
 
     bool move_confirmation() const {
-        return move_confirmation_->isChecked();
+        return move_confirmation_needed_ &&
+               move_confirmation_->isChecked();
     }
 
     void set_move_confirmation(bool needed) {
-        move_confirmation_->setChecked(needed);
+        move_confirmation_needed_ = needed;
+        update_confirmation_checkbox();
+    }
+
+    void update_confirmation_checkbox() {
+        move_confirmation_->setHidden(!active_ || !move_confirmation_needed_ ||
+                                      User::has_s(SWITCH_LESS_GAME_INFO));
     }
 
     void set_links_handler(const LinksHandler& links_handler) {
@@ -310,6 +315,7 @@ private:
     Wt::WCheckBox* move_confirmation_;
     Wt::WMessageBox* box_;
     Wt::Signal<HalfMove> move_signal_;
+    bool move_confirmation_needed_;
 
     CachedMoves cached_moves_;
     int current_move_;
@@ -485,10 +491,6 @@ int MovesWidget::current_move() const {
 
 void MovesWidget::set_half_move(int half_move_index) {
     impl_->goto_move(half_move_index);
-}
-
-bool MovesWidget::move_confirmation() const {
-    return impl_->move_confirmation();
 }
 
 void MovesWidget::set_move_confirmation(bool needed) {

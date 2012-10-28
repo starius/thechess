@@ -44,10 +44,9 @@ public:
     void set_moves(const Moves& moves);
     void set_active(bool active);
 
-    /** Get if confirmation dialog is opened for each move */
-    bool move_confirmation() const;
-
-    /** Set if confirmation dialog is opened for each move */
+    /** Set if confirmation checkbox is added under the BoardWidget.
+    Defaults to false.
+    */
     void set_move_confirmation(bool needed = true);
 
     /** Set links handler.
