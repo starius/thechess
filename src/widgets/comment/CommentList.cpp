@@ -400,7 +400,9 @@ void CommentList::print_edits() {
         patch_text_edit(post_text_);
         new Wt::WBreak(this);
     } else if (type == Comment::CHAT_MESSAGE) {
-        if (!User::has_s(SWITCH_FORMATTING_CHAT)) {
+        if (!User::has_s(SWITCH_FORMATTING_CHAT) ||
+                // FIXME maybe http://redmine.emweb.be/issues/1494
+                comment_base(root).type == COMPETITION) {
             Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
             edit_ = line_edit;
             edit_->enterPressed().connect(boost::bind(&CommentList::add_comment,
