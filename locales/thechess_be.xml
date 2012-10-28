@@ -387,6 +387,7 @@
     <message id="tc.user.competition_changer">змяняць турнір</message>
     <message id="tc.user.competition_creator">ствараць турнір</message>
     <message id="tc.user.competition_joiner">далучацца да турніру</message>
+    <message id='tc.user.Competitor_time'>Показывать время соперника в списке моих игр</message>
     <message id="tc.user.confirmed_by">, пацверджана&nbsp;</message>
     <message id="tc.user.cp_creator">стварыць параметры турніру</message>
     <message id="tc.user.Delete">Выдаліць рахунак</message>

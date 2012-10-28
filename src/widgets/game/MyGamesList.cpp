@@ -30,7 +30,7 @@ public:
     MyGameAnchor(const GamePtr& game, MyGamesListImp* list):
         Notifiable(Object(GAME, game.id())),
         game_(game), list_(list),
-        online_(0), countdown_(0) {
+        online_(0), my_countdown_(0), competitor_countdown_(0) {
         anchor_ = new Wt::WAnchor(this);
         if (!User::has_s(SWITCH_NAMES_IN_MYMENU) ||
                 !game->other_user(tApp->user())) {
@@ -55,11 +55,23 @@ public:
         style_by_state(game->state());
     }
 
+    void delete_countdown() {
+        delete my_countdown_;
+        my_countdown_ = 0;
+        delete competitor_countdown_;
+        competitor_countdown_ = 0;
+    }
+
     void add_countdown() {
         if (!User::has_s(SWITCH_HIDE_COUNTDOWN)) {
-            countdown_ = new Wt::Wc::Countdown(this, /* load JS */ false);
-            countdown_->addStyleClass("no-wrap");
-            countdown_->setMargin(5, Wt::Left | Wt::Right);
+            my_countdown_ = new Wt::Wc::Countdown(this, /* load JS */ false);
+            my_countdown_->addStyleClass("no-wrap");
+            my_countdown_->setMargin(5, Wt::Left | Wt::Right);
+        }
+        if (User::has_s(SWITCH_COMPETOR_TIME)) {
+            competitor_countdown_ = new Wt::Wc::Countdown(this, false);
+            competitor_countdown_->addStyleClass("no-wrap");
+            competitor_countdown_->setMargin(5, Wt::Left | Wt::Right);
         }
     }
 
@@ -111,16 +123,29 @@ public:
     }
 
     void update_countdown() {
-        if (countdown_) {
+        if (my_countdown_) {
             dbo::Transaction t(tApp->session());
-            countdown_->pause();
+            my_countdown_->pause();
             Td duration = game_->total_limit_now(tApp->user());
             if (duration > TD_NULL) {
-                countdown_->set_until(duration);
+                my_countdown_->set_until(duration);
             }
             if (game_->state() == Game::ACTIVE &&
                     tApp->user() == game_->order_user()) {
-                countdown_->resume();
+                my_countdown_->resume();
+            }
+        }
+        if (competitor_countdown_) {
+            dbo::Transaction t(tApp->session());
+            competitor_countdown_->pause();
+            UserPtr competitor = game_->other_user(tApp->user());
+            Td duration = game_->total_limit_now(competitor);
+            if (duration > TD_NULL) {
+                competitor_countdown_->set_until(duration);
+            }
+            if (game_->state() == Game::ACTIVE &&
+                    competitor == game_->order_user()) {
+                competitor_countdown_->resume();
             }
         }
     }
@@ -167,7 +192,8 @@ private:
     MyGamesListImp* list_;
     Wt::WAnchor* anchor_;
     Wt::WText* online_;
-    Wt::Wc::Countdown* countdown_;
+    Wt::Wc::Countdown* my_countdown_;
+    Wt::Wc::Countdown* competitor_countdown_;
 };
 
 typedef std::map<int, MyGameAnchor*> Anchors;
@@ -312,7 +338,7 @@ void MyGameAnchor::check_state() {
         if (!game_->is_ended()) {
             list_->extract_anchor(this);
             list_->insert_anchor(this, game_->state());
-            delete countdown_;
+            delete_countdown();
             add_countdown();
         }
         style_by_state(game_->state());

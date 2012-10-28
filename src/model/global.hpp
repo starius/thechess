@@ -387,6 +387,9 @@ enum UserSettings {
     /** Less info on game page */
     SWITCH_LESS_GAME_INFO = BOOST_BINARY(00100000 00000000 00000000),
 
+    /** Show competitor's countdown in MyGamesList as well as my one */
+    SWITCH_COMPETOR_TIME = BOOST_BINARY(01000000 00000000 00000000),
+
     /** Default value of settings of new user or Anonymous */
     SWITCH_DEFAULT = SWITCH_LASTMOVE |
                      SWITCH_ONLY_NOT_REMOVED_USERS |

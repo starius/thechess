@@ -884,6 +884,7 @@ TheChess.
     <message id='tc.user.competition_changer'>change competition</message>
     <message id='tc.user.competition_creator'>create competition</message>
     <message id='tc.user.competition_joiner'>join competition</message>
+    <message id='tc.user.Competitor_time'>Show time for competitor in game menu</message>
     <message id='tc.user.confirmed_by'>, confirmed by&nbsp;</message>
     <message id='tc.user.cp_creator'>create competition parameters</message>
     <message id='tc.user.Delete'>Delete account</message>

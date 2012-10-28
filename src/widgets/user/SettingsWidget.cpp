@@ -66,6 +66,7 @@ private:
     Wt::WCheckBox* hide_paused_games_;
     Wt::WCheckBox* hide_online_mygames_;
     Wt::WCheckBox* hide_countdown_mygames_;
+    Wt::WCheckBox* competitor_time_;
     Wt::WCheckBox* formatting_chat_;
     Wt::WCheckBox* more_formatting_;
     Wt::WCheckBox* less_game_info_;
@@ -126,6 +127,10 @@ private:
         hide_countdown_mygames_->setText(tr("tc.user.Hide_countdown_mygames"));
         hide_countdown_mygames_->setChecked(User::has_s(SWITCH_HIDE_COUNTDOWN));
         new Wt::WBreak(this);
+        competitor_time_ = new Wt::WCheckBox(this);
+        competitor_time_->setText(tr("tc.user.Competitor_time"));
+        competitor_time_->setChecked(User::has_s(SWITCH_COMPETOR_TIME));
+        new Wt::WBreak(this);
         formatting_chat_ = new Wt::WCheckBox(this);
         formatting_chat_->setText(tr("tc.user.Formatting_chat"));
         formatting_chat_->setChecked(User::has_s(SWITCH_FORMATTING_CHAT));
@@ -181,7 +186,6 @@ private:
         Wt::WPushButton* b0 = new Wt::WPushButton(tr("tc.user.Delete"), this);
         b0->clicked().connect(b, &Wt::WPushButton::show);
         b0->clicked().connect(b0, &Wt::WPushButton::hide);
-
     }
 
     void print_recalculation() {
@@ -249,18 +253,21 @@ private:
         bool hide_paused_games = User::has_s(SWITCH_HIDE_PAUSED_GAMES);
         bool hide_online_mygames = User::has_s(SWITCH_HIDE_ONLINE);
         bool hide_countdown_mygames = User::has_s(SWITCH_HIDE_COUNTDOWN);
+        bool competitor_time = User::has_s(SWITCH_COMPETOR_TIME);
         User::set_s(SWITCH_NAMES_IN_MYMENU, names_in_mymenu_->isChecked());
         User::set_s(SWITCH_HIDE_PAUSED_GAMES, hide_paused_games_->isChecked());
         User::set_s(SWITCH_HIDE_ONLINE, hide_online_mygames_->isChecked());
         User::set_s(SWITCH_HIDE_COUNTDOWN,
                     hide_countdown_mygames_->isChecked());
+        User::set_s(SWITCH_COMPETOR_TIME, competitor_time_->isChecked());
         User::set_s(SWITCH_FORMATTING_CHAT, formatting_chat_->isChecked());
         User::set_s(SWITCH_MORE_FORMATTING, more_formatting_->isChecked());
         User::set_s(SWITCH_LESS_GAME_INFO, less_game_info_->isChecked());
         if (names_in_mymenu != User::has_s(SWITCH_NAMES_IN_MYMENU) ||
                 hide_paused_games != User::has_s(SWITCH_HIDE_PAUSED_GAMES) ||
                 hide_online_mygames != User::has_s(SWITCH_HIDE_ONLINE) ||
-                hide_countdown_mygames != User::has_s(SWITCH_HIDE_COUNTDOWN)) {
+                hide_countdown_mygames != User::has_s(SWITCH_HIDE_COUNTDOWN) ||
+                competitor_time != User::has_s(SWITCH_COMPETOR_TIME)) {
             tApp->update_my_games();
         }
     }

@@ -395,6 +395,7 @@
     <message id='tc.user.competition_changer'>изменять турнир</message>
     <message id='tc.user.competition_creator'>создавать турнир</message>
     <message id='tc.user.competition_joiner'>присоединяться к турниру</message>
+    <message id='tc.user.Competitor_time'>Показывать время соперника в списке моих игр</message>
     <message id='tc.user.confirmed_by'>, подтверждено&nbsp;</message>
     <message id='tc.user.cp_creator'>создать параметры турнира</message>
     <message id='tc.user.Delete'>Удалить аккаунт</message>
