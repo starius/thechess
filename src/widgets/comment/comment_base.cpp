@@ -14,12 +14,15 @@ namespace thechess {
 
 Object comment_base(const CommentPtr& comment) {
     dbo::Transaction t(tApp->session());
-    if (comment->type() != Comment::CHAT_MESSAGE || !comment->root()) {
+    if (comment && comment->type() == Comment::CHAT_MESSAGE &&
+            comment->root()) {
+        return comment_base(comment->root());
+    } else if (comment->type() != Comment::CHAT_ROOT) {
         return Object(NOEVENT, 0);
     }
     try {
         GamePtr game = tApp->session().find<Game>()
-                       .where("comment_base_id = ?").bind(comment->root());
+                       .where("comment_base_id = ?").bind(comment);
         if (game) {
             return Object(GAME, int(game.id()));
         }
@@ -27,7 +30,7 @@ Object comment_base(const CommentPtr& comment) {
     { }
     try {
         CompetitionPtr c = tApp->session().find<Competition>()
-                           .where("comment_base_id = ?").bind(comment->root());
+                           .where("comment_base_id = ?").bind(comment);
         if (c) {
             return Object(COMPETITION, int(c.id()));
         }
