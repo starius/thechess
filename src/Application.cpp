@@ -236,7 +236,7 @@ void Application::explore_timezone() {
 }
 
 void Application::set_timezone_diff(int shift) {
-    shift = Wt::Wc::constrained_value(-24*60, shift, 24*60);
+    shift = Wt::Wc::constrained_value(-24 * 60, shift, 24 * 60);
     timezone_diff_ = -shift * MINUTE;
     path().open(internalPath());
     main_widget_->update_countup();
