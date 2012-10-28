@@ -38,6 +38,8 @@ static void add_emotions_and_image(Wt::WTextEdit* e) {
     e->setConfigurationSetting("force_p_newlines", false);
     e->setConfigurationSetting("forced_root_block", std::string());
     e->setConfigurationSetting("convert_urls", false);
+    e->setConfigurationSetting("content_css",
+                               std::string("/css/mycontent.css"));
 }
 
 void patch_text_edit(Wt::WTextEdit* text_edit) {
