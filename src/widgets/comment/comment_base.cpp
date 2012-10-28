@@ -17,7 +17,7 @@ Object comment_base(const CommentPtr& comment) {
     if (comment && comment->type() == Comment::CHAT_MESSAGE &&
             comment->root()) {
         return comment_base(comment->root());
-    } else if (comment->type() != Comment::CHAT_ROOT) {
+    } else if (!comment || comment->type() != Comment::CHAT_ROOT) {
         return Object(NOEVENT, 0);
     }
     try {
