@@ -28,7 +28,8 @@ std::string Gravatar::path(const UserPtr& user, int size) {
         return "";
     }
     bool ok = user->has_permission(AVATAR_NONDEFAULT);
-    return url(user->email(), size, !ok, ok ? user->avatar_path() : "wavatar");
+    bool wav = ok && user->avatar_path().empty();
+    return url(user->email(), size, !ok, wav ? "wavatar" : user->avatar_path());
 }
 
 }
