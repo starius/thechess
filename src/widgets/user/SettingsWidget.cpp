@@ -52,6 +52,7 @@ public:
                 tApp->user()->vacation_until() < now()) {
             print_vacation();
         }
+        print_delete();
         print_recalculation();
         print_set_motd();
     }
@@ -169,6 +170,18 @@ private:
                 50 * WEEK, this);
         Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
         b->clicked().connect(this, &SettingsWidgetImpl::save_vacation);
+    }
+
+    void print_delete() {
+        new Wt::WBreak(this);
+        Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Confirm"), this);
+        b->addStyleClass("thechess-dangerous");
+        b->hide();
+        b->clicked().connect(this, &SettingsWidgetImpl::delete_me);
+        Wt::WPushButton* b0 = new Wt::WPushButton(tr("tc.user.Delete"), this);
+        b0->clicked().connect(b, &Wt::WPushButton::show);
+        b0->clicked().connect(b0, &Wt::WPushButton::hide);
+
     }
 
     void print_recalculation() {
@@ -289,6 +302,15 @@ private:
         }
         int id = tApp->user().id();
         t_task(USER, id);
+    }
+
+    void delete_me() {
+        dbo::Transaction t(tApp->session());
+        tApp->user().reread();
+        tApp->user()->auth_info().reread();
+        tApp->user().modify()->set_removed(true);
+        t.commit();
+        wApp->redirect("/");
     }
 
     void rebuild_index() {

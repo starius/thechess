@@ -886,7 +886,7 @@ TheChess.
     <message id='tc.user.competition_joiner'>join competition</message>
     <message id='tc.user.confirmed_by'>, confirmed by&nbsp;</message>
     <message id='tc.user.cp_creator'>create competition parameters</message>
-    <message id='tc.user.Delete'>Delete</message>
+    <message id='tc.user.Delete'>Delete account</message>
     <message id='tc.user.Edit_rights'>Edit rights</message>
     <message id='tc.user.Email'>E-mail</message>
     <message id='tc.user.Formatting_chat'>Formatting in chat</message>

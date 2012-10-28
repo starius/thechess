@@ -397,7 +397,7 @@
     <message id='tc.user.competition_joiner'>присоединяться к турниру</message>
     <message id='tc.user.confirmed_by'>, подтверждено&nbsp;</message>
     <message id='tc.user.cp_creator'>создать параметры турнира</message>
-    <message id='tc.user.Delete'>Удалить</message>
+    <message id='tc.user.Delete'>Удалить аккаунт</message>
     <message id='tc.user.Edit_rights'>Редактировать права</message>
     <message id='tc.user.Formatting_chat'>Форматирование в чате</message>
     <message id='tc.user.forum_comment_creator'>комментировать форум</message>
