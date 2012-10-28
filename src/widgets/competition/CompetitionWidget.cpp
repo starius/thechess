@@ -577,9 +577,9 @@ void CompetitionWidget::reprint() {
     bindString("type", Competition::type2str(c->type()));
     bindString("name", c->name(), Wt::PlainText);
     bindString("description", c->description());
-    bindString("created", c->created().toString());
-    bindString("started", c->started().toString());
-    bindString("ended", c->ended().toString());
+    bindString("created", time2str(c->created()));
+    bindString("started", time2str(c->started()));
+    bindString("ended", time2str(c->ended()));
     bindString("state", tr(Competition::state2str(c->state())));
     bindWidget("members", new CompetitionMembers(c));
     bindWidget("winners", new CompetitionWinners(c));

@@ -800,7 +800,7 @@ void Game::pgn_additional(std::ostream& out) const {
     long t2 = gp_->limit_std().total_seconds();
     out << "[TimeControl \"" << t1 << '/' << t2 << "\"]" << std::endl;
     if (started_.isValid()) {
-        out << "[UTCTime \"" << started_.toString("HH:mm:ss") << "\"]";
+        out << "[UTCTime \"" << time2str(started_, "HH:mm:ss") << "\"]";
         out << std::endl;
     }
     out << "[Termination \"" << pgn_termination() << "\"]" << std::endl;
@@ -828,7 +828,7 @@ void Game::pgn(std::ostream& out, bool reduced) const {
     }
     const std::string& site = Options::instance()->pgn_site();
     std::string date = started_.isValid() ?
-                       started_.toString("yyyy.MM.dd").toUTF8() :
+                       time2str(started_, "yyyy.MM.dd").toUTF8() :
                        "????.??.??";
     int stage = competition_stage_ + 1;
     std::string round = competition_stage_ != -1 ?

@@ -9,6 +9,7 @@
 #define THECHESS_TIME_INTERVALS_
 
 #include <Wt/WDateTime>
+#include <Wt/WString>
 #include <Wt/Wc/TimeDuration.hpp>
 
 namespace thechess {
@@ -25,6 +26,10 @@ inline Wt::WDateTime now() {
 inline std::string td2str(const Td& duration) {
     return duration;
 }
+
+/** Return local time for given time */
+Wt::WString time2str(const Wt::WDateTime& time,
+                     const Wt::WString& format = "ddd MMM d hh:mm:ss yyyy");
 
 }
 

@@ -95,6 +95,11 @@ public:
     /** User set locale */
     void set_locale_by_user(const std::string& locale);
 
+    /** Timezone difference from UTC */
+    const Td& timezone_diff() {
+        return timezone_diff_;
+    }
+
     /** Get active Application.
     Same as WApplication::instance().
     There is macro for this method: tApp.
@@ -120,6 +125,7 @@ private:
     UserPtr user_;
     std::string ip_;
     Td* server_usage_;
+    Td timezone_diff_;
 
     bool check_ip();
     void decrease_sessions_counter();

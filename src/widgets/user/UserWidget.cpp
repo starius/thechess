@@ -65,7 +65,7 @@ public:
             new Wt::WText(tr("tc.user.Online"), this);
         } else {
             tmp = new Wt::WText(tr("tc.user.Last_online")
-                                .arg(user_->last_online().toString()), this);
+                                .arg(time2str(user_->last_online())), this);
             tmp->setStyleClass("thechess-datetime");
         }
         if (user_->removed()) {
@@ -105,13 +105,13 @@ public:
         tmp->setStyleClass("thechess-datetime");
         new Wt::WBreak(this);
         tmp = new Wt::WText(tr("tc.user.Registration_date")
-                            .arg(user_->registration_date().toString()), this);
+                            .arg(time2str(user_->registration_date())), this);
         tmp->setStyleClass("thechess-datetime");
         if (user_->vacation_until().isValid() &&
                 user_->vacation_until() > now()) {
             new Wt::WBreak(this);
             tmp = new Wt::WText(tr("tc.user.Vacation_until")
-                                .arg(user_->vacation_until().toString()), this);
+                                .arg(time2str(user_->vacation_until())), this);
             tmp->setStyleClass("thechess-datetime");
             Wt::WPushButton* b;
             if (tApp->user() && tApp->user()->has_permission(TIME_WIZARD)) {

@@ -137,7 +137,7 @@ private:
     void time(const Wt::WDateTime& dt, const char* tr_id,
               Wt::WContainerWidget* r) {
         if (dt.isValid()) {
-            kw("<font class='thechess-datetime'>" + dt.toString() + "</font>",
+            kw("<font class='thechess-datetime'>" + time2str(dt) + "</font>",
                tr_id, r);
         }
     }

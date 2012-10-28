@@ -265,7 +265,7 @@ void CommentList::print_post() {
     }
     new Wt::WBreak(this);
     new Wt::WBreak(this);
-    new Wt::WText(post_text->created().toString(), this);
+    new Wt::WText(time2str(post_text->created()), this);
     UserPtr user = post_text->init();
     if (user) {
         new Wt::WText(" ", this);
@@ -274,12 +274,12 @@ void CommentList::print_post() {
     if (post->edited() != post_text->created()) {
         new Wt::WBreak(this);
         new Wt::WText(tr("tc.forum.Post_edited")
-                      .arg(post->edited().toString()), this);
+                      .arg(time2str(post->edited())), this);
     }
     if (post_text->edited() != post_text->created()) {
         new Wt::WBreak(this);
         new Wt::WText(tr("tc.forum.Post_text_edited")
-                      .arg(post_text->edited().toString()), this);
+                      .arg(time2str(post_text->edited())), this);
     }
     CommentPtr topic = post->parent();
     if (topic) {

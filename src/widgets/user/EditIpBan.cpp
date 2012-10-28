@@ -26,7 +26,7 @@ EditIpBan::EditIpBan(const IpBanPtr& ban, Wt::WContainerWidget* parent):
     new Wt::WBreak(this);
     new Wt::WText(ban_->reason(), this);
     new Wt::WBreak(this);
-    new Wt::WText(ban_->stop().toString(), this);
+    new Wt::WText(time2str(ban_->stop()), this);
     new Wt::WBreak(this);
     user_anchor(ban_->creator(), this);
     new Wt::WBreak(this);

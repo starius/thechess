@@ -21,7 +21,7 @@ Wt::WString forum_comment_text(const CommentPtr& comment) {
                            comment->init()->safe_username() :
                            Wt::WString::tr("tc.user.Anonymous");
     return Wt::WString::tr("tc.forum.comment_template")
-           .arg(comment->created().toString())
+           .arg(time2str(comment->created()))
            .arg(username)
            .arg(text)
            .arg(comment->init().id());
