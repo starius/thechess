@@ -189,6 +189,10 @@ FIXME http://redmine.emweb.be/issues/1144
     height: auto !important;
 }
 
+.thechess-user-list thead th:first-child + th {
+    width: 100% !important;
+}
+
 .thechess-chat tbody .Wt-tv-c * {
     vertical-align: middle !important;
     margin: 0px;

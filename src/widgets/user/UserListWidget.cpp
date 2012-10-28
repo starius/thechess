@@ -28,7 +28,7 @@ typedef UserPtr Result;
 typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 
-const int WIDTH = 780;
+const Wt::WLength WIDTH(100, Wt::WLength::Percentage);
 const int HEIGHT = 500;
 }
 
