@@ -68,7 +68,7 @@ enum {
 
 MainWidget::MainWidget(Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent),
-    mymenu_(0) {
+    mymenu_(0), countup_(0), countup_updates_(0) {
     Wt::WTable* top = new Wt::WTable(this);
     Wt::WAnchor* logo = new Wt::WAnchor();
     logo->setText(tr("tc.common.Logo"));
@@ -431,6 +431,10 @@ void MainWidget::set_contents(WWidget* widget) {
 
 static void reset_countup(Wt::Wc::Countdown* countup) {
     Wt::WDateTime midnight = Wt::WDateTime(now().date());
+    midnight -= tApp->timezone_diff();
+    if (now() - midnight > DAY) {
+        midnight += DAY;
+    }
     countup->set_since(midnight);
     countup->set_format("HM");
     Wt::WDateTime next_midnight = midnight.addDays(1);
@@ -440,11 +444,18 @@ static void reset_countup(Wt::Wc::Countdown* countup) {
     Wt::Wc::updates_trigger();
 }
 
+void MainWidget::update_countup() {
+    countup_updates_ += 1;
+    if (countup_updates_ <= 3) {
+        reset_countup(countup_);
+    }
+}
+
 void MainWidget::show_countup() {
-    Wt::Wc::Countdown* countup = new Wt::Wc::Countdown(clock_and_locale_,
-            /* load javascript */ false);
-    countup->setInline(true);
-    reset_countup(countup);
+    countup_ = new Wt::Wc::Countdown(clock_and_locale_,
+                                     /* load javascript */ false);
+    countup_->setInline(true);
+    reset_countup(countup_);
 }
 
 void MainWidget::show_is_banned() {

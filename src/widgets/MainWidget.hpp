@@ -190,6 +190,11 @@ public:
     */
     void set_top_block_shown(bool shown = true);
 
+    /** Reset countup, when timezone is changed.
+    Max 3 times.
+    */
+    void update_countup();
+
 private:
     Wt::WContainerWidget* auth_place_;
     Wt::WContainerWidget* top_place_;
@@ -198,6 +203,8 @@ private:
     Wt::WContainerWidget* contents_place_;
     Wt::WContainerWidget* mygames_place_;
     MyGamesList* mymenu_;
+    Wt::Wc::Countdown* countup_;
+    int countup_updates_;
 
     void set_contents(WWidget* widget);
     void show_countup();
