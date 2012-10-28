@@ -442,7 +442,13 @@ private:
             but<&Game::check_auto_draws>("tc.game.Call_auto_judge");
         }
         if (game_->can_surrender(tApp->user())) {
-            but<&Game::surrender>("tc.game.Surrender");
+            Wt::WPushButton* s2 = but<&Game::surrender>("tc.common.Confirm");
+            s2->addStyleClass("thechess-dangerous");
+            s2->hide();
+            Wt::WPushButton* s1 = new Wt::WPushButton(tr("tc.game.Surrender"));
+            manager_->addWidget(s1);
+            s1->clicked().connect(s2, &Wt::WPushButton::show);
+            s1->clicked().connect(s1, &Wt::WPushButton::hide);
         }
     }
 
@@ -480,10 +486,11 @@ private:
     }
 
     template <GameMember method>
-    void but(const char* title_id) {
+    Wt::WPushButton* but(const char* title_id) {
         Wt::WPushButton* b;
         b = new Wt::WPushButton(tr(title_id), manager_);
         b->clicked().connect(this, &GameWidgetImpl::action<method>);
+        return b;
     }
 
     void pause_propose(Wt::Wc::TimeDurationWidget* pause_duration) {
