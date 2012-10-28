@@ -61,18 +61,13 @@ Options::Options(const Wt::WServer& server):
     read_int_value("main_page_content_id", main_page_content_id_);
     read_int_value("footer_content_id", footer_content_id_);
     read_int_value("top_logged_in_content_id", top_logged_in_content_id_);
-    int seconds = -1;
-    if (read_int_value("away_timeout_seconds", seconds)) {
-        away_timeout_ = seconds * SECOND;
-    }
+    read_seconds("away_timeout_seconds", away_timeout_);
     read_int_value("default_settings", (int&)(default_settings_));
     server.readConfigurationProperty("pgn_site", pgn_site_);
     read_int_value("champion_id", champion_id_);
     read_int_value("best_players_shown", best_players_shown_);
     read_int_value("user_agreement_id", user_agreement_id_);
-    if (read_int_value("game_max_preactive_seconds", seconds)) {
-        game_max_preactive_ = seconds * SECOND;
-    }
+    read_seconds("game_max_preactive_seconds", game_max_preactive_);
     read_int_value("min_first_draw", min_first_draw_);
     read_int_value("max_sessions", max_sessions_);
     read_int_value("whitelist_max_sessions", whitelist_max_sessions_);
@@ -82,9 +77,7 @@ Options::Options(const Wt::WServer& server):
     split(whitelist_, whitelist_str, is_any_of(" "));
     std::sort(whitelist_.begin(), whitelist_.end());
     std::vector<std::string>(whitelist_).swap(whitelist_); // reduce capacity
-    if (read_int_value("time_diff", seconds)) {
-        time_diff_ = seconds * SECOND;
-    }
+    read_seconds("time_diff", time_diff_);
     server_ = 0; // should not be used latter
 }
 
@@ -103,6 +96,15 @@ bool Options::read_int_value(const std::string& name, int& value) {
         value = atoi(value_str.c_str());
     }
     return result;
+}
+
+bool Options::read_seconds(const std::string& name, Td& value) {
+    int seconds = -1;
+    if (read_int_value(name, seconds)) {
+        value = seconds * SECOND;
+        return true;
+    }
+    return false;
 }
 
 }

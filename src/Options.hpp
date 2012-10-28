@@ -180,6 +180,7 @@ private:
     Td time_diff_;
 
     bool read_int_value(const std::string& name, int& value);
+    bool read_seconds(const std::string& name, Td& value);
 };
 
 }
