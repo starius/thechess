@@ -145,10 +145,22 @@ void Application::login_handler() {
         boost::mutex::scoped_lock lock(sessions_per_ip_mutex_);
         app_map_[this].user = user_;
     }
+    bool show_user_items = true;
     if (prev_user_ != user()) {
         prev_user_.reread();
         user().reread();
         if (user()) {
+            if (user()->has_comment_base() && !user()->online()) {
+                int new_messages = user()->comment_base()->children().find()
+                                   .where("created > ?")
+                                   .bind(user()->last_online())
+                                   .resultList().size();
+                if (new_messages) {
+                    main_widget_->main_menu()->show_user_items(true);
+                    t_emit(new NewMessage(user_.id()));
+                    show_user_items = false;
+                }
+            }
             user_action();
             check_my_games();
             if (gather_) {
@@ -170,7 +182,9 @@ void Application::login_handler() {
         path_.open(internalPath());
     }
     t.commit();
-    main_widget_->main_menu()->show_user_items(session_.login().loggedIn());
+    if (show_user_items) {
+        main_widget_->main_menu()->show_user_items(session_.login().loggedIn());
+    }
     main_widget_->set_top_block_shown(session_.login().loggedIn());
     main_widget_->update_my_games();
 }
