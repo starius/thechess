@@ -983,11 +983,11 @@ TheChess.
     <message id='tc.user.User_template'>
         <table>
             <tr>
-                <td><img width="80" src="{3}" /></td>
+                <td><img width="80" src="{2}" /></td>
                 <td>
-                    <a href="/user/{1}" class="thechess-user-anchor">{2}</a>
+                    <a class="thechess-user-anchor">{1}</a>
                     <br />
-                    {4}
+                    {3}
                 </td>
             </tr>
         </table>

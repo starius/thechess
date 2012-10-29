@@ -149,7 +149,6 @@ private:
                 return index.row() + 1;
             } else if (index.column() == NAME_COLUMN) {
                 return tr("tc.user.User_template")
-                       .arg(o.id())
                        .arg(o->safe_username())
                        .arg(Gravatar::path(o))
                        .arg(o->online() ? tr("tc.user.Online") : "");
@@ -159,6 +158,10 @@ private:
                 return o->games_stat().draws();
             } else if (index.column() == ONLINE_TIME) {
                 return td2str(o->online_time());
+            }
+        } else if (role == Wt::LinkRole) {
+            if (index.column() == NAME_COLUMN) {
+                return tApp->path().user_view()->get_link(o.id());
             }
         } else if (role == Wt::StyleClassRole) {
             if (index.column() == NAME_COLUMN) {
