@@ -43,7 +43,11 @@ AllSessions::AllSessions() {
         elementAt(row, SESSION_IP)->addWidget(a);
         Wt::WText* t;
         UserPtr u = app.user;
-        UserPtr user = u ? tApp->session().load<User>(u.id()) : UserPtr();
+        UserPtr user;
+        try {
+            user = u ? tApp->session().load<User>(u.id()) : UserPtr();
+        } catch (...)
+        { }
         elementAt(row, SESSION_USER)->addWidget(user_anchor(user));
         t = new Wt::WText(time2str(app.created));
         elementAt(row, SESSION_CREATED)->addWidget(t);
