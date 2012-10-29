@@ -166,6 +166,19 @@ void StagedCompetition::read_paires() {
         UserPair pair = stage_and_pair.second;
         read_pair(stage, pair);
     }
+    UserPtr unpaired;
+    int losers = 0;
+    BOOST_FOREACH (States::value_type& user_and_state, states_) {
+        if (user_and_state.second == UNPAIRED) {
+            unpaired = user_and_state.first;
+        } else if (user_and_state.second == LOSER) {
+            losers += 1;
+        }
+    }
+    if (losers == states_.size() - 1 && unpaired) {
+        states_[unpaired] = WINNER;
+        winner_ = unpaired;
+    }
 }
 
 void StagedCompetition::read_pair(int stage, const UserPair& pair) {
@@ -182,11 +195,6 @@ void StagedCompetition::read_pair(int stage, const UserPair& pair) {
             winners_[pair] = winner;
             states_[winner] = UNPAIRED;
             stages_[winner] = stage + 1;
-            if (stage + 1 == winner_stage_) {
-                BOOST_ASSERT(!winner_);
-                states_[winner] = WINNER;
-                winner_ = winner;
-            }
         }
     }
 }
