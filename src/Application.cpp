@@ -72,7 +72,8 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     require("/js/jquery.countdown.min.js");
     // FIXME http://redmine.emweb.be/issues/1491
     doJavaScript("window.alert = $.noop;");
-    Wt::Wc::fix_plain_anchors(/* external_blank */ true);
+    Wt::Wc::fix_plain_anchors(/* external_blank */ true, /* freq */ 400,
+            /* skip */ "/\\.htm|\\.php|pgn/i");
     session().login().changed().connect(this, &Application::login_handler);
     login_handler();
     path_.open(internalPath());
