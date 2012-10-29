@@ -34,6 +34,7 @@ Awards awards_of(const UserPtr& user) {
                     (e.all() >= 250 || e.wins() >= 125) ? 1 : 0;
     result.game_1 = (result.game_3 || result.game_2) ? 0 :
                     (e.all() >= 100, e.wins() >= 50) ? 1 : 0;
+    result.moder = user->admin_rights();
     return result;
 }
 
@@ -56,6 +57,7 @@ Wt::WWidget* awards_widget(const UserPtr& user) {
     add_award(result, awards.game_1, "img/awards/game-1.gif");
     add_award(result, awards.game_2, "img/awards/game-2.gif");
     add_award(result, awards.game_3, "img/awards/game-3.gif");
+    add_award(result, awards.moder, "img/awards/moder.gif");
     return result;
 }
 

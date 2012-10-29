@@ -39,6 +39,9 @@ struct Awards {
     max(games // 500, wins // 250).
     */
     int game_3;
+
+    /** Moderator */
+    bool moder;
 };
 
 /** Return number of awards */
