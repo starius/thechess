@@ -197,6 +197,7 @@ public:
             print_send();
             print_block();
         }
+        print_edit_description();
     }
 
     void notify(EventPtr) {
@@ -210,6 +211,7 @@ private:
     Wt::WPushButton* rating_button_;
     Wt::WPushButton* rating_and_me_button_;
     Wt::WAnchor* message_sent_;
+    Wt::WTextEdit* description_;
 
     void game_form() {
         start_button_->hide();
@@ -466,6 +468,16 @@ private:
         }
     }
 
+    void print_edit_description() {
+        if (tApp->user() && tApp->user()->has_permission(RECORDS_EDITOR)) {
+            description_ = new Wt::WTextEdit(user_->safe_description(), this);
+            patch_text_edit(description_);
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(tr("tc.common.Save"), this);
+            b->clicked().connect(this, &UserWidgetImpl::set_description);
+        }
+    }
+
     void send(Wt::WFormWidget* m) {
         tApp->user().reread();
         dbo::Transaction t(tApp->session());
@@ -502,6 +514,17 @@ private:
         }
         t.commit();
         t_emit(USER, user_.id());
+    }
+
+    void set_description() {
+        dbo::Transaction t(tApp->session());
+        if (tApp->user() && tApp->user()->has_permission(RECORDS_EDITOR)) {
+            user_.reread();
+            user_.modify()->set_description(description_->text());
+            admin_log("Change description of " + user_a(user_.id()));
+            t.commit();
+            t_emit(USER, user_.id());
+        }
     }
 };
 
