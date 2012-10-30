@@ -7,6 +7,7 @@
 
 #include <Wt/WAnchor>
 #include <Wt/WMessageBox>
+#include <Wt/WSound>
 
 #include "widgets/user/MessagesAnchor.hpp"
 #include "Application.hpp"
@@ -25,6 +26,7 @@ public:
         tApp->path().connect(tApp->path().my_messages(), boost::bind(
                                  &MessagesAnchorImpl::normal_style, this));
         normal_style();
+        sound_ = new Wt::WSound("/sound/bark.mp3", this);
     }
 
     ~MessagesAnchorImpl() {
@@ -43,6 +45,8 @@ public:
                                           &MessagesAnchorImpl::box_clicked);
             box_->show();
         }
+        sound_->stop();
+        sound_->play();
     }
 
     void box_clicked(Wt::StandardButton button) {
@@ -62,6 +66,7 @@ public:
 
 private:
     Wt::WMessageBox* box_;
+    Wt::WSound* sound_;
 };
 
 MessagesAnchor::MessagesAnchor(Wt::WContainerWidget* parent) :
