@@ -423,6 +423,7 @@
     <message id="tc.user.Names_in_menu">Показувати ім’я користувача в меню з іграми</message>
     <message id="tc.user.New_ban">Новий бан</message>
     <message id='tc.user.New_message'>Вам пришло новое сообщение! Открыть?</message>
+    <message id='tc.user.No_move_hints'>Не подсвечивать возможные ходы</message>
     <message id="tc.user.not_confirmed">, не підтверджено</message>
     <message id="tc.user.Not_removed">Не видалені</message>
     <message id='tc.user.Online'>&nbsp;<font style="background:Lightsteelblue;">На сайті</font>&nbsp;</message>

@@ -921,6 +921,7 @@ TheChess.
     <message id='tc.user.Names_in_menu'>Show usernames in game menu</message>
     <message id='tc.user.New_ban'>New ban</message>
     <message id='tc.user.New_message'>New message for you! Open private messages?</message>
+    <message id='tc.user.No_move_hints'>No move hints</message>
     <message id='tc.user.No_registration'>No registration</message>
     <message id='tc.user.not_confirmed'>, not confirmed</message>
     <message id='tc.user.Not_removed'>Not removed</message>
