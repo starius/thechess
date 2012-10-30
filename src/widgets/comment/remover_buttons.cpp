@@ -67,6 +67,11 @@ static void show_new_ban(Wt::WPushButton* b, CommentPtr c) {
 static void remove_comment(CommentPtr c) {
     dbo::Transaction t(tApp->session());
     c.modify()->set_state(Comment::DELETED);
+    if (c->type() == Comment::FORUM_POST_TEXT) {
+        CommentPtr post = c->parent();
+        post.reread();
+        post.modify()->set_state(Comment::DELETED);
+    }
     t.commit();
     tApp->path().open(tApp->internalPath());
 }
