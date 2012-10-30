@@ -26,7 +26,8 @@ public:
         tApp->path().connect(tApp->path().my_messages(), boost::bind(
                                  &MessagesAnchorImpl::normal_style, this));
         normal_style();
-        sound_ = new Wt::WSound("/sound/bark.mp3", this);
+        // TODO sound_ = new Wt::WSound("/sound/bark.mp3", this);
+        sound_ = new Wt::WSound("/sound/glass.mp3", this);
     }
 
     ~MessagesAnchorImpl() {
