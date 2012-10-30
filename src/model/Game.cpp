@@ -715,7 +715,7 @@ bool Game::real_rating() const {
 
 bool Game::can_mark_norating(const UserPtr& user) const {
     return user && user->has_permission(VIRTUALS_VIEWER) && !is_member(user) &&
-           real_rating();
+           !gp_->norating() && !norating();
 }
 
 void Game::mark_norating(const UserPtr& user) {
