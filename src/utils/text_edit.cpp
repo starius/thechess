@@ -21,7 +21,7 @@ static void add_emotions_and_image(Wt::WTextEdit* e) {
         ",fontsizeselect,|,forecolor,backcolor,|"
         ",justifyleft,justifycenter,justifyright,justifyfull,|"
         ",link,image,|"
-        ",numlist,bullist,|,emotions";
+        ",numlist,bullist,|,emotions,|,blockquote";
     e->setConfigurationSetting("theme_advanced_buttons1", std::string(b1));
     if (User::has_s(SWITCH_MORE_FORMATTING)) {
         const char* const b2 =
