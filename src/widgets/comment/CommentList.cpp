@@ -89,11 +89,11 @@ public:
             comment_width -= INIT_WIDTH;
             setColumnWidth(CommentModel::TIME_COL, CHAT_TIME_WIDTH);
         } else if (type == Comment::LOG_ENTRY) {
-            setAlternatingRowColors(true);
             setColumnHidden(CommentModel::ID_COL, true);
             comment_width -= LOG_TIME_WIDTH;
             comment_width -= INIT_WIDTH;
             setColumnWidth(CommentModel::TIME_COL, LOG_TIME_WIDTH);
+            addStyleClass("thechess-private-messages");
         } else if (type == Comment::PRIVATE_MESSAGE) {
             setColumnHidden(CommentModel::ID_COL, true);
             comment_width -= PRIVATE_TIME_WIDTH;
