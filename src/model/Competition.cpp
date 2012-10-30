@@ -12,9 +12,11 @@
 #include <boost/foreach.hpp>
 
 #include <Wt/Wc/rand.hpp>
+#include <Wt/Wc/util.hpp>
 
 #include "model/all.hpp"
 #include "config.hpp"
+#include "log.hpp"
 
 DBO_INSTANTIATE_TEMPLATES(thechess::Competition);
 
@@ -373,6 +375,9 @@ bool Competition::can_start() const {
                 result = true;
                 if (!virtual_allower_ && has_virtuals()) {
                     result = false;
+                    admin_log("Can't start competition " + TO_S(id()) +
+                              " because of virtuals",
+                              *session(), UserPtr(), true);
                 }
             }
         }
