@@ -422,6 +422,8 @@ private:
             Wt::WPushButton* b;
             b = new Wt::WPushButton(tr("tc.common.Send"), this);
             b->clicked().connect(boost::bind(&UserWidgetImpl::send, this, m));
+            m->enterPressed().connect(boost::bind(&UserWidgetImpl::send,
+                                                  this, m));
             message_sent_ = new Wt::WAnchor(this);
             message_sent_->setText(tr("tc.user.Message_sent"));
             message_sent_->setLink(tApp->path().my_messages()->link());
