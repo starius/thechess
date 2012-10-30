@@ -71,6 +71,7 @@ private:
     Wt::WCheckBox* formatting_chat_;
     Wt::WCheckBox* more_formatting_;
     Wt::WCheckBox* less_game_info_;
+    Wt::WCheckBox* no_move_hints_;
     Wt::WTextEdit* description_;
     Wt::Wc::TimeDurationWidget* vacation_duration_;
     Wt::Wc::TimeDurationWidget* filter_min_online_;
@@ -143,6 +144,10 @@ private:
         less_game_info_ = new Wt::WCheckBox(this);
         less_game_info_->setText(tr("tc.user.Less_game_info"));
         less_game_info_->setChecked(User::has_s(SWITCH_LESS_GAME_INFO));
+        new Wt::WBreak(this);
+        no_move_hints_ = new Wt::WCheckBox(this);
+        no_move_hints_->setText(tr("tc.user.No_move_hints"));
+        no_move_hints_->setChecked(User::has_s(SWITCH_NO_MOVE_HINTS));
         new Wt::WBreak(this);
         Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
         b->clicked().connect(this, &SettingsWidgetImpl::save_settings);
@@ -265,6 +270,7 @@ private:
         User::set_s(SWITCH_FORMATTING_CHAT, formatting_chat_->isChecked());
         User::set_s(SWITCH_MORE_FORMATTING, more_formatting_->isChecked());
         User::set_s(SWITCH_LESS_GAME_INFO, less_game_info_->isChecked());
+        User::set_s(SWITCH_NO_MOVE_HINTS, no_move_hints_->isChecked());
         if (names_in_mymenu != User::has_s(SWITCH_NAMES_IN_MYMENU) ||
                 hide_paused_games != User::has_s(SWITCH_HIDE_PAUSED_GAMES) ||
                 hide_online_mygames != User::has_s(SWITCH_HIDE_ONLINE) ||
