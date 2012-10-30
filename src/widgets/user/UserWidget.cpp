@@ -50,11 +50,13 @@ public:
         if (user_->has_permission(SUPER_RIGHTS_CHANGER)) {
             new Wt::WText(tr("tc.user.Admin"), this);
             new Wt::WBreak(this);
+            new Wt::WBreak(this);
         } else if (user_->admin_rights()) {
             new Wt::WText(tr("tc.user.Moder"), this);
             new Wt::WBreak(this);
+            new Wt::WBreak(this);
         }
-        new Wt::WBreak(this);
+        print_description();
         Gravatar* gravatar = new Gravatar(user_, this);
         gravatar->set_size(160);
         if (tApp->user() && user_->has_setting(SWITCH_PUBLIC_EMAIL)) {
@@ -190,7 +192,6 @@ public:
         print_rights();
         print_game_stat();
         print_competition_stat();
-        print_description();
         if (tApp->user() && tApp->user() != user_) {
             new Header(tr("tc.comment.private_messages"), this);
             print_send();
@@ -408,9 +409,10 @@ private:
 
     void print_description() {
         if (!user_->description().empty()) {
-            new Wt::WBreak(this);
             new Wt::WText(tr("tc.common.Description") + ": ", this);
             new Wt::WText(user_->safe_description(), this);
+            new Wt::WBreak(this);
+            new Wt::WBreak(this);
         }
     }
 
