@@ -29,10 +29,10 @@ static void add_emotions_and_image(Wt::WTextEdit* e) {
             "hr,removeformat,|,formatselect,sub,sup,strikethrough,styleprops,|,"
             "fullscreen";
         e->setConfigurationSetting("theme_advanced_buttons2", std::string(b2));
-        e->setExtraPlugins("emotions,inlinepopups,insertdatetime,"
+        e->setExtraPlugins("advimage,emotions,inlinepopups,insertdatetime,"
                            "table,fullscreen,style");
     } else {
-        e->setExtraPlugins("emotions,inlinepopups");
+        e->setExtraPlugins("advimage,emotions,inlinepopups");
     }
     e->setConfigurationSetting("force_br_newlines", true);
     e->setConfigurationSetting("force_p_newlines", false);
