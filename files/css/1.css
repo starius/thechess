@@ -186,6 +186,24 @@ FIXME http://redmine.emweb.be/issues/1144
     height: auto !important;
 }
 
+.thechess-private-messages {
+    width: 100% !important;
+    height: auto !important;
+}
+
+.thechess-private-messages table {
+    width: 100% !important;
+}
+
+.thechess-private-messages thead th:last-child {
+    width: 100% !important;
+}
+
+.thechess-private-messages tbody .Wt-tv-c {
+    height: auto !important;
+    white-space: normal !important;
+}
+
 .thechess-user-list {
     height: auto !important;
     width: auto !important;

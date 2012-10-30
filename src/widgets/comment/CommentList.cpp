@@ -35,6 +35,7 @@ const int COMMENT_HEIGHT = 700;
 const int ID_WIDTH = 40;
 const int CHAT_TIME_WIDTH = 50;
 const int LOG_TIME_WIDTH = 200;
+const int PRIVATE_TIME_WIDTH = 130;
 const int POST_TIME_WIDTH = 130;
 const int INIT_WIDTH = 120;
 const int COMMENT_ROW_HEIGHT_FORUM = 20;
@@ -87,13 +88,18 @@ public:
             comment_width -= CHAT_TIME_WIDTH;
             comment_width -= INIT_WIDTH;
             setColumnWidth(CommentModel::TIME_COL, CHAT_TIME_WIDTH);
-        } else if (type == Comment::LOG_ENTRY ||
-                   type == Comment::PRIVATE_MESSAGE) {
+        } else if (type == Comment::LOG_ENTRY) {
             setAlternatingRowColors(true);
             setColumnHidden(CommentModel::ID_COL, true);
             comment_width -= LOG_TIME_WIDTH;
             comment_width -= INIT_WIDTH;
             setColumnWidth(CommentModel::TIME_COL, LOG_TIME_WIDTH);
+        } else if (type == Comment::PRIVATE_MESSAGE) {
+            setColumnHidden(CommentModel::ID_COL, true);
+            comment_width -= PRIVATE_TIME_WIDTH;
+            comment_width -= INIT_WIDTH;
+            setColumnWidth(CommentModel::TIME_COL, PRIVATE_TIME_WIDTH);
+            addStyleClass("thechess-private-messages");
         } else if (type == Comment::FORUM_COMMENT) {
             setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
             addStyleClass("thechess-forum-comments");
