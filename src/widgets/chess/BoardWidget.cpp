@@ -334,6 +334,9 @@ private:
     }
 
     void modify_to() {
+        if (User::has_s(SWITCH_NO_MOVE_HINTS)) {
+            return;
+        }
         bool can_move = false;
         THECHESS_SQUARE_FOREACH (square) {
             if (board_.test_move(HalfMove(from_, square))) {
