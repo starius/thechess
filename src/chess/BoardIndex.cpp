@@ -169,7 +169,6 @@ void BoardIndex::search_board(const Board& board, std::vector<int>& games) {
         games.push_back(item5->game2);
         games.push_back(item5->game3);
         games.push_back(item5->game4);
-        std::cout << "search_board.arr5_" << std::endl;
         return;
     }
     ArrN::const_iterator itemN = std::lower_bound(arrN_.begin(), arrN_.end(),
