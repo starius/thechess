@@ -163,7 +163,8 @@ private:
         new Wt::WBreak(this);
         new Wt::WText(tr("tc.common.Description"), this);
         new Wt::WBreak(this);
-        description_ = new Wt::WTextEdit(tApp->user()->description(), this);
+        description_ = new Wt::WTextEdit(tApp->user()->safe_description());
+        addWidget(description_);
         patch_text_edit(description_);
         Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
         b->clicked().connect(this, &SettingsWidgetImpl::save_description);
