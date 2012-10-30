@@ -41,9 +41,7 @@ ChatCommentWidget::ChatCommentWidget(const CommentPtr& comment) {
         new Wt::WBreak(this);
         addWidget(a);
     }
-    if (comment->type() == Comment::CHAT_MESSAGE) {
-        add_remover_buttons(comment, this);
-    }
+    add_remover_buttons(comment, this);
 }
 
 }
