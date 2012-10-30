@@ -11,12 +11,21 @@
 #include <Wt/WString>
 #include <Wt/Wc/global.hpp>
 
+#include "model/all.hpp"
+
 namespace thechess {
 
 /** Log admin/moder action.
 draft=true is for actions of non-admins or for read-only actions of admins.
-
 user is the source of the message.
+*/
+void admin_log(const Wt::WString& message, dbo::Session& session,
+               UserPtr user, bool draft = false);
+
+/** Log admin/moder action.
+\warning tApp must be available.
+
+Overloaded function. tApp->session() is used.
 */
 void admin_log(const Wt::WString& message, UserPtr user, bool draft = false);
 
