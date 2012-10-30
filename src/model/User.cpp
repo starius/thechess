@@ -435,12 +435,9 @@ void User::set_setting(UserSettings setting, bool value) {
 }
 
 Wt::WString User::safe_description() const {
-    if (removed() &&
-            (!tApp->user() || !tApp->user()->has_permission(USER_REMOVER))) {
-        return Wt::WString::tr("tc.user.Removed_message");
-    } else {
-        return description();
-    }
+    Wt::WString result = description();
+    Wt::Utils::removeScript(result);
+    return result;
 }
 
 bool User::is_blocked(const UserPtr& bad, const UserPtr& good) {
