@@ -64,6 +64,13 @@ static void show_new_ban(Wt::WPushButton* b, CommentPtr c) {
     parent->addWidget(new NewIpBan(c->ip(), comm_a(c.id())));
 }
 
+static void remove_comment(CommentPtr c) {
+    dbo::Transaction t(tApp->session());
+    c.modify()->set_state(Comment::DELETED);
+    t.commit();
+    tApp->path().open(tApp->internalPath());
+}
+
 void add_remover_buttons(const CommentPtr& comment, Wt::WContainerWidget* p) {
     dbo::Transaction t(tApp->session());
     if (tApp->user() && tApp->user()->has_permission(COMMENTS_REMOVER)) {
@@ -97,6 +104,17 @@ void add_remover_buttons(const CommentPtr& comment, Wt::WContainerWidget* p) {
         Wt::WPushButton* b;
         b = new Wt::WPushButton(Wt::WString::tr("tc.user.New_ban"), p);
         b->clicked().connect(boost::bind(show_new_ban, b, comment));
+    }
+    if (comment->state() == Comment::OK && tApp->user()) {
+        Wt::WPushButton* b;
+        bool i_am_init = comment->init() == tApp->user();
+        bool i_am_target = comment->type() == Comment::PRIVATE_MESSAGE &&
+                           comment->root() == tApp->user()->comment_base();
+        if (i_am_init || i_am_target) {
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(Wt::WString::tr("tc.comment.Remove"), p);
+            b->clicked().connect(boost::bind(remove_comment, comment));
+        }
     }
 }
 
