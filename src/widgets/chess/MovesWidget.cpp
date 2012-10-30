@@ -368,7 +368,6 @@ private:
                 next.make_move(half_move);
                 box_->setText(half_move.san(current, next));
                 box_->setButtons(Wt::Ok | Wt::Cancel);
-                box_->setModal(false); // FIXME
                 box_->buttonClicked().connect(
                     boost::bind(&MovesWidgetImpl::box_clicked,
                                 this, half_move, _1));
