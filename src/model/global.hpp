@@ -240,6 +240,9 @@ enum UserRights {
     /** Right to show non-default avatar */
     AVATAR_NONDEFAULT = BOOST_BINARY(00001000 00000000),
 
+    /** Right to show non-default avatar */
+    EDIT_DESCRIPTION = BOOST_BINARY(00010000 00000000),
+
     /** Rights of regular user (given to new user) */
     REGULAR_USER = GAME_CREATOR |
                    GAME_JOINER |
@@ -252,7 +255,8 @@ enum UserRights {
                    CP_CREATOR |
                    COMPETITION_JOINER |
                    CLASSIFICATION_CHANGER |
-                   AVATAR_NONDEFAULT
+                   AVATAR_NONDEFAULT |
+                   EDIT_DESCRIPTION
 };
 
 /** Rights */

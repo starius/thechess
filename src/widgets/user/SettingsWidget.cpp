@@ -48,7 +48,9 @@ public:
         }
         print_settings_changer();
         print_filter_min_online();
-        print_description_changer();
+        if (tApp->user()->has_permission(EDIT_DESCRIPTION)) {
+            print_description_changer();
+        }
         if (!tApp->user()->vacation_until().isValid() ||
                 tApp->user()->vacation_until() < now()) {
             print_vacation();

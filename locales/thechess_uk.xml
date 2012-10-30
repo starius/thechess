@@ -392,6 +392,7 @@
     <message id="tc.user.confirmed_by">, підтверджено&nbsp;</message>
     <message id="tc.user.cp_creator">задати параметри турніру</message>
     <message id="tc.user.Delete">Видалити акаунт</message>
+    <message id='tc.user.edit_description'>редактировать описание</message>
     <message id="tc.user.Edit_rights">Редагувати права</message>
     <message id='tc.user.Formatting_chat'>Форматирование в чате</message>
     <message id="tc.user.forum_comment_creator">коментувати форум</message>

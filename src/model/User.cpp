@@ -223,6 +223,8 @@ const char* User::right_to_str(Rights right) {
         return "tc.user.classification_changer";
     } else if (right == AVATAR_NONDEFAULT) {
         return "tc.user.avatar_nondefault";
+    } else if (right == EDIT_DESCRIPTION) {
+        return "tc.user.edit_description";
     }
     return "tc.user.unknown_right";
 }
@@ -267,6 +269,7 @@ void User::for_each_right(const boost::function<void(Rights)> f) {
     f(COMPETITION_JOINER);
     f(CLASSIFICATION_CHANGER);
     f(AVATAR_NONDEFAULT);
+    f(EDIT_DESCRIPTION);
 }
 
 void User::for_each_admin(const boost::function<void(AdminRights)> f) {
