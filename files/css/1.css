@@ -181,17 +181,15 @@ FIXME http://redmine.emweb.be/issues/1144
     height: auto !important;
 }
 
-.thechess-user-list *:not(img) {
+.thechess-user-list {
     height: auto !important;
     width: auto !important;
 }
 
-.thechess-user-list {
+.thechess-user-list *:not(img) {
     height: auto !important;
-}
-
-.thechess-user-list thead th:first-child + th {
-    width: 100% !important;
+    width: auto !important;
+    white-space: normal !important;
 }
 
 .thechess-chat tbody .Wt-tv-c * {
