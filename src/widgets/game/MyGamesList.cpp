@@ -8,6 +8,7 @@
 #include <boost/foreach.hpp>
 
 #include <Wt/WTable>
+#include <Wt/WText>
 #include <Wt/WSound>
 #include <Wt/WAnchor>
 #include <Wt/WContainerWidget>

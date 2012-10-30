@@ -17,6 +17,7 @@
 #include <Wt/Wc/util.hpp>
 
 #include "widgets/user/UserListWidget.hpp"
+#include "widgets/user/Gravatar.hpp"
 #include "Application.hpp"
 #include "Options.hpp"
 #include "model/all.hpp"

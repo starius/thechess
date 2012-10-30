@@ -31,6 +31,7 @@
 #include "model/all.hpp"
 #include "utils/time_intervals.hpp"
 #include "log.hpp"
+#include "config.hpp"
 
 namespace thechess {
 

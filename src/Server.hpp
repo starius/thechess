@@ -8,11 +8,6 @@
 #ifndef THECHESS_SERVER_HPP_
 #define THECHESS_SERVER_HPP_
 
-// FIXME nasty public morozov
-#define private friend class thechess::Server; private
-#include <Wt/WServer>
-#undef private
-
 #include <Wt/WFileResource>
 #include <Wt/Dbo/FixedSqlConnectionPool>
 #include <Wt/Auth/AuthService>
@@ -23,6 +18,11 @@
 #include "Session.hpp"
 #include "model/object.hpp"
 #include "widgets/game/PgnResource.hpp"
+
+// FIXME nasty public morozov
+#define private friend class thechess::Server; private
+#include <Wt/WServer>
+#undef private
 
 namespace dbo = Wt::Dbo;
 

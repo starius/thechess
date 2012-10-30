@@ -27,6 +27,7 @@
 #include "Options.hpp"
 #include "model/all.hpp"
 #include "utils/text_edit.hpp"
+#include "Server.hpp"
 #include "log.hpp"
 
 namespace thechess {

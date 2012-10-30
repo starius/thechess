@@ -20,6 +20,7 @@
 #include "Server.hpp"
 #include "model/all.hpp"
 #include "utils/utils.hpp"
+#include "log.hpp"
 
 namespace thechess {
 
