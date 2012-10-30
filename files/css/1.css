@@ -181,8 +181,9 @@ FIXME http://redmine.emweb.be/issues/1144
     height: auto !important;
 }
 
-.thechess-user-list tbody .Wt-tv-c {
+.thechess-user-list *:not(img) {
     height: auto !important;
+    width: auto !important;
 }
 
 .thechess-user-list {
