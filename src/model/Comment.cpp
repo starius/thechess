@@ -215,8 +215,11 @@ Wt::WString Comment::text_or_removed(const UserPtr& viewer) const {
         } else if (state() == DRAFT) {
             result = Wt::WString::tr("tc.comment.draft_message");
         }
-        if (viewer && viewer->has_permission(COMMENTS_REMOVER)) {
-            result += text();
+        if (viewer) {
+            if (viewer->has_permission(COMMENTS_REMOVER) ||
+                    init() == viewer || viewer->comment_base() == self()) {
+                result += text();
+            }
         }
         return result;
     }
