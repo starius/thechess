@@ -10,3 +10,10 @@ Images:
  Lena Borodina <yolka00@list.ru>
  Подтверждаю согласие на копирование, перемещение и использование данного значка
 
+Sounds:
+* files/sound/bark.mp3 files/sound/glass.mp3
+ Converted from:
+ /usr/share/sounds/gnome/default/alerts/bark.ogg
+ /usr/share/sounds/gnome/default/alerts/glass.ogg
+ Original files from GNOME
+
