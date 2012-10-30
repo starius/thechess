@@ -419,13 +419,22 @@ private:
     void print_send() {
         if (tApp->user() && tApp->user()->can_send_message(user_)) {
             new Wt::WBreak(this);
-            Wt::WLineEdit* m = new Wt::WLineEdit(this);
-            m->setTextSize(50);
+            Wt::WFormWidget* m;
+            if (!User::has_s(SWITCH_FORMATTING_CHAT)) {
+                Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
+                line_edit->setTextSize(80);
+                m = line_edit;
+                m->enterPressed().connect(boost::bind(&UserWidgetImpl::send,
+                                                      this, m));
+            } else {
+                Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
+                patch_text_edit(text_edit);
+                new Wt::WBreak(this);
+                m = text_edit;
+            }
             Wt::WPushButton* b;
             b = new Wt::WPushButton(tr("tc.common.Send"), this);
             b->clicked().connect(boost::bind(&UserWidgetImpl::send, this, m));
-            m->enterPressed().connect(boost::bind(&UserWidgetImpl::send,
-                                                  this, m));
             message_sent_ = new Wt::WAnchor(this);
             message_sent_->setText(tr("tc.user.Message_sent"));
             message_sent_->setLink(tApp->path().my_messages()->link());
@@ -457,7 +466,7 @@ private:
         }
     }
 
-    void send(Wt::WLineEdit* m) {
+    void send(Wt::WFormWidget* m) {
         tApp->user().reread();
         dbo::Transaction t(tApp->session());
         if (tApp->user() && tApp->user()->can_send_message(user_)) {
@@ -468,13 +477,13 @@ private:
             }
             base.flush();
             CommentPtr message = tApp->session().add(new Comment(true));
-            message.modify()->set_text(m->text());
+            message.modify()->set_text(m->valueText());
             message.modify()->set_init(tApp->user());
             message.modify()->set_parent(base);
             message.modify()->set_root(base);
             message.modify()->set_type(Comment::PRIVATE_MESSAGE);
             t.commit();
-            m->setText("");
+            m->setValueText("");
             message_sent_->show();
             t_emit(COMMENT, base.id());
             t_emit(new NewMessage(user_.id()));
