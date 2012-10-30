@@ -82,6 +82,11 @@ a.thechess-excited {
     color: Firebrick;
 }
 
+.thechess-c {
+    color: purple;
+    font-weight: bolder;
+}
+
 .thechess-active {
     background-color: #90EE90;
 }

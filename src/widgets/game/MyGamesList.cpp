@@ -47,7 +47,8 @@ public:
             online_->addStyleClass("no-wrap");
         }
         if (game_->competition()) {
-            new Wt::WText(tr("tc.competition.c"), this);
+            Wt::WText* c = new Wt::WText(tr("tc.competition.c"), this);
+            c->addStyleClass("thechess-c");
         }
         add_countdown();
         excite_or_unexcite();
