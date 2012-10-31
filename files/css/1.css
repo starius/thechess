@@ -236,12 +236,12 @@ FIXME http://redmine.emweb.be/issues/1144
 }
 
 .thechess-chat tbody .Wt-tv-c * {
-    vertical-align: middle !important;
     margin: 0px;
 }
 
 .thechess-chat {
     width: 100% !important;
+    height: auto !important;
 }
 
 .thechess-chat table {
@@ -250,6 +250,11 @@ FIXME http://redmine.emweb.be/issues/1144
 
 .thechess-chat thead th:last-child {
     width: 100% !important;
+}
+
+.thechess-chat tbody .Wt-tv-c {
+    height: auto !important;
+    white-space: normal !important;
 }
 
 .thechess-dangerous {

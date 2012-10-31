@@ -84,7 +84,6 @@ public:
             setColumnWidth(CommentModel::TIME_COL, POST_TIME_WIDTH);
         } else if (type == Comment::CHAT_MESSAGE) {
             addStyleClass("thechess-chat");
-            setAlternatingRowColors(true);
             setColumnHidden(CommentModel::ID_COL, true);
             comment_width -= CHAT_TIME_WIDTH;
             comment_width -= INIT_WIDTH;
