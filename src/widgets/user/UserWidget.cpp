@@ -470,6 +470,9 @@ private:
 
     void print_edit_description() {
         if (tApp->user() && tApp->user()->has_permission(RECORDS_EDITOR)) {
+            new Wt::WBreak(this);
+            new Wt::WText(tr("tc.common.Description"), this);
+            new Wt::WBreak(this);
             description_ = new Wt::WTextEdit(user_->safe_description(), this);
             patch_text_edit(description_);
             Wt::WPushButton* b;
