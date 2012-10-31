@@ -583,6 +583,7 @@ private:
         dbo::Transaction t(tApp->session());
         game_.reread();
         game_.modify()->set_comment(tApp->user(), text);
+        admin_log("Edit comment of " + game_a(game_.id()));
         t.commit();
         t_emit(GAME, game_.id());
     }
