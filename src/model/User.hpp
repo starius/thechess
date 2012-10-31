@@ -318,9 +318,14 @@ public:
         return registration_date_;
     }
 
-    /** Get avatar path (compatibility with old version) */
+    /** Get avatar path */
     const std::string& avatar_path() const {
         return avatar_path_;
+    }
+
+    /** Set avatar path */
+    void set_avatar_path(const std::string& avatar_path) {
+        avatar_path_ = avatar_path;
     }
 
     /** Return min online_time of other user to send private message */

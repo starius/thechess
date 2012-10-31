@@ -63,6 +63,7 @@ public:
 private:
     ClassificationWidget* class_;
     Wt::WLineEdit* email_;
+    Wt::WLineEdit* avatar_;
     Wt::WLineEdit* motd_;
     Wt::WCheckBox* public_email_;
     Wt::WCheckBox* names_in_mymenu_;
@@ -100,6 +101,11 @@ private:
         Wt::WAnchor* a = new Wt::WAnchor("http://gravatar.com", this);
         a->setText(tr("tc.user.Change_avatar"));
         a->setTarget(Wt::TargetNewWindow);
+        avatar_ = new Wt::WLineEdit(tApp->user()->avatar_path(), this);
+        email_->setTextSize(40);
+        Wt::WPushButton* b;
+        b = new Wt::WPushButton(tr("tc.common.Save"), this);
+        b->clicked().connect(this, &SettingsWidgetImpl::save_avatar);
     }
 
     void print_classification_changer() {
@@ -253,6 +259,19 @@ private:
         delete sender();
         if (email != tApp->user()->email()) {
             tApp->user().modify()->set_email(email);
+        }
+    }
+
+    void save_avatar() {
+        dbo::Transaction t(tApp->session());
+        if (!tApp->user()) {
+            return;
+        }
+        std::string avatar = avatar_->text().toUTF8();
+        delete sender();
+        if (avatar != tApp->user()->avatar_path()) {
+            tApp->user().modify()->set_avatar_path(avatar);
+            admin_log("Change avatar path");
         }
     }
 
