@@ -69,7 +69,8 @@ ForumCommentWidget::ForumCommentWidget(const CommentPtr& comment) {
         return;
     }
     new Header(tr("tc.forum.Comment"), this);
-    new Wt::WText(forum_comment_text(comment), this);
+    Wt::WText* text = new Wt::WText(forum_comment_text(comment), this);
+    text->addStyleClass("thechess-forum-comments");
     UserPtr user = comment->init();
     if (user) {
         new Wt::WBreak(this);
