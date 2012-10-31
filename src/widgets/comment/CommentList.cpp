@@ -27,6 +27,7 @@
 #include "model/global.hpp"
 #include "Application.hpp"
 #include "utils/text_edit.hpp"
+#include "log.hpp"
 
 namespace thechess {
 
@@ -355,6 +356,7 @@ void CommentList::add_comment(const CommentPtr& parent) {
     comment.modify()->set_root(root);
     if (type == Comment::FORUM_POST) {
         comment.flush();
+        admin_log("New post " + comm_a(comment.id()));
         CommentPtr post_text = tApp->session().add(new Comment(true));
         post_text.modify()->set_created(comment->created());
         post_text.modify()->set_edited(comment->created());
