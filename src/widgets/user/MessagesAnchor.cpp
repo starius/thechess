@@ -37,7 +37,9 @@ public:
     void notify(EventPtr) {
         setStyleClass("thechess-excited");
         std::string messages_path = tApp->path().my_messages()->full_path();
-        if (!box_ && wApp->internalPath() != messages_path) {
+        Wt::Wc::url::Node* node = tApp->path().parse(wApp->internalPath());
+        if (!box_ && node != tApp->path().my_messages() &&
+                node != tApp->path().game_view()) {
             box_ = new Wt::WMessageBox;
             box_->setCaption(tr("tc.comment.private_messages"));
             box_->setText(tr("tc.user.New_message"));
