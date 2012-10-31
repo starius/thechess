@@ -113,6 +113,9 @@ public:
         return state_;
     }
 
+    /** Set state to RECRUITING if it is CANCELLED */
+    void revive();
+
     /** Return string representation of the competition state */
     static const char* state2str(State state);
 

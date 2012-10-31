@@ -78,6 +78,12 @@ Wt::WDateTime Competition::next_check() const {
     return result;
 }
 
+void Competition::revive() {
+    if (state_ == CANCELLED) {
+        state_ = RECRUITING;
+    }
+}
+
 const char* Competition::state2str(State state) {
     if (state == RECRUITING) {
         return "tc.competition.state_recruiting";
