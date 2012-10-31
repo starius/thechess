@@ -482,23 +482,8 @@ private:
         tApp->user().reread();
         dbo::Transaction t(tApp->session());
         if (tApp->user() && tApp->user()->can_send_message(user_)) {
-            CommentPtr base = user_->comment_base();
-            if (!base) {
-                user_.reread();
-                base = user_.modify()->comment_base();
-            }
-            base.flush();
-            CommentPtr message = tApp->session().add(new Comment(true));
-            message.modify()->set_text(m->valueText());
-            message.modify()->set_init(tApp->user());
-            message.modify()->set_parent(base);
-            message.modify()->set_root(base);
-            message.modify()->set_type(Comment::PRIVATE_MESSAGE);
-            t.commit();
+            User::send_message(tApp->user(), user_, m->valueText());
             m->setValueText("");
-            message_sent_->show();
-            t_emit(COMMENT, base.id());
-            t_emit(new NewMessage(user_.id()));
         }
     }
 

@@ -44,6 +44,13 @@ static void add_comment(CommentPtr comment, Wt::WTextEdit* edit,
     CommentPtr post = post_text->parent();
     post.reread();
     post.modify()->post_comment_added();
+    c.flush();
+    // private notification
+    Wt::WString notification = "[auto] " + comm_a(c.id());
+    User::send_message(tApp->user(), post->init(), notification);
+    if (post->init() != comment->init()) {
+        User::send_message(tApp->user(), comment->init(), notification);
+    }
     t.commit();
     t_emit(COMMENT, root_id);
     if (state == Comment::DRAFT) {

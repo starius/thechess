@@ -372,6 +372,9 @@ void CommentList::add_comment(const CommentPtr& parent) {
         CommentPtr post = root->parent();
         post.reread();
         post.modify()->post_comment_added();
+        // private notification
+        User::send_message(tApp->user(), post->init(),
+                           "[auto] " + comm_a(comment.id()));
     }
     t.commit();
     edit_->setValueText("");

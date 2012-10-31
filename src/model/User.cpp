@@ -462,6 +462,27 @@ bool User::can_send_message(const UserPtr& to) const {
            !is_blocked(self(), to);
 }
 
+void User::send_message(UserPtr from, UserPtr to, const Wt::WString& text) {
+    if (!to || from == to) {
+        return;
+    }
+    CommentPtr base = to->comment_base();
+    if (!base) {
+        to.reread();
+        base = to.modify()->comment_base();
+        base.flush();
+    }
+    CommentPtr message = to.session()->add(new Comment(true));
+    message.modify()->set_text(text);
+    message.modify()->set_init(from);
+    message.modify()->set_parent(base);
+    message.modify()->set_root(base);
+    message.modify()->set_type(Comment::PRIVATE_MESSAGE);
+    message.flush();
+    t_emit(COMMENT, base.id());
+    t_emit(new NewMessage(to.id()));
+}
+
 void User::check(Wt::Wc::notify::TaskPtr task) {
     task->set_notify_needed(check_vacation());
     if (vacation_until_.isValid() && vacation_until_ > now()) {

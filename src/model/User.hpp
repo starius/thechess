@@ -398,6 +398,9 @@ public:
     /** Return if this user can send message to another user */
     bool can_send_message(const UserPtr& to) const;
 
+    /** Send message */
+    static void send_message(UserPtr from, UserPtr to, const Wt::WString& text);
+
     /** Run self-checks for planned action.
     User who can return from vacation, will be returned.
     */
