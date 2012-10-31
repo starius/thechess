@@ -6,11 +6,14 @@
  */
 
 #include <functional>
+#include <sstream>
 #include <stdexcept>
 #include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 
 #include <Wt/WEnvironment>
 #include <Wt/WApplication>
+#include <Wt/Utils>
 #include <Wt/Auth/PasswordVerifier>
 #include <Wt/Auth/PasswordStrengthValidator>
 #include <Wt/Auth/HashFunction>
@@ -84,6 +87,49 @@ void Server::reread_options() {
     Wt::WServer::instance_ = this;
 }
 
+std::string utf8_to_cp1251(const std::string& utf8) {
+    std::stringstream result;
+    bool byte2 = false;
+    char c1;
+    BOOST_FOREACH (char i, utf8) {
+        if (i <= 127) {
+            result << i;
+        }
+        if (byte2) {
+            int new_c2 = (c1 & 3) * 64 + (i & 63);
+            int new_c1 = (c1 >> 2) & 5;
+            int new_i = new_c1 * 256 + new_c2;
+            char out_i;
+            if (new_i == 1025) {
+                out_i = 168;
+            } else if (new_i == 1105) {
+                out_i = 184;
+            } else {
+                out_i = new_i - 848;
+            }
+            result << out_i;
+            byte2 = false;
+        }
+        if ((i >> 5) == 6) {
+            c1 = i;
+            byte2 = true;
+        }
+    }
+    return result.str();
+}
+
+class CP1251NoSaltMd5 : public Wt::Auth::HashFunction {
+public:
+    std::string name() const {
+        return "CP1251NoSaltMd5";
+    }
+
+    std::string compute(const std::string& msg,
+                        const std::string& /* salt */) const {
+        return Wt::Utils::hexEncode(Wt::Utils::md5(utf8_to_cp1251(msg)));
+    }
+};
+
 void Server::auth_init() {
     using namespace Wt::Auth;
     auth_service_.setAuthTokensEnabled(true, config::COOKIE_NAME);
@@ -100,6 +146,7 @@ void Server::auth_init() {
     password_service_.setStrengthValidator(s);
     PasswordVerifier* verifier = new PasswordVerifier();
     verifier->addHashFunction(new BCryptHashFunction(7));
+    verifier->addHashFunction(new CP1251NoSaltMd5);
     password_service_.setVerifier(verifier);
 }
 
