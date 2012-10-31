@@ -215,7 +215,10 @@ UserPtr Session::auth_info_to_user(const AuthInfoPtr& auth_info) {
         auth_info.modify()->setUser(user);
         if (IpBan::am_i_banned()) {
             admin_log("Register from banned IP " +
-                      ip_a(wApp->environment().clientAddress()), user, true);
+                      ip_a(wApp->environment().clientAddress()), user);
+        } else {
+            admin_log("New user from IP " +
+                      ip_a(wApp->environment().clientAddress()), user);
         }
     }
     return user;
