@@ -751,7 +751,7 @@ const Wt::WString& Game::comment() const {
 }
 
 bool Game::can_comment(const UserPtr& user) const {
-    return is_member(user);
+    return is_member(user) || (user && user->has_permission(RECORDS_EDITOR));
 }
 
 void Game::set_comment(const UserPtr& user, const Wt::WString& t) {
