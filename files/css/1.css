@@ -221,6 +221,7 @@ FIXME http://redmine.emweb.be/issues/1144
 
 .thechess-private-messages tbody .Wt-tv-c {
     height: auto !important;
+    min-height: 20px !important;
     white-space: normal !important;
 }
 
@@ -254,6 +255,7 @@ FIXME http://redmine.emweb.be/issues/1144
 
 .thechess-chat tbody .Wt-tv-c {
     height: auto !important;
+    min-height: 20px !important;
     white-space: normal !important;
 }
 
