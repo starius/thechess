@@ -294,6 +294,7 @@ private:
         tApp->user().reread();
         Wt::WString description = patch_text_edit_text(description_->text());
         tApp->user().modify()->set_description(description);
+        admin_log("Change description of himself");
         t.commit();
         t_emit(USER, tApp->user().id());
     }
