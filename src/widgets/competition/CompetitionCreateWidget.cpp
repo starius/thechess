@@ -81,7 +81,12 @@ void CompetitionCreateWidget::button_handler() {
         comp = c_;
         comp.reread();
         write_record(comp.modify(), /* init */ false);
-        admin_log("Change " + comp_a(comp.id()));
+        if (comp->state() == Competition::CANCELLED) {
+            comp.modify()->revive();
+            admin_log("Change and revive " + comp_a(comp.id()));
+        } else {
+            admin_log("Change " + comp_a(comp.id()));
+        }
     } else {
         comp = tApp->session().add(new Competition(true));
         write_record(comp.modify(), /* init */ true);

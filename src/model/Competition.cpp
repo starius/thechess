@@ -309,7 +309,7 @@ void Competition::kick(const UserPtr& kicker, const UserPtr& kicked) {
 }
 
 bool Competition::can_change_parameters(const UserPtr& user) const {
-    return state_ == RECRUITING && user &&
+    return (state_ == RECRUITING || state_ == CANCELLED) && user &&
            (user == init() || user->has_permission(COMPETITION_CHANGER));
 }
 
