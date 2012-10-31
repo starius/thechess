@@ -1,4 +1,14 @@
-body, td, pre {color:#000; font-family:'Arial', Tahoma, Arial, sans-serif; font-size:14px; margin:8px;}
+body, td, pre {
+    color:#000;
+    font-family:'Arial', Tahoma, Arial, sans-serif;
+    font-size:14px;
+    margin:8px;
+}
+
+* {
+    white-space: normal !important;
+}
+
 body {background:#FFF;}
 body.mceForceColors {background:#FFF; color:#000;}
 h1 {font-size: 2em}
