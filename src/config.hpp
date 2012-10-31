@@ -339,7 +339,7 @@ const Td FORCE_START_DELAY = WEEK;
 const Td MIN_RECRUITING_TIME = 4 * WEEK;
 
 /** Time after which competition would be canceled in case not started */
-const Td MAX_RECRUITING_TIME = 8 * WEEK;
+const Td MAX_RECRUITING_TIME = 99 * WEEK;
 
 /** Min number of members competition to start */
 const int MIN_USERS = 50;
