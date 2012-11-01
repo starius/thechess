@@ -39,6 +39,7 @@ public:
         if (!tApp->user()) {
             return;
         }
+        tApp->user().reread();
         new Header(tr("tc.user.Settings"), this);
         print_password_changer();
         print_email_changer();
@@ -247,6 +248,7 @@ private:
         if (!tApp->user()) {
             return;
         }
+        tApp->user().reread();
         std::string email = email_->text().toUTF8();
         if (email.length() < 3 || email.find('@') == std::string::npos) {
             email_->setText(tr("Wt.Auth.email-invalid"));
@@ -267,6 +269,7 @@ private:
         if (!tApp->user()) {
             return;
         }
+        tApp->user().reread();
         std::string avatar = avatar_->text().toUTF8();
         delete sender();
         if (avatar != tApp->user()->avatar_path()) {
@@ -276,6 +279,8 @@ private:
     }
 
     void save_settings() {
+        dbo::Transaction t(tApp->session());
+        tApp->user().reread();
         User::set_s(SWITCH_PUBLIC_EMAIL, public_email_->isChecked());
         bool names_in_mymenu = User::has_s(SWITCH_NAMES_IN_MYMENU);
         bool hide_paused_games = User::has_s(SWITCH_HIDE_PAUSED_GAMES);
