@@ -23,7 +23,6 @@
 #include "widgets/user/RatingChanges.hpp"
 #include "widgets/user/RightsEdit.hpp"
 #include "widgets/user/ClassificationWidget.hpp"
-#include "widgets/game/GameCreateWidget.hpp"
 #include "widgets/user/user_anchor.hpp"
 #include "widgets/user/awards.hpp"
 #include "widgets/Header.hpp"
@@ -46,6 +45,7 @@ public:
         dbo::Transaction t(tApp->session());
         user_.reread();
         tApp->user().reread();
+        tApp->path().user_view()->set_integer_value(user.id());
         new Header(user_->username(), this);
         if (user_->has_permission(SUPER_RIGHTS_CHANGER)) {
             new Wt::WText(tr("tc.user.Admin"), this);
@@ -128,10 +128,11 @@ public:
         if (tApp->user() && tApp->user() != user_ && !user_->removed() &&
                 !User::is_blocked(tApp->user(), user_) &&
                 tApp->user()->has_permission(GAME_CREATOR)) {
-            start_button_ = new Wt::WPushButton(
-                Wt::WString::tr("tc.user.Start_game"), this);
-            start_button_->clicked()
-            .connect(this, &UserWidgetImpl::game_form);
+            Wt::WAnchor* start_game = new Wt::WAnchor(this);
+            start_game->setText(tr("tc.user.Start_game"));
+            start_game->setLink(tApp->path().user_challenge()->link());
+            start_game->addStyleClass("thechess-main-button");
+            new Wt::WBreak(this);
         }
         if (0) { //user->games_stat().all() > 0) {
             // crash in Wt 3.2.1
@@ -164,7 +165,6 @@ public:
             b->clicked().connect(this, &UserWidgetImpl::kick);
         }
         new Wt::WBreak(this);
-        tApp->path().user_view()->set_integer_value(user.id());
         Wt::WAnchor* a;
         if (tApp->user() &&
                 tApp->user()->has_permission(VIRTUALS_VIEWER)) {
@@ -207,16 +207,10 @@ public:
 private:
     UserPtr user_;
     ClassificationWidget* class_;
-    Wt::WPushButton* start_button_;
     Wt::WPushButton* rating_button_;
     Wt::WPushButton* rating_and_me_button_;
     Wt::WAnchor* message_sent_;
     Wt::WTextEdit* description_;
-
-    void game_form() {
-        start_button_->hide();
-        new GameCreateWidget(user_, this);
-    }
 
     void discard_vacation() {
         dbo::Transaction t(tApp->session());

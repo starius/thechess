@@ -299,7 +299,8 @@
     <message id='tc.title.CommentList_edit'>Редагування « Форум « TheChess</message>
     <message id='tc.title.CommentList_global_chat'>Чат « TheChess</message>
     <message id='tc.title.CommentList_my_messages'>Мої повідомлення « TheChess</message>
-    <message id='tc.title.GameCreateWidget'>Create « Гра « TheChess</message>
+    <message id='tc.title.GameCreateWidget'>Створити « Гра « TheChess</message>
+    <message id='tc.title.GameCreateWidget_with'>{1} « Створити « Гра « TheChess</message>
     <message id='tc.title.GameListWidget'>Перелік « Гра « TheChess</message>
     <message id='tc.title.GameWidget'>{1} « Гра « TheChess</message>
     <message id='tc.title.IpBanList'>Перелік банів по IP « TheChess</message>

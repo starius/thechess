@@ -794,6 +794,7 @@ TheChess.
     <message id='tc.title.CommentList_global_chat'>Chat « TheChess</message>
     <message id='tc.title.CommentList_my_messages'>My messages « TheChess</message>
     <message id='tc.title.GameCreateWidget'>Create « Game « TheChess</message>
+    <message id='tc.title.GameCreateWidget_with'>{1} « Create « Game « TheChess</message>
     <message id='tc.title.GameListWidget'>List « Game « TheChess</message>
     <message id='tc.title.GameWidget'>{1} « Game « TheChess</message>
     <message id='tc.title.IpBanList'>List of IP bans « TheChess</message>

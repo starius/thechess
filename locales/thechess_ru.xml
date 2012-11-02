@@ -306,7 +306,8 @@
     <message id='tc.title.CommentList_edit'>Правка « Форум « TheChess</message>
     <message id='tc.title.CommentList_global_chat'>Чат « TheChess</message>
     <message id='tc.title.CommentList_my_messages'>Мои сообщения « TheChess</message>
-    <message id='tc.title.GameCreateWidget'>Create « Игра « TheChess</message>
+    <message id='tc.title.GameCreateWidget'>Создать « Игра « TheChess</message>
+    <message id='tc.title.GameCreateWidget_with'>{1} « Создать « Игра « TheChess</message>
     <message id='tc.title.GameListWidget'>Список « Игра « TheChess</message>
     <message id='tc.title.GameWidget'>{1} « Игра « TheChess</message>
     <message id='tc.title.IpBanList'>Список банов по IP « TheChess</message>

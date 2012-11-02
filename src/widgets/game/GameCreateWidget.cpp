@@ -67,6 +67,7 @@ void GameCreateWidget::set_moves(const Moves& moves) {
 
 void GameCreateWidget::print() {
     Wt::WPushButton* ok = new Wt::WPushButton(tr("tc.user.Start_game"), this);
+    ok->addStyleClass("thechess-main-button");
     selector_ = new GPSelector(this);
     selector_->select_first();
     selector_->set_gp(gp_);

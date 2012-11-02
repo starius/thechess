@@ -264,6 +264,20 @@ FIXME http://redmine.emweb.be/issues/1144
     color: white;
 }
 
+.thechess-main-button, .thechess-main-button:hover {
+    background: #f90;
+    line-height: 2em;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 0.2em;
+    padding: 0.2em;
+    border: 3px #df152d outset;
+    color: black !important;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+}
+
 .jp-audio {
     visibility: hidden;
 }
