@@ -10,6 +10,7 @@
 #include <Wt/WTable>
 #include <Wt/WText>
 #include <Wt/WSound>
+#include <Wt/WImage>
 #include <Wt/WAnchor>
 #include <Wt/WContainerWidget>
 #include <Wt/Dbo/Transaction>
@@ -32,6 +33,17 @@ public:
         Notifiable(Object(GAME, game.id())),
         game_(game), list_(list),
         online_(0), my_countdown_(0), competitor_countdown_(0) {
+        addStyleClass("no-wrap");
+        Piece::Color my_color = game_->color_of(tApp->user());
+        Wt::WImage* color = 0;
+        if (my_color == Piece::WHITE) {
+            color = new Wt::WImage("img/chess/white.gif", this);
+        } else if (my_color == Piece::BLACK) {
+            color = new Wt::WImage("img/chess/black.gif", this);
+        }
+        if (color) {
+            color->addStyleClass("no-wrap");
+        }
         anchor_ = new Wt::WAnchor(this);
         if (!User::has_s(SWITCH_NAMES_IN_MYMENU) ||
                 !game->other_user(tApp->user())) {
