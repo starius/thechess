@@ -354,6 +354,7 @@ void MyGameAnchor::check_state() {
             list_->insert_anchor(this, game_->state());
             delete_countdown();
             add_countdown();
+            update_countdown();
         }
         style_by_state(game_->state());
     }
