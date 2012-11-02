@@ -279,7 +279,6 @@ private:
     }
 
     void save_settings() {
-        dbo::Transaction t(tApp->session());
         tApp->user().reread();
         User::set_s(SWITCH_PUBLIC_EMAIL, public_email_->isChecked());
         bool names_in_mymenu = User::has_s(SWITCH_NAMES_IN_MYMENU);
