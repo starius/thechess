@@ -276,6 +276,7 @@ FIXME http://redmine.emweb.be/issues/1144
     color: black !important;
     -moz-border-radius: 20px;
     -webkit-border-radius: 20px;
+    border-radius: 20px;
 }
 
 .jp-audio {
