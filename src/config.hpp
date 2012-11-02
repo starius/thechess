@@ -188,7 +188,7 @@ const Td LIMIT_STD = WEEK;
 const Td LIMIT_PRIVATE_INIT = 4 * WEEK;
 
 /** Max pause leeway */
-const Td PAUSE_LIMIT_INIT = WEEK;
+const Td PAUSE_LIMIT_INIT = 6 * 4 * WEEK;
 
 /** Max move number for draw */
 const int FIRST_DRAW = 5000 * 2;
