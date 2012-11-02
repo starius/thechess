@@ -18,6 +18,9 @@ class MainPage : public Wt::WTemplate {
 public:
     /** Constructor */
     MainPage(Wt::WContainerWidget* parent = 0);
+
+    /** Refresh the widget */
+    void refresh();
 };
 
 }

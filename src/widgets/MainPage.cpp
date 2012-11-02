@@ -21,21 +21,7 @@ namespace thechess {
 MainPage::MainPage(Wt::WContainerWidget* parent):
     WTemplate(parent) {
     dbo::Transaction t(tApp->session());
-    int comment_id = Options::instance()->main_page_content_id();
-    if (comment_id > 0) {
-        try {
-            CommentPtr comment = tApp->session().load<Comment>(comment_id,
-                                 /* forceReread */ true);
-            if (comment->type() == Comment::FORUM_COMMENT ||
-                    comment->type() == Comment::FORUM_POST_TEXT) {
-                setTemplateText(comment->text());
-            }
-        } catch (...)
-        { }
-    }
-    if (templateText().empty()) {
-        setTemplateText(tr("tc.main.main_template"));
-    }
+    refresh();
     int best_players_shown = Options::instance()->best_players_shown();
     Users best_users = tApp->session().find<User>()
                        .where("rights <> 0")
@@ -75,6 +61,25 @@ MainPage::MainPage(Wt::WContainerWidget* parent):
                  .bind(now() - Options::instance()->away_timeout())
                  .resultList().size();
     bindInt("online", online);
+}
+
+void MainPage::refresh() {
+    dbo::Transaction t(tApp->session());
+    int comment_id = Options::instance()->main_page_content_id();
+    if (comment_id > 0) {
+        try {
+            CommentPtr comment = tApp->session().load<Comment>(comment_id,
+                                 /* forceReread */ true);
+            if (comment->type() == Comment::FORUM_COMMENT ||
+                    comment->type() == Comment::FORUM_POST_TEXT) {
+                setTemplateText(comment->text());
+            }
+        } catch (...)
+        { }
+    }
+    if (templateText().empty()) {
+        setTemplateText(tr("tc.main.main_template"));
+    }
 }
 
 }

@@ -13,6 +13,10 @@ namespace thechess {
 
 Footer::Footer(Wt::WContainerWidget* parent):
     WText(parent) {
+    refresh();
+}
+
+void Footer::refresh() {
     int comment_id = Options::instance()->footer_content_id();
     if (comment_id > 0) {
         dbo::Transaction t(tApp->session());

@@ -18,6 +18,9 @@ class Footer : public Wt::WText {
 public:
     /** Constructor */
     Footer(Wt::WContainerWidget* parent = 0);
+
+    /** Refresh the widget */
+    void refresh();
 };
 
 }
