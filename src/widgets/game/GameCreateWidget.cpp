@@ -66,6 +66,7 @@ void GameCreateWidget::set_moves(const Moves& moves) {
 }
 
 void GameCreateWidget::print() {
+    Wt::WPushButton* ok = new Wt::WPushButton(tr("tc.user.Start_game"), this);
     selector_ = new GPSelector(this);
     selector_->select_first();
     selector_->set_gp(gp_);
@@ -76,7 +77,6 @@ void GameCreateWidget::print() {
     color_->addItem(tr("tc.game.black"));
     form->item(tr("tc.game.your_color"), "", color_, color_);
     new Wt::WBreak(this);
-    Wt::WPushButton* ok = new Wt::WPushButton(tr("tc.common.Create"), this);
     ok->clicked().connect(this, &GameCreateWidget::button_handler);
     error_message_ = new Wt::WText(this);
     error_message_->setStyleClass("thechess-error");
