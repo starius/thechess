@@ -58,8 +58,9 @@ Options::Options(const Wt::WServer& server):
     read_int_value("banned_ip_user_rights", (int&)(banned_ip_user_rights_));
     read_int_value("anonymous_rights", (int&)(anonymous_rights_));
     read_int_value("vacation_rights", (int&)(vacation_rights_));
-    read_int_value("main_page_content_id", main_page_content_id_);
-    read_int_value("footer_content_id", footer_content_id_);
+    read_locales("main_page_content_id", main_page_content_id_,
+                 main_page_content_);
+    read_locales("footer_content_id", footer_content_id_, footer_content_);
     read_int_value("top_logged_in_content_id", top_logged_in_content_id_);
     read_seconds("away_timeout_seconds", away_timeout_);
     read_int_value("default_settings", (int&)(default_settings_));
@@ -79,6 +80,14 @@ Options::Options(const Wt::WServer& server):
     std::vector<std::string>(whitelist_).swap(whitelist_); // reduce capacity
     read_seconds("time_diff", time_diff_);
     server_ = 0; // should not be used latter
+}
+
+int Options::main_page_content_id() const {
+    return locales_id(main_page_content_, main_page_content_id_);
+}
+
+int Options::footer_content_id() const {
+    return locales_id(footer_content_, footer_content_id_);
 }
 
 bool Options::ip_in_whitelist(const std::string& ip) const {
@@ -105,6 +114,35 @@ bool Options::read_seconds(const std::string& name, Td& value) {
         return true;
     }
     return false;
+}
+
+bool Options::read_locales(const std::string& name, int& main,
+                           Locale2Int& locales) {
+    std::string value_str;
+    bool result = server_->readConfigurationProperty(name, value_str);
+    if (!server_->readConfigurationProperty(name, value_str)) {
+        return false;
+    }
+    using namespace boost::algorithm;
+    std::vector<std::string> parts;
+    split(parts, value_str, is_any_of(" "));
+    main = atoi(parts[0].c_str());
+    for (int i = 1; i < parts.size(); i++) {
+        std::vector<std::string> locale_and_id;
+        split(locale_and_id, parts[i], is_any_of("="));
+        locales[locale_and_id[0]] = atoi(locale_and_id[1].c_str());
+    }
+    return true;
+}
+
+int Options::locales_id(const Locale2Int& locales, int d) const {
+    if (wApp) {
+        Locale2Int::const_iterator it = locales.find(wApp->locale());
+        if (it != locales.end()) {
+            return it->second;
+        }
+    }
+    return d;
 }
 
 }

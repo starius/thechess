@@ -68,14 +68,10 @@ public:
     }
 
     /** Id of comment, which text is used as main page contents */
-    int main_page_content_id() const {
-        return main_page_content_id_;
-    }
+    int main_page_content_id() const;
 
     /** Id of comment, which text is used as page footer */
-    int footer_content_id() const {
-        return footer_content_id_;
-    }
+    int footer_content_id() const;
 
     /** Id of comment, which text is shown right to AuthWidget when loggen in */
     int top_logged_in_content_id() const {
@@ -156,6 +152,8 @@ public:
 private:
     const Wt::WServer* server_; // should not be used after construction!
 
+    typedef std::map<std::string, int> Locale2Int;
+
     DatabaseType database_type_;
     std::string database_value_;
     int connections_in_pool_;
@@ -164,7 +162,9 @@ private:
     UserRights anonymous_rights_;
     UserRights vacation_rights_;
     int main_page_content_id_;
+    Locale2Int main_page_content_;
     int footer_content_id_;
+    Locale2Int footer_content_;
     int top_logged_in_content_id_;
     Td away_timeout_;
     UserSettings default_settings_;
@@ -181,6 +181,9 @@ private:
 
     bool read_int_value(const std::string& name, int& value);
     bool read_seconds(const std::string& name, Td& value);
+    bool read_locales(const std::string& name, int& main, Locale2Int& locales);
+
+    int locales_id(const Locale2Int& locales, int d) const;
 };
 
 }
