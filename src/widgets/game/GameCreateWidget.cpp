@@ -33,6 +33,9 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
         new Wt::WText(tr("tc.user.User_blocked_you"), this);
         return;
     }
+    if (tApp->user() == user_) {
+        return;
+    }
     if (tApp->user() && tApp->user()->has_permission(GAME_CREATOR)) {
         print();
     }
