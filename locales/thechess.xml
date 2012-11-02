@@ -857,6 +857,11 @@ TheChess.
     <message id='tc.user.Already_banned'>Already banned</message>
     <message id='tc.user.Anonymous'>Anonymous</message>
     <message id='tc.user.avatar_nondefault'>avatar nondefault</message>
+    <message id='tc.user.Award_competitions'>Competition winner</message>
+    <message id='tc.user.Award_game_1'>100 ended games or 50 wins</message>
+    <message id='tc.user.Award_game_2'>250 ended games or 125 wins</message>
+    <message id='tc.user.Award_game_3'>500 ended games or 250 wins</message>
+    <message id='tc.user.Award_moder'>Moderator</message>
     <message id='tc.user.Ban_disabled'>Ban disabled</message>
     <message id='tc.user.ban_reason'>reason of ban</message>
     <message id='tc.user.Block'>Block</message>

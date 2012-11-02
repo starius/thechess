@@ -361,6 +361,11 @@
     <message id="tc.user.Already_banned">Ужо ў бане</message>
     <message id="tc.user.Anonymous">Ананімус</message>
     <message id="tc.user.avatar_nondefault">аватар не па змаўчанні</message>
+    <message id='tc.user.Award_competitions'>Победитель турнира</message>
+    <message id='tc.user.Award_game_1'>100 сыгранных партий или 50 побед</message>
+    <message id='tc.user.Award_game_2'>250 сыгранных партий или 125 побед</message>
+    <message id='tc.user.Award_game_3'>500 сыгранных партий или 250 побед</message>
+    <message id='tc.user.Award_moder'>Модератор</message>
     <message id="tc.user.ban_reason">прычына бану</message>
     <message id="tc.user.Block">Заблакаваць</message>
     <message id="tc.user.Change_avatar">Змяніць аватар</message>

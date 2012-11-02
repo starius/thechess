@@ -38,12 +38,14 @@ Awards awards_of(const UserPtr& user) {
     return result;
 }
 
-static void add_award(Wt::WContainerWidget* c, int awards, const char* path) {
+static void add_award(Wt::WContainerWidget* c, int awards, const char* path,
+                      const char* title) {
     if (awards) {
         if (awards >= 2) {
             c->addWidget(new Wt::WText(TO_S(awards)));
         }
         Wt::WImage* im = new Wt::WImage(path);
+        im->setAttributeValue("title", Wt::WString::tr(title));
         im->setHeight(60);
         c->addWidget(im);
     }
@@ -53,11 +55,16 @@ static void add_award(Wt::WContainerWidget* c, int awards, const char* path) {
 Wt::WWidget* awards_widget(const UserPtr& user) {
     Wt::WContainerWidget* result = new Wt::WContainerWidget();
     Awards awards = awards_of(user);
-    add_award(result, awards.competitions, "img/awards/competition.png");
-    add_award(result, awards.game_1, "img/awards/game-1.gif");
-    add_award(result, awards.game_2, "img/awards/game-2.gif");
-    add_award(result, awards.game_3, "img/awards/game-3.gif");
-    add_award(result, awards.moder, "img/awards/moder.gif");
+    add_award(result, awards.competitions, "img/awards/competition.png",
+              "tc.user.Award_competitions");
+    add_award(result, awards.game_1, "img/awards/game-1.gif",
+              "tc.user.Award_game_1");
+    add_award(result, awards.game_2, "img/awards/game-2.gif",
+              "tc.user.Award_game_2");
+    add_award(result, awards.game_3, "img/awards/game-3.gif",
+              "tc.user.Award_game_3");
+    add_award(result, awards.moder, "img/awards/moder.gif",
+              "tc.user.Award_moder");
     return result;
 }
 
