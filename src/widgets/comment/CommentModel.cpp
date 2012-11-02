@@ -120,7 +120,8 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
 
 Wt::WFlags<Wt::ItemFlag> CommentModel::flags(const Wt::WModelIndex& i) const {
     Wt::WFlags<Wt::ItemFlag> f = BaseQM::flags(i);
-    if (i.column() == CONTENTS_COLUMN || i.column() == INIT_COL) {
+    if (i.column() == CONTENTS_COLUMN || i.column() == INIT_COL
+            || i.column() == DESTINATION_COL) {
         f |= Wt::ItemIsXHTMLText;
     }
     return f;
