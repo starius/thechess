@@ -287,6 +287,7 @@ protected:
         Wt::Wc::Pager* pager = new Wt::Wc::Pager(this);
         pager->set_base(10);
         pager->set_half_of_frame(2);
+        setSelectable(true);
         return pager;
     }
 };

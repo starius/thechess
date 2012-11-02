@@ -107,6 +107,7 @@ public:
         setColumnWidth(IpBanListModel::IP, 100);
         setColumnWidth(IpBanListModel::START, 100);
         setColumnWidth(IpBanListModel::STOP, 100);
+        setSelectable(true);
     }
 
 protected:

@@ -218,6 +218,7 @@ public:
         setSortingEnabled(UserListModel::NUMBER_COL, false);
         setSortingEnabled(UserListModel::DRAWS_COLUMN, false);
         addStyleClass("thechess-user-list");
+        setSelectable(true);
     }
 
 protected:

@@ -147,6 +147,7 @@ public:
         setColumnWidth(CPListModel::MAX_CLASSIFICATION_COLUMN, 70);
         setColumnWidth(CPListModel::FORCE_START_DELAY_COLUMN, 60);
         setRowHeaderCount(1); // fixed id_columns when scrolling
+        setSelectable(true);
     }
 
 protected:

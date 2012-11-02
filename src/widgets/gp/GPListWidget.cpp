@@ -131,6 +131,7 @@ public:
         setColumnWidth(GPListModel::NORATING_COLUMN, 40);
         setColumnWidth(GPListModel::FIRST_DRAW_COLUMN, 30);
         setRowHeaderCount(1); // fixed id_columns when scrolling
+        setSelectable(true);
     }
 
 protected:

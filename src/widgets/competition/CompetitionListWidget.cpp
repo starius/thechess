@@ -253,6 +253,7 @@ public:
         setRowHeaderCount(1); // fixed id_columns when scrolling
         setSortingEnabled(false);
         Wt::Wc::scroll_to_last(this);
+        setSelectable(true);
     }
 
 protected:

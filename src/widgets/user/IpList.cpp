@@ -120,6 +120,7 @@ public:
         Wt::WTableView(p) {
         setModel(model);
         resize(ILP::WIDTH, ILP::HEIGHT);
+        setSelectable(true);
     }
 
 protected:
