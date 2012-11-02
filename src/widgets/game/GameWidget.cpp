@@ -510,6 +510,7 @@ private:
         admin_log("Pause " + game_a(game_.id()));
         t.commit();
         t_task(GAME, game_.id());
+        t_emit(GAME, game_.id());
     }
 
     void discard_pause() {
@@ -519,6 +520,7 @@ private:
         admin_log("Discard pause of " + game_a(game_.id()));
         t.commit();
         t_task(GAME, game_.id());
+        t_emit(GAME, game_.id());
     }
 
     void mistake_propose() {
