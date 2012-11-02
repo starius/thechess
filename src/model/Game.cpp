@@ -495,7 +495,7 @@ void Game::admin_pause_discard(const UserPtr& user) {
 }
 
 bool Game::admin_can_pause(const UserPtr& user) const {
-    return state() == ACTIVE && user && !is_member(user) &&
+    return state() == ACTIVE && user &&
            user->has_permission(TIME_WIZARD);
 }
 
@@ -714,7 +714,7 @@ bool Game::real_rating() const {
 }
 
 bool Game::can_mark_norating(const UserPtr& user) const {
-    return user && user->has_permission(VIRTUALS_VIEWER) && !is_member(user) &&
+    return user && user->has_permission(VIRTUALS_VIEWER) &&
            !gp_->norating() && !norating();
 }
 
