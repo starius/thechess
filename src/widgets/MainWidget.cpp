@@ -244,6 +244,12 @@ void MainWidget::gp_challenge(const GPPtr& gp) {
     wApp->setTitle(tr("tc.title.GameCreateWidget"));
 }
 
+void MainWidget::user_challenge(const UserPtr& user) {
+    set_contents(new GameCreateWidget(user));
+    wApp->setTitle(tr("tc.title.GameCreateWidget_with")
+                   .arg(user->username20()));
+}
+
 void MainWidget::competition_view(const CompetitionPtr& c) {
     set_contents(new CompetitionWidget(c));
     if (c->name().empty()) {

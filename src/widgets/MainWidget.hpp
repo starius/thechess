@@ -91,6 +91,9 @@ public:
     /** Game challenge with this GP */
     void gp_challenge(const GPPtr& gp);
 
+    /** Game challenge with this user */
+    void user_challenge(const UserPtr& user);
+
     /** List of competitions */
     void competition_list();
 
