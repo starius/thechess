@@ -483,7 +483,7 @@ bool Game::is_pause_proposed() const {
 }
 
 bool Game::admin_can_pause_discard(const UserPtr& user) const {
-    return state() == PAUSE && user && !is_member(user) &&
+    return state() == PAUSE && user &&
            user->has_permission(TIME_WIZARD);
 }
 
