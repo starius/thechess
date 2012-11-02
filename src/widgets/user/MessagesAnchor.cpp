@@ -23,8 +23,8 @@ public:
         setText(tr("tc.menu.private_messages"));
         setLink(tApp->path().my_messages()->link());
         clicked().connect(this, &MessagesAnchorImpl::normal_style);
-        tApp->path().connect(tApp->path().my_messages(), boost::bind(
-                                 &MessagesAnchorImpl::normal_style, this));
+        tApp->path().my_messages()->opened().connect(boost::bind(
+                    &MessagesAnchorImpl::normal_style, this));
         normal_style();
         // TODO sound_ = new Wt::WSound("/sound/bark.mp3", this);
         sound_ = new Wt::WSound("/sound/glass.mp3", this);
