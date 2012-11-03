@@ -109,6 +109,10 @@ Application::Application(bool, const Wt::WEnvironment& env, Server& server):
 }
 
 Application::~Application() {
+    if (user()) {
+        t_emit_after(USER, user().id(),
+                     now() + Options::instance()->away_timeout());
+    }
     decrease_sessions_counter();
     delete kick_;
 }
