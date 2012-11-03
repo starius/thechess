@@ -64,9 +64,6 @@ public:
         } else if (my_color == Piece::BLACK) {
             color = new Wt::WImage("img/chess/black.gif", this);
         }
-        if (color) {
-            color->addStyleClass("no-wrap");
-        }
         anchor_ = new Wt::WAnchor(this);
         if (!User::has_s(SWITCH_NAMES_IN_MYMENU) ||
                 !game->other_user(tApp->user())) {
@@ -76,7 +73,6 @@ public:
         }
         anchor_->setLink(tApp->path().game_view()->get_link(game_.id()));
         anchor_->setMargin(5, Wt::Left | Wt::Right);
-        anchor_->addStyleClass("no-wrap");
         if (!User::has_s(SWITCH_HIDE_ONLINE)) {
             UserPtr competitor = game_->other_user(tApp->user());
             if (competitor) {
@@ -104,12 +100,10 @@ public:
     void add_countdown() {
         if (!User::has_s(SWITCH_HIDE_COUNTDOWN)) {
             my_countdown_ = new Wt::Wc::Countdown(this, /* load JS */ false);
-            my_countdown_->addStyleClass("no-wrap");
             my_countdown_->setMargin(5, Wt::Left | Wt::Right);
         }
         if (User::has_s(SWITCH_COMPETOR_TIME)) {
             competitor_countdown_ = new Wt::Wc::Countdown(this, false);
-            competitor_countdown_->addStyleClass("no-wrap");
             competitor_countdown_->setMargin(5, Wt::Left | Wt::Right);
         }
     }
