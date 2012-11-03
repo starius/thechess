@@ -405,7 +405,7 @@ namespace tracker {
 /** Standard delay for all tasks.
 \see PlanningServer::set_delay()
 */
-const Td DELAY = 0.01 * SECOND;
+const Td DELAY = SECOND;
 
 /** Delay for task re-processing in case of stale object exception.
 The valus is selected each time from this range (min, max).
