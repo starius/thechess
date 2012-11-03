@@ -155,6 +155,11 @@ void Application::login_handler() {
     bool show_user_items = true;
     if (prev_user_ != user()) {
         prev_user_.reread();
+        if (prev_user_) {
+            prev_user_.modify()->logout_last_online();
+            prev_user_.flush();
+            t_emit_after(USER, prev_user_.id());
+        }
         user().reread();
         if (user()) {
             if (user()->has_comment_base() && !user()->online()) {
