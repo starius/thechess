@@ -184,6 +184,14 @@ CREATE TABLE "thechess_user" (
   "vacation_until" timestamp,
   "admin_rights" integer not null
 );
+CREATE TABLE "thechess_team" (
+  "id" serial primary key,
+  "version" integer not null,
+  "name" text not null,
+  "description" text not null,
+  "init_id" bigint,
+  "created" timestamp
+);
 CREATE TABLE "winners_competition" (
   "thechess_user_id" bigint not null,
   "thechess_competition_id" bigint not null,
@@ -204,6 +212,27 @@ CREATE TABLE "thechess_message_filter" (
   primary key ("good_id", "bad_id"),
   constraint "fk_thechess_message_filter_key1" foreign key ("good_id") references "thechess_user" ("id"),
   constraint "fk_thechess_message_filter_key2" foreign key ("bad_id") references "thechess_user" ("id")
+);
+CREATE TABLE "team_members" (
+  "thechess_user_id" bigint not null,
+  "thechess_team_id" bigint not null,
+  primary key ("thechess_user_id", "thechess_team_id"),
+  constraint "fk_team_members_key1" foreign key ("thechess_user_id") references "thechess_user" ("id"),
+  constraint "fk_team_members_key2" foreign key ("thechess_team_id") references "thechess_team" ("id")
+);
+CREATE TABLE "team_candidates" (
+  "thechess_user_id" bigint not null,
+  "thechess_team_id" bigint not null,
+  primary key ("thechess_user_id", "thechess_team_id"),
+  constraint "fk_team_members_key1" foreign key ("thechess_user_id") references "thechess_user" ("id"),
+  constraint "fk_team_members_key2" foreign key ("thechess_team_id") references "thechess_team" ("id")
+);
+CREATE TABLE "team_banned" (
+  "thechess_user_id" bigint not null,
+  "thechess_team_id" bigint not null,
+  primary key ("thechess_user_id", "thechess_team_id"),
+  constraint "fk_team_members_key1" foreign key ("thechess_user_id") references "thechess_user" ("id"),
+  constraint "fk_team_members_key2" foreign key ("thechess_team_id") references "thechess_team" ("id")
 );
 
 ALTER TABLE "auth_identity"
@@ -247,7 +276,8 @@ ALTER TABLE "thechess_ip_ban"
 ALTER TABLE "thechess_user"
   ADD constraint "fk_thechess_user_classification_confirmer" foreign key ("classification_confirmer_id") references "thechess_user" ("id"),
   ADD constraint "fk_thechess_user_comment_base" foreign key ("comment_base_id") references "thechess_comment" ("id");
-
+ALTER TABLE "thechess_team"
+  ADD constraint "fk_thechess_team_init" foreign key ("init_id") references "thechess_team" ("id");
 
 CREATE INDEX "members_competitions_thechess_competition" on "members_competitions" ("thechess_competition_id");
 CREATE INDEX "members_competitions_thechess_user" on "members_competitions" ("thechess_user_id");

@@ -184,6 +184,7 @@ void Session::map_classes() {
     mapClass<Game>("thechess_game");
     mapClass<CP>("thechess_cp");
     mapClass<Competition>("thechess_competition");
+    mapClass<Team>("thechess_team");
     mapClass<Comment>("thechess_comment");
     mapClass<BD>("thechess_bd");
     mapClass<IpBan>("thechess_ip_ban");

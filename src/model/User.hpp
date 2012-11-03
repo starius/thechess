@@ -74,6 +74,11 @@ public:
                      "thechess_message_filter", "good_id");
         dbo::hasMany(a, they_blocked_me_, dbo::ManyToMany,
                      "thechess_message_filter", "bad_id");
+        dbo::hasMany(a, leader_in_teams_, dbo::ManyToOne, "init");
+        dbo::hasMany(a, member_in_teams_, dbo::ManyToMany, "team_members");
+        dbo::hasMany(a, candidate_in_teams_, dbo::ManyToMany,
+                     "team_candidates");
+        dbo::hasMany(a, banned_in_teams_, dbo::ManyToMany, "team_banned");
     }
 
     /** Return (first of) auth info */
@@ -450,6 +455,11 @@ private:
 
     GPs gps_;
     CPs cps_;
+
+    Teams leader_in_teams_;
+    Teams member_in_teams_;
+    Teams candidate_in_teams_;
+    Teams banned_in_teams_;
 
     bool check_vacation();
 };

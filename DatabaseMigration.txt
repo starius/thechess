@@ -15,6 +15,39 @@ ALTER TABLE thechess_ip_ban DROP COLUMN enabled;
 ALTER TABLE thechess_ip_ban ADD COLUMN state integer not null default 10;
 
 
+CREATE TABLE "thechess_team" (
+  "id" serial primary key,
+  "version" integer not null,
+  "name" text not null,
+  "description" text not null,
+  "init_id" bigint,
+  "created" timestamp
+);
+CREATE TABLE "team_members" (
+  "thechess_user_id" bigint not null,
+  "thechess_team_id" bigint not null,
+  primary key ("thechess_user_id", "thechess_team_id"),
+  constraint "fk_team_members_key1" foreign key ("thechess_user_id") references "thechess_user" ("id"),
+  constraint "fk_team_members_key2" foreign key ("thechess_team_id") references "thechess_team" ("id")
+);
+CREATE TABLE "team_candidates" (
+  "thechess_user_id" bigint not null,
+  "thechess_team_id" bigint not null,
+  primary key ("thechess_user_id", "thechess_team_id"),
+  constraint "fk_team_members_key1" foreign key ("thechess_user_id") references "thechess_user" ("id"),
+  constraint "fk_team_members_key2" foreign key ("thechess_team_id") references "thechess_team" ("id")
+);
+CREATE TABLE "team_banned" (
+  "thechess_user_id" bigint not null,
+  "thechess_team_id" bigint not null,
+  primary key ("thechess_user_id", "thechess_team_id"),
+  constraint "fk_team_members_key1" foreign key ("thechess_user_id") references "thechess_user" ("id"),
+  constraint "fk_team_members_key2" foreign key ("thechess_team_id") references "thechess_team" ("id")
+);
+ALTER TABLE "thechess_team"
+  ADD constraint "fk_thechess_team_init" foreign key ("init_id") references "thechess_team" ("id");
+
+
 3.0.8 to 3.0.9
 ==============
 

@@ -35,6 +35,7 @@ class GP;
 class Game;
 class CP;
 class Competition;
+class Team;
 class Comment;
 class BD;
 class IpBan;
@@ -45,6 +46,7 @@ typedef dbo::ptr<GP> GPPtr;
 typedef dbo::ptr<Game> GamePtr;
 typedef dbo::ptr<CP> CPPtr;
 typedef dbo::ptr<Competition> CompetitionPtr;
+typedef dbo::ptr<Team> TeamPtr;
 typedef dbo::ptr<Comment> CommentPtr;
 typedef dbo::ptr<BD> BDPtr;
 typedef dbo::ptr<IpBan> IpBanPtr;
@@ -64,6 +66,9 @@ typedef CP* CPPtr;
 /** Dbo pointer to Competition */
 typedef Competition* CompetitionPtr;
 
+/** Dbo pointer to Team */
+typedef Team* TeamPtr;
+
 /** Dbo pointer to Comment */
 typedef Comment* CommentPtr;
 
@@ -80,6 +85,7 @@ typedef dbo::collection<GPPtr> GPs;
 typedef dbo::collection<GamePtr> Games;
 typedef dbo::collection<CPPtr> CPs;
 typedef dbo::collection<CompetitionPtr> Competitions;
+typedef dbo::collection<TeamPtr> Teams;
 typedef dbo::collection<CommentPtr> Comments;
 typedef dbo::collection<BDPtr> BDs;
 typedef dbo::collection<IpBanPtr> IpBans;
@@ -98,6 +104,9 @@ typedef CP* CPs;
 
 /** Competition dbo collection */
 typedef Competition* Competitions;
+
+/** Team dbo collection */
+typedef Team* Teams;
 
 /** Comment dbo collection */
 typedef Comment* Comments;
@@ -124,6 +133,9 @@ typedef std::vector<CPPtr> CPsVector;
 
 /** Competition vector */
 typedef std::vector<CompetitionPtr> CompetitionsVector;
+
+/** Team vector */
+typedef std::vector<TeamPtr> TeamsVector;
 
 /** Comment vector */
 typedef std::vector<CommentPtr> CommentsVector;
