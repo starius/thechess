@@ -125,6 +125,7 @@ private:
     Kick* kick_;
     UserPtr user_;
     std::string ip_;
+    bool offline_emited_;
     Td* server_usage_;
     Td timezone_diff_;
     Wt::JSignal<int> timezone_signal_;
@@ -141,6 +142,7 @@ private:
     void gather_explorer(Wt::Wc::Gather::DataType type,
                          const std::string& value);
     void user_action();
+    void nonuser_action();
     void check_my_games();
 };
 

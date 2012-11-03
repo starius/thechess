@@ -45,6 +45,7 @@ static boost::mutex sessions_per_ip_mutex_;
 Application::Application(const Wt::WEnvironment& env, Server& server) :
     Wt::WApplication(env), server_(server), session_(server.pool()),
     gather_(0), kick_(0),
+    offline_emited_(false),
     server_usage_(0),
     timezone_diff_(Options::instance()->time_diff()),
     timezone_signal_(root(), "timezone") {
@@ -84,6 +85,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
 Application::Application(bool, const Wt::WEnvironment& env, Server& server):
     Wt::WApplication(env), server_(server), session_(server.pool()),
     gather_(0), kick_(0),
+    offline_emited_(false),
     server_usage_(0),
     timezone_diff_(Options::instance()->time_diff()),
     timezone_signal_(root(), "timezone") {
@@ -213,6 +215,8 @@ void Application::notify(const Wt::WEvent& e) {
         }
         if (e_type == Wt::UserEvent) {
             user_action();
+        } else {
+            nonuser_action();
         }
         // } catch (dbo::StaleObjectException e) {
         //     log("notice") << e.what();
@@ -339,6 +343,7 @@ void Application::gather_explorer(Wt::Wc::Gather::DataType type,
 void Application::user_action() {
     dbo::Transaction t(session());
     if (user()) {
+        offline_emited_ = false;
         user().reread();
         Td away = now() - user()->last_online();
         float away_ratio = away / Options::instance()->away_timeout();
@@ -350,6 +355,19 @@ void Application::user_action() {
         }
         if (away_ratio > 2) {
             check_my_games();
+        }
+    }
+}
+
+void Application::nonuser_action() {
+    dbo::Transaction t(session());
+    if (!offline_emited_ && user()) {
+        if (!user()->online()) {
+            user().reread();
+            if (!user()->online()) {
+                offline_emited_ = true;
+                t_emit_after(USER, user().id());
+            }
         }
     }
 }
