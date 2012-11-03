@@ -212,7 +212,6 @@ void Application::notify(const Wt::WEvent& e) {
             *server_usage_ += stop - start;
         }
         if (e_type == Wt::UserEvent) {
-            // FIXME this does not work
             user_action();
         }
         // } catch (dbo::StaleObjectException e) {
