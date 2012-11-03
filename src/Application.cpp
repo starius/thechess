@@ -340,6 +340,9 @@ void Application::user_action() {
         if (away_ratio > 0.5) {
             user().modify()->update_last_online();
         }
+        if (away_ratio > 1) {
+            t_emit_after(USER, user().id());
+        }
         if (away_ratio > 2) {
             check_my_games();
         }
