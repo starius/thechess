@@ -57,6 +57,11 @@ public:
         game_(game), list_(list),
         my_countdown_(0), competitor_countdown_(0) {
         addStyleClass("no-wrap");
+        reprint();
+    }
+
+    void reprint() {
+        clear();
         Piece::Color my_color = game_->color_of(tApp->user());
         Wt::WImage* color = 0;
         if (my_color == Piece::WHITE) {
@@ -66,10 +71,10 @@ public:
         }
         anchor_ = new Wt::WAnchor(this);
         if (!User::has_s(SWITCH_NAMES_IN_MYMENU) ||
-                !game->other_user(tApp->user())) {
+                !game_->other_user(tApp->user())) {
             anchor_->setText(boost::lexical_cast<std::string>(game_.id()));
         } else {
-            anchor_->setText(game->other_user(tApp->user())->safe_username());
+            anchor_->setText(game_->other_user(tApp->user())->safe_username());
         }
         anchor_->setLink(tApp->path().game_view()->get_link(game_.id()));
         anchor_->setMargin(5, Wt::Left | Wt::Right);
@@ -87,14 +92,7 @@ public:
         excite_or_unexcite();
         update_countdown();
         deselect();
-        style_by_state(game->state());
-    }
-
-    void delete_countdown() {
-        delete my_countdown_;
-        my_countdown_ = 0;
-        delete competitor_countdown_;
-        competitor_countdown_ = 0;
+        style_by_state(game_->state());
     }
 
     void add_countdown() {
@@ -361,11 +359,8 @@ void MyGameAnchor::check_state() {
         if (!game_->is_ended()) {
             list_->extract_anchor(this);
             list_->insert_anchor(this, game_->state());
-            delete_countdown();
-            add_countdown();
-            update_countdown();
         }
-        style_by_state(game_->state());
+        reprint();
     }
 }
 
