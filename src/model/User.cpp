@@ -297,6 +297,10 @@ void User::update_last_online() {
     last_online_ = now();
 }
 
+void User::logout_last_online() {
+    last_online_ = now() - Options::instance()->away_timeout() - SECOND;
+}
+
 dbo::Query<GamePtr> User::games() const {
     return session()->find<Game>()
            .where("white_id = ? or black_id = ? or init_id = ?")

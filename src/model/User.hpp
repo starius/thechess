@@ -196,6 +196,9 @@ public:
     /** Set last online time to now, update online_time */
     void update_last_online();
 
+    /** Set last online time to now - away_timeout - second */
+    void logout_last_online();
+
     /** Get total time spent online */
     const Td& online_time() const {
         return online_time_;
