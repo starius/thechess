@@ -169,6 +169,7 @@ void Application::login_handler() {
                 }
             }
             user_action();
+            user().flush();
             check_my_games();
             if (gather_) {
                 gather_->explore_all();
