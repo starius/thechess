@@ -27,12 +27,35 @@ const int ORDER_OF_STATES_SIZE = 4;
 const Game::State ORDER_OF_STATES[ORDER_OF_STATES_SIZE] =
 {Game::ACTIVE, Game::PAUSE, Game::CONFIRMED, Game::PROPOSED};
 
+class OnlineLabel : public Wt::WText, public Notifiable {
+public:
+    OnlineLabel(const UserPtr& user):
+        Wt::WText(tr("tc.user.Online")),
+        Notifiable(Object(USER, user.id())),
+        user_(user) {
+        update_hidden();
+    }
+
+    void notify(EventPtr) {
+        dbo::Transaction t(tApp->session());
+        user_.reread();
+        update_hidden();
+    }
+
+    void update_hidden() {
+        setHidden(!user_->online());
+    }
+
+private:
+    UserPtr user_;
+};
+
 class MyGameAnchor : public Wt::WContainerWidget, public Notifiable {
 public:
     MyGameAnchor(const GamePtr& game, MyGamesListImp* list):
         Notifiable(Object(GAME, game.id())),
         game_(game), list_(list),
-        online_(0), my_countdown_(0), competitor_countdown_(0) {
+        my_countdown_(0), competitor_countdown_(0) {
         addStyleClass("no-wrap");
         Piece::Color my_color = game_->color_of(tApp->user());
         Wt::WImage* color = 0;
@@ -55,8 +78,10 @@ public:
         anchor_->setMargin(5, Wt::Left | Wt::Right);
         anchor_->addStyleClass("no-wrap");
         if (!User::has_s(SWITCH_HIDE_ONLINE)) {
-            online_ = new Wt::WText(tr("tc.user.Online"), this);
-            online_->addStyleClass("no-wrap");
+            UserPtr competitor = game_->other_user(tApp->user());
+            if (competitor) {
+                addWidget(new OnlineLabel(competitor));
+            }
         }
         if (game_->competition()) {
             Wt::WText* c = new Wt::WText(tr("tc.competition.c"), this);
@@ -125,14 +150,6 @@ public:
             excite();
         } else {
             unexcite();
-        }
-        update_online();
-    }
-
-    void update_online() {
-        if (online_) {
-            UserPtr competitor = game_->other_user(tApp->user());
-            online_->setHidden(!competitor || !competitor->online());
         }
     }
 
@@ -205,7 +222,6 @@ private:
     GamePtr game_;
     MyGamesListImp* list_;
     Wt::WAnchor* anchor_;
-    Wt::WText* online_;
     Wt::Wc::Countdown* my_countdown_;
     Wt::Wc::Countdown* competitor_countdown_;
 };
@@ -328,7 +344,6 @@ private:
             a->excite_or_unexcite();
         }
         a->update_countdown();
-        a->update_online();
     }
 
     void remove_anchor(MyGameAnchor* a, int game_id) {
