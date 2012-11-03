@@ -141,6 +141,9 @@ void t_emit(ObjectType type, int id);
 Use this function instead of t_emit to notify about
 changed objects from process().
 */
+void t_emit_after(ObjectType type, int id, const Wt::WDateTime& when);
+
+/** Notify listening widgets through NotifyTask */
 void t_emit_after(ObjectType type, int id);
 
 /** Notify listening widgets */

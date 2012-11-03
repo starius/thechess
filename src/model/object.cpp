@@ -151,6 +151,10 @@ void t_task(ObjectType type, int id) {
     t_task(type, id, now());
 }
 
+void t_emit_after(ObjectType type, int id, const Wt::WDateTime& when) {
+    t_task(boost::make_shared<NotifyTask>(type, id), when);
+}
+
 void t_emit_after(ObjectType type, int id) {
     t_task(boost::make_shared<NotifyTask>(type, id), now());
 }
