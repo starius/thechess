@@ -118,6 +118,7 @@ bool Options::read_seconds(const std::string& name, Td& value) {
 
 bool Options::read_locales(const std::string& name, int& main,
                            Locale2Int& locales) {
+    locales.clear();
     std::string value_str;
     bool result = server_->readConfigurationProperty(name, value_str);
     if (!server_->readConfigurationProperty(name, value_str)) {
