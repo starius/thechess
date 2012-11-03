@@ -349,6 +349,7 @@ void Application::user_action() {
         float away_ratio = away / Options::instance()->away_timeout();
         if (away_ratio > 0.5) {
             user().modify()->update_last_online();
+            user().flush();
         }
         if (away_ratio > 1) {
             t_emit_after(USER, user().id());
