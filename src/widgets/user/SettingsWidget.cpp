@@ -9,6 +9,7 @@
 #include <boost/foreach.hpp>
 #include <boost/scoped_ptr.hpp>
 
+#include <Wt/WEnvironment>
 #include <Wt/WContainerWidget>
 #include <Wt/WPushButton>
 #include <Wt/WAnchor>
@@ -123,43 +124,62 @@ private:
         new Wt::WBreak(this);
         public_email_ = new Wt::WCheckBox(tr("tc.user.Public_email"), this);
         public_email_->setChecked(User::has_s(SWITCH_PUBLIC_EMAIL));
+        connect_to_save(public_email_);
         new Wt::WBreak(this);
         names_in_mymenu_ = new Wt::WCheckBox(tr("tc.user.Names_in_menu"), this);
         names_in_mymenu_->setChecked(User::has_s(SWITCH_NAMES_IN_MYMENU));
+        connect_to_save(names_in_mymenu_);
         new Wt::WBreak(this);
         hide_paused_games_ = new Wt::WCheckBox(tr("tc.user.Hide_paused"), this);
         hide_paused_games_->setChecked(User::has_s(SWITCH_HIDE_PAUSED_GAMES));
+        connect_to_save(hide_paused_games_);
         new Wt::WBreak(this);
         hide_online_mygames_ = new Wt::WCheckBox(this);
         hide_online_mygames_->setText(tr("tc.user.Hide_online_mygames"));
         hide_online_mygames_->setChecked(User::has_s(SWITCH_HIDE_ONLINE));
+        connect_to_save(hide_online_mygames_);
         new Wt::WBreak(this);
         hide_countdown_mygames_ = new Wt::WCheckBox(this);
         hide_countdown_mygames_->setText(tr("tc.user.Hide_countdown_mygames"));
         hide_countdown_mygames_->setChecked(User::has_s(SWITCH_HIDE_COUNTDOWN));
+        connect_to_save(hide_countdown_mygames_);
         new Wt::WBreak(this);
         competitor_time_ = new Wt::WCheckBox(this);
         competitor_time_->setText(tr("tc.user.Competitor_time"));
         competitor_time_->setChecked(User::has_s(SWITCH_COMPETOR_TIME));
+        connect_to_save(competitor_time_);
         new Wt::WBreak(this);
         formatting_chat_ = new Wt::WCheckBox(this);
         formatting_chat_->setText(tr("tc.user.Formatting_chat"));
         formatting_chat_->setChecked(User::has_s(SWITCH_FORMATTING_CHAT));
+        connect_to_save(formatting_chat_);
         new Wt::WBreak(this);
         more_formatting_ = new Wt::WCheckBox(this);
         more_formatting_->setText(tr("tc.user.More_formatting"));
         more_formatting_->setChecked(User::has_s(SWITCH_MORE_FORMATTING));
+        connect_to_save(more_formatting_);
         new Wt::WBreak(this);
         less_game_info_ = new Wt::WCheckBox(this);
         less_game_info_->setText(tr("tc.user.Less_game_info"));
         less_game_info_->setChecked(User::has_s(SWITCH_LESS_GAME_INFO));
+        connect_to_save(less_game_info_);
         new Wt::WBreak(this);
         no_move_hints_ = new Wt::WCheckBox(this);
         no_move_hints_->setText(tr("tc.user.No_move_hints"));
         no_move_hints_->setChecked(User::has_s(SWITCH_NO_MOVE_HINTS));
-        new Wt::WBreak(this);
-        Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
-        b->clicked().connect(this, &SettingsWidgetImpl::save_settings);
+        connect_to_save(no_move_hints_);
+        if (!wApp->environment().ajax()) {
+            new Wt::WBreak(this);
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(tr("tc.common.Save"), this);
+            b->clicked().connect(this, &SettingsWidgetImpl::save_settings);
+        }
+    }
+
+    void connect_to_save(Wt::WCheckBox* box) {
+        if (wApp->environment().ajax()) {
+            box->changed().connect(this, &SettingsWidgetImpl::save_settings);
+        }
     }
 
     void print_filter_min_online() {
