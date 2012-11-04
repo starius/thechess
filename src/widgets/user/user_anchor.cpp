@@ -28,12 +28,12 @@ public:
 
     void notify(EventPtr) {
         dbo::Transaction t(tApp->session());
-        user_.reread();
         reprint();
     }
 
     void reprint() {
         dbo::Transaction t(tApp->session());
+        user_.reread();
         clear();
         Gravatar* gravatar = new Gravatar(user_, this);
         gravatar->set_size(15);
