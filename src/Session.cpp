@@ -127,11 +127,12 @@ void Session::recalculate_game_rating() {
 
 void Session::recalculate_competition_rating() {
     dbo::Transaction t(*this);
-    Users users = find<User>().resultList();
-    BOOST_FOREACH (UserPtr user, users) {
-        user.modify()->competitions_stat().reset();
-        user.purge();
-    }
+    execute("update thechess_user set competitions_stat_elo = ?, "
+            "competitions_stat_all = 0, "
+            "competitions_stat_wins = 0, competitions_stat_fails = 0")
+    .bind(EloPlayer(true).elo());
+    t.commit();
+    dbo::Transaction t2(*this);
     Competitions ccc = find<Competition>()
                        .orderBy("ended").resultList();
     BOOST_FOREACH (CompetitionPtr c, ccc) {
