@@ -293,9 +293,7 @@ private:
                 print_mistake_buttons();
                 print_draw_buttons();
             }
-            if (game_->is_ended()) {
-                print_ended_buttons();
-            }
+            print_ended_buttons();
         }
     }
 
