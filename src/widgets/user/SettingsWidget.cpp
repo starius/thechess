@@ -351,7 +351,8 @@ private:
             Td duration = vacation_duration_->corrected_value();
             Wt::WDateTime until = now() + duration;
             tApp->user().modify()->set_vacation_until(until);
-            Games games = tApp->user()->games().resultList();
+            Games games = tApp->user()->games().where("state < ?")
+                          .bind(Game::MIN_ENDED);
             BOOST_FOREACH (GamePtr g, games) {
                 g.modify()->take_vacation_pause(duration);
                 game_ids.push_back(g.id());
