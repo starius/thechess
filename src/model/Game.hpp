@@ -610,7 +610,7 @@ public:
     If you call this manually, you should call this method of all the games,
     ordered by ended().
     */
-    void stat_change();
+    void stat_change() const;
 
 private:
     GPPtr gp_;

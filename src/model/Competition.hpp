@@ -190,7 +190,7 @@ public:
     If you call this manually, you should call this method of
     all the competitions, ordered by ended().
     */
-    void stat_change();
+    void stat_change() const;
 
     /* @} */
 

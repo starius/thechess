@@ -243,7 +243,7 @@ UsersVector Competition::virtuals() const {
     return UsersVector(users.begin(), users.end());
 }
 
-void Competition::stat_change() {
+void Competition::stat_change() const {
     UsersVector members = members_vector();
     UsersVector winners = winners_vector();
     std::set<UserPtr> set_of_winners;

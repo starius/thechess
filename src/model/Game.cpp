@@ -100,7 +100,7 @@ const char* Game::state2str_id(State state) {
     return "tc.game.State_state";
 }
 
-void Game::stat_change() {
+void Game::stat_change() const {
     if (!real_rating()) {
         return;
     }
@@ -111,8 +111,9 @@ void Game::stat_change() {
     if (is_draw()) {
         white_.modify()->games_stat().draw(&(black_.modify()->games_stat()));
     }
-    rating_after_[Piece::WHITE] = white()->games_stat().elo();
-    rating_after_[Piece::BLACK] = black()->games_stat().elo();
+    // FIXME
+    // rating_after_[Piece::WHITE] = white()->games_stat().elo();
+    // rating_after_[Piece::BLACK] = black()->games_stat().elo();
 }
 
 Wt::WString Game::str_state() const {

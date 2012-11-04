@@ -120,8 +120,7 @@ void Session::recalculate_game_rating() {
             if (game.id() % 1000 == 0) {
                 std::cerr << "Recalc. game " << game.id() << std::endl;
             }
-            game.modify()->stat_change();
-            game.purge();
+            game->stat_change();
         }
     }
 }
@@ -136,8 +135,7 @@ void Session::recalculate_competition_rating() {
     Competitions ccc = find<Competition>()
                        .orderBy("ended").resultList();
     BOOST_FOREACH (CompetitionPtr c, ccc) {
-        c.modify()->stat_change();
-        c.purge();
+        c->stat_change();
     }
 }
 
