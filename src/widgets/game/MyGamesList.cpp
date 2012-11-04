@@ -319,6 +319,7 @@ private:
         if (o->user_id != user_.id()) {
             GamePtr game = a->game();
             game.reread();
+            a->excite_or_unexcite();
             MyGameAnchor* last_clicked_a = 0;
             if (last_clicked_) {
                 Anchors::iterator it = anchors_.find(last_clicked_);
