@@ -657,7 +657,7 @@ void Game::draw_discard(const UserPtr& user) {
 
 bool Game::can_surrender(const UserPtr& user) const {
     return state() == ACTIVE &&
-           size_without_init() >= gp_->first_draw() &&
+           moves().size() >= 4 && // min moves number
            is_member(user);
 }
 
