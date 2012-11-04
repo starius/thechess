@@ -112,7 +112,7 @@ void Session::recalculate_game_rating() {
     .bind(EloPlayer(true).elo());
     int games_size = find<Game>().resultList().size();
     t.commit();
-    const int STEP = 1000;
+    const int STEP = 1000000;
     for (int offset = 0; offset < games_size; offset += STEP) {
         dbo::Transaction t2(*this);
         Games games = find<Game>().orderBy("ended").limit(STEP).offset(offset);
