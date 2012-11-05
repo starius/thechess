@@ -10,6 +10,7 @@
 #include <boost/foreach.hpp>
 
 #include <Wt/WBreak>
+#include <Wt/WText>
 
 #include "widgets/team/TeamWidget.hpp"
 #include "widgets/team/TeamEdit.hpp"
@@ -42,6 +43,9 @@ void TeamWidget::reprint() {
 void TeamWidget::print_title() {
     addWidget(new Header(tr("tc.team.Title")
                          .arg(team_.id()).arg(team_->name())));
+    addWidget(new Wt::WText(tr("tc.common.Description")));
+    addWidget(new Wt::WBreak);
+    addWidget(new Wt::WText(team_->description()));
 }
 
 void TeamWidget::print_members() {
