@@ -80,6 +80,11 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     path_.open(internalPath());
     internalPathChanged().connect(this, &Application::user_action);
     explore_timezone();
+    doJavaScript("setInterval(function() {"
+                 "$('.thechess-user-list *:not(img)')"
+                 ".css('height','auto')"
+                 ".css('white-space','normal');"
+                 "}, 1000);");
 }
 
 Application::Application(bool, const Wt::WEnvironment& env, Server& server):
