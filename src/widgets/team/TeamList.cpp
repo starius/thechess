@@ -44,7 +44,7 @@ private:
         TLP::Q q;
         q = tApp->session().query<TeamPtr>("select * from thechess_team");
         if (!tApp->user() || !tApp->user()->has_permission(TEAM_CHANGER)) {
-            q.where("removed = 0");
+            q.where("removed = ?").bind(false);
         }
         setQuery(q, /* keep_columns */ true);
     }
