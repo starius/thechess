@@ -75,6 +75,8 @@ private:
         add_button("tc.menu.all_posts", path_->all_posts());
         add_button("tc.menu.all_comments", path_->all_comments());
         add_button("tc.menu.global_chat", path_->global_chat());
+        add_section("tc.menu.team");
+        add_button("tc.menu.teams_list", path_->teams_list());
     }
 
     void add_button(const char* title_id, const Wt::WLink& link) {

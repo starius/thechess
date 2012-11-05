@@ -295,6 +295,8 @@
     <message id='tc.menu.new_competition'>новый турнир</message>
     <message id='tc.menu.private_messages'>личные сообщения</message>
     <message id='tc.menu.settings'>настройки</message>
+    <message id='tc.menu.team'>команда</message>
+    <message id='tc.menu.teams_list'>список команд</message>
     <message id='tc.menu.testing_board'>доска для проб</message>
     <message id='tc.menu.topics'>тематики</message>
     <message id='tc.menu.user'>пользователь</message>
@@ -325,6 +327,8 @@
     <message id='tc.title.MovesWidget_moves'>Ходы « TheChess</message>
     <message id='tc.title.NewIpBan'>Новый бан « TheChess</message>
     <message id='tc.title.SettingsWidget'>Настройки « Пользователь « TheChess</message>
+    <message id='tc.title.TeamList'>Команды « TheChess</message>
+    <message id='tc.title.TeamWidget'>{1} « Команды « TheChess</message>
     <message id='tc.title.UserListWidget'>Список « Пользователь « TheChess</message>
     <message id='tc.title.UserWidget'>{1} « Пользователь « TheChess</message>
     <message id='tc.title.VirtualsWidget'>Клоны « Пользователь « TheChess</message>

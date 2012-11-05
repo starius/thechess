@@ -198,6 +198,12 @@ public:
     */
     void update_countup();
 
+    /** Teams list */
+    void teams_list();
+
+    /** Team view */
+    void team_view(const TeamPtr& team);
+
 private:
     Wt::WContainerWidget* auth_place_;
     Wt::WContainerWidget* top_place_;

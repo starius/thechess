@@ -272,6 +272,16 @@ public:
         return global_chat_;
     }
 
+    /** Teams list */
+    url::PredefinedNode* teams_list() const {
+        return teams_list_;
+    }
+
+    /** Team view */
+    url::IntegerNode* team_view() const {
+        return team_view_;
+    }
+
 private:
     MainWidget* main_widget_;
     url::PredefinedNode* user_list_;
@@ -322,6 +332,8 @@ private:
     url::PredefinedNode* my_messages_;
     url::PredefinedNode* user_comments_;
     url::PredefinedNode* global_chat_;
+    url::PredefinedNode* teams_list_;
+    url::IntegerNode* team_view_;
 
     void open_user();
     void open_user_challenge();
@@ -349,6 +361,7 @@ private:
     void open_edit_banned_ip();
     void open_new_ip_ban();
     void open_user_comments();
+    void open_team();
 };
 
 }

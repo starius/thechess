@@ -45,6 +45,8 @@
 #include "widgets/comment/ForumCommentWidget.hpp"
 #include "widgets/comment/ForumEdit.hpp"
 #include "widgets/comment/ChatCommentWidget.hpp"
+#include "widgets/team/TeamList.hpp"
+#include "widgets/team/TeamWidget.hpp"
 #include "chess/Moves.hpp"
 #include "chess/Board.hpp"
 #include "chess/Piece.hpp"
@@ -412,6 +414,20 @@ void MainWidget::user_comments(const UserPtr& user) {
 void MainWidget::global_chat() {
     set_contents(new CommentList(Comment::CHAT_MESSAGE));
     wApp->setTitle(tr("tc.title.CommentList_global_chat"));
+}
+
+void MainWidget::teams_list() {
+    set_contents(new TeamList);
+    wApp->setTitle(tr("tc.title.TeamList"));
+}
+
+void MainWidget::team_view(const TeamPtr& team) {
+    set_contents(new TeamWidget(team));
+    if (team->name().empty()) {
+        wApp->setTitle(tr("tc.title.TeamWidget").arg(team.id()));
+    } else {
+        wApp->setTitle(tr("tc.title.TeamWidget").arg(team->name()));
+    }
 }
 
 Wt::Auth::AuthWidget* MainWidget::auth_widget() {

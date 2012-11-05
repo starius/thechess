@@ -782,6 +782,8 @@ TheChess.
     <message id='tc.menu.new_competition'>new competition</message>
     <message id='tc.menu.private_messages'>private messages</message>
     <message id='tc.menu.settings'>settings</message>
+    <message id='tc.menu.team'>team</message>
+    <message id='tc.menu.teams_list'>list of teams</message>
     <message id='tc.menu.testing_board'>testing board</message>
     <message id='tc.menu.topics'>topics</message>
     <message id='tc.menu.user'>user</message>
@@ -813,6 +815,8 @@ TheChess.
     <message id='tc.title.MovesWidget_moves'>Moves « TheChess</message>
     <message id='tc.title.NewIpBan'>New ban « TheChess</message>
     <message id='tc.title.SettingsWidget'>Settings « User « TheChess</message>
+    <message id='tc.title.TeamList'>Teams « TheChess</message>
+    <message id='tc.title.TeamWidget'>{1} « Teams « TheChess</message>
     <message id='tc.title.UserListWidget'>List « User « TheChess</message>
     <message id='tc.title.UserWidget'>{1} « User « TheChess</message>
     <message id='tc.title.VirtualsWidget'>Virtuals « User « TheChess</message>
