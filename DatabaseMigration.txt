@@ -47,6 +47,9 @@ CREATE TABLE "team_banned" (
 ALTER TABLE "thechess_team"
   ADD constraint "fk_thechess_team_init" foreign key ("init_id") references "thechess_team" ("id");
 
+ALTER TABLE "thechess_team"
+  ADD COLUMN "comment_base_id" bigint,
+  ADD constraint "fk_thechess_team_comment_base" foreign key ("comment_base_id") references "thechess_comment" ("id");
 
 3.0.8 to 3.0.9
 ==============

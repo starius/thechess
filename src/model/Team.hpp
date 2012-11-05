@@ -68,10 +68,29 @@ public:
         return banned_;
     }
 
+    /** \name Methods of comments */
+    /* @{ */
+
+    /** Return if there is a comment base  */
+    bool has_comment_base() const;
+
+    /** Return comment base.
+    Lazy created.
+    */
+    const CommentPtr& comment_base();
+
+    /** Get comment base (may return 0) */
+    const CommentPtr& comment_base() const {
+        return comment_base_;
+    }
+
+    /* @} */
+
 private:
     Users members_;
     Users candidates_;
     Users banned_;
+    CommentPtr comment_base_;
 };
 
 }

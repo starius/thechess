@@ -190,7 +190,8 @@ CREATE TABLE "thechess_team" (
   "name" text not null,
   "description" text not null,
   "init_id" bigint,
-  "created" timestamp
+  "created" timestamp,
+  "comment_base_id" bigint
 );
 CREATE TABLE "winners_competition" (
   "thechess_user_id" bigint not null,
@@ -278,6 +279,8 @@ ALTER TABLE "thechess_user"
   ADD constraint "fk_thechess_user_comment_base" foreign key ("comment_base_id") references "thechess_comment" ("id");
 ALTER TABLE "thechess_team"
   ADD constraint "fk_thechess_team_init" foreign key ("init_id") references "thechess_team" ("id");
+ALTER TABLE "thechess_team"
+  ADD constraint "fk_thechess_team_comment_base" foreign key ("comment_base_id") references "thechess_comment" ("id");
 
 CREATE INDEX "members_competitions_thechess_competition" on "members_competitions" ("thechess_competition_id");
 CREATE INDEX "members_competitions_thechess_user" on "members_competitions" ("thechess_user_id");

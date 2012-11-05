@@ -17,5 +17,18 @@ Team::Team()
 Team::Team(bool)
 { }
 
+bool Team::has_comment_base() const {
+    return comment_base_;
+}
+
+const CommentPtr& Team::comment_base() {
+    if (!comment_base_) {
+        comment_base_ = session()->add(new Comment(true));
+        comment_base_.modify()->set_type(Comment::CHAT_ROOT);
+        comment_base_.flush();
+    }
+    return comment_base_;
+}
+
 }
 
