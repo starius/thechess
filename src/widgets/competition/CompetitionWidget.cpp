@@ -47,7 +47,7 @@ public:
             user_anchor(user, item);
             if (c->can_kick(tApp->user(), user)) {
                 Wt::WPushButton* b;
-                b = new Wt::WPushButton(tr("tc.common.Kick"), item);
+                b = new Wt::WPushButton(tr("tc.common.Discard"), item);
                 b->clicked().connect(boost::bind(&CompetitionMembers::kick,
                                                  this, user));
             }
@@ -61,7 +61,7 @@ private:
         dbo::Transaction t(tApp->session());
         c_.reread();
         c_.modify()->kick(tApp->user(), user);
-        admin_log("Kick " + user_a(user.id()) + " from " + comp_a(c_.id()));
+        admin_log("Discard " + user_a(user.id()) + " from " + comp_a(c_.id()));
         t.commit();
         t_emit(COMPETITION, c_.id());
     }
