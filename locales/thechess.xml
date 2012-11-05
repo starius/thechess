@@ -685,6 +685,7 @@ TheChess.
     <message id='tc.game.Move_confirmation'>Move confirmation</message>
     <message id='tc.game.moves_size'>#moves</message>
     <message id='tc.game.No_draw'>The game can't be ended with draw</message>
+    <message id='tc.game.non_cancelled'>non cancelled</message>
     <message id='tc.game.norating'>non-rating</message>
     <message id='tc.game.norating_false'>game result will affect members' rating</message>
     <message id='tc.game.norating_true'>game result will not affect members' rating</message>

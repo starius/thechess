@@ -192,6 +192,7 @@
     <message id="tc.game.Move_confirmation">Пацверджанне ходу</message>
     <message id="tc.game.moves_size">хадоў</message>
     <message id="tc.game.No_draw">Гульня не можа завяршыцца ўнічыю</message>
+    <message id='tc.game.non_cancelled'>неотменённые</message>
     <message id="tc.game.norating">нерэйтынгавая</message>
     <message id="tc.game.norating_false">вынік гульні паўплывае на рэйтынг удзельнікаў</message>
     <message id="tc.game.norating_true">вынік гульні не паўплывае на рэйтынг удзельнікаў</message>

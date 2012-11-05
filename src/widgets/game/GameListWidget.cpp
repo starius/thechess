@@ -47,7 +47,7 @@ const int GAME_IN_TUPLE = 0;
 class GameStateSelect : public Wt::WComboBox {
 public:
     enum State {
-        ALL,
+        NON_CANCELLED,
         NOTSTARTED,
         ACTIVE,
         PAUSE,
@@ -60,7 +60,7 @@ public:
 
     GameStateSelect(Wt::WContainerWidget* parent = 0):
         WComboBox(parent) {
-        addItem(tr("tc.common.all"));
+        addItem(tr("tc.game.non_cancelled"));
         addItem(tr("tc.common.not_started"));
         addItem(tr(Game::state2str_id(Game::ACTIVE)));
         addItem(tr(Game::state2str_id(Game::PAUSE)));
@@ -105,7 +105,7 @@ public:
         only_my_(false),
         only_commented_(false),
         user_(user),
-        state_(GameStateSelect::ALL) {
+        state_(GameStateSelect::NON_CANCELLED) {
         set_query();
         addColumn("G.id", tr("tc.common.number"));
         addColumn("G.id", tr("tc.game.white")); // dummy
@@ -214,8 +214,10 @@ public:
         } else if (state_ == GameStateSelect::DRAW) {
             q.where("G.state >= ? and G.state <= ?");
             q.bind(Game::MIN_DRAW).bind(Game::MAX_DRAW);
-        } else if (state_ != GameStateSelect::ALL) {
+        } else if (state_ != GameStateSelect::NON_CANCELLED) {
             q.where("G.state = ?").bind(GameStateSelect::state(state_));
+        } else if (state_ == GameStateSelect::NON_CANCELLED) {
+            q.where("G.state <> ?").bind(Game::CANCELLED);
         }
         if (!name_like_.empty()) {
             q.where("(G.name like ? or G.id = ?)");
