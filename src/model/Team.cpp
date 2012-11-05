@@ -59,6 +59,7 @@ TeamPtr create_team(const UserPtr& user) {
         team = user.session()->add(new Team(true));
         team.modify()->set_init(user);
         team.modify()->members().insert(user);
+        team.flush();
         team_chat(team, "team created", user);
     }
     return team;
