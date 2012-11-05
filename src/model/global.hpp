@@ -208,7 +208,8 @@ enum ObjectType {
     USER,
     COMMENT,
     COMPETITION,
-    IP_BAN
+    IP_BAN,
+    TEAM_OBJECT
 };
 
 /** Rights */
