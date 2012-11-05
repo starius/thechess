@@ -95,11 +95,13 @@ void TeamWidget::list_users(const Users& users, const Wt::WString& header) {
 }
 
 void TeamWidget::user_buttons(const UserPtr& user, Wt::WContainerWidget* item) {
-    if (can_change_team_candidate(tApp->user(), team_, user)) {
-        add_button(tr("tc.common.Confirm"), boost::bind(change_team_candidate,
-                   _1, _2, user, true), item);
-        add_button(tr("tc.common.Discard"), boost::bind(change_team_candidate,
-                   _1, _2, user, false), item);
+    if (can_approve_team_candidate(tApp->user(), team_, user)) {
+        add_button(tr("tc.common.Confirm"), boost::bind(approve_team_candidate,
+                   _1, _2, user), item);
+    }
+    if (can_discard_team_candidate(tApp->user(), team_, user)) {
+        add_button(tr("tc.common.Discard"), boost::bind(discard_team_candidate,
+                   _1, _2, user), item);
     }
     if (can_change_team_members(tApp->user(), team_, user)) {
         add_button(tr("tc.common.Discard"), boost::bind(remove_team_member,

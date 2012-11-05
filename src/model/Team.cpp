@@ -111,18 +111,32 @@ void join_team(const UserPtr& user, const TeamPtr& team) {
     }
 }
 
-bool can_change_team_candidate(const UserPtr& user, const TeamPtr& team,
-                               const UserPtr& candidate) {
+bool can_approve_team_candidate(const UserPtr& user, const TeamPtr& team,
+                                const UserPtr& candidate) {
     return is_team_manager(user, team) && team->candidates().count(candidate);
 }
 
-void change_team_candidate(const UserPtr& user, const TeamPtr& team,
-                           const UserPtr& candidate, bool approve) {
-    if (can_change_team_candidate(user, team, candidate)) {
+void approve_team_candidate(const UserPtr& user, const TeamPtr& team,
+                            const UserPtr& candidate) {
+    if (can_approve_team_candidate(user, team, candidate)) {
         team.modify()->candidates().erase(candidate);
-        if (approve) {
-            team.modify()->members().insert(candidate);
-            team_chat(team, "add member " + user_a(candidate), user);
+        team.modify()->members().insert(candidate);
+        team_chat(team, "add member " + user_a(candidate), user);
+    }
+}
+
+bool can_discard_team_candidate(const UserPtr& user, const TeamPtr& team,
+                                const UserPtr& candidate) {
+    return team->candidates().count(candidate) &&
+           (is_team_manager(user, team) || user == candidate);
+}
+
+void discard_team_candidate(const UserPtr& user, const TeamPtr& team,
+                            const UserPtr& candidate) {
+    if (can_discard_team_candidate(user, team, candidate)) {
+        team.modify()->candidates().erase(candidate);
+        if (candidate == user) {
+            team_chat(team, "leave candidates", user);
         } else {
             team.modify()->banned().insert(candidate);
             team_chat(team, "ban member " + user_a(candidate), user);

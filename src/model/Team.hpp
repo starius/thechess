@@ -139,13 +139,21 @@ bool can_join_team(const UserPtr& user, const TeamPtr& team);
 /** Try add himself to team's candidates */
 void join_team(const UserPtr& user, const TeamPtr& team);
 
-/** Return if the user can approve or discard the team candidate */
-bool can_change_team_candidate(const UserPtr& user, const TeamPtr& team,
-                               const UserPtr& candidate);
+/** Return if the user can approve the team candidate */
+bool can_approve_team_candidate(const UserPtr& user, const TeamPtr& team,
+                                const UserPtr& candidate);
 
-/** Try approve or discard the team candidate */
-void change_team_candidate(const UserPtr& user, const TeamPtr& team,
-                           const UserPtr& candidate, bool approve);
+/** Try approve the team candidate */
+void approve_team_candidate(const UserPtr& user, const TeamPtr& team,
+                            const UserPtr& candidate);
+
+/** Return if the user can discard the team candidate */
+bool can_discard_team_candidate(const UserPtr& user, const TeamPtr& team,
+                                const UserPtr& candidate);
+
+/** Try discard the team candidate */
+void discard_team_candidate(const UserPtr& user, const TeamPtr& team,
+                            const UserPtr& candidate);
 
 /** Return if the user can remove user from team members list */
 bool can_change_team_members(const UserPtr& user, const TeamPtr& team,
