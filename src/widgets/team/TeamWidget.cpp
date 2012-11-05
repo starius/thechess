@@ -37,6 +37,7 @@ void TeamWidget::reprint() {
     print_title();
     print_members();
     print_candidates();
+    print_banned();
     print_manager();
 }
 
