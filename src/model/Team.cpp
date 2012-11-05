@@ -122,7 +122,7 @@ void approve_team_candidate(const UserPtr& user, const TeamPtr& team,
     if (can_approve_team_candidate(user, team, candidate)) {
         team.modify()->candidates().erase(candidate);
         team.modify()->members().insert(candidate);
-        team_chat(team, "add member " + user_a(candidate), user);
+        team_chat(team, "add member " + user_a(candidate.id()), user);
     }
 }
 
@@ -140,7 +140,7 @@ void discard_team_candidate(const UserPtr& user, const TeamPtr& team,
             team_chat(team, "leave candidates", user);
         } else {
             team.modify()->banned().insert(candidate);
-            team_chat(team, "ban member " + user_a(candidate), user);
+            team_chat(team, "ban member " + user_a(candidate.id()), user);
         }
     }
 }
@@ -156,7 +156,7 @@ void remove_team_member(const UserPtr& user, const TeamPtr& team,
                         const UserPtr& member) {
     if (can_remove_team_members(user, team, member)) {
         team.modify()->members().erase(member);
-        team_chat(team, "remove member " + user_a(member), user);
+        team_chat(team, "remove member " + user_a(member.id()), user);
     }
 }
 
@@ -169,7 +169,7 @@ void remove_team_banned(const UserPtr& user, const TeamPtr& team,
                         const UserPtr& banned) {
     if (can_remove_team_banned(user, team, banned)) {
         team.modify()->banned().erase(banned);
-        team_chat(team, "unban " + user_a(banned), user);
+        team_chat(team, "unban " + user_a(banned.id()), user);
     }
 }
 
