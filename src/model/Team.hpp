@@ -37,6 +37,7 @@ public:
         dbo::hasMany(a, candidates_, dbo::ManyToMany, "team_candidates");
         dbo::hasMany(a, banned_, dbo::ManyToMany, "team_banned");
         dbo::belongsTo(a, comment_base_, "comment_base");
+        dbo::field(a, removed_, "removed");
     }
 
     /** Team members */
@@ -87,11 +88,22 @@ public:
 
     /* @} */
 
+    /** Get the team is removed */
+    bool removed() const {
+        return removed_;
+    }
+
+    /** Set the team is removed */
+    void set_removed(bool removed) {
+        removed_ = removed;
+    }
+
 private:
     Users members_;
     Users candidates_;
     Users banned_;
     CommentPtr comment_base_;
+    bool removed_;
 };
 
 /** Add new message to team chat.

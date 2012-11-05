@@ -191,7 +191,8 @@ CREATE TABLE "thechess_team" (
   "description" text not null,
   "init_id" bigint,
   "created" timestamp,
-  "comment_base_id" bigint
+  "comment_base_id" bigint,
+  "removed" boolean not null
 );
 CREATE TABLE "winners_competition" (
   "thechess_user_id" bigint not null,
@@ -338,3 +339,4 @@ CREATE INDEX "user_online_time" ON "thechess_user" ("online_time");
 CREATE INDEX "user_registration_date" ON "thechess_user" ("registration_date");
 CREATE INDEX "user_vacation_until" ON "thechess_user" ("vacation_until");
 CREATE INDEX "user_last_online" ON "thechess_user" ("last_online");
+CREATE INDEX "team_removed" ON "thechess_team" ("removed");

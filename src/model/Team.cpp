@@ -14,7 +14,8 @@ namespace thechess {
 Team::Team()
 { }
 
-Team::Team(bool)
+Team::Team(bool):
+    removed_(false)
 { }
 
 bool Team::has_comment_base() const {

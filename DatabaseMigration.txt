@@ -51,6 +51,10 @@ ALTER TABLE "thechess_team"
   ADD COLUMN "comment_base_id" bigint,
   ADD constraint "fk_thechess_team_comment_base" foreign key ("comment_base_id") references "thechess_comment" ("id");
 
+ALTER TABLE "thechess_team"
+  ADD COLUMN "removed" boolean not null;
+CREATE INDEX "team_removed" ON "thechess_team" ("removed");
+
 3.0.8 to 3.0.9
 ==============
 
