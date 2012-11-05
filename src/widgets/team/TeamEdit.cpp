@@ -14,10 +14,11 @@
 
 namespace thechess {
 
-TeamEdit::TeamEdit(const TeamPtr& team) {
+TeamEdit::TeamEdit(const TeamPtr& team):
+    team_(team) {
     dbo::Transaction t(tApp->session());
     // TODO check that this user can edit
-    add_record_inputs(team.get(), this);
+    add_record_inputs(team_.get(), this);
     Wt::WPushButton* save = new Wt::WPushButton(tr("tc.common.Save"));
     item("", "", save);
     save->clicked().connect(this, &TeamEdit::save);
