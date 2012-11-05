@@ -132,7 +132,7 @@ void change_team_candidate(const UserPtr& user, const TeamPtr& team,
 
 bool can_change_team_members(const UserPtr& user, const TeamPtr& team,
                              const UserPtr& member) {
-    return team->candidates().count(member) &&
+    return team->members().count(member) &&
            (user == member ||
             (member != team->init() && is_team_manager(user, team)));
 }
