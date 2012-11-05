@@ -43,6 +43,9 @@ private:
         dbo::Transaction t(tApp->session());
         TLP::Q q;
         q = tApp->session().query<TeamPtr>("select * from thechess_team");
+        if (!tApp->user()->has_permission(TEAM_CHANGER)) {
+            q.where("removed = 0");
+        }
         setQuery(q, /* keep_columns */ true);
     }
 
