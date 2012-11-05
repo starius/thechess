@@ -279,7 +279,7 @@ ALTER TABLE "thechess_user"
   ADD constraint "fk_thechess_user_classification_confirmer" foreign key ("classification_confirmer_id") references "thechess_user" ("id"),
   ADD constraint "fk_thechess_user_comment_base" foreign key ("comment_base_id") references "thechess_comment" ("id");
 ALTER TABLE "thechess_team"
-  ADD constraint "fk_thechess_team_init" foreign key ("init_id") references "thechess_team" ("id");
+  ADD constraint "fk_thechess_team_init" foreign key ("init_id") references "thechess_user" ("id");
 ALTER TABLE "thechess_team"
   ADD constraint "fk_thechess_team_comment_base" foreign key ("comment_base_id") references "thechess_comment" ("id");
 
