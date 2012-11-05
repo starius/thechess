@@ -285,6 +285,9 @@ enum AdminRights {
     /** No permissions */
     NO_ADMIN_RIGHTS = 0,
 
+    /** Right to edit members, candidates and banned list of a team */
+    TEAM_CHANGER = BOOST_BINARY(00000100 00000000 00000000),
+
     /** Right (un)pause games and return user from vacation */
     TIME_WIZARD = BOOST_BINARY(00001000 00000000 00000000),
 

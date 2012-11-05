@@ -236,6 +236,8 @@ const char* User::right_to_str(Rights right) {
 const char* User::right_to_str(AdminRights right) {
     if (right == TIME_WIZARD) {
         return "tc.user.time_wizard";
+    } else if (right == TEAM_CHANGER) {
+        return "tc.user.team_changer";
     } else if (right == COMMENTS_REMOVER) {
         return "tc.user.comments_remover";
     } else if (right == CLASSIFICATION_CONFIRMER) {
@@ -279,6 +281,7 @@ void User::for_each_right(const boost::function<void(Rights)> f) {
 }
 
 void User::for_each_admin(const boost::function<void(AdminRights)> f) {
+    f(TEAM_CHANGER);
     f(TIME_WIZARD);
     f(COMMENTS_REMOVER);
     f(CLASSIFICATION_CONFIRMER);
