@@ -15,6 +15,7 @@
 #include "widgets/team/TeamWidget.hpp"
 #include "widgets/team/TeamEdit.hpp"
 #include "widgets/user/user_anchor.hpp"
+#include "widgets/comment/CommentList.hpp"
 #include "widgets/Header.hpp"
 
 namespace thechess {
@@ -39,6 +40,7 @@ void TeamWidget::reprint() {
     print_candidates();
     print_banned();
     print_manager();
+    print_chat();
 }
 
 void TeamWidget::print_title() {
@@ -76,6 +78,13 @@ void TeamWidget::print_manager() {
     if (can_edit_team(tApp->user(), team_)) {
         Wt::WPushButton* b = new Wt::WPushButton(tr("tc.team.Change"), this);
         b->clicked().connect(this, &TeamWidget::show_edit);
+    }
+}
+
+void TeamWidget::print_chat() {
+    if (team_->has_comment_base()) {
+        addWidget(new CommentList(Comment::CHAT_MESSAGE,
+                                  team_->comment_base()));
     }
 }
 
