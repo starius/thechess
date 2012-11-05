@@ -52,10 +52,10 @@ private:
     boost::any data(const Wt::WModelIndex& index,
                     int role = Wt::DisplayRole) const {
         dbo::Transaction t(tApp->session());
-        const TeamPtr& o = resultRow(index.row());
         if (role == Wt::LinkRole) {
             if (index.column() == ID_COL) {
-                // TODO
+                const TeamPtr& o = resultRow(index.row());
+                return tApp->path().team_view()->get_link(o.id());
             }
         }
         t.commit();
@@ -98,8 +98,10 @@ TeamList::TeamList() {
 void TeamList::team_create() {
     dbo::Transaction t(tApp->session());
     TeamPtr team = create_team(tApp->user());
+    t.commit();
     if (team) {
-        // TODO open team page
+        tApp->path().team_view()->set_integer_value(team.id());
+        tApp->path().team_view()->open();
     }
 }
 
