@@ -50,7 +50,7 @@ void team_chat(const TeamPtr& team, const Wt::WString& text,
 }
 
 bool can_create_team(const UserPtr& user) {
-    return user->has_permission(CREATE_TEAM);
+    return user && user->has_permission(CREATE_TEAM);
 }
 
 TeamPtr create_team(const UserPtr& user) {
@@ -65,9 +65,13 @@ TeamPtr create_team(const UserPtr& user) {
     return team;
 }
 
+static bool is_team_manager(const UserPtr& user, const TeamPtr& team) {
+    return (user && user->has_permission(TEAM_CHANGER)) ||
+           team->init() == user;
+}
+
 bool can_remove_team(const UserPtr& user, const TeamPtr& team) {
-    return (user->has_permission(TEAM_CHANGER) || team->init() == user) &&
-           !team->removed();
+    return is_team_manager(user, team) && !team->removed();
 }
 
 void remove_team(const UserPtr& user, const TeamPtr& team) {
@@ -78,7 +82,7 @@ void remove_team(const UserPtr& user, const TeamPtr& team) {
 }
 
 bool can_restore_team(const UserPtr& user, const TeamPtr& team) {
-    return user->has_permission(TEAM_CHANGER) && team->removed();
+    return user && user->has_permission(TEAM_CHANGER) && team->removed();
 }
 
 void restore_team(const UserPtr& user, const TeamPtr& team) {
@@ -89,12 +93,12 @@ void restore_team(const UserPtr& user, const TeamPtr& team) {
 }
 
 bool can_edit_team(const UserPtr& user, const TeamPtr& team) {
-    return user->has_permission(RECORDS_EDITOR) ||
+    return (user && user->has_permission(RECORDS_EDITOR)) ||
            user == team->init();
 }
 
 bool can_join_team(const UserPtr& user, const TeamPtr& team) {
-    return user->has_permission(JOIN_TEAM) &&
+    return user && user->has_permission(JOIN_TEAM) &&
            !team->members().count(user) &&
            !team->candidates().count(user) &&
            !team->banned().count(user);
@@ -109,8 +113,7 @@ void join_team(const UserPtr& user, const TeamPtr& team) {
 
 bool can_change_team_candidate(const UserPtr& user, const TeamPtr& team,
                                const UserPtr& candidate) {
-    return (user->has_permission(TEAM_CHANGER) || team->init() == user) &&
-           team->candidates().count(user);
+    return is_team_manager(user, team) && team->candidates().count(user);
 }
 
 void change_team_candidate(const UserPtr& user, const TeamPtr& team,
@@ -131,8 +134,7 @@ bool can_change_team_members(const UserPtr& user, const TeamPtr& team,
                              const UserPtr& member) {
     return team->candidates().count(member) &&
            (user == member ||
-            (member != team->init() &&
-             (user->has_permission(TEAM_CHANGER) || team->init() == user)));
+            (member != team->init() && is_team_manager(user, team)));
 }
 
 void remove_team_member(const UserPtr& user, const TeamPtr& team,
@@ -145,8 +147,7 @@ void remove_team_member(const UserPtr& user, const TeamPtr& team,
 
 bool can_change_team_banned(const UserPtr& user, const TeamPtr& team,
                             const UserPtr& banned) {
-    return (user->has_permission(TEAM_CHANGER) || team->init() == user) &&
-           team->banned().count(user);
+    return is_team_manager(user, team) && team->banned().count(user);
 }
 
 void remove_team_banned(const UserPtr& user, const TeamPtr& team,
@@ -158,7 +159,7 @@ void remove_team_banned(const UserPtr& user, const TeamPtr& team,
 }
 
 bool can_list_team_banned(const UserPtr& user, const TeamPtr& team) {
-    return user->has_permission(TEAM_CHANGER) || team->init() == user;
+    return is_team_manager(user, team);
 }
 
 }
