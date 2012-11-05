@@ -42,7 +42,7 @@ private:
     void set_query() {
         dbo::Transaction t(tApp->session());
         TLP::Q q;
-        q = tApp->session().query<TeamPtr>("select * from thechess_team");
+        q = tApp->session().find<Team>();
         if (!tApp->user() || !tApp->user()->has_permission(TEAM_CHANGER)) {
             q.where("removed = ?").bind(false);
         }
