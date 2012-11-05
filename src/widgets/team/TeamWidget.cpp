@@ -101,7 +101,7 @@ void TeamWidget::add_button(const Wt::WString& button,
                             const TeamWidget::UserAction& user_action,
                             Wt::WContainerWidget* item) {
     Wt::WPushButton* b = new Wt::WPushButton(button, item);
-    b->clicked().connect(boost::bind(&TeamWidget::apply_action,
+    b->clicked().connect(boost::bind(&TeamWidget::apply_action, this,
                                      boost::protect(user_action)));
 }
 
