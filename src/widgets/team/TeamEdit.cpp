@@ -22,7 +22,7 @@ TeamEdit::TeamEdit(const TeamPtr& team):
     }
     add_record_inputs(team_.get(), this);
     Wt::WPushButton* save = new Wt::WPushButton(tr("tc.common.Save"));
-    item("", "", save);
+    item("", "", save, save);
     save->clicked().connect(this, &TeamEdit::save);
 }
 
