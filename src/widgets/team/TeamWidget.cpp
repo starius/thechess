@@ -103,11 +103,11 @@ void TeamWidget::user_buttons(const UserPtr& user, Wt::WContainerWidget* item) {
         add_button(tr("tc.common.Discard"), boost::bind(discard_team_candidate,
                    _1, _2, user), item);
     }
-    if (can_change_team_members(tApp->user(), team_, user)) {
+    if (can_remove_team_members(tApp->user(), team_, user)) {
         add_button(tr("tc.common.Discard"), boost::bind(remove_team_member,
                    _1, _2, user), item);
     }
-    if (can_change_team_banned(tApp->user(), team_, user)) {
+    if (can_remove_team_banned(tApp->user(), team_, user)) {
         add_button(tr("tc.common.Discard"), boost::bind(remove_team_banned,
                    _1, _2, user), item);
     }

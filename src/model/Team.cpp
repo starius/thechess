@@ -144,7 +144,7 @@ void discard_team_candidate(const UserPtr& user, const TeamPtr& team,
     }
 }
 
-bool can_change_team_members(const UserPtr& user, const TeamPtr& team,
+bool can_remove_team_members(const UserPtr& user, const TeamPtr& team,
                              const UserPtr& member) {
     return team->members().count(member) &&
            (user == member ||
@@ -153,20 +153,20 @@ bool can_change_team_members(const UserPtr& user, const TeamPtr& team,
 
 void remove_team_member(const UserPtr& user, const TeamPtr& team,
                         const UserPtr& member) {
-    if (can_change_team_members(user, team, member)) {
+    if (can_remove_team_members(user, team, member)) {
         team.modify()->members().erase(member);
         team_chat(team, "remove member " + user_a(member), user);
     }
 }
 
-bool can_change_team_banned(const UserPtr& user, const TeamPtr& team,
+bool can_remove_team_banned(const UserPtr& user, const TeamPtr& team,
                             const UserPtr& banned) {
     return is_team_manager(user, team) && team->banned().count(banned);
 }
 
 void remove_team_banned(const UserPtr& user, const TeamPtr& team,
                         const UserPtr& banned) {
-    if (can_change_team_banned(user, team, banned)) {
+    if (can_remove_team_banned(user, team, banned)) {
         team.modify()->banned().erase(banned);
         team_chat(team, "unban " + user_a(banned), user);
     }

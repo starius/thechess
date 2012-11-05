@@ -156,7 +156,7 @@ void discard_team_candidate(const UserPtr& user, const TeamPtr& team,
                             const UserPtr& candidate);
 
 /** Return if the user can remove user from team members list */
-bool can_change_team_members(const UserPtr& user, const TeamPtr& team,
+bool can_remove_team_members(const UserPtr& user, const TeamPtr& team,
                              const UserPtr& member);
 
 /** Try remove user from team members list */
@@ -164,7 +164,7 @@ void remove_team_member(const UserPtr& user, const TeamPtr& team,
                         const UserPtr& candidate);
 
 /** Return if the user can remove user from team ban list */
-bool can_change_team_banned(const UserPtr& user, const TeamPtr& team,
+bool can_remove_team_banned(const UserPtr& user, const TeamPtr& team,
                             const UserPtr& banned);
 
 /** Try remove user from team ban list */
