@@ -36,6 +36,7 @@ public:
         dbo::hasMany(a, members_, dbo::ManyToMany, "team_members");
         dbo::hasMany(a, candidates_, dbo::ManyToMany, "team_candidates");
         dbo::hasMany(a, banned_, dbo::ManyToMany, "team_banned");
+        dbo::belongsTo(a, comment_base_, "comment_base");
     }
 
     /** Team members */
