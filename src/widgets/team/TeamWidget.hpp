@@ -23,7 +23,20 @@ public:
 private:
     TeamPtr team_;
 
+    typedef boost::function<void(const UserPtr&, const TeamPtr&)> UserAction;
+
     void reprint();
+    void print_title();
+    void print_members();
+    void print_candidates();
+    void print_banned();
+    void print_manager();
+    void list_users(const Users& users);
+    void user_buttons(const UserPtr& user, Wt::WContainerWidget* item);
+    void add_button(const Wt::WString& button, const UserAction& user_action,
+                    Wt::WContainerWidget* item);
+    void apply_action(const UserAction& user_action);
+
 };
 
 }

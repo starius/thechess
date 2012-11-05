@@ -19,6 +19,7 @@ Message id should be like "tc.SECTION.ID"
  * game
  * main
  * menu
+ * team
  * title
  * user
 
@@ -786,6 +787,13 @@ TheChess.
     <message id='tc.menu.user'>user</message>
     <message id='tc.menu.users_list'>list of users</message>
     <message id='tc.menu.virtuals_list'>list of virtuals</message>
+
+    <message id='tc.team.Banned'>Banned candidates</message>
+    <message id='tc.team.Candidates'>Candidates</message>
+    <message id='tc.team.Members'>Members</message>
+    <message id='tc.team.Remove_team'>Remove team</message>
+    <message id='tc.team.Restore_team'>Restore team</message>
+    <message id='tc.team.Title'>Team # {1} {2}</message>
 
     <message id='tc.title.AllSessions'>All sessions « TheChess</message>
     <message id='tc.title.BoardWidget'>Board « TheChess</message>
