@@ -18,6 +18,9 @@ class TeamList : public Wt::WContainerWidget {
 public:
     /** Constructor */
     TeamList();
+
+private:
+    void team_create();
 };
 
 }

@@ -83,9 +83,21 @@ protected:
 };
 
 TeamList::TeamList() {
+    dbo::Transaction t(tApp->session());
     TeamListModel* m = new TeamListModel(this);
     TeamListView* view = new TeamListView(m, this);
-    // TODO team creation button
+    if (can_create_team(tApp->user())) {
+        Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Create"), this);
+        b->clicked().connect(this, &TeamList::team_create);
+    }
+}
+
+void TeamList::team_create() {
+    dbo::Transaction t(tApp->session());
+    TeamPtr team = create_team(tApp->user());
+    if (team) {
+        // TODO open team page
+    }
 }
 
 }
