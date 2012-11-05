@@ -93,6 +93,33 @@ private:
     CommentPtr comment_base_;
 };
 
+/** Add new message to team chat.
+Message is prefixed with [auto].
+*/
+void team_chat(const TeamPtr& team, const Wt::WString& message,
+               const UserPtr& user = UserPtr());
+
+/** Return if the user can create a team */
+bool can_create_team(const UserPtr& user);
+
+/** Return if the user can edit the team */
+bool can_edit_team(const UserPtr& user, const TeamPtr& team);
+
+/** Return if the user can add himself to team's candidates */
+bool can_join_team(const UserPtr& user, const TeamPtr& team);
+
+/** Return if the user can approve or discard the team candidate */
+bool can_change_team_candidate(const UserPtr& user, const TeamPtr& team,
+                               const UserPtr& candidate);
+
+/** Return if the user can remove user from team members list */
+bool can_change_team_members(const UserPtr& user, const TeamPtr& team,
+                             const UserPtr& candidate);
+
+/** Return if the user can remove user from team ban list */
+bool can_change_team_banned(const UserPtr& user, const TeamPtr& team,
+                            const UserPtr& banned);
+
 }
 
 DBO_EXTERN_TEMPLATES(thechess::Team);
