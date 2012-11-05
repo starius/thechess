@@ -276,7 +276,6 @@ enum UserRights {
                    CLASSIFICATION_CHANGER |
                    AVATAR_NONDEFAULT |
                    EDIT_DESCRIPTION |
-                   CREATE_TEAM |
                    JOIN_TEAM
 };
 
