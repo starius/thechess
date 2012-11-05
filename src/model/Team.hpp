@@ -115,11 +115,20 @@ void team_chat(const TeamPtr& team, const Wt::WString& message,
 /** Return if the user can create a team */
 bool can_create_team(const UserPtr& user);
 
+/** Try to create a team and return it on success */
+TeamPtr create_team(const UserPtr& user);
+
 /** Return if the user can remove the team */
 bool can_remove_team(const UserPtr& user, const TeamPtr& team);
 
+/** Try remove the team */
+void remove_team(const UserPtr& user, const TeamPtr& team);
+
 /** Return if the user can restore the team */
 bool can_restore_team(const UserPtr& user, const TeamPtr& team);
+
+/** Try restore the team */
+void restore_team(const UserPtr& user, const TeamPtr& team);
 
 /** Return if the user can edit the team */
 bool can_edit_team(const UserPtr& user, const TeamPtr& team);
@@ -127,17 +136,32 @@ bool can_edit_team(const UserPtr& user, const TeamPtr& team);
 /** Return if the user can add himself to team's candidates */
 bool can_join_team(const UserPtr& user, const TeamPtr& team);
 
+/** Try add himself to team's candidates */
+void join_team(const UserPtr& user, const TeamPtr& team);
+
 /** Return if the user can approve or discard the team candidate */
 bool can_change_team_candidate(const UserPtr& user, const TeamPtr& team,
                                const UserPtr& candidate);
 
+/** Try approve or discard the team candidate */
+void change_team_candidate(const UserPtr& user, const TeamPtr& team,
+                           const UserPtr& candidate, bool approve);
+
 /** Return if the user can remove user from team members list */
 bool can_change_team_members(const UserPtr& user, const TeamPtr& team,
-                             const UserPtr& candidate);
+                             const UserPtr& member);
+
+/** Try remove user from team members list */
+void remove_team_member(const UserPtr& user, const TeamPtr& team,
+                        const UserPtr& candidate);
 
 /** Return if the user can remove user from team ban list */
 bool can_change_team_banned(const UserPtr& user, const TeamPtr& team,
                             const UserPtr& banned);
+
+/** Try remove user from team ban list */
+void remove_team_banned(const UserPtr& user, const TeamPtr& team,
+                        const UserPtr& banned);
 
 }
 

@@ -52,13 +52,34 @@ bool can_create_team(const UserPtr& user) {
     return user->has_permission(CREATE_TEAM);
 }
 
+TeamPtr create_team(const UserPtr& user) {
+    TeamPtr team;
+    if (can_create_team(user)) {
+        team = user.session()->add(new Team(true));
+        team.modify()->set_init(user);
+    }
+    return team;
+}
+
 bool can_remove_team(const UserPtr& user, const TeamPtr& team) {
     return (user->has_permission(TEAM_CHANGER) || team->init() == user) &&
-            !team->removed();
+           !team->removed();
+}
+
+void remove_team(const UserPtr& user, const TeamPtr& team) {
+    if (can_remove_team(user, team)) {
+        team.modify()->set_removed(true);
+    }
 }
 
 bool can_restore_team(const UserPtr& user, const TeamPtr& team) {
     return user->has_permission(TEAM_CHANGER) && team->removed();
+}
+
+void restore_team(const UserPtr& user, const TeamPtr& team) {
+    if (can_restore_team(user, team)) {
+        team.modify()->set_removed(false);
+    }
 }
 
 bool can_edit_team(const UserPtr& user, const TeamPtr& team) {
@@ -73,22 +94,54 @@ bool can_join_team(const UserPtr& user, const TeamPtr& team) {
            !team->banned().count(user);
 }
 
+void join_team(const UserPtr& user, const TeamPtr& team) {
+    if (can_join_team(user, team)) {
+        team.modify()->candidates().insert(user);
+    }
+}
+
 bool can_change_team_candidate(const UserPtr& user, const TeamPtr& team,
                                const UserPtr& candidate) {
     return (user->has_permission(TEAM_CHANGER) || team->init() == user) &&
            team->candidates().count(user);
 }
 
+void change_team_candidate(const UserPtr& user, const TeamPtr& team,
+                           const UserPtr& candidate, bool approve) {
+    if (can_change_team_candidate(user, team, candidate)) {
+        team.modify()->candidates().erase(user);
+        if (approve) {
+            team.modify()->members().insert(user);
+        } else {
+            team.modify()->banned().insert(user);
+        }
+    }
+}
+
 bool can_change_team_members(const UserPtr& user, const TeamPtr& team,
-                             const UserPtr& candidate) {
+                             const UserPtr& member) {
     return (user->has_permission(TEAM_CHANGER) || team->init() == user) &&
-           team->candidates().count(user);
+           team->candidates().count(member);
+}
+
+void remove_team_member(const UserPtr& user, const TeamPtr& team,
+                        const UserPtr& member) {
+    if (can_change_team_members(user, team, member)) {
+        team.modify()->members().erase(user);
+    }
 }
 
 bool can_change_team_banned(const UserPtr& user, const TeamPtr& team,
                             const UserPtr& banned) {
     return (user->has_permission(TEAM_CHANGER) || team->init() == user) &&
            team->banned().count(user);
+}
+
+void remove_team_banned(const UserPtr& user, const TeamPtr& team,
+                        const UserPtr& banned) {
+    if (can_change_team_banned(user, team, banned)) {
+        team.modify()->banned().erase(banned);
+    }
 }
 
 }
