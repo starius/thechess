@@ -50,19 +50,16 @@ void TeamWidget::print_title() {
 }
 
 void TeamWidget::print_members() {
-    addWidget(new Header(tr("tc.team.Members")));
-    list_users(team_->members());
+    list_users(team_->members(), tr("tc.team.Members"));
 }
 
 void TeamWidget::print_candidates() {
-    addWidget(new Header(tr("tc.team.Candidates")));
-    list_users(team_->candidates());
+    list_users(team_->candidates(), tr("tc.team.Candidates"));
 }
 
 void TeamWidget::print_banned() {
     if (can_list_team_banned(tApp->user(), team_)) {
-        addWidget(new Header(tr("tc.team.Banned")));
-        list_users(team_->banned());
+        list_users(team_->banned(), tr("tc.team.Banned"));
     }
 }
 
@@ -82,10 +79,14 @@ void TeamWidget::print_manager() {
     }
 }
 
-void TeamWidget::list_users(const Users& users) {
+void TeamWidget::list_users(const Users& users, const Wt::WString& header) {
+    UsersVector users_copy(users.begin(), users.end());
+    if (users_copy.empty()) {
+        return;
+    }
+    addWidget(new Header(header));
     Wt::WContainerWidget* list = new Wt::WContainerWidget(this);
     list->setList(true);
-    UsersVector users_copy(users.begin(), users.end());
     BOOST_FOREACH (const UserPtr& user, users_copy) {
         Wt::WContainerWidget* item = new Wt::WContainerWidget(list);
         user_anchor(user, item);

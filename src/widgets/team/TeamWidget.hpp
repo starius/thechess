@@ -31,7 +31,7 @@ private:
     void print_candidates();
     void print_banned();
     void print_manager();
-    void list_users(const Users& users);
+    void list_users(const Users& users, const Wt::WString& header);
     void user_buttons(const UserPtr& user, Wt::WContainerWidget* item);
     void add_button(const Wt::WString& button, const UserAction& user_action,
                     Wt::WContainerWidget* item);
