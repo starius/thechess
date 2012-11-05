@@ -64,11 +64,14 @@ void TeamWidget::print_banned() {
 void TeamWidget::print_manager() {
     if (can_remove_team(tApp->user(), team_)) {
         add_button(tr("tc.team.Remove_team"), remove_team, this);
-    } else if (can_restore_team(tApp->user(), team_)) {
+    }
+    if (can_restore_team(tApp->user(), team_)) {
         add_button(tr("tc.team.Restore_team"), restore_team, this);
-    } else if (can_join_team(tApp->user(), team_)) {
+    }
+    if (can_join_team(tApp->user(), team_)) {
         add_button(tr("tc.common.Join"), join_team, this);
-    } else if (can_edit_team(tApp->user(), team_)) {
+    }
+    if (can_edit_team(tApp->user(), team_)) {
         Wt::WPushButton* b = new Wt::WPushButton(tr("tc.team.Change"), this);
         b->clicked().connect(this, &TeamWidget::show_edit);
     }
