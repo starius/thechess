@@ -6,6 +6,7 @@
  */
 
 #include "model/all.hpp"
+#include "log.hpp"
 
 DBO_INSTANTIATE_TEMPLATES(thechess::Team);
 
@@ -57,6 +58,7 @@ TeamPtr create_team(const UserPtr& user) {
     if (can_create_team(user)) {
         team = user.session()->add(new Team(true));
         team.modify()->set_init(user);
+        team_chat(team, "team created", user);
     }
     return team;
 }
@@ -69,6 +71,7 @@ bool can_remove_team(const UserPtr& user, const TeamPtr& team) {
 void remove_team(const UserPtr& user, const TeamPtr& team) {
     if (can_remove_team(user, team)) {
         team.modify()->set_removed(true);
+        team_chat(team, "team removed", user);
     }
 }
 
@@ -79,6 +82,7 @@ bool can_restore_team(const UserPtr& user, const TeamPtr& team) {
 void restore_team(const UserPtr& user, const TeamPtr& team) {
     if (can_restore_team(user, team)) {
         team.modify()->set_removed(false);
+        team_chat(team, "team restored", user);
     }
 }
 
@@ -97,6 +101,7 @@ bool can_join_team(const UserPtr& user, const TeamPtr& team) {
 void join_team(const UserPtr& user, const TeamPtr& team) {
     if (can_join_team(user, team)) {
         team.modify()->candidates().insert(user);
+        team_chat(team, "join", user);
     }
 }
 
@@ -112,8 +117,10 @@ void change_team_candidate(const UserPtr& user, const TeamPtr& team,
         team.modify()->candidates().erase(user);
         if (approve) {
             team.modify()->members().insert(user);
+            team_chat(team, "add member " + user_a(candidate), user);
         } else {
             team.modify()->banned().insert(user);
+            team_chat(team, "ban member " + user_a(candidate), user);
         }
     }
 }
@@ -127,7 +134,8 @@ bool can_change_team_members(const UserPtr& user, const TeamPtr& team,
 void remove_team_member(const UserPtr& user, const TeamPtr& team,
                         const UserPtr& member) {
     if (can_change_team_members(user, team, member)) {
-        team.modify()->members().erase(user);
+        team.modify()->members().erase(member);
+        team_chat(team, "remove member " + user_a(member), user);
     }
 }
 
@@ -141,6 +149,7 @@ void remove_team_banned(const UserPtr& user, const TeamPtr& team,
                         const UserPtr& banned) {
     if (can_change_team_banned(user, team, banned)) {
         team.modify()->banned().erase(banned);
+        team_chat(team, "unban " + user_a(banned), user);
     }
 }
 
