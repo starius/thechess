@@ -113,18 +113,18 @@ void join_team(const UserPtr& user, const TeamPtr& team) {
 
 bool can_change_team_candidate(const UserPtr& user, const TeamPtr& team,
                                const UserPtr& candidate) {
-    return is_team_manager(user, team) && team->candidates().count(user);
+    return is_team_manager(user, team) && team->candidates().count(candidate);
 }
 
 void change_team_candidate(const UserPtr& user, const TeamPtr& team,
                            const UserPtr& candidate, bool approve) {
     if (can_change_team_candidate(user, team, candidate)) {
-        team.modify()->candidates().erase(user);
+        team.modify()->candidates().erase(candidate);
         if (approve) {
-            team.modify()->members().insert(user);
+            team.modify()->members().insert(candidate);
             team_chat(team, "add member " + user_a(candidate), user);
         } else {
-            team.modify()->banned().insert(user);
+            team.modify()->banned().insert(candidate);
             team_chat(team, "ban member " + user_a(candidate), user);
         }
     }
@@ -147,7 +147,7 @@ void remove_team_member(const UserPtr& user, const TeamPtr& team,
 
 bool can_change_team_banned(const UserPtr& user, const TeamPtr& team,
                             const UserPtr& banned) {
-    return is_team_manager(user, team) && team->banned().count(user);
+    return is_team_manager(user, team) && team->banned().count(banned);
 }
 
 void remove_team_banned(const UserPtr& user, const TeamPtr& team,
