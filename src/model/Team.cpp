@@ -108,7 +108,7 @@ bool can_join_team(const UserPtr& user, const TeamPtr& team) {
 void join_team(const UserPtr& user, const TeamPtr& team) {
     if (can_join_team(user, team)) {
         team.modify()->candidates().insert(user);
-        team_chat(team, "join", user);
+        team_chat(team, "join candidates", user);
     }
 }
 
