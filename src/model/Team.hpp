@@ -163,6 +163,9 @@ bool can_change_team_banned(const UserPtr& user, const TeamPtr& team,
 void remove_team_banned(const UserPtr& user, const TeamPtr& team,
                         const UserPtr& banned);
 
+/** Return if the user can list banned users of the team */
+bool can_list_team_banned(const UserPtr& user, const TeamPtr& team);
+
 }
 
 DBO_EXTERN_TEMPLATES(thechess::Team);

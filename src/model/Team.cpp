@@ -156,5 +156,9 @@ void remove_team_banned(const UserPtr& user, const TeamPtr& team,
     }
 }
 
+bool can_list_team_banned(const UserPtr& user, const TeamPtr& team) {
+    return user->has_permission(TEAM_CHANGER) || team->init() == user;
+}
+
 }
 
