@@ -36,7 +36,7 @@ private:
     void add_button(const Wt::WString& button, const UserAction& user_action,
                     Wt::WContainerWidget* item);
     void apply_action(const UserAction& user_action);
-
+    void show_edit();
 };
 
 }

@@ -12,6 +12,7 @@
 #include <Wt/WBreak>
 
 #include "widgets/team/TeamWidget.hpp"
+#include "widgets/team/TeamEdit.hpp"
 #include "widgets/user/user_anchor.hpp"
 #include "widgets/Header.hpp"
 
@@ -36,7 +37,6 @@ void TeamWidget::reprint() {
     print_members();
     print_candidates();
     print_manager();
-    // TODO TeamEdit
 }
 
 void TeamWidget::print_title() {
@@ -68,6 +68,9 @@ void TeamWidget::print_manager() {
         add_button(tr("tc.team.Restore_team"), restore_team, this);
     } else if (can_join_team(tApp->user(), team_)) {
         add_button(tr("tc.common.Join"), join_team, this);
+    } else if (can_edit_team(tApp->user(), team_)) {
+        Wt::WPushButton* b = new Wt::WPushButton(tr("tc.team.Change"), this);
+        b->clicked().connect(this, &TeamWidget::show_edit);
     }
 }
 
@@ -111,6 +114,12 @@ void TeamWidget::apply_action(const TeamWidget::UserAction& user_action) {
     user_action(tApp->user(), team_);
     t.commit();
     t_emit(TEAM_OBJECT, team_.id());
+}
+
+void TeamWidget::show_edit() {
+    dbo::Transaction t(tApp->session());
+    clear();
+    addWidget(new TeamEdit(team_));
 }
 
 }
