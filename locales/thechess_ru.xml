@@ -405,6 +405,7 @@
     <message id='tc.user.Competitor_time'>Показывать время соперника в списке моих игр</message>
     <message id='tc.user.confirmed_by'>, подтверждено&nbsp;</message>
     <message id='tc.user.cp_creator'>создать параметры турнира</message>
+    <message id='tc.user.create_team'>создавать команду</message>
     <message id='tc.user.Delete'>Удалить аккаунт</message>
     <message id='tc.user.edit_description'>редактировать описание</message>
     <message id='tc.user.Edit_rights'>Редактировать права</message>
@@ -427,6 +428,7 @@
     <message id='tc.user.ip'>ip-адрес</message>
     <message id='tc.user.IpBanList'>Список банов по IP</message>
     <message id='tc.user.IpList'>Список IP</message>
+    <message id='tc.user.join_team'>присоединяться к команде</message>
     <message id='tc.user.Last_online'>Последний раз на сайте: {1}</message>
     <message id='tc.user.Less_game_info'>Меньше информации на странице партии</message>
     <message id='tc.user.List_rights'>Список прав</message>
