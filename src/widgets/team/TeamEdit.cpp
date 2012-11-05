@@ -30,8 +30,7 @@ void TeamEdit::save() {
     dbo::Transaction t(tApp->session());
     write_record(team_.modify());
     t.commit();
-    // TODO open team page
-    // TODO emit team event
+    t_emit(TEAM_OBJECT, team_.id());
 }
 
 }
