@@ -61,7 +61,7 @@ void TeamWidget::print_candidates() {
 void TeamWidget::print_banned() {
     if (can_list_team_banned(tApp->user(), team_)) {
         addWidget(new Header(tr("tc.team.Banned")));
-        list_users(team_->candidates());
+        list_users(team_->banned());
     }
 }
 
