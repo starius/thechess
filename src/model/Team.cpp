@@ -129,7 +129,8 @@ void change_team_candidate(const UserPtr& user, const TeamPtr& team,
 bool can_change_team_members(const UserPtr& user, const TeamPtr& team,
                              const UserPtr& member) {
     return (user->has_permission(TEAM_CHANGER) || team->init() == user) &&
-           team->candidates().count(member);
+           team->candidates().count(member) &&
+           (member != team->init() || user == member);
 }
 
 void remove_team_member(const UserPtr& user, const TeamPtr& team,
