@@ -99,6 +99,7 @@ bool can_edit_team(const UserPtr& user, const TeamPtr& team) {
 
 bool can_join_team(const UserPtr& user, const TeamPtr& team) {
     return user && user->has_permission(JOIN_TEAM) &&
+           !team->removed() &&
            !team->members().count(user) &&
            !team->candidates().count(user) &&
            !team->banned().count(user);
