@@ -95,6 +95,10 @@ struct BDId {
     /** Comparison operator */
     bool operator==(const BDId& other) const;
 
+    // FIXME http://redmine.emweb.be/issues/1510
+    /** Comparison operator */
+    bool operator!=(const BDId& other) const;
+
     /** Comparison operator */
     bool operator<(const BDId& other) const;
 };

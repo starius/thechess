@@ -26,6 +26,10 @@ bool BDId::operator==(const BDId& other) const {
     return user == other.user && type == other.type && value == other.value;
 }
 
+bool BDId::operator!=(const BDId& other) const {
+    return !(*this == other);
+}
+
 bool BDId::operator<(const BDId& other) const {
     return user < other.user || (user == other.user && (type < other.type ||
                                  (type == other.type && value < other.value)));
