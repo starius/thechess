@@ -115,6 +115,12 @@ void team_chat(const TeamPtr& team, const Wt::WString& message,
 /** Return if the user can create a team */
 bool can_create_team(const UserPtr& user);
 
+/** Return if the user can remove the team */
+bool can_remove_team(const UserPtr& user, const TeamPtr& team);
+
+/** Return if the user can restore the team */
+bool can_restore_team(const UserPtr& user, const TeamPtr& team);
+
 /** Return if the user can edit the team */
 bool can_edit_team(const UserPtr& user, const TeamPtr& team);
 

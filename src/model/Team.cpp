@@ -52,6 +52,14 @@ bool can_create_team(const UserPtr& user) {
     return user->has_permission(CREATE_TEAM);
 }
 
+bool can_remove_team(const UserPtr& user, const TeamPtr& team) {
+    return user->has_permission(TEAM_CHANGER) || team->init() == user;
+}
+
+bool can_restore_team(const UserPtr& user, const TeamPtr& team) {
+    return user->has_permission(TEAM_CHANGER);
+}
+
 bool can_edit_team(const UserPtr& user, const TeamPtr& team) {
     return user->has_permission(RECORDS_EDITOR) ||
            user == team->init();
