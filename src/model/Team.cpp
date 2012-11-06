@@ -177,5 +177,19 @@ bool can_list_team_banned(const UserPtr& user, const TeamPtr& team) {
     return is_team_manager(user, team);
 }
 
+bool can_set_team_leader(const UserPtr& user, const TeamPtr& team,
+                         const UserPtr& new_leader) {
+    return user && team->init() == user && new_leader && user != new_leader &&
+           team->members().count(new_leader);
+}
+
+void set_team_leader(const UserPtr& user, const TeamPtr& team,
+                     const UserPtr& new_leader) {
+    if (can_set_team_leader(user, team, new_leader)) {
+        team.modify()->set_init(new_leader);
+        team_chat(team, "new team leader " + user_a(new_leader.id()), user);
+    }
+}
+
 }
 

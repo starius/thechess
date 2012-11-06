@@ -797,6 +797,7 @@ TheChess.
     <message id='tc.team.Members'>Members</message>
     <message id='tc.team.Remove_team'>Remove team</message>
     <message id='tc.team.Restore_team'>Restore team</message>
+    <message id='tc.team.SetLeader'>New team leader</message>
     <message id='tc.team.Title'>Team # {1} {2}</message>
 
     <message id='tc.title.AllSessions'>All sessions « TheChess</message>

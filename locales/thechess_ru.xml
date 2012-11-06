@@ -310,6 +310,7 @@
     <message id='tc.team.Members'>Члены команды</message>
     <message id='tc.team.Remove_team'>Удалить команду</message>
     <message id='tc.team.Restore_team'>Восстановить команду</message>
+    <message id='tc.team.SetLeader'>Назначить капитаном</message>
     <message id='tc.team.Title'>Команда № {1} {2}</message>
 
     <message id='tc.title.BoardWidget'>Доска « TheChess</message>

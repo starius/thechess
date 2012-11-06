@@ -132,6 +132,10 @@ void TeamWidget::user_buttons(const UserPtr& user, Wt::WContainerWidget* item) {
         add_button(tr("tc.common.Discard"), boost::bind(remove_team_banned,
                    _1, _2, user), item);
     }
+    if (can_set_team_leader(tApp->user(), team_, user)) {
+        add_button(tr("tc.team.SetLeader"), boost::bind(set_team_leader,
+                   _1, _2, user), item);
+    }
 }
 
 void TeamWidget::add_button(const Wt::WString& button,

@@ -174,6 +174,14 @@ void remove_team_banned(const UserPtr& user, const TeamPtr& team,
 /** Return if the user can list banned users of the team */
 bool can_list_team_banned(const UserPtr& user, const TeamPtr& team);
 
+/** Return if the user can set other user as team leader */
+bool can_set_team_leader(const UserPtr& user, const TeamPtr& team,
+                         const UserPtr& new_leader);
+
+/** Try set other user as team leader */
+void set_team_leader(const UserPtr& user, const TeamPtr& team,
+                     const UserPtr& new_leader);
+
 }
 
 DBO_EXTERN_TEMPLATES(thechess::Team);
