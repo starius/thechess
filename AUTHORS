@@ -5,6 +5,10 @@ Translations authors:
 * Belorussian: Igor Silvanovich <igor_silvan@tut.by>
 * Ukrainian: Enkalo Mikola <myenkalo@ukrtelecom.ua>
 
+files/js/tinymce_language_pack.tar.gz
+Tinymce translation was downloaded from
+http://www.tinymce.com/i18n/index.php?ctrl=lang&act=download
+
 Images:
 * files/img/awards/moder.gif files/img/awards/competition.png
  Lena Borodina <yolka00@list.ru>
