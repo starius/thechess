@@ -60,42 +60,46 @@ protected:
         dbo::Transaction t(tApp->session());
         result->setList(true);
         kw(game_->str_state(), "tc.game.State", result);
-        user(game_->white(), "tc.game.white", result);
-        user(game_->black(), "tc.game.black", result);
-        user(game_->order_user(), "tc.game.order_user", result);
-        user(game_->init(), "tc.game.init", result);
-        kw(tr(game_->colors_random() ? "tc.game.colors_random" :
-              "tc.game.colors_not_random"), "tc.game.colors", result);
+        if (!User::has_s(SWITCH_LESS_GAME_INFO)) {
+            user(game_->white(), "tc.game.white", result);
+            user(game_->black(), "tc.game.black", result);
+            user(game_->order_user(), "tc.game.order_user", result);
+            user(game_->init(), "tc.game.init", result);
+            kw(tr(game_->colors_random() ? "tc.game.colors_random" :
+                  "tc.game.colors_not_random"), "tc.game.colors", result);
+        }
         user(game_->winner(), "tc.common.winner", result);
-        time(game_->created(), "tc.common.created", result);
-        time(game_->confirmed(), "tc.game.confirmed", result);
-        time(game_->started(), "tc.game.started", result);
-        time(game_->lastmove(), "tc.game.lastmove", result);
-        time(game_->pause_until(), "tc.game.pause_until", result);
-        time(game_->ended(), "tc.game.ended", result);
-        const GPPtr& gp = game_->gp();
-        if (game_->is_ended()) {
-            bool_item(game_->real_rating(), "tc.game.real_rating_true",
-                      "tc.game.real_rating_false", result);
-        } else {
-            bool_item((gp->norating() || game_->norating()),
-                      "tc.game.norating_true",
-                      "tc.game.norating_false", result);
-        }
-        if (!game_->is_ended()) {
-            if (gp->first_draw() != NO_DRAW) {
-                int first_draw =  gp->first_draw() / 2;
-                item(Wt::WString::trn("tc.game.First_draw", first_draw)
-                     .arg(gp->first_draw() / 2), result);
+        if (!User::has_s(SWITCH_LESS_GAME_INFO)) {
+            time(game_->created(), "tc.common.created", result);
+            time(game_->confirmed(), "tc.game.confirmed", result);
+            time(game_->started(), "tc.game.started", result);
+            time(game_->lastmove(), "tc.game.lastmove", result);
+            time(game_->pause_until(), "tc.game.pause_until", result);
+            time(game_->ended(), "tc.game.ended", result);
+            const GPPtr& gp = game_->gp();
+            if (game_->is_ended()) {
+                bool_item(game_->real_rating(), "tc.game.real_rating_true",
+                          "tc.game.real_rating_false", result);
             } else {
-                item(Wt::WString::tr("tc.game.No_draw"), result);
+                bool_item((gp->norating() || game_->norating()),
+                          "tc.game.norating_true",
+                          "tc.game.norating_false", result);
             }
-        }
-        {
-            Wt::WContainerWidget* li = new Wt::WContainerWidget(result);
-            Wt::WAnchor* a = new Wt::WAnchor(li);
-            a->setText(tr("tc.game.Parameters"));
-            a->setLink(tApp->path().gp_view()->get_link(gp.id()));
+            if (!game_->is_ended()) {
+                if (gp->first_draw() != NO_DRAW) {
+                    int first_draw =  gp->first_draw() / 2;
+                    item(Wt::WString::trn("tc.game.First_draw", first_draw)
+                         .arg(gp->first_draw() / 2), result);
+                } else {
+                    item(Wt::WString::tr("tc.game.No_draw"), result);
+                }
+            }
+            {
+                Wt::WContainerWidget* li = new Wt::WContainerWidget(result);
+                Wt::WAnchor* a = new Wt::WAnchor(li);
+                a->setText(tr("tc.game.Parameters"));
+                a->setLink(tApp->path().gp_view()->get_link(gp.id()));
+            }
         }
         const CompetitionPtr& c = game_->competition();
         if (c) {
@@ -110,14 +114,16 @@ protected:
                 new Wt::WText(tr("tc.competition.stage_is").arg(stage), li);
             }
         }
-        if (game_->state() == Game::CONFIRMED && c) {
-            time(game_->confirmed() + c->cp()->force_start_delay(),
-                 "tc.game.force_start", result);
-        }
-        if (game_->state() == Game::PROPOSED && c &&
-                c->type() == STAGED) {
-            time(game_->created() + c->cp()->relax_time(),
-                 "tc.game.force_confirm", result);
+        if (!User::has_s(SWITCH_LESS_GAME_INFO)) {
+            if (game_->state() == Game::CONFIRMED && c) {
+                time(game_->confirmed() + c->cp()->force_start_delay(),
+                     "tc.game.force_start", result);
+            }
+            if (game_->state() == Game::PROPOSED && c &&
+                    c->type() == STAGED) {
+                time(game_->created() + c->cp()->relax_time(),
+                     "tc.game.force_confirm", result);
+            }
         }
     }
 
