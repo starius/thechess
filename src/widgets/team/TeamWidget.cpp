@@ -50,7 +50,7 @@ void TeamWidget::print_title() {
     addWidget(new Wt::WBreak);
     addWidget(new Wt::WText(team_->description()));
     addWidget(new Wt::WBreak);
-    addWidget(new Wt::WText(tr("tc.common.creator")));
+    addWidget(new Wt::WText(tr("tc.team.Leader")));
     addWidget(new Wt::WText(" "));
     user_anchor(team_->init(), this);
     addWidget(new Wt::WBreak);

@@ -793,6 +793,7 @@ TheChess.
     <message id='tc.team.Banned'>Banned candidates</message>
     <message id='tc.team.Candidates'>Candidates</message>
     <message id='tc.team.Change'>Change name or description</message>
+    <message id='tc.team.Leader'>Leader</message>
     <message id='tc.team.Members'>Members</message>
     <message id='tc.team.Remove_team'>Remove team</message>
     <message id='tc.team.Restore_team'>Restore team</message>
