@@ -127,9 +127,9 @@ void Session::recalculate_game_rating() {
 
 void Session::recalculate_competition_rating() {
     dbo::Transaction t(*this);
-    execute("update thechess_user set competitions_stat_elo = ?, "
-            "competitions_stat_all = 0, "
-            "competitions_stat_wins = 0, competitions_stat_fails = 0")
+    execute("update thechess_user set compteitions_stat_elo = ?, "
+            "compteitions_stat_all = 0, "
+            "compteitions_stat_wins = 0, compteitions_stat_fails = 0")
     .bind(EloPlayer(true).elo());
     t.commit();
     dbo::Transaction t2(*this);
