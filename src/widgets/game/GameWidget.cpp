@@ -120,7 +120,7 @@ protected:
                      "tc.game.force_start", result);
             }
             if (game_->state() == Game::PROPOSED && c &&
-                    c->type() == STAGED) {
+                    game_->created().isValid()) {
                 time(game_->created() + c->cp()->relax_time(),
                      "tc.game.force_confirm", result);
             }
