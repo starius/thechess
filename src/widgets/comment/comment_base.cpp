@@ -36,6 +36,14 @@ Object comment_base(const CommentPtr& comment) {
         }
     } catch (...)
     { }
+    try {
+        TeamPtr team = tApp->session().find<Team>()
+                       .where("comment_base_id = ?").bind(comment);
+        if (team) {
+            return Object(TEAM_OBJECT, int(team.id()));
+        }
+    } catch (...)
+    { }
     return Object(NOEVENT, 0);
 }
 
@@ -60,6 +68,11 @@ Wt::WAnchor* anchor_to_host(const CommentPtr& comment) {
         Wt::WAnchor* a = new Wt::WAnchor();
         a->setText(Wt::WString::tr("tc.competition.Header").arg(object.id));
         a->setLink(tApp->path().competition_view()->get_link(object.id));
+        return a;
+    } else if (object.type == TEAM_OBJECT) {
+        Wt::WAnchor* a = new Wt::WAnchor();
+        a->setText(Wt::WString::tr("tc.team.Title").arg(object.id).arg(""));
+        a->setLink(tApp->path().team_view()->get_link(object.id));
         return a;
     }
     return 0;
