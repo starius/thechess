@@ -455,7 +455,7 @@ void Competition::process_classical() {
             used[g->white()] += 1;
             used[g->black()] += 1;
         }
-        if (g->state() == Game::PROPOSED) {
+        if (g->state() == Game::PROPOSED && !g->created().isValid()) {
             proposed.push_back(g);
         }
     }

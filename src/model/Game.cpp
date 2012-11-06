@@ -348,7 +348,7 @@ void Game::confirm(const UserPtr& user) {
 }
 
 void Game::propose_by_competition() {
-    if (competition()) {
+    if (competition() && !created().isValid()) {
         set_created(now());
     }
 }
