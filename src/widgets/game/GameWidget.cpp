@@ -59,7 +59,7 @@ protected:
     void add_items(Wt::WContainerWidget* result) {
         dbo::Transaction t(tApp->session());
         result->setList(true);
-        kw(game_->str_state(), "tc.game.State", result);
+        kw(game_->str_state(), "tc.game.State", result, /* bold */ true);
         if (!User::has_s(SWITCH_LESS_GAME_INFO)) {
             user(game_->white(), "tc.game.white", result);
             user(game_->black(), "tc.game.black", result);
@@ -68,7 +68,7 @@ protected:
             kw(tr(game_->colors_random() ? "tc.game.colors_random" :
                   "tc.game.colors_not_random"), "tc.game.colors", result);
         }
-        user(game_->winner(), "tc.common.winner", result);
+        user(game_->winner(), "tc.common.winner", result, /* bold */ true);
         if (!User::has_s(SWITCH_LESS_GAME_INFO)) {
             time(game_->created(), "tc.common.created", result);
             time(game_->confirmed(), "tc.game.confirmed", result);
@@ -130,14 +130,18 @@ protected:
 private:
     GamePtr game_;
 
-    void item(const Wt::WString& text, Wt::WContainerWidget* r) {
+    void item(const Wt::WString& text, Wt::WContainerWidget* r,
+              bool bold = false) {
         Wt::WContainerWidget* li = new Wt::WContainerWidget(r);
-        new Wt::WText(text, li);
+        Wt::WText* t = new Wt::WText(text, li);
+        if (bold) {
+            t->decorationStyle().font().setWeight(Wt::WFont::Bolder);
+        }
     }
 
     void kw(const Wt::WString& s, const char* tr_id,
-            Wt::WContainerWidget* r) {
-        item(tr("tc.common.kw").arg(tr(tr_id)).arg(s), r);
+            Wt::WContainerWidget* r, bool bold = false) {
+        item(tr("tc.common.kw").arg(tr(tr_id)).arg(s), r, bold);
     }
 
     void time(const Wt::WDateTime& dt, const char* tr_id,
@@ -149,9 +153,9 @@ private:
     }
 
     void user(const UserPtr& user, const char* tr_id,
-              Wt::WContainerWidget* r) {
+              Wt::WContainerWidget* r, bool bold = false) {
         if (user) {
-            kw(user->safe_username(), tr_id, r);
+            kw(user->safe_username(), tr_id, r, bold);
         }
     }
 
@@ -198,8 +202,8 @@ public:
             comment_container_ = new Wt::WContainerWidget(this);
         }
         print_comment();
+        game_status_ = new GameStatus(game_, this);
         if (!User::has_s(SWITCH_LESS_GAME_INFO)) {
-            game_status_ = new GameStatus(game_, this);
             if (game->is_ended()) {
                 new Wt::WAnchor(str(boost::format("/pgn/?game=%i") % game.id()),
                                 tr("tc.game.Download_pgn"), this);
@@ -464,9 +468,7 @@ private:
     }
 
     void print_status() {
-        if (game_status_) {
-            game_status_->update();
-        }
+        game_status_->update();
     }
 
     typedef void (Game::*GameMember)(const UserPtr&);
