@@ -92,6 +92,8 @@ void TeamWidget::print_manager() {
 
 void TeamWidget::print_chat() {
     if (team_->has_comment_base()) {
+        addWidget(new Wt::WBreak);
+        addWidget(new Wt::WBreak);
         addWidget(new CommentList(Comment::CHAT_MESSAGE,
                                   team_->comment_base()));
     }
@@ -102,6 +104,7 @@ void TeamWidget::list_users(const Users& users, const Wt::WString& header) {
     if (users_copy.empty()) {
         return;
     }
+    addWidget(new Wt::WBreak);
     addWidget(new Header(header));
     Wt::WContainerWidget* list = new Wt::WContainerWidget(this);
     list->setList(true);
