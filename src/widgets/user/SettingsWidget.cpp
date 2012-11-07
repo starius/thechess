@@ -354,6 +354,7 @@ private:
             Games games = tApp->user()->games().where("state < ?")
                           .bind(Game::MIN_ENDED);
             BOOST_FOREACH (GamePtr g, games) {
+                g.reread();
                 g.modify()->take_vacation_pause(duration);
                 game_ids.push_back(g.id());
             }
