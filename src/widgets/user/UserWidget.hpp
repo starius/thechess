@@ -9,20 +9,26 @@
 #define THECHESS_WIDGETS_USEREWIDGET_HPP_
 
 #include <Wt/WGlobal>
-#include <Wt/WCompositeWidget>
+#include <Wt/WContainerWidget>
 #include <Wt/Dbo/ptr>
 
 #include "model/all.hpp"
 
 namespace thechess {
 
-class UserWidget : public Wt::WCompositeWidget {
+class UserWidget : public Wt::WContainerWidget {
 public:
     UserWidget(const UserPtr& user, Wt::WContainerWidget* parent = 0);
+
 private:
     class UserWidgetImpl;
 
-    UserWidgetImpl* impl_;
+    UserPtr user_;
+    Wt::WFormWidget* message_;
+    Wt::WAnchor* message_sent_;
+
+    void print_send();
+    void send();
 };
 
 }

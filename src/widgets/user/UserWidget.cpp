@@ -41,6 +41,23 @@ public:
         Wt::WContainerWidget(),
         Notifiable(Object(USER, user.id())),
         user_(user) {
+        reprint();
+    }
+
+    void notify(EventPtr) {
+        reprint();
+    }
+
+private:
+    UserPtr user_;
+    ClassificationWidget* class_;
+    Wt::WPushButton* rating_button_;
+    Wt::WPushButton* rating_and_me_button_;
+    Wt::WTextEdit* description_;
+
+    void reprint() {
+        UserPtr user = user_;
+        clear();
         Wt::WText* tmp;
         dbo::Transaction t(tApp->session());
         user_.reread();
@@ -193,24 +210,10 @@ public:
         print_game_stat();
         print_competition_stat();
         if (tApp->user() && tApp->user() != user_) {
-            new Header(tr("tc.comment.private_messages"), this);
-            print_send();
             print_block();
         }
         print_edit_description();
     }
-
-    void notify(EventPtr) {
-        tApp->path().open(tApp->internalPath());
-    }
-
-private:
-    UserPtr user_;
-    ClassificationWidget* class_;
-    Wt::WPushButton* rating_button_;
-    Wt::WPushButton* rating_and_me_button_;
-    Wt::WAnchor* message_sent_;
-    Wt::WTextEdit* description_;
 
     void discard_vacation() {
         dbo::Transaction t(tApp->session());
@@ -412,32 +415,6 @@ private:
         }
     }
 
-    void print_send() {
-        if (tApp->user() && tApp->user()->can_send_message(user_)) {
-            new Wt::WBreak(this);
-            Wt::WFormWidget* m;
-            if (!User::has_s(SWITCH_FORMATTING_CHAT)) {
-                Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
-                line_edit->setTextSize(80);
-                m = line_edit;
-                m->enterPressed().connect(boost::bind(&UserWidgetImpl::send,
-                                                      this, m));
-            } else {
-                Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
-                patch_text_edit(text_edit);
-                new Wt::WBreak(this);
-                m = text_edit;
-            }
-            Wt::WPushButton* b;
-            b = new Wt::WPushButton(tr("tc.common.Send"), this);
-            b->clicked().connect(boost::bind(&UserWidgetImpl::send, this, m));
-            message_sent_ = new Wt::WAnchor(this);
-            message_sent_->setText(tr("tc.user.Message_sent"));
-            message_sent_->setLink(tApp->path().my_messages()->link());
-            message_sent_->hide();
-        }
-    }
-
     void print_block() {
         new Wt::WBreak(this);
         Wt::WPushButton* b = new Wt::WPushButton(this);
@@ -475,16 +452,6 @@ private:
         }
     }
 
-    void send(Wt::WFormWidget* m) {
-        tApp->user().reread();
-        dbo::Transaction t(tApp->session());
-        if (tApp->user() && tApp->user()->can_send_message(user_)) {
-            User::send_message(tApp->user(), user_, m->valueText());
-            m->setValueText("");
-            message_sent_->show();
-        }
-    }
-
     void inverse_blocked() {
         dbo::Transaction t(tApp->session());
         tApp->user().reread();
@@ -512,9 +479,45 @@ private:
 };
 
 UserWidget::UserWidget(const UserPtr& user, Wt::WContainerWidget* parent) :
-    WCompositeWidget(parent) {
-    impl_ = new UserWidgetImpl(user);
-    setImplementation(impl_);
+    WContainerWidget(parent),
+    user_(user) {
+    addWidget(new UserWidgetImpl(user));
+    print_send();
+}
+
+void UserWidget::print_send() {
+    if (tApp->user() && tApp->user()->can_send_message(user_)) {
+        new Wt::WBreak(this);
+        new Header(tr("tc.comment.private_messages"), this);
+        if (!User::has_s(SWITCH_FORMATTING_CHAT)) {
+            Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
+            line_edit->setTextSize(80);
+            message_ = line_edit;
+            message_->enterPressed().connect(this, &UserWidget::send);
+        } else {
+            Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
+            patch_text_edit(text_edit);
+            new Wt::WBreak(this);
+            message_ = text_edit;
+        }
+        Wt::WPushButton* b;
+        b = new Wt::WPushButton(tr("tc.common.Send"), this);
+        b->clicked().connect(this, &UserWidget::send);
+        message_sent_ = new Wt::WAnchor(this);
+        message_sent_->setText(tr("tc.user.Message_sent"));
+        message_sent_->setLink(tApp->path().my_messages()->link());
+        message_sent_->hide();
+    }
+}
+
+void UserWidget::send() {
+    tApp->user().reread();
+    dbo::Transaction t(tApp->session());
+    if (tApp->user() && tApp->user()->can_send_message(user_)) {
+        User::send_message(tApp->user(), user_, message_->valueText());
+        message_->setValueText("");
+        message_sent_->show();
+    }
 }
 
 }
