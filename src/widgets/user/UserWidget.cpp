@@ -481,6 +481,7 @@ private:
         if (tApp->user() && tApp->user()->can_send_message(user_)) {
             User::send_message(tApp->user(), user_, m->valueText());
             m->setValueText("");
+            message_sent_->show();
         }
     }
 
