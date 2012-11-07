@@ -55,6 +55,8 @@ ALTER TABLE "thechess_team"
   ADD COLUMN "removed" boolean not null;
 CREATE INDEX "team_removed" ON "thechess_team" ("removed");
 
+update thechess_user set rights=rights|16384  where rights <> 0;
+
 3.0.8 to 3.0.9
 ==============
 
