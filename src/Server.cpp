@@ -61,6 +61,7 @@ Server::Server(int argc, char** argv):
     planning_.set_delay(config::tracker::DELAY);
     planning_.set_notification_server(&notifier_);
     planning_.set_io_service(&io_service_);
+    io_service_.start();
     //addResource(&all_pgn_, "/pgn/all.pgn");
     addResource(&pgn_, "/pgn/");
     addResource(&swfstore_, "/swfstore.swf");
