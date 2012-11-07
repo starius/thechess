@@ -365,6 +365,8 @@ private:
         }
         int id = tApp->user().id();
         t_task(USER, id);
+        tApp->path().user_view()->set_integer_value(tApp->user().id());
+        tApp->path().user_view()->open();
     }
 
     void delete_me() {
