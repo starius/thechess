@@ -15,6 +15,7 @@
 
 #include "widgets/game/GameCreateWidget.hpp"
 #include "widgets/gp/GPSelector.hpp"
+#include "widgets/user/user_anchor.hpp"
 #include "widgets/Header.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
@@ -29,6 +30,8 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
     tApp->user().reread();
     new Header(tr("tc.game.Competitor")
                .arg(user->username()), this);
+    user_anchor(user, this);
+    new Wt::WBreak(this);
     if (User::is_blocked(tApp->user(), user_)) {
         new Wt::WText(tr("tc.user.User_blocked_you"), this);
         return;
