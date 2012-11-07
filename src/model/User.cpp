@@ -492,7 +492,7 @@ void User::send_message(UserPtr from, UserPtr to, const Wt::WString& text) {
     message.modify()->set_root(base);
     message.modify()->set_type(Comment::PRIVATE_MESSAGE);
     message.flush();
-    t_emit(COMMENT, base.id());
+    t_emit_after(COMMENT, base.id());
     t_emit(new NewMessage(to.id()));
 }
 
