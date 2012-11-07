@@ -5,6 +5,8 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <boost/thread/tss.hpp>
+
 #include <Wt/WString>
 #include <Wt/Utils>
 #include <Wt/Wc/util.hpp>
@@ -13,6 +15,16 @@
 #include "Application.hpp"
 
 namespace thechess {
+
+typedef boost::thread_specific_ptr<Path> PathPtr;
+static PathPtr path_;
+
+static Path& path() {
+    if (path_.get() == 0) {
+        path_.reset(new Path);
+    }
+    return *path_;
+}
 
 void admin_log(const Wt::WString& message, dbo::Session& session,
                UserPtr user, bool draft) {
@@ -45,12 +57,12 @@ Wt::WString user_a(int user_id) {
     dbo::Transaction t(tApp->session());
     UserPtr u = tApp->session().load<User>(user_id);
     Wt::WString name = Wt::Utils::htmlEncode(u->username());
-    return html_a(tApp->path().user_view(), user_id, name);
+    return html_a(path().user_view(), user_id, name);
 }
 
 Wt::WString comp_a(int id) {
     Wt::WString t = Wt::WString("competition {1}").arg(id);
-    return html_a(tApp->path().competition_view(), id, t);
+    return html_a(path().competition_view(), id, t);
 }
 
 Wt::WString comm_a(int comment_id) {
@@ -60,23 +72,23 @@ Wt::WString comm_a(int comment_id) {
     Wt::WString text;
     int id;
     if (comment->type() == Comment::CHAT_MESSAGE) {
-        node = tApp->path().chat_comment();
+        node = path().chat_comment();
         text = "chat message {1}";
         id = comment.id();
     } else if (comment->type() == Comment::FORUM_POST) {
-        node = tApp->path().post();
+        node = path().post();
         text = "forum post {1}";
         id = comment.id();
     } else if (comment->type() == Comment::FORUM_POST_TEXT) {
-        node = tApp->path().post();
+        node = path().post();
         text = "forum post {1}";
         id = comment->parent().id();
     } else if (comment->type() == Comment::FORUM_TOPIC) {
-        node = tApp->path().topic_posts();
+        node = path().topic_posts();
         text = "forum topic {1}";
         id = comment.id();
     } else if (comment->type() == Comment::FORUM_COMMENT) {
-        node = tApp->path().post_comment();
+        node = path().post_comment();
         text = "forum comment {1}";
         id = comment.id();
     }
@@ -89,11 +101,11 @@ Wt::WString comm_a(int comment_id) {
 
 Wt::WString game_a(int id) {
     Wt::WString t = Wt::WString("game {1}").arg(id);
-    return html_a(tApp->path().game_view(), id, t);
+    return html_a(path().game_view(), id, t);
 }
 
 Wt::WString ip_a(const std::string& ip) {
-    return html_a(tApp->path().banned_ip()->get_full_path(ip), ip);
+    return html_a(path().banned_ip()->get_full_path(ip), ip);
 }
 
 }
