@@ -633,7 +633,6 @@ private:
     void print_comment_list_impl() {
         dbo::Transaction t(tApp->session());
         CommentPtr comment_base = game_->comment_base();
-        bool notify = !comment_base;
         if (!comment_base) {
             game_.reread();
             comment_base = game_.modify()->comment_base();
