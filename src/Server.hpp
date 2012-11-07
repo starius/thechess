@@ -9,6 +9,7 @@
 #define THECHESS_SERVER_HPP_
 
 #include <Wt/WFileResource>
+#include <Wt/WIOService>
 #include <Wt/Dbo/FixedSqlConnectionPool>
 #include <Wt/Auth/AuthService>
 #include <Wt/Auth/PasswordService>
@@ -85,6 +86,7 @@ private:
     SharedBoardIndex shared_board_index_;
     dbo::FixedSqlConnectionPool pool_;
     Notifier notifier_;
+    Wt::WIOService io_service_;
     Planning planning_;
     PgnResource pgn_;
     AllPgnResource all_pgn_;

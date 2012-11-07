@@ -57,8 +57,10 @@ Server::Server(int argc, char** argv):
     argc_(argc), argv_(argv) {
     instance_ = this;
     notifier_.set_direct_to_this(this);
+    io_service_.setThreadCount(1);
     planning_.set_delay(config::tracker::DELAY);
     planning_.set_notification_server(&notifier_);
+    planning_.set_io_service(&io_service_);
     //addResource(&all_pgn_, "/pgn/all.pgn");
     addResource(&pgn_, "/pgn/");
     addResource(&swfstore_, "/swfstore.swf");
