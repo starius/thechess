@@ -206,11 +206,16 @@ private:
 
     void print_vacation() {
         new Wt::WBreak(this);
-        new Wt::WText(tr("tc.user.Vacation_until").arg(""), this);
+        new Wt::WBreak(this);
+        Wt::WText* v = new Wt::WText(tr("tc.user.Vacation_until").arg(""));
+        addWidget(v);
+        v->decorationStyle().font().setWeight(Wt::WFont::Bolder);
         vacation_duration_ = new Wt::Wc::TimeDurationWidget(DAY, DAY,
                 50 * WEEK, this);
         Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
         b->clicked().connect(this, &SettingsWidgetImpl::save_vacation);
+        new Wt::WBreak(this);
+        new Wt::WBreak(this);
     }
 
     void print_delete() {
