@@ -525,14 +525,15 @@ private:
 class CompetitionChat : public Wt::WContainerWidget {
 public:
     CompetitionChat(const CompetitionPtr& c):
-        c_(c) {
+        c_(c), chat_(false) {
         print_comment_list();
     }
 
-private:
-    CompetitionPtr c_;
-
     void print_comment_list() {
+        if (chat_) {
+            return;
+        }
+        clear();
         dbo::Transaction t(tApp->session());
         if (c_->has_comment_base()) {
             print_comment_list_impl();
@@ -547,6 +548,10 @@ private:
         }
     }
 
+private:
+    CompetitionPtr c_;
+    bool chat_;
+
     void print_comment_list_impl() {
         dbo::Transaction t(tApp->session());
         CommentPtr comment_base = c_->comment_base();
@@ -556,6 +561,7 @@ private:
             t.commit();
             t_emit(COMPETITION, c_.id());
         } else {
+            chat_ = true;
             addWidget(new CommentList(Comment::CHAT_MESSAGE, comment_base));
         }
     }
@@ -584,7 +590,12 @@ void CompetitionWidget::reprint() {
     bindWidget("winners", new CompetitionWinners(c));
     bindWidget("terms", new CompetitionTerms(c));
     bindWidget("view", new CompetitionView(c));
-    bindWidget("chat", new CompetitionChat(c));
+    Wt::WWidget* chat = resolveWidget("chat");
+    if (chat) {
+        downcast<CompetitionChat*>(chat)->print_comment_list();
+    } else {
+        bindWidget("chat", new CompetitionChat(c));
+    }
     Wt::WWidget* manager = resolveWidget("manager");
     if (!manager || !downcast<CompetitionManager*>(manager)->is_editing()) {
         bindWidget("manager", new CompetitionManager(c));
