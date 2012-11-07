@@ -48,7 +48,7 @@ public:
         addColumn("limit_std", tr("tc.game.limit_std"));
         addColumn("limit_private_init", tr("tc.game.limit_private_init"));
         addColumn("norating", tr("tc.game.norating"));
-        addColumn("first_draw", tr("tc.game.first_draw"));
+        addColumn("first_draw", tr("tc.game.first_draw")); // dummy
     }
 
     boost::any data(const Wt::WModelIndex& index,
@@ -60,6 +60,8 @@ public:
                 return td2str(o->limit_std());
             } else if (index.column() == LIMIT_PRIVATE_COLUMN) {
                 return td2str(o->limit_private_init());
+            } else if (index.column() == FIRST_DRAW_COLUMN) {
+                return o->first_draw() / 2;
             }
         } else if (role == Wt::LinkRole && index.column() == N_COLUMN) {
             return tApp->path().gp_view()->get_link(o.id());
