@@ -76,7 +76,9 @@ Path::Path(Wt::WObject* parent):
     global_chat_ = new PredefinedNode("chat", this);
     teams_list_ = new PredefinedNode("team", this);
     team_view_ = new IntegerNode(teams_list_);
-    tApp->internalPathChanged().connect(this, &Parser::open);
+    if (wApp) {
+        wApp->internalPathChanged().connect(this, &Parser::open);
+    }
 }
 
 void Path::connect_main_widget(MainWidget* mw) {
