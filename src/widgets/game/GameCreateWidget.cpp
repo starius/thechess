@@ -36,6 +36,10 @@ GameCreateWidget::GameCreateWidget(const UserPtr& user,
         new Wt::WText(tr("tc.user.User_blocked_you"), this);
         return;
     }
+    if (!user_ || user_->removed()) {
+        new Wt::WText(tr("tc.user.Removed_message"), this);
+        return;
+    }
     if (tApp->user() == user_) {
         return;
     }
