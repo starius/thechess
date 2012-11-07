@@ -111,6 +111,10 @@ a.thechess-excited {
     background-color: white;
 }
 
+.thechess-ended {
+    background-color: #E5E5E5;
+}
+
 .thechess-games-all {
     color: black;
 }

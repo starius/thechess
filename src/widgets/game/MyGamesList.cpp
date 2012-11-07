@@ -204,6 +204,9 @@ public:
         if (state == Game::CONFIRMED) {
             addStyleClass("thechess-confirmed");
         }
+        if (state >= Game::MIN_ENDED) {
+            addStyleClass("thechess-ended");
+        }
     }
 
     void check_state();
