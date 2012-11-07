@@ -43,6 +43,9 @@ public:
     */
     Server(int argc, char** argv);
 
+    /** Stop server */
+    void stop();
+
     /** Get application options */
     const Options& options() const {
         return options_;

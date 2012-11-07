@@ -75,6 +75,13 @@ Server::Server(int argc, char** argv):
     session.reconsider(*this);
 }
 
+void Server::stop() {
+    // FIXME http://redmine.emweb.be/issues/1122
+    io_service_.boost::asio::io_service::stop();
+    ioService().boost::asio::io_service::stop();
+    Wt::WServer::stop();
+}
+
 void Server::reread_options() {
     {
         Wt::WServer server_copy(argv_[0], first_file(config::WT_CONFIG_FILES,
