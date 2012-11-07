@@ -22,13 +22,6 @@ public:
 
 private:
     class UserWidgetImpl;
-
-    UserPtr user_;
-    Wt::WFormWidget* message_;
-    Wt::WAnchor* message_sent_;
-
-    void print_send();
-    void send();
 };
 
 }

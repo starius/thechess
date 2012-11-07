@@ -48,6 +48,7 @@ class MainMenu;
 class MainPage;
 class MainWidget;
 class MessagesAnchor;
+class MessageForm;
 class MovesWidget;
 class MyGamesList;
 class NewIpBan;
