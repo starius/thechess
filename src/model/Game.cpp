@@ -18,6 +18,7 @@
 #include "chess/CachedMoves.hpp"
 #include "log.hpp"
 #include "Options.hpp"
+#include "Application.hpp" // FIXME
 
 DBO_INSTANTIATE_TEMPLATES(thechess::Game);
 
@@ -304,6 +305,16 @@ void Game::set_random(const UserPtr& user1, const UserPtr& user2) {
 
 void Game::set_state(State state) {
     state_ = state;
+    if (state_ >= MIN_ENDED) {
+        Wt::WString notification = "[auto] " + game_a(id());
+        UserPtr from = tApp ? tApp->user() : UserPtr();
+        if (from != white()) {
+            User::send_message(from, white(), notification);
+        }
+        if (from != black()) {
+            User::send_message(from, black(), notification);
+        }
+    }
 }
 
 void Game::set_of_color(const UserPtr& user, Piece::Color color) {
