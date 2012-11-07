@@ -24,6 +24,8 @@ TeamWidget::TeamWidget(const TeamPtr& team):
     Notifiable(Object(TEAM_OBJECT, team.id())),
     team_(team) {
     dbo::Transaction t(tApp->session());
+    main_ = new Wt::WContainerWidget(this);
+    print_chat();
     reprint();
 }
 
@@ -34,30 +36,29 @@ void TeamWidget::notify(EventPtr) {
 }
 
 void TeamWidget::reprint() {
-    clear();
+    main_->clear();
     print_title();
     print_members();
     print_candidates();
     print_banned();
     print_manager();
-    print_chat();
 }
 
 void TeamWidget::print_title() {
-    addWidget(new Header(tr("tc.team.Title")
-                         .arg(team_.id()).arg(team_->name())));
-    addWidget(new Wt::WText(tr("tc.common.Description")));
-    addWidget(new Wt::WBreak);
-    addWidget(new Wt::WText(team_->description()));
-    addWidget(new Wt::WBreak);
-    addWidget(new Wt::WText(tr("tc.team.Leader")));
-    addWidget(new Wt::WText(" "));
-    user_anchor(team_->init(), this);
-    addWidget(new Wt::WBreak);
+    main_->addWidget(new Header(tr("tc.team.Title")
+                                .arg(team_.id()).arg(team_->name())));
+    main_->addWidget(new Wt::WText(tr("tc.common.Description")));
+    main_->addWidget(new Wt::WBreak);
+    main_->addWidget(new Wt::WText(team_->description()));
+    main_->addWidget(new Wt::WBreak);
+    main_->addWidget(new Wt::WText(tr("tc.team.Leader")));
+    main_->addWidget(new Wt::WText(" "));
+    user_anchor(team_->init(), main_);
+    main_->addWidget(new Wt::WBreak);
     Wt::WText* date = new Wt::WText(time2str(team_->created()));
     date->addStyleClass("thechess-datetime");
-    addWidget(date);
-    addWidget(new Wt::WBreak);
+    main_->addWidget(date);
+    main_->addWidget(new Wt::WBreak);
 }
 
 void TeamWidget::print_members() {
@@ -76,16 +77,16 @@ void TeamWidget::print_banned() {
 
 void TeamWidget::print_manager() {
     if (can_remove_team(tApp->user(), team_)) {
-        add_button(tr("tc.team.Remove_team"), remove_team, this);
+        add_button(tr("tc.team.Remove_team"), remove_team, main_);
     }
     if (can_restore_team(tApp->user(), team_)) {
-        add_button(tr("tc.team.Restore_team"), restore_team, this);
+        add_button(tr("tc.team.Restore_team"), restore_team, main_);
     }
     if (can_join_team(tApp->user(), team_)) {
-        add_button(tr("tc.common.Join"), join_team, this);
+        add_button(tr("tc.common.Join"), join_team, main_);
     }
     if (can_edit_team(tApp->user(), team_)) {
-        Wt::WPushButton* b = new Wt::WPushButton(tr("tc.team.Change"), this);
+        Wt::WPushButton* b = new Wt::WPushButton(tr("tc.team.Change"), main_);
         b->clicked().connect(this, &TeamWidget::show_edit);
     }
 }
@@ -104,9 +105,9 @@ void TeamWidget::list_users(const Users& users, const Wt::WString& header) {
     if (users_copy.empty()) {
         return;
     }
-    addWidget(new Wt::WBreak);
-    addWidget(new Header(header));
-    Wt::WContainerWidget* list = new Wt::WContainerWidget(this);
+    main_->addWidget(new Wt::WBreak);
+    main_->addWidget(new Header(header));
+    Wt::WContainerWidget* list = new Wt::WContainerWidget(main_);
     list->setList(true);
     BOOST_FOREACH (const UserPtr& user, users_copy) {
         Wt::WContainerWidget* item = new Wt::WContainerWidget(list);
@@ -157,7 +158,7 @@ void TeamWidget::apply_action(const TeamWidget::UserAction& user_action) {
 void TeamWidget::show_edit() {
     dbo::Transaction t(tApp->session());
     clear();
-    addWidget(new TeamEdit(team_));
+    main_->addWidget(new TeamEdit(team_));
 }
 
 }

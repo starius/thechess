@@ -22,6 +22,7 @@ public:
 
 private:
     TeamPtr team_;
+    Wt::WContainerWidget* main_;
 
     typedef boost::function<void(const UserPtr&, const TeamPtr&)> UserAction;
 
