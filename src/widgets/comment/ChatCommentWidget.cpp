@@ -11,6 +11,7 @@
 #include <Wt/WPushButton>
 
 #include "widgets/comment/ChatCommentWidget.hpp"
+#include "widgets/comment/MessageForm.hpp"
 #include "widgets/comment/forum_comment_text.hpp"
 #include "widgets/comment/remover_buttons.hpp"
 #include "widgets/comment/comment_base.hpp"
@@ -42,6 +43,7 @@ ChatCommentWidget::ChatCommentWidget(const CommentPtr& comment) {
         addWidget(a);
     }
     add_remover_buttons(comment, this);
+    addWidget(new MessageForm(user));
 }
 
 }
