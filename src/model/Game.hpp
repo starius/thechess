@@ -650,6 +650,8 @@ private:
     CommentPtr comment_base_;
     bool norating_;
 
+    void set_state(State state);
+
     void set_white(const UserPtr& user) {
         white_ = user;
     }

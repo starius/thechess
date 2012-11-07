@@ -302,6 +302,10 @@ void Game::set_random(const UserPtr& user1, const UserPtr& user2) {
     }
 }
 
+void Game::set_state(State state) {
+    state_ = state;
+}
+
 void Game::set_of_color(const UserPtr& user, Piece::Color color) {
     if (color == Piece::WHITE) {
         set_white(user);
@@ -358,11 +362,11 @@ void Game::confirm() {
     if (!created().isValid()) {
         set_created(now());
     }
-    state_ = CONFIRMED;
+    set_state(CONFIRMED);
 }
 
 void Game::start() {
-    state_ = ACTIVE;
+    set_state(ACTIVE);
     limit_private_[Piece::WHITE] = gp_->limit_private_init();
     limit_private_[Piece::BLACK] = gp_->limit_private_init();
     pause_limit_ = gp_->pause_limit_init();
@@ -373,7 +377,7 @@ void Game::start() {
 }
 
 void Game::stop_pause() {
-    state_ = ACTIVE;
+    set_state(ACTIVE);
     lastmove_ += pause_proposed_td_;
     pause_proposed_td_ = TD_NULL;
     pause_until_ = Wt::WDateTime();
@@ -504,7 +508,7 @@ void Game::admin_pause(const UserPtr& user, const Td& td) {
     if (admin_can_pause(user)) {
         pause_proposer_.reset();
         pause_proposed_td_ = td;
-        state_ = PAUSE;
+        set_state(PAUSE);
         pause_until_ = now() + pause_proposed_td();
         pause_limit_ = std::max(TD_NULL, pause_limit_ - pause_proposed_td());
     }
@@ -521,7 +525,7 @@ bool Game::can_pause_agree(const UserPtr& user) const {
 void Game::pause_agree(const UserPtr& user) {
     if (can_pause_agree(user)) {
         pause_proposer_.reset();
-        state_ = PAUSE;
+        set_state(PAUSE);
         pause_until_ = now() + pause_proposed_td();
         pause_limit_ -= pause_proposed_td();
     }
@@ -545,7 +549,7 @@ void Game::take_vacation_pause(Td duration) {
             pause_limit_ -= duration;
         }
         if (duration > TD_NULL) {
-            state_ = PAUSE;
+            set_state(PAUSE);
             pause_until_ = now() + duration;
             pause_proposed_td_ = duration;
         }
@@ -727,7 +731,7 @@ void Game::mark_norating(const UserPtr& user) {
 }
 
 void Game::finish(State state, const UserPtr& winner) {
-    state_ = state;
+    set_state(state);
     if (winner) {
         winner_ = winner;
     }
