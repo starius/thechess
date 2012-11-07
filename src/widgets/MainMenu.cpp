@@ -44,6 +44,7 @@ private:
         add_button("tc.menu.games_list", path_->game_list());
         if (user_items_ && tApp->user()->has_permission(GAME_CREATOR)) {
             add_button("tc.menu.challenge", path_->game_new());
+            add_button("tc.menu.random_competitor", path_->random_competitor());
         }
         add_button("tc.menu.testing_board", path_->board_root());
         // FIXME list of GP and CP

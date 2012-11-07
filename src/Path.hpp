@@ -38,6 +38,11 @@ public:
         return user_list_;
     }
 
+    /** Random online user */
+    url::PredefinedNode* random_competitor() const {
+        return random_competitor_;
+    }
+
     /** List of sessions */
     url::PredefinedNode* all_sessions() const {
         return all_sessions_;
@@ -285,6 +290,7 @@ public:
 private:
     MainWidget* main_widget_;
     url::PredefinedNode* user_list_;
+    url::PredefinedNode* random_competitor_;
     url::PredefinedNode* all_sessions_;
     url::IntegerNode* user_view_;
     url::PredefinedNode* virtuals_of_user_;
@@ -336,6 +342,7 @@ private:
     url::IntegerNode* team_view_;
 
     void open_user();
+    void open_random_competitor();
     void open_user_challenge();
     void open_virtuals_of_user();
     void open_ip_of_user();

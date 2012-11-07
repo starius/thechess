@@ -286,6 +286,7 @@
     <message id="tc.menu.my_page">мая старонка</message>
     <message id="tc.menu.new_competition">новы турнір</message>
     <message id="tc.menu.private_messages">асабістыя паведамленні</message>
+    <message id='tc.menu.random_competitor'>случайный соперник</message>
     <message id="tc.menu.settings">налады</message>
     <message id='tc.menu.team'>команда</message>
     <message id='tc.menu.teams_list'>список команд</message>

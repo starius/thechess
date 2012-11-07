@@ -781,6 +781,7 @@ TheChess.
     <message id='tc.menu.my_page'>my page</message>
     <message id='tc.menu.new_competition'>new competition</message>
     <message id='tc.menu.private_messages'>private messages</message>
+    <message id='tc.menu.random_competitor'>random competitor</message>
     <message id='tc.menu.settings'>settings</message>
     <message id='tc.menu.team'>team</message>
     <message id='tc.menu.teams_list'>list of teams</message>

@@ -20,6 +20,7 @@ using namespace Wt::Wc::url;
 Path::Path(Wt::WObject* parent):
     Parser(parent), main_widget_(0) {
     user_list_ = new PredefinedNode("user", this);
+    random_competitor_ = new PredefinedNode("random", this);
     all_sessions_ = new PredefinedNode("sessions", user_list_);
     user_view_ = new IntegerNode(user_list_);
     user_challenge_ = new PredefinedNode("challenge", user_view_);
@@ -85,6 +86,8 @@ void Path::connect_main_widget(MainWidget* mw) {
     main_widget_ = mw;
     connect(this, boost::bind(&MainWidget::main_page, mw));
     connect(user_list_, boost::bind(&MainWidget::user_list, mw));
+    connect(random_competitor_,
+            boost::bind(&Path::open_random_competitor, this));
     connect(all_sessions_, boost::bind(&MainWidget::all_sessions, mw));
     connect(user_view_, boost::bind(&Path::open_user, this));
     connect(user_challenge_, boost::bind(&Path::open_user_challenge, this));
@@ -142,6 +145,25 @@ void Path::open_user() {
         main_widget_->user_view(tApp->session().load<User>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
+}
+
+void Path::open_random_competitor() {
+    BOOST_ASSERT(main_widget_);
+    dbo::Transaction t(tApp->session());
+    if (tApp->user()) {
+        try {
+            UserPtr user = tApp->session().find<User>()
+                           .where("rights != ?").bind(NONE)
+                           .where("vacation_until is null")
+                           .where("last_online >= ?")
+                           .bind(now() - Options::instance()->away_timeout())
+                           .where("id <> ?").bind(tApp->user())
+                           .orderBy("random()").limit(1);
+            main_widget_->user_challenge(user);
+        } catch (...) {
+            main_widget_->game_new();
+        }
+    }
 }
 
 void Path::open_user_challenge() {
