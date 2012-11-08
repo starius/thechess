@@ -469,7 +469,7 @@ void User::remove_from_my_filter(const UserPtr& bad) {
 }
 
 bool User::can_send_message(const UserPtr& to) const {
-    return self() != to &&
+    return to && self() != to &&
            online_time() >= to->filter_min_online() &&
            Comment::can_create(self(), Comment::PRIVATE_MESSAGE) &&
            !is_blocked(self(), to);
