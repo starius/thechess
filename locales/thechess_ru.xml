@@ -383,7 +383,7 @@
 
     <message id='tc.user.Admin'><u>Администратор</u></message>
     <message id='tc.user.Already_banned'>Уже в бане</message>
-    <message id='tc.user.Anonymous'>Анонимус</message>
+    <message id='tc.user.Anonymous'>Гость</message>
     <message id='tc.user.avatar_nondefault'>аватар не по умолчанию</message>
     <message id='tc.user.Award_competitions'>Победитель турнира</message>
     <message id='tc.user.Award_game_1'>100 сыгранных партий или 50 побед</message>
