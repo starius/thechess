@@ -157,7 +157,7 @@ void TeamWidget::apply_action(const TeamWidget::UserAction& user_action) {
 
 void TeamWidget::show_edit() {
     dbo::Transaction t(tApp->session());
-    clear();
+    main_->clear();
     main_->addWidget(new TeamEdit(team_));
 }
 
