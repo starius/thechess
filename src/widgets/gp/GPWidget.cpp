@@ -35,11 +35,11 @@ GPWidget::GPWidget(const GP* gp,
                                     max::MOVES_INIT, false, Piece::WHITE, cell);
     Wt::WPushButton* reset = new Wt::WPushButton(tr("tc.common.Reset"), cell);
     reset->clicked().connect(moves_widget_, &MovesWidget::reset);
-    limit_std_ = new TimeDurationWidget(min::LIMIT_STD,
+    limit_std_ = new TimeDurationWidget(TD_NULL,
                                         gp->limit_std(),
                                         max::LIMIT_STD);
     item(tr("tc.game.limit_std"), "", limit_std_->form_widget(), limit_std_);
-    limit_private_init_ = new TimeDurationWidget(min::LIMIT_PRIVATE_INIT,
+    limit_private_init_ = new TimeDurationWidget(TD_NULL,
             gp->limit_private_init(), max::LIMIT_PRIVATE_INIT);
     item(tr("tc.game.limit_private_init"), "",
          limit_private_init_->form_widget(), limit_private_init_);
@@ -62,8 +62,14 @@ GPWidget::GPWidget(const GP* gp,
 void GPWidget::apply_parameters(GP* gp) {
     write_record(gp);
     gp->set_moves(moves_widget_->moves());
-    gp->set_limit_std(limit_std_->corrected_value());
-    gp->set_limit_private_init(limit_private_init_->corrected_value());
+    Td limit_std = limit_std_->corrected_value();
+    Td limit_private = limit_private_init_->corrected_value();
+    using namespace config; // max, min
+    if (limit_std < min::LIMIT_STD && limit_private < min::LIMIT_PRIVATE_INIT) {
+        limit_std = min::LIMIT_STD;
+    }
+    gp->set_limit_std(limit_std);
+    gp->set_limit_private_init(limit_private);
     gp->set_norating(norating_->checkState() == Wt::Checked);
     gp->set_pause_limit(pause_limit_init_->corrected_value());
     gp->set_first_draw(first_draw_->value() * 2);
