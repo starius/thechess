@@ -38,10 +38,10 @@ const char* const PASSWORD_REGEX = "[a-zA-Z0-9._%+-@]{3,30}";
 namespace min {
 
 /** Min renewable leeway */
-const Td LIMIT_STD = TD_NULL;
+const Td LIMIT_STD = 10 * SECOND;
 
 /** Min non-renewable leeway */
-const Td LIMIT_PRIVATE_INIT = 5 * MINUTE;
+const Td LIMIT_PRIVATE_INIT = MINUTE;
 
 /** Min pause leeway */
 const Td PAUSE_LIMIT_INIT = TD_NULL;
