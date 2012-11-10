@@ -62,6 +62,14 @@ private:
         return TLP::BaseQM::data(index, role);
     }
 
+    Wt::WFlags<Wt::ItemFlag> flags(const Wt::WModelIndex& i) const {
+        Wt::WFlags<Wt::ItemFlag> f = TLP::BaseQM::flags(i);
+        if (i.column() == DESCRIPTION_COL) {
+            f |= Wt::ItemIsXHTMLText;
+        }
+        return f;
+    }
+
     static Wt::WString tr(const char* key) {
         return Wt::WString::tr(key);
     }
