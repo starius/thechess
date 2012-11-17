@@ -76,7 +76,7 @@ private:
         }
         print_description();
         Gravatar* gravatar = new Gravatar(user_, this);
-        gravatar->set_size(160);
+        gravatar->set_size(320);
         if (tApp->user() && user_->has_setting(SWITCH_PUBLIC_EMAIL)) {
             new Wt::WBreak(this);
             new Wt::WText(user_->email(), this);
