@@ -126,7 +126,8 @@ Planning* t_planning() {
 void t_task(TaskPtr task, const Wt::WDateTime& when) {
     std::cerr << "t_task " << task->key() + " " << when.toString() << std::endl;
     t_planning()->add(task, when);
-    if (wApp && !wApp->environment().ajax()) {
+    if (wApp && !wApp->environment().ajax() &&
+            !Wt::Wc::isinstance<NotifyTask>(task.get())) {
         t_emit(task);
     }
 }
