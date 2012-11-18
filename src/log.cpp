@@ -37,7 +37,11 @@ void admin_log(const Wt::WString& message, dbo::Session& session,
 }
 
 void admin_log(const Wt::WString& message, UserPtr user, bool draft) {
-    admin_log(message, *(user.session()), user, draft);
+    dbo::Session* session = user ? user.session() :
+                            tApp ? &tApp->session() : 0;
+    if (session) {
+        admin_log(message, *session, user, draft);
+    }
 }
 
 void admin_log(const Wt::WString& message, bool draft) {
