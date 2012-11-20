@@ -28,7 +28,7 @@ TeamEdit::TeamEdit(const TeamPtr& team):
 
 void TeamEdit::save() {
     dbo::Transaction t(tApp->session());
-    write_record(team_.modify());
+    write_record(team_.modify(), /* init */ false);
     team_chat(team_, "change name/description of the team", tApp->user());
     t.commit();
     t_emit(TEAM_OBJECT, team_.id());
