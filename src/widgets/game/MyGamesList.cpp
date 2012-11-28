@@ -62,6 +62,8 @@ public:
 
     void reprint() {
         clear();
+        my_countdown_ = 0;
+        competitor_countdown_ = 0;
         Piece::Color my_color = game_->color_of(tApp->user());
         Wt::WImage* color = 0;
         if (my_color == Piece::WHITE) {
