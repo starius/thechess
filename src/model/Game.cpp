@@ -647,7 +647,8 @@ void Game::draw_propose(const UserPtr& user) {
 }
 
 bool Game::can_draw_agree(const UserPtr& user) const {
-    return can_draw_discard(user) && meet_first_draw();
+    return can_draw_discard(user) && draw_proposer() == other_user(user) &&
+           meet_first_draw();
 }
 
 void Game::draw_agree(const UserPtr& user) {
@@ -660,8 +661,7 @@ void Game::draw_agree(const UserPtr& user) {
 bool Game::can_draw_discard(const UserPtr& user) const {
     return state() == ACTIVE &&
            is_draw_proposed() &&
-           is_member(user) &&
-           draw_proposer() == other_user(user);
+           is_member(user);
 }
 
 void Game::draw_discard(const UserPtr& user) {
