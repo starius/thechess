@@ -17,6 +17,7 @@
 #include <Wt/WFlags>
 #include <Wt/WImage>
 #include <Wt/WPushButton>
+#include <Wt/WDialog>
 #include <Wt/WCheckBox>
 #include <Wt/WSignal>
 #include <Wt/WTable>
@@ -115,7 +116,7 @@ public:
                     const Board& board) :
         Wt::WContainerWidget(), board_(board), bottom_(bottom),
         active_(active), activated_(false),
-        select_turn_into_flag_(false),
+        select_turn_into_(0),
         big_box_(0),
         dialog_(0) {
         Wt::WPushButton* b;
@@ -132,7 +133,6 @@ public:
         }
         check_activate();
         board_build();
-        select_turn_into_ = new Wt::WContainerWidget(this);
         turn_button_place_ = new Wt::WContainerWidget(this);
         Wt::WPushButton* links = new Wt::WPushButton(tr("tc.common.Links"));
         turn_button_place_->addWidget(links);
@@ -176,6 +176,8 @@ public:
     ~BoardWidgetImpl() {
         delete dialog_;
         dialog_ = 0;
+        delete select_turn_into_;
+        select_turn_into_ = 0;
     }
 
     const char* xml_message() {
@@ -263,11 +265,10 @@ private:
     HalfMove lastmove_;
     Square shah_square_;
 
-    Wt::WContainerWidget* select_turn_into_;
+    Wt::WDialog* select_turn_into_;
     Wt::WContainerWidget* turn_button_place_;
     TakenPieces* taken_pieces_;
     Wt::WTemplate* board_template_;
-    bool select_turn_into_flag_;
     DnDPiece* images_[64];
     Wt::WImage* draggable_;
     Wt::WCheckBox* lastmove_box_;
@@ -376,7 +377,7 @@ private:
         } else {
             modify_to_undo();
         }
-        if (select_turn_into_flag_) {
+        if (select_turn_into_) {
             print_select_undo();
         }
         from_ = Square();
@@ -392,7 +393,7 @@ private:
     }
 
     void onclick(Square square) {
-        if (select_turn_into_flag_) {
+        if (select_turn_into_) {
             return;
         }
         if (!active_) {
@@ -414,7 +415,6 @@ private:
     void try_move(const HalfMove half_move) {
         if (board_.test_move(half_move)) {
             if (half_move.could_turn_into(board_)) {
-                select_turn_into_flag_ = true;
                 print_select(half_move);
                 return;
             } else {
@@ -428,22 +428,26 @@ private:
     }
 
     void print_select(HalfMove half_move) {
+        select_turn_into_ = new Wt::WDialog;
+        Wt::WContainerWidget* contents = select_turn_into_->contents();
         static Piece::Letter cc[] =
         { Piece::QUEEN, Piece::ROOK, Piece::BISHOP, Piece::KNIGHT };
         BOOST_FOREACH (Piece::Letter c, cc) {
             Piece cm = Piece(board_.order(), c);
             std::string path = BoardWidget::image(cm, big_);
-            Wt::WImage* img = new Wt::WImage(path, select_turn_into_);
+            Wt::WImage* img = new Wt::WImage(path, contents);
             img->clicked().connect(boost::bind(
                                        &BoardWidgetImpl::select_onclick,
                                        this, c, half_move));
             img->decorationStyle().setCursor(Wt::PointingHandCursor);
         }
+        select_turn_into_->setModal(true);
+        select_turn_into_->show();
     }
 
     void print_select_undo() {
-        select_turn_into_->clear();
-        select_turn_into_flag_ = false;
+        delete select_turn_into_;
+        select_turn_into_ = 0;
     }
 
     void select_onclick(Piece::Letter letter, HalfMove half_move) {
