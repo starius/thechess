@@ -454,7 +454,8 @@ public:
                 button<&Competition::force_start>("tc.competition.Force_start");
             }
         }
-        if (c->has_virtuals()) {
+        bool admin = tApp->user() && tApp->user()->admin_rights();
+        if (c->has_virtuals() && (!c->virtual_allower() || admin)) {
             new Wt::WBreak(this);
             new Wt::WText(tr("tc.competition.Virtuals"), this);
             if (tApp->user() && tApp->user()->has_permission(VIRTUALS_VIEWER)) {
