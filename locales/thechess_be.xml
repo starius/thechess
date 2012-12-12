@@ -107,12 +107,12 @@
     <message id="tc.competition.Type_staged">Ступеністы</message>
     <message id="tc.competition.Type_team">Камандны</message>
     <message id="tc.competition.Users">Колькасць удзельнікаў</message>
-    <message id="tc.competition.Virtuals_allowed_by">Клоны дазволены&nbsp;</message>
+    <message id="tc.competition.Virtuals_allowed_by">Магчымыя клоны дазволены&nbsp;</message>
     <message id="tc.competition.Winner">Пераможца</message>
     <message id="tc.competition.Winners">Пераможцы</message>
     <message id="tc.competition.Virtuals">
         <font style="background:#F2C576;">
-            У турніры ёсць клоны.
+            У турніры ёсць магчымыя клоны.
         </font>
     </message>
     <message id="tc.competition.widget_template">

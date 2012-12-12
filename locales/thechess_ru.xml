@@ -115,12 +115,12 @@
     <message id='tc.competition.Type_staged'>Ступенчатый</message>
     <message id='tc.competition.Type_team'>Командный</message>
     <message id='tc.competition.Users'>Число участников</message>
-    <message id='tc.competition.Virtuals_allowed_by'>Клоны разрешены&nbsp;</message>
+    <message id='tc.competition.Virtuals_allowed_by'>Возможные клоны разрешены&nbsp;</message>
     <message id='tc.competition.Winner'>Победитель</message>
     <message id='tc.competition.Winners'>Победители</message>
     <message id='tc.competition.Virtuals'>
         <font style="background:#F2C576;">
-            В турнире есть клоны.
+            В турнире есть возможные клоны.
         </font>
     </message>
     <message id='tc.competition.widget_template'>

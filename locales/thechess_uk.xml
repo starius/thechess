@@ -108,12 +108,12 @@
     <message id="tc.competition.Type_staged">Ступеневий</message>
     <message id="tc.competition.Type_team">Командний</message>
     <message id="tc.competition.Users">Кількість учасників</message>
-    <message id="tc.competition.Virtuals_allowed_by">Клони дозволено&nbsp;</message>
+    <message id="tc.competition.Virtuals_allowed_by">Можливі клони дозволено&nbsp;</message>
     <message id="tc.competition.Winner">Переможець</message>
     <message id="tc.competition.Winners">Переможці</message>
     <message id="tc.competition.Virtuals">
         <font style="background:#F2C576;">
-            У турнірі є клони.
+            У турнірі є можливі клони.
         </font>
     </message>
     <message id="tc.competition.widget_template">
