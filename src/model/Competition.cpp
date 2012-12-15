@@ -451,12 +451,11 @@ void Competition::process_classical() {
     std::map<UserPtr, int> used;
     GamesVector proposed;
     BOOST_FOREACH (const GamePtr& g, games_vector()) {
-        if (g->state() != Game::PROPOSED && !g->is_ended()) {
-            used[g->white()] += 1;
-            used[g->black()] += 1;
-        }
         if (g->state() == Game::PROPOSED && !g->created().isValid()) {
             proposed.push_back(g);
+        } else if (!g->is_ended()) {
+            used[g->white()] += 1;
+            used[g->black()] += 1;
         }
     }
     std::random_shuffle(proposed.begin(), proposed.end(),
