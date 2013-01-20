@@ -1,5 +1,5 @@
 file(DOWNLOAD
-    https://raw.github.com/starius/wt-classes/gh-pages/jquery.countdown.min.js
+    https://raw.github.com/starius/wt-classes/gh-pages/jquery.countdown-1.6.1.min.js
     ${CMAKE_CURRENT_BINARY_DIR}/jquery.countdown.min.js
 )
 
