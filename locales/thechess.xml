@@ -971,6 +971,7 @@ TheChess.
     <message id='tc.user.Settings'>Settings</message>
     <message id='tc.user.Start_game'>Start a game</message>
     <message id='tc.user.super_rights_changer'>change super rights</message>
+    <message id='tc.user.Take_vacation'>Take a vacation</message>
     <message id='tc.user.team_changer'>team changer</message>
     <message id='tc.user.Terms_of_use'>User agreement</message>
     <message id='tc.user.They_blocked_me'>Number of users who blocked this user: {1}</message>

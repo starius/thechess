@@ -212,7 +212,8 @@ private:
         v->decorationStyle().font().setWeight(Wt::WFont::Bolder);
         vacation_duration_ = new Wt::Wc::TimeDurationWidget(DAY, DAY,
                 50 * WEEK, this);
-        Wt::WPushButton* b = new Wt::WPushButton(tr("tc.common.Save"), this);
+        Wt::WPushButton* b;
+        b = new Wt::WPushButton(tr("tc.user.Take_vacation"), this);
         b->clicked().connect(this, &SettingsWidgetImpl::save_vacation);
         new Wt::WBreak(this);
         new Wt::WBreak(this);
