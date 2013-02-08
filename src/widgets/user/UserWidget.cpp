@@ -210,9 +210,7 @@ private:
         print_rights();
         print_game_stat();
         print_competition_stat();
-        if (tApp->user() && tApp->user() != user_) {
-            print_block();
-        }
+        print_block();
         print_edit_description();
     }
 
@@ -417,14 +415,16 @@ private:
     }
 
     void print_block() {
-        new Wt::WBreak(this);
-        Wt::WPushButton* b = new Wt::WPushButton(this);
-        b->clicked().connect(this, &UserWidgetImpl::inverse_blocked);
-        if (User::is_blocked(user_, tApp->user())) {
-            b->setText(tr("tc.user.Unblock"));
-        } else {
-            b->setText(tr("tc.user.Block"));
-            b->addStyleClass("thechess-dangerous");
+        if (tApp->user() && tApp->user() != user_) {
+            new Wt::WBreak(this);
+            Wt::WPushButton* b = new Wt::WPushButton(this);
+            b->clicked().connect(this, &UserWidgetImpl::inverse_blocked);
+            if (User::is_blocked(user_, tApp->user())) {
+                b->setText(tr("tc.user.Unblock"));
+            } else {
+                b->setText(tr("tc.user.Block"));
+                b->addStyleClass("thechess-dangerous");
+            }
         }
         int i_blocked_them_size = user_->i_blocked_them().size();
         if (i_blocked_them_size) {
