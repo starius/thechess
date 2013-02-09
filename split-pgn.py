@@ -11,7 +11,7 @@ while True:
         n = int(re.search('^\[Event "(\d+)"\]', line).groups()[0])
         if f:
             f.close()
-        d = str(n / 1000)
+        d = "%04i" % (n / 1000)
         if not os.path.exists(d):
             os.mkdir(d)
         name = d + '/' + str(n) + '.pgn'
