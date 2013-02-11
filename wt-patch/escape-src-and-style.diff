@@ -1,0 +1,90 @@
+diff --git a/src/web/RefEncoder.C b/src/web/RefEncoder.C
+index 0ccd634..ca6e717 100644
+--- a/src/web/RefEncoder.C
++++ b/src/web/RefEncoder.C
+@@ -14,6 +14,8 @@
+ #include "WebSession.h"
+ #include "WebUtils.h"
+ 
++#include <boost/regex.hpp>
++#include <boost/algorithm/string/trim.hpp>
+ #include "rapidxml/rapidxml.hpp"
+ #include "rapidxml/rapidxml_print.hpp"
+ 
+@@ -23,6 +25,34 @@ namespace Wt {
+ 
+ LOGGER("RefEncoder");
+ 
++typedef std::ostream_iterator<char, char> OutIterator;
++
++class ReplaceUrl {
++public:
++    ReplaceUrl(WApplication* app):
++        app_(app)
++    { }
++
++    template<typename Out>
++    Out operator()(const boost::smatch& what, Out out) const {
++        std::string url = what[1].str();
++        boost::algorithm::trim(url);
++        std::string s = "url(" + app_->encodeUntrustedUrl(url) + ")";
++        out = std::copy(s.begin(), s.end(), out);
++        return out;
++    }
++
++private:
++    WApplication* app_;
++};
++
++static std::string replaceUrlInStyle(std::string& style, WApplication *app) {
++    boost::regex re("url\\((.*://.*)\\)",
++            boost::regex::perl|boost::regex::icase);
++    ReplaceUrl ru(app);
++    return boost::regex_replace(style, re, ru);
++}
++
+ void EncodeRefs(xml_node<> *x_node, WApplication *app,
+ 		WFlags<RefEncoderOption> options)
+ {
+@@ -75,11 +105,6 @@ void EncodeRefs(xml_node<> *x_node, WApplication *app,
+ 	x_href->value
+ 	  (doc->allocate_string(app->resolveRelativeUrl(url).c_str()));
+       } else if (options & EncodeRedirectTrampoline) {
+-	/*
+-	 * FIXME: also apply this to other occurences of URLs:
+-	 * - images
+-	 * - in CSS
+-	 */
+ 	if (path.find("://") != std::string::npos) {
+ 	  path = app->encodeUntrustedUrl(path);
+ 	  x_href->value(doc->allocate_string(path.c_str()));
+@@ -87,6 +112,29 @@ void EncodeRefs(xml_node<> *x_node, WApplication *app,
+       }
+     }
+   }
++  if (options & EncodeRedirectTrampoline) {
++    xml_attribute<> *x_style = x_node->first_attribute("style");
++    if (x_style) {
++      std::string style = x_style->value();
++      if (style.find("://") != std::string::npos) {
++        style = replaceUrlInStyle(style, app);
++    std::cout << style << std::endl;
++        xml_document<> *doc = x_node->document();
++        x_style->value(doc->allocate_string(style.c_str()));
++      }
++    }
++    if (strcmp(x_node->name(), "img") == 0) {
++      xml_attribute<> *x_scr = x_node->first_attribute("src");
++      if (x_scr) {
++        std::string path = x_scr->value();
++        if (path.find("://") != std::string::npos) {
++          path = app->encodeUntrustedUrl(path);
++          xml_document<> *doc = x_node->document();
++          x_scr->value(doc->allocate_string(path.c_str()));
++        }
++      }
++    }
++  }
+ 
+   for (xml_node<> *x_child = x_node->first_node(); x_child;
+        x_child = x_child->next_sibling())
