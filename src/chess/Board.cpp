@@ -239,6 +239,12 @@ void Board::change_order() {
 }
 
 bool Board::castling(Square rook_square) const {
+    Piece::Color rook_color = (rook_square.rank() == Square::RANK_1) ?
+                              Piece::WHITE : Piece::BLACK;
+    if (piece(rook_square) != Piece(rook_color, Piece::ROOK)) {
+        // Rook was taken by opposite or left this square
+        return false;
+    }
     if (rook_square == Square(Square::FILE_A, Square::RANK_1)) {
         return pieces_[CASTLING_BYTE] & ~0x7F; // 0111 1111
     } else if (rook_square == Square(Square::FILE_H, Square::RANK_1)) {
