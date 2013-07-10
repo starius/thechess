@@ -153,6 +153,9 @@ public:
         games_size_ = games_size;
     }
 
+    /** Copy parameters (including parent) from other gp */
+    void apply_parameters(const GP& other);
+
 private:
     GPPtr parent_;
     GPs children_;

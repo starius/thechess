@@ -41,5 +41,17 @@ void GP::set_no_draw() {
     pause_limit_init_ = min::PAUSE_LIMIT_INIT;
 }
 
+void GP::apply_parameters(const GP& other) {
+    parent_ = other.parent_;
+    games_ = other.games_;
+    moves_ = other.moves_;
+    limit_std_ = other.limit_std_;
+    limit_private_init_ = other.limit_private_init_;
+    pause_limit_init_ = other.pause_limit_init_;
+    norating_ = other.norating_;
+    first_draw_ = other.first_draw_;
+    games_size_ = other.games_size_;
+}
+
 }
 
