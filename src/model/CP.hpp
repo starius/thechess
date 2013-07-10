@@ -59,6 +59,9 @@ public:
         dbo::field(a, competitions_size_, "competitions_size");
     }
 
+    /** Copy parameters (including parent) from other cp */
+    void apply_parameters(const CP& other);
+
     /** Get type */
     Type type() const {
         return type_;

@@ -40,5 +40,28 @@ CP::CP(bool):
     competitions_size_(0)
 { }
 
+void CP::apply_parameters(const CP& other) {
+    parent_ = other.parent_;
+    gp_ = other.gp_;
+    type_ = other.type_;
+    min_rating_ = other.min_rating_;
+    max_rating_ = other.max_rating_;
+    min_classification_ = other.min_classification_;
+    max_classification_ = other.max_classification_;
+    force_start_delay_ = other.force_start_delay_;
+    min_users_ = other.min_users_;
+    max_users_ = other.max_users_;
+    min_recruiting_time_ = other.min_recruiting_time_;
+    max_recruiting_time_ = other.max_recruiting_time_;
+    max_simultaneous_games_ = other.max_simultaneous_games_;
+    games_factor_ = other.games_factor_;
+    relax_time_ = other.relax_time_;
+    min_substages_ = other.min_substages_;
+    increment_substages_ = other.increment_substages_;
+    min_online_time_ = other.min_online_time_;
+    max_online_time_ = other.max_online_time_;
+    competitions_size_ = other.competitions_size_;
+}
+
 }
 
