@@ -34,11 +34,7 @@ int GP::first_draw() const {
 }
 
 void GP::set_no_draw() {
-    using namespace config; // min
     first_draw_ = NO_DRAW;
-    limit_std_ = min::LIMIT_STD;
-    limit_private_init_ = min::LIMIT_PRIVATE_INIT;
-    pause_limit_init_ = min::PAUSE_LIMIT_INIT;
 }
 
 void GP::apply_parameters(const GP& other) {

@@ -487,12 +487,15 @@ GamePtr Competition::create_game(const UserPtr& white, const UserPtr& black,
     if (no_draw) {
         GPPtr no_draw;
         dbo::Query<GPPtr> q = session()->find<GP>()
-                              .where("first_draw = ?").bind(NO_DRAW);
+                              .where("first_draw = ?").bind(NO_DRAW)
+                              .where("parent_id = ?").bind(gp_ptr);
         if (q.resultList().size()) {
             no_draw = q.resultList().front();
         } else {
             no_draw = session()->add(new GP(true));
-            no_draw.modify()->set_no_draw();
+            no_draw.modify()->apply_parameters(*gp_ptr);
+            no_draw->set_parent(gp_ptr);
+            no_draw->set_no_draw();
         }
         gp_ptr = no_draw;
     }
