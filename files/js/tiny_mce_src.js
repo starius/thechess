@@ -8602,8 +8602,10 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 
 				n = DOM.add(tr, 'td');
 
+				var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
+
 				n = DOM.add(n, 'a', {
-					href : (tinymce.isOpera ? '' : 'javascript:;'),
+					href : ((tinymce.isOpera || isFirefox) ? '' : 'javascript:;'),
 					style : {
 						backgroundColor : '#' + c
 					},
