@@ -494,8 +494,8 @@ GamePtr Competition::create_game(const UserPtr& white, const UserPtr& black,
         } else {
             no_draw = session()->add(new GP(true));
             no_draw.modify()->apply_parameters(*gp_ptr);
-            no_draw->set_parent(gp_ptr);
-            no_draw->set_no_draw();
+            no_draw.modify()->set_parent(gp_ptr);
+            no_draw.modify()->set_no_draw();
         }
         gp_ptr = no_draw;
     }
