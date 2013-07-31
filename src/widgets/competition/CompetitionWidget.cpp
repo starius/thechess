@@ -464,6 +464,7 @@ public:
                 }
             }
             if (c->virtual_allower()) {
+                new Wt::WBreak(this);
                 new Wt::WText(tr("tc.competition.Virtuals_allowed_by"), this);
                 user_anchor(c->virtual_allower(), this);
             } else if (c->can_allow_virtuals(tApp->user())) {
