@@ -422,7 +422,6 @@ void Competition::create_games_classical() {
             BOOST_ASSERT(black);
             black_games[black] += 1;
             N[white][black] += 1;
-            N[black][white] += 1;
             create_game(white, black);
         }
         t_emit_after(USER, white.id());
