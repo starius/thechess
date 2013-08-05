@@ -412,10 +412,12 @@ void Competition::create_games_classical() {
         for (int i = 0; i < white_games_per_user; i++) {
             UserPtr black;
             BOOST_FOREACH (const UserPtr& user, members) {
-                if (user != white && black_games[user] != white_games_per_user)
+                if (user != white &&
+                        black_games[user] != white_games_per_user) {
                     if (!black || N_white[user] < N_white[black]) {
                         black = user;
                     }
+                }
             }
             BOOST_ASSERT(black);
             black_games[black] += 1;
