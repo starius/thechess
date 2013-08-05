@@ -414,7 +414,22 @@ void Competition::create_games_classical() {
             BOOST_FOREACH (const UserPtr& user, members) {
                 if (user != white &&
                         black_games[user] != white_games_per_user) {
+                    bool good_black_user = false;
+                    // compare number of games:
+                    // N_white[user] : where white_id=white and black_id=user
+                    // N_white[black] : where white_id=white and black_id=black
                     if (!black || N_white[user] < N_white[black]) {
+                        good_black_user = true;
+                    }
+                    if (N_white[user] == N_white[black]) {
+                        // compare total number of games
+                        int white_vs_user = N[white][user] + N[user][white];
+                        int white_vs_black = N[white][black] + N[black][white];
+                        if (white_vs_user < white_vs_black) {
+                            good_black_user = true;
+                        }
+                    }
+                    if (good_black_user) {
                         black = user;
                     }
                 }
