@@ -340,3 +340,22 @@ CREATE INDEX "user_registration_date" ON "thechess_user" ("registration_date");
 CREATE INDEX "user_vacation_until" ON "thechess_user" ("vacation_until");
 CREATE INDEX "user_last_online" ON "thechess_user" ("last_online");
 CREATE INDEX "team_removed" ON "thechess_team" ("removed");
+
+-- new classes Aug 2013 --
+CREATE TABLE "thechess_tcm" (
+  "team_id" bigint,
+  "competition_id" bigint,
+  "user_id" bigint,
+  primary key ("team_id", "competition_id", "user_id")
+);
+ALTER TABLE "thechess_tcm"
+  ADD constraint "fk_thechess_tcm_team" foreign key ("team_id")
+    references "thechess_team" ("id"),
+  ADD constraint "fk_thechess_tcm_competition" foreign key ("competition_id")
+    references "thechess_competition" ("id"),
+  ADD constraint "fk_thechess_tcm_user" foreign key ("user_id")
+    references "thechess_user" ("id");
+CREATE INDEX "thechess_tcm_team" on "thechess_tcm" ("team_id");
+CREATE INDEX "thechess_tcm_competition" on "thechess_tcm" ("competition_id");
+CREATE INDEX "thechess_tcm_user" on "thechess_tcm" ("user_id");
+
