@@ -69,6 +69,11 @@ Wt::WString comp_a(int id) {
     return html_a(path().competition_view(), id, t);
 }
 
+Wt::WString team_a(int id) {
+    Wt::WString t = Wt::WString("team {1}").arg(id);
+    return html_a(path().team_view(), id, t);
+}
+
 Wt::WString comm_a(int comment_id) {
     dbo::Transaction t(tApp->session());
     CommentPtr comment = tApp->session().load<Comment>(comment_id);
