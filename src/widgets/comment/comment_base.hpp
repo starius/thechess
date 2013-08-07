@@ -19,6 +19,18 @@ If not found, then result.id == 0.
 */
 Object comment_base(const CommentPtr& comment);
 
+/** Return anchor to global chat */
+Wt::WAnchor* global_chat_anchor();
+
+/** Return anchor to game */
+Wt::WAnchor* game_anchor(int id);
+
+/** Return anchor to competition */
+Wt::WAnchor* competition_anchor(int id);
+
+/** Return anchor to team */
+Wt::WAnchor* team_anchor(int id);
+
 /** Return anchor to page of base of this CHAT_ROOT.
 If not found, then result == 0.
 */
