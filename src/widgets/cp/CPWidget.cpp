@@ -149,17 +149,19 @@ void CPWidget::apply_parameters(CP* cp) {
     if (t == CLASSICAL || t == STAGED) {
         cp->set_min_users(min_users_->corrected_value());
         cp->set_max_users(max_users_->corrected_value());
-        cp->set_min_recruiting_time(min_recruiting_time_->corrected_value());
-        cp->set_max_recruiting_time(max_recruiting_time_->corrected_value());
     }
-    if (t == CLASSICAL) {
+    cp->set_min_recruiting_time(min_recruiting_time_->corrected_value());
+    cp->set_max_recruiting_time(max_recruiting_time_->corrected_value());
+    if (t == CLASSICAL || t == TEAM) {
         int max_simultaneous_games = max_simultaneous_games_->corrected_value();
         cp->set_max_simultaneous_games(max_simultaneous_games);
         cp->set_games_factor(games_factor_->corrected_value());
     }
     cp->set_relax_time(relax_time_->corrected_value());
-    cp->set_min_substages(min_substages_->corrected_value());
-    cp->set_increment_substages(increment_substages_->corrected_value());
+    if (t == STAGED) {
+        cp->set_min_substages(min_substages_->corrected_value());
+        cp->set_increment_substages(increment_substages_->corrected_value());
+    }
     if (cp->min_rating() > cp->max_rating()) {
         cp->set_max_rating(cp->min_rating());
     }
@@ -179,16 +181,14 @@ void CPWidget::apply_parameters(CP* cp) {
 void CPWidget::type_handler() {
     CompetitionType t = get_type();
     form_->hide(users_);
-    form_->hide(recruiting_time_);
     form_->hide(max_simultaneous_games_);
     form_->hide(games_factor_);
     form_->hide(min_substages_);
     form_->hide(increment_substages_);
     if (t == CLASSICAL || t == STAGED) {
         form_->show(users_);
-        form_->show(recruiting_time_);
     }
-    if (t == CLASSICAL) {
+    if (t == CLASSICAL || t == TEAM) {
         form_->show(max_simultaneous_games_);
         form_->show(games_factor_);
     }
