@@ -296,6 +296,9 @@ bool Competition::can_leave(const UserPtr& user) const {
 void Competition::leave(const UserPtr& user) {
     if (can_leave(user)) {
         members_.erase(user);
+        if (type() == TEAM) {
+            tcm_remove(self(), user);
+        }
     }
 }
 
