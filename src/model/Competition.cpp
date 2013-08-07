@@ -536,7 +536,6 @@ void Competition::process_classical() {
 }
 
 void Competition::finish(const UsersVector& winners) {
-    UsersVector members = members_vector();
     BOOST_FOREACH (const UserPtr& u, winners) {
         winners_.insert(u);
     }
