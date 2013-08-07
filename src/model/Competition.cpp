@@ -264,17 +264,7 @@ void Competition::stat_change() const {
 }
 
 bool Competition::can_join(const UserPtr& user) const {
-    return state_ == RECRUITING &&
-           user && !is_member(user) &&
-           user->has_permission(COMPETITION_JOINER) &&
-           user->games_stat().elo() >= cp_->min_rating() &&
-           user->games_stat().elo() <= cp_->max_rating() &&
-           user->classification() >= cp_->min_classification() &&
-           user->classification() <= cp_->max_classification() &&
-           user->online_time() >= cp_->min_online_time() &&
-           (user->online_time() <= cp_->max_online_time() ||
-            cp_->max_online_time() < SECOND) &&
-           static_cast<int>(members_.size()) < cp_->max_users();
+    return can_join_common(user) && (type() == STAGED || type() == CLASSICAL);
 }
 
 void Competition::join(const UserPtr& user) {
@@ -285,7 +275,7 @@ void Competition::join(const UserPtr& user) {
 
 bool Competition::can_team_join(const UserPtr& user,
                                 const TeamPtr& team) const {
-    return can_join(user) &&
+    return can_join_common(user) &&
            team &&
            !team->removed() &&
            team->members().count(user);
@@ -567,6 +557,20 @@ GamePtr Competition::create_game(const UserPtr& white, const UserPtr& black,
     game.modify()->make_competition_game(white, black, self(), stage, random);
     game.flush();
     return game;
+}
+
+bool Competition::can_join_common(const UserPtr& user) const {
+    return state_ == RECRUITING &&
+           user && !is_member(user) &&
+           user->has_permission(COMPETITION_JOINER) &&
+           user->games_stat().elo() >= cp_->min_rating() &&
+           user->games_stat().elo() <= cp_->max_rating() &&
+           user->classification() >= cp_->min_classification() &&
+           user->classification() <= cp_->max_classification() &&
+           user->online_time() >= cp_->min_online_time() &&
+           (user->online_time() <= cp_->max_online_time() ||
+            cp_->max_online_time() < SECOND) &&
+           static_cast<int>(members_.size()) < cp_->max_users();
 }
 
 }

@@ -355,6 +355,8 @@ private:
     GamePtr create_game(const UserPtr& white, const UserPtr& black,
                         int stage = -1, bool no_draw = false);
 
+    bool can_join_common(const UserPtr& user) const;
+
     friend class StagedCompetition;
 };
 
