@@ -128,9 +128,17 @@ class CompetitionWinners : public Wt::WContainerWidget {
 public:
     CompetitionWinners(const CompetitionPtr& c) {
         setList(true);
-        BOOST_FOREACH (const UserPtr& user, c->winners_vector()) {
-            Wt::WContainerWidget* item = new Wt::WContainerWidget(this);
-            user_anchor(user, item);
+        if (c->type() == TEAM) {
+            TeamsVector w(c->winner_teams().begin(), c->winner_teams().end());
+            BOOST_FOREACH (const TeamPtr& team, w) {
+                Wt::WContainerWidget* item = new Wt::WContainerWidget(this);
+                item->addWidget(team_anchor(team.id()));
+            }
+        } else if (c->type() == CLASSICAL || c->type() == STAGED) {
+            BOOST_FOREACH (const UserPtr& user, c->winners_vector()) {
+                Wt::WContainerWidget* item = new Wt::WContainerWidget(this);
+                user_anchor(user, item);
+            }
         }
     }
 };
