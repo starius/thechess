@@ -68,11 +68,11 @@ public:
         dbo::belongsTo(a, gp_, "gp");
         dbo::field(a, state_, "state");
         dbo::hasMany(a, members_, dbo::ManyToMany, "members_competitions");
+        dbo::hasMany(a, winners_, dbo::ManyToMany, "winners_competition");
         dbo::belongsTo(a, virtual_allower_, "virtual_allower");
         dbo::hasMany(a, games_, dbo::ManyToOne, "competition");
         dbo::field(a, started_, "started");
         dbo::field(a, ended_, "ended");
-        dbo::hasMany(a, winners_, dbo::ManyToMany, "winners_competition");
         dbo::field(a, comment_base_, "comment_base");
     }
 
@@ -292,6 +292,7 @@ private:
     State state_;
 
     Users members_;
+    Users winners_;
 
     UserPtr virtual_allower_;
 
@@ -299,8 +300,6 @@ private:
 
     Wt::WDateTime started_;
     Wt::WDateTime ended_;
-
-    Users winners_;
 
     CommentPtr comment_base_;
 
