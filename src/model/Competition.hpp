@@ -356,6 +356,7 @@ private:
                         int stage = -1, bool no_draw = false);
 
     bool can_join_common(const UserPtr& user) const;
+    void remove_user(const UserPtr& user);
 
     friend class StagedCompetition;
 };

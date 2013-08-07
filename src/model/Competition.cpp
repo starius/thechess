@@ -148,11 +148,9 @@ void Competition::set_cp(const CPPtr& cp) {
         bool next_team = cp->type() == TEAM;
         if (prev_team != next_team && state() == RECRUITING) {
             // remove all users
-            dbo::Session& s = *self()->session();
-            s.execute("delete from members_competitions where "
-                      "thechess_competition_id=?").bind(id());
-            s.execute("delete from thechess_tcm where "
-                      "competition_id=?").bind(id());
+            BOOST_FOREACH (const UserPtr& user, members_vector()) {
+                remove_user(user);
+            }
         }
     }
     cp_ = cp;
@@ -305,10 +303,7 @@ bool Competition::can_leave(const UserPtr& user) const {
 
 void Competition::leave(const UserPtr& user) {
     if (can_leave(user)) {
-        members_.erase(user);
-        if (type() == TEAM) {
-            tcm_remove(self(), user);
-        }
+        remove_user(user);
     }
 }
 
@@ -322,10 +317,7 @@ bool Competition::can_kick(const UserPtr& kicker, const UserPtr& kicked) const {
 
 void Competition::kick(const UserPtr& kicker, const UserPtr& kicked) {
     if (can_kick(kicker, kicked)) {
-        members_.erase(kicked);
-        if (type() == TEAM) {
-            tcm_remove(self(), kicked);
-        }
+        remove_user(kicked);
     }
 }
 
@@ -584,6 +576,13 @@ bool Competition::can_join_common(const UserPtr& user) const {
            (user->online_time() <= cp_->max_online_time() ||
             cp_->max_online_time() < SECOND) &&
            static_cast<int>(members_.size()) < cp_->max_users();
+}
+
+void Competition::remove_user(const UserPtr& user) {
+    members_.erase(user);
+    if (type() == TEAM) {
+        tcm_remove(self(), user);
+    }
 }
 
 }
