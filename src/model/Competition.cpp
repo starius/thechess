@@ -144,6 +144,16 @@ UsersVector Competition::winners_of_games(const GamesVector& games) {
 void Competition::set_cp(const CPPtr& cp) {
     if (cp_) {
         cp_.modify()->set_competitions_size(cp_->competitions_size() - 1);
+        bool prev_team = type() == TEAM;
+        bool next_team = cp->type() == TEAM;
+        if (prev_team != next_team && state() == RECRUITING) {
+            // remove all users
+            dbo::Session& s = *self()->session();
+            s.execute("delete from members_competitions where "
+                      "thechess_competition_id=?").bind(id());
+            s.execute("delete from thechess_tcm where "
+                      "competition_id=?").bind(id());
+        }
     }
     cp_ = cp;
     cp.modify()->set_competitions_size(cp->competitions_size() + 1);
