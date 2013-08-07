@@ -550,7 +550,9 @@ TheChess.
         ${tr:tc.common.Rating}: <span class="thechess-games-rating">${elo}</span>.
     </message>
 
+    <message id='tc.competition.Add_team'>Add team</message>
     <message id='tc.competition.c'>(c)</message>
+    <message id='tc.competition.Cant_add_team'>Can't add team</message>
     <message id='tc.competition.Cant_change'>You have no permission to change this competition</message>
     <message id='tc.competition.Cant_create'>You have no permission to create competition</message>
     <message id='tc.competition.Change'>Change parameters</message>
@@ -591,6 +593,7 @@ TheChess.
     <message id='tc.competition.state_cancelled'>cancelled</message>
     <message id='tc.competition.state_ended'>ended</message>
     <message id='tc.competition.state_recruiting'>recruiting</message>
+    <message id='tc.competition.Team_not_found'>Team not found</message>
     <message id='tc.competition.Tree'>Tree</message>
     <message id='tc.competition.Type'>Type</message>
     <message id='tc.competition.Type_classical'>Classical</message>

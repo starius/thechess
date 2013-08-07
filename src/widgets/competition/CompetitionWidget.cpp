@@ -18,6 +18,8 @@
 #include <Wt/WTreeTableNode>
 #include <Wt/WAnchor>
 #include <Wt/WImage>
+#include <Wt/WLineEdit>
+#include <Wt/WIntValidator>
 #include <Wt/WCompositeWidget>
 #include <Wt/WPushButton>
 #include <Wt/WBreak>
@@ -453,6 +455,14 @@ public:
             if (c->can_force_start(tApp->user())) {
                 button<&Competition::force_start>("tc.competition.Force_start");
             }
+            if (c->state() == Competition::RECRUITING) {
+                new Wt::WBreak(this);
+                team_id_ = new Wt::WLineEdit(this);
+                team_id_->setValidator(new Wt::WIntValidator);
+                Wt::WPushButton* b;
+                b = new Wt::WPushButton(tr("tc.competition.Add_team"), this);
+                b->clicked().connect(this, &CompetitionManager::add_team);
+            }
         }
         bool admin = tApp->user() && tApp->user()->admin_rights();
         if (c->has_virtuals() && (!c->virtual_allower() || admin)) {
@@ -486,6 +496,7 @@ public:
 private:
     CompetitionPtr c_;
     bool is_editing_;
+    Wt::WLineEdit* team_id_;
 
     void show_change_widget() {
         downcast<Wt::WPushButton*>(sender())->hide();
@@ -521,6 +532,34 @@ private:
 
     void save_handler() {
         is_editing_ = false;
+    }
+
+    void add_team() {
+        if (!tApp->user()) {
+            return;
+        }
+        if (team_id_->validate() != Wt::WValidator::Valid) {
+            return;
+        }
+        dbo::Transaction t(tApp->session());
+        c_.reread();
+        tApp->user().reread();
+        int team_id = boost::lexical_cast<int>(team_id_->text());
+        TeamPtr team;
+        try {
+            team = tApp->session().load<Team>(team_id);
+        } catch (...) {
+            team_id_->setText(tr("tc.competition.Team_not_found"));
+            return;
+        }
+        if (!c_->can_add_team(tApp->user(), team)) {
+            team_id_->setText(tr("tc.competition.Cant_add_team"));
+            return;
+        }
+        c_.modify()->add_team(tApp->user(), team);
+        admin_log("Add " + team_a(team.id()));
+        t.commit();
+        t_task(COMPETITION, c_.id());
     }
 };
 
