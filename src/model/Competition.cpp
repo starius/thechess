@@ -344,6 +344,7 @@ bool Competition::can_force_start(const UserPtr& user) const {
            user &&
            (user == init() || user->has_permission(COMPETITION_CHANGER)) &&
            int(members_.size()) >= ccm::MIN_USERS &&
+           (type() != TEAM || teams_.size() >= 2) &&
            now() - created() >= ccm::MIN_RECRUITING_TIME &&
            (virtual_allower_ || !has_virtuals());
 }
