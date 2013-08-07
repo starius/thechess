@@ -252,6 +252,9 @@ UsersVector Competition::virtuals() const {
 }
 
 void Competition::stat_change() const {
+    if (type() == TEAM) {
+        return;
+    }
     UsersVector members = members_vector();
     UsersVector winners = winners_vector();
     std::set<UserPtr> set_of_winners;
