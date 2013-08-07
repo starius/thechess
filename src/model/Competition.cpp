@@ -305,6 +305,9 @@ bool Competition::can_kick(const UserPtr& kicker, const UserPtr& kicked) const {
 void Competition::kick(const UserPtr& kicker, const UserPtr& kicked) {
     if (can_kick(kicker, kicked)) {
         members_.erase(kicked);
+        if (type() == TEAM) {
+            tcm_remove(self(), kicked);
+        }
     }
 }
 
