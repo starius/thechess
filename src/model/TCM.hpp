@@ -23,7 +23,7 @@ public:
 
     /** Create instance to be added to database */
     TCM(const TeamPtr& team, const CompetitionPtr& competition,
-        const UserPtr& u);
+        const UserPtr& user);
 
     /** Wt::Dbo persist implementation */
     template<class Action>
