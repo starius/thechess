@@ -60,6 +60,12 @@ typedef std::map<UserPtr, TeamPtr> User2Team;
 /** Add relations user to his team for the competition to the map */
 void tcm_map_user_to_team(User2Team& result, const CompetitionPtr& competition);
 
+/** Map team to list of users */
+typedef std::map<TeamPtr, UsersVector> Team2Users;
+
+/** Add relations user to his team for the competition to the map */
+void tcm_map_team_to_users(Team2Users& result, const CompetitionPtr& c);
+
 /** Add the member of the team to the competition */
 void tcm_add(const TeamPtr& team, const CompetitionPtr& competition,
              const UserPtr& user);

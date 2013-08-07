@@ -56,6 +56,16 @@ void tcm_map_user_to_team(User2Team& result,
     }
 }
 
+void tcm_map_team_to_users(Team2Users& result, const CompetitionPtr& c) {
+    TCMs tsms = c.session()->find<TCM>()
+                .where("competition_id = ?").bind(c);
+    BOOST_FOREACH (TCMPtr tcm, tsms) {
+        const UserPtr& user = tcm->user();
+        const TeamPtr& team = tcm->team();
+        result[team].push_back(user);
+    }
+}
+
 void tcm_add(const TeamPtr& team, const CompetitionPtr& competition,
              const UserPtr& user) {
     competition.session()->add(new TCM(team, competition, user));

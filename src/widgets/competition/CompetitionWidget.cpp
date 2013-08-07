@@ -50,16 +50,19 @@ public:
                 add_user_to_list(user, this);
             }
         } else if (c_->type() == TEAM) {
+            tcm_map_team_to_users(t2u_, c);
             // list of teams here
             TeamsVector teams(c->teams().begin(), c->teams().end());
             BOOST_FOREACH (const TeamPtr& team, teams) {
                 add_team_to_list(team, this);
             }
+            t2u_.clear();
         }
     }
 
 private:
     CompetitionPtr c_;
+    Team2Users t2u_;
 
     void kick(UserPtr user) {
         dbo::Transaction t(tApp->session());
@@ -98,6 +101,11 @@ private:
             b = new Wt::WPushButton(tr("tc.common.Discard"), item);
             b->clicked().connect(boost::bind(&CompetitionMembers::remove_team,
                                              this, team));
+        }
+        Wt::WContainerWidget* sub_list = new Wt::WContainerWidget(item);
+        sub_list->setList(true);
+        BOOST_FOREACH (const UserPtr& user, t2u_[team]) {
+            add_user_to_list(user, sub_list);
         }
     }
 };
