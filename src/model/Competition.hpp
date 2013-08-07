@@ -230,6 +230,12 @@ public:
     /** Try to join the user */
     void join(const UserPtr& user);
 
+    /** Return if the user can join (team competition) */
+    bool can_team_join(const UserPtr& user, const TeamPtr& team) const;
+
+    /** Try to join the user (team competition) */
+    void team_join(const UserPtr& user, const TeamPtr& team);
+
     /** Return if the user can leave */
     bool can_leave(const UserPtr& user) const;
 
@@ -285,6 +291,33 @@ public:
     const CommentPtr& comment_base() const {
         return comment_base_;
     }
+
+    /* @} */
+
+    /** \name Methods of teams */
+    /* @{ */
+
+    /** Get teams collection */
+    const Teams& teams() const {
+        return teams_;
+    }
+
+    /** Get winner teams collection */
+    const Teams& winner_teams() const {
+        return winner_teams_;
+    }
+
+    /** If the user can add the team to the competition */
+    bool can_add_team(const UserPtr& user, const TeamPtr& team) const;
+
+    /** Try to add the team to the competition */
+    void add_team(const UserPtr& user, const TeamPtr& team);
+
+    /** If the user can remove the team from the competition */
+    bool can_remove_team(const UserPtr& user, const TeamPtr& team) const;
+
+    /** Try to remove the team from the competition */
+    void remove_team(const UserPtr& user, const TeamPtr& team);
 
     /* @} */
 

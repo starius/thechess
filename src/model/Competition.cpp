@@ -283,6 +283,21 @@ void Competition::join(const UserPtr& user) {
     }
 }
 
+bool Competition::can_team_join(const UserPtr& user,
+                                const TeamPtr& team) const {
+    return can_join(user) &&
+           team &&
+           !team->removed() &&
+           team->members().count(user);
+}
+
+void Competition::team_join(const UserPtr& user, const TeamPtr& team) {
+    if (can_team_join(user, team)) {
+        members_.insert(user);
+        tcm_add(team, self(), user);
+    }
+}
+
 bool Competition::can_leave(const UserPtr& user) const {
     return state_ == RECRUITING &&
            is_member(user);
@@ -373,6 +388,35 @@ const CommentPtr& Competition::comment_base() {
         comment_base_.flush();
     }
     return comment_base_;
+}
+
+bool Competition::can_add_team(const UserPtr& user, const TeamPtr& team) const {
+    return state_ == RECRUITING &&
+           user &&
+           !teams_.count(team) &&
+           !team->removed() &&
+           team->init() == user;
+}
+
+void Competition::add_team(const UserPtr& user, const TeamPtr& team) {
+    if (can_add_team(user, team)) {
+        teams_.insert(team);
+    }
+}
+
+bool Competition::can_remove_team(const UserPtr& user,
+                                  const TeamPtr& team) const {
+    return state_ == RECRUITING &&
+           user &&
+           teams_.count(team) &&
+           (team->init() == user || init() == user ||
+            user->has_permission(COMPETITION_CHANGER));
+}
+
+void Competition::remove_team(const UserPtr& user, const TeamPtr& team) {
+    if (can_remove_team(user, team)) {
+        teams_.erase(team);
+    }
 }
 
 bool Competition::can_start() const {
