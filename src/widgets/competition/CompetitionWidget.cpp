@@ -32,6 +32,7 @@
 #include "widgets/competition/CompetitionCreateWidget.hpp"
 #include "widgets/user/user_anchor.hpp"
 #include "widgets/comment/CommentList.hpp"
+#include "widgets/comment/comment_base.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
 #include "config.hpp"
@@ -44,14 +45,15 @@ public:
     CompetitionMembers(const CompetitionPtr& c):
         c_(c) {
         setList(true);
-        BOOST_FOREACH (const UserPtr& user, c->members_vector()) {
-            Wt::WContainerWidget* item = new Wt::WContainerWidget(this);
-            user_anchor(user, item);
-            if (c->can_kick(tApp->user(), user)) {
-                Wt::WPushButton* b;
-                b = new Wt::WPushButton(tr("tc.common.Discard"), item);
-                b->clicked().connect(boost::bind(&CompetitionMembers::kick,
-                                                 this, user));
+        if (c_->type() == CLASSICAL || c_->type() == STAGED) {
+            BOOST_FOREACH (const UserPtr& user, c->members_vector()) {
+                add_user_to_list(user, this);
+            }
+        } else if (c_->type() == TEAM) {
+            // list of teams here
+            TeamsVector teams(c->teams().begin(), c->teams().end());
+            BOOST_FOREACH (const TeamPtr& team, teams) {
+                add_team_to_list(team, this);
             }
         }
     }
@@ -66,6 +68,37 @@ private:
         admin_log("Discard " + user_a(user.id()) + " from " + comp_a(c_.id()));
         t.commit();
         t_emit(COMPETITION, c_.id());
+    }
+
+    void remove_team(TeamPtr team) {
+        dbo::Transaction t(tApp->session());
+        c_.reread();
+        c_.modify()->remove_team(tApp->user(), team);
+        admin_log("Discard " + team_a(team.id()) + " from " + comp_a(c_.id()));
+        t.commit();
+        t_emit(COMPETITION, c_.id());
+    }
+
+    void add_user_to_list(const UserPtr& user, Wt::WContainerWidget* list) {
+        Wt::WContainerWidget* item = new Wt::WContainerWidget(list);
+        user_anchor(user, item);
+        if (c_->can_kick(tApp->user(), user)) {
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(tr("tc.common.Discard"), item);
+            b->clicked().connect(boost::bind(&CompetitionMembers::kick,
+                                             this, user));
+        }
+    }
+
+    void add_team_to_list(const TeamPtr& team, Wt::WContainerWidget* list) {
+        Wt::WContainerWidget* item = new Wt::WContainerWidget(list);
+        item->addWidget(team_anchor(team.id()));
+        if (c_->can_remove_team(tApp->user(), team)) {
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(tr("tc.common.Discard"), item);
+            b->clicked().connect(boost::bind(&CompetitionMembers::remove_team,
+                                             this, team));
+        }
     }
 };
 
