@@ -148,6 +148,84 @@ struct dbo_traits<thechess::BD> : public dbo_default_traits {
 
 /* @} */
 
+/** \name Id field for TCM */
+/* @{ */
+
+namespace thechess {
+
+/** Id field for TCM */
+struct TCMId {
+    /** Team */
+    TeamPtr team;
+
+    /** Competition */
+    CompetitionPtr competition;
+
+    /** User */
+    UserPtr user;
+
+    /** Default constructor */
+    TCMId();
+
+    /** Constructor */
+    TCMId(const TeamPtr& t, const CompetitionPtr& c, const UserPtr& u);
+
+    /** Comparison operator */
+    bool operator==(const TCMId& other) const;
+
+    // FIXME http://redmine.emweb.be/issues/1510
+    /** Comparison operator */
+    bool operator!=(const TCMId& other) const;
+
+    /** Comparison operator */
+    bool operator<(const TCMId& other) const;
+};
+
+/** Output stream operator for TCMId */
+std::ostream& operator<<(std::ostream& o, const TCMId& id);
+
+}
+
+namespace Wt {
+namespace Dbo {
+
+/** Dbo field for TCMId */
+template <class Action>
+void field(Action& action, thechess::TCMId& id,
+           const std::string& name, int /* size */ = -1) {
+    field(action, id.team, name + "team");
+    field(action, id.competition, name + "competition");
+    field(action, id.user, name + "user");
+}
+
+/** Dbo settings of TCM model */
+template<>
+struct dbo_traits<thechess::TCM> : public dbo_default_traits {
+    /** Type if id */
+    typedef thechess::TCMId IdType;
+
+    /** Invalid id */
+    static IdType invalidId() {
+        return IdType();
+    }
+
+    /** Disables surrogate id field */
+    static const char* surrogateIdField() {
+        return 0;
+    }
+
+    /** Disables version field */
+    static const char* versionField() {
+        return 0;
+    }
+};
+
+}
+
+}
+
+/* @} */
+
 /** \name Field for WhiteBlack */
 /* @{ */
 

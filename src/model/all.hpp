@@ -16,6 +16,7 @@
 #include "model/CP.hpp"
 #include "model/Competition.hpp"
 #include "model/Team.hpp"
+#include "model/TCM.hpp"
 #include "model/Comment.hpp"
 #include "model/BD.hpp"
 #include "model/IpBan.hpp"
