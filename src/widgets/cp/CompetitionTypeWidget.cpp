@@ -19,7 +19,7 @@ CompetitionTypeWidget::CompetitionTypeWidget(bool with_all,
     }
     addItem(Competition::type2str(CLASSICAL));
     addItem(Competition::type2str(STAGED));
-    // TODO addItem(Competition::type2str(TEAM));
+    addItem(Competition::type2str(TEAM));
 }
 
 CompetitionType CompetitionTypeWidget::value() const {
@@ -48,7 +48,7 @@ void CompetitionTypeWidget::set_value(CompetitionType value) {
     } else if (value == CLASSICAL) {
         index = 1;
     } else if (value == TEAM) {
-        // TODO index = 2;
+        index = 2;
     }
     if (with_all_) {
         index += 1;
