@@ -62,15 +62,31 @@ Wt::WAnchor* game_anchor(int id) {
 }
 
 Wt::WAnchor* competition_anchor(int id) {
+    dbo::Transaction t(tApp->session());
+    Wt::WString title(Wt::WString::tr("tc.competition.Header"));
+    CompetitionPtr c = tApp->session().load<Competition>(id);
+    if (c->name().empty()) {
+        title.arg(id);
+    } else {
+        title.arg(c->name());
+    }
     Wt::WAnchor* a = new Wt::WAnchor;
-    a->setText(Wt::WString::tr("tc.competition.Header").arg(id));
+    a->setText(title);
     a->setLink(tApp->path().competition_view()->get_link(id));
     return a;
 }
 
 Wt::WAnchor* team_anchor(int id) {
+    dbo::Transaction t(tApp->session());
+    Wt::WString title(Wt::WString::tr("tc.team.Title").arg(id));
+    TeamPtr team = tApp->session().load<Team>(id);
+    if (!team->name().empty()) {
+        title.arg(team->name());
+    } else {
+        title.arg("");
+    }
     Wt::WAnchor* a = new Wt::WAnchor;
-    a->setText(Wt::WString::tr("tc.team.Title").arg(id).arg(""));
+    a->setText(title);
     a->setLink(tApp->path().team_view()->get_link(id));
     return a;
 }
