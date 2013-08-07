@@ -38,6 +38,9 @@ public:
         dbo::hasMany(a, banned_, dbo::ManyToMany, "team_banned");
         dbo::belongsTo(a, comment_base_, "comment_base");
         dbo::field(a, removed_, "removed");
+        dbo::hasMany(a, competitions_, dbo::ManyToMany, "teams_competitions");
+        dbo::hasMany(a, won_competitions_, dbo::ManyToMany,
+                     "winner_teams_competitions");
     }
 
     /** Team members */
@@ -104,6 +107,8 @@ private:
     Users banned_;
     CommentPtr comment_base_;
     bool removed_;
+    Competitions competitions_;
+    Competitions won_competitions_;
 };
 
 /** Add new message to team chat.

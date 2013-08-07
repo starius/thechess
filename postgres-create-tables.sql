@@ -359,3 +359,22 @@ CREATE INDEX "thechess_tcm_team" on "thechess_tcm" ("team_id");
 CREATE INDEX "thechess_tcm_competition" on "thechess_tcm" ("competition_id");
 CREATE INDEX "thechess_tcm_user" on "thechess_tcm" ("user_id");
 
+CREATE TABLE "teams_competitions" (
+  "thechess_team_id" bigint not null,
+  "thechess_competition_id" bigint not null,
+  primary key ("thechess_team_id", "thechess_competition_id"),
+  constraint "fk_members_competitions_key1" foreign key ("thechess_team_id") references "thechess_team" ("id"),
+  constraint "fk_members_competitions_key2" foreign key ("thechess_competition_id") references "thechess_competition" ("id")
+);
+CREATE INDEX "teams_competitions_team" on "teams_competitions" ("thechess_team_id");
+CREATE INDEX "teams_competitions_competition" on "teams_competitions" ("thechess_competition_id");
+
+CREATE TABLE "winner_teams_competitions" (
+  "thechess_team_id" bigint not null,
+  "thechess_competition_id" bigint not null,
+  primary key ("thechess_team_id", "thechess_competition_id"),
+  constraint "fk_members_competitions_key1" foreign key ("thechess_team_id") references "thechess_team" ("id"),
+  constraint "fk_members_competitions_key2" foreign key ("thechess_competition_id") references "thechess_competition" ("id")
+);
+CREATE INDEX "winner_teams_competitions_team" on "winner_teams_competitions" ("thechess_team_id");
+CREATE INDEX "winner_teams_competitions_competition" on "winner_teams_competitions" ("thechess_competition_id");

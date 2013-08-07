@@ -74,6 +74,9 @@ public:
         dbo::field(a, started_, "started");
         dbo::field(a, ended_, "ended");
         dbo::field(a, comment_base_, "comment_base");
+        dbo::hasMany(a, teams_, dbo::ManyToMany, "teams_competitions");
+        dbo::hasMany(a, winner_teams_, dbo::ManyToMany,
+                     "winner_teams_competitions");
     }
 
     /** Get competition parameters */
@@ -302,6 +305,9 @@ private:
     Wt::WDateTime ended_;
 
     CommentPtr comment_base_;
+
+    Teams teams_;
+    Teams winner_teams_;
 
     bool can_start() const;
     void start();
