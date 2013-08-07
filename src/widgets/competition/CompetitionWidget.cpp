@@ -82,6 +82,14 @@ private:
         t_emit(COMPETITION, c_.id());
     }
 
+    void team_join(TeamPtr team) {
+        dbo::Transaction t(tApp->session());
+        c_.reread();
+        c_.modify()->team_join(tApp->user(), team);
+        t.commit();
+        t_emit(COMPETITION, c_.id());
+    }
+
     void add_user_to_list(const UserPtr& user, Wt::WContainerWidget* list) {
         Wt::WContainerWidget* item = new Wt::WContainerWidget(list);
         user_anchor(user, item);
@@ -100,6 +108,12 @@ private:
             Wt::WPushButton* b;
             b = new Wt::WPushButton(tr("tc.common.Discard"), item);
             b->clicked().connect(boost::bind(&CompetitionMembers::remove_team,
+                                             this, team));
+        }
+        if (c_->can_team_join(tApp->user(), team)) {
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(tr("tc.common.Join"), item);
+            b->clicked().connect(boost::bind(&CompetitionMembers::team_join,
                                              this, team));
         }
         Wt::WContainerWidget* sub_list = new Wt::WContainerWidget(item);
