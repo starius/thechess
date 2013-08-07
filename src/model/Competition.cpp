@@ -410,6 +410,11 @@ bool Competition::can_remove_team(const UserPtr& user,
 
 void Competition::remove_team(const UserPtr& user, const TeamPtr& team) {
     if (can_remove_team(user, team)) {
+        Team2Users t2u;
+        tcm_map_team_to_users(t2u, self());
+        BOOST_FOREACH (UserPtr user, t2u[team]) {
+            remove_user(user);
+        }
         teams_.erase(team);
     }
 }
