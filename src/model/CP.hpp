@@ -179,9 +179,6 @@ public:
 
     /* @} */
 
-    /** \name Parameters of CLASSICAL and STAGED competitions */
-    /* @{ */
-
     /** Get time after which confirmed games would be started automatically */
     Td force_start_delay() const {
         return force_start_delay_;
@@ -190,26 +187,6 @@ public:
     /** Set time after which confirmed games would be started automatically */
     void set_force_start_delay(Td v) {
         force_start_delay_ = v;
-    }
-
-    /** Get min number of members competition to start */
-    int min_users() const {
-        return min_users_;
-    }
-
-    /** Set min number of members competition to start */
-    void set_min_users(int v) {
-        min_users_ = v;
-    }
-
-    /** Get max allowed number of members */
-    int max_users() const {
-        return max_users_;
-    }
-
-    /** Set max allowed number of members */
-    void set_max_users(int v) {
-        max_users_ = v;
     }
 
     /** Get min recruiting time competition to start */
@@ -232,19 +209,42 @@ public:
         max_recruiting_time_ = v;
     }
 
-    /** Get max number of simultaneous games by user */
-    int max_simultaneous_games() const {
-        return max_simultaneous_games_;
+    /** \name Parameters of CLASSICAL and STAGED competitions */
+    /* @{ */
+
+    /** Get min number of members competition to start */
+    int min_users() const {
+        return min_users_;
     }
 
-    /** Set max number of simultaneous games by user */
-    void set_max_simultaneous_games(int v) {
-        max_simultaneous_games_ = v;
+    /** Set min number of members competition to start */
+    void set_min_users(int v) {
+        min_users_ = v;
+    }
+
+    /** Get max allowed number of members */
+    int max_users() const {
+        return max_users_;
+    }
+
+    /** Set max allowed number of members */
+    void set_max_users(int v) {
+        max_users_ = v;
     }
 
     /* @} */
 
-    /** \name Parameters of CLASSICAL competition */
+    /** Get time after which created games would be confirmed automatically */
+    Td relax_time() const {
+        return relax_time_;
+    }
+
+    /** Set time after which created games would be confirmed automatically */
+    void set_relax_time(Td v) {
+        relax_time_ = v;
+    }
+
+    /** \name Parameters of CLASSICAL and TEAM competition */
     /* @{ */
 
     /** Get factor of games number.
@@ -262,14 +262,14 @@ public:
         games_factor_ = v;
     }
 
-    /** Get time after which created games would be confirmed automatically */
-    Td relax_time() const {
-        return relax_time_;
+    /** Get max number of simultaneous games by user */
+    int max_simultaneous_games() const {
+        return max_simultaneous_games_;
     }
 
-    /** Set time after which created games would be confirmed automatically */
-    void set_relax_time(Td v) {
-        relax_time_ = v;
+    /** Set max number of simultaneous games by user */
+    void set_max_simultaneous_games(int v) {
+        max_simultaneous_games_ = v;
     }
 
     /* @} */
