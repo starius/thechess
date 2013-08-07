@@ -155,9 +155,6 @@ namespace thechess {
 
 /** Id field for TCM */
 struct TCMId {
-    /** Team */
-    TeamPtr team;
-
     /** Competition */
     CompetitionPtr competition;
 
@@ -168,7 +165,7 @@ struct TCMId {
     TCMId();
 
     /** Constructor */
-    TCMId(const TeamPtr& t, const CompetitionPtr& c, const UserPtr& u);
+    TCMId(const CompetitionPtr& c, const UserPtr& u);
 
     /** Comparison operator */
     bool operator==(const TCMId& other) const;
@@ -193,7 +190,6 @@ namespace Dbo {
 template <class Action>
 void field(Action& action, thechess::TCMId& id,
            const std::string& name, int /* size */ = -1) {
-    field(action, id.team, name + "team");
     field(action, id.competition, name + "competition");
     field(action, id.user, name + "user");
 }

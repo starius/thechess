@@ -31,11 +31,12 @@ public:
     template<class Action>
     void persist(Action& a) {
         dbo::id(a, id_, "");
+        dbo::belongsTo(a, team_, "team");
     }
 
     /** Team */
     const TeamPtr& team() const {
-        return id_.team;
+        return team_;
     }
 
     /** Competition */
@@ -50,6 +51,7 @@ public:
 
 private:
     TCMId id_;
+    TeamPtr team_;
 };
 
 /** Map user to team */
@@ -63,8 +65,7 @@ void tcm_add(const TeamPtr& team, const CompetitionPtr& competition,
              const UserPtr& user);
 
 /** Remove the member of the team to the competition */
-void tcm_remove(const TeamPtr& team, const CompetitionPtr& competition,
-                const UserPtr& user);
+void tcm_remove(const CompetitionPtr& competition, const UserPtr& user);
 
 }
 

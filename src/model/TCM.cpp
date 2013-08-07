@@ -16,13 +16,12 @@ namespace thechess {
 TCMId::TCMId()
 { }
 
-TCMId::TCMId(const TeamPtr& t, const CompetitionPtr& c, const UserPtr& u):
-    team(t), competition(c), user(u)
+TCMId::TCMId(const CompetitionPtr& c, const UserPtr& u):
+    competition(c), user(u)
 { }
 
 bool TCMId::operator==(const TCMId& other) const {
-    return team == other.team && competition == other.competition &&
-           user == other.user;
+    return competition == other.competition && user == other.user;
 }
 
 bool TCMId::operator!=(const TCMId& other) const {
@@ -30,14 +29,12 @@ bool TCMId::operator!=(const TCMId& other) const {
 }
 
 bool TCMId::operator<(const TCMId& other) const {
-    return team < other.team ||
-           (team == other.team && (competition < other.competition ||
-                                   (competition == other.competition &&
-                                    user < other.user)));
+    return competition < other.competition ||
+           (competition == other.competition && user < other.user);
 }
 
 std::ostream& operator<<(std::ostream& o, const TCMId& id) {
-    o << '(' << id.team << ',' << id.competition << ',' << id.user << ')';
+    o << '(' << id.competition << ',' << id.user << ')';
     return o;
 }
 
@@ -45,7 +42,7 @@ TCM::TCM()
 { }
 
 TCM::TCM(const TeamPtr& t, const CompetitionPtr& c, const UserPtr& u):
-    id_(t, c, u)
+    id_(c, u), team_(t)
 { }
 
 void tcm_map_user_to_team(User2Team& result,
@@ -64,10 +61,9 @@ void tcm_add(const TeamPtr& team, const CompetitionPtr& competition,
     competition.session()->add(new TCM(team, competition, user));
 }
 
-void tcm_remove(const TeamPtr& team, const CompetitionPtr& competition,
-                const UserPtr& user) {
+void tcm_remove(const CompetitionPtr& competition, const UserPtr& user) {
     dbo::Session& s = *competition.session();
-    TCMPtr tcm = s.load<TCM>(TCMId(team, competition, user));
+    TCMPtr tcm = s.load<TCM>(TCMId(competition, user));
     tcm.remove();
 }
 

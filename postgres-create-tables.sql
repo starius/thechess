@@ -343,10 +343,10 @@ CREATE INDEX "team_removed" ON "thechess_team" ("removed");
 
 -- new classes Aug 2013 --
 CREATE TABLE "thechess_tcm" (
-  "team_id" bigint,
   "competition_id" bigint,
   "user_id" bigint,
-  primary key ("team_id", "competition_id", "user_id")
+  "team_id" bigint,
+  primary key ("competition_id", "user_id")
 );
 ALTER TABLE "thechess_tcm"
   ADD constraint "fk_thechess_tcm_team" foreign key ("team_id")
