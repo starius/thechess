@@ -539,7 +539,7 @@ public:
     CompetitionView(const CompetitionPtr& c) {
         if (c->state() == Competition::ACTIVE ||
                 c->state() == Competition::ENDED) {
-            if (c->type() == CLASSICAL) {
+            if (c->type() == CLASSICAL || c->type() == TEAM) {
                 setImplementation(new ClassicalView(c));
             }
             if (c->type() == STAGED) {
