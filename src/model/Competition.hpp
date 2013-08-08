@@ -60,8 +60,16 @@ public:
     \param wins Map (user to number of wins) to modify
     \note Draw is considered as 0.5 for white and 0.5 for black.
     */
-    static void wins_number(const GamesVector& games,
-                            std::map<UserPtr, float>& wins);
+    static void wins_number(const GamesVector& games, User2float& wins);
+
+    /** Increase numbers of won game in map.
+    \param user_wins Map (user to number of wins)
+    \param u2t Map (user to team)
+    \param team_wins Map (team to number of wins) to modify
+    */
+    static void team_wins_number(const User2float& user_wins,
+                                 const User2Team& u2t,
+                                 Team2float& team_wins);
 
     /** Return a vector of users obtained max number of wins */
     static UsersVector winners_of_games(const GamesVector& games);

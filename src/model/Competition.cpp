@@ -121,8 +121,18 @@ void Competition::wins_number(const GamesVector& games,
     }
 }
 
+void Competition::team_wins_number(const User2float& user_wins,
+                                   const User2Team& u2t,
+                                   Team2float& team_wins) {
+    BOOST_FOREACH (User2float::value_type& user2float, user_wins) {
+        const UserPtr& user = user2float.first;
+        TeamPtr team = u2t[user];
+        float w = user2float.second;
+        team_wins[team] += w;
+    }
+}
+
 UsersVector Competition::winners_of_games(const GamesVector& games) {
-    typedef std::map<UserPtr, float> User2float;
     User2float wins;
     wins_number(games, wins);
     UsersVector winners;
@@ -142,22 +152,15 @@ UsersVector Competition::winners_of_games(const GamesVector& games) {
 }
 
 TeamsVector Competition::winner_teams_of_games(const GamesVector& games) {
-    typedef std::map<UserPtr, float> User2float;
-    User2float wins;
-    wins_number(games, wins);
+    User2float user_wins;
+    wins_number(games, user_wins);
     User2Team u2t;
     tcm_map_user_to_team(u2t, self());
-    typedef std::map<TeamPtr, float> Team2float;
-    Team2float t2f;
-    BOOST_FOREACH (User2float::value_type& user2float, wins) {
-        const UserPtr& user = user2float.first;
-        TeamPtr team = u2t[user];
-        float w = user2float.second;
-        t2f[team] += w;
-    }
+    Team2float team_wins;
+    team_wins_number(user_wins, u2t, team_wins);
     TeamsVector winners;
     float max_wins = -1;
-    BOOST_FOREACH (Team2float::value_type& team2float, t2f) {
+    BOOST_FOREACH (Team2float::value_type& team2float, team_wins) {
         const TeamPtr& team = team2float.first;
         float w = team2float.second;
         if (max_wins < 0 || w - max_wins > 0.1) {
