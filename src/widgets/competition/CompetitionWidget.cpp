@@ -222,10 +222,23 @@ public:
         gt_ = c->games_table();
         table_ = new Wt::WTable(this);
         table_->setStyleClass("thechess-table-border");
-        Competition::wins_number(c->games_vector(), wins_);
         members_ = c->members_vector();
-        std::sort(members_.begin(), members_.end(),
-                  boost::bind(&ClassicalViewImpl::compare_users, this, _1, _2));
+        if (c->type() == CLASSICAL) {
+            Competition::wins_number(c->games_vector(), user_wins_);
+            std::sort(members_.begin(), members_.end(),
+                      boost::bind(&ClassicalViewImpl::compare_users_classical,
+                                  this, _1, _2));
+        } else if (c->type() == TEAM) {
+            tcm_map_user_to_team(u2t_, c);
+            teams_ = TeamsVector(c->teams().begin(), c->teams().end());
+            Competition::team_wins_number(user_wins_, u2t_, team_wins_);
+            std::sort(teams_.begin(), teams_.end(),
+                      boost::bind(&ClassicalViewImpl::compare_teams,
+                                  this, _1, _2));
+            std::sort(members_.begin(), members_.end(),
+                      boost::bind(&ClassicalViewImpl::compare_users_team,
+                                  this, _1, _2));
+        }
         headers();
         scores(c);
         fill_table();
@@ -236,10 +249,27 @@ private:
     GamesTable gt_;
     UsersVector members_;
     bool show_wins_;
-    mutable std::map<UserPtr, float> wins_;
+    mutable User2float user_wins_;
+    mutable Team2float team_wins_;
+    mutable TeamsVector teams_;
+    mutable User2Team u2t_;
 
-    bool compare_users(const UserPtr& a, const UserPtr& b) const {
-        return wins_[a] > wins_[b];
+    bool compare_users_classical(const UserPtr& a, const UserPtr& b) const {
+        return user_wins_[a] > user_wins_[b];
+    }
+
+    bool compare_teams(const TeamPtr& a, const TeamPtr& b) const {
+        return team_wins_[a] > team_wins_[b];
+    }
+
+    bool compare_users_team(const UserPtr& a, const UserPtr& b) const {
+        const TeamPtr& a_team = u2t_[a];
+        const TeamPtr& b_team = u2t_[b];
+        if (a_team != b_team) {
+            return team_wins_[a_team] > team_wins_[b_team];
+        } else {
+            return user_wins_[a] > user_wins_[b];
+        }
     }
 
     void headers() {
@@ -267,7 +297,7 @@ private:
         int i = 0;
         BOOST_FOREACH (const UserPtr& user, members_) {
             int row = i + TOP_SHIFT;
-            std::string w = TO_S(wins_[user]);
+            std::string w = TO_S(user_wins_[user]);
             table_->elementAt(row, score_right)->addWidget(new Wt::WText(w));
             table_->elementAt(row, SCORE_COLUMN)->addWidget(new Wt::WText(w));
             i++;
