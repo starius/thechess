@@ -27,6 +27,12 @@ public:
     /** Type of competition */
     typedef CompetitionType Type;
 
+    /** Map user to float number */
+    typedef std::map<UserPtr, float> User2float;
+
+    /** Map team to float number */
+    typedef std::map<TeamPtr, float> Team2float;
+
     /** State of competition */
     enum State {
         RECRUITING = 10, /**< Recruiting, users are joining */
