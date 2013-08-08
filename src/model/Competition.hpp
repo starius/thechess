@@ -60,6 +60,9 @@ public:
     /** Return a vector of users obtained max number of wins */
     static UsersVector winners_of_games(const GamesVector& games);
 
+    /** Return a vector of teams obtained max number of wins */
+    TeamsVector winner_teams_of_games(const GamesVector& games);
+
     /** Wt::Dbo persist implementation */
     template<class Action>
     void persist(Action& a) {
@@ -345,12 +348,16 @@ private:
     bool can_start() const;
     void start();
     void create_games_classical();
+    int calculate_white_games_per_team() const;
+    void create_games_team();
     void cancel_impl();
 
     void process();
     void process_classical();
 
     void finish(const UsersVector& winners);
+    void finish(const TeamsVector& winners);
+    void finish();
 
     GamePtr create_game(const UserPtr& white, const UserPtr& black,
                         int stage = -1, bool no_draw = false);

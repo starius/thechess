@@ -141,6 +141,36 @@ UsersVector Competition::winners_of_games(const GamesVector& games) {
     return winners;
 }
 
+TeamsVector Competition::winner_teams_of_games(const GamesVector& games) {
+    typedef std::map<UserPtr, float> User2float;
+    User2float wins;
+    wins_number(games, wins);
+    User2Team u2t;
+    tcm_map_user_to_team(u2t, self());
+    typedef std::map<TeamPtr, float> Team2float;
+    Team2float t2f;
+    BOOST_FOREACH (User2float::value_type& user2float, wins) {
+        const UserPtr& user = user2float.first;
+        TeamPtr team = u2t[user];
+        float w = user2float.second;
+        t2f[team] += w;
+    }
+    TeamsVector winners;
+    float max_wins = -1;
+    BOOST_FOREACH (Team2float::value_type& team2float, t2f) {
+        const TeamPtr& team = team2float.first;
+        float w = team2float.second;
+        if (max_wins < 0 || w - max_wins > 0.1) {
+            max_wins = w;
+            winners.clear();
+        }
+        if (abs(w - max_wins) < 0.1) {
+            winners.push_back(team);
+        }
+    }
+    return winners;
+}
+
 void Competition::set_cp(const CPPtr& cp) {
     if (cp_) {
         cp_.modify()->set_competitions_size(cp_->competitions_size() - 1);
@@ -446,6 +476,9 @@ void Competition::start() {
     if (type() == CLASSICAL) {
         create_games_classical();
     }
+    if (type() == TEAM) {
+        create_games_team();
+    }
     state_ = ACTIVE;
     started_ = now();
 }
@@ -494,12 +527,137 @@ void Competition::create_games_classical() {
     }
 }
 
+int Competition::calculate_white_games_per_team() const {
+    Team2Users t2u;
+    tcm_map_team_to_users(t2u, self());
+    TeamsVector teams(teams_.begin(), teams_.end());
+    // product = users in this team * users in all other teams
+    int sum_of_products = 0;
+    BOOST_FOREACH (const TeamPtr& t1, teams) {
+        int users_in_t1 = t2u[t1].size();
+        int users_in_other_teams = 0;
+        BOOST_FOREACH (const TeamPtr& t2, teams) {
+            if (t2 != t1) {
+                users_in_other_teams += t2u[t2].size();
+            }
+        }
+        sum_of_products += users_in_t1 * users_in_other_teams;
+    }
+    int white_games_per_team_raw = cp_->games_factor() * sum_of_products /
+                                   teams.size();
+    int max_team = 0;
+    BOOST_FOREACH (const TeamPtr& t, teams) {
+        max_team = std::max(max_team, int(t2u[t].size()));
+    }
+    return std::max(max_team, white_games_per_team_raw);
+}
+
+void Competition::create_games_team() {
+    Team2Users team2user;
+    tcm_map_team_to_users(team2user, self());
+    TeamsVector teams(teams_.begin(), teams_.end());
+    std::random_shuffle(teams.begin(), teams.end(),
+                        Wt::Wc::rand_for_shuffle);
+    int white_games_per_team = calculate_white_games_per_team();
+    std::map<TeamPtr, int> team_black_games;
+    std::map<UserPtr, int> user_white_games;
+    std::map<UserPtr, int> user_black_games;
+    // games number between them
+    std::map<TeamPtr, std::map<TeamPtr, int> > t2t;
+    std::map<UserPtr, std::map<UserPtr, int> > u2u;
+    std::map<UserPtr, std::map<TeamPtr, int> > u2t; // white user, black team
+    std::map<TeamPtr, std::map<UserPtr, int> > t2u; // white team, black user
+    BOOST_FOREACH (const TeamPtr& white, teams) {
+        for (int i = 0; i < white_games_per_team; i++) {
+            TeamPtr black;
+            BOOST_FOREACH (const TeamPtr& team, teams) {
+                if (team != white) {
+                    if (!black) {
+                        black = team;
+                    }
+                    if (team_black_games[team] > team_black_games[black]) {
+                        continue;
+                    }
+                    if (t2t[white][team] > t2t[white][black]) {
+                        continue;
+                    }
+                    int white_vs_team = t2t[white][team] + t2t[team][white];
+                    int white_vs_black = t2t[white][black] + t2t[black][white];
+                    if (white_vs_team > white_vs_black) {
+                        continue;
+                    }
+                    black = team;
+                }
+            }
+            BOOST_ASSERT(black);
+            team_black_games[black] += 1;
+            t2t[white][black] += 1;
+            // now select white user
+            UserPtr white_user;
+            BOOST_FOREACH (const UserPtr& user, team2user[white]) {
+                if (!white_user) {
+                    white_user = user;
+                }
+                if (user_white_games[user] > user_white_games[white_user]) {
+                    continue;
+                }
+                if (u2t[user][black] > u2t[white_user][black]) {
+                    continue;
+                }
+                white_user = user;
+            }
+            BOOST_ASSERT(white_user);
+            user_white_games[white_user] += 1;
+            u2t[white_user][black] += 1;
+            // now select black user
+            UserPtr black_user;
+            BOOST_FOREACH (const UserPtr& user, team2user[black]) {
+                if (!black_user) {
+                    black_user = user;
+                }
+                if (user_black_games[user] > user_black_games[black_user]) {
+                    continue;
+                }
+                if (t2u[white][user] > t2u[white][black_user]) {
+                    continue;
+                }
+                if (u2u[white_user][user] > u2u[white_user][black_user]) {
+                    continue;
+                }
+                int vs_user = u2u[white_user][user] + u2u[user][white_user];
+                int vs_black = u2u[white_user][black_user] +
+                               u2u[black_user][white_user];
+                if (vs_user > vs_black) {
+                    continue;
+                }
+                black_user = user;
+            }
+            BOOST_ASSERT(black_user);
+            user_black_games[black_user] += 1;
+            t2u[white][black_user] += 1;
+            u2u[white_user][black_user] += 1;
+            create_game(white_user, black_user);
+        }
+    }
+    UsersVector members(members_.begin(), members_.end());
+    BOOST_FOREACH (const UserPtr& user, members) {
+        t_emit_after(USER, user.id());
+    }
+}
+
 void Competition::process() {
     if (type() == CLASSICAL) {
         process_classical();
         GamesVector g(games_vector());
         if (all_ended(g)) {
             UsersVector winners = winners_of_games(g);
+            finish(winners);
+        }
+    } else if (type() == TEAM) {
+        process_classical();
+        GamesVector g(games_vector());
+        if (all_ended(g)) {
+            TeamsVector winners = winner_teams_of_games(g);
             finish(winners);
         }
     } else if (type() == STAGED) {
@@ -514,7 +672,7 @@ void Competition::process() {
 }
 
 void Competition::process_classical() {
-    BOOST_ASSERT(type() == CLASSICAL);
+    BOOST_ASSERT(type() == CLASSICAL || type() == TEAM);
     std::map<UserPtr, int> used;
     GamesVector proposed;
     BOOST_FOREACH (const GamePtr& g, games_vector()) {
@@ -542,6 +700,17 @@ void Competition::finish(const UsersVector& winners) {
     BOOST_FOREACH (const UserPtr& u, winners) {
         winners_.insert(u);
     }
+    finish();
+}
+
+void Competition::finish(const TeamsVector& winners) {
+    BOOST_FOREACH (const TeamPtr& team, winners) {
+        winner_teams_.insert(team);
+    }
+    finish();
+}
+
+void Competition::finish() {
     state_ = ENDED;
     ended_ = now();
     stat_change();
