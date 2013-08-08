@@ -218,7 +218,7 @@ const int TOP_SHIFT = 1;
 class ClassicalViewImpl : public Wt::WContainerWidget {
 public:
     ClassicalViewImpl(const CompetitionPtr& c, bool show_wins):
-        show_wins_(show_wins) {
+        c_(c), show_wins_(show_wins) {
         gt_ = c->games_table();
         table_ = new Wt::WTable(this);
         table_->setStyleClass("thechess-table-border");
@@ -245,6 +245,7 @@ public:
     }
 
 private:
+    CompetitionPtr c_;
     Wt::WTable* table_;
     GamesTable gt_;
     UsersVector members_;
@@ -306,12 +307,37 @@ private:
 
     void fill_table() {
         int members_size = members_.size();
+        std::map<TeamPtr, int> team_index;
+        for (int i = 0; i < teams_.size(); i++) {
+            const TeamPtr& team = teams_[i];
+            team_index[team] = i;
+        }
         for (int row = 0; row < members_size; ++row) {
             const UserPtr& urow = members_[row];
+            const TeamPtr& trow = u2t_[urow];
+            int trow_odd = team_index[trow] % 2;
             for (int col = 0; col < members_size; ++col) {
                 const UserPtr& ucol = members_[col];
+                const TeamPtr& tcol = u2t_[ucol];
                 Wt::WTableCell* cell = table_->elementAt(row + TOP_SHIFT,
                                        col + LEFT_SHIFT);
+                if (c_->type() == TEAM) {
+                    int tcol_odd = team_index[tcol] % 2;
+                    Wt::GlobalColor bgcolor = Wt::white;
+                    if (!trow_odd && !tcol_odd) {
+                        bgcolor = Wt::white;
+                    } else if (trow_odd && !tcol_odd) {
+                        bgcolor = lightGray;
+                    } else if (!trow_odd && tcol_odd) {
+                        bgcolor = lightGray;
+                    } else if (trow_odd && tcol_odd) {
+                        bgcolor = Wt::gray;
+                    }
+                    if (trow == tcol) {
+                        bgcolor = Wt::white;
+                    }
+                    cell->decorationStyle().setBackgroundColor(bgcolor);
+                }
                 cell->clear();
                 if (row == col) {
                     new Wt::WText(tr("tc.competition.dash"), cell);
