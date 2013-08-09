@@ -187,6 +187,12 @@ public:
             a->setLink(tApp->path().gp_view()->get_link(gp.id()));
             new Wt::WBreak(this);
         }
+        {
+            Wt::WAnchor* a = new Wt::WAnchor(this);
+            a->setText(tr("tc.competition.Parameters") + " " + TO_S(cp.id()));
+            a->setLink(tApp->path().cp_view()->get_link(cp.id()));
+            new Wt::WBreak(this);
+        }
     }
 
     template<typename T>
