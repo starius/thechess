@@ -178,6 +178,10 @@ void CPWidget::apply_parameters(CP* cp) {
     }
 }
 
+void CPWidget::hide_gp_selector() {
+    gp_selector_->hide();
+}
+
 void CPWidget::type_handler() {
     CompetitionType t = get_type();
     form_->hide(users_);

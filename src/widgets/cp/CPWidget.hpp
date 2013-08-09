@@ -32,6 +32,9 @@ public:
     /** Apply parameters */
     void apply_parameters(CP* cp);
 
+    /** Hide GP selector */
+    void hide_gp_selector();
+
 private:
     Wt::Wc::TableForm* form_;
     GPSelector* gp_selector_;
