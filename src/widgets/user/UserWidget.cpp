@@ -25,7 +25,7 @@
 #include "widgets/user/ClassificationWidget.hpp"
 #include "widgets/user/user_anchor.hpp"
 #include "widgets/user/awards.hpp"
-#include "widgets/comment/MessageForm.hpp"
+#include "widgets/comment/CommentList.hpp"
 #include "widgets/Header.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
@@ -483,7 +483,9 @@ private:
 UserWidget::UserWidget(const UserPtr& user, Wt::WContainerWidget* parent) :
     WContainerWidget(parent) {
     addWidget(new UserWidgetImpl(user));
-    addWidget(new MessageForm(user));
+    addWidget(new CommentList(Comment::PRIVATE_MESSAGE,
+                              /* root */ CommentPtr(),
+                              user));
 }
 
 }
