@@ -28,6 +28,8 @@ public:
 
     CompetitionListWidget(const UserPtr& user, Wt::WContainerWidget* p = 0);
 
+    CompetitionListWidget(const TeamPtr& team, Wt::WContainerWidget* p = 0);
+
 private:
     CompetitionStateSelect* state_;
     CompetitionTypeWidget* type_;
@@ -36,6 +38,7 @@ private:
     Wt::WCheckBox* only_my_;
     Wt::WLineEdit* name_like_;
     UserPtr user_;
+    TeamPtr team_;
 
     void initialize();
     void apply();

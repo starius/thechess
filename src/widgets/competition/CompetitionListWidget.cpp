@@ -88,9 +88,10 @@ public:
 
     typedef CompetitionStateSelect::State State;
 
-    CompetitionListModel(const UserPtr& user, Wt::WObject* parent = 0) :
+    CompetitionListModel(const UserPtr& user, const UserPtr& team,
+                         Wt::WObject* parent = 0) :
         CLP::BaseQM(parent) {
-        set_query(/* only_my */ false, user);
+        set_query(/* only_my */ false, user, team);
         addColumn("C.id", tr("tc.common.number"));
         addColumn("C.name", tr("tc.common.Name"));
         addColumn("CP.type", tr("tc.competition.Type"));
@@ -131,6 +132,7 @@ public:
     }
 
     void set_query(bool only_my = false, const UserPtr& user = UserPtr(),
+                   const TeamPtr& team = TeamPtr(),
                    State state = CompetitionStateSelect::ALL,
                    CompetitionType type = NO_COMPETITION_TYPE,
                    const Wt::WString& name_like = Wt::WString::Empty) {
@@ -158,6 +160,10 @@ public:
             sql << "members_competitions I "
                 "left join thechess_competition C "
                 "on C.id=I.thechess_competition_id ";
+        } else if (team) {
+            sql << "teams_competitions T "
+                "left join thechess_competition C "
+                "on C.id=T.thechess_competition_id ";
         } else {
             sql << "thechess_competition C ";
         }
@@ -185,6 +191,15 @@ public:
                 sql << "and ";
             }
             sql << "I.thechess_user_id = ? ";
+        }
+        if (team) {
+            if (!where) {
+                where = true;
+                sql << "where ";
+            } else {
+                sql << "and ";
+            }
+            sql << "T.thechess_team_id = ? ";
         }
         if (state != CompetitionStateSelect::ALL) {
             if (!where) {
@@ -220,6 +235,9 @@ public:
         }
         if (only_my) {
             q.bind(tApp->user());
+        }
+        if (team) {
+            q.bind(team);
         }
         if (state != CompetitionStateSelect::ALL) {
             q.bind(CompetitionStateSelect::state(state));
@@ -273,9 +291,15 @@ CompetitionListWidget::CompetitionListWidget(const UserPtr& user,
     initialize();
 }
 
+CompetitionListWidget::CompetitionListWidget(const TeamPtr& team,
+        Wt::WContainerWidget* p):
+    team_(team) {
+    initialize();
+}
+
 void CompetitionListWidget::initialize() {
     manager();
-    model_ = new CompetitionListModel(user_, this);
+    model_ = new CompetitionListModel(user_, team_, this);
     view_ = new CompetitionListView(model_, this);
     apply();
 }
@@ -283,7 +307,7 @@ void CompetitionListWidget::initialize() {
 void CompetitionListWidget::apply() {
     bool only_my = only_my_->isChecked() && tApp->user();
     User::set_s(SWITCH_ONLY_MY_COMPETITIONS, only_my);
-    model_->set_query(only_my, user_, state_->state(), type_->value(),
+    model_->set_query(only_my, user_, team_, state_->state(), type_->value(),
                       name_like_->text());
     Wt::Wc::scroll_to_last(view_);
 }
