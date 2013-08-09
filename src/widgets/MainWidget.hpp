@@ -106,6 +106,9 @@ public:
     /** Create new competition */
     void competition_new();
 
+    /** View competition parameters */
+    void cp_view(const CPPtr& cp);
+
     /** View the board */
     void board_view(const std::string& data);
 

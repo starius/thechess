@@ -110,6 +110,7 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(games_of_competition_,
             boost::bind(&Path::open_games_of_competition, this));
     connect(competition_new_, boost::bind(&MainWidget::competition_new, mw));
+    connect(cp_view_, boost::bind(&Path::open_cp, this));
     connect(board_, boost::bind(&Path::open_board, this));
     connect(board_games_, boost::bind(&Path::open_board_games, this));
     connect(moves_, boost::bind(&Path::open_moves, this));
@@ -274,6 +275,17 @@ void Path::open_games_of_competition() {
     try {
         CompetitionPtr c = tApp->session().load<Competition>(id);
         main_widget_->games_of_competition(c);
+    } catch (dbo::ObjectNotFoundException)
+    { }
+}
+
+void Path::open_cp() {
+    BOOST_ASSERT(main_widget_);
+    long long id = cp_view_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        CPPtr cp = tApp->session().load<CP>(id);
+        main_widget_->cp_view(c);
     } catch (dbo::ObjectNotFoundException)
     { }
 }

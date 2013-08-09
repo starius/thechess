@@ -32,6 +32,7 @@
 #include "widgets/competition/CompetitionWidget.hpp"
 #include "widgets/competition/CompetitionCreateWidget.hpp"
 #include "widgets/competition/CompetitionListWidget.hpp"
+#include "widgets/cp/CPWidget.hpp"
 #include "widgets/user/UserWidget.hpp"
 #include "widgets/user/UserListWidget.hpp"
 #include "widgets/user/VirtualsWidget.hpp"
@@ -278,6 +279,22 @@ void MainWidget::competition_list() {
 void MainWidget::competition_new() {
     set_contents(new CompetitionCreateWidget());
     wApp->setTitle(tr("tc.title.CompetitionCreateWidget"));
+}
+
+void MainWidget::cp_view(const CPPtr& cp) {
+    Wt::WContainerWidget* c = new Wt::WContainerWidget();
+    c->addWidget(new Header(tr("tc.competition.Parameters") +
+                            " " + TO_S(cp.id())));
+    c->addWidget(new CPWidget(cp.get()));
+    if (cp->gp()) {
+        c->addWidget(new Wt::WBreak);
+        Wt::WAnchor* a = new Wt::WAnchor(c);
+        a->setText(tr("tc.game.Parameters"));
+        a->setLink(tApp->path().gp_view()->get_link(cp->gp().id()));
+    }
+    // TODO anchor to start new competition
+    set_contents(c);
+    wApp->setTitle(tr("tc.title.CPWidget").arg(cp.id()));
 }
 
 void MainWidget::board_view(const std::string& data) {

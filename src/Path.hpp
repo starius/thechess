@@ -354,6 +354,7 @@ private:
     void open_gp_challenge();
     void open_competition();
     void open_games_of_competition();
+    void open_cp();
     void open_board();
     void open_board_games();
     void open_moves();
