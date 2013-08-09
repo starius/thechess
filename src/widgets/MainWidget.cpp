@@ -292,7 +292,10 @@ void MainWidget::cp_view(const CPPtr& cp) {
         a->setText(tr("tc.game.Parameters"));
         a->setLink(tApp->path().gp_view()->get_link(cp->gp().id()));
     }
-    // TODO anchor to start new competition
+    Wt::WAnchor* challenge = new Wt::WAnchor(c);
+    tApp->path().cp_view()->set_integer_value(cp.id());
+    challenge->setLink(tApp->path().cp_challenge()->link());
+    challenge->setText(tr("tc.competition.Create_welcome"));
     set_contents(c);
     wApp->setTitle(tr("tc.title.CPWidget").arg(cp.id()));
 }
