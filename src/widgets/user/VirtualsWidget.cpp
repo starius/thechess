@@ -11,11 +11,13 @@
 #include <boost/algorithm/string/replace.hpp>
 
 #include <Wt/WImage>
+#include <Wt/WTable>
 #include <Wt/WText>
 #include <Wt/WBreak>
 #include <Wt/WSlider>
 #include <Wt/WViewWidget>
 #include <Wt/Wc/FilterResource.hpp>
+#include <Wt/Wc/Gather.hpp>
 
 #include "widgets/user/VirtualsWidget.hpp"
 #include "widgets/user/user_anchor.hpp"
@@ -114,6 +116,64 @@ private:
     int min_score_;
 };
 
+class BDList : public Wt::WViewWidget {
+public:
+    enum Column {
+        BD_TYPE,
+        A_USED,
+        A_USER,
+        BD_VALUE,
+        B_USER,
+        B_USED
+    };
+
+    BDList(const dbo::Query<BD::BDPair>& pairs,
+           Wt::WContainerWidget* parent = 0):
+        Wt::WViewWidget(parent),
+        pairs_(pairs)
+    { }
+
+    virtual Wt::WWidget* renderView() {
+        Wt::WContainerWidget* c = new Wt::WContainerWidget;
+        dbo::Transaction t(tApp->session());
+        if (!tApp->user() ||
+                !tApp->user()->has_permission(VIRTUALS_VIEWER)) {
+            return Wt::WContainerWidget;
+        }
+        table_ = new Wt::WTable(c);
+        table_->setStyleClass("thechess-table-border");
+        dbo::collection<BDPair> pairs_col = pairs_;
+        row_ = 0;
+        BOOST_FOREACH (BDPair pair, pairs_col) {
+            const BDPtr& a_bd = pair.first;
+            const BDPtr& b_bd = pair.second;
+            const UserPtr& a_user = a_bd->user();
+            const UserPtr& b_user = b_bd->user();
+            set_cell(BD_TYPE, Wt::Wc::Gather::type_to_str(a_bd->type()));
+            set_cell(A_USED, time2str(a_bd->used()));
+            set_cell(A_USER, user_anchor(a_user));
+            set_cell(BD_VALUE, a_bd->value());
+            set_cell(B_USER, user_anchor(b_user));
+            set_cell(B_USED, time2str(b_bd->used()));
+            row += 1;
+        }
+        return c;
+    }
+
+private:
+    dbo::Query<BD::BDPair> pairs_;
+    Wt::WTable* table_;
+    int row_;
+
+    void set_cell(Column col, Wt::WWidget* widget) {
+        table_->elementAt(row_, int(col))->addWidget(widget);
+    }
+
+    void set_cell(Column col, const Wt::WString& text) {
+        set_cell(col, new Wt::WText(text));
+    }
+};
+
 VirtualsWidget::VirtualsWidget(const dbo::Query<BD::BDPair>& pairs,
                                Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent) {
@@ -144,6 +204,7 @@ static void update_text(Wt::WText* label, Wt::WSlider* slider) {
 
 void VirtualsWidget::initialize(const dbo::Query<BD::BDPair>& pairs) {
     VirtualsList* list = new VirtualsList(pairs);
+    BDList* bd_list = new BDList(pairs);
     Wt::WSlider* min_score = new Wt::WSlider(this);
     Wt::WText* t = new Wt::WText(this);
     min_score->setMinimum(10);
@@ -154,6 +215,7 @@ void VirtualsWidget::initialize(const dbo::Query<BD::BDPair>& pairs) {
     min_score->valueChanged().connect(boost::bind(update_text, t, min_score));
     new Wt::WBreak(this);
     addWidget(list);
+    addWidget(bd_list);
     update_text(t, min_score);
 }
 
