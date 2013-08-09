@@ -333,9 +333,6 @@ private:
                     } else if (trow_odd && tcol_odd) {
                         bgcolor = Wt::gray;
                     }
-                    if (trow == tcol) {
-                        bgcolor = Wt::white;
-                    }
                     cell->decorationStyle().setBackgroundColor(bgcolor);
                 }
                 cell->clear();
