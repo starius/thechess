@@ -42,11 +42,11 @@ namespace thechess {
 
 class CompetitionMembers : public Wt::WContainerWidget {
 public:
-    CompetitionMembers(const CompetitionPtr& c):
+    CompetitionMembers(const CompetitionPtr& c, const UsersVector& members):
         c_(c) {
         setList(true);
         if (c_->type() == CLASSICAL || c_->type() == STAGED) {
-            BOOST_FOREACH (const UserPtr& user, c->members_vector()) {
+            BOOST_FOREACH (const UserPtr& user, members) {
                 add_user_to_list(user, this);
             }
         } else if (c_->type() == TEAM) {
@@ -735,6 +735,7 @@ CompetitionWidget::CompetitionWidget(const CompetitionPtr& competition,
 void CompetitionWidget::reprint() {
     dbo::Transaction t(tApp->session());
     c.reread();
+    UsersVector members = c->members_vector();
     bindInt("id", c.id());
     bindString("type", Competition::type2str(c->type()));
     bindString("name", c->name(), Wt::PlainText);
@@ -743,7 +744,7 @@ void CompetitionWidget::reprint() {
     bindString("started", time2str(c->started()));
     bindString("ended", time2str(c->ended()));
     bindString("state", tr(Competition::state2str(c->state())));
-    bindWidget("members", new CompetitionMembers(c));
+    bindWidget("members", new CompetitionMembers(c, members));
     bindWidget("winners", new CompetitionWinners(c));
     bindWidget("terms", new CompetitionTerms(c));
     bindWidget("view", new CompetitionView(c));
