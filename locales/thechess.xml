@@ -618,6 +618,7 @@ TheChess.
         closed <span class="thechess-datetime">${ended}</span>.
         <br /> Competition type: ${type}.
         <br /> Competition state: ${state}.
+        <br /> ${n_users}.
         <br /> Description: ${description}
         <br /> <h2>Conditions for participation</h2> ${terms}
         <br /> <h2>Members of competition</h2> ${members}
