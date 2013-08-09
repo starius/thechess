@@ -31,6 +31,7 @@ private:
     void print_members();
     void print_candidates();
     void print_banned();
+    void print_anchors();
     void print_manager();
     void print_chat();
     void list_users(const Users& users, const Wt::WString& header);

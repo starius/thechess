@@ -11,6 +11,7 @@
 
 #include <Wt/WBreak>
 #include <Wt/WText>
+#include <Wt/WAnchor>
 
 #include "widgets/team/TeamWidget.hpp"
 #include "widgets/team/TeamEdit.hpp"
@@ -41,6 +42,7 @@ void TeamWidget::reprint() {
     print_members();
     print_candidates();
     print_banned();
+    print_anchors();
     print_manager();
 }
 
@@ -73,6 +75,13 @@ void TeamWidget::print_banned() {
     if (can_list_team_banned(tApp->user(), team_)) {
         list_users(team_->banned(), tr("tc.team.Banned"));
     }
+}
+
+void TeamWidget::print_anchors() {
+    new Wt::WBreak(main_);
+    Wt::WAnchor* a = new Wt::WAnchor(main_);
+    a->setText(tr("tc.competition.List"));
+    a->setLink(tApp->path().team_competitions()->link());
 }
 
 void TeamWidget::print_manager() {
