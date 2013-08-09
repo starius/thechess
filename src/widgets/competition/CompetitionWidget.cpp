@@ -166,11 +166,11 @@ public:
         if (c->type() == CLASSICAL || c->type() == STAGED) {
             kw("tc.competition.Users", tr("tc.common.interval")
                .arg(cp->min_users()).arg(cp->max_users()));
-            kw("tc.competition.Recruiting_time", tr("tc.common.interval")
-               .arg(td2str(cp->min_recruiting_time()))
-               .arg(td2str(cp->max_recruiting_time())));
         }
-        if (c->type() == CLASSICAL) {
+        kw("tc.competition.Recruiting_time", tr("tc.common.interval")
+           .arg(td2str(cp->min_recruiting_time()))
+           .arg(td2str(cp->max_recruiting_time())));
+        if (c->type() == CLASSICAL || c->type() == TEAM) {
             kw("tc.competition.Max_simultaneous_games",
                cp->max_simultaneous_games());
             boost::format f("%.3f");
