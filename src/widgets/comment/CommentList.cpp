@@ -142,7 +142,7 @@ protected:
 CommentList::CommentList(Comment::Type type, const CommentPtr& root,
                          const UserPtr& init, Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent),
-    edit_(0), only_ok_(0), only_draft_(0), only_my_(0) {
+    edit_(0), only_ok_(0), only_draft_(0), only_my_(0), init_(init) {
     dbo::Transaction t(tApp->session());
     if (type == Comment::LOG_ENTRY) {
         if (!tApp->user() || !tApp->user()->has_permission(LOGS_READER)) {
@@ -340,6 +340,17 @@ void CommentList::add_comment(const CommentPtr& parent) {
     }
     dbo::Transaction t(tApp->session());
     tApp->user().reread();
+    if (type == Comment::PRIVATE_MESSAGE) {
+        if (init_) {
+            const UserPtr& he = init_;
+            UserPtr me = tApp->user();
+            if (me && me->can_send_message(he)) {
+                User::send_message(me, he, text);
+                edit_->setValueText("");
+            }
+        }
+        return;
+    }
     Comment::State state = Comment::state_of_new(tApp->user(),
                            comment_model()->type(), parent);
     if (state == Comment::DELETED) {
@@ -435,9 +446,23 @@ void CommentList::print_edits() {
         edit_ = line_edit;
         line_edit->setTextSize(80);
         line_edit->setMaxLength(LOG_LENGTH);
+    } else if (type == Comment::PRIVATE_MESSAGE && init_ &&
+               tApp->user() && tApp->user()->can_send_message(init_)) {
+        const UserPtr& he = init_;
+        CommentPtr his_base = he->comment_base();
+        if (!User::has_s(SWITCH_FORMATTING_CHAT)) {
+            Wt::WLineEdit* line_edit = new Wt::WLineEdit(this);
+            line_edit->setTextSize(80);
+            edit_ = line_edit;
+            edit_->enterPressed().connect(boost::bind(&CommentList::add_comment,
+                                          this, CommentPtr()));
+        } else {
+            Wt::WTextEdit* text_edit = new Wt::WTextEdit(this);
+            patch_text_edit(text_edit);
+            new Wt::WBreak(this);
+            edit_ = text_edit;
+        }
     }
-    // PRIVATE_MESSAGE has no 'Add' feature.
-    // see UserWidget
 }
 
 }

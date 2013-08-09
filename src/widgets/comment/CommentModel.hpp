@@ -39,8 +39,9 @@ public:
 
     /** Constructor.
     \param type Type of selected comments. NO_TYPE means all comments.
-    \param root Root of selected comments (automatically for PRIVATE_MESSAGE).
-    \param init Author of message to filter in
+    \param root Root of selected comments (ignored for PRIVATE_MESSAGE).
+    \param init Author of message to filter in. If type == PRIVATE_MESSAGE,
+        this specifies user to show private chat with.
     \param parent Parent widget.
     */
     CommentModel(Comment::Type type, const CommentPtr& root = CommentPtr(),

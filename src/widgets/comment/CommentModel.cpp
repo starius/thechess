@@ -18,10 +18,19 @@ CommentModel::CommentModel(Comment::Type type, const CommentPtr& root,
     CommentModel::BaseQM(parent),
     type_(type), root_(root), init_(init) {
     dbo::Transaction t(tApp->session());
-    if (type == Comment::PRIVATE_MESSAGE && !root_ && tApp->user()) {
+    if (type == Comment::PRIVATE_MESSAGE && tApp->user()) {
         tApp->user().reread();
-        if (tApp->user()->has_comment_base()) {
-            root_ = tApp->user()->comment_base();
+        if (!tApp->user()->has_comment_base()) {
+            tApp->user().modify()->comment_base();
+        }
+        // set root for Notifiable, to update on new messages
+        root_ =  tApp->user().comment_base();
+        if (init) {
+            // other user (private chat)
+            init.reread();
+            if (!init->has_comment_base()) {
+                init.modify()->comment_base();
+            }
         }
     }
     only_ok_ = User::has_s(SWITCH_ONLY_OK_COMMENTS);
@@ -146,8 +155,19 @@ CommentModel::Query CommentModel::get_query() const {
     Query result;
     if (type_ == Comment::PRIVATE_MESSAGE) {
         result = tApp->session().find<Comment>();
-        result.where("root_id = ? or init_id = ?")
-        .bind(root_).bind(tApp->user());
+        const UserPtr& me = tApp->user();
+        const CommentPtr& my_base = me->comment_base();
+        if (init_) {
+            // private chat with user init_
+            const UserPtr& he = init_;
+            CommentPtr his_base = he->comment_base();
+            result.where("root_id in (?, ?) and init_id in (?, ?)")
+            .bind(his_base).bind(my_base).bind(he).bind(me);
+        } else {
+            // all my private messages with all users
+            result.where("root_id = ? or init_id = ?")
+            .bind(my_base).bind(me);
+        }
     } else if (root_) {
         result = root_->family().find();
     } else {
