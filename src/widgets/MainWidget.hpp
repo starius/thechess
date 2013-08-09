@@ -210,6 +210,9 @@ public:
     /** Team view */
     void team_view(const TeamPtr& team);
 
+    /** Team competitions list */
+    void team_competitions(const TeamPtr& team);
+
 private:
     Wt::WContainerWidget* auth_place_;
     Wt::WContainerWidget* top_place_;

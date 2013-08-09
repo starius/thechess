@@ -78,6 +78,7 @@ Path::Path(Wt::WObject* parent):
     global_chat_ = new PredefinedNode("chat", this);
     teams_list_ = new PredefinedNode("team", this);
     team_view_ = new IntegerNode(teams_list_);
+    team_competitions_ = new PredefinedNode("competitions", team_view_);
     if (wApp) {
         wApp->internalPathChanged().connect(this, &Parser::open);
     }
@@ -138,6 +139,8 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(global_chat_, boost::bind(&MainWidget::global_chat, mw));
     connect(teams_list_, boost::bind(&MainWidget::teams_list, mw));
     connect(team_view_, boost::bind(&Path::open_team, this));
+    connect(team_competitions_,
+            boost::bind(&Path::open_team_competitions, this));
 }
 
 void Path::open_user() {
@@ -415,6 +418,16 @@ void Path::open_team() {
     dbo::Transaction t(tApp->session());
     try {
         main_widget_->team_view(tApp->session().load<Team>(id));
+    } catch (dbo::ObjectNotFoundException)
+    { }
+}
+
+void Path::open_team_competitions() {
+    BOOST_ASSERT(main_widget_);
+    long long id = team_view_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        main_widget_->team_competitions(tApp->session().load<Team>(id));
     } catch (dbo::ObjectNotFoundException)
     { }
 }

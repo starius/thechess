@@ -455,6 +455,12 @@ void MainWidget::team_view(const TeamPtr& team) {
     }
 }
 
+void MainWidget::team_competitions(const TeamPtr& team) {
+    set_contents(new CompetitionListWidget(team));
+    wApp->setTitle(tr("tc.title.CompetitionListWidget_of")
+                   .arg(team->name()));
+}
+
 Wt::Auth::AuthWidget* MainWidget::auth_widget() {
     return downcast<Wt::Auth::AuthWidget*>(auth_place_->widget(0));
 }

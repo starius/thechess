@@ -292,6 +292,11 @@ public:
         return team_view_;
     }
 
+    /** List competitions of a team */
+    url::PredefinedNode* team_competitions() const {
+        return team_competitions_;
+    }
+
 private:
     MainWidget* main_widget_;
     url::PredefinedNode* user_list_;
@@ -346,6 +351,7 @@ private:
     url::PredefinedNode* global_chat_;
     url::PredefinedNode* teams_list_;
     url::IntegerNode* team_view_;
+    url::PredefinedNode* team_competitions_;
 
     void open_user();
     void open_random_competitor();
@@ -377,6 +383,7 @@ private:
     void open_new_ip_ban();
     void open_user_comments();
     void open_team();
+    void open_team_competitions();
 };
 
 }
