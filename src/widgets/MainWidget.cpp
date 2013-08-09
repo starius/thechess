@@ -297,6 +297,11 @@ void MainWidget::cp_view(const CPPtr& cp) {
     wApp->setTitle(tr("tc.title.CPWidget").arg(cp.id()));
 }
 
+void MainWidget::cp_challenge(const CPPtr& cp) {
+    set_contents(new CompetitionCreateWidget(cp));
+    wApp->setTitle(tr("tc.title.CompetitionCreateWidget"));
+}
+
 void MainWidget::board_view(const std::string& data) {
     BoardWidget* b;
     b = new BoardWidget(/* big */ false, /* active */ true,

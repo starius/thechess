@@ -23,6 +23,10 @@ public:
     /** Constructor for creation of new competition */
     CompetitionCreateWidget(Wt::WContainerWidget* p = 0);
 
+    /** Constructor for creation of new competition with parameters */
+    CompetitionCreateWidget(const CPPtr& cp,
+                            Wt::WContainerWidget* p = 0);
+
     /** Constructor for modifying of the competition */
     CompetitionCreateWidget(const CompetitionPtr& c,
                             Wt::WContainerWidget* p = 0);

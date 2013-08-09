@@ -163,6 +163,11 @@ public:
         return cp_new_;
     }
 
+    /** Create new competition with this cp */
+    url::PredefinedNode* cp_challenge() const {
+        return cp_challenge_;
+    }
+
     /** Root of board URL's */
     url::PredefinedNode* board_root() const {
         return board_root_;
@@ -315,6 +320,7 @@ private:
     url::PredefinedNode* cp_list_;
     url::IntegerNode* cp_view_;
     url::PredefinedNode* cp_new_;
+    url::PredefinedNode* cp_challenge_;
     url::PredefinedNode* board_root_;
     url::StringNode* board_;
     url::PredefinedNode* board_games_;
@@ -355,6 +361,7 @@ private:
     void open_competition();
     void open_games_of_competition();
     void open_cp();
+    void open_cp_challenge();
     void open_board();
     void open_board_games();
     void open_moves();

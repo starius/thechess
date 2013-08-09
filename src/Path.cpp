@@ -46,6 +46,7 @@ Path::Path(Wt::WObject* parent):
     cp_list_ = new PredefinedNode("parameters", competition_list_);
     cp_view_ = new IntegerNode(cp_list_);
     cp_new_ = new PredefinedNode("new", cp_list_);
+    cp_challenge_ = new PredefinedNode("challenge", cp_view_);
     board_root_ = new PredefinedNode("board", this);
     board_ = new StringNode(board_root_);
     board_games_ = new PredefinedNode("games", board_);
@@ -111,6 +112,7 @@ void Path::connect_main_widget(MainWidget* mw) {
             boost::bind(&Path::open_games_of_competition, this));
     connect(competition_new_, boost::bind(&MainWidget::competition_new, mw));
     connect(cp_view_, boost::bind(&Path::open_cp, this));
+    connect(cp_challenge_, boost::bind(&Path::open_cp_challenge, this));
     connect(board_, boost::bind(&Path::open_board, this));
     connect(board_games_, boost::bind(&Path::open_board_games, this));
     connect(moves_, boost::bind(&Path::open_moves, this));
@@ -286,6 +288,17 @@ void Path::open_cp() {
     try {
         CPPtr cp = tApp->session().load<CP>(id);
         main_widget_->cp_view(c);
+    } catch (dbo::ObjectNotFoundException)
+    { }
+}
+
+void Path::open_cp_challenge() {
+    BOOST_ASSERT(main_widget_);
+    long long id = cp_view_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        CPPtr cp = tApp->session().load<CP>(id);
+        main_widget_->cp_challenge(cp);
     } catch (dbo::ObjectNotFoundException)
     { }
 }

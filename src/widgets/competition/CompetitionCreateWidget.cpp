@@ -37,6 +37,24 @@ CompetitionCreateWidget::CompetitionCreateWidget(Wt::WContainerWidget* p):
     }
 }
 
+CompetitionCreateWidget::CompetitionCreateWidget(const CPPtr& cp,
+        Wt::WContainerWidget* p):
+    Wt::WContainerWidget(p) {
+    dbo::Transaction t(tApp->session());
+    if (tApp->user() && Competition::can_create_competition(tApp->user())) {
+        new Header(tr("tc.competition.Create_welcome"), this);
+        print();
+        gp_selector_->set_gp(cp->gp());
+        cp_selector_->set_cp(cp);
+        ok_ = new Wt::WPushButton(tr("tc.common.Create"), this);
+        ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler);
+        error_message_ = new Wt::WText(this);
+        error_message_->setStyleClass("thechess-error");
+    } else {
+        new Wt::WText(tr("tc.competition.Cant_create"), this);
+    }
+}
+
 CompetitionCreateWidget::CompetitionCreateWidget(const CompetitionPtr& c,
         Wt::WContainerWidget* p):
     Wt::WContainerWidget(p), c_(c) {
