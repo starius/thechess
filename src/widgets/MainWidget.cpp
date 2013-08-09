@@ -289,7 +289,7 @@ void MainWidget::cp_view(const CPPtr& cp) {
     if (cp->gp()) {
         c->addWidget(new Wt::WBreak);
         Wt::WAnchor* a = new Wt::WAnchor(c);
-        a->setText(tr("tc.game.Parameters"));
+        a->setText(tr("tc.game.Parameters") + " " + TO_S(cp->gp().id()));
         a->setLink(tApp->path().gp_view()->get_link(cp->gp().id()));
     }
     Wt::WAnchor* challenge = new Wt::WAnchor(c);

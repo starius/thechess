@@ -183,7 +183,7 @@ public:
         }
         {
             Wt::WAnchor* a = new Wt::WAnchor(this);
-            a->setText(tr("tc.game.Parameters"));
+            a->setText(tr("tc.game.Parameters") + " " + TO_S(gp.id()));
             a->setLink(tApp->path().gp_view()->get_link(gp.id()));
             new Wt::WBreak(this);
         }
