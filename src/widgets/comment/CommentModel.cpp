@@ -91,7 +91,11 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
             }
         } else if (index.column() == TIME_COL) {
             if (type() == Comment::CHAT_MESSAGE) {
-                return time2str(o->created(), "HH:mm");
+                if (o->created().date() == Wt::WDate::currentDate()) {
+                    return time2str(o->created(), "HH:mm");
+                } else {
+                    return time2str(o->created(), "dd.MM");
+                }
             } else {
                 return time2str(o->created(), "dd MMM yyyy hh:mm");
             }
