@@ -14,6 +14,7 @@
 #include <Wt/WText>
 #include <Wt/WBreak>
 #include <Wt/WSlider>
+#include <Wt/WViewWidget>
 #include <Wt/Wc/FilterResource.hpp>
 
 #include "widgets/user/VirtualsWidget.hpp"
@@ -73,21 +74,20 @@ private:
     int min_score_;
 };
 
-class VirtualsList : public Wt::WContainerWidget {
+class VirtualsList : public Wt::WViewWidget {
 public:
     VirtualsList(const dbo::Query<BD::BDPair>& pairs,
                  Wt::WContainerWidget* parent = 0):
-        Wt::WContainerWidget(parent),
-        pairs_(pairs), min_score_(Wt::Wc::Gather::MIN_SIGNIFICANT) {
-        update_list();
-    }
+        Wt::WViewWidget(parent),
+        pairs_(pairs), min_score_(Wt::Wc::Gather::MIN_SIGNIFICANT)
+    { }
 
-    void update_list() {
-        clear();
+    virtual Wt::WWidget* renderView() {
+        Wt::WContainerWidget* c = new Wt::WContainerWidget;
         dbo::Transaction t(tApp->session());
         if (!tApp->user() ||
                 !tApp->user()->has_permission(VIRTUALS_VIEWER)) {
-            return;
+            return Wt::WContainerWidget;
         }
         BD::Scores scores;
         BD::scores(pairs_, scores);
@@ -96,16 +96,17 @@ public:
             const UserPair& pair = pair_and_score.first;
             const UserPtr a = pair.first();
             const UserPtr b = pair.second();
-            addWidget(new Wt::WBreak());
-            addWidget(user_anchor(a));
-            addWidget(new Wt::WText(" &mdash; "));
-            addWidget(user_anchor(b));
+            c->addWidget(new Wt::WBreak());
+            c->addWidget(user_anchor(a));
+            c->addWidget(new Wt::WText(" &mdash; "));
+            c->addWidget(user_anchor(b));
         }
+        return c;
     }
 
     void set_min_score(int min_score) {
         min_score_ = min_score;
-        update_list();
+        update();
     }
 
 private:
