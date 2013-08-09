@@ -511,6 +511,7 @@ TheChess.
     <message id='tc.common.last'>last</message>
     <message id='tc.common.Links'>Links</message>
     <message id='tc.common.Moves'>Moves</message>
+    <message id='tc.common.N_users'>{1} users</message>
     <message id='tc.common.Name'>Name</message>
     <message id='tc.common.no_params_error'>parameters aren't selected</message>
     <message id='tc.common.not_started'>not started</message>

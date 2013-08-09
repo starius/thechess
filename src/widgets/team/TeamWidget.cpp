@@ -116,6 +116,8 @@ void TeamWidget::list_users(const Users& users, const Wt::WString& header) {
     }
     main_->addWidget(new Wt::WBreak);
     main_->addWidget(new Header(header));
+    Wt::WString n_users = tr("tc.common.N_users").arg(users_copy.size());
+    main_->addWidget(new Wt::WText(n_users));
     Wt::WContainerWidget* list = new Wt::WContainerWidget(main_);
     list->setList(true);
     BOOST_FOREACH (const UserPtr& user, users_copy) {
