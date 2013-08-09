@@ -36,6 +36,7 @@
     <message id="tc.common.last">апошні</message>
     <message id="tc.common.Links">Спасылкі</message>
     <message id="tc.common.Moves">Хады</message>
+    <message id='tc.common.N_users'>{1} пользователей</message>
     <message id="tc.common.Name">Назва</message>
     <message id="tc.common.no_params_error">не выбраны параметры</message>
     <message id="tc.common.not_started">неначатые</message>
@@ -61,7 +62,9 @@
         а потым прайдзіце ў другую ўкладку для ўнясення змен.
     </message>
 
+    <message id='tc.competition.Add_team'>Добавить команду</message>
     <message id='tc.competition.c'>(т)</message>
+    <message id='tc.competition.Cant_add_team'>Невозможно добавить команду</message>
     <message id="tc.competition.Cant_change">Вы не можаце змяняць гэты турнір</message>
     <message id="tc.competition.Cant_create">Вы не можаце ствараць турніры</message>
     <message id="tc.competition.Change">Змяніць параметры</message>
@@ -101,6 +104,7 @@
     <message id="tc.competition.state_cancelled">адменены</message>
     <message id="tc.competition.state_ended">завершаны</message>
     <message id="tc.competition.state_recruiting">які набіраецца</message>
+    <message id='tc.competition.Team_not_found'>Команда не найдена</message>
     <message id="tc.competition.Tree">Дрэва</message>
     <message id="tc.competition.Type">Тып</message>
     <message id="tc.competition.Type_classical">Класічны</message>
@@ -123,6 +127,7 @@
         быў зачынены <span class="thechess-datetime">${ended}</span>.
         <br /> Тып турніру: ${type}.
         <br /> Статут турніру: ${state}.
+        <br /> ${n_users}.
         <br /> Апісанне: ${description}
         <br /> <h2>Умовы да ўдзельнікаў </h2> ${terms}
         <br /> <h2>Удзельнікі турніру</h2> ${members}
@@ -359,6 +364,9 @@
     </message>
     <message id="tc.title.CompetitionWidget">
         {1} « Турнір « TheChess
+    </message>
+    <message id='tc.title.CPWidget'>
+        {1} « Параметры « Турнір « TheChess
     </message>
     <message id="tc.title.GameListWidget_of">
         {1} « Гульня « TheChess

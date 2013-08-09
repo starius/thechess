@@ -44,6 +44,7 @@
     <message id='tc.common.last'>последний</message>
     <message id='tc.common.Links'>Ссылки</message>
     <message id='tc.common.Moves'>Ходы</message>
+    <message id='tc.common.N_users'>{1} пользователей</message>
     <message id='tc.common.Name'>Имя</message>
     <message id='tc.common.no_params_error'>не выбраны параметры</message>
     <message id='tc.common.not_started'>неначатые</message>
@@ -69,7 +70,9 @@
         а потом пройдите во вторую вкладку для внесения изменений.
     </message>
 
+    <message id='tc.competition.Add_team'>Добавить команду</message>
     <message id='tc.competition.c'>(т)</message>
+    <message id='tc.competition.Cant_add_team'>Невозможно добавить команду</message>
     <message id='tc.competition.Cant_change'>Вы не можете изменять этот турнир</message>
     <message id='tc.competition.Cant_create'>Вы не можете создавать турниры</message>
     <message id='tc.competition.Change'>Изменить параметры</message>
@@ -109,6 +112,7 @@
     <message id='tc.competition.state_cancelled'>отменённый</message>
     <message id='tc.competition.state_ended'>завершённый</message>
     <message id='tc.competition.state_recruiting'>набирающийся</message>
+    <message id='tc.competition.Team_not_found'>Команда не найдена</message>
     <message id='tc.competition.Tree'>Дерево</message>
     <message id='tc.competition.Type'>Тип</message>
     <message id='tc.competition.Type_classical'>Классический</message>
@@ -131,6 +135,7 @@
         был закрыт <span class="thechess-datetime">${ended}</span>.
         <br /> Тип турнира: ${type}.
         <br /> Статус турнира: ${state}.
+        <br /> ${n_users}.
         <br /> Описание: ${description}
         <br /> <h2>Условия к участникам</h2> ${terms}
         <br /> <h2>Участники турнира</h2> ${members}
@@ -367,6 +372,9 @@
     </message>
     <message id='tc.title.CompetitionWidget'>
         {1} « Турнир « TheChess
+    </message>
+    <message id='tc.title.CPWidget'>
+        {1} « Параметры « Турнир « TheChess
     </message>
     <message id='tc.title.GameListWidget_of'>
         {1} « Игра « TheChess
