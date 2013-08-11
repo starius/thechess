@@ -53,6 +53,8 @@
     <message id="tc.common.start">початок</message>
     <message id="tc.common.stop">кінець</message>
     <message id="tc.common.Total_played">Всього зіграно</message>
+    <message id='tc.common.type'>тип</message>
+    <message id="tc.common.value">значение</message>
     <message id="tc.common.winner">переможець</message>
     <message id="tc.common.Wins">Перемог</message>
     <message id="tc.common.Select_or_create">

@@ -527,6 +527,8 @@ TheChess.
     <message id='tc.common.start'>start</message>
     <message id='tc.common.stop'>stop</message>
     <message id='tc.common.Total_played'>Total played</message>
+    <message id='tc.common.type'>type</message>
+    <message id="tc.common.value">value</message>
     <message id='tc.common.winner'>winner</message>
     <message id='tc.common.Wins'>Wins</message>
     <message id='tc.common.Logo'>

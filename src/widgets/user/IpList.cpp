@@ -32,7 +32,8 @@ class IpListModel : public ILP::BaseQM {
 public:
     enum {
         USER,
-        IP,
+        TYPE,
+        VALUE,
         LAST_USE,
         BAN
     };
@@ -63,7 +64,8 @@ private:
         last_used_ = 4 * WEEK;
         set_query();
         addColumn("type", tr("tc.user.user")); // dummy
-        addColumn("value", tr("tc.user.ip"));
+        addColumn("type", tr("tc.common.type")); // dummy
+        addColumn("value", tr("tc.common.value"));
         addColumn("used", tr("tc.common.last"));
         addColumn("type", tr("tc.user.New_ban")); // dummy
         sort(LAST_USE, Wt::DescendingOrder);
@@ -72,7 +74,6 @@ private:
     void set_query() {
         dbo::Transaction t(tApp->session());
         ILP::Q q = tApp->session().find<BD>();
-        q.where("type = ?").bind(Wt::Wc::Gather::IP);
         if (user_) {
             q.where("user_id = ?").bind(user_);
         } else {
@@ -88,18 +89,26 @@ private:
         const BDPtr& o = resultRow(index.row());
         if (role == Wt::DisplayRole) {
             if (index.column() == BAN) {
-                if (IpBan::is_banned(o->value())) {
-                    return tr("tc.user.Already_banned");
+                if (o->type() == Wt::Wc::Gather::IP) {
+                    if (IpBan::is_banned(o->value())) {
+                        return tr("tc.user.Already_banned");
+                    } else {
+                        return tr("tc.user.New_ban");
+                    }
                 } else {
-                    return tr("tc.user.New_ban");
+                    return "";
                 }
             } else if (index.column() == USER) {
                 return o->user()->username();
+            } else if (index.column() == TYPE) {
+                return Wt::Wc::Gather::type_to_str(o->type());
             }
         } else if (role == Wt::LinkRole) {
-            if (index.column() == IP) {
+            if (index.column() == VALUE && o->type() == Wt::Wc::Gather::IP) {
                 return tApp->path().banned_ip()->get_link(o->value());
-            } else if (index.column() == BAN && !IpBan::is_banned(o->value())) {
+            } else if (index.column() == BAN &&
+                       o->type() == Wt::Wc::Gather::IP &&
+                       !IpBan::is_banned(o->value())) {
                 tApp->path().user_view()->set_integer_value(o->user().id());
                 return tApp->path().new_ip_ban()->get_link(o->value());
             } else if (index.column() == USER) {
@@ -120,6 +129,7 @@ public:
         Wt::WTableView(p) {
         setModel(model);
         resize(ILP::WIDTH, ILP::HEIGHT);
+        setColumnWidth(IpListModel::VALUE, 200);
         setSelectable(true);
     }
 
