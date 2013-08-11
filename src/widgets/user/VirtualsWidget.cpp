@@ -116,6 +116,7 @@ private:
     int min_score_;
 };
 
+// TODO save this to txt file and download
 class BDList : public Wt::WViewWidget {
 public:
     enum Column {
@@ -204,7 +205,6 @@ static void update_text(Wt::WText* label, Wt::WSlider* slider) {
 
 void VirtualsWidget::initialize(const dbo::Query<BD::BDPair>& pairs) {
     VirtualsList* list = new VirtualsList(pairs);
-    BDList* bd_list = new BDList(pairs);
     Wt::WSlider* min_score = new Wt::WSlider(this);
     Wt::WText* t = new Wt::WText(this);
     min_score->setMinimum(10);
@@ -215,7 +215,6 @@ void VirtualsWidget::initialize(const dbo::Query<BD::BDPair>& pairs) {
     min_score->valueChanged().connect(boost::bind(update_text, t, min_score));
     new Wt::WBreak(this);
     addWidget(list);
-    addWidget(bd_list);
     update_text(t, min_score);
 }
 
