@@ -249,6 +249,12 @@ public:
                       boost::bind(&ClassicalViewImpl::compare_users_team,
                                   this, _1, _2));
         }
+        BOOST_FOREACH (const GamePtr& game, games_) {
+            if (game->is_ended()) {
+                user_ended_[game->white()] += 1;
+                user_ended_[game->black()] += 1;
+            }
+        }
         headers();
         scores(c);
         fill_table();
@@ -262,6 +268,7 @@ private:
     GamesVector games_;
     bool show_wins_;
     mutable Competition::User2float user_wins_;
+    mutable Competition::User2float user_ended_;
     mutable Competition::Team2float team_wins_;
     mutable TeamsVector teams_;
     mutable User2Team u2t_;
@@ -310,7 +317,8 @@ private:
         int i = 0;
         BOOST_FOREACH (const UserPtr& user, members_) {
             int row = i + TOP_SHIFT;
-            std::string w = TO_S(user_wins_[user]);
+            std::string w = TO_S(user_wins_[user]) + "/" +
+                            TO_S(user_ended_[user]);
             table_->elementAt(row, score_right)->addWidget(new Wt::WText(w));
             table_->elementAt(row, SCORE_COLUMN)->addWidget(new Wt::WText(w));
             i++;
