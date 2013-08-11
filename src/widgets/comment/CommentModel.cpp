@@ -188,7 +188,7 @@ CommentModel::Query CommentModel::get_query() const {
         .bind(Comment::FORUM_POST)
         .bind(Comment::FORUM_COMMENT);
     }
-    if (init_) {
+    if (init_ && type_ != Comment::PRIVATE_MESSAGE) {
         result.where("init_id = ?").bind(init_);
     }
     if (only_my_) {
