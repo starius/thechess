@@ -8,6 +8,7 @@
 #include <Wt/WAnchor>
 #include <Wt/WMessageBox>
 #include <Wt/WSound>
+#include <Wt/Wc/util.hpp>
 
 #include "widgets/user/MessagesAnchor.hpp"
 #include "Application.hpp"
@@ -34,11 +35,15 @@ public:
         delete box_;
     }
 
-    void notify(EventPtr) {
+    void notify(EventPtr e) {
+        const NewMessage* new_message = DOWNCAST<const NewMessage*>(e.get());
+        int sender_id = new_message->sender_id;
         setStyleClass("thechess-excited");
         Wt::Wc::url::Node* node = tApp->path().parse(wApp->internalPath());
         if (!box_ && node != tApp->path().my_messages() &&
-                node != tApp->path().game_view()) {
+                node != tApp->path().game_view() &&
+                (node != tApp->path().user_view() ||
+                 tApp->path().user_view()->integer() != sender_id)) {
             box_ = new Wt::WMessageBox;
             box_->setCaption(tr("tc.comment.private_messages"));
             box_->setText(tr("tc.user.New_message"));
