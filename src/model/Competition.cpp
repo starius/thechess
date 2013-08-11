@@ -578,15 +578,12 @@ void Competition::create_games_team() {
                     if (team_black_games[team] == white_games_per_team) {
                         continue;
                     }
-                    if (!black) {
-                        black = team;
-                    }
-                    if (t2t[white][team] > t2t[white][black]) {
+                    if (black && t2t[white][team] > t2t[white][black]) {
                         continue;
                     }
                     int white_vs_team = t2t[white][team] + t2t[team][white];
                     int white_vs_black = t2t[white][black] + t2t[black][white];
-                    if (white_vs_team > white_vs_black) {
+                    if (black && white_vs_team > white_vs_black) {
                         continue;
                     }
                     black = team;
@@ -598,13 +595,18 @@ void Competition::create_games_team() {
             // now select white user
             UserPtr white_user;
             BOOST_FOREACH (const UserPtr& user, team2user[white]) {
-                if (!white_user) {
-                    white_user = user;
-                }
-                if (user_white_games[user] > user_white_games[white_user]) {
+                int user_games = user_white_games[user] +
+                                 user_black_games[user];
+                int white_user_games = user_white_games[white_user] +
+                                       user_black_games[white_user];
+                if (white_user && user_games > white_user_games) {
                     continue;
                 }
-                if (u2t[user][black] > u2t[white_user][black]) {
+                if (white_user &&
+                        user_white_games[user] > user_white_games[white_user]) {
+                    continue;
+                }
+                if (white_user && u2t[user][black] > u2t[white_user][black]) {
                     continue;
                 }
                 white_user = user;
@@ -615,22 +617,22 @@ void Competition::create_games_team() {
             // now select black user
             UserPtr black_user;
             BOOST_FOREACH (const UserPtr& user, team2user[black]) {
-                if (!black_user) {
-                    black_user = user;
-                }
-                if (user_black_games[user] > user_black_games[black_user]) {
+                if (black_user &&
+                        user_black_games[user] > user_black_games[black_user]) {
                     continue;
                 }
-                if (t2u[white][user] > t2u[white][black_user]) {
+                if (black_user &&
+                        t2u[white][user] > t2u[white][black_user]) {
                     continue;
                 }
-                if (u2u[white_user][user] > u2u[white_user][black_user]) {
+                if (black_user &&
+                        u2u[white_user][user] > u2u[white_user][black_user]) {
                     continue;
                 }
                 int vs_user = u2u[white_user][user] + u2u[user][white_user];
                 int vs_black = u2u[white_user][black_user] +
                                u2u[black_user][white_user];
-                if (vs_user > vs_black) {
+                if (black_user && vs_user > vs_black) {
                     continue;
                 }
                 black_user = user;
