@@ -483,9 +483,11 @@ private:
 UserWidget::UserWidget(const UserPtr& user, Wt::WContainerWidget* parent) :
     WContainerWidget(parent) {
     addWidget(new UserWidgetImpl(user));
-    addWidget(new CommentList(Comment::PRIVATE_MESSAGE,
-                              /* root */ CommentPtr(),
-                              user));
+    if (user != tApp->user()) {
+        addWidget(new CommentList(Comment::PRIVATE_MESSAGE,
+                                  /* root */ CommentPtr(),
+                                  user));
+    }
 }
 
 }
