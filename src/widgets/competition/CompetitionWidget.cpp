@@ -750,7 +750,7 @@ void CompetitionWidget::reprint() {
     bindString("started", time2str(c->started()));
     bindString("ended", time2str(c->ended()));
     bindString("state", tr(Competition::state2str(c->state())));
-    bindString("n_users", tr("tc.common.n_users").arg(members.size()));
+    bindString("n_users", tr("tc.common.N_users").arg(members.size()));
     bindWidget("members", new CompetitionMembers(c, members));
     bindWidget("winners", new CompetitionWinners(c));
     bindWidget("terms", new CompetitionTerms(c));
