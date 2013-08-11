@@ -575,11 +575,11 @@ void Competition::create_games_team() {
             TeamPtr black;
             BOOST_FOREACH (const TeamPtr& team, teams) {
                 if (team != white) {
+                    if (team_black_games[team] == white_games_per_team) {
+                        continue;
+                    }
                     if (!black) {
                         black = team;
-                    }
-                    if (team_black_games[team] > team_black_games[black]) {
-                        continue;
                     }
                     if (t2t[white][team] > t2t[white][black]) {
                         continue;
