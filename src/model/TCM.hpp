@@ -54,9 +54,6 @@ private:
     TeamPtr team_;
 };
 
-/** Map user to team */
-typedef std::map<UserPtr, TeamPtr> User2Team;
-
 /** Add relations user to his team for the competition to the map */
 void tcm_map_user_to_team(User2Team& result, const CompetitionPtr& competition);
 

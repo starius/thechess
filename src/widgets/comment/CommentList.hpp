@@ -41,7 +41,7 @@ private:
     Wt::WCheckBox* only_draft_;
     Wt::WCheckBox* only_my_;
     Wt::WLineEdit* text_like_;
-    CommentPtr init_;
+    UserPtr init_;
 
     CommentModel* comment_model() const;
 

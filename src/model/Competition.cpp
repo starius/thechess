@@ -124,9 +124,9 @@ void Competition::wins_number(const GamesVector& games,
 void Competition::team_wins_number(const User2float& user_wins,
                                    const User2Team& u2t,
                                    Team2float& team_wins) {
-    BOOST_FOREACH (User2float::value_type& user2float, user_wins) {
+    BOOST_FOREACH (const User2float::value_type& user2float, user_wins) {
         const UserPtr& user = user2float.first;
-        TeamPtr team = u2t[user];
+        TeamPtr team = u2t.find(user)->second;
         float w = user2float.second;
         team_wins[team] += w;
     }

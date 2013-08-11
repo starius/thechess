@@ -290,7 +290,7 @@ void Path::open_cp() {
     dbo::Transaction t(tApp->session());
     try {
         CPPtr cp = tApp->session().load<CP>(id);
-        main_widget_->cp_view(c);
+        main_widget_->cp_view(cp);
     } catch (dbo::ObjectNotFoundException)
     { }
 }

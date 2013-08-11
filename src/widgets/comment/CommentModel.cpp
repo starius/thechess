@@ -24,12 +24,12 @@ CommentModel::CommentModel(Comment::Type type, const CommentPtr& root,
             tApp->user().modify()->comment_base();
         }
         // set root for Notifiable, to update on new messages
-        root_ =  tApp->user().comment_base();
-        if (init) {
+        root_ =  tApp->user()->comment_base();
+        if (init_) {
             // other user (private chat)
-            init.reread();
-            if (!init->has_comment_base()) {
-                init.modify()->comment_base();
+            init_.reread();
+            if (!init_->has_comment_base()) {
+                init_.modify()->comment_base();
             }
         }
     }

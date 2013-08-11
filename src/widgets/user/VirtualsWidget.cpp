@@ -89,7 +89,7 @@ public:
         dbo::Transaction t(tApp->session());
         if (!tApp->user() ||
                 !tApp->user()->has_permission(VIRTUALS_VIEWER)) {
-            return Wt::WContainerWidget;
+            return new Wt::WContainerWidget;
         }
         BD::Scores scores;
         BD::scores(pairs_, scores);
@@ -138,15 +138,15 @@ public:
         dbo::Transaction t(tApp->session());
         if (!tApp->user() ||
                 !tApp->user()->has_permission(VIRTUALS_VIEWER)) {
-            return Wt::WContainerWidget;
+            return new Wt::WContainerWidget;
         }
         table_ = new Wt::WTable(c);
         table_->setStyleClass("thechess-table-border");
-        dbo::collection<BDPair> pairs_col = pairs_;
+        dbo::collection<BD::BDPair> pairs_col = pairs_;
         row_ = 0;
-        BOOST_FOREACH (BDPair pair, pairs_col) {
-            const BDPtr& a_bd = pair.first;
-            const BDPtr& b_bd = pair.second;
+        BOOST_FOREACH (BD::BDPair pair, pairs_col) {
+            const BDPtr& a_bd = pair.get<0>();
+            const BDPtr& b_bd = pair.get<1>();
             const UserPtr& a_user = a_bd->user();
             const UserPtr& b_user = b_bd->user();
             set_cell(BD_TYPE, Wt::Wc::Gather::type_to_str(a_bd->type()));
@@ -155,7 +155,7 @@ public:
             set_cell(BD_VALUE, a_bd->value());
             set_cell(B_USER, user_anchor(b_user));
             set_cell(B_USED, time2str(b_bd->used()));
-            row += 1;
+            row_ += 1;
         }
         return c;
     }

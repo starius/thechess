@@ -285,7 +285,7 @@ void MainWidget::cp_view(const CPPtr& cp) {
     Wt::WContainerWidget* c = new Wt::WContainerWidget();
     c->addWidget(new Header(tr("tc.competition.Parameters") +
                             " " + TO_S(cp.id())));
-    CPWidget* cp_widget = CPWidget(cp.get());
+    CPWidget* cp_widget = new CPWidget(cp.get());
     cp_widget->hide_gp_selector();
     c->addWidget(cp_widget);
     if (cp->gp()) {

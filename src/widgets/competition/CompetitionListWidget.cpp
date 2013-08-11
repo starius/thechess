@@ -88,7 +88,7 @@ public:
 
     typedef CompetitionStateSelect::State State;
 
-    CompetitionListModel(const UserPtr& user, const UserPtr& team,
+    CompetitionListModel(const UserPtr& user, const TeamPtr& team,
                          Wt::WObject* parent = 0) :
         CLP::BaseQM(parent) {
         set_query(/* only_my */ false, user, team);

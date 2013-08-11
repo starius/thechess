@@ -493,6 +493,9 @@ class EloPlayer;
 
 template<typename T> struct WhiteBlack;
 
+/** Map user to team */
+typedef std::map<UserPtr, TeamPtr> User2Team;
+
 }
 
 /* @} */
