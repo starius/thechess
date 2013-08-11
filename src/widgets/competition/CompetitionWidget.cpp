@@ -224,13 +224,13 @@ const int TOP_SHIFT = 1;
 class ClassicalViewImpl : public Wt::WContainerWidget {
 public:
     ClassicalViewImpl(const CompetitionPtr& c, bool show_wins):
-        c_(c), show_wins_(show_wins) {
+        c_(c), games_(c->games_vector()), show_wins_(show_wins) {
         gt_ = c->games_table();
         table_ = new Wt::WTable(this);
         table_->setStyleClass("thechess-table-border");
         members_ = c->members_vector();
         if (c->type() == CLASSICAL) {
-            Competition::wins_number(c->games_vector(), user_wins_);
+            Competition::wins_number(games_, user_wins_);
             std::sort(members_.begin(), members_.end(),
                       boost::bind(&ClassicalViewImpl::compare_users_classical,
                                   this, _1, _2));
@@ -259,6 +259,7 @@ private:
     Wt::WTable* table_;
     GamesTable gt_;
     UsersVector members_;
+    GamesVector games_;
     bool show_wins_;
     mutable Competition::User2float user_wins_;
     mutable Competition::Team2float team_wins_;
