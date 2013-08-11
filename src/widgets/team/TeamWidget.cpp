@@ -85,6 +85,7 @@ void TeamWidget::print_anchors() {
 }
 
 void TeamWidget::print_manager() {
+    new Wt::WBreak(main_);
     if (can_remove_team(tApp->user(), team_)) {
         add_button(tr("tc.team.Remove_team"), remove_team, main_);
     }
