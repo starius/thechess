@@ -501,7 +501,7 @@ void User::send_message(UserPtr from, UserPtr to, const Wt::WString& text) {
     message.flush();
     t_emit(COMMENT, base.id());
     t_emit(COMMENT, from_base.id());
-    t_emit(new NewMessage(to.id()));
+    t_emit(new NewMessage(to.id(), from.id()));
 }
 
 void User::check(Wt::Wc::notify::TaskPtr task) {

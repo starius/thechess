@@ -102,10 +102,13 @@ struct NotifyTask : public Object {
 class NewMessage : public Event {
 public:
     /** Constructor */
-    NewMessage(int reader_id);
+    NewMessage(int reader_id, int sender_id = -1);
 
     /** ID of addressee User */
     int reader_id;
+
+    /** ID of author User */
+    int sender_id;
 
     /** Comparison operator */
     bool operator<(const NewMessage& b) const {

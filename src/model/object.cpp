@@ -87,8 +87,8 @@ NotifyTask::NotifyTask(ObjectType ot, int i):
 void NotifyTask::process(TaskPtr task, Planning* server) const
 { }
 
-NewMessage::NewMessage(int r):
-    reader_id(r)
+NewMessage::NewMessage(int r, int s):
+    reader_id(r), sender_id(s)
 { }
 
 std::string NewMessage::key() const {
