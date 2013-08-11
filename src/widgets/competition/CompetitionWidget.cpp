@@ -342,7 +342,7 @@ private:
                     cell->decorationStyle().setBackgroundColor(bgcolor);
                 }
                 cell->clear();
-                if (row == col) {
+                if (row == col || (trow && trow == tcol)) {
                     new Wt::WText(tr("tc.competition.dash"), cell);
                 } else if (show_wins_) {
                     std::map<UserPtr, float> wins;
