@@ -241,6 +241,10 @@ public:
             std::sort(teams_.begin(), teams_.end(),
                       boost::bind(&ClassicalViewImpl::compare_teams,
                                   this, _1, _2));
+            for (int i = 0; i < teams_.size(); i++) {
+                const TeamPtr& team = teams_[i];
+                team_index_[team] = i;
+            }
             std::sort(members_.begin(), members_.end(),
                       boost::bind(&ClassicalViewImpl::compare_users_team,
                                   this, _1, _2));
@@ -260,6 +264,7 @@ private:
     mutable Competition::Team2float team_wins_;
     mutable TeamsVector teams_;
     mutable User2Team u2t_;
+    mutable std::map<TeamPtr, int> team_index_;
 
     bool compare_users_classical(const UserPtr& a, const UserPtr& b) const {
         return user_wins_[a] > user_wins_[b];
@@ -273,7 +278,7 @@ private:
         const TeamPtr& a_team = u2t_[a];
         const TeamPtr& b_team = u2t_[b];
         if (a_team != b_team) {
-            return team_wins_[a_team] > team_wins_[b_team];
+            return team_index_[a_team] < team_index_[b_team];
         } else {
             return user_wins_[a] > user_wins_[b];
         }
@@ -313,22 +318,17 @@ private:
 
     void fill_table() {
         int members_size = members_.size();
-        std::map<TeamPtr, int> team_index;
-        for (int i = 0; i < teams_.size(); i++) {
-            const TeamPtr& team = teams_[i];
-            team_index[team] = i;
-        }
         for (int row = 0; row < members_size; ++row) {
             const UserPtr& urow = members_[row];
             const TeamPtr& trow = u2t_[urow];
-            int trow_odd = team_index[trow] % 2;
+            int trow_odd = team_index_[trow] % 2;
             for (int col = 0; col < members_size; ++col) {
                 const UserPtr& ucol = members_[col];
                 const TeamPtr& tcol = u2t_[ucol];
                 Wt::WTableCell* cell = table_->elementAt(row + TOP_SHIFT,
                                        col + LEFT_SHIFT);
                 if (c_->type() == TEAM) {
-                    int tcol_odd = team_index[tcol] % 2;
+                    int tcol_odd = team_index_[tcol] % 2;
                     Wt::GlobalColor bgcolor = Wt::white;
                     if (!trow_odd && !tcol_odd) {
                         bgcolor = Wt::white;
