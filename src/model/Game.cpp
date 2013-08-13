@@ -608,12 +608,15 @@ void Game::mistake_agree(const UserPtr& user) {
     if (can_mistake_agree(user)) {
         Wt::WDateTime cached_now = now();
         Td spent = cached_now - lastmove_;
-        if (spent <= pause_limit_) {
-            pause_limit_ -= spent;
-        } else {
-            spent -= pause_limit_;
-            pause_limit_ = TD_NULL;
-            limit_private_[order_color()] -= spent;
+        spent -= gp_->limit_std();
+        if (spent > TD_NULL) {
+            if (spent <= pause_limit_) {
+                pause_limit_ -= spent;
+            } else {
+                spent -= pause_limit_;
+                pause_limit_ = TD_NULL;
+                limit_private_[order_color()] -= spent;
+            }
         }
         lastmove_ = cached_now;
         mistake_proposer_.reset();
