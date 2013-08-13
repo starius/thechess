@@ -77,7 +77,7 @@ private:
         dbo::Transaction t(tApp->session());
         c_.reread();
         c_.modify()->remove_team(tApp->user(), team);
-        admin_log("Discard " + team_a(team.id()) + " from " + comp_a(c_.id()));
+        admin_log("Remove " + team_a(team.id()) + " from " + comp_a(c_.id()));
         t.commit();
         t_emit(COMPETITION, c_.id());
     }
