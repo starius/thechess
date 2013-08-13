@@ -231,7 +231,7 @@ public:
         Notifiable(Object(USER, user.id())),
         user_(user),
         last_clicked_(0) {
-        sound_ = new Wt::WSound("/sound/glass.mp3", this);
+        sound_ = new Wt::WSound("/sound/tick.mp3", this);
         for (int i = 0; i < ORDER_OF_STATES_SIZE; i++) {
             first_of_state_[i] = 0;
         }
