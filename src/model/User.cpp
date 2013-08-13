@@ -486,11 +486,14 @@ void User::send_message(UserPtr from, UserPtr to, const Wt::WString& text) {
         base = to.modify()->comment_base();
         base.flush();
     }
-    CommentPtr from_base = from->comment_base();
-    if (!from_base) {
-        from.reread();
-        from_base = from.modify()->comment_base();
-        from_base.flush();
+    CommentPtr from_base;
+    if (from) {
+        from_base = from->comment_base();
+        if (!from_base) {
+            from.reread();
+            from_base = from.modify()->comment_base();
+            from_base.flush();
+        }
     }
     CommentPtr message = to.session()->add(new Comment(true));
     message.modify()->set_text(text);
@@ -501,7 +504,9 @@ void User::send_message(UserPtr from, UserPtr to, const Wt::WString& text) {
     message.flush();
     t_emit_after(COMMENT, base.id());
     t_emit(COMMENT, from_base.id());
-    t_emit(new NewMessage(to.id(), from.id()));
+    if (from) {
+        t_emit(new NewMessage(to.id(), from.id()));
+    }
 }
 
 void User::check(Wt::Wc::notify::TaskPtr task) {
