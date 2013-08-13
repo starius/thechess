@@ -427,7 +427,7 @@ bool Competition::can_add_team(const UserPtr& user, const TeamPtr& team) const {
            user &&
            !teams_.count(team) &&
            !team->removed() &&
-           team->init() == user;
+           (team->init() == user || user->has_permission(COMPETITION_CHANGER));
 }
 
 void Competition::add_team(const UserPtr& user, const TeamPtr& team) {
