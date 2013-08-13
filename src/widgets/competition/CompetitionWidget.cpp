@@ -688,7 +688,7 @@ private:
             return;
         }
         c_.modify()->add_team(tApp->user(), team);
-        admin_log("Add " + team_a(team.id()));
+        admin_log("Add " + team_a(team.id()) + " in " + comp_a(c_.id()));
         t.commit();
         t_task(COMPETITION, c_.id());
     }
