@@ -81,6 +81,8 @@ Wt::WDateTime Competition::next_check() const {
 void Competition::revive() {
     if (state_ == CANCELLED) {
         state_ = RECRUITING;
+        ended_ = Wt::WDateTime();
+        started_ = Wt::WDateTime();
     }
 }
 
