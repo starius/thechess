@@ -15,7 +15,9 @@
 #include <Wt/WText>
 #include <Wt/WBreak>
 #include <Wt/WSlider>
+#include <Wt/WTableView>
 #include <Wt/WViewWidget>
+#include <Wt/Dbo/QueryModel>
 #include <Wt/Wc/FilterResource.hpp>
 #include <Wt/Wc/Gather.hpp>
 
@@ -116,62 +118,82 @@ private:
     int min_score_;
 };
 
-// TODO save this to txt file and download
-class BDList : public Wt::WViewWidget {
+namespace VW {
+typedef BDPair Result;
+typedef dbo::Query<Result> Q;
+typedef dbo::QueryModel<Result> BaseQM;
+
+const int WIDTH = 750;
+const int HEIGHT = 500;
+}
+
+class BDPairModel : public VW::BaseQM {
 public:
     enum Column {
         BD_TYPE,
-        A_USED,
-        A_USER,
+        U_USED,
+        U_USER,
         BD_VALUE,
-        B_USER,
-        B_USED
+        V_USER,
+        V_USED
     };
 
-    BDList(const dbo::Query<BD::BDPair>& pairs,
-           Wt::WContainerWidget* parent = 0):
-        Wt::WViewWidget(parent),
-        pairs_(pairs)
-    { }
-
-    virtual Wt::WWidget* renderView() {
-        Wt::WContainerWidget* c = new Wt::WContainerWidget;
-        dbo::Transaction t(tApp->session());
-        if (!tApp->user() ||
-                !tApp->user()->has_permission(VIRTUALS_VIEWER)) {
-            return new Wt::WContainerWidget;
-        }
-        table_ = new Wt::WTable(c);
-        table_->setStyleClass("thechess-table-border");
-        dbo::collection<BD::BDPair> pairs_col = pairs_;
-        row_ = 0;
-        BOOST_FOREACH (BD::BDPair pair, pairs_col) {
-            const BDPtr& a_bd = pair.get<0>();
-            const BDPtr& b_bd = pair.get<1>();
-            const UserPtr& a_user = a_bd->user();
-            const UserPtr& b_user = b_bd->user();
-            set_cell(BD_TYPE, Wt::Wc::Gather::type_to_str(a_bd->type()));
-            set_cell(A_USED, time2str(a_bd->used()));
-            set_cell(A_USER, user_anchor(a_user));
-            set_cell(BD_VALUE, a_bd->value());
-            set_cell(B_USER, user_anchor(b_user));
-            set_cell(B_USED, time2str(b_bd->used()));
-            row_ += 1;
-        }
-        return c;
+    BDPairModel(const dbo::Query<BD::BDPair>& pairs, Wt::WObject* parent = 0):
+        VW::BaseQM(parent) {
+        setQuery(pairs);
+        addColumn("U.type", tr("tc.common.type")); // dummy
+        addColumn("U.used", tr("tc.common.last"));
+        addColumn("U.user_id", tr("tc.user.user")); // dummy
+        addColumn("U.value", tr("tc.common.value"));
+        addColumn("V.user_id", tr("tc.user.user")); // dummy
+        addColumn("V.used", tr("tc.common.last"));
+        sort(BD_TYPE, Wt::AscendingOrder);
     }
 
 private:
-    dbo::Query<BD::BDPair> pairs_;
-    Wt::WTable* table_;
-    int row_;
-
-    void set_cell(Column col, Wt::WWidget* widget) {
-        table_->elementAt(row_, int(col))->addWidget(widget);
+    boost::any data(const Wt::WModelIndex& index,
+                    int role = Wt::DisplayRole) const {
+        dbo::Transaction t(tApp->session());
+        const BDPair& o = resultRow(index.row());
+        if (role == Wt::DisplayRole) {
+            if (index.column() == BD_TYPE) {
+                return Wt::Wc::Gather::type_to_str(o.get<0>()->type());
+            } else if (index.column() == U_USER) {
+                UserPtr u_user = o.get<0>()->user();
+                return u_user->username();
+            } else if (index.column() == V_USER) {
+                UserPtr v_user = o.get<1>()->user();
+                return v_user->username();
+            }
+        } else if (role == Wt::LinkRole) {
+            if (index.column() == U_USER) {
+                UserPtr u_user = o.get<0>()->user();
+                return tApp->path().user_view()->get_link(u_user.id());
+            } else if (index.column() == V_USER) {
+                UserPtr v_user = o.get<0>()->user();
+                return tApp->path().user_view()->get_link(v_user.id());
+            }
+        }
+        return VW::BaseQM::data(index, role);
     }
 
-    void set_cell(Column col, const Wt::WString& text) {
-        set_cell(col, new Wt::WText(text));
+    static Wt::WString tr(const char* key) {
+        return Wt::WString::tr(key);
+    }
+};
+
+class BDPairView : public Wt::WTableView {
+public:
+    BDPairView(BDPairModel* model, Wt::WContainerWidget* p = 0):
+        Wt::WTableView(p) {
+        setModel(model);
+        resize(VW::WIDTH, VW::HEIGHT);
+        setSelectable(true);
+    }
+
+protected:
+    WWidget* createPageNavigationBar() {
+        return new Wt::Wc::Pager(this);
     }
 };
 
@@ -204,6 +226,11 @@ static void update_text(Wt::WText* label, Wt::WSlider* slider) {
 }
 
 void VirtualsWidget::initialize(const dbo::Query<BD::BDPair>& pairs) {
+    if (!tApp->user() || !tApp->user()->has_permission(VIRTUALS_VIEWER)) {
+        return;
+    }
+    BDPairModel* m = new BDPairModel(pairs, this);
+    addWidget(new BDPairView(m));
     VirtualsList* list = new VirtualsList(pairs);
     Wt::WSlider* min_score = new Wt::WSlider(this);
     Wt::WText* t = new Wt::WText(this);
