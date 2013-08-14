@@ -199,6 +199,9 @@ public:
     */
     GamesVector games_with(const UserPtr& user, GamesTable& gt) const;
 
+    /** Return data matches between members of the competition */
+    void virtuals_pairs(dbo::Query<BDPair>& pairs) const;
+
     /** Return if there are virtuals among competition members */
     bool has_virtuals() const;
 
