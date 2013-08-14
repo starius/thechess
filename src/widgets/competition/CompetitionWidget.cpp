@@ -603,6 +603,10 @@ public:
                 BOOST_FOREACH (UserPtr user, c->virtuals()) {
                     user_anchor(user, this);
                 }
+                new Wt::WBreak(this);
+                Wt::WAnchor* a = new Wt::WAnchor(this);
+                a->setLink(tApp->path().virtuals_in_competition()->link());
+                a->setText(tr("tc.user.Virtuals_list"));
             }
             if (c->virtual_allower()) {
                 new Wt::WBreak(this);
