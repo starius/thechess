@@ -9,7 +9,6 @@
 #define THECHESS_MODEL_BD_HPP_
 
 #include <set>
-#include <boost/tuple/tuple.hpp>
 
 #include "model/model.hpp"
 
@@ -22,7 +21,7 @@ namespace thechess {
 class BD : public dbo::Dbo<BD> {
 public:
     /** A pair of BDPtr's */
-    typedef boost::tuple<BDPtr, BDPtr> BDPair;
+    typedef ::thechess::BDPair BDPair;
 
     /** Map user pair to int */
     typedef std::map<UserPair, int> Scores;

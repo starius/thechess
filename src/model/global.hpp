@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <boost/utility/binary.hpp>
+#include <boost/tuple/tuple.hpp>
 
 #include <Wt/WGlobal>
 
@@ -157,6 +158,9 @@ typedef std::vector<BDPtr> BDsVector;
 
 /** IpBan vector */
 typedef std::vector<IpBanPtr> IpBansVector;
+
+/** Pair of BD */
+typedef boost::tuple<BDPtr, BDPtr> BDPair;
 
 }
 
