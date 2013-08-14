@@ -143,6 +143,11 @@ public:
         return games_of_competition_;
     }
 
+    /** List virtuals in competition */
+    url::PredefinedNode* virtuals_in_competition() const {
+        return virtuals_in_competition_;
+    }
+
     /** Create new competition */
     url::PredefinedNode* competition_new() const {
         return competition_new_;
@@ -321,6 +326,7 @@ private:
     url::PredefinedNode* competition_list_;
     url::IntegerNode* competition_view_;
     url::PredefinedNode* games_of_competition_;
+    url::PredefinedNode* virtuals_in_competition_;
     url::PredefinedNode* competition_new_;
     url::PredefinedNode* cp_list_;
     url::IntegerNode* cp_view_;
@@ -366,6 +372,7 @@ private:
     void open_gp_challenge();
     void open_competition();
     void open_games_of_competition();
+    void open_virtuals_in_competition();
     void open_cp();
     void open_cp_challenge();
     void open_board();

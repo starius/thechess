@@ -42,6 +42,8 @@ Path::Path(Wt::WObject* parent):
     competition_list_ = new PredefinedNode("competition", this);
     competition_view_ = new IntegerNode(competition_list_);
     games_of_competition_ = new PredefinedNode("games", competition_view_);
+    virtuals_in_competition_ = new PredefinedNode("virtuals",
+            competition_view_);
     competition_new_ = new PredefinedNode("new", competition_list_);
     cp_list_ = new PredefinedNode("parameters", competition_list_);
     cp_view_ = new IntegerNode(cp_list_);
@@ -111,6 +113,8 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(competition_view_, boost::bind(&Path::open_competition, this));
     connect(games_of_competition_,
             boost::bind(&Path::open_games_of_competition, this));
+    connect(virtuals_in_competition_,
+            boost::bind(&Path::open_virtuals_in_competition, this));
     connect(competition_new_, boost::bind(&MainWidget::competition_new, mw));
     connect(cp_view_, boost::bind(&Path::open_cp, this));
     connect(cp_challenge_, boost::bind(&Path::open_cp_challenge, this));
@@ -280,6 +284,17 @@ void Path::open_games_of_competition() {
     try {
         CompetitionPtr c = tApp->session().load<Competition>(id);
         main_widget_->games_of_competition(c);
+    } catch (dbo::ObjectNotFoundException)
+    { }
+}
+
+void Path::open_virtuals_in_competition() {
+    BOOST_ASSERT(main_widget_);
+    long long id = competition_view_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        CompetitionPtr c = tApp->session().load<Competition>(id);
+        main_widget_->virtuals_in_competition(c);
     } catch (dbo::ObjectNotFoundException)
     { }
 }

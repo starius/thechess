@@ -271,6 +271,13 @@ void MainWidget::games_of_competition(const CompetitionPtr& c) {
     }
 }
 
+void MainWidget::virtuals_in_competition(const CompetitionPtr& c) {
+    dbo::Query<BDPair> pairs;
+    c->virtuals_pairs(pairs);
+    set_contents(new VirtualsWidget(pairs));
+    wApp->setTitle(tr("tc.title.VirtualsWidget_of").arg(c->name()));
+}
+
 void MainWidget::competition_list() {
     set_contents(new CompetitionListWidget());
     wApp->setTitle(tr("tc.title.CompetitionListWidget"));

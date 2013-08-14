@@ -103,6 +103,9 @@ public:
     /** List games of competition */
     void games_of_competition(const CompetitionPtr& c);
 
+    /** List virtuals in competition */
+    void virtuals_in_competition(const CompetitionPtr& c);
+
     /** Create new competition */
     void competition_new();
 
