@@ -327,6 +327,7 @@ void Competition::join(const UserPtr& user) {
 bool Competition::can_team_join(const UserPtr& user,
                                 const TeamPtr& team) const {
     return can_join_common(user) &&
+           type() == TEAM &&
            team &&
            !team->removed() &&
            team->members().count(user);
@@ -431,6 +432,7 @@ const CommentPtr& Competition::comment_base() {
 
 bool Competition::can_add_team(const UserPtr& user, const TeamPtr& team) const {
     return state_ == RECRUITING &&
+           type() == TEAM &&
            user &&
            !teams_.count(team) &&
            !team->removed() &&
@@ -446,6 +448,7 @@ void Competition::add_team(const UserPtr& user, const TeamPtr& team) {
 bool Competition::can_remove_team(const UserPtr& user,
                                   const TeamPtr& team) const {
     return state_ == RECRUITING &&
+           type() == TEAM &&
            user &&
            teams_.count(team) &&
            (team->init() == user || init() == user ||
