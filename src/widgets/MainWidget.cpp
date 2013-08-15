@@ -145,6 +145,16 @@ void MainWidget::virtuals_of_user(const UserPtr& user) {
     wApp->setTitle(tr("tc.title.VirtualsWidget_of").arg(user->username20()));
 }
 
+void MainWidget::virtuals_of_user_pair(const UserPtr& u_user,
+                                       const UserPtr& v_user) {
+    dbo::Query<BDPair> pairs = BD::pairs(tApp->session());
+    pairs.where("U.user_id in(?,?) and V.user_id in(?,?)")
+    .bind(u_user).bind(v_user).bind(u_user).bind(v_user);
+    set_contents(new VirtualsWidget(pairs));
+    wApp->setTitle(tr("tc.title.VirtualsWidget_of")
+                   .arg(u_user->username20() + " - " + v_user->username20()));
+}
+
 void MainWidget::ip_of_user(const UserPtr& user) {
     set_contents(new IpList(user));
     wApp->setTitle(tr("tc.title.VirtualsWidget_of").arg(user->username20()));

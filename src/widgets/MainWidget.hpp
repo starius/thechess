@@ -52,6 +52,9 @@ public:
     /** View user's virtuals */
     void virtuals_of_user(const UserPtr& user);
 
+    /** View matches between user pair */
+    void virtuals_of_user_pair(const UserPtr& u_user, const UserPtr& v_user);
+
     /** View user's IP address(es) */
     void ip_of_user(const UserPtr& user);
 

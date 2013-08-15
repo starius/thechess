@@ -25,6 +25,7 @@ Path::Path(Wt::WObject* parent):
     user_view_ = new IntegerNode(user_list_);
     user_challenge_ = new PredefinedNode("challenge", user_view_);
     virtuals_of_user_ = new PredefinedNode("virtuals", user_view_);
+    virtuals_of_user_pair_ = new IntegerNode(virtuals_of_user_);
     ip_of_user_ = new PredefinedNode("ip", user_view_);
     games_of_user_ = new PredefinedNode("games", user_view_);
     competitions_of_user_ = new PredefinedNode("competitions", user_view_);
@@ -96,6 +97,8 @@ void Path::connect_main_widget(MainWidget* mw) {
     connect(user_view_, boost::bind(&Path::open_user, this));
     connect(user_challenge_, boost::bind(&Path::open_user_challenge, this));
     connect(virtuals_of_user_, boost::bind(&Path::open_virtuals_of_user, this));
+    connect(virtuals_of_user_pair_,
+            boost::bind(&Path::open_virtuals_of_user_pair, this));
     connect(ip_of_user_, boost::bind(&Path::open_ip_of_user, this));
     connect(games_of_user_, boost::bind(&Path::open_games_of_user, this));
     connect(competitions_of_user_, boost::bind(&Path::open_competitions_of_user,
@@ -192,6 +195,19 @@ void Path::open_virtuals_of_user() {
     dbo::Transaction t(tApp->session());
     try {
         main_widget_->virtuals_of_user(tApp->session().load<User>(id));
+    } catch (dbo::ObjectNotFoundException)
+    { }
+}
+
+void Path::open_virtuals_of_user_pair() {
+    BOOST_ASSERT(main_widget_);
+    long long u_user_id = user_view_->integer();
+    long long v_user_id = virtuals_of_user_pair_->integer();
+    dbo::Transaction t(tApp->session());
+    try {
+        UserPtr u_user = tApp->session().load<User>(u_user_id);
+        UserPtr v_user = tApp->session().load<User>(v_user_id);
+        main_widget_->virtuals_of_user_pair(u_user, v_user);
     } catch (dbo::ObjectNotFoundException)
     { }
 }

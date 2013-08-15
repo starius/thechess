@@ -58,6 +58,11 @@ public:
         return virtuals_of_user_;
     }
 
+    /** View virtuals of user pair */
+    url::IntegerNode* virtuals_of_user_pair() const {
+        return virtuals_of_user_pair_;
+    }
+
     /** View IP addresses of user */
     url::PredefinedNode* ip_of_user() const {
         return ip_of_user_;
@@ -309,6 +314,7 @@ private:
     url::PredefinedNode* all_sessions_;
     url::IntegerNode* user_view_;
     url::PredefinedNode* virtuals_of_user_;
+    url::IntegerNode* virtuals_of_user_pair_;
     url::PredefinedNode* ip_of_user_;
     url::PredefinedNode* games_of_user_;
     url::PredefinedNode* competitions_of_user_;
@@ -363,6 +369,7 @@ private:
     void open_random_competitor();
     void open_user_challenge();
     void open_virtuals_of_user();
+    void open_virtuals_of_user_pair();
     void open_ip_of_user();
     void open_games_of_user();
     void open_competitions_of_user();
