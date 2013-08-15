@@ -586,7 +586,7 @@ public:
             if (c->can_force_start(tApp->user())) {
                 button<&Competition::force_start>("tc.competition.Force_start");
             }
-            if (c->state() == Competition::RECRUITING) {
+            if (c->state() == Competition::RECRUITING && c->type() == TEAM) {
                 new Wt::WBreak(this);
                 team_id_ = new Wt::WLineEdit(this);
                 team_id_->setValidator(new Wt::WIntValidator);
