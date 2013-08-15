@@ -130,7 +130,7 @@ typedef dbo::Query<Result> Q;
 typedef dbo::QueryModel<Result> BaseQM;
 
 const int WIDTH = 750;
-const int HEIGHT = 500;
+const int HEIGHT = 600;
 }
 
 class BDPairModel : public VW::BaseQM {
@@ -194,6 +194,12 @@ public:
         Wt::WTableView(p) {
         setModel(model);
         resize(VW::WIDTH, VW::HEIGHT);
+        setColumnWidth(BDPairModel::BD_TYPE, 70);
+        setColumnWidth(BDPairModel::U_USED, 120);
+        setColumnWidth(BDPairModel::U_USER, 120);
+        setColumnWidth(BDPairModel::BD_VALUE, 200);
+        setColumnWidth(BDPairModel::V_USER, 120);
+        setColumnWidth(BDPairModel::V_USED, 120);
         setSelectable(true);
     }
 
