@@ -13,6 +13,7 @@
 #include <Wt/WImage>
 #include <Wt/WTable>
 #include <Wt/WText>
+#include <Wt/WAnchor>
 #include <Wt/WBreak>
 #include <Wt/WSlider>
 #include <Wt/WTableView>
@@ -102,7 +103,12 @@ public:
             const UserPtr b = pair.second();
             c->addWidget(new Wt::WBreak());
             c->addWidget(user_anchor(a));
-            c->addWidget(new Wt::WText(" &mdash; "));
+            tApp->path().user_view()->set_integer_value(a.id());
+            tApp->path().virtuals_of_user_pair()->set_integer_value(b.id());
+            Wt::WAnchor* an = new Wt::WAnchor;
+            an->setText(" &mdash; ");
+            an->setLink(tApp->path().virtuals_of_user_pair()->link());
+            c->addWidget(an);
             c->addWidget(user_anchor(b));
         }
         return c;
