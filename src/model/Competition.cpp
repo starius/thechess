@@ -767,7 +767,8 @@ bool Competition::can_join_common(const UserPtr& user) const {
            user->online_time() >= cp_->min_online_time() &&
            (user->online_time() <= cp_->max_online_time() ||
             cp_->max_online_time() < SECOND) &&
-           static_cast<int>(members_.size()) < cp_->max_users();
+           (static_cast<int>(members_.size()) < cp_->max_users() ||
+            type() == TEAM);
 }
 
 void Competition::remove_user(const UserPtr& user) {
