@@ -160,12 +160,12 @@ public:
             sql << "members_competitions I "
                 "left join thechess_competition C "
                 "on C.id=I.thechess_competition_id ";
-        } else if (team) {
-            sql << "teams_competitions T "
-                "left join thechess_competition C "
-                "on C.id=T.thechess_competition_id ";
         } else {
             sql << "thechess_competition C ";
+        }
+        if (team) {
+            sql << "left join teams_competitions T "
+                "on C.id=T.thechess_competition_id ";
         }
         sql << "left join winners_competition WC "
             "on WC.thechess_competition_id=C.id ";
