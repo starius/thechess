@@ -148,7 +148,7 @@ public:
         sql << "CP.type ";
         sql << "from ";
         if (user && only_my) {
-            sql << "members_competitions U cross join members_competitions I "
+            sql << "members_competitions U inner join members_competitions I "
                 "on U.thechess_competition_id=I.thechess_competition_id "
                 "left join thechess_competition C "
                 "on C.id=I.thechess_competition_id ";
