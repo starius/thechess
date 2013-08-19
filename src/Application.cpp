@@ -238,7 +238,6 @@ void Application::notify(const Wt::WEvent& e) {
         //     quit();
     } catch (std::exception& e) {
         log("fatal") << e.what();
-        redirect(internalPath());
         quit();
     }
 }
