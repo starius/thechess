@@ -213,14 +213,14 @@ void Application::login_handler() {
 }
 
 void Application::notify(const Wt::WEvent& e) {
+    Wt::EventType e_type = e.eventType();
+    Wt::WDateTime start = now();
+    Wt::WApplication::notify(e);
+    Wt::WDateTime stop = now();
+    if (server_usage_) {
+        *server_usage_ += stop - start;
+    }
     try {
-        Wt::EventType e_type = e.eventType();
-        Wt::WDateTime start = now();
-        Wt::WApplication::notify(e);
-        Wt::WDateTime stop = now();
-        if (server_usage_) {
-            *server_usage_ += stop - start;
-        }
         if (e_type == Wt::UserEvent) {
             user_action();
         } else {
