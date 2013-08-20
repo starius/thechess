@@ -414,6 +414,26 @@ public:
     */
     void check(Wt::Wc::notify::TaskPtr task);
 
+    /** List of teams where he is leader */
+    const Teams& leader_in_teams() const {
+        return leader_in_teams_;
+    }
+
+    /** List of teams where he is member */
+    const Teams& member_in_teams() const {
+        return member_in_teams_;
+    }
+
+    /** List of teams where he is candidate */
+    const Teams& candidate_in_teams() const {
+        return candidate_in_teams_;
+    }
+
+    /** List of teams where he is banned */
+    const Teams& banned_in_teams() const {
+        return banned_in_teams_;
+    }
+
 private:
     Wt::WString username_;
     Rights rights_; // default constructor: 0
