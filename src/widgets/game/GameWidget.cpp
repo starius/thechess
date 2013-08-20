@@ -29,6 +29,7 @@
 #include "widgets/chess/MovesWidget.hpp"
 #include "widgets/chess/LinksDialog.hpp"
 #include "widgets/comment/CommentList.hpp"
+#include "widgets/comment/comment_base.hpp"
 #include "model/all.hpp"
 #include "Application.hpp"
 #include "config.hpp"
@@ -130,18 +131,19 @@ protected:
 private:
     GamePtr game_;
 
-    void item(const Wt::WString& text, Wt::WContainerWidget* r,
-              bool bold = false) {
+    Wt::WContainerWidget* item(const Wt::WString& text, Wt::WContainerWidget* r,
+                               bool bold = false) {
         Wt::WContainerWidget* li = new Wt::WContainerWidget(r);
         Wt::WText* t = new Wt::WText(text, li);
         if (bold) {
             t->decorationStyle().font().setWeight(Wt::WFont::Bolder);
         }
+        return li;
     }
 
-    void kw(const Wt::WString& s, const char* tr_id,
-            Wt::WContainerWidget* r, bool bold = false) {
-        item(tr("tc.common.kw").arg(tr(tr_id)).arg(s), r, bold);
+    Wt::WContainerWidget* kw(const Wt::WString& s, const char* tr_id,
+                             Wt::WContainerWidget* r, bool bold = false) {
+        return item(tr("tc.common.kw").arg(tr(tr_id)).arg(s), r, bold);
     }
 
     void time(const Wt::WDateTime& dt, const char* tr_id,
@@ -155,7 +157,16 @@ private:
     void user(const UserPtr& user, const char* tr_id,
               Wt::WContainerWidget* r, bool bold = false) {
         if (user) {
-            kw(user->safe_username(), tr_id, r, bold);
+            Wt::WContainerWidget* li;
+            li = kw(user->safe_username(), tr_id, r, bold);
+            const CompetitionPtr& c = game_->competition();
+            if (c->type() == TEAM) {
+                TCMPtr tcm = tApp->session().load<TCM>(TCMId(c, user));
+                TeamPtr team = tcm->team();
+                li->addWidget(new Wt::WText(" ("));
+                li->addWidget(team_anchor(team.id()));
+                li->addWidget(new Wt::WText(")"));
+            }
         }
     }
 
