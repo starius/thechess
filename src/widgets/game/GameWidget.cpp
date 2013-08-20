@@ -159,8 +159,8 @@ private:
         if (user) {
             Wt::WContainerWidget* li;
             li = kw(user->safe_username(), tr_id, r, bold);
-            const CompetitionPtr& c = game_->competition();
-            if (c->type() == TEAM) {
+            CompetitionPtr c = game_->competition();
+            if (c && c->type() == TEAM) {
                 TCMPtr tcm = tApp->session().load<TCM>(TCMId(c, user));
                 TeamPtr team = tcm->team();
                 li->addWidget(new Wt::WText(" ("));
