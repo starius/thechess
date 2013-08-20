@@ -364,6 +364,7 @@ private:
                 }
                 cell->clear();
                 if (row == col) {
+                    cell->setVerticalAlignment(Wt::AlignMiddle);
                     if (trow) {
                         if (team_first_member_[trow] == urow) {
                             int members_number = team_members_[trow];
