@@ -236,6 +236,10 @@ public:
                                   this, _1, _2));
         } else if (c->type() == TEAM) {
             tcm_map_user_to_team(u2t_, c);
+            BOOST_FOREACH (const User2Team::value_type& u_t, u2t_) {
+                const TeamPtr& team = u_t.second;
+                team_members_[team] += 1;
+            }
             teams_ = TeamsVector(c->teams().begin(), c->teams().end());
             Competition::team_wins_number(user_wins_, u2t_, team_wins_);
             std::sort(teams_.begin(), teams_.end(),
@@ -248,6 +252,12 @@ public:
             std::sort(members_.begin(), members_.end(),
                       boost::bind(&ClassicalViewImpl::compare_users_team,
                                   this, _1, _2));
+            BOOST_FOREACH (const UserPtr& user, members_) {
+                const TeamPtr& team = u2t_[user];
+                if (team_first_member_.find(team) == team_first_member_.end()) {
+                    team_first_member_[team] = user;
+                }
+            }
         }
         BOOST_FOREACH (const GamePtr& game, games_) {
             if (game->is_ended()) {
@@ -273,6 +283,8 @@ private:
     mutable TeamsVector teams_;
     mutable User2Team u2t_;
     mutable std::map<TeamPtr, int> team_index_;
+    mutable std::map<TeamPtr, int> team_members_;
+    mutable std::map<TeamPtr, UserPtr> team_first_member_;
 
     bool compare_users_classical(const UserPtr& a, const UserPtr& b) const {
         return user_wins_[a] > user_wins_[b];
@@ -351,8 +363,17 @@ private:
                     cell->decorationStyle().setBackgroundColor(bgcolor);
                 }
                 cell->clear();
-                if (row == col || (trow && trow == tcol)) {
-                    new Wt::WText(tr("tc.competition.dash"), cell);
+                if (row == col) {
+                    if (trow) {
+                        if (team_first_member_[trow] == urow) {
+                            int members_number = team_members_[trow];
+                            cell->setRowSpan(members_number);
+                            cell->setColumnSpan(members_number);
+                            new Wt::WText(tr("tc.competition.dash"), cell);
+                        }
+                    } else {
+                        new Wt::WText(tr("tc.competition.dash"), cell);
+                    }
                 } else if (show_wins_) {
                     std::map<UserPtr, float> wins;
                     Competition::wins_number(gt_[urow][ucol], wins);
