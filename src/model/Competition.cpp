@@ -340,6 +340,21 @@ void Competition::team_join(const UserPtr& user, const TeamPtr& team) {
     }
 }
 
+bool Competition::can_add_user(const UserPtr& active, const UserPtr& passive,
+                               const TeamPtr& team) const {
+    return can_team_join(passive, team) &&
+           (team->init() == active ||
+            active->has_permission(COMPETITION_CHANGER));
+}
+
+void Competition::add_user(const UserPtr& active, const UserPtr& passive,
+                           const TeamPtr& team) {
+    if (can_add_user(active, passive, team)) {
+        members_.insert(passive);
+        tcm_add(team, self(), passive);
+    }
+}
+
 bool Competition::can_leave(const UserPtr& user) const {
     return state_ == RECRUITING &&
            is_member(user);

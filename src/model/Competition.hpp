@@ -256,6 +256,14 @@ public:
     /** Try to join the user (team competition) */
     void team_join(const UserPtr& user, const TeamPtr& team);
 
+    /** Return if active user can add passive user to the team competition */
+    bool can_add_user(const UserPtr& active, const UserPtr& passive,
+                      const TeamPtr& team) const;
+
+    /** Try by active user to add passive user to the team competition */
+    void add_user(const UserPtr& active, const UserPtr& passive,
+                  const TeamPtr& team);
+
     /** Return if the user can leave */
     bool can_leave(const UserPtr& user) const;
 
