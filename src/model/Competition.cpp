@@ -645,6 +645,15 @@ void Competition::create_games_team() {
                 if (black_user && vs_user > vs_black) {
                     continue;
                 }
+                if (black_user) {
+                    int elo_diff_user = abs(white_user->games_stat().elo() -
+                                            user->games_stat().elo());
+                    int elo_diff_black = abs(white_user->games_stat().elo() -
+                                             black_user->games_stat().elo());
+                    if (elo_diff_user > elo_diff_black) {
+                        continue;
+                    }
+                }
                 black_user = user;
             }
             BOOST_ASSERT(black_user);
