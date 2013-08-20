@@ -370,7 +370,7 @@ private:
                             int members_number = team_members_[trow];
                             cell->setRowSpan(members_number);
                             cell->setColumnSpan(members_number);
-                            new Wt::WText(tr("tc.competition.dash"), cell);
+                            cell->addWidget(team_anchor(trow.id()));
                         }
                     } else {
                         new Wt::WText(tr("tc.competition.dash"), cell);
