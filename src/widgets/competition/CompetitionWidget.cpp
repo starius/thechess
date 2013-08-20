@@ -376,11 +376,13 @@ private:
                         new Wt::WText(tr("tc.competition.dash"), cell);
                     }
                 } else if (show_wins_) {
-                    std::map<UserPtr, float> wins;
-                    Competition::wins_number(gt_[urow][ucol], wins);
-                    Competition::wins_number(gt_[ucol][urow], wins);
-                    new Wt::WText(TO_S(wins[urow]) +
-                                  "/" + TO_S(wins[ucol]), cell);
+                    if (!gt_[urow][ucol].empty() || !gt_[ucol][urow].empty()) {
+                        std::map<UserPtr, float> wins;
+                        Competition::wins_number(gt_[urow][ucol], wins);
+                        Competition::wins_number(gt_[ucol][urow], wins);
+                        new Wt::WText(TO_S(wins[urow]) +
+                                      "/" + TO_S(wins[ucol]), cell);
+                    }
                 } else {
                     BOOST_FOREACH (const GamePtr& game, gt_[ucol][urow]) {
                         game_reference(game, cell);
