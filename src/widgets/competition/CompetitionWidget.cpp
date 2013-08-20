@@ -371,6 +371,11 @@ private:
                             cell->setRowSpan(members_number);
                             cell->setColumnSpan(members_number);
                             cell->addWidget(team_anchor(trow.id()));
+                            cell->addWidget(new Wt::WBreak);
+                            float wins = team_wins_[trow];
+                            Wt::WString score = tr("tc.competition.Score");
+                            score += " " + TO_S(wins);
+                            cell->addWidget(new Wt::WText(score));
                         }
                     } else {
                         new Wt::WText(tr("tc.competition.dash"), cell);
