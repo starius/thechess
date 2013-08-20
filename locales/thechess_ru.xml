@@ -489,6 +489,7 @@
     <message id='tc.user.super_rights_changer'>изменять особые права</message>
     <message id='tc.user.Take_vacation'>Уйти в отпуск</message>
     <message id='tc.user.team_changer'>изменять команды</message>
+    <message id='tc.user.Teams_of'>Член команд</message>
     <message id='tc.user.Terms_of_use'>Пользовательским соглашением</message>
     <message id='tc.user.They_blocked_me'>Число заблокировавших этого пользователя: {1}</message>
     <message id='tc.user.This_ip_banned'>Этот IP-адрес заблокирован</message>

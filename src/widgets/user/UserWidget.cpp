@@ -6,6 +6,7 @@
  */
 
 #include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 #include <iostream>
 
 #include <Wt/WContainerWidget>
@@ -26,6 +27,7 @@
 #include "widgets/user/user_anchor.hpp"
 #include "widgets/user/awards.hpp"
 #include "widgets/comment/CommentList.hpp"
+#include "widgets/comment/comment_base.hpp"
 #include "widgets/Header.hpp"
 #include "Application.hpp"
 #include "model/all.hpp"
@@ -210,6 +212,7 @@ private:
         print_rights();
         print_game_stat();
         print_competition_stat();
+        print_teams();
         print_block();
         print_edit_description();
     }
@@ -385,6 +388,20 @@ private:
         const EloPlayer& stat = user_->competitions_stat();
         new Wt::WText(tr("tc.user.Competitions_stat"), this);
         print_stat(stat, false);
+    }
+
+    void print_teams() {
+        const Teams& teams = user_->member_in_teams();
+        TeamsVector teams_vec(teams.begin(), teams.end());
+        if (!teams_vec.empty()) {
+            addWidget(new Header(tr("tc.user.Teams_of")));
+            Wt::WContainerWidget* list = new Wt::WContainerWidget(this);
+            list->setList(true);
+            BOOST_FOREACH (const TeamPtr& team, teams_vec) {
+                Wt::WContainerWidget* li = new Wt::WContainerWidget(list);
+                li->addWidget(team_anchor(team.id()));
+            }
+        }
     }
 
     void print_stat(const EloPlayer& stat, bool draws_fails) {
