@@ -229,8 +229,8 @@ public:
         table_ = new Wt::WTable(this);
         table_->setStyleClass("thechess-table-border");
         members_ = c->members_vector();
+        Competition::wins_number(games_, user_wins_);
         if (c->type() == CLASSICAL) {
-            Competition::wins_number(games_, user_wins_);
             std::sort(members_.begin(), members_.end(),
                       boost::bind(&ClassicalViewImpl::compare_users_classical,
                                   this, _1, _2));
