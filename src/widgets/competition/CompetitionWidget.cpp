@@ -63,6 +63,7 @@ public:
 private:
     CompetitionPtr c_;
     Team2Users t2u_;
+    Wt::WLineEdit* user_id_;
 
     void kick(UserPtr user) {
         dbo::Transaction t(tApp->session());
@@ -116,11 +117,52 @@ private:
             b->clicked().connect(boost::bind(&CompetitionMembers::team_join,
                                              this, team));
         }
+        if (c_->state() == Competition::RECRUITING &&
+                (team->init() == tApp->user() ||
+                 tApp->user()->has_permission(COMPETITION_CHANGER))) {
+            new Wt::WBreak(this);
+            user_id_ = new Wt::WLineEdit(this);
+            user_id_->setValidator(new Wt::WIntValidator);
+            Wt::WPushButton* b;
+            b = new Wt::WPushButton(tr("tc.competition.Add_user"), this);
+            b->clicked().connect(boost::bind(&CompetitionMembers::add_user,
+                                             this, team));
+        }
         Wt::WContainerWidget* sub_list = new Wt::WContainerWidget(item);
         sub_list->setList(true);
         BOOST_FOREACH (const UserPtr& user, t2u_[team]) {
             add_user_to_list(user, sub_list);
         }
+    }
+
+    void add_user(TeamPtr team) {
+        if (!tApp->user()) {
+            return;
+        }
+        if (user_id_->validate() != Wt::WValidator::Valid) {
+            return;
+        }
+        dbo::Transaction t(tApp->session());
+        c_.reread();
+        tApp->user().reread();
+        int user_id = boost::lexical_cast<int>(user_id_->text());
+        UserPtr user;
+        try {
+            user = tApp->session().load<User>(user_id);
+        } catch (...) {
+            user_id_->setText(tr("tc.competition.User_not_found"));
+            return;
+        }
+        if (!c_->can_add_user(tApp->user(), user, team)) {
+            user_id_->setText(tr("tc.competition.Cant_add_user"));
+            return;
+        }
+        c_.modify()->add_user(tApp->user(), user, team);
+        admin_log("Add " + user_a(user.id()) + " in " + comp_a(c_.id()) +
+                  " for team " + team_a(team.id()));
+        t.commit();
+        t_task(COMPETITION, c_.id());
+        t_task(USER, user.id());
     }
 };
 

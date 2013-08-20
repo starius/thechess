@@ -66,8 +66,10 @@
     </message>
 
     <message id='tc.competition.Add_team'>Добавить команду</message>
+    <message id='tc.competition.Add_user'>Добавить пользователя</message>
     <message id='tc.competition.c'>(т)</message>
     <message id='tc.competition.Cant_add_team'>Невозможно добавить команду</message>
+    <message id='tc.competition.Cant_add_user'>Невозможно добавить пользователя</message>
     <message id="tc.competition.Cant_change">Ви не можете змінювати цей турнір</message>
     <message id="tc.competition.Cant_create">Ви не можете створювати турніри</message>
     <message id="tc.competition.Change">Змінити параметри</message>
@@ -113,6 +115,7 @@
     <message id="tc.competition.Type_classical">Класичний</message>
     <message id="tc.competition.Type_staged">Ступеневий</message>
     <message id="tc.competition.Type_team">Командний</message>
+    <message id='tc.competition.User_not_found'>Пользователь не найден</message>
     <message id="tc.competition.Users">Кількість учасників</message>
     <message id="tc.competition.Virtuals_allowed_by">Можливі клони дозволено&nbsp;</message>
     <message id="tc.competition.Winner">Переможець</message>

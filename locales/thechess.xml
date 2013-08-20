@@ -554,8 +554,10 @@ TheChess.
     </message>
 
     <message id='tc.competition.Add_team'>Add team</message>
+    <message id='tc.competition.Add_user'>Add user</message>
     <message id='tc.competition.c'>(c)</message>
     <message id='tc.competition.Cant_add_team'>Can't add team</message>
+    <message id='tc.competition.Cant_add_user'>Can't add user</message>
     <message id='tc.competition.Cant_change'>You have no permission to change this competition</message>
     <message id='tc.competition.Cant_create'>You have no permission to create competition</message>
     <message id='tc.competition.Change'>Change parameters</message>
@@ -602,6 +604,7 @@ TheChess.
     <message id='tc.competition.Type_classical'>Classical</message>
     <message id='tc.competition.Type_staged'>Staged</message>
     <message id='tc.competition.Type_team'>Team</message>
+    <message id='tc.competition.User_not_found'>User not found</message>
     <message id='tc.competition.user_pair'>{1} - {2}</message>
     <message id='tc.competition.Users'>Number of users</message>
     <message id='tc.competition.Virtuals_allowed_by'>Possible virtuals allowed by&nbsp;</message>
