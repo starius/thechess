@@ -286,7 +286,7 @@ void Game::make_competition_game(const UserPtr& white, const UserPtr& black,
     }
     competition_ = competition;
     competition_stage_ = competition_stage;
-    if (competition->type() == CLASSICAL) {
+    if (competition->type() == CLASSICAL || competition->type() == TEAM) {
         // will be set in propose_by_competition()
         set_created(Wt::WDateTime());
     }
