@@ -35,7 +35,7 @@ static void add_emotions_and_image(Wt::WTextEdit* e) {
     } else {
         e->setExtraPlugins("advimage,emotions,inlinepopups");
     }
-    std::string main_locale = wApp->locale().substr(0, 2);
+    std::string main_locale = Wt::Wc::get_locale(wApp).substr(0, 2);
     e->setConfigurationSetting("language", main_locale);
     e->setConfigurationSetting("force_br_newlines", true);
     e->setConfigurationSetting("force_p_newlines", false);

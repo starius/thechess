@@ -13,6 +13,8 @@
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
 
+#include <Wt/Wc/util.hpp>
+
 #include "Options.hpp"
 #include "Server.hpp"
 #include "config.hpp"
@@ -138,7 +140,7 @@ bool Options::read_locales(const std::string& name, int& main,
 
 int Options::locales_id(const Locale2Int& locales, int d) const {
     if (wApp) {
-        std::string main_locale = wApp->locale().substr(0, 2);
+        std::string main_locale = Wt::Wc::get_locale(wApp).substr(0, 2);
         Locale2Int::const_iterator it = locales.find(main_locale);
         if (it != locales.end()) {
             return it->second;
