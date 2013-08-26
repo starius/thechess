@@ -58,6 +58,10 @@ Dependencies:
    >=3.2.1 (git b50f9b97f49054abb0fe3) + patches from wt-patch/
     or
    >=3.2.3 (git 9f9a0adf63b977e55097f) + patches from wt-patch/
+   patches for 3.3.1:
+   no-error-messages-in-html.diff
+   no-http-only-cookies.diff
+   wtableview.diff
  * wt-classes library (https://bitbucket.org/starius/wt-classes/)
  * dot command (graphviz lib)
  * Boost library >= 1.44
