@@ -307,6 +307,9 @@ public:
                 user_ended_[game->black()] += 1;
             }
         }
+        if (c->type() == TEAM) {
+            Competition::team_wins_number(user_ended_, u2t_, team_ended_);
+        }
         headers();
         scores(c);
         fill_table();
@@ -322,6 +325,7 @@ private:
     mutable Competition::User2float user_wins_;
     mutable Competition::User2float user_ended_;
     mutable Competition::Team2float team_wins_;
+    mutable Competition::Team2float team_ended_;
     mutable TeamsVector teams_;
     mutable User2Team u2t_;
     mutable std::map<TeamPtr, int> team_index_;
@@ -415,8 +419,10 @@ private:
                             cell->addWidget(team_anchor(trow.id()));
                             cell->addWidget(new Wt::WBreak);
                             float wins = team_wins_[trow];
+                            float ended = team_ended_[trow];
                             Wt::WString score = tr("tc.competition.Score");
                             score += " " + TO_S(wins);
+                            score += " / " + TO_S(ended);
                             cell->addWidget(new Wt::WText(score));
                         }
                     } else {
