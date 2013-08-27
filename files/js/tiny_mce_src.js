@@ -10567,9 +10567,10 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 					i = s.grid_width - 1;
 				}
 
+				var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
 				n = DOM.add(tr, 'td');
 				var settings = {
-					href : 'javascript:;',
+					href : ((tinymce.isOpera || isFirefox) ? '' : 'javascript:;'),
 					style : {
 						backgroundColor : '#' + c
 					},
