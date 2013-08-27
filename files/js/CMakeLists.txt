@@ -8,3 +8,9 @@ file(DOWNLOAD
     ${CMAKE_CURRENT_BINARY_DIR}/jquery.min.js
 )
 
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/fix_tinymce_change_lang.js
+    ${CMAKE_CURRENT_BINARY_DIR}/fix_tinymce_change_lang.js
+    COPYONLY
+)
+
