@@ -176,7 +176,7 @@ private:
                 UserPtr u_user = o.get<0>()->user();
                 return tApp->path().user_view()->get_link(u_user.id());
             } else if (index.column() == V_USER) {
-                UserPtr v_user = o.get<0>()->user();
+                UserPtr v_user = o.get<1>()->user();
                 return tApp->path().user_view()->get_link(v_user.id());
             }
         }
