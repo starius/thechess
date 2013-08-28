@@ -129,7 +129,11 @@ public:
         Wt::WTableView(p) {
         setModel(model);
         resize(ILP::WIDTH, ILP::HEIGHT);
-        setColumnWidth(IpListModel::VALUE, 200);
+        setColumnWidth(IpListModel::USER, 70);
+        setColumnWidth(IpListModel::TYPE, 70);
+        setColumnWidth(IpListModel::VALUE, 380);
+        setColumnWidth(IpListModel::LAST_USE, 140);
+        setColumnWidth(IpListModel::BAN, 100);
         setSelectable(true);
     }
 
