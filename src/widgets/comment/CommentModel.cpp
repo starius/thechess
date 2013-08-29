@@ -96,6 +96,9 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
                 return time2str(o->created(), "dd.MM");
             }
         }
+    } else if (role == Wt::ToolTipRole && index.column() == TIME_COL) {
+        const CommentPtr& o = resultRow(index.row());
+        return time2str(o->created(), "dd MMM yyyy hh:mm");
     } else if (role == Wt::LinkRole && index.column() == ID_COL) {
         const CommentPtr& o = resultRow(index.row());
         return comment_page(o);
