@@ -101,9 +101,17 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
         } else if (index.column() == ID_COL && type() == Comment::NO_TYPE) {
             return host_text(o);
         }
-    } else if (role == Wt::ToolTipRole && index.column() == TIME_COL) {
+    } else if (role == Wt::ToolTipRole) {
         const CommentPtr& o = resultRow(index.row());
-        return time2str(o->created(), "dd MMM yyyy hh:mm");
+        if (index.column() == TIME_COL) {
+            return time2str(o->created(), "dd MMM yyyy hh:mm");
+        } else if (index.column() == ID_COL && type() == Comment::NO_TYPE) {
+            return host_text(o);
+        } else if (index.column() == INIT_COL) {
+            return o->init() ?
+                   o->init()->username() :
+                   Wt::WString::tr("tc.user.Anonymous");
+        }
     } else if (role == Wt::LinkRole) {
         const CommentPtr& o = resultRow(index.row());
         if (index.column() == ID_COL) {
