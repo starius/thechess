@@ -33,7 +33,8 @@ namespace thechess {
 
 const int COMMENT_WIDTH = 770;
 const int COMMENT_HEIGHT = 700;
-const int ID_WIDTH = 80;
+const int ID_WIDTH = 50;
+const int NO_TYPE_ID_WIDTH = 110;
 const int TIME_WIDTH = 50;
 const int INIT_WIDTH = 120;
 const int COMMENT_ROW_HEIGHT_FORUM = 20;
@@ -51,9 +52,10 @@ public:
         setModel(model);
         Comment::Type type = model->type();
         int comment_width = COMMENT_WIDTH - 40;
+        int id_width = (type == Comment::NO_TYPE) ? NO_TYPE_ID_WIDTH : ID_WIDTH;
         resize(COMMENT_WIDTH, COMMENT_HEIGHT);
         setSelectable(true);
-        setColumnWidth(CommentModel::ID_COL, ID_WIDTH);
+        setColumnWidth(CommentModel::ID_COL, id_width);
         setColumnWidth(CommentModel::INIT_COL, INIT_WIDTH);
         if (type == Comment::PRIVATE_MESSAGE) {
             setColumnWidth(CommentModel::DESTINATION_COL, INIT_WIDTH);
@@ -68,14 +70,14 @@ public:
             setColumnHidden(CommentModel::INIT_COL, true);
         } else if (type == Comment::FORUM_POST) {
             setAlternatingRowColors(true);
-            comment_width -= ID_WIDTH;
+            comment_width -= id_width;
             comment_width -= TIME_WIDTH;
             comment_width -= INIT_WIDTH;
             setColumnWidth(CommentModel::TIME_COL, TIME_WIDTH);
         } else if (type == Comment::NO_TYPE) {
             setRowHeight(ALL_COMMENTS_ROW_HEIGHT);
             setAlternatingRowColors(true);
-            setColumnHidden(CommentModel::ID_COL, true);
+            comment_width -= id_width;
             comment_width -= TIME_WIDTH;
             comment_width -= INIT_WIDTH;
             setColumnWidth(CommentModel::TIME_COL, TIME_WIDTH);
@@ -100,7 +102,7 @@ public:
         } else if (type == Comment::FORUM_COMMENT) {
             setRowHeight(COMMENT_ROW_HEIGHT_FORUM);
             addStyleClass("thechess-forum-comments");
-            comment_width -= ID_WIDTH;
+            comment_width -= id_width;
             setColumnHidden(CommentModel::TIME_COL, true);
             setColumnHidden(CommentModel::INIT_COL, true);
         }

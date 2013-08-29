@@ -9,6 +9,7 @@
 
 #include "widgets/comment/CommentModel.hpp"
 #include "widgets/comment/forum_comment_text.hpp"
+#include "widgets/comment/comment_base.hpp"
 #include "Application.hpp"
 
 namespace thechess {
@@ -97,6 +98,8 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
             } else {
                 return time2str(o->created(), "yyyy");
             }
+        } else if (index.column() == ID_COL && type() == Comment::NO_TYPE) {
+            return host_text(o);
         }
     } else if (role == Wt::ToolTipRole && index.column() == TIME_COL) {
         const CommentPtr& o = resultRow(index.row());
@@ -104,7 +107,11 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
     } else if (role == Wt::LinkRole) {
         const CommentPtr& o = resultRow(index.row());
         if (index.column() == ID_COL) {
-            return comment_page(o);
+            if (type() == Comment::NO_TYPE) {
+                return host_link(o);
+            } else {
+                return comment_page(o);
+            }
         } else if (index.column() == CONTENTS_COLUMN &&
                    type() == Comment::FORUM_TOPIC) {
             return comment_page(o);
