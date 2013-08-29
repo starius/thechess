@@ -34,10 +34,7 @@ namespace thechess {
 const int COMMENT_WIDTH = 770;
 const int COMMENT_HEIGHT = 700;
 const int ID_WIDTH = 80;
-const int CHAT_TIME_WIDTH = 50;
-const int LOG_TIME_WIDTH = 150;
-const int PRIVATE_TIME_WIDTH = 150;
-const int POST_TIME_WIDTH = 150;
+const int TIME_WIDTH = 50;
 const int INIT_WIDTH = 120;
 const int COMMENT_ROW_HEIGHT_FORUM = 20;
 const int ALL_COMMENTS_ROW_HEIGHT = 35;
@@ -72,33 +69,33 @@ public:
         } else if (type == Comment::FORUM_POST) {
             setAlternatingRowColors(true);
             comment_width -= ID_WIDTH;
-            comment_width -= POST_TIME_WIDTH;
+            comment_width -= TIME_WIDTH;
             comment_width -= INIT_WIDTH;
-            setColumnWidth(CommentModel::TIME_COL, POST_TIME_WIDTH);
+            setColumnWidth(CommentModel::TIME_COL, TIME_WIDTH);
         } else if (type == Comment::NO_TYPE) {
             setRowHeight(ALL_COMMENTS_ROW_HEIGHT);
             setAlternatingRowColors(true);
             setColumnHidden(CommentModel::ID_COL, true);
-            comment_width -= POST_TIME_WIDTH;
+            comment_width -= TIME_WIDTH;
             comment_width -= INIT_WIDTH;
-            setColumnWidth(CommentModel::TIME_COL, POST_TIME_WIDTH);
+            setColumnWidth(CommentModel::TIME_COL, TIME_WIDTH);
         } else if (type == Comment::CHAT_MESSAGE) {
             addStyleClass("thechess-chat");
             setColumnHidden(CommentModel::ID_COL, true);
-            comment_width -= CHAT_TIME_WIDTH;
+            comment_width -= TIME_WIDTH;
             comment_width -= INIT_WIDTH;
-            setColumnWidth(CommentModel::TIME_COL, CHAT_TIME_WIDTH);
+            setColumnWidth(CommentModel::TIME_COL, TIME_WIDTH);
         } else if (type == Comment::LOG_ENTRY) {
             setColumnHidden(CommentModel::ID_COL, true);
-            comment_width -= LOG_TIME_WIDTH;
+            comment_width -= TIME_WIDTH;
             comment_width -= INIT_WIDTH;
-            setColumnWidth(CommentModel::TIME_COL, LOG_TIME_WIDTH);
+            setColumnWidth(CommentModel::TIME_COL, TIME_WIDTH);
             addStyleClass("thechess-private-messages");
         } else if (type == Comment::PRIVATE_MESSAGE) {
             setColumnHidden(CommentModel::ID_COL, true);
-            comment_width -= PRIVATE_TIME_WIDTH;
+            comment_width -= TIME_WIDTH;
             comment_width -= INIT_WIDTH;
-            setColumnWidth(CommentModel::TIME_COL, PRIVATE_TIME_WIDTH);
+            setColumnWidth(CommentModel::TIME_COL, TIME_WIDTH);
             addStyleClass("thechess-private-messages");
         } else if (type == Comment::FORUM_COMMENT) {
             setRowHeight(COMMENT_ROW_HEIGHT_FORUM);

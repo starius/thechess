@@ -90,14 +90,10 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
                 return user->safe_username();
             }
         } else if (index.column() == TIME_COL) {
-            if (type() == Comment::CHAT_MESSAGE) {
-                if (now() - o->created() < DAY) {
-                    return time2str(o->created(), "HH:mm");
-                } else {
-                    return time2str(o->created(), "dd.MM");
-                }
+            if (now() - o->created() < DAY) {
+                return time2str(o->created(), "HH:mm");
             } else {
-                return time2str(o->created(), "dd MMM yyyy hh:mm");
+                return time2str(o->created(), "dd.MM");
             }
         }
     } else if (role == Wt::LinkRole && index.column() == ID_COL) {
