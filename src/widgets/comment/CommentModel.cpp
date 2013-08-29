@@ -101,30 +101,28 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
     } else if (role == Wt::ToolTipRole && index.column() == TIME_COL) {
         const CommentPtr& o = resultRow(index.row());
         return time2str(o->created(), "dd MMM yyyy hh:mm");
-    } else if (role == Wt::LinkRole && index.column() == ID_COL) {
+    } else if (role == Wt::LinkRole) {
         const CommentPtr& o = resultRow(index.row());
-        return comment_page(o);
-    } else if (role == Wt::LinkRole && index.column() == CONTENTS_COLUMN &&
-               type() == Comment::FORUM_TOPIC) {
-        const CommentPtr& o = resultRow(index.row());
-        return comment_page(o);
-    } else if (role == Wt::LinkRole && index.column() == INIT_COL) {
-        const CommentPtr& o = resultRow(index.row());
-        UserPtr user = o->init();
-        if (user) {
-            return tApp->path().user_view()->get_link(user.id());
-        }
-    } else if (role == Wt::LinkRole && index.column() == DESTINATION_COL &&
-               type() == Comment::PRIVATE_MESSAGE) {
-        const CommentPtr& o = resultRow(index.row());
-        UserPtr user = destination_user(o);
-        if (user) {
-            return tApp->path().user_view()->get_link(user.id());
-        }
-    } else if (role == Wt::LinkRole && index.column() == TIME_COL) {
-        const CommentPtr& o = resultRow(index.row());
-        if (type() != Comment::FORUM_POST) {
+        if (index.column() == ID_COL) {
             return comment_page(o);
+        } else if (index.column() == CONTENTS_COLUMN &&
+                   type() == Comment::FORUM_TOPIC) {
+            return comment_page(o);
+        } else if (index.column() == INIT_COL) {
+            UserPtr user = o->init();
+            if (user) {
+                return tApp->path().user_view()->get_link(user.id());
+            }
+        } else if (index.column() == DESTINATION_COL &&
+                   type() == Comment::PRIVATE_MESSAGE) {
+            UserPtr user = destination_user(o);
+            if (user) {
+                return tApp->path().user_view()->get_link(user.id());
+            }
+        } else if (index.column() == TIME_COL) {
+            if (type() != Comment::FORUM_POST) {
+                return comment_page(o);
+            }
         }
     }
     return BaseQM::data(index, role);
