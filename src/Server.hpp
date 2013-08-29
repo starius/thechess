@@ -13,6 +13,7 @@
 #include <Wt/Dbo/FixedSqlConnectionPool>
 #include <Wt/Auth/AuthService>
 #include <Wt/Auth/PasswordService>
+#include <Wt/Wc/GlobalLocalizedStrings.hpp>
 
 #include "Options.hpp"
 #include "SharedBoardIndex.hpp"
@@ -84,8 +85,12 @@ public:
         return instance_;
     }
 
+    /** Create localized strings pointing to global storage */
+    Wt::WLocalizedStrings* create_localized_strings();
+
 private:
     Options options_;
+    Wt::Wc::GlobalLocalizedStrings gls_;
     SharedBoardIndex shared_board_index_;
     dbo::FixedSqlConnectionPool pool_;
     Notifier notifier_;

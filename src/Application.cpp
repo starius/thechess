@@ -62,12 +62,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     set_auth_widget();
     enableUpdates(true);
     useStyleSheet("css/1.css");
-    messageResourceBundle().use(Wt::WApplication::appRoot() +
-                                "locales/thechess");
-    messageResourceBundle().use(Wt::WApplication::appRoot() +
-                                "locales/wtclasses/wtclasses");
-    messageResourceBundle().use(Wt::WApplication::appRoot() +
-                                "locales/wt");
+    setLocalizedStrings(server.create_localized_strings());
     setCssTheme("polished");
     require("/js/jquery.min.js");
     require("/js/jquery.countdown.min.js");
@@ -99,12 +94,7 @@ Application::Application(bool, const Wt::WEnvironment& env, Server& server):
     }
     enableUpdates(true);
     useStyleSheet("css/1.css");
-    messageResourceBundle().use(Wt::WApplication::appRoot() +
-                                "locales/thechess");
-    messageResourceBundle().use(Wt::WApplication::appRoot() +
-                                "locales/wtclasses/wtclasses");
-    messageResourceBundle().use(Wt::WApplication::appRoot() +
-                                "locales/wt");
+    setLocalizedStrings(server.create_localized_strings());
     // FIXME Wt::Auth translations in separate file do not work
     setCssTheme("polished");
     // FIXME http://redmine.emweb.be/issues/1491

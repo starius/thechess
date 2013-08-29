@@ -62,6 +62,12 @@ Server::Server(int argc, char** argv):
     planning_.set_notification_server(&notifier_);
     planning_.set_io_service(&io_service_);
     io_service_.start();
+    gls_.use(Wt::Wc::approot() + "locales/thechess");
+    gls_.use(Wt::Wc::approot() + "locales/wtclasses/wtclasses");
+    gls_.use(Wt::Wc::approot() + "locales/wt");
+    gls_.add_lang("ru");
+    gls_.add_lang("be");
+    gls_.add_lang("uk");
     //addResource(&all_pgn_, "/pgn/all.pgn");
     addResource(&pgn_, "/pgn/");
     addResource(&swfstore_, "/swfstore.swf");
@@ -95,6 +101,10 @@ void Server::reread_options() {
     }
     // FIXME races
     Wt::WServer::instance_ = this;
+}
+
+Wt::WLocalizedStrings* Server::create_localized_strings() {
+    return gls_.create_localized_strings();
 }
 
 std::string utf8_to_cp1251(const std::string& utf8) {
