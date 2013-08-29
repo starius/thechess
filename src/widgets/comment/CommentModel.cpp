@@ -92,8 +92,10 @@ boost::any CommentModel::data(const Wt::WModelIndex& index, int role) const {
         } else if (index.column() == TIME_COL) {
             if (now() - o->created() < DAY) {
                 return time2str(o->created(), "HH:mm");
-            } else {
+            } else if (now() - o->created() < 365 * DAY) {
                 return time2str(o->created(), "dd.MM");
+            } else {
+                return time2str(o->created(), "yyyy");
             }
         }
     } else if (role == Wt::ToolTipRole && index.column() == TIME_COL) {
