@@ -47,21 +47,39 @@ Object comment_base(const CommentPtr& comment) {
     return Object(NOEVENT, 0);
 }
 
+#define TR(x) Wt::WString::tr(x)
+
+Wt::WString global_chat_text() {
+    return TR("tc.comment.Global_chat");
+}
+
+Wt::WLink global_chat_link() {
+    return tApp->path().global_chat()->link();
+}
+
 Wt::WAnchor* global_chat_anchor() {
     Wt::WAnchor* a = new Wt::WAnchor;
-    a->setText(Wt::WString::tr("tc.comment.Global_chat"));
-    a->setLink(tApp->path().global_chat()->link());
+    a->setText(global_chat_text());
+    a->setLink(global_chat_link());
     return a;
+}
+
+Wt::WString game_text(int id) {
+    return TR("tc.game.Header").arg(id);
+}
+
+Wt::WLink game_link(int id) {
+    return tApp->path().game_view()->get_link(id);
 }
 
 Wt::WAnchor* game_anchor(int id) {
     Wt::WAnchor* a = new Wt::WAnchor;
-    a->setText(Wt::WString::tr("tc.game.Header").arg(id));
-    a->setLink(tApp->path().game_view()->get_link(id));
+    a->setText(game_text(id));
+    a->setLink(game_link(id));
     return a;
 }
 
-Wt::WAnchor* competition_anchor(int id) {
+Wt::WString competition_text(int id) {
     dbo::Transaction t(tApp->session());
     Wt::WString title(Wt::WString::tr("tc.competition.Header"));
     CompetitionPtr c = tApp->session().load<Competition>(id);
@@ -70,13 +88,21 @@ Wt::WAnchor* competition_anchor(int id) {
     } else {
         title.arg(c->name());
     }
+    return title;
+}
+
+Wt::WLink competition_link(int id) {
+    return tApp->path().competition_view()->get_link(id);
+}
+
+Wt::WAnchor* competition_anchor(int id) {
     Wt::WAnchor* a = new Wt::WAnchor;
-    a->setText(title);
-    a->setLink(tApp->path().competition_view()->get_link(id));
+    a->setText(competition_text(id));
+    a->setLink(competition_link(id));
     return a;
 }
 
-Wt::WAnchor* team_anchor(int id) {
+Wt::WString team_text(int id) {
     dbo::Transaction t(tApp->session());
     Wt::WString title(Wt::WString::tr("tc.team.Title").arg(id));
     TeamPtr team = tApp->session().load<Team>(id);
@@ -85,10 +111,56 @@ Wt::WAnchor* team_anchor(int id) {
     } else {
         title.arg("");
     }
+    return title;
+}
+
+Wt::WLink team_link(int id) {
+    return tApp->path().team_view()->get_link(id);
+}
+
+Wt::WAnchor* team_anchor(int id) {
     Wt::WAnchor* a = new Wt::WAnchor;
-    a->setText(title);
-    a->setLink(tApp->path().team_view()->get_link(id));
+    a->setText(team_text(id));
+    a->setLink(team_link(id));
     return a;
+}
+
+Wt::WString host_text(const CommentPtr& comment) {
+    dbo::Transaction t(tApp->session());
+    if (comment->type() == Comment::CHAT_MESSAGE && !comment->root()) {
+        return global_chat_text();
+    }
+    Object object = comment_base(comment);
+    if (object.id == 0) {
+        return "";
+    }
+    if (object.type == GAME) {
+        return game_text(object.id);
+    } else if (object.type == COMPETITION) {
+        return competition_text(object.id);
+    } else if (object.type == TEAM_OBJECT) {
+        return team_text(object.id);
+    }
+    return "";
+}
+
+Wt::WLink host_link(const CommentPtr& comment) {
+    dbo::Transaction t(tApp->session());
+    if (comment->type() == Comment::CHAT_MESSAGE && !comment->root()) {
+        return global_chat_link();
+    }
+    Object object = comment_base(comment);
+    if (object.id == 0) {
+        return Wt::WLink();
+    }
+    if (object.type == GAME) {
+        return game_link(object.id);
+    } else if (object.type == COMPETITION) {
+        return competition_link(object.id);
+    } else if (object.type == TEAM_OBJECT) {
+        return team_link(object.id);
+    }
+    return Wt::WLink();
 }
 
 Wt::WAnchor* anchor_to_host(const CommentPtr& comment) {
