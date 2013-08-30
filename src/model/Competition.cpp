@@ -65,7 +65,7 @@ void Competition::check(Wt::Wc::notify::TaskPtr task) {
 Wt::WDateTime Competition::next_check() const {
     Wt::WDateTime result;
     if (state_ == RECRUITING) {
-        if (type() == CLASSICAL || type() == STAGED) {
+        if (has_recruiting_time(type())) {
             if (now() < created() + cp_->min_recruiting_time()) {
                 result = created() + cp_->min_recruiting_time();
             } else {
@@ -177,8 +177,8 @@ TeamsVector Competition::winner_teams_of_games(const GamesVector& games) {
 void Competition::set_cp(const CPPtr& cp) {
     if (cp_) {
         cp_.modify()->set_competitions_size(cp_->competitions_size() - 1);
-        bool prev_team = type() == TEAM;
-        bool next_team = cp->type() == TEAM;
+        bool prev_team = is_team(type());
+        bool next_team = is_team(cp->type());
         if (prev_team != next_team && state() == RECRUITING) {
             // remove all users
             BOOST_FOREACH (const UserPtr& user, members_vector()) {
@@ -241,7 +241,7 @@ GamesVector Competition::games_with(const UserPtr& user,
 }
 
 GamesTable Competition::games_table() const {
-    BOOST_ASSERT(type() == CLASSICAL || type() == TEAM);
+    BOOST_ASSERT(is_round_robin(type()));
     GamesTable result;
     BOOST_FOREACH (const GamePtr& game, games_vector()) {
         result[game->white()][game->black()].push_back(game);
@@ -290,7 +290,7 @@ UsersVector Competition::virtuals() const {
 }
 
 void Competition::stat_change() const {
-    if (type() == TEAM) {
+    if (is_team(type())) {
         return;
     }
     UsersVector members = members_vector();
@@ -313,7 +313,7 @@ void Competition::stat_change() const {
 }
 
 bool Competition::can_join(const UserPtr& user) const {
-    return can_join_common(user) && (type() == STAGED || type() == CLASSICAL);
+    return can_join_common(user) && !is_team(type());
 }
 
 void Competition::join(const UserPtr& user) {
@@ -325,7 +325,7 @@ void Competition::join(const UserPtr& user) {
 bool Competition::can_team_join(const UserPtr& user,
                                 const TeamPtr& team) const {
     return can_join_common(user) &&
-           type() == TEAM &&
+           is_team(type()) &&
            team &&
            !team->removed() &&
            team->members().count(user);
@@ -401,7 +401,7 @@ bool Competition::can_force_start(const UserPtr& user) const {
            user &&
            (user == init() || user->has_permission(COMPETITION_CHANGER)) &&
            int(members_.size()) >= ccm::MIN_USERS &&
-           (type() != TEAM || teams_.size() >= 2) &&
+           (!is_team(type()) || teams_.size() >= 2) &&
            now() - created() >= ccm::MIN_RECRUITING_TIME &&
            (virtual_allower_ || !has_virtuals());
 }
@@ -445,7 +445,7 @@ const CommentPtr& Competition::comment_base() {
 
 bool Competition::can_add_team(const UserPtr& user, const TeamPtr& team) const {
     return state_ == RECRUITING &&
-           type() == TEAM &&
+           is_team(type()) &&
            user &&
            !teams_.count(team) &&
            !team->removed() &&
@@ -461,7 +461,7 @@ void Competition::add_team(const UserPtr& user, const TeamPtr& team) {
 bool Competition::can_remove_team(const UserPtr& user,
                                   const TeamPtr& team) const {
     return state_ == RECRUITING &&
-           type() == TEAM &&
+           is_team(type()) &&
            user &&
            teams_.count(team) &&
            (team->init() == user || init() == user ||
@@ -482,7 +482,7 @@ void Competition::remove_team(const UserPtr& user, const TeamPtr& team) {
 bool Competition::can_start() const {
     bool result = false;
     if (state_ == RECRUITING) {
-        if (type() == CLASSICAL || type() == STAGED) {
+        if (has_users_number(type()) && has_recruiting_time(type())) {
             if (static_cast<int>(members_.size()) >= cp_->min_users() &&
                     now() - created() >= cp_->min_recruiting_time()) {
                 result = true;
@@ -709,7 +709,7 @@ void Competition::process() {
 }
 
 void Competition::process_classical() {
-    BOOST_ASSERT(type() == CLASSICAL || type() == TEAM);
+    BOOST_ASSERT(is_round_robin(type()));
     std::map<UserPtr, int> used;
     GamesVector proposed;
     BOOST_FOREACH (const GamePtr& g, games_vector()) {
@@ -779,23 +779,44 @@ GamePtr Competition::create_game(const UserPtr& white, const UserPtr& black,
 }
 
 bool Competition::can_join_common(const UserPtr& user) const {
-    return state_ == RECRUITING &&
-           user && !is_member(user) &&
-           user->has_permission(COMPETITION_JOINER) &&
-           user->games_stat().elo() >= cp_->min_rating() &&
-           user->games_stat().elo() <= cp_->max_rating() &&
-           user->classification() >= cp_->min_classification() &&
-           user->classification() <= cp_->max_classification() &&
-           user->online_time() >= cp_->min_online_time() &&
-           (user->online_time() <= cp_->max_online_time() ||
-            cp_->max_online_time() < SECOND) &&
-           (static_cast<int>(members_.size()) < cp_->max_users() ||
-            type() == TEAM);
+    if (state_ != RECRUITING || !user || is_member(user)) {
+        return false;
+    }
+    if (!user->has_permission(COMPETITION_JOINER)) {
+        return false;
+    }
+    CompetitionType t = type();
+    if (has_rating(t) && user->games_stat().elo() < cp_->min_rating()) {
+        return false;
+    }
+    if (has_rating(t) && user->games_stat().elo() > cp_->max_rating()) {
+        return false;
+    }
+    if (has_classification(t) &&
+            user->classification() < cp_->min_classification()) {
+        return false;
+    }
+    if (has_classification(t) &&
+            user->classification() > cp_->max_classification()) {
+        return false;
+    }
+    if (has_online_time(t) && user->online_time() < cp_->min_online_time()) {
+        return false;
+    }
+    if (has_online_time(t) && user->online_time() > cp_->max_online_time() &&
+            cp_->max_online_time() >= SECOND) {
+        return false;
+    }
+    if (has_users_number(t) &&
+            static_cast<int>(members_.size()) >= cp_->max_users()) {
+        return false;
+    }
+    return true;
 }
 
 void Competition::remove_user(const UserPtr& user) {
     members_.erase(user);
-    if (type() == TEAM) {
+    if (is_team(type())) {
         tcm_remove(self(), user);
     }
 }

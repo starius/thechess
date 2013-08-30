@@ -42,8 +42,10 @@ private:
     CompetitionTypeWidget* type_;
     Wt::Wc::ConstrainedSpinBox* min_rating_;
     Wt::Wc::ConstrainedSpinBox* max_rating_;
+    Wt::Wc::IntervalWidget* rating_;
     ClassificationWidget* min_classification_;
     ClassificationWidget* max_classification_;
+    Wt::Wc::IntervalWidget* classification_;
 
     Wt::Wc::TimeDurationWidget* force_start_delay_;
 
@@ -63,6 +65,7 @@ private:
 
     Wt::Wc::TimeDurationWidget* min_online_time_;
     Wt::Wc::TimeDurationWidget* max_online_time_;
+    Wt::Wc::IntervalWidget* online_time_;
 
     void type_handler();
     CompetitionType get_type() const;

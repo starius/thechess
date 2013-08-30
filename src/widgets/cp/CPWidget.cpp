@@ -32,7 +32,6 @@ CPWidget::CPWidget(const CP* cp, bool allow_change_type,
     }
     new Header(tr("tc.competition.Parameters"), this);
     form_ = new Wt::Wc::TableForm(this);
-    Wt::Wc::IntervalWidget* interval;
     Wt::WContainerWidget* cell;
     type_ = new CompetitionTypeWidget(/* with_all */ false);
     cell = form_->item(tr("tc.competition.Type"), "", type_, type_);
@@ -56,16 +55,16 @@ CPWidget::CPWidget(const CP* cp, bool allow_change_type,
     max_rating_ = new Wt::Wc::ConstrainedSpinBox();
     max_rating_->setRange(min::MAX_RATING, max::MAX_RATING);
     max_rating_->setValue(cp->max_rating());
-    interval = new Wt::Wc::IntervalWidget(min_rating_, max_rating_);
-    form_->item(tr("tc.competition.Rating"), "", min_rating_, interval);
+    rating_ = new Wt::Wc::IntervalWidget(min_rating_, max_rating_);
+    form_->item(tr("tc.competition.Rating"), "", min_rating_, rating_);
     min_classification_ = new ClassificationWidget(min::MIN_CLASSIFICATION,
             cp->min_classification(), max::MIN_CLASSIFICATION);
     max_classification_ = new ClassificationWidget(min::MAX_CLASSIFICATION,
             cp->max_classification(), max::MAX_CLASSIFICATION);
-    interval = new Wt::Wc::IntervalWidget(min_classification_,
-                                          max_classification_);
+    classification_ = new Wt::Wc::IntervalWidget(min_classification_,
+            max_classification_);
     form_->item(tr("tc.competition.Members_classification"), "",
-                min_classification_, interval);
+                min_classification_, classification_);
     //
     min_online_time_ = new Wt::Wc::TimeDurationWidget(
         min::MIN_ONLINE_TIME,
@@ -73,11 +72,10 @@ CPWidget::CPWidget(const CP* cp, bool allow_change_type,
     max_online_time_ = new Wt::Wc::TimeDurationWidget(
         min::MAX_ONLINE_TIME,
         cp->max_online_time(), max::MAX_ONLINE_TIME);
-    Wt::Wc::IntervalWidget* online_time;
-    online_time = new Wt::Wc::IntervalWidget(min_online_time_,
+    online_time_ = new Wt::Wc::IntervalWidget(min_online_time_,
             max_online_time_);
     form_->item(tr("tc.competition.Online_time"), "",
-                min_online_time_->form_widget(), online_time);
+                min_online_time_->form_widget(), online_time_);
     //
     force_start_delay_ = new Wt::Wc::TimeDurationWidget(min::FORCE_START_DELAY,
             cp->force_start_delay(), max::FORCE_START_DELAY);
@@ -139,42 +137,54 @@ void CPWidget::apply_parameters(CP* cp) {
     write_record(cp);
     CompetitionType t = get_type();
     cp->set_type(t);
-    cp->set_min_rating(min_rating_->corrected_value());
-    cp->set_max_rating(max_rating_->corrected_value());
-    cp->set_min_classification(min_classification_->value());
-    cp->set_max_classification(max_classification_->value());
-    cp->set_min_online_time(min_online_time_->value());
-    cp->set_max_online_time(max_online_time_->value());
-    cp->set_force_start_delay(force_start_delay_->corrected_value());
-    if (t == CLASSICAL || t == STAGED) {
+    if (has_rating(t)) {
+        cp->set_min_rating(min_rating_->corrected_value());
+        cp->set_max_rating(max_rating_->corrected_value());
+        if (cp->min_rating() > cp->max_rating()) {
+            cp->set_max_rating(cp->min_rating());
+        }
+    }
+    if (has_classification(t)) {
+        cp->set_min_classification(min_classification_->value());
+        cp->set_max_classification(max_classification_->value());
+    }
+    if (has_online_time(t)) {
+        cp->set_min_online_time(min_online_time_->value());
+        cp->set_max_online_time(max_online_time_->value());
+    }
+    if (has_force_start_delay(t)) {
+        cp->set_force_start_delay(force_start_delay_->corrected_value());
+    }
+    if (has_users_number(t)) {
         cp->set_min_users(min_users_->corrected_value());
         cp->set_max_users(max_users_->corrected_value());
-    }
-    cp->set_min_recruiting_time(min_recruiting_time_->corrected_value());
-    cp->set_max_recruiting_time(max_recruiting_time_->corrected_value());
-    if (t == CLASSICAL || t == TEAM) {
-        int max_simultaneous_games = max_simultaneous_games_->corrected_value();
-        cp->set_max_simultaneous_games(max_simultaneous_games);
-        cp->set_games_factor(games_factor_->corrected_value());
-    }
-    cp->set_relax_time(relax_time_->corrected_value());
-    if (t == STAGED) {
-        cp->set_min_substages(min_substages_->corrected_value());
-        cp->set_increment_substages(increment_substages_->corrected_value());
-    }
-    if (cp->min_rating() > cp->max_rating()) {
-        cp->set_max_rating(cp->min_rating());
-    }
-    if (cp->min_classification() > cp->max_classification()) {
-        cp->set_max_classification(cp->min_classification());
-    }
-    if (t == CLASSICAL || t == STAGED) {
         if (cp->min_users() > cp->max_users()) {
             cp->set_min_users(cp->max_users());
         }
+    }
+    if (has_recruiting_time(t)) {
+        cp->set_min_recruiting_time(min_recruiting_time_->corrected_value());
+        cp->set_max_recruiting_time(max_recruiting_time_->corrected_value());
         if (cp->min_recruiting_time() > cp->max_recruiting_time()) {
             cp->set_min_recruiting_time(cp->max_recruiting_time());
         }
+    }
+    if (has_max_simultaneous_games(t)) {
+        int max_simultaneous_games = max_simultaneous_games_->corrected_value();
+        cp->set_max_simultaneous_games(max_simultaneous_games);
+    }
+    if (has_games_factor(t)) {
+        cp->set_games_factor(games_factor_->corrected_value());
+    }
+    if (has_relax_time(t)) {
+        cp->set_relax_time(relax_time_->corrected_value());
+    }
+    if (has_substages(t)) {
+        cp->set_min_substages(min_substages_->corrected_value());
+        cp->set_increment_substages(increment_substages_->corrected_value());
+    }
+    if (cp->min_classification() > cp->max_classification()) {
+        cp->set_max_classification(cp->min_classification());
     }
 }
 
@@ -184,22 +194,17 @@ void CPWidget::hide_gp_selector() {
 
 void CPWidget::type_handler() {
     CompetitionType t = get_type();
-    form_->hide(users_);
-    form_->hide(max_simultaneous_games_);
-    form_->hide(games_factor_);
-    form_->hide(min_substages_);
-    form_->hide(increment_substages_);
-    if (t == CLASSICAL || t == STAGED) {
-        form_->show(users_);
-    }
-    if (t == CLASSICAL || t == TEAM) {
-        form_->show(max_simultaneous_games_);
-        form_->show(games_factor_);
-    }
-    if (t == STAGED) {
-        form_->show(min_substages_);
-        form_->show(increment_substages_);
-    }
+    form_->set_visible(rating_, has_rating(t));
+    form_->set_visible(classification_, has_classification(t));
+    form_->set_visible(force_start_delay_, has_force_start_delay(t));
+    form_->set_visible(users_, has_users_number(t));
+    form_->set_visible(recruiting_time_, has_recruiting_time(t));
+    form_->set_visible(max_simultaneous_games_, has_max_simultaneous_games(t));
+    form_->set_visible(games_factor_, has_games_factor(t));
+    form_->set_visible(relax_time_, has_relax_time(t));
+    form_->set_visible(min_substages_, has_substages(t));
+    form_->set_visible(increment_substages_, has_substages(t));
+    form_->set_visible(online_time_, has_online_time(t));
 }
 
 void CPWidget::set_type(CompetitionType t) {

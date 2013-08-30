@@ -45,11 +45,11 @@ public:
     CompetitionMembers(const CompetitionPtr& c, const UsersVector& members):
         c_(c) {
         setList(true);
-        if (c_->type() == CLASSICAL || c_->type() == STAGED) {
+        if (!is_team(c_->type())) {
             BOOST_FOREACH (const UserPtr& user, members) {
                 add_user_to_list(user, this);
             }
-        } else if (c_->type() == TEAM) {
+        } else {
             tcm_map_team_to_users(t2u_, c);
             // list of teams here
             TeamsVector teams(c->teams().begin(), c->teams().end());
@@ -171,13 +171,13 @@ class CompetitionWinners : public Wt::WContainerWidget {
 public:
     CompetitionWinners(const CompetitionPtr& c) {
         setList(true);
-        if (c->type() == TEAM) {
+        if (is_team(c->type())) {
             TeamsVector w(c->winner_teams().begin(), c->winner_teams().end());
             BOOST_FOREACH (const TeamPtr& team, w) {
                 Wt::WContainerWidget* item = new Wt::WContainerWidget(this);
                 item->addWidget(team_anchor(team.id()));
             }
-        } else if (c->type() == CLASSICAL || c->type() == STAGED) {
+        } else {
             BOOST_FOREACH (const UserPtr& user, c->winners_vector()) {
                 Wt::WContainerWidget* item = new Wt::WContainerWidget(this);
                 user_anchor(user, item);
@@ -192,35 +192,50 @@ public:
         using namespace config::competition::defaults;
         CPPtr cp = c->cp();
         GPPtr gp = c->gp();
-        kw("tc.competition.Rating", tr("tc.common.interval")
-           .arg(cp->min_rating()).arg(cp->max_rating()));
-        if (cp->min_classification() != MIN_CLASSIFICATION ||
-                cp->max_classification() != MAX_CLASSIFICATION) {
-            kw("tc.competition.Members_classification", tr("tc.common.interval")
+        CompetitionType type = c->type();
+        if (has_rating(type)) {
+            kw("tc.competition.Rating", tr("tc.common.interval")
+               .arg(cp->min_rating()).arg(cp->max_rating()));
+        }
+        if (has_classification(type) &&
+                (cp->min_classification() != MIN_CLASSIFICATION ||
+                 cp->max_classification() != MAX_CLASSIFICATION)) {
+            kw("tc.competition.Members_classification",
+               tr("tc.common.interval")
                .arg(User::classification2str(cp->min_classification()))
                .arg(User::classification2str(cp->max_classification())));
         }
-        if (cp->min_online_time() > SECOND || cp->max_online_time() >= SECOND) {
+        if (has_online_time(type) && (cp->min_online_time() > SECOND ||
+                                      cp->max_online_time() >= SECOND)) {
             kw("tc.competition.Online_time", tr("tc.common.interval")
                .arg(td2str(cp->min_online_time()))
                .arg(td2str(cp->max_online_time())));
         }
-        kw("tc.competition.Force_start_delay", td2str(cp->force_start_delay()));
-        if (c->type() == CLASSICAL || c->type() == STAGED) {
+        if (has_force_start_delay(type)) {
+            kw("tc.competition.Force_start_delay",
+               td2str(cp->force_start_delay()));
+        }
+        if (has_users_number(type)) {
             kw("tc.competition.Users", tr("tc.common.interval")
                .arg(cp->min_users()).arg(cp->max_users()));
         }
-        kw("tc.competition.Recruiting_time", tr("tc.common.interval")
-           .arg(td2str(cp->min_recruiting_time()))
-           .arg(td2str(cp->max_recruiting_time())));
-        if (c->type() == CLASSICAL || c->type() == TEAM) {
+        if (has_recruiting_time(type)) {
+            kw("tc.competition.Recruiting_time", tr("tc.common.interval")
+               .arg(td2str(cp->min_recruiting_time()))
+               .arg(td2str(cp->max_recruiting_time())));
+        }
+        if (has_max_simultaneous_games(type)) {
             kw("tc.competition.Max_simultaneous_games",
                cp->max_simultaneous_games());
+        }
+        if (has_games_factor(type)) {
             boost::format f("%.3f");
             kw("tc.competition.Games_factor", str(f % cp->games_factor()));
         }
-        kw("tc.competition.Relax_time", td2str(cp->relax_time()));
-        if (c->type() == STAGED) {
+        if (has_relax_time(type)) {
+            kw("tc.competition.Relax_time", td2str(cp->relax_time()));
+        }
+        if (has_substages(type)) {
             kw("tc.competition.Min_substages", cp->min_substages());
             kw("tc.competition.Increment_substages", cp->increment_substages());
         }
