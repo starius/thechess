@@ -357,11 +357,6 @@ inline bool is_round_robin(CompetitionType type) {
     return type == CLASSICAL || type == TEAM;
 }
 
-/** Return if "created" of new games should be null */
-inline bool is_created_null(CompetitionType type) {
-    return type == CLASSICAL || type == TEAM;
-}
-
 /** Return if competition has rating requirement */
 inline bool has_rating(CompetitionType type) {
     return true;
@@ -392,9 +387,14 @@ inline bool has_max_simultaneous_games(CompetitionType type) {
     return type == CLASSICAL || type == TEAM;
 }
 
+/** Return if "created" of new games should be null */
+inline bool is_created_null(CompetitionType type) {
+    return has_max_simultaneous_games(type);
+}
+
 /** Return if competition has games factor */
 inline bool has_games_factor(CompetitionType type) {
-    return type == CLASSICAL || type == TEAM;
+    return has_max_simultaneous_games(type);
 }
 
 /** Return if competition has relax time */
