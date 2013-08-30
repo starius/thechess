@@ -374,7 +374,7 @@ inline bool has_force_start_delay(CompetitionType type) {
 
 /** Return if competition has users number requirement */
 inline bool has_users_number(CompetitionType type) {
-    return type == CLASSICAL || type == STAGED;
+    return !is_team(type);
 }
 
 /** Return if competition has recruiting time requirement */
