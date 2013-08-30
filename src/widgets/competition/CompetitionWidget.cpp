@@ -120,7 +120,8 @@ private:
         }
         if (c_->state() == Competition::RECRUITING &&
                 (team->init() == tApp->user() ||
-                 tApp->user()->has_permission(COMPETITION_CHANGER))) {
+                 (tApp->user() &&
+                  tApp->user()->has_permission(COMPETITION_CHANGER)))) {
             new Wt::WBreak(this);
             user_id_ = new Wt::WLineEdit(this);
             user_id_->setValidator(new Wt::WIntValidator);
