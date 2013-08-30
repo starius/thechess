@@ -604,6 +604,7 @@ TheChess.
     <message id='tc.competition.Tree'>Tree</message>
     <message id='tc.competition.Type'>Type</message>
     <message id='tc.competition.Type_classical'>Classical</message>
+    <message id='tc.competition.Type_pair_team'>Pair team</message>
     <message id='tc.competition.Type_staged'>Staged</message>
     <message id='tc.competition.Type_team'>Team</message>
     <message id='tc.competition.User_not_found'>User not found</message>

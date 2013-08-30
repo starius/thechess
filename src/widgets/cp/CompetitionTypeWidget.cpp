@@ -20,6 +20,7 @@ CompetitionTypeWidget::CompetitionTypeWidget(bool with_all,
     addItem(Competition::type2str(CLASSICAL));
     addItem(Competition::type2str(STAGED));
     addItem(Competition::type2str(TEAM));
+    addItem(Competition::type2str(PAIR_TEAM));
 }
 
 CompetitionType CompetitionTypeWidget::value() const {
@@ -37,6 +38,8 @@ CompetitionType CompetitionTypeWidget::value() const {
         return STAGED;
     } else if (index == 2) {
         return TEAM;
+    } else if (index == 3) {
+        return PAIR_TEAM;
     }
     return NO_COMPETITION_TYPE;
 }

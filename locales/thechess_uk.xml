@@ -113,6 +113,7 @@
     <message id="tc.competition.Tree">Дерево</message>
     <message id="tc.competition.Type">Тип</message>
     <message id="tc.competition.Type_classical">Класичний</message>
+    <message id='tc.competition.Type_pair_team'>Парный командный</message>
     <message id="tc.competition.Type_staged">Ступеневий</message>
     <message id="tc.competition.Type_team">Командний</message>
     <message id='tc.competition.User_not_found'>Пользователь не найден</message>

@@ -349,7 +349,7 @@ private:
 
 /** Return if competition type is team */
 inline bool is_team(CompetitionType type) {
-    return type == TEAM;
+    return type == TEAM || type == PAIR_TEAM;
 }
 
 /** Return if competition type is Round-robin */
@@ -384,7 +384,7 @@ inline bool has_recruiting_time(CompetitionType type) {
 
 /** Return if competition has max simultaneous games limit */
 inline bool has_max_simultaneous_games(CompetitionType type) {
-    return type == CLASSICAL || type == TEAM;
+    return type == CLASSICAL || type == TEAM || type == PAIR_TEAM;
 }
 
 /** Return if "created" of new games should be null */

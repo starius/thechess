@@ -176,14 +176,17 @@ enum CompetitionType {
     NO_COMPETITION_TYPE = 0, /**< Not a real type. Not in database */
     CLASSICAL = 10, /**< Classical competition */
     STAGED = 20, /**< Staged competition */
-    TEAM = 30 /**< Team competition */
+    TEAM = 30, /**< Team competition */
+    PAIR_TEAM = 40 /**< Pair team competition */
 };
 
 /** Array of all CompetitionType members */
-const CompetitionType COMPETITION_TYPES[] = {CLASSICAL, STAGED, TEAM};
+const CompetitionType COMPETITION_TYPES[] = {
+    CLASSICAL, STAGED, TEAM, PAIR_TEAM
+};
 
 /** Length of COMPETITION_TYPES */
-const int COMPETITION_TYPES_SIZE = 3;
+const int COMPETITION_TYPES_SIZE = 4;
 
 /** Classification of player */
 enum Classification {

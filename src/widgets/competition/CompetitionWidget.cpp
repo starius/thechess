@@ -293,7 +293,7 @@ public:
             std::sort(members_.begin(), members_.end(),
                       boost::bind(&ClassicalViewImpl::compare_users_classical,
                                   this, _1, _2));
-        } else if (c->type() == TEAM) {
+        } else if (is_team(c->type())) {
             tcm_map_user_to_team(u2t_, c);
             BOOST_FOREACH (const User2Team::value_type& u_t, u2t_) {
                 const TeamPtr& team = u_t.second;
@@ -645,7 +645,7 @@ public:
     CompetitionView(const CompetitionPtr& c) {
         if (c->state() == Competition::ACTIVE ||
                 c->state() == Competition::ENDED) {
-            if (c->type() == CLASSICAL || c->type() == TEAM) {
+            if (c->type() == CLASSICAL || is_team(c->type())) {
                 setImplementation(new ClassicalView(c));
             }
             if (c->type() == STAGED) {
@@ -680,7 +680,7 @@ public:
             if (c->can_force_start(tApp->user())) {
                 button<&Competition::force_start>("tc.competition.Force_start");
             }
-            if (c->state() == Competition::RECRUITING && c->type() == TEAM) {
+            if (c->state() == Competition::RECRUITING && is_team(c->type())) {
                 new Wt::WBreak(this);
                 team_id_ = new Wt::WLineEdit(this);
                 team_id_->setValidator(new Wt::WIntValidator);

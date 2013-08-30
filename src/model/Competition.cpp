@@ -36,6 +36,8 @@ Wt::WString Competition::type2str(Type type) {
         return Wt::WString::tr("tc.competition.Type_staged");
     } else if (type == TEAM) {
         return Wt::WString::tr("tc.competition.Type_team");
+    } else if (type == PAIR_TEAM) {
+        return Wt::WString::tr("tc.competition.Type_pair_team");
     }
     return Wt::WString::tr("tc.competition.Type");
 }
@@ -395,6 +397,22 @@ void Competition::cancel(const UserPtr& user) {
     }
 }
 
+static bool equal_two_teams(const CompetitionPtr& c) {
+    Team2Users t2u;
+    tcm_map_team_to_users(t2u, c);
+    if (t2u.size() != 2) {
+        return false;
+    }
+    int team_a_size = t2u.begin()->second.size();
+    int team_b_size = t2u.rbegin()->second.size();
+    if (team_a_size != team_b_size) {
+        return false;
+    }
+    if (team_a_size == 0) {
+    }
+    return true;
+}
+
 bool Competition::can_force_start(const UserPtr& user) const {
     namespace ccm = config::competition::min;
     return state_ == RECRUITING &&
@@ -402,6 +420,7 @@ bool Competition::can_force_start(const UserPtr& user) const {
            (user == init() || user->has_permission(COMPETITION_CHANGER)) &&
            int(members_.size()) >= ccm::MIN_USERS &&
            (!is_team(type()) || teams_.size() >= 2) &&
+           (type() != PAIR_TEAM || equal_two_teams(self())) &&
            now() - created() >= ccm::MIN_RECRUITING_TIME &&
            (virtual_allower_ || !has_virtuals());
 }
@@ -446,6 +465,7 @@ const CommentPtr& Competition::comment_base() {
 bool Competition::can_add_team(const UserPtr& user, const TeamPtr& team) const {
     return state_ == RECRUITING &&
            is_team(type()) &&
+           (type() != PAIR_TEAM || teams_.size() < 2) &&
            user &&
            !teams_.count(team) &&
            !team->removed() &&
@@ -504,6 +524,9 @@ void Competition::start() {
     }
     if (type() == TEAM) {
         create_games_team();
+    }
+    if (type() == PAIR_TEAM) {
+        create_games_pair_team();
     }
     state_ = ACTIVE;
     started_ = now();
@@ -682,6 +705,41 @@ void Competition::create_games_team() {
     }
 }
 
+struct EloCmp {
+    bool operator()(const UserPtr& a, const UserPtr& b) const {
+        return a->games_stat().elo() < b->games_stat().elo();
+    }
+};
+
+void Competition::create_games_pair_team() {
+    TeamsVector teams(teams_.begin(), teams_.end());
+    BOOST_ASSERT(teams.size() == 2);
+    TeamPtr a_team = teams[0];
+    TeamPtr b_team = teams[1];
+    Team2Users t2u;
+    tcm_map_team_to_users(t2u, self());
+    BOOST_ASSERT(t2u.size() == 2);
+    UsersVector& a_users = t2u[a_team];
+    UsersVector& b_users = t2u[b_team];
+    BOOST_ASSERT(a_users.size() == b_users.size());
+    int pairs_number = a_users.size();
+    std::sort(a_users.begin(), a_users.end(), EloCmp());
+    std::sort(b_users.begin(), b_users.end(), EloCmp());
+    int white_games_per_user = std::max(1, int(cp()->games_factor()));
+    for (int i = 0; i < pairs_number; i++) {
+        UserPtr a_user = a_users[i];
+        UserPtr b_user = b_users[i];
+        for (int j = 0; j < white_games_per_user; j++) {
+            create_game(a_user, b_user);
+            create_game(b_user, a_user);
+        }
+    }
+    UsersVector members(members_.begin(), members_.end());
+    BOOST_FOREACH (const UserPtr& user, members) {
+        t_emit_after(USER, user.id());
+    }
+}
+
 void Competition::process() {
     if (type() == CLASSICAL) {
         process_classical();
@@ -690,7 +748,7 @@ void Competition::process() {
             UsersVector winners = winners_of_games(g);
             finish(winners);
         }
-    } else if (type() == TEAM) {
+    } else if (is_team(type())) {
         process_classical();
         GamesVector g(games_vector());
         if (all_ended(g)) {

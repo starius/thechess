@@ -375,6 +375,7 @@ private:
     void create_games_classical();
     int calculate_white_games_per_team() const;
     void create_games_team();
+    void create_games_pair_team();
     void cancel_impl();
 
     void process();
