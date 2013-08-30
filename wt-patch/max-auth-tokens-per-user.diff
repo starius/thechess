@@ -1,0 +1,13 @@
+diff --git a/src/Wt/Auth/Dbo/UserDatabase b/src/Wt/Auth/Dbo/UserDatabase
+index ac74b8a..fd2e073 100644
+--- a/src/Wt/Auth/Dbo/UserDatabase
++++ b/src/Wt/Auth/Dbo/UserDatabase
+@@ -41,7 +41,7 @@ public:
+    */
+   UserDatabase(Wt::Dbo::Session& session)
+     : session_(session),
+-      maxAuthTokensPerUser_(50)
++      maxAuthTokensPerUser_(500)
+   { }
+ 
+   virtual Transaction *startTransaction() {

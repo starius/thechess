@@ -62,6 +62,7 @@ Dependencies:
    no-error-messages-in-html.diff
    no-http-only-cookies.diff
    wtableview.diff
+   max-auth-tokens-per-user.diff
  * wt-classes library (https://bitbucket.org/starius/wt-classes/)
  * dot command (graphviz lib)
  * Boost library >= 1.44
