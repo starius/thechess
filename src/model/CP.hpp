@@ -344,6 +344,76 @@ private:
     int competitions_size_;
 };
 
+/** \name Feature-tests for competition types */
+/* @{ */
+
+/** Return if competition type is team */
+inline bool is_team(CompetitionType type) {
+    return type == TEAM;
+}
+
+/** Return if competition type is Round-robin */
+inline bool is_round_robin(CompetitionType type) {
+    return type == CLASSICAL || type == TEAM;
+}
+
+/** Return if "created" of new games should be null */
+inline bool is_created_null(CompetitionType type) {
+    return type == CLASSICAL || type == TEAM;
+}
+
+/** Return if competition has rating requirement */
+inline bool has_rating(CompetitionType type) {
+    return true;
+}
+
+/** Return if competition has classification requirement */
+inline bool has_classification(CompetitionType type) {
+    return true;
+}
+
+/** Return if competition has has_force start delay */
+inline bool has_force_start_delay(CompetitionType type) {
+    return true;
+}
+
+/** Return if competition has users number requirement */
+inline bool has_users_number(CompetitionType type) {
+    return type == CLASSICAL || type == STAGED;
+}
+
+/** Return if competition has recruiting time requirement */
+inline bool has_recruiting_time(CompetitionType type) {
+    return true;
+}
+
+/** Return if competition has max simultaneous games limit */
+inline bool has_max_simultaneous_games(CompetitionType type) {
+    return type == CLASSICAL || type == TEAM;
+}
+
+/** Return if competition has games factor */
+inline bool has_games_factor(CompetitionType type) {
+    return type == CLASSICAL || type == TEAM;
+}
+
+/** Return if competition has relax time */
+inline bool has_relax_time(CompetitionType type) {
+    return true;
+}
+
+/** Return if competition has substages number */
+inline bool has_substages(CompetitionType type) {
+    return type == STAGED;
+}
+
+/** Return if competition has online time requirement */
+inline bool has_online_time(CompetitionType type) {
+    return true;
+}
+
+/* @} */
+
 }
 
 DBO_EXTERN_TEMPLATES(thechess::CP);
