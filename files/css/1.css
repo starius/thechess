@@ -283,6 +283,10 @@ FIXME http://redmine.emweb.be/issues/1144
     border-radius: 20px;
 }
 
+.register-anchor {
+    font-weight: bold;
+}
+
 .jp-audio {
     visibility: hidden;
 }

@@ -77,7 +77,9 @@ See locales-test manpage for more information.
                     <td class="Wt-buttons">
                         ${lost-password}
                         <br />
-                        ${register}
+                        <div class="register-anchor">
+                            ${register}
+                        </div>
                     </td>
                 </tr>
             </table>
