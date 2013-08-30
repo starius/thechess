@@ -293,7 +293,7 @@ public:
             std::sort(members_.begin(), members_.end(),
                       boost::bind(&ClassicalViewImpl::compare_users_classical,
                                   this, _1, _2));
-        } else if (is_team(c->type())) {
+        } else if (c->type() == TEAM) {
             tcm_map_user_to_team(u2t_, c);
             BOOST_FOREACH (const User2Team::value_type& u_t, u2t_) {
                 const TeamPtr& team = u_t.second;
@@ -640,16 +640,129 @@ private:
     StagedCompetition sc_;
 };
 
+struct EloCmp2 {
+    bool operator()(const UserPtr& a, const UserPtr& b) const {
+        return a->games_stat().elo() < b->games_stat().elo();
+    }
+};
+
+class PairTeamWidget : public Wt::WContainerWidget {
+public:
+    enum {
+        COL_ID,
+        COL_TEAM_A,
+        COL_ELO_A,
+        COL_GAMES_A,
+        COL_SCORE_A,
+        COL_TEAM_B,
+        COL_ELO_B,
+        COL_GAMES_B,
+        COL_SCORE_B,
+        COL_SUM
+    };
+
+    PairTeamWidget(const CompetitionPtr& c):
+        c_(c) {
+        TeamsVector teams(c_->teams().begin(), c_->teams().end());
+        BOOST_ASSERT(teams.size() == 2);
+        TeamPtr a_team = teams[0];
+        TeamPtr b_team = teams[1];
+        Team2Users t2u;
+        tcm_map_team_to_users(t2u, c);
+        BOOST_ASSERT(t2u.size() == 2);
+        UsersVector& a_users = t2u[a_team];
+        UsersVector& b_users = t2u[b_team];
+        std::sort(a_users.begin(), a_users.end(), EloCmp2());
+        typedef std::map<UserPtr, GamesVector> User2Games;
+        User2Games u2g;
+        GamesVector games = c_->games_vector();
+        BOOST_FOREACH (const GamePtr& game, games) {
+            u2g[game->white()].push_back(game);
+        }
+        Competition::User2float user_wins;
+        Competition::wins_number(games, user_wins);
+        //
+        table_ = new Wt::WTable(this);
+        table_->setStyleClass("thechess-table-border");
+        // header: -|team a|elo a|team b|elo b|
+        // header:    games a|games b|score a|score b|sum
+        e(0, COL_TEAM_A, team_anchor(a_team.id()));
+        e(0, COL_ELO_A, tr("tc.user.games_stat_elo"));
+        e(0, COL_GAMES_A, tr("tc.game.List"));
+        e(0, COL_SCORE_A, tr("tc.competition.Score"));
+        e(0, COL_TEAM_B, team_anchor(b_team.id()));
+        e(0, COL_ELO_B, tr("tc.user.games_stat_elo"));
+        e(0, COL_GAMES_B, tr("tc.game.List"));
+        e(0, COL_SCORE_B, tr("tc.competition.Score"));
+        e(0, COL_SUM, tr("tc.competition.Ended_games_number"));
+        //
+        int team_size = a_users.size();
+        float a_wins_total = 0.0;
+        float b_wins_total = 0.0;
+        for (int i = 0; i < team_size; i++) {
+            int number = i + 1;
+            int row = i + 1;
+            const UserPtr& a_user = a_users[i];
+            const UserPtr& b_user = b_users[i];
+            const GamesVector& a_games = u2g[a_user];
+            const GamesVector& b_games = u2g[b_user];
+            float a_wins = user_wins[a_user];
+            float b_wins = user_wins[b_user];
+            a_wins_total += a_wins;
+            b_wins_total += b_wins;
+            e(row, COL_ID, TO_S(number));
+            e(row, COL_TEAM_A, user_anchor(a_user));
+            e(row, COL_ELO_A, TO_S(a_user->games_stat().elo()));
+            e(row, COL_GAMES_A, a_games);
+            e(row, COL_SCORE_A, TO_S(a_wins));
+            e(row, COL_TEAM_B, user_anchor(b_user));
+            e(row, COL_ELO_B, TO_S(b_user->games_stat().elo()));
+            e(row, COL_GAMES_B, b_games);
+            e(row, COL_SCORE_B, TO_S(b_wins));
+            e(row, COL_SUM, TO_S(a_wins + b_wins));
+        }
+        int row = team_size + 1;
+        e(row, COL_SCORE_A, TO_S(a_wins_total));
+        e(row, COL_SCORE_B, TO_S(b_wins_total));
+        e(row, COL_SUM, TO_S(a_wins_total + b_wins_total));
+    }
+
+private:
+    CompetitionPtr c_;
+    Wt::WTable* table_;
+
+    Wt::WTableCell* e(int row, int col) {
+        return table_->elementAt(row, col);
+    }
+
+    void e(int row, int col, Wt::WWidget* widget) {
+        e(row, col)->addWidget(widget);
+    }
+
+    void e(int row, int col, const Wt::WString& text) {
+        e(row, col, new Wt::WText(text));
+    }
+
+    void e(int row, int col, const GamesVector& games) {
+        BOOST_FOREACH (const GamePtr& game, games) {
+            game_reference(game, e(row, col));
+        }
+    }
+};
+
 class CompetitionView : public Wt::WCompositeWidget {
 public:
     CompetitionView(const CompetitionPtr& c) {
         if (c->state() == Competition::ACTIVE ||
                 c->state() == Competition::ENDED) {
-            if (c->type() == CLASSICAL || is_team(c->type())) {
+            if (is_round_robin(c->type())) {
                 setImplementation(new ClassicalView(c));
             }
             if (c->type() == STAGED) {
                 setImplementation(new StagedWidget(c));
+            }
+            if (c->type() == PAIR_TEAM) {
+                setImplementation(new PairTeamWidget(c));
             }
         }
         if (!implementation()) {

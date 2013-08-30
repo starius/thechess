@@ -84,6 +84,7 @@
     <message id='tc.competition.competition'>турнир</message>
     <message id='tc.competition.Create_welcome'>Создать новый турнир</message>
     <message id='tc.competition.Ended'>Завершён</message>
+    <message id='tc.competition.Ended_games_number'># завершённых</message>
     <message id='tc.competition.Force_start'>Форсированный старт</message>
     <message id='tc.competition.Force_start_delay'>Форсированный старт партии</message>
     <message id='tc.competition.Games_factor'>Множитель партий</message>

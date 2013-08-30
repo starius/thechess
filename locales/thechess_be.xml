@@ -76,6 +76,7 @@
     <message id="tc.competition.competition">турнір</message>
     <message id="tc.competition.Create_welcome">Стварыць новы турнір</message>
     <message id="tc.competition.Ended">Завершаны</message>
+    <message id='tc.competition.Ended_games_number'># завершённых</message>
     <message id='tc.competition.Force_start'>Фарсіраваны старт</message>
     <message id="tc.competition.Force_start_delay">Фарсіраваны старт партыі</message>
     <message id="tc.competition.Games_factor">Множнік партый</message>
