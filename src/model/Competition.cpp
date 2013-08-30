@@ -32,11 +32,9 @@ Competition::Competition(bool):
 Wt::WString Competition::type2str(Type type) {
     if (type == CLASSICAL) {
         return Wt::WString::tr("tc.competition.Type_classical");
-    }
-    if (type == STAGED) {
+    } else if (type == STAGED) {
         return Wt::WString::tr("tc.competition.Type_staged");
-    }
-    if (type == TEAM) {
+    } else if (type == TEAM) {
         return Wt::WString::tr("tc.competition.Type_team");
     }
     return Wt::WString::tr("tc.competition.Type");
