@@ -156,6 +156,14 @@ void Server::auth_init() {
     auth_service_.setAuthTokenValidity(config::COOKIE_AGE.total_minutes());
     auth_service_.setEmailVerificationEnabled(true);
     password_service_.setAttemptThrottlingEnabled(true);
+    PasswordStrengthValidator* s = new PasswordStrengthValidator();
+    s->setMinimumPassPhraseWords(1);
+    s->setMinimumLength(Wt::Auth::PasswordStrengthValidator::OneCharClass, 3);
+    s->setMinimumLength(Wt::Auth::PasswordStrengthValidator::TwoCharClass, 3);
+    s->setMinimumLength(Wt::Auth::PasswordStrengthValidator::PassPhrase, 3);
+    s->setMinimumLength(Wt::Auth::PasswordStrengthValidator::ThreeCharClass, 3);
+    s->setMinimumLength(Wt::Auth::PasswordStrengthValidator::FourCharClass, 3);
+    password_service_.setStrengthValidator(s);
     PasswordVerifier* verifier = new PasswordVerifier();
     verifier->addHashFunction(new BCryptHashFunction(7));
     verifier->addHashFunction(new CP1251NoSaltMd5);
