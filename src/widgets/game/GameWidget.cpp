@@ -349,7 +349,8 @@ private:
             if (game_->can_competition_confirm(tApp->user())) {
                 Wt::WText* t = new Wt::WText(manager_);
                 t->setText(tr("tc.game.Competition_confirm_welcome"));
-                but<&Game::competition_confirm>("tc.game.Competition_confirm");
+                but<&Game::competition_confirm>("tc.game.Competition_confirm",
+                                                true);
             } else if (game_->can_competition_discard(tApp->user())) {
                 Wt::WText* t = new Wt::WText(manager_);
                 t->setText(tr("tc.game.Competition_discard_welcome"));
@@ -357,9 +358,9 @@ private:
             }
         } else {
             if (game_->can_join(tApp->user())) {
-                but<&Game::join>("tc.common.Join");
+                but<&Game::join>("tc.common.Join", true);
             } else if (game_->can_confirm(tApp->user())) {
-                but<&Game::confirm>("tc.common.Confirm");
+                but<&Game::confirm>("tc.common.Confirm", true);
             }
             if (game_->can_cancel(tApp->user())) {
                 but<&Game::cancel>("tc.common.Cancel");
@@ -503,10 +504,13 @@ private:
     }
 
     template <GameMember method>
-    Wt::WPushButton* but(const char* title_id) {
+    Wt::WPushButton* but(const char* title_id, bool main_button = false) {
         Wt::WPushButton* b;
         b = new Wt::WPushButton(tr(title_id), manager_);
         b->clicked().connect(this, &GameWidgetImpl::action<method>);
+        if (main_button) {
+            b->addStyleClass("thechess-main-button");
+        }
         return b;
     }
 

@@ -116,6 +116,7 @@ private:
             b = new Wt::WPushButton(tr("tc.common.Join"), item);
             b->clicked().connect(boost::bind(&CompetitionMembers::team_join,
                                              this, team));
+            b->addStyleClass("thechess-main-button");
         }
         if (c_->state() == Competition::RECRUITING &&
                 (team->init() == tApp->user() ||
@@ -647,7 +648,7 @@ public:
         c_(c), is_editing_(false) {
         if (tApp->user()) {
             if (c->can_join(tApp->user())) {
-                button<&Competition::join>("tc.common.Join");
+                button<&Competition::join>("tc.common.Join", true);
             } else if (c->can_leave(tApp->user())) {
                 button<&Competition::leave>("tc.game.Leave");
             }
@@ -736,10 +737,13 @@ private:
     }
 
     template <CompetitionMethod method>
-    void button(const char* title_id) {
+    void button(const char* title_id, bool main_button = false) {
         Wt::WPushButton* b;
         b = new Wt::WPushButton(tr(title_id), this);
         b->clicked().connect(this, &CompetitionManager::action<method>);
+        if (main_button) {
+            b->addStyleClass("thechess-main-button");
+        }
     }
 
     void save_handler() {

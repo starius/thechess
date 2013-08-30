@@ -30,6 +30,7 @@ CompetitionCreateWidget::CompetitionCreateWidget(Wt::WContainerWidget* p):
         print();
         ok_ = new Wt::WPushButton(tr("tc.common.Create"), this);
         ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler);
+        ok_->addStyleClass("thechess-main-button");
         error_message_ = new Wt::WText(this);
         error_message_->setStyleClass("thechess-error");
     } else {
@@ -48,6 +49,7 @@ CompetitionCreateWidget::CompetitionCreateWidget(const CPPtr& cp,
         cp_selector_->set_cp(cp);
         ok_ = new Wt::WPushButton(tr("tc.common.Create"), this);
         ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler);
+        ok_->addStyleClass("thechess-main-button");
         error_message_ = new Wt::WText(this);
         error_message_->setStyleClass("thechess-error");
     } else {
@@ -67,6 +69,7 @@ CompetitionCreateWidget::CompetitionCreateWidget(const CompetitionPtr& c,
         cp_selector_->set_cp(c->cp());
         ok_ = new Wt::WPushButton(tr("tc.common.Save"), this);
         ok_->clicked().connect(this, &CompetitionCreateWidget::button_handler);
+        ok_->addStyleClass("thechess-main-button");
         error_message_ = new Wt::WText(this);
         error_message_->setStyleClass("thechess-error");
     } else {

@@ -248,6 +248,7 @@ void MainWidget::gp_view(const GPPtr& gp) {
     tApp->path().gp_view()->set_integer_value(gp.id());
     challenge->setLink(tApp->path().gp_challenge()->link());
     challenge->setText(tr("tc.game.Challenge"));
+    challenge->addStyleClass("thechess-main-button");
     set_contents(c);
     wApp->setTitle(tr("tc.title.GPWidget").arg(gp.id()));
 }
@@ -316,6 +317,7 @@ void MainWidget::cp_view(const CPPtr& cp) {
     tApp->path().cp_view()->set_integer_value(cp.id());
     challenge->setLink(tApp->path().cp_challenge()->link());
     challenge->setText(tr("tc.competition.Create_welcome"));
+    challenge->addStyleClass("thechess-main-button");
     set_contents(c);
     wApp->setTitle(tr("tc.title.CPWidget").arg(cp.id()));
 }
