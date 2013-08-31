@@ -302,6 +302,16 @@ public:
         return virtual_allower_;
     }
 
+    /** Return if games in pairs of these two players can be exchanged.
+    Only for PAIR_TEAM competition in Competition::ACTIVE state.
+    Only for PROPOSED games.
+    Users must be in one team.
+    */
+    bool can_exchange(const UserPtr& a, UserPtr& b) const;
+
+    /** Try to exchange games in pairs of these two players */
+    void exchange(const UserPtr& a, UserPtr& b);
+
     /* @} */
 
     /** \name Methods of comments */

@@ -368,6 +368,25 @@ void Game::propose_by_competition() {
     }
 }
 
+bool Game::can_exchange(const GamePtr& other) const {
+    return state() == PROPOSED && other->state() == PROPOSED &&
+           competition() && competition() == other->competition() &&
+           competition()->type() == PAIR_TEAM &&
+           competition()->state() == Competition::ACTIVE;
+}
+
+void Game::exchange(const GamePtr& other) {
+    if (can_exchange(other)) {
+        std::swap(black_, other.modify()->black_);
+        set_created(Wt::WDateTime());
+        other.modify()->set_created(Wt::WDateTime());
+        competition_confirmer_[Piece::WHITE] = false;
+        competition_confirmer_[Piece::BLACK] = false;
+        other.modify()->competition_confirmer_[Piece::WHITE] = false;
+        other.modify()->competition_confirmer_[Piece::BLACK] = false;
+    }
+}
+
 void Game::confirm() {
     confirmed_ = now();
     if (!created().isValid()) {

@@ -449,6 +449,55 @@ void Competition::allow_virtuals(const UserPtr& user) {
     }
 }
 
+bool Competition::can_exchange(const UserPtr& a, UserPtr& b) const {
+    if (type() != PAIR_TEAM) {
+        return false;
+    }
+    User2Team u2t;
+    tcm_map_user_to_team(u2t, self());
+    if (u2t[a] != u2t[b]) {
+        return false;
+    }
+    Games g = games().find()
+              .where("white = ? or black = ? or white = ? or black = ?")
+              .bind(a).bind(a).bind(b).bind(b);
+    BOOST_FOREACH (GamePtr game, g) {
+        if (game->state() != Game::PROPOSED) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void Competition::exchange(const UserPtr& a, UserPtr& b) {
+    if (can_exchange(a, b)) {
+        const char* COLORS[] = {"white", "black"};
+        typedef std::pair<GamePtr, GamePtr> GamePair;
+        std::vector<GamePair> game_pairs;
+        for (int color_i = 0; color_i < 2; color_i++) {
+            std::string color = COLORS[color_i];
+            Games a_games = games().find().where(color + " = ?").bind(a);
+            GamesVector a_games_v(a_games.begin(), a_games.end());
+            Games b_games = games().find().where(color + " = ?").bind(b);
+            GamesVector b_games_v(b_games.begin(), b_games.end());
+            BOOST_ASSERT(a_games_v.size() == b_games_v.size());
+            int games_size = a_games_v.size();
+            for (int game_id = 0; game_id < games_size; game_id++) {
+                GamePtr a_game = a_games_v[game_id];
+                GamePtr b_game = b_games_v[game_id];
+                game_pairs.push_back(std::make_pair(a_game, b_game));
+            }
+        }
+        BOOST_FOREACH (const GamePair& game_pair, game_pairs) {
+            GamePtr a_game = game_pair.first;
+            GamePtr b_game = game_pair.second;
+            a_game.modify()->exchange(b_game);
+        }
+        t_emit_after(USER, a.id());
+        t_emit_after(USER, b.id());
+    }
+}
+
 bool Competition::has_comment_base() const {
     return comment_base_;
 }

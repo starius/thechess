@@ -592,6 +592,17 @@ public:
     */
     void propose_by_competition();
 
+    /** Return if the game can be "exchanged" with other game.
+    Exchange means that black users of these games are
+    swapped.
+    This works only for PROPOSED games of PAIR_TEAM competition
+    of state Competition::ACTIVE.
+    */
+    bool can_exchange(const GamePtr& other) const;
+
+    /** Try to exchange the game with other game */
+    void exchange(const GamePtr& other);
+
     /* @} */
 
     /** Write PGN representation of game to stream.
