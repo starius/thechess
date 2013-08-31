@@ -372,7 +372,7 @@ void MyGameAnchor::check_state() {
 
 void MyGameAnchor::check_ended() {
     dbo::Transaction t(tApp->session());
-    if (game_->state() > Game::MIN_ENDED) {
+    if (game_->state() > Game::MIN_ENDED || !game_->is_member(tApp->user())) {
         list_->remove_anchor(this, game_.id());
     }
 }
