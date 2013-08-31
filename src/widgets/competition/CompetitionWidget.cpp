@@ -671,7 +671,6 @@ public:
         tcm_map_team_to_users(t2u, c);
         BOOST_ASSERT(t2u.size() == 2);
         UsersVector& a_users = t2u[a_team];
-        UsersVector& b_users = t2u[b_team];
         std::sort(a_users.begin(), a_users.end(), EloCmp2());
         typedef std::map<UserPtr, GamesVector> User2Games;
         User2Games u2g;
@@ -703,8 +702,9 @@ public:
             int number = i + 1;
             int row = i + 1;
             const UserPtr& a_user = a_users[i];
-            const UserPtr& b_user = b_users[i];
             const GamesVector& a_games = u2g[a_user];
+            const GamePtr& a_game = a_games[0];
+            const UserPtr& b_user = a_game->other_user(a_user);
             const GamesVector& b_games = u2g[b_user];
             float a_wins = user_wins[a_user];
             float b_wins = user_wins[b_user];
