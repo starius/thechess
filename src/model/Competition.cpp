@@ -67,7 +67,10 @@ void Competition::check(Wt::Wc::notify::TaskPtr task) {
 Wt::WDateTime Competition::next_check() const {
     Wt::WDateTime result;
     if (state_ == RECRUITING) {
-        if (has_recruiting_time(type())) {
+        namespace ccm = config::competition::min;
+        if (now() - created() < ccm::MIN_RECRUITING_TIME) {
+            result = created() + ccm::MIN_RECRUITING_TIME;
+        } else if (has_recruiting_time(type())) {
             if (now() < created() + cp_->min_recruiting_time()) {
                 result = created() + cp_->min_recruiting_time();
             } else {
