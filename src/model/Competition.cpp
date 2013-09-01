@@ -470,6 +470,12 @@ bool Competition::can_exchange(const UserPtr& a, UserPtr& b) const {
     return true;
 }
 
+bool Competition::can_exchange(const UserPtr& user) const {
+    return type() == PAIR_TEAM && state() == ACTIVE && user &&
+           (user->has_permission(COMPETITION_CHANGER) ||
+            init() == user);
+}
+
 void Competition::exchange(const UserPtr& a, UserPtr& b) {
     if (can_exchange(a, b)) {
         const char* COLORS[] = {"white", "black"};

@@ -309,6 +309,9 @@ public:
     */
     bool can_exchange(const UserPtr& a, UserPtr& b) const;
 
+    /** Return if the user can do exchange */
+    bool can_exchange(const UserPtr& user) const;
+
     /** Try to exchange games in pairs of these two players */
     void exchange(const UserPtr& a, UserPtr& b);
 
