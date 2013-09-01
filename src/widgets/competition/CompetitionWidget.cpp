@@ -147,9 +147,9 @@ private:
         dbo::Transaction t(tApp->session());
         c_.reread();
         tApp->user().reread();
-        int user_id = boost::lexical_cast<int>(user_id_->text());
         UserPtr user;
         try {
+            int user_id = boost::lexical_cast<int>(user_id_->text());
             user = tApp->session().load<User>(user_id);
         } catch (...) {
             user_id_->setText(tr("tc.competition.User_not_found"));
@@ -889,9 +889,9 @@ private:
         dbo::Transaction t(tApp->session());
         c_.reread();
         tApp->user().reread();
-        int team_id = boost::lexical_cast<int>(team_id_->text());
         TeamPtr team;
         try {
+            int team_id = boost::lexical_cast<int>(team_id_->text());
             team = tApp->session().load<Team>(team_id);
         } catch (...) {
             team_id_->setText(tr("tc.competition.Team_not_found"));
