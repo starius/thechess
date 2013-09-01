@@ -78,6 +78,8 @@
     <message id="tc.competition.Create_welcome">Створити новий турнір</message>
     <message id="tc.competition.Ended">Завершено</message>
     <message id='tc.competition.Ended_games_number'># завершённых</message>
+    <message id='tc.competition.Exchange'>Поменяться</message>
+    <message id='tc.competition.Exchange_must_2'>Отметьте двух пользователей для обмена</message>
     <message id='tc.competition.Force_start'>Форсований старт</message>
     <message id="tc.competition.Force_start_delay">Форсований старт партії</message>
     <message id="tc.competition.Games_factor">Множник партій</message>

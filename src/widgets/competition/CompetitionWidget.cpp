@@ -19,6 +19,7 @@
 #include <Wt/WAnchor>
 #include <Wt/WImage>
 #include <Wt/WLineEdit>
+#include <Wt/WCheckBox>
 #include <Wt/WIntValidator>
 #include <Wt/WCompositeWidget>
 #include <Wt/WPushButton>
@@ -645,6 +646,15 @@ struct EloCmp2 {
     }
 };
 
+static bool all_proposed(const GamesVector& games) {
+    BOOST_FOREACH (const GamePtr& game, games) {
+        if (game->state() != Game::PROPOSED) {
+            return false;
+        }
+    }
+    return true;
+}
+
 class PairTeamWidget : public Wt::WContainerWidget {
 public:
     enum {
@@ -694,6 +704,8 @@ public:
         e(0, COL_SCORE_B, tr("tc.competition.Score"));
         e(0, COL_SUM, tr("tc.competition.Ended_games_number"));
         //
+        bool can_exchange = c->can_exchange(tApp->user());
+        //
         int team_size = a_users.size();
         float a_wins_total = 0.0;
         float b_wins_total = 0.0;
@@ -719,16 +731,56 @@ public:
             e(row, COL_GAMES_B, b_games);
             e(row, COL_SCORE_B, TO_S(b_wins));
             e(row, COL_SUM, TO_S(a_wins + b_wins));
+            if (can_exchange &&
+                    all_proposed(a_games) && all_proposed(b_games)) {
+                e(row, COL_ID, check_box(a_user));
+            }
         }
         int row = team_size + 1;
         e(row, COL_SCORE_A, TO_S(a_wins_total));
         e(row, COL_SCORE_B, TO_S(b_wins_total));
         e(row, COL_SUM, TO_S(a_wins_total + b_wins_total));
+        if (check_boxes_.size() >= 2) {
+            Wt::WPushButton* ex;
+            ex = new Wt::WPushButton(tr("tc.competition.Exchange"), this);
+            ex->clicked().connect(this, &PairTeamWidget::exchange);
+            exchange_result_ = new Wt::WText(this);
+        }
     }
 
 private:
     CompetitionPtr c_;
     Wt::WTable* table_;
+    typedef std::map<UserPtr, Wt::WCheckBox*> User2Checkbox;
+    User2Checkbox check_boxes_;
+    Wt::WText* exchange_result_;
+
+    Wt::WCheckBox* check_box(const UserPtr& user) {
+        Wt::WCheckBox* result = new Wt::WCheckBox;
+        check_boxes_[user] = result;
+        return result;
+    }
+
+    void exchange() {
+        dbo::Transaction t(tApp->session());
+        if (c_->can_exchange(tApp->user())) {
+            std::vector<UserPtr> users;
+            BOOST_FOREACH (const User2Checkbox::value_type& user_and_box,
+                          check_boxes_) {
+                const UserPtr& user = user_and_box.first;
+                Wt::WCheckBox* checkbox = user_and_box.second;
+                if (checkbox->isChecked()) {
+                    users.push_back(user);
+                }
+            }
+            if (users.size() == 2) {
+                c_.modify()->exchange(users[0], users[1]);
+                t_emit(COMPETITION, c_.id());
+            } else {
+                exchange_result_->setText(tr("tc.competition.Exchange_must_2"));
+            }
+        }
+    }
 
     Wt::WTableCell* e(int row, int col) {
         return table_->elementAt(row, col);
