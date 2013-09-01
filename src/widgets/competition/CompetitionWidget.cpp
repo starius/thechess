@@ -63,7 +63,6 @@ public:
 private:
     CompetitionPtr c_;
     Team2Users t2u_;
-    Wt::WLineEdit* user_id_;
 
     void kick(UserPtr user) {
         dbo::Transaction t(tApp->session());
@@ -123,12 +122,12 @@ private:
                  (tApp->user() &&
                   tApp->user()->has_permission(COMPETITION_CHANGER)))) {
             new Wt::WBreak(this);
-            user_id_ = new Wt::WLineEdit(this);
-            user_id_->setValidator(new Wt::WIntValidator);
+            Wt::WLineEdit* user_id_edit = new Wt::WLineEdit(this);
+            user_id_edit->setValidator(new Wt::WIntValidator);
             Wt::WPushButton* b;
             b = new Wt::WPushButton(tr("tc.competition.Add_user"), this);
             b->clicked().connect(boost::bind(&CompetitionMembers::add_user,
-                                             this, team));
+                                             this, team, user_id_edit));
         }
         Wt::WContainerWidget* sub_list = new Wt::WContainerWidget(item);
         sub_list->setList(true);
@@ -137,11 +136,11 @@ private:
         }
     }
 
-    void add_user(TeamPtr team) {
+    void add_user(TeamPtr team, Wt::WLineEdit* user_id_edit) {
         if (!tApp->user()) {
             return;
         }
-        if (user_id_->validate() != Wt::WValidator::Valid) {
+        if (user_id_edit->validate() != Wt::WValidator::Valid) {
             return;
         }
         dbo::Transaction t(tApp->session());
@@ -149,14 +148,14 @@ private:
         tApp->user().reread();
         UserPtr user;
         try {
-            int user_id = boost::lexical_cast<int>(user_id_->text());
+            int user_id = boost::lexical_cast<int>(user_id_edit->text());
             user = tApp->session().load<User>(user_id);
         } catch (...) {
-            user_id_->setText(tr("tc.competition.User_not_found"));
+            user_id_edit->setText(tr("tc.competition.User_not_found"));
             return;
         }
         if (!c_->can_add_user(tApp->user(), user, team)) {
-            user_id_->setText(tr("tc.competition.Cant_add_user"));
+            user_id_edit->setText(tr("tc.competition.Cant_add_user"));
             return;
         }
         c_.modify()->add_user(tApp->user(), user, team);
