@@ -450,7 +450,7 @@ void Competition::allow_virtuals(const UserPtr& user) {
 }
 
 bool Competition::can_exchange(const UserPtr& a, UserPtr& b) const {
-    if (type() != PAIR_TEAM) {
+    if (type() != PAIR_TEAM || state() != ACTIVE) {
         return false;
     }
     User2Team u2t;
@@ -459,7 +459,8 @@ bool Competition::can_exchange(const UserPtr& a, UserPtr& b) const {
         return false;
     }
     Games g = games().find()
-              .where("white = ? or black = ? or white = ? or black = ?")
+              .where("white_id = ? or black_id = ? or "
+                     "white_id = ? or black_id = ?")
               .bind(a).bind(a).bind(b).bind(b);
     BOOST_FOREACH (GamePtr game, g) {
         if (game->state() != Game::PROPOSED) {
@@ -476,10 +477,18 @@ void Competition::exchange(const UserPtr& a, UserPtr& b) {
         std::vector<GamePair> game_pairs;
         for (int color_i = 0; color_i < 2; color_i++) {
             std::string color = COLORS[color_i];
-            Games a_games = games().find().where(color + " = ?").bind(a);
-            GamesVector a_games_v(a_games.begin(), a_games.end());
-            Games b_games = games().find().where(color + " = ?").bind(b);
-            GamesVector b_games_v(b_games.begin(), b_games.end());
+            GamesVector a_games_v;
+            {
+                Games a_games = games().find().where(color + "_id = ?").bind(a);
+                GamesVector a_games_temp(a_games.begin(), a_games.end());
+                a_games_v.swap(a_games_temp);
+            }
+            GamesVector b_games_v;
+            {
+                Games b_games = games().find().where(color + "_id = ?").bind(b);
+                GamesVector b_games_temp(b_games.begin(), b_games.end());
+                b_games_v.swap(b_games_temp);
+            }
             BOOST_ASSERT(a_games_v.size() == b_games_v.size());
             int games_size = a_games_v.size();
             for (int game_id = 0; game_id < games_size; game_id++) {
