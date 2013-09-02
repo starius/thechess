@@ -85,12 +85,21 @@ public:
         return instance_;
     }
 
-    /** Create localized strings pointing to global storage */
-    Wt::WLocalizedStrings* create_localized_strings();
+    /** Create global localized strings storage.
+    \warning Make sure to store this pointer with Application.
+    */
+    const boost::shared_ptr<Wt::Wc::GlobalLocalizedStrings>& gls() const {
+        return gls_;
+    }
+
+    /** Reread global localized strings storage.
+    Old ssesion will cntinue to use old localized strings storage.
+    */
+    void reset_gls();
 
 private:
     Options options_;
-    Wt::Wc::GlobalLocalizedStrings gls_;
+    boost::shared_ptr<Wt::Wc::GlobalLocalizedStrings> gls_;
     SharedBoardIndex shared_board_index_;
     dbo::FixedSqlConnectionPool pool_;
     Notifier notifier_;

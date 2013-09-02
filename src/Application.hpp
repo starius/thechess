@@ -129,6 +129,7 @@ private:
     Td* server_usage_;
     Td timezone_diff_;
     Wt::JSignal<int> timezone_signal_;
+    boost::shared_ptr<Wt::Wc::GlobalLocalizedStrings> gls_;
 
     void explore_timezone();
     void set_timezone_diff(int shift);

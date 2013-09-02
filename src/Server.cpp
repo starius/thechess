@@ -62,12 +62,7 @@ Server::Server(int argc, char** argv):
     planning_.set_notification_server(&notifier_);
     planning_.set_io_service(&io_service_);
     io_service_.start();
-    gls_.use(Wt::Wc::approot() + "locales/thechess");
-    gls_.use(Wt::Wc::approot() + "locales/wtclasses/wtclasses");
-    gls_.use(Wt::Wc::approot() + "locales/wt");
-    gls_.add_lang("ru");
-    gls_.add_lang("be");
-    gls_.add_lang("uk");
+    reset_gls();
     //addResource(&all_pgn_, "/pgn/all.pgn");
     addResource(&pgn_, "/pgn/");
     addResource(&swfstore_, "/swfstore.swf");
@@ -103,8 +98,22 @@ void Server::reread_options() {
     Wt::WServer::instance_ = this;
 }
 
-Wt::WLocalizedStrings* Server::create_localized_strings() {
-    return gls_.create_localized_strings();
+void Server::reset_gls() {
+    std::string locale;
+    if (tApp) {
+        locale = Wt::Wc::get_locale();
+    }
+    Wt::Wc::GlobalLocalizedStrings* gls = new Wt::Wc::GlobalLocalizedStrings;
+    gls->use(Wt::Wc::approot() + "locales/thechess");
+    gls->use(Wt::Wc::approot() + "locales/wtclasses/wtclasses");
+    gls->use(Wt::Wc::approot() + "locales/wt");
+    gls->add_lang("ru");
+    gls->add_lang("be");
+    gls->add_lang("uk");
+    gls_.reset(gls);
+    if (tApp) {
+        Wt::Wc::set_locale(locale);
+    }
 }
 
 std::string utf8_to_cp1251(const std::string& utf8) {
