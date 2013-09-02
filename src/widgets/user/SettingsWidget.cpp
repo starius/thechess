@@ -242,6 +242,8 @@ private:
             b->clicked().connect(this, &SettingsWidgetImpl::clear_index);
             b = new Wt::WPushButton(tr("tc.user.Reread_options"), this);
             b->clicked().connect(this, &SettingsWidgetImpl::reread_options);
+            b = new Wt::WPushButton(tr("tc.user.Reread_translations"), this);
+            b->clicked().connect(this, &SettingsWidgetImpl::reread_tr);
         }
     }
 
@@ -401,6 +403,11 @@ private:
     void reread_options() {
         admin_log("Reread options", true);
         Server::instance()->reread_options();
+    }
+
+    void reread_tr() {
+        admin_log("Reread translations", true);
+        Server::instance()->reset_gls();
     }
 
     void recalculation() {

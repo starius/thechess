@@ -491,6 +491,7 @@
     <message id='tc.user.regular_rights_changer'>изменять обычные права</message>
     <message id='tc.user.Removed_message'><b>[Удалённый пользователь]</b></message>
     <message id='tc.user.Reread_options'>Перезагрузить настройки</message>
+    <message id='tc.user.Reread_translations'>Перезагрузить переводы</message>
     <message id='tc.user.Set_motd'>Выставить номер комментария, показанного сверху</message>
     <message id='tc.user.Settings'>Настройки</message>
     <message id='tc.user.Start_game'>Начать игру</message>
