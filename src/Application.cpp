@@ -157,6 +157,7 @@ void Application::login_handler() {
     }
     bool show_user_items = true;
     if (prev_user_ != user()) {
+        main_widget_->clear_cached_contents();
         prev_user_.reread();
         if (prev_user_) {
             prev_user_.modify()->logout_last_online();

@@ -12,6 +12,7 @@
 #include <Wt/Wc/util.hpp>
 #include <Wt/Wc/SWFStore.hpp>
 #include <Wt/Wc/Countdown.hpp>
+#include <Wt/Wc/CachedContents.hpp>
 
 #include "model/all.hpp"
 #include "widgets/MainWidget.hpp"
@@ -57,6 +58,37 @@
 
 namespace thechess {
 
+class MyCachedContents : public Wt::Wc::CachedContents {
+public:
+    MyCachedContents():
+        path_(tApp->path()) {
+        ignore_url(path_.settings_page()->full_path());
+        ignore_url(path_.main_page()->full_path());
+        ignore_url(path_.random_competitor()->full_path());
+        wApp->internalPathChanged()
+        .connect(this, &MyCachedContents::my_open_url);
+    }
+
+    void my_open_url(const std::string& url) {
+        if (path_.parse(url) == path_.game_view()) {
+            // ignore games because
+            // 1) they load fast
+            // 2) mymenu_->select_game()
+            path_.game_view()->open(/* change_path */ false);
+        } else {
+            open_url(url);
+        }
+    }
+
+protected:
+    void open_url_impl(const std::string& url) {
+        path_.open(url);
+    }
+
+private:
+    Path& path_;
+};
+
 enum {
     LOGO_IN_TOP,
     AUTH_IN_TOP,
@@ -85,9 +117,11 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
     menu_place_ = middle->elementAt(0, MENU_IN_MIDDLE);
     clock_and_locale_ = new Wt::WContainerWidget(menu_place_);
     clock_and_locale_->setStyleClass("no-wrap");
-    contents_place_ = middle->elementAt(0, CONTENTS_IN_MIDDLE);
-    contents_place_->resize(Wt::WLength(80, Wt::WLength::Percentage),
-                            Wt::WLength::Auto);
+    Wt::WTableCell* contents_cell = middle->elementAt(0, CONTENTS_IN_MIDDLE);
+    contents_place_ = new MyCachedContents;
+    contents_cell->addWidget(contents_place_);
+    contents_cell->resize(Wt::WLength(80, Wt::WLength::Percentage),
+                          Wt::WLength::Auto);
     mygames_place_ = middle->elementAt(0, GAME_LIST_IN_MIDDLE);
     addWidget(new Footer());
     show_countup();
@@ -128,6 +162,10 @@ void MainWidget::update_my_games() {
         mymenu_ = new MyGamesList(tApp->user());
         mygames_place_->addWidget(mymenu_);
     }
+}
+
+void MainWidget::clear_cached_contents() {
+    contents_place_->clear();
 }
 
 void MainWidget::main_page() {
@@ -500,8 +538,7 @@ void MainWidget::set_top_block_shown(bool shown) {
 }
 
 void MainWidget::set_contents(WWidget* widget) {
-    contents_place_->clear();
-    contents_place_->addWidget(widget);
+    contents_place_->set_contents_raw(widget);
 }
 
 static void reset_countup(Wt::Wc::Countdown* countup) {

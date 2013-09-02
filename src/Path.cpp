@@ -82,9 +82,6 @@ Path::Path(Wt::WObject* parent):
     teams_list_ = new PredefinedNode("team", this);
     team_view_ = new IntegerNode(teams_list_);
     team_competitions_ = new PredefinedNode("competitions", team_view_);
-    if (wApp) {
-        wApp->internalPathChanged().connect(this, &Parser::open);
-    }
 }
 
 void Path::connect_main_widget(MainWidget* mw) {

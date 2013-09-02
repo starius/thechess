@@ -40,6 +40,9 @@ public:
     /** Update list of user's games (East) */
     void update_my_games();
 
+    /** Clear Wt::Wc::CachedContents used to cache URLs */
+    void clear_cached_contents();
+
     /** Show main page */
     void main_page();
 
@@ -224,7 +227,7 @@ private:
     Wt::WContainerWidget* top_place_;
     Wt::WContainerWidget* menu_place_;
     Wt::WContainerWidget* clock_and_locale_;
-    Wt::WContainerWidget* contents_place_;
+    Wt::Wc::CachedContents* contents_place_;
     Wt::WContainerWidget* mygames_place_;
     MyGamesList* mymenu_;
     Wt::Wc::Countdown* countup_;
