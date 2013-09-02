@@ -8,6 +8,7 @@
 #include <Wt/WTable>
 #include <Wt/WAnchor>
 #include <Wt/WDateTime>
+#include <Wt/WPushButton>
 #include <Wt/Auth/AuthWidget>
 #include <Wt/Wc/util.hpp>
 #include <Wt/Wc/SWFStore.hpp>
@@ -104,6 +105,10 @@ enum {
     GAME_LIST_IN_MIDDLE
 };
 
+static void refresh_url() {
+    tApp->path().open(wApp->internalPath());
+}
+
 MainWidget::MainWidget(Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent),
     mymenu_(0), countup_(0), countup_updates_(0) {
@@ -120,6 +125,10 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
     menu_place_ = middle->elementAt(0, MENU_IN_MIDDLE);
     clock_and_locale_ = new Wt::WContainerWidget(menu_place_);
     clock_and_locale_->setStyleClass("no-wrap");
+    menu_place_->addWidget(new Wt::WBreak);
+    Wt::WPushButton* refresh;
+    refresh = new Wt::WPushButton(tr("tc.common.Refresh"), menu_place_);
+    refresh->clicked().connect(boost::bind(refresh_url));
     Wt::WTableCell* contents_cell = middle->elementAt(0, CONTENTS_IN_MIDDLE);
     contents_place_ = new MyCachedContents;
     contents_cell->addWidget(contents_place_);
