@@ -482,6 +482,7 @@
     <message id="tc.user.Registration_date">Дата рэгістрацыі: {1}</message>
     <message id="tc.user.regular_rights_changer">змяняць звычайныя правы</message>
     <message id="tc.user.Removed_message"><b>[Выдалены карыстальнік]</b></message>
+    <message id='tc.user.Reread_options'>Перезагрузить настройки</message>
     <message id='tc.user.Set_motd'>Выставить номер комментария, показанного сверху</message>
     <message id="tc.user.Settings">Налады</message>
     <message id="tc.user.Start_game">Пачаць гульню</message>
