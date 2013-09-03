@@ -65,23 +65,25 @@ public:
         path_(tApp->path()) {
         int widgets_cache_size = Options::instance()->widgets_cache_size();
         set_cache_size(widgets_cache_size);
-        ignore_url(path_.settings_page()->full_path());
-        ignore_url(path_.main_page()->full_path());
-        ignore_url(path_.random_competitor()->full_path());
-        ignore_url(path_.all_comments()->full_path());
-        ignore_url(path_.all_sessions()->full_path());
-        ignore_url(path_.all_banned_ip()->full_path());
-        ignore_prefix(path_.user_list()->full_path());
         wApp->internalPathChanged()
         .connect(this, &MyCachedContents::my_open_url);
     }
 
     void my_open_url(const std::string& url) {
-        if (path_.parse(url) == path_.game_view()) {
+        Wt::Wc::url::Node* node = path_.parse(url);
+        if (node == path_.game_view() ||
+                node == path_.settings_page() ||
+                node == path_.main_page() ||
+                node == path_.random_competitor() ||
+                node == path_.all_comments() ||
+                node == path_.all_sessions() ||
+                node == path_.all_banned_ip() ||
+                node == path_.user_list() ||
+                node == path_.user_view()) {
             // ignore games because
             // 1) they load fast
             // 2) mymenu_->select_game()
-            path_.game_view()->open(/* change_path */ false);
+            node->open(/* change_path */ false);
         } else {
             open_url(url);
         }
