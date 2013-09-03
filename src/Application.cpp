@@ -68,6 +68,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     require("/js/jquery.min.js");
     require("/js/jquery.countdown.min.js");
     require("/js/fix_tinymce_change_lang.js");
+    require("/js/save_login_and_password.js");
     // FIXME http://redmine.emweb.be/issues/1491
     doJavaScript("window.alert = $.noop;");
     Wt::Wc::fix_plain_anchors(/* freq */ 400, /* skip */ "/^mailto\\:|pgn/i");
