@@ -438,6 +438,9 @@ see wt-classes/Gather.
 */
 const bool GATHERING = true;
 
+/** Widgets cache size */
+const int WIDGETS_CACHE_SIZE = 2;
+
 }
 
 }

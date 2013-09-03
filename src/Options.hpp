@@ -143,6 +143,11 @@ public:
         return time_diff_;
     }
 
+    /** Widgets cache size */
+    int widgets_cache_size() const {
+        return widgets_cache_size_;
+    }
+
     /** return if the IP is in whitelist */
     bool ip_in_whitelist(const std::string& ip) const;
 
@@ -178,6 +183,7 @@ private:
     std::vector<std::string> whitelist_; // sorted
     int whitelist_max_sessions_;
     Td time_diff_;
+    int widgets_cache_size_;
 
     bool read_int_value(const std::string& name, int& value);
     bool read_seconds(const std::string& name, Td& value);

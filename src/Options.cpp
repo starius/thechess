@@ -43,7 +43,8 @@ Options::Options(const Wt::WServer& server):
     min_first_draw_(config::min::FIRST_DRAW),
     max_sessions_(config::defaults::MAX_SESSIONS),
     whitelist_max_sessions_(config::defaults::WHITELIST_MAX_SESSIONS),
-    time_diff_(config::defaults::TIME_DIFF) {
+    time_diff_(config::defaults::TIME_DIFF),
+    widgets_cache_size_(config::WIDGETS_CACHE_SIZE) {
     std::string value;
     if (server.readConfigurationProperty("database_type", value)) {
         BOOST_ASSERT(value == "postgres" ||
@@ -74,6 +75,7 @@ Options::Options(const Wt::WServer& server):
     read_int_value("min_first_draw", min_first_draw_);
     read_int_value("max_sessions", max_sessions_);
     read_int_value("whitelist_max_sessions", whitelist_max_sessions_);
+    read_int_value("widgets_cache_size", widgets_cache_size_);
     std::string whitelist_str(config::defaults::WHITELIST);
     server.readConfigurationProperty("whitelist", whitelist_str);
     using namespace boost::algorithm;

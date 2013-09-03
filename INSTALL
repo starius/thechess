@@ -52,6 +52,7 @@ Other options:
     int whitelist
     int whitelist_max_sessions
     int time_diff
+    int widgets_cache_size
 
 Dependencies:
  * witty library
