@@ -63,6 +63,7 @@ class MyCachedContents : public Wt::Wc::CachedContents {
 public:
     MyCachedContents():
         path_(tApp->path()) {
+        set_cache_size(2);
         ignore_url(path_.settings_page()->full_path());
         ignore_url(path_.main_page()->full_path());
         ignore_url(path_.random_competitor()->full_path());
