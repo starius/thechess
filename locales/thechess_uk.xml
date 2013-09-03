@@ -288,7 +288,7 @@
 
     <message id='tc.menu.admin_log'>адміністративний журнал</message>
     <message id='tc.menu.all_comments'>всі коментарі</message>
-    <message id='tc.menu.all_posts'>всі темы</message>
+    <message id='tc.menu.all_posts'>всі теми</message>
     <message id='tc.menu.banned_ip'>забанені IP</message>
     <message id='tc.menu.challenge'>виклик</message>
     <message id='tc.menu.competition'>турнір</message>
@@ -301,11 +301,11 @@
     <message id='tc.menu.my_page'>моя сторінка</message>
     <message id='tc.menu.new_competition'>новий турнір</message>
     <message id='tc.menu.private_messages'>особисті повідомлення</message>
-    <message id='tc.menu.random_competitor'>случайный соперник</message>
+    <message id='tc.menu.random_competitor'>випадковий суперник</message>
     <message id='tc.menu.settings'>налаштування</message>
     <message id='tc.menu.team'>команда</message>
-    <message id='tc.menu.teams_list'>список команд</message>
-    <message id='tc.menu.testing_board'>дошка для проб</message>
+    <message id='tc.menu.teams_list'>перелік команд</message>
+    <message id='tc.menu.testing_board'>дошка для випробувань</message>
     <message id='tc.menu.topics'>тематики</message>
     <message id='tc.menu.user'>користувач</message>
     <message id='tc.menu.users_list'>перелік користувачів</message>
