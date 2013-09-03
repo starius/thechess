@@ -79,7 +79,11 @@ public:
                 node == path_.all_sessions() ||
                 node == path_.all_banned_ip() ||
                 node == path_.user_list() ||
-                node == path_.user_view()) {
+                node == path_.user_view() ||
+                node == path_.post() ||
+                node == path_.forum_edit() ||
+                node == path_.post_comment() ||
+                node == path_.chat_comment()) {
             // ignore games because
             // 1) they load fast
             // 2) mymenu_->select_game()
