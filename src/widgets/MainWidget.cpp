@@ -70,6 +70,7 @@ public:
         ignore_url(path_.all_comments()->full_path());
         ignore_url(path_.all_sessions()->full_path());
         ignore_url(path_.all_banned_ip()->full_path());
+        ignore_prefix(path_.user_list()->full_path());
         wApp->internalPathChanged()
         .connect(this, &MyCachedContents::my_open_url);
     }
