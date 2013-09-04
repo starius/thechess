@@ -137,6 +137,9 @@ void t_emit_after(ObjectType type, int id, const Wt::WDateTime& when);
 /** Notify listening widgets through task */
 void t_emit_after(ObjectType type, int id);
 
+/** Notify listening widgets through task */
+void t_emit_after(const std::string& key);
+
 /** Notify listening widgets */
 void t_emit(const std::string& key);
 

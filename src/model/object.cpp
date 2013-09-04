@@ -163,5 +163,25 @@ void t_emit_after(ObjectType type, int id) {
     t_task(boost::make_shared<NotifyTask>(type, id), now());
 }
 
+struct StringNotifyTask : public Task {
+    StringNotifyTask(const std::string& key):
+        key_(key)
+    { }
+
+    std::string key() const {
+        return key_;
+    }
+
+    void process(TaskPtr task, Planning* server) const
+    { }
+
+private:
+    std::string key_;
+};
+
+void t_emit_after(const std::string& key) {
+    t_planning()->add(TaskPtr(new StringNotifyTask(key)), now());
+}
+
 }
 
