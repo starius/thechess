@@ -107,6 +107,7 @@ void GameCreateWidget::button_handler() {
     }
     error_message_->setText("");
     GamePtr game = tApp->session().add(new Game(gp));
+    t_emit_after("game-list");
     Piece::Color color = selected_color();
     if (with_user_) {
         game.modify()->propose_game(tApp->user(), user_, color);

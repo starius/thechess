@@ -597,6 +597,7 @@ void Competition::start() {
     }
     state_ = ACTIVE;
     started_ = now();
+    t_emit_after("game-list");
 }
 
 void Competition::create_games_classical() {

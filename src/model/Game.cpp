@@ -39,6 +39,7 @@ Game::Game(const GPPtr& gp):
     rating_after_(-1),
     norating_(false) {
     gp.modify()->set_games_size(gp->games_size() + 1);
+    t_emit_after("game-list");
 }
 
 bool Game::is_ended() const {

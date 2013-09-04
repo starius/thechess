@@ -87,7 +87,7 @@ public:
     }
 };
 
-class GameListModel : public GLP::BaseQM {
+class GameListModel : public GLP::BaseQM, public Notifiable {
 public:
     enum {
         N_COLUMN,
@@ -102,6 +102,7 @@ public:
 
     GameListModel(const UserPtr& user, Wt::WObject* parent = 0) :
         GLP::BaseQM(parent),
+        Notifiable("game-list"),
         only_my_(false),
         only_commented_(false),
         user_(user),
@@ -270,6 +271,10 @@ public:
 
     void set_games(const std::vector<int>& games) {
         games_ = games;
+        set_query();
+    }
+
+    virtual void notify(EventPtr) {
         set_query();
     }
 

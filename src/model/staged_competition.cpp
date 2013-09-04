@@ -244,6 +244,7 @@ void StagedCompetition::join_users() {
 }
 
 void StagedCompetition::create_games(Competition* competition) {
+    bool games_created = false;
     BOOST_FOREACH (Paires::value_type& stage_and_pair, paires_) {
         int stage = stage_and_pair.first;
         UserPair pair = stage_and_pair.second;
@@ -257,12 +258,16 @@ void StagedCompetition::create_games(Competition* competition) {
                 const UserPtr& black = i ? pair.second() : pair.first();
                 GamePtr game = competition->create_game(white, black,
                                                         stage, no_draw);
+                games_created = true;
                 games_[pair].push_back(game);
                 t_task(GAME, game.id());
             }
             t_emit_after(USER, pair.first().id());
             t_emit_after(USER, pair.second().id());
         }
+    }
+    if (games_created) {
+        t_emit_after("game-list");
     }
 }
 
