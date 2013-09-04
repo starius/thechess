@@ -40,7 +40,7 @@ static void edit_comment(CommentPtr c, Wt::WFormWidget* edit) {
         url = tApp->path().topic_posts()->get_full_path(c.id());
     }
     t.commit();
-    tApp->setInternalPath(url, /* emit */ true);
+    wApp->internalPathChanged().emit(wApp->internalPath());
 }
 
 ForumEdit::ForumEdit(const CommentPtr& c, Wt::WContainerWidget* p):

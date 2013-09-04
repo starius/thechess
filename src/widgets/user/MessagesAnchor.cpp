@@ -63,7 +63,7 @@ public:
         }
         if (button == Wt::Ok) {
             std::string messages_path = tApp->path().my_messages()->full_path();
-            wApp->setInternalPath(messages_path, /* emit */ true);
+            wApp->internalPathChanged().emit(wApp->internalPath());
         }
     }
 

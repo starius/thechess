@@ -74,7 +74,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     Wt::Wc::fix_plain_anchors(/* freq */ 400, /* skip */ "/^mailto\\:|pgn/i");
     session().login().changed().connect(this, &Application::login_handler);
     login_handler();
-    setInternalPath(internalPath(), /* emit */ true);
+    internalPathChanged().emit(internalPath());
     internalPathChanged().connect(this, &Application::user_action);
     explore_timezone();
     doJavaScript("setInterval(function() {"
@@ -251,7 +251,7 @@ void Application::set_timezone_diff(int shift) {
     shift = Wt::Wc::constrained_value(-24 * 60, shift, 24 * 60);
     timezone_diff_ = -shift * MINUTE;
     main_widget_->clear_cached_contents();
-    setInternalPath(internalPath(), /* emit */ true);
+    internalPathChanged().emit(internalPath());
     main_widget_->update_countup();
 }
 

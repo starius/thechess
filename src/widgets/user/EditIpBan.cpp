@@ -56,7 +56,7 @@ void EditIpBan::save(BanState state) {
         delete this; // TODO go to page with ban list
     } catch (dbo::StaleObjectException e) {
         ban_.reread();
-        wApp->setInternalPath(wApp->internalPath(), /* emit */ true);
+        wApp->internalPathChanged().emit(wApp->internalPath());
     }
 }
 
