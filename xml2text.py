@@ -14,10 +14,10 @@ root = parse(xml_file).getroot()
 def explore(element):
     text = element.text
     if text and text.strip():
-        print(text.strip())
+        print(text.strip().encode('utf8'))
     tail = element.tail
     if tail and tail.strip():
-        print(tail.strip())
+        print(tail.strip().encode('utf8'))
     for child in element:
         explore(child)
 
