@@ -77,7 +77,7 @@
     <message id="tc.competition.Create_welcome">Стварыць новы турнір</message>
     <message id="tc.competition.Ended">Завершаны</message>
     <message id='tc.competition.Ended_games_number'># завершённых</message>
-    <message id='tc.competition.Exchange'>Поменяться</message>
+    <message id='tc.competition.Exchange'>Памяняцца</message>
     <message id='tc.competition.Exchange_must_2'>Адзначце двух карыстальнікаў для абмену</message>
     <message id='tc.competition.Force_start'>Фарсіраваны старт</message>
     <message id="tc.competition.Force_start_delay">Фарсіраваны старт партыі</message>
@@ -95,7 +95,7 @@
     <message id="tc.competition.min_rating">мінімальны рэйтынг</message>
     <message id="tc.competition.Min_substages">Падраундаў у першым раўндзе</message>
     <message id="tc.competition.Online_time">Час, праведзены ўдзельнікамі анлайн</message>
-    <message id="tc.competition.Parameters">Турнирные параметры</message>
+    <message id="tc.competition.Parameters">Турнірныя параметры</message>
     <message id="tc.competition.Rating">Рэйтынг удзельнікаў</message>
     <message id="tc.competition.Recruiting_time">Час на зборы</message>
     <message id="tc.competition.Relax_time">Час на адпачынак</message>
@@ -148,7 +148,7 @@
 
     <message id="tc.forum.all_comments">усе каментарыі</message>
     <message id="tc.forum.all_posts">усе тэмы</message>
-    <message id='tc.forum.Change_topic'>Изменить тематику</message>
+    <message id='tc.forum.Change_topic'>Змяніць тэматыку</message>
     <message id="tc.forum.Comment">Старонка каментарыя</message>
     <message id="tc.forum.Edit">Праўка</message>
     <message id="tc.forum.Goto_parent">Адкрыць бацькоўскі каментарый #{1}</message>
@@ -300,7 +300,7 @@
     <message id="tc.menu.my_page">мая старонка</message>
     <message id="tc.menu.new_competition">новы турнір</message>
     <message id="tc.menu.private_messages">асабістыя паведамленні</message>
-    <message id='tc.menu.random_competitor'>случайный соперник</message>
+    <message id='tc.menu.random_competitor'>выпадковы супернік</message>
     <message id="tc.menu.settings">налады</message>
     <message id='tc.menu.team'>каманда</message>
     <message id='tc.menu.teams_list'>спіс каманд</message>
@@ -400,7 +400,7 @@
     <message id='tc.user.Award_game_3'>500 згуляных партый ці 250 перамог</message>
     <message id='tc.user.Award_moder'>Мадэратар</message>
     <message id="tc.user.ban_reason">прычына бану</message>
-    <message id="tc.user.Block">Заблакаваць</message>
+    <message id="tc.user.Block">Заблакіраваць</message>
     <message id="tc.user.Change_avatar">Змяніць аватар</message>
     <message id="tc.user.chat_writer">пісаць у чат</message>
     <message id="tc.user.classification">разрад</message>
@@ -426,7 +426,7 @@
     <message id="tc.user.competition_changer">змяняць турнір</message>
     <message id="tc.user.competition_creator">ствараць турнір</message>
     <message id="tc.user.competition_joiner">далучацца да турніру</message>
-    <message id='tc.user.Competitor_time'>Показывать время соперника в списке моих игр</message>
+    <message id='tc.user.Competitor_time'>Паказваць час суперніка ў спісе маіх гульняў</message>
     <message id="tc.user.confirmed_by">, пацверджана&nbsp;</message>
     <message id="tc.user.cp_creator">стварыць параметры турніру</message>
     <message id='tc.user.create_team'>ствараць каманду</message>
@@ -494,7 +494,7 @@
     <message id='tc.user.Terms_of_use'>Карыстальніцкай дамовай</message>
     <message id='tc.user.They_blocked_me'>Колькасць заблакіраваўшых гэтага карыстальніка: {1}</message>
     <message id="tc.user.This_ip_banned">Гэты IP-адрас заблакіраваны</message>
-    <message id='tc.user.time_wizard'>магия времени</message>
+    <message id='tc.user.time_wizard'>магія часу</message>
     <message id="tc.user.Unblock">Разблакіраваць</message>
     <message id="tc.user.Undelete">Аднавіць</message>
     <message id="tc.user.unknown_right">невядомае права</message>
