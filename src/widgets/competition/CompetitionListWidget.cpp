@@ -281,22 +281,26 @@ protected:
 };
 
 CompetitionListWidget::CompetitionListWidget(Wt::WContainerWidget* p):
-    Wt::WContainerWidget(p) {
+    Wt::WContainerWidget(p), Notifiable("competition-list") {
     initialize();
 }
 
 CompetitionListWidget::CompetitionListWidget(const UserPtr& user,
         Wt::WContainerWidget* p):
-    Wt::WContainerWidget(p),
+    Wt::WContainerWidget(p), Notifiable("competition-list"),
     user_(user) {
     initialize();
 }
 
 CompetitionListWidget::CompetitionListWidget(const TeamPtr& team,
         Wt::WContainerWidget* p):
-    Wt::WContainerWidget(p),
+    Wt::WContainerWidget(p), Notifiable("competition-list"),
     team_(team) {
     initialize();
+}
+
+void CompetitionListWidget::notify(EventPtr) {
+    apply();
 }
 
 void CompetitionListWidget::initialize() {

@@ -22,13 +22,16 @@ class CompetitionStateSelect;
 class CompetitionListModel;
 class CompetitionListView;
 
-class CompetitionListWidget : public Wt::WContainerWidget {
+class CompetitionListWidget : public Wt::WContainerWidget,
+    public Notifiable {
 public:
     CompetitionListWidget(Wt::WContainerWidget* parent = 0);
 
     CompetitionListWidget(const UserPtr& user, Wt::WContainerWidget* p = 0);
 
     CompetitionListWidget(const TeamPtr& team, Wt::WContainerWidget* p = 0);
+
+    virtual void notify(EventPtr);
 
 private:
     CompetitionStateSelect* state_;

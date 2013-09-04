@@ -110,6 +110,7 @@ void CompetitionCreateWidget::button_handler() {
         }
     } else {
         comp = tApp->session().add(new Competition(true));
+        t_emit_after("competition-list");
         write_record(comp.modify(), /* init */ true);
         comp.flush();
         admin_log("Create " + comp_a(comp.id()));
