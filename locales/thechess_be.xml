@@ -36,13 +36,13 @@
     <message id="tc.common.last">апошні</message>
     <message id="tc.common.Links">Спасылкі</message>
     <message id="tc.common.Moves">Хады</message>
-    <message id='tc.common.N_users'>{1} пользователей</message>
+    <message id='tc.common.N_users'>{1} карыстальнікаў</message>
     <message id="tc.common.Name">Назва</message>
     <message id="tc.common.no_params_error">не выбраны параметры</message>
-    <message id="tc.common.not_started">неначатые</message>
+    <message id="tc.common.not_started">непачатыя</message>
     <message id="tc.common.number">№</message>
     <message id="tc.common.Only_my">Толькі мае</message>
-    <message id="tc.common.Open">Открыть</message>
+    <message id="tc.common.Open">Адкрыць</message>
     <message id="tc.common.Rating">Рэйтынг</message>
     <message id="tc.common.Refresh">Аднавіць</message>
     <message id="tc.common.Reset">Скід</message>
@@ -52,7 +52,7 @@
     <message id="tc.common.start">пачатак</message>
     <message id="tc.common.stop">канец</message>
     <message id="tc.common.Total_played">Усяго згуляна</message>
-    <message id='tc.common.type'>тип</message>
+    <message id='tc.common.type'>тып</message>
     <message id="tc.common.value">значение</message>
     <message id="tc.common.winner">пераможца</message>
     <message id="tc.common.Wins">Перамог</message>
@@ -78,7 +78,7 @@
     <message id="tc.competition.Ended">Завершаны</message>
     <message id='tc.competition.Ended_games_number'># завершённых</message>
     <message id='tc.competition.Exchange'>Поменяться</message>
-    <message id='tc.competition.Exchange_must_2'>Отметьте двух пользователей для обмена</message>
+    <message id='tc.competition.Exchange_must_2'>Адзначце двух карыстальнікаў для абмену</message>
     <message id='tc.competition.Force_start'>Фарсіраваны старт</message>
     <message id="tc.competition.Force_start_delay">Фарсіраваны старт партыі</message>
     <message id="tc.competition.Games_factor">Множнік партый</message>
@@ -103,22 +103,22 @@
     <message id="tc.competition.Select_cp">Выбар параметраў турніру</message>
     <message id="tc.competition.Show_games">Паказаць нумары партый</message>
     <message id="tc.competition.Show_wins">Паказаць колькасць перамог</message>
-    <message id="tc.competition.Stage">Раунд</message>
-    <message id='tc.competition.stage_is'>, раунд {1}</message>
+    <message id="tc.competition.Stage">Раўнд</message>
+    <message id='tc.competition.stage_is'>, раўнд {1}</message>
     <message id="tc.competition.Started">Пачаты</message>
-    <message id="tc.competition.State">Статус</message>
+    <message id="tc.competition.State">Статут</message>
     <message id="tc.competition.state_active">актыўны</message>
     <message id="tc.competition.state_cancelled">адменены</message>
     <message id="tc.competition.state_ended">завершаны</message>
     <message id="tc.competition.state_recruiting">які набіраецца</message>
-    <message id='tc.competition.Team_not_found'>Команда не найдена</message>
+    <message id='tc.competition.Team_not_found'>Каманда не знойдзена</message>
     <message id="tc.competition.Tree">Дрэва</message>
     <message id="tc.competition.Type">Тып</message>
     <message id="tc.competition.Type_classical">Класічны</message>
     <message id='tc.competition.Type_pair_team'>Парны камандны</message>
     <message id="tc.competition.Type_staged">Ступеністы</message>
     <message id="tc.competition.Type_team">Камандны</message>
-    <message id='tc.competition.User_not_found'>Пользователь не найден</message>
+    <message id='tc.competition.User_not_found'>Карыстальнік не знойдзены</message>
     <message id="tc.competition.Users">Колькасць удзельнікаў</message>
     <message id="tc.competition.Virtuals_allowed_by">Магчымыя клоны дазволены&nbsp;</message>
     <message id="tc.competition.Winner">Пераможца</message>
@@ -169,7 +169,7 @@
     <message id="tc.game.Analysis">Аналіз</message>
     <message id="tc.game.Analysis_title">Аналіз гульні № {1}</message>
     <message id="tc.game.black">чорны</message>
-    <message id='tc.game.Black_won'>Черные победили</message>
+    <message id='tc.game.Black_won'>Чорныя перамаглі</message>
     <message id="tc.game.Call_auto_judge">Выклікаць аўтаматычнага суддзю</message>
     <message id="tc.game.Challenge">Выклік</message>
     <message id="tc.game.colors">колеры</message>
@@ -206,7 +206,7 @@
     <message id="tc.game.Move_confirmation">Пацверджанне ходу</message>
     <message id="tc.game.moves_size">хадоў</message>
     <message id="tc.game.No_draw">Гульня не можа завяршыцца ўнічыю</message>
-    <message id='tc.game.non_cancelled'>неотменённые</message>
+    <message id='tc.game.non_cancelled'>неадмененыя</message>
     <message id="tc.game.norating">нерэйтынгавая</message>
     <message id="tc.game.norating_false">вынік гульні паўплывае на рэйтынг удзельнікаў</message>
     <message id="tc.game.norating_true">вынік гульні не паўплывае на рэйтынг удзельнікаў</message>
@@ -224,7 +224,7 @@
     <message id="tc.game.real_rating">рэйтынгавая</message>
     <message id="tc.game.real_rating_false">вынік гульні не ўплывае на рэйтынг удзельнікаў</message>
     <message id="tc.game.real_rating_true">вынік гульні ўплывае на рэйтынг удзельнікаў</message>
-    <message id='tc.game.Rebuild_index'>Пересчитать индекс игр</message>
+    <message id='tc.game.Rebuild_index'>Пералічыць індэкс гульняў</message>
     <message id="tc.game.Select_gp">Выбар параметраў партыі</message>
     <message id="tc.game.Start_position">Зыходная пазіцыя</message>
     <message id="tc.game.started">пачата</message>
@@ -245,7 +245,7 @@
     <message id="tc.game.State_state">Невядомы стан</message>
     <message id="tc.game.State_surrendered">Здадзена</message>
     <message id="tc.game.State_timeout">Пратэрмінавана</message>
-    <message id='tc.game.Stop_pause'>Остановить паузу</message>
+    <message id='tc.game.Stop_pause'>Прыпыніць паўзу</message>
     <message id="tc.game.Surrender">Здацца</message>
     <message id="tc.game.white">белы</message>
     <message id='tc.game.White_won'>Белыя перамаглі</message>
@@ -317,7 +317,7 @@
     <message id='tc.team.Members'>Члены каманды</message>
     <message id='tc.team.Remove_team'>Выдаліць каманду</message>
     <message id='tc.team.Restore_team'>Аднавіць каманду</message>
-    <message id='tc.team.SetLeader'>Назначить капитаном</message>
+    <message id='tc.team.SetLeader'>Назначыць капітанам</message>
     <message id='tc.team.Title'>Каманда № {1} {2}</message>
 
     <message id="tc.title.BoardWidget">Дошка « TheChess</message>
@@ -390,14 +390,14 @@
         Клоны {1} « Карыстальнік « TheChess
     </message>
 
-    <message id='tc.user.Admin'><u>Администратор</u></message>
+    <message id='tc.user.Admin'><u>Адміністратар</u></message>
     <message id="tc.user.Already_banned">Ужо ў бане</message>
-    <message id="tc.user.Anonymous">Гость</message>
+    <message id="tc.user.Anonymous">Госць</message>
     <message id="tc.user.avatar_nondefault">аватар не па змаўчанні</message>
-    <message id='tc.user.Award_competitions'>Победитель турнира</message>
-    <message id='tc.user.Award_game_1'>100 сыгранных партий или 50 побед</message>
-    <message id='tc.user.Award_game_2'>250 сыгранных партий или 125 побед</message>
-    <message id='tc.user.Award_game_3'>500 сыгранных партий или 250 побед</message>
+    <message id='tc.user.Award_competitions'>Пераможца турніру</message>
+    <message id='tc.user.Award_game_1'>100 згуляных партый ці 50 перамог</message>
+    <message id='tc.user.Award_game_2'>250 згуляных партый ці 125 перамог</message>
+    <message id='tc.user.Award_game_3'>500 згуляных партый ці 250 перамог</message>
     <message id='tc.user.Award_moder'>Мадэратар</message>
     <message id="tc.user.ban_reason">прычына бану</message>
     <message id="tc.user.Block">Заблакаваць</message>
@@ -446,7 +446,7 @@
     <message id="tc.user.gp_creator">стварыць параметры гульні</message>
     <message id='tc.user.Hide_countdown_mygames'>Прыбраць час з меню гульняў</message>
     <message id='tc.user.Hide_online_mygames'>Прыбраць надпіс На сайце з меню гульняў</message>
-    <message id='tc.user.Hide_paused'>Спрятать приостановленные игры</message>
+    <message id='tc.user.Hide_paused'>Схаваць прыпыненыя гульні</message>
     <message id='tc.user.I_blocked_them'>Колькасць заблакіраваных карыстальнікаў: {1}</message>
     <message id='tc.user.ID'>Рэгістрацыйны нумар карыстальніка: {1}</message>
     <message id="tc.user.ip">ip-адрас</message>
@@ -523,8 +523,8 @@
         </ul>
     </message>
     <message id='tc.user.Our_games_stat'>
-        Вы сыграли {1} игр с {5}, в {2} из которых Вы победили,
-        в {3} победил(а) {5} и {4} завершились вничью.
+        Вы згулялі {1} гульняў з {5}, у {2} з якіх Вы перамаглі,
+        у {3} перамог(ла) {5} і {4} завяршыліся ўнічыю.
     </message>
     <message id='tc.user.Terms_template'>
         Рэгіструючыся, Вы пацвярджаеце згоду з ${a}
