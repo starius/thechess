@@ -86,18 +86,6 @@ struct Object : public TryAgainTask {
     std::string key() const;
 };
 
-/** Task for notifying only.
-
-\ingroup model
-*/
-struct NotifyTask : public Object {
-    /** Constructor */
-    NotifyTask(ObjectType ot, int i);
-
-    /** No-op */
-    void process(TaskPtr task, Planning* server) const;
-};
-
 /** Event emited when private messge is sent */
 class NewMessage : public Event {
 public:
@@ -140,13 +128,13 @@ void t_emit(Event* event);
 /** Notify listening widgets */
 void t_emit(ObjectType type, int id);
 
-/** Notify listening widgets through NotifyTask.
+/** Notify listening widgets through task.
 Use this function instead of t_emit to notify about
 changed objects from process().
 */
 void t_emit_after(ObjectType type, int id, const Wt::WDateTime& when);
 
-/** Notify listening widgets through NotifyTask */
+/** Notify listening widgets through task */
 void t_emit_after(ObjectType type, int id);
 
 /** Notify listening widgets */

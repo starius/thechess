@@ -80,12 +80,14 @@ std::string Object::key() const {
            boost::lexical_cast<std::string>(id);
 }
 
-NotifyTask::NotifyTask(ObjectType ot, int i):
-    Object(ot, i)
-{ }
+struct NotifyTask : public Object {
+    NotifyTask(ObjectType ot, int i):
+        Object(ot, i)
+    { }
 
-void NotifyTask::process(TaskPtr task, Planning* server) const
-{ }
+    void process(TaskPtr task, Planning* server) const
+    { }
+};
 
 NewMessage::NewMessage(int r, int s):
     reader_id(r), sender_id(s)
