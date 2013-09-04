@@ -69,19 +69,15 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     require("/js/jquery.countdown.min.js");
     require("/js/fix_tinymce_change_lang.js");
     require("/js/save_login_and_password.js");
+    require("/js/disable_alert.js");
+    require("/js/fix_menu_bullets.js");
     // FIXME http://redmine.emweb.be/issues/1491
-    doJavaScript("window.alert = $.noop;");
     Wt::Wc::fix_plain_anchors(/* freq */ 400, /* skip */ "/^mailto\\:|pgn/i");
     session().login().changed().connect(this, &Application::login_handler);
     login_handler();
     internalPathChanged().emit(internalPath());
     internalPathChanged().connect(this, &Application::user_action);
     explore_timezone();
-    doJavaScript("setInterval(function() {"
-                 "$('.thechess-user-list *:not(img)')"
-                 ".css('height','auto')"
-                 ".css('white-space','normal');"
-                 "}, 1000);");
 }
 
 Application::Application(bool, const Wt::WEnvironment& env, Server& server):
@@ -101,7 +97,7 @@ Application::Application(bool, const Wt::WEnvironment& env, Server& server):
     // FIXME Wt::Auth translations in separate file do not work
     setCssTheme("polished");
     // FIXME http://redmine.emweb.be/issues/1491
-    doJavaScript("window.alert = $.noop;");
+    require("/js/disable_alert.js");
     init_widget_mode();
     explore_timezone();
 }
