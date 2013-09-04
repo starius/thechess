@@ -112,7 +112,7 @@
     <message id="tc.competition.state_cancelled">скасований</message>
     <message id="tc.competition.state_ended">завершений</message>
     <message id="tc.competition.state_recruiting">що набирається</message>
-    <message id='tc.competition.Team_not_found'>Команда не найдена</message>
+    <message id='tc.competition.Team_not_found'>Команда не знайдена</message>
     <message id="tc.competition.Tree">Дерево</message>
     <message id="tc.competition.Type">Тип</message>
     <message id="tc.competition.Type_classical">Класичний</message>
@@ -147,8 +147,8 @@
         <br/><h2>Чат</h2>${chat}
     </message>
 
-    <message id='tc.forum.all_comments'>усі коментарі</message>
-    <message id='tc.forum.all_posts'>усі темы</message>
+    <message id='tc.forum.all_comments'>всі коментарі</message>
+    <message id='tc.forum.all_posts'>всі теми</message>
     <message id='tc.forum.Change_topic'>Змінити тематику</message>
     <message id='tc.forum.Comment'>Сторінка коментаря</message>
     <message id='tc.forum.Edit'>Правка</message>
@@ -157,7 +157,7 @@
     <message id='tc.forum.Post_edited'>Назву теми відредаговано {1}</message>
     <message id='tc.forum.post_header'>тема {1}: {2}</message>
     <message id='tc.forum.Post_text_edited'>Тема відредагована {1}</message>
-    <message id='tc.forum.topic_posts'>темы теми {1}</message>
+    <message id='tc.forum.topic_posts'>теми тематики {1}</message>
     <message id='tc.forum.topics'>теми</message>
     <message id='tc.forum.comment_template'>
         Від <span class="thechess-datetime">{1}</span>,
@@ -411,7 +411,7 @@
     <message id="tc.user.classification_changer">змінити розряд</message>
     <message id="tc.user.classification_confirmer">підтверджувати розряд</message>
     <message id="tc.user.classification_d">середній аматор (4)</message>
-    <message id="tc.user.classification_e">слабий аматор (5)</message>
+    <message id="tc.user.classification_e">слабкий аматор (5)</message>
     <message id="tc.user.classification_expert">кандидат в майстри</message>
     <message id="tc.user.classification_f">початківець (розряд F)</message>
     <message id="tc.user.classification_g">початківець (розряд G)</message>
@@ -447,7 +447,7 @@
     <message id="tc.user.gp_creator">задати параметри гри</message>
     <message id='tc.user.Hide_countdown_mygames'>Прибрати час з меню ігор</message>
     <message id='tc.user.Hide_online_mygames'>Прибрати напис На сайті з меню ігор</message>
-    <message id='tc.user.Hide_paused'>Спрятать приостановленные игры</message>
+    <message id='tc.user.Hide_paused'>Сховати призупинені ігри</message>
     <message id='tc.user.I_blocked_them'>Кількість заблокованих користувачів: {1}</message>
     <message id='tc.user.ID'>Реєстраційний номер користувача: {1}</message>
     <message id="tc.user.ip">ip-адрес</message>
@@ -525,7 +525,7 @@
     </message>
     <message id='tc.user.Our_games_stat'>
         Ви зіграли {1} ігор з {5}, в {2} в яких Ви перемогли,
-        в {3} переміг(а) {5} и {4} закінчились унічию.
+        в {3} переміг(а) {5} і {4} закінчились унічию.
     </message>
     <message id='tc.user.Terms_template'>
         Реєструючись, Ви погоджуєтесь з ${a}
