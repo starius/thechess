@@ -223,6 +223,8 @@ CommentModel::Query CommentModel::get_query() const {
     }
     if (type_ == Comment::FORUM_COMMENT) {
         result.orderBy("show_index");
+    } else if (type_ == Comment::FORUM_POST) {
+        result.orderBy("created");
     } else {
         result.orderBy("id");
     }
