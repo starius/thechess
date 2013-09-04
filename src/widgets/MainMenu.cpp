@@ -92,7 +92,9 @@ private:
     }
 
     void add_section(const char* title_id) {
-        addWidget(new Wt::WBreak());
+        if (count()) {
+            addWidget(new Wt::WBreak());
+        }
         Wt::WContainerWidget* c = new Wt::WContainerWidget(this);
         Wt::WText* text = new Wt::WText(tr(title_id), c);
         text->setStyleClass("thechess-section");
