@@ -2,7 +2,7 @@
 
 <messages nplurals="3" plural="(n%10 == 0 || n%10 &gt;= 5 || n/10%10 == 1) ? 2 : n%10==1 ? 0 : 1">
 
-    <message id='tc.comment.Add'>Добавити повідомлення</message>
+    <message id='tc.comment.Add'>Додати повідомлення</message>
     <message id='tc.comment.admin_log'>адміністративний журнал</message>
     <message id='tc.comment.Approve'>Схвалити</message>
     <message id='tc.comment.deleted_message'>[Видалено]</message>
@@ -189,7 +189,7 @@
     <message id="tc.game.Draw_proposal">Нічия запропонована, запропонував {1}</message>
     <message id="tc.game.Draw_propose">Запропонувати нічию</message>
     <message id="tc.game.ended">завершена</message>
-    <message id="tc.game.Enlarged_images">Збільшені зображення</message>
+    <message id="tc.game.Enlarged_images">Збільшене зображення</message>
     <message id="tc.game.first_draw">число ходів для нічиєї</message>
     <message id="tc.game.force_confirm">форсоване підтвердження</message>
     <message id="tc.game.force_start">форсований старт</message>
@@ -215,7 +215,7 @@
     <message id="tc.game.of_white">білих</message>
     <message id="tc.game.Only_commented">Тільки прокоментовані</message>
     <message id="tc.game.order_user">ходити</message>
-    <message id="tc.game.Overturn_board">Перевернути</message>
+    <message id="tc.game.Overturn_board">Обернути</message>
     <message id="tc.game.Parameters">Игровые параметры</message>
     <message id="tc.game.pause_limit">запас часу на паузи</message>
     <message id="tc.game.Pause_proposal">Перерва запропонована, запропонував {1}, тривалість: {2}</message>
