@@ -287,12 +287,14 @@ CompetitionListWidget::CompetitionListWidget(Wt::WContainerWidget* p):
 
 CompetitionListWidget::CompetitionListWidget(const UserPtr& user,
         Wt::WContainerWidget* p):
+    Wt::WContainerWidget(p),
     user_(user) {
     initialize();
 }
 
 CompetitionListWidget::CompetitionListWidget(const TeamPtr& team,
         Wt::WContainerWidget* p):
+    Wt::WContainerWidget(p),
     team_(team) {
     initialize();
 }
