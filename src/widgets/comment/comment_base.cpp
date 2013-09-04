@@ -127,59 +127,96 @@ Wt::WAnchor* team_anchor(int id) {
 
 Wt::WString host_text(const CommentPtr& comment) {
     dbo::Transaction t(tApp->session());
-    if (comment->type() == Comment::CHAT_MESSAGE && !comment->root()) {
-        return global_chat_text();
-    }
-    Object object = comment_base(comment);
-    if (object.id == 0) {
-        return "";
-    }
-    if (object.type == GAME) {
-        return game_text(object.id);
-    } else if (object.type == COMPETITION) {
-        return competition_text(object.id);
-    } else if (object.type == TEAM_OBJECT) {
-        return team_text(object.id);
+    if (comment->type() == Comment::CHAT_MESSAGE) {
+        if (!comment->root()) {
+            return global_chat_text();
+        }
+        Object object = comment_base(comment);
+        if (object.id == 0) {
+            return "";
+        }
+        if (object.type == GAME) {
+            return game_text(object.id);
+        } else if (object.type == COMPETITION) {
+            return competition_text(object.id);
+        } else if (object.type == TEAM_OBJECT) {
+            return team_text(object.id);
+        }
+    } else if (comment->type() == Comment::FORUM_TOPIC) {
+        return Wt::WString::tr("tc.forum.topics");
+    } else if (comment->type() == Comment::FORUM_POST) {
+        CommentPtr topic = comment->root();
+        if (topic) {
+            return topic->text();
+        } else {
+            return Wt::WString::tr("tc.forum.all_posts");
+        }
+    } else if (comment->type() == Comment::FORUM_COMMENT) {
+        CommentPtr post_text = comment->root();
+        CommentPtr post = post_text->parent();
+        return post->text();
     }
     return "";
 }
 
 Wt::WLink host_link(const CommentPtr& comment) {
     dbo::Transaction t(tApp->session());
-    if (comment->type() == Comment::CHAT_MESSAGE && !comment->root()) {
-        return global_chat_link();
-    }
-    Object object = comment_base(comment);
-    if (object.id == 0) {
-        return Wt::WLink();
-    }
-    if (object.type == GAME) {
-        return game_link(object.id);
-    } else if (object.type == COMPETITION) {
-        return competition_link(object.id);
-    } else if (object.type == TEAM_OBJECT) {
-        return team_link(object.id);
+    if (comment->type() == Comment::CHAT_MESSAGE) {
+        if (!comment->root()) {
+            return global_chat_link();
+        }
+        Object object = comment_base(comment);
+        if (object.id == 0) {
+            return Wt::WLink();
+        }
+        if (object.type == GAME) {
+            return game_link(object.id);
+        } else if (object.type == COMPETITION) {
+            return competition_link(object.id);
+        } else if (object.type == TEAM_OBJECT) {
+            return team_link(object.id);
+        }
+    } else if (comment->type() == Comment::FORUM_TOPIC) {
+        return tApp->path().topics()->link();
+    } else if (comment->type() == Comment::FORUM_POST) {
+        CommentPtr topic = comment->root();
+        if (topic) {
+            return tApp->path().topic_posts()->get_link(topic.id());
+        } else {
+            return tApp->path().all_posts()->link();
+        }
+    } else if (comment->type() == Comment::FORUM_COMMENT) {
+        CommentPtr post_text = comment->root();
+        CommentPtr post = post_text->parent();
+        return tApp->path().post()->get_link(post.id());
     }
     return Wt::WLink();
 }
 
 Wt::WAnchor* anchor_to_host(const CommentPtr& comment) {
     dbo::Transaction t(tApp->session());
-    if (comment->type() == Comment::CHAT_MESSAGE && !comment->root()) {
-        return global_chat_anchor();
+    if (comment->type() == Comment::CHAT_MESSAGE) {
+        // this special case to avoid double call to comment_base()
+        if (comment->type() == Comment::CHAT_MESSAGE && !comment->root()) {
+            return global_chat_anchor();
+        }
+        Object object = comment_base(comment);
+        if (object.id == 0) {
+            return 0;
+        }
+        if (object.type == GAME) {
+            return game_anchor(object.id);
+        } else if (object.type == COMPETITION) {
+            return competition_anchor(object.id);
+        } else if (object.type == TEAM_OBJECT) {
+            return team_anchor(object.id);
+        }
+    } else {
+        Wt::WAnchor* a = new Wt::WAnchor;
+        a->setText(host_text(comment));
+        a->setLink(host_link(comment));
+        return a;
     }
-    Object object = comment_base(comment);
-    if (object.id == 0) {
-        return 0;
-    }
-    if (object.type == GAME) {
-        return game_anchor(object.id);
-    } else if (object.type == COMPETITION) {
-        return competition_anchor(object.id);
-    } else if (object.type == TEAM_OBJECT) {
-        return team_anchor(object.id);
-    }
-    return 0;
 }
 
 }
