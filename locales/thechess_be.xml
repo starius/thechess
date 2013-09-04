@@ -302,8 +302,8 @@
     <message id="tc.menu.private_messages">асабістыя паведамленні</message>
     <message id='tc.menu.random_competitor'>случайный соперник</message>
     <message id="tc.menu.settings">налады</message>
-    <message id='tc.menu.team'>команда</message>
-    <message id='tc.menu.teams_list'>список команд</message>
+    <message id='tc.menu.team'>каманда</message>
+    <message id='tc.menu.teams_list'>спіс каманд</message>
     <message id="tc.menu.testing_board">дошка для спроб</message>
     <message id="tc.menu.topics">тэматыкі</message>
     <message id="tc.menu.user">карыстальнік</message>
@@ -448,7 +448,7 @@
     <message id='tc.user.Hide_online_mygames'>Убрать надпись На сайте из меню игр</message>
     <message id='tc.user.Hide_paused'>Спрятать приостановленные игры</message>
     <message id='tc.user.I_blocked_them'>Число заблокированных пользователей: {1}</message>
-    <message id='tc.user.ID'>Регистрационный номер пользователя: {1}</message>
+    <message id='tc.user.ID'>Рэгістрацыйны нумар карыстальніка: {1}</message>
     <message id="tc.user.ip">ip-адрас</message>
     <message id="tc.user.IpBanList">Спіс банаў па IP</message>
     <message id="tc.user.IpList">Спіс IP</message>
