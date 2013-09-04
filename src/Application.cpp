@@ -65,12 +65,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     gls_ = server.gls();
     setLocalizedStrings(gls_->create_localized_strings());
     setCssTheme("polished");
-    require("/js/jquery.min.js");
-    require("/js/jquery.countdown.min.js");
-    require("/js/fix_tinymce_change_lang.js");
-    require("/js/save_login_and_password.js");
-    require("/js/disable_alert.js");
-    require("/js/fix_menu_bullets.js");
+    require("/js/all_in_one.js");
     // FIXME http://redmine.emweb.be/issues/1491
     Wt::Wc::fix_plain_anchors(/* freq */ 400, /* skip */ "/^mailto\\:|pgn/i");
     session().login().changed().connect(this, &Application::login_handler);
@@ -97,7 +92,7 @@ Application::Application(bool, const Wt::WEnvironment& env, Server& server):
     // FIXME Wt::Auth translations in separate file do not work
     setCssTheme("polished");
     // FIXME http://redmine.emweb.be/issues/1491
-    require("/js/disable_alert.js");
+    require("/js/all_in_one.js");
     init_widget_mode();
     explore_timezone();
 }
