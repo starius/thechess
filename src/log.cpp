@@ -34,6 +34,7 @@ void admin_log(const Wt::WString& message, dbo::Session& session,
     comment.modify()->set_init(user);
     comment.modify()->set_text(message);
     comment.modify()->set_state(draft ? Comment::DRAFT : Comment::OK);
+    t_emit_after(Object(COMMENT, -1)); // -1 because no root
 }
 
 void admin_log(const Wt::WString& message, UserPtr user, bool draft) {
