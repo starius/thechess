@@ -835,7 +835,6 @@ void Competition::process() {
 }
 
 void Competition::process_classical() {
-    BOOST_ASSERT(is_round_robin(type()));
     std::map<UserPtr, int> used;
     GamesVector proposed;
     BOOST_FOREACH (const GamePtr& g, games_vector()) {
