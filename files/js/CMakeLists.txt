@@ -10,6 +10,12 @@ file(DOWNLOAD
 )
 list(APPEND js_files_1 ${CMAKE_CURRENT_BINARY_DIR}/jquery.countdown.min.js.inc)
 
+file(DOWNLOAD
+    http://yui.yahooapis.com/combo?2.9.0/build/yahoo-dom-event/yahoo-dom-event.js&2.9.0/build/element/element-min.js&2.9.0/build/cookie/cookie-min.js&2.9.0/build/swf/swf-min.js&2.9.0/build/swfstore/swfstore-min.js
+    ${CMAKE_CURRENT_BINARY_DIR}/swfstore-min.js.inc
+)
+list(APPEND js_files_1 ${CMAKE_CURRENT_BINARY_DIR}/swfstore-min.js.inc)
+
 file(GLOB js_files_2 "${CMAKE_CURRENT_SOURCE_DIR}/*.js")
 list(REMOVE_ITEM js_files_2 "${CMAKE_CURRENT_SOURCE_DIR}/tiny_mce_src.js")
 

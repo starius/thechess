@@ -310,7 +310,7 @@ void Application::gather_init() {
     if (!gather_) {
         gather_ = new Wt::Wc::Gather(boost::bind(&Application::gather_explorer,
                                      this, _1, _2), this);
-        gather_->set_swfstore(new Wt::Wc::SWFStore(root()));
+        gather_->set_swfstore(new Wt::Wc::SWFStore(root(), /*load js*/ false));
         gather_->set_localstore(new Wt::Wc::LocalStore(root()));
         triggerUpdate();
     }
