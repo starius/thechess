@@ -330,7 +330,7 @@
 
     <message id='tc.title.BoardWidget'>Доска « TheChess</message>
     <message id='tc.title.ChatCommentWidget'>Сообщение чата « TheChess</message>
-    <message id='tc.title.CommentList_admin_log'>Административный журнир « TheChess</message>
+    <message id='tc.title.CommentList_admin_log'>Административный журнал « TheChess</message>
     <message id='tc.title.CommentList_edit'>Правка « Форум « TheChess</message>
     <message id='tc.title.CommentList_global_chat'>Чат « TheChess</message>
     <message id='tc.title.CommentList_my_messages'>Мои сообщения « TheChess</message>
