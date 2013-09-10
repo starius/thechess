@@ -24,8 +24,8 @@ public:
         setText(tr("tc.menu.private_messages"));
         setLink(tApp->path().my_messages()->link());
         clicked().connect(this, &MessagesAnchorImpl::normal_style);
-        tApp->path().my_messages()->opened().connect(boost::bind(
-                    &MessagesAnchorImpl::normal_style, this));
+        wApp->internalPathChanged()
+        .connect(this, &MessagesAnchorImpl::check_path);
         normal_style();
         // TODO sound_ = new Wt::WSound("/sound/bark.mp3", this);
         sound_ = new Wt::WSound("/sound/glass.mp3", this);
@@ -35,10 +35,19 @@ public:
         delete box_;
     }
 
+    void check_path(const std::string& path) {
+        if (tApp->path().parse(path) == tApp->path().my_messages()) {
+            normal_style();
+        }
+    }
+
     void notify(EventPtr e) {
         const NewMessage* new_message = DOWNCAST<const NewMessage*>(e.get());
         int sender_id = new_message->sender_id;
-        setStyleClass("thechess-excited");
+        if (tApp->path().parse(wApp->internalPath()) !=
+                tApp->path().my_messages()) {
+            setStyleClass("thechess-excited");
+        }
         Wt::Wc::url::Node* node = tApp->path().parse(wApp->internalPath());
         if (!box_ && node != tApp->path().my_messages() &&
                 node != tApp->path().game_view() &&
@@ -64,6 +73,7 @@ public:
         if (button == Wt::Ok) {
             std::string messages_path = tApp->path().my_messages()->full_path();
             wApp->setInternalPath(messages_path, /* emit */ true);
+            normal_style(); // see http://redmine.webtoolkit.eu/issues/2173
         }
     }
 
