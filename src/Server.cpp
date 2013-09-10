@@ -102,6 +102,7 @@ void Server::reset_gls() {
     std::string locale;
     if (tApp) {
         locale = Wt::Wc::get_locale();
+        Wt::Wc::set_locale("");
     }
     Wt::Wc::GlobalLocalizedStrings* gls = new Wt::Wc::GlobalLocalizedStrings;
     gls->use(Wt::Wc::approot() + "locales/thechess");
