@@ -46,6 +46,7 @@ private:
         if (!tApp->user() || !tApp->user()->has_permission(TEAM_CHANGER)) {
             q.where("removed = ?").bind(false);
         }
+        q.orderBy("id");
         setQuery(q, /* keep_columns */ true);
     }
 
