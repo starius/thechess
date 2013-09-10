@@ -47,6 +47,7 @@ static void change_topic(CommentPtr post, Wt::WLineEdit* topic) {
             CommentPtr t = tApp->session().load<Comment>(topic_id);
             if (t->type() == Comment::FORUM_TOPIC) {
                 post.modify()->set_parent(t);
+                post.modify()->set_root(t);
                 // admin log
                 admin_log("Change topic of " + comm_a(post.id()));
             }
