@@ -132,7 +132,7 @@ void Application::update_my_games() {
 }
 
 void Application::set_locale_by_user(const std::string& locale) {
-    setLocale(locale);
+    Wt::Wc::set_locale(locale);
     dbo::Transaction t(tApp->session());
     if (user()) {
         user().reread();
@@ -183,7 +183,7 @@ void Application::login_handler() {
             }
             kick_ = new Kick();
             if (!user()->locale().empty()) {
-                setLocale(user()->locale());
+                Wt::Wc::set_locale(user()->locale());
             }
             user().flush();
         }
