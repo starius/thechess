@@ -855,7 +855,7 @@ void Game::pgn_additional(std::ostream& out) const {
     }
 }
 
-// see http://cfajohnson.com/chess/SAN/SAN_DOC/Standard
+// see http://scid.sourceforge.net/doc/standard.txt
 void Game::pgn(std::ostream& out, bool reduced) const {
     std::string event = boost::lexical_cast<std::string>(id());
     if (competition_) {
