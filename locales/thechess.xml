@@ -698,7 +698,7 @@ TheChess.
     <message id='tc.game.List'>List of games</message>
     <message id='tc.game.Mark_norating'>Mark non-rating</message>
     <message id='tc.game.Mistake_proposal'>{1} proposed to roll back game to position before move {2} {3}</message>
-    <message id='tc.game.Mistake_propose'>Rollback</message>
+    <message id='tc.game.Mistake_propose'>Take move back</message>
     <message id='tc.game.Move_confirmation'>Move confirmation</message>
     <message id='tc.game.moves_size'>#moves</message>
     <message id='tc.game.No_draw'>The game can't be ended with draw</message>
@@ -763,7 +763,7 @@ TheChess.
         </plural>
     </message>
     <message id='tc.game.Mistake_welcome'>
-        Wrong move? Select it and press Rollback -
+        Wrong move? Select it and press "Take move back" -
         game would be rolled back before selected move
     </message>
 

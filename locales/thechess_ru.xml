@@ -210,7 +210,7 @@
     <message id='tc.game.List'>Список игр</message>
     <message id='tc.game.Mark_norating'>Пометить как нерейтинговую</message>
     <message id='tc.game.Mistake_proposal'>{1} предлагает откатить к позиции, предшествующей ходу {2} {3}</message>
-    <message id='tc.game.Mistake_propose'>Откатить</message>
+    <message id='tc.game.Mistake_propose'>Отменить ход</message>
     <message id='tc.game.Move_confirmation'>Подтверждение хода</message>
     <message id='tc.game.moves_size'>ходов</message>
     <message id='tc.game.No_draw'>Игра не может завершиться вничью</message>
@@ -274,7 +274,7 @@
         </plural>
     </message>
     <message id='tc.game.Mistake_welcome'>
-        Неверный ход? Выделите его и нажмите Откатить -
+        Неверный ход? Выделите его и нажмите "Отменить ход" -
         будет восстановлена позиция, предшествующая выделенному ходу
     </message>
 
