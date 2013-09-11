@@ -138,6 +138,8 @@ void Application::set_locale_by_user(const std::string& locale) {
         user().reread();
         user().modify()->set_locale(locale);
     }
+    int five_years = 3600 * 24 * 365 * 5;
+    wApp->setCookie("tc_locale", locale, five_years);
 }
 
 void Application::login_handler() {
@@ -236,6 +238,11 @@ void Application::explore_timezone() {
     timezone_signal_.connect(this, &Application::set_timezone_diff);
     doJavaScript(timezone_signal_.createCall(
                      "(new Date()).getTimezoneOffset()"));
+    try {
+        std::string locale = wApp->environment().getCookie("tc_locale");
+        Wt::Wc::set_locale(locale);
+    } catch (...)
+    { }
 }
 
 void Application::set_timezone_diff(int shift) {
