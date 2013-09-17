@@ -76,7 +76,7 @@
     <message id="tc.competition.competition">турнір</message>
     <message id="tc.competition.Create_welcome">Стварыць новы турнір</message>
     <message id="tc.competition.Ended">Завершаны</message>
-    <message id='tc.competition.Ended_games_number'>Колькасць завершённых</message>
+    <message id='tc.competition.Ended_games_number'>Колькасць завершаных</message>
     <message id='tc.competition.Exchange'>Памяняцца</message>
     <message id='tc.competition.Exchange_must_2'>Адзначце двух карыстальнікаў для абмену</message>
     <message id='tc.competition.Force_start'>Фарсіраваны старт</message>
