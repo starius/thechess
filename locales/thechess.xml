@@ -568,7 +568,7 @@ TheChess.
     <message id='tc.competition.Create_welcome'>Create new competition</message>
     <message id='tc.competition.dash'>&mdash;</message>
     <message id='tc.competition.Ended'>Ended</message>
-    <message id='tc.competition.Ended_games_number'># ended</message>
+    <message id='tc.competition.Ended_games_number'>Ended games number</message>
     <message id='tc.competition.Exchange'>Exchange</message>
     <message id='tc.competition.Exchange_must_2'>Select two pairs for exchange</message>
     <message id='tc.competition.Force_start'>Forced start</message>
