@@ -104,7 +104,7 @@ private:
         a->setText(tr("tc.user.Change_avatar"));
         a->setTarget(Wt::TargetNewWindow);
         avatar_ = new Wt::WLineEdit(tApp->user()->avatar_path(), this);
-        email_->setTextSize(40);
+        avatar_->setTextSize(40);
         Wt::WPushButton* b;
         b = new Wt::WPushButton(tr("tc.common.Save"), this);
         b->clicked().connect(this, &SettingsWidgetImpl::save_avatar);
