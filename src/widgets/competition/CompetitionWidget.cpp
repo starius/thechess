@@ -642,7 +642,7 @@ private:
 
 struct EloCmp2 {
     bool operator()(const UserPtr& a, const UserPtr& b) const {
-        return a->games_stat().elo() < b->games_stat().elo();
+        return b->games_stat().elo() < a->games_stat().elo();
     }
 };
 
