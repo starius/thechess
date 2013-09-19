@@ -114,10 +114,6 @@ enum {
     GAME_LIST_IN_MIDDLE
 };
 
-static void refresh_url() {
-    tApp->path().open(wApp->internalPath());
-}
-
 MainWidget::MainWidget(Wt::WContainerWidget* parent):
     Wt::WContainerWidget(parent),
     mymenu_(0), countup_(0), countup_updates_(0) {
@@ -137,7 +133,7 @@ MainWidget::MainWidget(Wt::WContainerWidget* parent):
     menu_place_->addWidget(new Wt::WBreak);
     Wt::WPushButton* refresh;
     refresh = new Wt::WPushButton(tr("tc.common.Refresh"), menu_place_);
-    refresh->clicked().connect(boost::bind(refresh_url));
+    refresh->clicked().connect(boost::bind(&MainWidget::refresh_url, this));
     Wt::WTableCell* contents_cell = middle->elementAt(0, CONTENTS_IN_MIDDLE);
     contents_place_ = new MyCachedContents;
     contents_cell->addWidget(contents_place_);
@@ -599,6 +595,11 @@ void MainWidget::show_is_banned() {
         ban->setRef("/html/banned.html");
         menu_place_->addWidget(ban);
     }
+}
+
+void MainWidget::refresh_url() {
+    contents_place_->remove_from_cache(wApp->internalPath());
+    contents_place_->open_url(wApp->internalPath());
 }
 
 }
