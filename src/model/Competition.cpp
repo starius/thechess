@@ -22,6 +22,14 @@ DBO_INSTANTIATE_TEMPLATES(thechess::Competition);
 
 namespace thechess {
 
+double double_abs(double value) {
+    if (value < 0.0) {
+        return -value;
+    } else {
+        return value;
+    }
+}
+
 Competition::Competition() {
 }
 
@@ -149,7 +157,7 @@ UsersVector Competition::winners_of_games(const GamesVector& games) {
             max_wins = w;
             winners.clear();
         }
-        if (abs(w - max_wins) < 0.1) {
+        if (double_abs(w - max_wins) < 0.1) {
             winners.push_back(u);
         }
     }
@@ -172,7 +180,7 @@ TeamsVector Competition::winner_teams_of_games(const GamesVector& games) {
             max_wins = w;
             winners.clear();
         }
-        if (abs(w - max_wins) < 0.1) {
+        if (double_abs(w - max_wins) < 0.1) {
             winners.push_back(team);
         }
     }
