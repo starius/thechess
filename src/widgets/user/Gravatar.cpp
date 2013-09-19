@@ -18,7 +18,7 @@ Gravatar::Gravatar(const UserPtr& user, Wt::WContainerWidget* parent):
             user->has_permission(AVATAR_NONDEFAULT)) {
         set_default(user->avatar_path());
     } else {
-        set_default(Wt::Wc::GravatarImage::WAVATAR);
+        set_default(Wt::Wc::GravatarImage::RETRO);
     }
     set_force_default(!user->has_permission(AVATAR_NONDEFAULT));
 }
