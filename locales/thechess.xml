@@ -1010,6 +1010,14 @@ TheChess.
     <message id='tc.user.Competitions_stat'>
         <h2>Competitions stats:</h2>
     </message>
+    <message id='tc.user.Email_unverified'>
+        Your e-mail "{1}" is not verified.
+        Please, go to <a href="{2}">Settings page</a>,
+        enter valid e-mail, then open Inbox, open mail from TheChess
+        and click URL from that mail.
+        Otherwise, you would not be able to recover password
+        in case you forget it.
+    </message>
     <message id='tc.user.Filter_min_online'>
         Min online time spend by user to be able to send you a message
     </message>

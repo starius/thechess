@@ -21,6 +21,15 @@ void TopBlock::notify(EventPtr) {
 }
 
 void TopBlock::update_contents() {
+    dbo::Transaction t(tApp->session());
+    if (tApp->user() && !tApp->user()->email().empty()) {
+        set_message();
+    } else if (tApp->user()) {
+        set_email_unverified();
+    }
+}
+
+void TopBlock::set_message() {
     int comment_id = Options::instance()->top_logged_in_content_id();
     if (comment_id > 0) {
         dbo::Transaction t(tApp->session());
@@ -34,6 +43,17 @@ void TopBlock::update_contents() {
         } catch (...)
         { }
     }
+}
+
+void TopBlock::set_email_unverified() {
+    dbo::Transaction t(tApp->session());
+    std::string unverified_email = "";
+    if (tApp->user() && tApp->user()->auth_info()) {
+        unverified_email = tApp->user()->auth_info()->unverifiedEmail();
+    }
+    std::string settings_path = tApp->path().settings_page()->full_path();
+    setText(tr("tc.user.Email_unverified")
+            .arg(unverified_email).arg(settings_path));
 }
 
 }

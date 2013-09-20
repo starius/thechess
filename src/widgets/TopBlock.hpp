@@ -26,6 +26,8 @@ public:
 
 private:
     void update_contents();
+    void set_message();
+    void set_email_unverified();
 };
 
 }
