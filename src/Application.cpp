@@ -67,7 +67,7 @@ Application::Application(const Wt::WEnvironment& env, Server& server) :
     setCssTheme("polished");
     require("/js/all_in_one.js");
     // FIXME http://redmine.emweb.be/issues/1491
-    Wt::Wc::fix_plain_anchors(/* freq */ 400, /* skip */ "/^mailto\\:|pgn/i");
+    Wt::Wc::fix_plain_anchors(400, "/^mailto\\:|pgn|rar/i");
     session().login().changed().connect(this, &Application::login_handler);
     login_handler();
     internalPathChanged().emit(internalPath());
