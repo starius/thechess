@@ -535,7 +535,7 @@ private:
         if (tApp->user() && tApp->user()->has_permission(RECORDS_EDITOR)) {
             user_.reread();
             user_.modify()->set_avatar_path(avatar_->text().toUTF8());
-            admin_log("Change email of " + user_a(user_.id()));
+            admin_log("Change avatar of " + user_a(user_.id()));
             t.commit();
             t_emit(USER, user_.id());
         }
