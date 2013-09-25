@@ -462,28 +462,34 @@ private:
 
     void print_edit_description() {
         if (tApp->user() && tApp->user()->has_permission(RECORDS_EDITOR)) {
-            new Wt::WBreak(this);
-            Wt::WText* d = new Wt::WText(tr("tc.common.Description"), this);
+            Wt::WPanel* panel = new Wt::WPanel(this);
+            panel->setCollapsible(true);
+            panel->collapse();
+            panel->setTitle(tr("tc.user.Settings"));
+            Wt::WContainerWidget* p = new Wt::WContainerWidget();
+            panel->setCentralWidget(p);
+            new Wt::WBreak(p);
+            Wt::WText* d = new Wt::WText(tr("tc.common.Description"), p);
             d->decorationStyle().font().setWeight(Wt::WFont::Bolder);
-            new Wt::WBreak(this);
-            description_ = new Wt::WTextEdit(user_->safe_description(), this);
+            new Wt::WBreak(p);
+            description_ = new Wt::WTextEdit(user_->safe_description(), p);
             patch_text_edit(description_);
             Wt::WPushButton* b;
-            b = new Wt::WPushButton(tr("tc.common.Save"), this);
+            b = new Wt::WPushButton(tr("tc.common.Save"), p);
             b->clicked().connect(this, &UserWidgetImpl::set_description);
             //
-            new Wt::WBreak(this);
-            new Wt::WText(tr("tc.user.Email"), this);
-            email_ = new Wt::WLineEdit(user_->email(), this);
+            new Wt::WBreak(p);
+            new Wt::WText(tr("tc.user.Email"), p);
+            email_ = new Wt::WLineEdit(user_->email(), p);
             email_->setTextSize(40);
-            b = new Wt::WPushButton(tr("tc.common.Save"), this);
+            b = new Wt::WPushButton(tr("tc.common.Save"), p);
             b->clicked().connect(this, &UserWidgetImpl::set_email);
             //
-            new Wt::WBreak(this);
-            new Wt::WText(tr("tc.user.Change_avatar"), this);
-            avatar_ = new Wt::WLineEdit(user_->avatar_path(), this);
+            new Wt::WBreak(p);
+            new Wt::WText(tr("tc.user.Change_avatar"), p);
+            avatar_ = new Wt::WLineEdit(user_->avatar_path(), p);
             avatar_->setTextSize(40);
-            b = new Wt::WPushButton(tr("tc.common.Save"), this);
+            b = new Wt::WPushButton(tr("tc.common.Save"), p);
             b->clicked().connect(this, &UserWidgetImpl::set_avatar);
         }
     }
