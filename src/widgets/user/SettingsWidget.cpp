@@ -99,6 +99,9 @@ private:
     }
 
     void print_avater_note() {
+        if (!tApp->user()->has_permission(AVATAR_NONDEFAULT)) {
+            return;
+        }
         new Wt::WBreak(this);
         Wt::WAnchor* a = new Wt::WAnchor("http://gravatar.com", this);
         a->setText(tr("tc.user.Change_avatar"));
