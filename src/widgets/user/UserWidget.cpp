@@ -57,6 +57,8 @@ private:
     Wt::WPushButton* rating_button_;
     Wt::WPushButton* rating_and_me_button_;
     Wt::WTextEdit* description_;
+    Wt::WLineEdit* email_;
+    Wt::WLineEdit* avatar_;
 
     void reprint() {
         UserPtr user = user_;
@@ -469,6 +471,20 @@ private:
             Wt::WPushButton* b;
             b = new Wt::WPushButton(tr("tc.common.Save"), this);
             b->clicked().connect(this, &UserWidgetImpl::set_description);
+            //
+            new Wt::WBreak(this);
+            new Wt::WText(tr("tc.user.Email"), this);
+            email_ = new Wt::WLineEdit(user_->email(), this);
+            email_->setTextSize(40);
+            b = new Wt::WPushButton(tr("tc.common.Save"), this);
+            b->clicked().connect(this, &UserWidgetImpl::set_email);
+            //
+            new Wt::WBreak(this);
+            new Wt::WText(tr("tc.user.Change_avatar"), this);
+            avatar_ = new Wt::WLineEdit(user_->avatar_path(), this);
+            avatar_->setTextSize(40);
+            b = new Wt::WPushButton(tr("tc.common.Save"), this);
+            b->clicked().connect(this, &UserWidgetImpl::set_avatar);
         }
     }
 
@@ -492,6 +508,28 @@ private:
             user_.reread();
             user_.modify()->set_description(description_->text());
             admin_log("Change description of " + user_a(user_.id()));
+            t.commit();
+            t_emit(USER, user_.id());
+        }
+    }
+
+    void set_email() {
+        dbo::Transaction t(tApp->session());
+        if (tApp->user() && tApp->user()->has_permission(RECORDS_EDITOR)) {
+            user_.reread();
+            user_->auth_info().modify()->setEmail(email_->text().toUTF8());
+            admin_log("Change email of " + user_a(user_.id()));
+            t.commit();
+            t_emit(USER, user_.id());
+        }
+    }
+
+    void set_avatar() {
+        dbo::Transaction t(tApp->session());
+        if (tApp->user() && tApp->user()->has_permission(RECORDS_EDITOR)) {
+            user_.reread();
+            user_.modify()->set_avatar_path(avatar_->text().toUTF8());
+            admin_log("Change email of " + user_a(user_.id()));
             t.commit();
             t_emit(USER, user_.id());
         }
